@@ -31,6 +31,11 @@ export const cmsSeed: Record<string, CmsPage> = {
     title: 'Home Page',
     category: 'Main Pages',
     content: {
+      heroBadge: {
+        en: '✦ Mauritius\'s Trusted Medical Concierge',
+        fr: '✦ Votre Conciergerie Médicale de Confiance à l\'Île Maurice',
+        kr: '✦ Ou Konzierz Medikal de Konfians dan Moris'
+      },
       heroTitleLine1: {
         en: 'World-Class Healthcare,',
         fr: 'Des Soins de Classe Mondiale,',
@@ -46,38 +51,52 @@ export const cmsSeed: Record<string, CmsPage> = {
         fr: 'Connecter les patients de l\'île Maurice aux principaux hôpitaux accrédités dans le monde entier. Obtenez des avis médicaux d\'experts, des prix transparents et une coordination de voyage complète, tout cela gratuitement.',
         kr: 'Konekte bann pasian Moris ar bann pli bon lopital dan lemond. Gagn bann lavi expert medikal, pri kler, ek kordinasion voyaz — tou sa pou nanye.'
       },
+      heroBannerImage: {
+        en: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80',
+        fr: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80',
+        kr: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80'
+      },
       trustText: {
         en: 'Trusted by 12,000+ Mauritian Patients',
         fr: 'Approuvé par plus de 12 000 patients mauriciens',
         kr: 'Plis ki 12,000 pasian Morisien fer nou konfians'
       },
-      statPatients: { en: 'Patients Assisted', fr: 'Patients Assistés', kr: 'Pasian Asiste' },
-      statHospitals: { en: 'Accredited Hospitals', fr: 'Hôpitaux Accrédités', kr: 'Lopital Akredite' },
-      statCountries: { en: 'Global Destinations', fr: 'Destinations Mondiales', kr: 'Destinasion Mondial' },
-      statSatisfaction: { en: 'Satisfaction Rate', fr: 'Taux de Satisfaction', kr: 'Pousantaz Satisfe' },
-      processStep1Title: { en: 'Describe Your Need', fr: 'Décrivez Votre Besoin', kr: 'Dekrir Ou Bizin' },
+      statPatients: { en: '12,000+ Patients Assisted', fr: '12 000+ Patients Accompagnés', kr: '12,000+ Pasian Asiste' },
+      statHospitals: { en: '50+ Accredited Hospitals', fr: '50+ Hôpitaux Accrédités', kr: '50+ Lopital Akredite' },
+      statCountries: { en: '8 Global Destinations', fr: '8 Destinations Mondiales', kr: '8 Destinasion Mondial' },
+      statSatisfaction: { en: '98% Satisfaction Rate', fr: '98% Taux de Satisfaction', kr: '98% Pousantaz Satisfe' },
+      processLabel: { en: 'Simple 4-Step Process', fr: 'Processus en 4 Étapes', kr: 'Prosesis an 4 Letap' },
+      processTitle: { en: 'Your Healthcare Journey in 4 Simple Steps', fr: 'Votre Parcours de Soins en 4 Étapes Simples', kr: 'Ou Vwayaz Lasante an 4 Letap' },
+      processStep1Title: { en: '1. Describe Your Need', fr: '1. Décrivez Votre Besoin', kr: '1. Dekrir Ou Bizin' },
       processStep1Desc: { 
         en: 'Fill our simple medical inquiry form with your condition, specialty, and preferences.',
         fr: 'Remplissez notre formulaire de demande médicale simple avec votre condition, votre spécialité et vos préférences.',
         kr: 'Ranpli nou form sinp ek dekrir ou maladi, spesialite, ek ou preferans.'
       },
-      processStep2Title: { en: 'Get a Free Opinion', fr: 'Obtenez un Avis Gratuit', kr: 'Gagn Lavi Gratis' },
+      processStep2Title: { en: '2. Get a Free Opinion', fr: '2. Obtenez un Avis Gratuit', kr: '2. Gagn Lavi Gratis' },
       processStep2Desc: {
-        en: 'Our medical team reviews your case and recommends the best hospitals and specialists.',
-        fr: 'Notre équipe médicale examine votre cas et vous recommande les meilleurs hôpitaux et spécialistes.',
-        kr: 'Nou lekip medikal get ou dosie e rekomann bann pli bon lopital ek dokter.'
+        en: 'Our medical team reviews your case and recommends the best hospitals and specialists within 48 hours.',
+        fr: 'Notre équipe médicale examine votre cas et vous recommande les meilleurs hôpitaux et spécialistes sous 48h.',
+        kr: 'Nou lekip medikal get ou dosie e rekomann bann pli bon lopital ek dokter dan 48h.'
       },
-      processStep3Title: { en: 'We Plan Everything', fr: 'Nous Planifions Tout', kr: 'Nou Planifie Tou' },
+      processStep3Title: { en: '3. We Plan Everything', fr: '3. Nous Planifions Tout', kr: '3. Nou Planifie Tou' },
       processStep3Desc: {
         en: 'Appointment, visa support, flights, hotel, and airport transfers — all coordinated by Med360.',
         fr: 'Rendez-vous, demande de visa, vols, hôtels et transferts aéroport — tout est coordonné par Med360.',
         kr: 'Randevou, viza, biye avion, lotel, ek transpor — Med360 okip tou.'
       },
-      processStep4Title: { en: 'Travel & Recover', fr: 'Voyagez et Récupérez', kr: 'Voyaz ek Repoze' },
+      processStep4Title: { en: '4. Travel & Recover', fr: '4. Voyagez et Récupérez', kr: '4. Voyaz ek Repoze' },
       processStep4Desc: {
-        en: 'Arrive with confidence. Our local coordinator stays with you throughout your treatment.',
-        fr: 'Arrivez en toute confiance. Notre coordinateur local reste avec vous tout au long de votre traitement.',
-        kr: 'Voyaz san traka. Nou kordinater lokal res avek ou pandan tou ou tretman.'
+        en: 'Arrive with confidence. Our dedicated coordinator stays with you throughout your treatment.',
+        fr: 'Arrivez en toute confiance. Notre coordinateur dédié reste avec vous tout au long de votre traitement.',
+        kr: 'Voyaz san traka. Nou kordinater dedie res avek ou pandan tou ou tretman.'
+      },
+      whyBadge: { en: 'Why Choose Medical 360', fr: 'Pourquoi Choisir Medical 360', kr: 'Kifer Swazir Medical 360' },
+      whyTitle: { en: 'Your Health. Our Lifelong Mission.', fr: 'Votre Santé. Notre Mission de Vie.', kr: 'Ou Lasante. Nou Mision.' },
+      whyDesc: {
+        en: 'We are your trusted health partner. From finding the right surgeon to coordinating every flight and hotel, we handle the stress so you can focus on healing.',
+        fr: 'Nous sommes votre partenaire santé de confiance. De la recherche du bon chirurgien à la réservation des vols et hôtels, nous gérons tout le stress pour vous.',
+        kr: 'Nou ou partner lasante de konfians. Depi trouv bon dokter ziska rezerv vol ek lotel, nou okip tou pou ou kapav zis konsantre lor ou gerizon.'
       },
       consultationTitle: {
         en: 'Comprehensive Support at Every Step',
@@ -97,9 +116,9 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Main Pages',
     content: {
       heroLabel: {
-        en: 'Our Story',
-        fr: 'Notre Histoire',
-        kr: 'Nou Zistwar'
+        en: 'Our Story & Purpose',
+        fr: 'Notre Histoire & Notre Mission',
+        kr: 'Nou Zistwar & Nou Lobzektif'
       },
       heroTitle: {
         en: 'About Medical 360',
@@ -112,9 +131,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Med360 Ltd ti kree avek enn sel lobzektif: fer sir ki sak pasian dan Moris ek l\'osean Indien gagn akse ar bann meyer swen lasante klas mondial.'
       },
       missionLabel: {
-        en: 'Our Mission',
-        fr: 'Notre Mission',
-        kr: 'Nou Mision'
+        en: 'Our Core Mission',
+        fr: 'Notre Mission Principale',
+        kr: 'Nou Mision Prinsipal'
       },
       missionTitle: {
         en: 'Bridging Mauritius to World-Class Healthcare',
@@ -136,6 +155,14 @@ export const cmsSeed: Record<string, CmsPage> = {
         fr: 'Notre service est toujours 100% gratuit pour les patients. Nous sommes rémunérés directement par nos hôpitaux partenaires, jamais par les patients que nous aidons.',
         kr: 'Nou servis li touzour 100% gratis pou bann pasian. Se bann lopital partner ki pey nou direk, zame bann pasian ki nou ed.'
       },
+      pillar1Title: { en: 'JCI / NABH Accredited Hospitals Only', fr: 'Uniquement des Hôpitaux Accrédités JCI / NABH', kr: 'Zis Lopital Akredite JCI / NABH' },
+      pillar1Desc: { en: 'We only partner with hospitals that meet the most rigorous global quality and safety standards.', fr: 'Nous ne travaillons qu\'avec des hôpitaux respectant les normes de sécurité les plus strictes.', kr: 'Nou travay zis ar bann lopital ki ena bann pli o standard sekirite.' },
+      pillar2Title: { en: 'Direct Department Head Opinions', fr: 'Avis Directs des Chefs de Service', kr: 'Lavi Direk Sef Dokter' },
+      pillar2Desc: { en: 'Your medical reports are reviewed directly by chief surgeons, not automated software.', fr: 'Vos rapports médicaux sont examinés directement par les chirurgiens en chef.', kr: 'Ou dosie medikal li examine direk par bann sef sirizien.' },
+      pillar3Title: { en: 'Complete Travel Coordination', fr: 'Coordination Complète du Voyage', kr: 'Kordinasion Vwayaz Konple' },
+      pillar3Desc: { en: 'Medical visas, flights, companion travel, airport pickup, and dedicated hotel booking.', fr: 'Visas médicaux, vols, billets accompagnants, accueil aéroport et réservation hôtel.', kr: 'Viza medikal, vol, biye akonpagnan, transpor ek rezervasion lotel.' },
+      pillar4Title: { en: 'Zero Patient Fees', fr: 'Zéro Frais pour le Patient', kr: 'Zero Fré Pou Pasian' },
+      pillar4Desc: { en: 'Our guidance and concierge coordination are 100% free of charge for Mauritian patients.', fr: 'Notre accompagnement et notre conciergerie sont 100% gratuits pour les patients mauriciens.', kr: 'Nou asistans ek kordinasion zot 100% gratis pou bann pasian Morisien.' },
       ctaTitle: {
         en: 'Ready to Start Your Journey?',
         fr: 'Prêt à Commencer Votre Parcours ?',
@@ -154,9 +181,9 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Main Pages',
     content: {
       heroLabel: {
-        en: 'Full Concierge',
-        fr: 'Conciergerie Complète',
-        kr: 'Full Concierge'
+        en: 'Full Concierge Care',
+        fr: 'Conciergerie Médicale Complète',
+        kr: 'Full Concierge Medikal'
       },
       heroTitle: {
         en: 'Our Services Cover Every Need',
@@ -168,12 +195,18 @@ export const cmsSeed: Record<string, CmsPage> = {
         fr: 'De votre première demande au suivi post-traitement, Medical 360 s\'occupe de chaque détail de votre parcours de santé à l\'étranger.',
         kr: 'Depi premie demann ziska swivi apre tretman, Medical 360 okip tou bann detay dan ou vwayaz medikal.'
       },
-      serviceOpinionTitle: { en: 'Free Expert Medical Opinion', fr: 'Avis Médical d\'Expert Gratuit', kr: 'Lavi Medikal Expert Gratis' },
+      serviceOpinionTitle: { en: '1. Free Expert Medical Opinion', fr: '1. Avis Médical d\'Expert Gratuit', kr: '1. Lavi Medikal Expert Gratis' },
       serviceOpinionDesc: { en: 'Receive treatment plans and transparent cost estimates from top hospital department heads within 48 hours.', fr: 'Recevez des plans de traitement et des devis transparents des chefs de service hospitaliers sous 48h.', kr: 'Gagn plan tretman ek estimasion pri kler depi bann sef dokter dan 48h.' },
-      serviceTravelTitle: { en: 'Medical Visa & Travel Planning', fr: 'Visa Médical & Organisation du Voyage', kr: 'Viza Medikal & Plan Voyaz' },
+      serviceTravelTitle: { en: '2. Medical Visa & Travel Planning', fr: '2. Visa Médical & Organisation du Voyage', kr: '2. Viza Medikal & Plan Voyaz' },
       serviceTravelDesc: { en: 'Fast-track visa invitation letters, priority flight bookings with medical luggage allowances, and airline wheelchair assistance.', fr: 'Lettres d\'invitation visa accélérées, réservations vols prioritaires avec bagages médicaux et assistance.', kr: 'Let linvitasion viza vit-vit, rezervasion vol prioritair ek lasistans fotey roulan.' },
-      serviceHospitalTitle: { en: 'Priority Hospital Admission', fr: 'Admission Hospitalière Prioritaire', kr: 'Ladmision Lopital Prioriter' },
-      serviceHospitalDesc: { en: 'Skip waiting lists. Direct appointments booked with leading chief surgeons, private rooms, and zero queueing.', fr: 'Évitez les listes d\'attente. Rendez-vous directs avec les chirurgiens en chef et chambres privées.', kr: 'Pa bizin atann. Randevou direk ar bann sef sirizien ek lasam prive.' }
+      serviceHospitalTitle: { en: '3. Priority Hospital Admission', fr: '3. Admission Hospitalière Prioritaire', kr: '3. Ladmision Lopital Prioriter' },
+      serviceHospitalDesc: { en: 'Skip waiting lists. Direct appointments booked with leading chief surgeons, private rooms, and zero queueing.', fr: 'Évitez les listes d\'attente. Rendez-vous directs avec les chirurgiens en chef et chambres privées.', kr: 'Pa bizin atann. Randevou direk ar bann sef sirizien ek lasam prive.' },
+      serviceTranslationTitle: { en: '4. Multilingual & Translator Support', fr: '4. Assistance Traducteur & Multilingue', kr: '4. Lasistans Tradiksion & Langaz' },
+      serviceTranslationDesc: { en: 'Dedicated on-ground language coordinators fluent in English, French, and local languages to assist you in every doctor consultation.', fr: 'Coordinateurs locaux bilingues pour vous assister lors de chaque consultation avec les médecins.', kr: 'Kordinater lokal pou ed ou dan sak randevou dokter pou tradir tou kler.' },
+      serviceTransferTitle: { en: '5. Airport VIP Meet & Greet', fr: '5. Accueil VIP & Transferts Aéroport', kr: '5. Lariwe VIP & Transpor Lotel' },
+      serviceTransferDesc: { en: 'Private ambulance or comfortable chauffeur vehicle waiting upon landing to escort you directly to your hospital or hotel.', fr: 'Ambulance privée ou véhicule tout confort à l\'atterrissage pour vous conduire directement à l\'hôpital ou à l\'hôtel.', kr: 'Ambilans prive ouswa transpor konfor ki pe atann ou pou amenn ou lopital ouswa lotel.' },
+      serviceRecoveryTitle: { en: '6. Post-Treatment Remote Follow-Up', fr: '6. Suivi Médical à Distance Post-Traitement', kr: '6. Swivi Medikal A Distans Apre Tretman' },
+      serviceRecoveryDesc: { en: 'Post-op telemedicine consultations with your operating surgeon once you return home to Mauritius.', fr: 'Téléconsultations post-opératoires avec votre chirurgien une fois de retour à l\'Île Maurice.', kr: 'Konsiltasion video ar ou sirizien kan ou retourn Moris pou fer sir tou pe bien pase.' }
     }
   },
   specialties: {
@@ -195,6 +228,11 @@ export const cmsSeed: Record<string, CmsPage> = {
         en: 'Browse our full range of medical specialties. Click any specialty to view procedures, estimated costs, and get a tailored opinion.',
         fr: 'Parcourez notre gamme complète de spécialités médicales. Cliquez sur une spécialité pour voir les procédures, les coûts estimés et obtenir un avis sur mesure.',
         kr: 'Get tou bann spesialite medikal ki nou ofer. Klik lor enn spesialite pou trouv bann tretman, pri estime, ek gagn enn lavi medikal personnaliser.'
+      },
+      guidanceText: {
+        en: 'All procedures include comprehensive pre-operative assessment and international standard surgical care.',
+        fr: 'Toutes les interventions incluent un bilan préopératoire complet et des soins chirurgicaux aux standards internationaux.',
+        kr: 'Tou bann loperasion inklir bilan konple avan loperasion ek swen o standard internasional.'
       }
     }
   },
@@ -217,6 +255,11 @@ export const cmsSeed: Record<string, CmsPage> = {
         en: 'Every hospital in our network is internationally accredited. Browse our partner hospitals and explore their specialties, facilities, and patient services.',
         fr: 'Chaque hôpital de notre réseau est accrédité au niveau international. Parcourez nos hôpitaux partenaires et explorez leurs spécialités, leurs installations et leurs services aux patients.',
         kr: 'Sak lopital dan nou rezo ena akreditasion internasional. Get nou bann lopital partner ek explor zot spesialite, fasilite, ek servis pou bann pasian.'
+      },
+      searchPlaceholder: {
+        en: 'Search hospitals by name, city, or country...',
+        fr: 'Rechercher des hôpitaux par nom, ville ou pays...',
+        kr: 'Rod lopital par nom, lavil ouswa pei...'
       }
     }
   },
@@ -344,12 +387,22 @@ export const cmsSeed: Record<string, CmsPage> = {
         en: 'Mon – Sat: 8:00 AM – 7:00 PM (MUT)\nWhatsApp available 24/7',
         fr: 'Lun – Sam : 8h00 – 19h00 (MUT)\nWhatsApp disponible 24h/24 et 7j/7',
         kr: 'Lindi - Samdi: 08:00 - 19:00 (MUT)\nWhatsApp disponib 24/7'
+      },
+      emailAddress: {
+        en: 'contact@med360.mu',
+        fr: 'contact@med360.mu',
+        kr: 'contact@med360.mu'
+      },
+      phoneNumber: {
+        en: '+230 59188275',
+        fr: '+230 59188275',
+        kr: '+230 59188275'
       }
     }
   },
   footer: {
     id: 'footer',
-    title: 'Footer Content',
+    title: 'Footer & Legal',
     category: 'Global',
     content: {
       tagline: {

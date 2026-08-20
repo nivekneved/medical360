@@ -23,13 +23,19 @@ export function AdminPageEditor() {
 
   const handleUpdate = (field: string, lang: string, value: string) => {
     setSavedSuccess(false);
-    setFormData((prev) => ({
-      ...prev,
-      [field]: {
-        ...(prev[field] || {}),
-        [lang]: value,
-      },
-    }));
+    setFormData((prev) => {
+      const existing = prev[field];
+      if (typeof existing === 'string') {
+        return { ...prev, [field]: value };
+      }
+      return {
+        ...prev,
+        [field]: {
+          ...(existing || {}),
+          [lang]: value,
+        },
+      };
+    });
   };
 
   const handleSave = async () => {
@@ -244,8 +250,20 @@ export function AdminPageEditor() {
           </div>
         ) : (
           fieldEntries.map(([fieldKey, fieldVal]) => {
-            const isMultiline = typeof fieldVal?.[activeLang] === 'string' && (fieldVal[activeLang].length > 80 || fieldVal[activeLang].includes('\n') || fieldKey.toLowerCase().includes('desc') || fieldKey.toLowerCase().includes('subtitle') || fieldKey.toLowerCase().includes('p1') || fieldKey.toLowerCase().includes('p2') || fieldKey.toLowerCase().includes('p3') || fieldKey.toLowerCase().includes('tagline'));
-            const currentValue = fieldVal?.[activeLang] ?? '';
+            const currentValue = typeof fieldVal === 'string'
+              ? fieldVal
+              : (fieldVal?.[activeLang] ?? fieldVal?.['en'] ?? '');
+
+            const isMultiline = typeof currentValue === 'string' && (
+              currentValue.length > 80 ||
+              currentValue.includes('\n') ||
+              fieldKey.toLowerCase().includes('desc') ||
+              fieldKey.toLowerCase().includes('subtitle') ||
+              fieldKey.toLowerCase().includes('p1') ||
+              fieldKey.toLowerCase().includes('p2') ||
+              fieldKey.toLowerCase().includes('p3') ||
+              fieldKey.toLowerCase().includes('tagline')
+            );
 
             // Format human-readable title
             const labelText = fieldKey
