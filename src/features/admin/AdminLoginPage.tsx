@@ -3,20 +3,38 @@ import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 
+import { validateHoneypot, sanitizeInput, checkRateLimit } from '../../core/services/security.service';
+
 export function AdminLoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState('admin@med360.mu');
   const [password, setPassword] = useState('med360admin');
+  const [honeypot, setHoneypot] = useState('');
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    // 1. Honeypot Check
+    if (!validateHoneypot(honeypot)) {
+      setError('Authentication failed.');
+      return;
+    }
+
+    // 2. Rate Limit
+    const rateCheck = checkRateLimit('web_admin_login', 5, 5 * 60 * 1000);
+    if (!rateCheck.allowed) {
+      setError(`Too many login attempts. Please wait ${rateCheck.remainingCooldownSeconds}s.`);
+      return;
+    }
+
     setLoading(true);
     setError('');
-    const ok = await login(email, password);
+    const cleanEmail = sanitizeInput(email);
+    const ok = await login(cleanEmail, password);
     if (ok) {
       navigate('/admin/dashboard');
     } else {
@@ -42,6 +60,18 @@ export function AdminLoginPage() {
           onSubmit={handleSubmit}
           style={{ background: 'var(--color-dark-3)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 'var(--radius-2xl)', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
         >
+          {/* Honeypot field */}
+          <div style={{ display: 'none', position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
+            <input
+              type="text"
+              name="user_verification_auth"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={e => setHoneypot(e.target.value)}
+            />
+          </div>
+
           <div className="form-group">
             <label className="form-label" htmlFor="admin-email" style={{ color: 'rgba(255,255,255,0.7)' }}>Email</label>
             <div style={{ position: 'relative' }}>
