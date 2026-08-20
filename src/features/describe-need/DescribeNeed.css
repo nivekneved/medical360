@@ -1,19 +1,20 @@
 .page-hero--sm {
   padding: var(--space-16) 0 var(--space-12);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .wizard-container {
   max-width: 780px;
   margin: 0 auto;
-  padding-top: var(--space-12);
-  padding-bottom: var(--space-20);
+  padding-top: 4rem; /* Generous top separation from hero container */
+  padding-bottom: var(--space-24);
 }
 
 .wizard-steps {
   display: flex;
   align-items: center;
-  margin-top: var(--space-4);
-  margin-bottom: var(--space-10);
+  margin-top: 1.5rem;
+  margin-bottom: 2.75rem;
   gap: 0;
 }
 
