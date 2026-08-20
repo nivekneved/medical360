@@ -6,7 +6,7 @@
 
 .admin-sidebar {
   width: var(--sidebar-width);
-  background: var(--color-dark);
+  background: #090d10;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -16,6 +16,7 @@
   z-index: 100;
   transition: width 0.25s ease;
   overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .admin-sidebar--collapsed { width: 64px; }
@@ -54,7 +55,7 @@
   white-space: nowrap;
 }
 
-.admin-sidebar__logo-accent { color: var(--color-primary); }
+.admin-sidebar__logo-accent { color: var(--color-accent-light); }
 
 .admin-mock-badge {
   display: flex;
@@ -62,8 +63,8 @@
   gap: 0.375rem;
   margin: 0.5rem 0.75rem;
   padding: 0.35rem 0.75rem;
-  background: rgba(0,212,177,0.12);
-  color: var(--color-accent);
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
   border-radius: 999px;
   font-size: 0.7rem;
   font-weight: 700;
@@ -85,7 +86,7 @@
   gap: 0.75rem;
   padding: 0.7rem 0.875rem;
   border-radius: 8px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.6);
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.15s ease;
@@ -98,12 +99,12 @@
 
 .admin-sidebar__link:hover {
   background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.9);
+  color: #10b981;
 }
 
 .admin-sidebar__link--active {
-  background: rgba(26,107,255,0.15);
-  color: var(--color-primary);
+  background: rgba(6, 95, 70, 0.25);
+  color: #34d399;
   font-weight: 600;
 }
 
@@ -144,7 +145,7 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: var(--color-dark-3);
+  background: #111822;
   border: 1px solid rgba(255,255,255,0.1);
   display: flex;
   align-items: center;

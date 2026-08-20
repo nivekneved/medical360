@@ -15,6 +15,7 @@
 
 .cs-card:hover {
   box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
   transform: translateY(-4px);
 }
 
@@ -38,14 +39,14 @@
 .cs-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent 60%);
+  background: linear-gradient(to top, rgba(9,13,16,0.65), transparent 60%);
 }
 
 .cs-card__savings {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: var(--color-accent);
+  background: var(--color-primary);
   color: white;
   font-size: 0.75rem;
   font-weight: 700;
@@ -57,7 +58,7 @@
   position: absolute;
   bottom: 1rem;
   left: 1rem;
-  background: rgba(0,0,0,0.6);
+  background: rgba(9,13,16,0.65);
   color: white;
   font-size: 0.75rem;
   font-weight: 600;

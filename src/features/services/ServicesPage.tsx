@@ -71,7 +71,7 @@ export function ServicesPage() {
                     width: 52,
                     height: 52,
                     borderRadius: 'var(--radius-lg)',
-                    background: 'linear-gradient(135deg, rgba(26,107,255,0.1), rgba(0,212,177,0.1))',
+                    background: 'rgba(6, 95, 70, 0.12)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',

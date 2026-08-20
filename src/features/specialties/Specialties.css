@@ -40,7 +40,7 @@
 .spec-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+  background: linear-gradient(to top, rgba(9,13,16,0.75) 0%, rgba(9,13,16,0.2) 100%);
 }
 
 .spec-card__name {
@@ -88,7 +88,7 @@
 .spec-procedure__cost {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-accent-dark);
+  color: var(--color-primary);
   white-space: nowrap;
 }
 

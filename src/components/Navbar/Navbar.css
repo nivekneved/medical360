@@ -47,7 +47,7 @@
   font-family: var(--font-display);
   font-weight: 900;
   font-size: 1.2rem;
-  color: white;
+  color: #ffffff;
 }
 
 .navbar__logo-ring {
@@ -98,12 +98,13 @@
 
 .navbar__link:hover {
   color: var(--color-primary);
-  background: rgba(26, 107, 255, 0.08);
+  background: rgba(6, 95, 70, 0.08);
 }
 
 .navbar__link--active {
   color: var(--color-primary);
   font-weight: 600;
+  background: rgba(6, 95, 70, 0.08);
 }
 
 /* Actions */
@@ -120,8 +121,8 @@
   gap: var(--space-2);
   padding: 0.5rem 1rem;
   border-radius: var(--radius-full);
-  background: rgba(37, 211, 102, 0.12);
-  color: #16a34a;
+  background: rgba(22, 163, 74, 0.12);
+  color: #15803d;
   font-size: 0.875rem;
   font-weight: 600;
   transition: var(--transition-fast);
@@ -132,7 +133,7 @@
 }
 
 .navbar__whatsapp:hover {
-  background: rgba(37, 211, 102, 0.22);
+  background: rgba(22, 163, 74, 0.22);
 }
 
 /* Toggle */

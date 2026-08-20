@@ -26,7 +26,7 @@ export function ContactPage() {
               <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.5rem' }}>Reach Us Directly</h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(37,211,102,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#25D366', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(22,163,74,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a', flexShrink: 0 }}>
                     <MessageCircle size={20} />
                   </div>
                   <div>
@@ -38,7 +38,7 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(26,107,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(6,95,70,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
                     <Phone size={20} />
                   </div>
                   <div>
@@ -48,7 +48,7 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(26,107,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(6,95,70,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
                     <Mail size={20} />
                   </div>
                   <div>
@@ -58,7 +58,7 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(26,107,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(6,95,70,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
                     <Clock size={20} />
                   </div>
                   <div>
@@ -71,7 +71,7 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(26,107,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(6,95,70,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
                     <MapPin size={20} />
                   </div>
                   <div>
