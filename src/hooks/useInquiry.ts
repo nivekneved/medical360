@@ -1,7 +1,13 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import type { Inquiry, InquiryUrgency } from '../core/types';
 import { mockEngine } from '../core/mock/engine';
 import { buildInquiryWhatsAppUrl } from '../core/services/whatsapp.service';
+import {
+  validateHoneypot,
+  validateSubmissionTiming,
+  checkRateLimit,
+  sanitizeInput,
+} from '../core/services/security.service';
 
 // ─── Step form data shape ─────────────────────────────────────────────────────
 export interface InquiryFormData {
@@ -35,12 +41,18 @@ const INITIAL_FORM: InquiryFormData = {
 export function useInquiry() {
   const [step, setStep]             = useState(1);
   const [formData, setFormData]     = useState<InquiryFormData>(INITIAL_FORM);
+  const [honeypot, setHoneypot]     = useState('');
+  const [formStartTime, setFormStartTime] = useState<number>(Date.now());
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted]   = useState(false);
   const [createdInquiry, setCreatedInquiry] = useState<Inquiry | null>(null);
   const [error, setError]           = useState<string | null>(null);
 
   const totalSteps = 4;
+
+  useEffect(() => {
+    setFormStartTime(Date.now());
+  }, []);
 
   const updateField = useCallback(<K extends keyof InquiryFormData>(
     key: K,
@@ -55,15 +67,47 @@ export function useInquiry() {
   const submit = useCallback(async (specialtyName: string) => {
     setSubmitting(true);
     setError(null);
+
+    // 1. Honeypot check (Automated spam defense)
+    if (!validateHoneypot(honeypot)) {
+      console.warn('🛡️ Security: Honeypot field filled. Bot submission silently discarded.');
+      setSubmitted(true);
+      setSubmitting(false);
+      return;
+    }
+
+    // 2. Timing check (< 1.5s is flagged)
+    if (!validateSubmissionTiming(formStartTime, 1500)) {
+      console.warn('🛡️ Security: Inhuman submission speed detected.');
+      setError('Suspicious fast activity detected. Please review your details and submit again.');
+      setSubmitting(false);
+      return;
+    }
+
+    // 3. Client Rate Limit
+    const rateCheck = checkRateLimit('web_inquiry_submit', 5, 10 * 60 * 1000);
+    if (!rateCheck.allowed) {
+      setError(`Too many submissions. Please wait ${rateCheck.remainingCooldownSeconds}s before trying again.`);
+      setSubmitting(false);
+      return;
+    }
+
     try {
+      // 4. Input Sanitization
+      const cleanFirstName = sanitizeInput(formData.firstName);
+      const cleanLastName  = sanitizeInput(formData.lastName);
+      const cleanPhone     = sanitizeInput(formData.phone);
+      const cleanEmail     = sanitizeInput(formData.email);
+      const cleanDesc      = sanitizeInput(formData.description);
+
       const inquiry = await mockEngine.createInquiry({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
+        firstName: cleanFirstName,
+        lastName: cleanLastName,
+        email: cleanEmail,
+        phone: cleanPhone,
         countryOfResidence: formData.countryOfResidence,
         specialtyId: formData.specialtyId,
-        description: formData.description,
+        description: cleanDesc,
         urgency: formData.urgency,
         preferredCountry: formData.preferredCountry || undefined,
         budgetRangeUSD:
@@ -76,11 +120,11 @@ export function useInquiry() {
 
       // Open WhatsApp after submission
       const waUrl = buildInquiryWhatsAppUrl({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        firstName: cleanFirstName,
+        lastName: cleanLastName,
         country: formData.countryOfResidence,
         specialty: specialtyName,
-        description: formData.description,
+        description: cleanDesc,
       });
       window.open(waUrl, '_blank');
     } catch {
@@ -88,11 +132,13 @@ export function useInquiry() {
     } finally {
       setSubmitting(false);
     }
-  }, [formData]);
+  }, [formData, honeypot, formStartTime]);
 
   const reset = useCallback(() => {
     setStep(1);
     setFormData(INITIAL_FORM);
+    setHoneypot('');
+    setFormStartTime(Date.now());
     setSubmitted(false);
     setCreatedInquiry(null);
     setError(null);
@@ -102,6 +148,8 @@ export function useInquiry() {
     step,
     totalSteps,
     formData,
+    honeypot,
+    setHoneypot,
     submitting,
     submitted,
     createdInquiry,

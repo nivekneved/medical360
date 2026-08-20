@@ -16,7 +16,7 @@ export function DescribeNeedPage() {
   const { t, i18n } = useTranslation();
   const { specialties } = useSpecialties();
   const {
-    step, totalSteps, formData, submitting, submitted,
+    step, totalSteps, formData, honeypot, setHoneypot, submitting, submitted,
     updateField, nextStep, prevStep, submit, reset, error
   } = useInquiry();
   const { data: cms } = useCMS('describe-need');
@@ -119,6 +119,18 @@ export function DescribeNeedPage() {
           {/* Step 1: Personal Details */}
           {step === 1 && (
             <div className="wizard-body animate-fade-in">
+              {/* Security Honeypot */}
+              <div style={{ display: 'none', position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
+                <input
+                  type="text"
+                  name="website_url_check"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={e => setHoneypot(e.target.value)}
+                />
+              </div>
+
               <h2 className="wizard-title">{l10n('Vos Détails Personnels', 'Ou Bann Detay', 'Your Personal Details')}</h2>
               <div className="form-row">
                 <div className="form-group">
