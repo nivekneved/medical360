@@ -16,6 +16,10 @@
   --color-warning:        #f59e0b;
   --color-success:        #10b981;
 
+  --color-dark:           #080d1a;
+  --color-dark-2:         #10172a;
+  --color-dark-3:         #172036;
+
   /* Typography */
   --font-sans:            'Inter', system-ui, -apple-system, sans-serif;
   --font-display:         'Outfit', 'Inter', sans-serif;
