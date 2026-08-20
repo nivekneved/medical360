@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { MessageCircle, Phone, Mail, MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import './Footer.css';
 
 export function Footer() {
+  const { t, i18n } = useTranslation();
+
   return (
     <footer className="footer">
       <div className="container">
@@ -18,7 +21,7 @@ export function Footer() {
               </div>
             </div>
             <p className="footer__tagline">
-              Connecting Mauritius to world-class healthcare, one patient at a time.
+              {t('footer.tagline')}
             </p>
             <div className="footer__contact">
               <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="footer__contact-item">
@@ -38,38 +41,38 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="footer__col">
-            <h4 className="footer__heading">Quick Links</h4>
+            <h4 className="footer__heading">{t('footer.quickLinks')}</h4>
             <ul className="footer__links">
-              <li><Link to="/about">About Us</Link></li>
-              <li><Link to="/hospitals">Associated Hospitals</Link></li>
-              <li><Link to="/specialties">Our Specialties</Link></li>
-              <li><Link to="/services">Our Services</Link></li>
-              <li><Link to="/case-studies">Case Studies</Link></li>
-              <li><Link to="/contact">Contact Us</Link></li>
+              <li><Link to="/about">{t('nav.about')}</Link></li>
+              <li><Link to="/hospitals">{t('nav.hospitals')}</Link></li>
+              <li><Link to="/specialties">{t('nav.specialties')}</Link></li>
+              <li><Link to="/services">{t('nav.services')}</Link></li>
+              <li><Link to="/case-studies">{t('nav.caseStudies')}</Link></li>
+              <li><Link to="/contact">{t('nav.contact')}</Link></li>
             </ul>
           </div>
 
           {/* Specialties */}
           <div className="footer__col">
-            <h4 className="footer__heading">Top Specialties</h4>
+            <h4 className="footer__heading">{t('footer.topSpecialties')}</h4>
             <ul className="footer__links">
-              <li><Link to="/specialties/sp-cardiology">Cardiology</Link></li>
-              <li><Link to="/specialties/sp-oncology">Oncology</Link></li>
-              <li><Link to="/specialties/sp-orthopedics">Orthopedics</Link></li>
-              <li><Link to="/specialties/sp-neurology">Neurology</Link></li>
-              <li><Link to="/specialties/sp-transplant">Organ Transplants</Link></li>
-              <li><Link to="/specialties/sp-ivf">IVF &amp; Fertility</Link></li>
+              <li><Link to="/specialties/sp-cardiology">{t('footer.specialtiesList.cardiology')}</Link></li>
+              <li><Link to="/specialties/sp-oncology">{t('footer.specialtiesList.oncology')}</Link></li>
+              <li><Link to="/specialties/sp-orthopedics">{t('footer.specialtiesList.orthopedics')}</Link></li>
+              <li><Link to="/specialties/sp-neurology">{t('footer.specialtiesList.neurology')}</Link></li>
+              <li><Link to="/specialties/sp-transplant">{t('footer.specialtiesList.transplant')}</Link></li>
+              <li><Link to="/specialties/sp-ivf">{t('footer.specialtiesList.ivf')}</Link></li>
             </ul>
           </div>
 
           {/* CTA */}
           <div className="footer__col">
-            <h4 className="footer__heading">Get Started</h4>
+            <h4 className="footer__heading">{t('common.getStarted')}</h4>
             <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.55)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
-              Our service is free for patients. Get a free medical opinion today.
+              {t('footer.freeOpinionDesc')}
             </p>
             <Link to="/describe-need" className="btn btn-accent btn-sm" id="footer-cta-btn">
-              Describe Your Need
+              {t('nav.freeOpinion')}
             </Link>
             <a
               href={buildMed360WhatsAppUrl()}
@@ -79,15 +82,15 @@ export function Footer() {
               style={{ marginTop: '0.75rem', display: 'inline-flex' }}
               id="footer-whatsapp-btn"
             >
-              <MessageCircle size={16} /> WhatsApp Us
+              <MessageCircle size={16} /> {t('nav.whatsapp')}
             </a>
           </div>
         </div>
 
         <div className="footer__bottom">
-          <p>© {new Date().getFullYear()} Med360 Ltd. All rights reserved. | Port Louis, Mauritius</p>
+          <p>© {new Date().getFullYear()} Med360 Ltd. {t('footer.rights')} | Port Louis, Mauritius</p>
           <div className="footer__bottom-links">
-            <Link to="/admin">Admin Portal</Link>
+            <Link to="/admin">{t('footer.adminPortal')}</Link>
           </div>
         </div>
       </div>

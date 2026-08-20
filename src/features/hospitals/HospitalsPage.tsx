@@ -2,17 +2,22 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Filter, Star, MapPin, Shield, ArrowRight } from 'lucide-react';
 import { useHospitals } from '../../hooks/useHospitals';
+import { useTranslation } from 'react-i18next';
 import { getUniqueCountries, getUniqueAccreditations } from '../../core/services/hospital.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
 import type { HospitalFilters } from '../../core/services/hospital.service';
+import { SEO } from '../../components/SEO/SEO';
+import { useCMS } from '../../hooks/useCMS';
 import './Hospitals.css';
 
 export function HospitalsPage() {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<HospitalFilters>({});
   const [searchInput, setSearchInput] = useState('');
+  const { t, i18n } = useTranslation();
   const { hospitals, loading } = useHospitals(filters);
   const { hospitals: allHospitals } = useHospitals({});
+  const { data: cms } = useCMS('hospitals');
 
   const countries = getUniqueCountries(allHospitals);
   const accreditations = getUniqueAccreditations(allHospitals);
@@ -21,16 +26,37 @@ export function HospitalsPage() {
     setFilters(f => ({ ...f, searchQuery: searchInput || undefined }));
   }
 
+  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
+  const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
+
+  const tCms = (key: string, fallback: string) => {
+    if (!cms?.content?.[key]) return fallback;
+    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+  };
+
   return (
     <main className="hospitals-page" style={{ paddingTop: 'var(--navbar-height)' }}>
+      <SEO 
+        title={l10n('Hôpitaux Associés', 'Lopital Partner', 'Associated Hospitals')}
+        description={l10n('Découvrez nos hôpitaux partenaires.', 'Dekouver nou bann lopital partner.', 'Discover our partner hospitals.')}
+        canonical="/hospitals"
+      />
       {/* Header */}
       <section className="page-hero">
         <div className="page-hero__bg" />
         <div className="container page-hero__inner">
-          <span className="section-label" style={{ color: 'var(--color-accent)' }}>Our Network</span>
-          <h1 className="text-h1" style={{ color: 'white' }}>Associated Hospitals</h1>
+          <span className="section-label" style={{ color: 'var(--color-accent)' }}>
+            {tCms('heroLabel', l10n('Notre Réseau', 'Nou Rezo', 'Our Network'))}
+          </span>
+          <h1 className="text-h1" style={{ color: 'white' }}>
+            {tCms('heroTitle', l10n('Hôpitaux Associés', 'Lopital Partner', 'Associated Hospitals'))}
+          </h1>
           <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 560 }}>
-            Every hospital in our network is internationally accredited. Browse our partner hospitals and explore their specialties, facilities, and patient services.
+            {tCms('heroDesc', l10n(
+              'Chaque hôpital de notre réseau est accrédité au niveau international. Parcourez nos hôpitaux partenaires et explorez leurs spécialités, leurs installations et leurs services aux patients.',
+              'Sak lopital dan nou rezo ena akreditasion internasional. Get nou bann lopital partner ek explor zot spesialite, fasilite, ek servis pou bann pasian.',
+              'Every hospital in our network is internationally accredited. Browse our partner hospitals and explore their specialties, facilities, and patient services.'
+            ))}
           </p>
         </div>
       </section>
@@ -43,13 +69,13 @@ export function HospitalsPage() {
             <input
               id="hospital-search-input"
               className="form-input"
-              placeholder="Search hospitals by name, city, or country…"
+              placeholder={l10n("Rechercher des hôpitaux par nom, ville ou pays...", "Rod lopital par nom, lavil ouswa pei...", "Search hospitals by name, city, or country…")}
               value={searchInput}
               onChange={e => setSearchInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSearch()}
             />
             <button className="btn btn-primary btn-sm" onClick={handleSearch} id="hospital-search-btn">
-              Search
+              {l10n('Rechercher', 'Rode', 'Search')}
             </button>
           </div>
           <div className="filter-row">
@@ -60,7 +86,7 @@ export function HospitalsPage() {
               value={filters.country ?? ''}
               onChange={e => setFilters(f => ({ ...f, country: e.target.value || undefined }))}
             >
-              <option value="">All Countries</option>
+              <option value="">{l10n('Tous les Pays', 'Tou Pei', 'All Countries')}</option>
               {countries.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
             <select
@@ -70,11 +96,11 @@ export function HospitalsPage() {
               value={filters.accreditation ?? ''}
               onChange={e => setFilters(f => ({ ...f, accreditation: e.target.value || undefined }))}
             >
-              <option value="">All Accreditations</option>
+              <option value="">{l10n('Toutes les Accréditations', 'Tou Akreditasion', 'All Accreditations')}</option>
               {accreditations.map(a => <option key={a} value={a}>{a}</option>)}
             </select>
             <button className="btn btn-outline btn-sm" onClick={() => { setFilters({}); setSearchInput(''); }} id="hospital-clear-filters-btn">
-              Clear Filters
+              {l10n('Effacer les filtres', 'Efase', 'Clear Filters')}
             </button>
           </div>
         </div>
@@ -82,7 +108,11 @@ export function HospitalsPage() {
         {/* Results Count */}
         {!loading && (
           <p className="text-muted" style={{ marginBottom: '1.5rem', fontSize: '0.9rem' }}>
-            Showing {hospitals.length} hospital{hospitals.length !== 1 ? 's' : ''}
+            {l10n(
+              `Affichage de ${hospitals.length} hôpital${hospitals.length !== 1 ? 's' : ''}`,
+              `Pe montre ${hospitals.length} lopital`,
+              `Showing ${hospitals.length} hospital${hospitals.length !== 1 ? 's' : ''}`
+            )}
           </p>
         )}
 
@@ -105,20 +135,20 @@ export function HospitalsPage() {
                         </span>
                       ))}
                     </div>
-                    <h2 className="hospital-list-card__name">{hospital.name}</h2>
+                    <h2 className="hospital-list-card__name">{l(hospital, 'name')}</h2>
                     <p className="hospital-list-card__location">
-                      <MapPin size={14} /> {hospital.city}, {hospital.country}
+                      <MapPin size={14} /> {l(hospital, 'city')}, {l(hospital, 'country')}
                     </p>
                     <div className="hospital-list-card__rating">
                       <Star size={14} fill="#ffb400" color="#ffb400" />
                       <strong>{hospital.rating}</strong>
-                      <span className="text-muted">({formatNumber(hospital.reviewCount)} reviews)</span>
+                      <span className="text-muted">({formatNumber(hospital.reviewCount)} {l10n('avis', 'reviou', 'reviews')})</span>
                       <span className="hospital-list-card__separator">·</span>
-                      <span>{formatNumber(hospital.bedsCount)} beds</span>
+                      <span>{formatNumber(hospital.bedsCount)} {l10n('lits', 'lili', 'beds')}</span>
                       <span className="hospital-list-card__separator">·</span>
-                      <span>{formatNumber(hospital.internationalPatientsPerYear)}+ intl. patients/yr</span>
+                      <span>{formatNumber(hospital.internationalPatientsPerYear)}+ {l10n('patients intl/an', 'pasian intl/an', 'intl. patients/yr')}</span>
                     </div>
-                    <p className="hospital-list-card__desc">{truncateText(hospital.description, 160)}</p>
+                    <p className="hospital-list-card__desc">{truncateText(l(hospital, 'description'), 160)}</p>
                   </div>
                   <div className="hospital-list-card__actions">
                     <button
@@ -126,14 +156,14 @@ export function HospitalsPage() {
                       onClick={() => navigate(`/hospitals/${hospital.id}`)}
                       id={`view-hospital-${hospital.id}-btn`}
                     >
-                      View Details <ArrowRight size={14} />
+                      {l10n('Voir les détails', 'Get Detay', 'View Details')} <ArrowRight size={14} />
                     </button>
                     <button
                       className="btn btn-outline btn-sm"
                       onClick={() => navigate(`/describe-need?hospital=${hospital.id}`)}
                       id={`inquire-hospital-${hospital.id}-btn`}
                     >
-                      Get Opinion
+                      {l10n('Obtenir un avis', 'Gagn Lavi Medikal', 'Get Opinion')}
                     </button>
                   </div>
                 </div>

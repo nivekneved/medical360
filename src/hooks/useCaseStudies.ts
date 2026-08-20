@@ -6,11 +6,16 @@ export function useCaseStudies() {
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
   const [loading, setLoading]         = useState(true);
 
-  useEffect(() => {
+  const fetchCaseStudies = () => {
+    setLoading(true);
     mockEngine.getCaseStudies().then(setCaseStudies).finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchCaseStudies();
   }, []);
 
-  return { caseStudies, loading };
+  return { caseStudies, loading, refetch: fetchCaseStudies };
 }
 
 export function useFeaturedCaseStudies() {

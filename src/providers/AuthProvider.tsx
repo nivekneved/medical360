@@ -24,18 +24,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AdminUser | null>(() => {
     try {
       const stored = sessionStorage.getItem('med360_admin_user');
-      return stored ? JSON.parse(stored) : null;
+      return stored ? JSON.parse(atob(stored)) : null;
     } catch {
       return null;
     }
   });
 
   async function login(email: string, password: string): Promise<boolean> {
-    if (password !== MOCK_PASSWORD) return false;
-    const found = MOCK_ADMINS.find(a => a.email === email && a.active);
-    if (!found) return false;
+    // Brute force protection check
+    const attempts = parseInt(localStorage.getItem('med360_login_attempts') || '0', 10);
+    const lockoutUntil = parseInt(localStorage.getItem('med360_lockout_until') || '0', 10);
+    
+    if (Date.now() < lockoutUntil) {
+      alert('Too many failed attempts. Account locked temporarily.');
+      return false;
+    }
+
+    // Since this is mock logic, we use a basic string check.
+    // In production this would be hashed on the server.
+    if (password !== MOCK_PASSWORD || !MOCK_ADMINS.find(a => a.email === email && a.active)) {
+      const newAttempts = attempts + 1;
+      localStorage.setItem('med360_login_attempts', newAttempts.toString());
+      
+      if (newAttempts >= 3) {
+        // Lockout for 5 minutes
+        localStorage.setItem('med360_lockout_until', (Date.now() + 5 * 60 * 1000).toString());
+      }
+      return false;
+    }
+
+    // Success
+    localStorage.removeItem('med360_login_attempts');
+    localStorage.removeItem('med360_lockout_until');
+    
+    const found = MOCK_ADMINS.find(a => a.email === email && a.active)!;
     setUser(found);
-    sessionStorage.setItem('med360_admin_user', JSON.stringify(found));
+    // Obfuscate token for mock environment
+    sessionStorage.setItem('med360_admin_user', btoa(JSON.stringify(found)));
     return true;
   }
 

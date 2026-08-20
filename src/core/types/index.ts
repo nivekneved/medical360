@@ -1,13 +1,17 @@
 // ---------------------------------------------
-// Medical 360 — Core Domain Types
+// Medical 360 â€” Core Domain Types
 // ---------------------------------------------
 
 export interface Hospital {
   id: string;
   name: string;
+  name_fr?: string;
+  name_kr?: string;
   city: string;
   country: string;
   description: string;
+  description_fr?: string;
+  description_kr?: string;
   imageUrl: string;
   gallery: string[];
   accreditations: string[];
@@ -29,10 +33,16 @@ export interface Hospital {
 export interface Specialty {
   id: string;
   name: string;
+  name_fr?: string;
+  name_kr?: string;
   slug: string;
   icon: string;
   description: string;
+  description_fr?: string;
+  description_kr?: string;
   shortDescription: string;
+  shortDescription_fr?: string;
+  shortDescription_kr?: string;
   imageUrl: string;
   procedures: Procedure[];
   featured: boolean;
@@ -42,7 +52,11 @@ export interface Procedure {
   id: string;
   specialtyId: string;
   name: string;
+  name_fr?: string;
+  name_kr?: string;
   description: string;
+  description_fr?: string;
+  description_kr?: string;
   estimatedDurationDays: number;
   estimatedCostUSD: { min: number; max: number };
 }
@@ -69,12 +83,20 @@ export interface CaseStudy {
   patientCountry: string;
   patientAge: number;
   condition: string;
+  condition_fr?: string;
+  condition_kr?: string;
   specialtyId: string;
   hospitalId: string;
   doctorId?: string;
   treatment: string;
+  treatment_fr?: string;
+  treatment_kr?: string;
   outcome: string;
+  outcome_fr?: string;
+  outcome_kr?: string;
   testimonial: string;
+  testimonial_fr?: string;
+  testimonial_kr?: string;
   costSavedPercent: number;
   durationDays: number;
   year: number;

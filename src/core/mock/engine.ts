@@ -1,8 +1,10 @@
-import type { MockConfig, Inquiry, InquiryStatus } from '../types';
+import type { MockConfig, Inquiry, InquiryStatus, Hospital, Specialty, Doctor, CaseStudy } from '../types';
 import { hospitalsSeed } from './seeds/hospitals.seed';
 import { specialtiesSeed } from './seeds/specialties.seed';
+import { doctorsSeed } from './seeds/doctors.seed';
 import { caseStudiesSeed } from './seeds/case-studies.seed';
 import { inquiriesSeed } from './seeds/inquiries.seed';
+import { cmsSeed, CmsPage } from './seeds/cms.seed';
 
 // ─── Default Config ──────────────────────────────────────────────────────────
 const DEFAULT_CONFIG: MockConfig = {
@@ -11,12 +13,12 @@ const DEFAULT_CONFIG: MockConfig = {
   errorRate: 0,
 };
 
-const STORAGE_KEY = 'med360_mock_store';
+const STORAGE_KEY = 'med360_mock_store_v2';
 const CONFIG_KEY  = 'med360_mock_config';
 
 // ─── Latency Simulator ───────────────────────────────────────────────────────
 function getLatencyMs(latency: MockConfig['latency']): number {
-  const map = { instant: 0, normal: 350, slow: 1200 };
+  const map = { instant: 0, normal: 300, slow: 1000 };
   return map[latency];
 }
 
@@ -25,12 +27,41 @@ function simulateDelay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+// ─── Deep Merge Helper ───────────────────────────────────────────────────────
+function mergeCms(seed: Record<string, CmsPage>, existing: Record<string, CmsPage>): Record<string, CmsPage> {
+  const result: Record<string, CmsPage> = { ...seed };
+  if (!existing) return result;
+  
+  for (const [pageId, seedPage] of Object.entries(seed)) {
+    const exPage = existing[pageId];
+    if (exPage && exPage.content) {
+      result[pageId] = {
+        ...seedPage,
+        ...exPage,
+        content: {
+          ...seedPage.content,
+          ...exPage.content,
+        },
+      };
+    }
+  }
+  // Also preserve any custom pages created
+  for (const [pageId, exPage] of Object.entries(existing)) {
+    if (!result[pageId]) {
+      result[pageId] = exPage;
+    }
+  }
+  return result;
+}
+
 // ─── Store Shape ─────────────────────────────────────────────────────────────
 interface MockStore {
-  hospitals: typeof hospitalsSeed;
-  specialties: typeof specialtiesSeed;
-  caseStudies: typeof caseStudiesSeed;
+  hospitals: Hospital[];
+  specialties: Specialty[];
+  doctors: Doctor[];
+  caseStudies: CaseStudy[];
   inquiries: Inquiry[];
+  cms: Record<string, CmsPage>;
 }
 
 function loadStore(): MockStore {
@@ -38,10 +69,14 @@ function loadStore(): MockStore {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as MockStore;
-      // Sync fresh seeds for specialties and hospitals so image updates reflect immediately
-      parsed.specialties = specialtiesSeed;
-      parsed.hospitals = hospitalsSeed;
-      return parsed;
+      return {
+        hospitals: parsed.hospitals?.length ? parsed.hospitals : hospitalsSeed,
+        specialties: parsed.specialties?.length ? parsed.specialties : specialtiesSeed,
+        doctors: parsed.doctors?.length ? parsed.doctors : doctorsSeed,
+        caseStudies: parsed.caseStudies?.length ? parsed.caseStudies : caseStudiesSeed,
+        inquiries: parsed.inquiries ?? inquiriesSeed,
+        cms: mergeCms(cmsSeed, parsed.cms ?? {}),
+      };
     }
   } catch {
     // ignore parse errors
@@ -49,8 +84,10 @@ function loadStore(): MockStore {
   return {
     hospitals: hospitalsSeed,
     specialties: specialtiesSeed,
+    doctors: doctorsSeed,
     caseStudies: caseStudiesSeed,
     inquiries: inquiriesSeed,
+    cms: cmsSeed,
   };
 }
 
@@ -58,7 +95,7 @@ function saveStore(store: MockStore): void {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
   } catch {
-    // ignore storage errors (e.g. private mode)
+    // ignore storage errors
   }
 }
 
@@ -66,8 +103,10 @@ function resetStore(): MockStore {
   const fresh: MockStore = {
     hospitals: hospitalsSeed,
     specialties: specialtiesSeed,
+    doctors: doctorsSeed,
     caseStudies: caseStudiesSeed,
     inquiries: inquiriesSeed,
+    cms: cmsSeed,
   };
   saveStore(fresh);
   return fresh;
@@ -120,72 +159,144 @@ class MockEngine {
   }
 
   // ── Hospitals ──────────────────────────────────────────────────────────────
-  async getHospitals() {
+  async getHospitals(): Promise<Hospital[]> {
     await this.delay();
-    return [...this.store.hospitals.filter(h => h.active)];
+    return [...this.store.hospitals];
   }
 
-  async getHospitalById(id: string) {
+  async getHospitalById(id: string): Promise<Hospital | null> {
     await this.delay();
     return this.store.hospitals.find(h => h.id === id) ?? null;
   }
 
-  async getFeaturedHospitals() {
+  async getFeaturedHospitals(): Promise<Hospital[]> {
     await this.delay();
     return this.store.hospitals.filter(h => h.featured && h.active);
   }
 
-  async getHospitalsBySpecialty(specialtyId: string) {
+  async getHospitalsBySpecialty(specialtyId: string): Promise<Hospital[]> {
     await this.delay();
     return this.store.hospitals.filter(h => h.specialties.includes(specialtyId) && h.active);
   }
 
+  async updateHospital(id: string, updates: Partial<Hospital>): Promise<Hospital> {
+    await this.delay();
+    const idx = this.store.hospitals.findIndex(h => h.id === id);
+    if (idx === -1) throw new Error('Hospital not found');
+    const updated = { ...this.store.hospitals[idx], ...updates };
+    this.store.hospitals[idx] = updated;
+    this.save();
+    return updated;
+  }
+
+  async createHospital(hospital: Omit<Hospital, 'id'>): Promise<Hospital> {
+    await this.delay();
+    const newHospital: Hospital = {
+      ...hospital,
+      id: `hosp-${Date.now()}`,
+    };
+    this.store.hospitals.unshift(newHospital);
+    this.save();
+    return newHospital;
+  }
+
   // ── Specialties ────────────────────────────────────────────────────────────
-  async getSpecialties() {
+  async getSpecialties(): Promise<Specialty[]> {
     await this.delay();
     return [...this.store.specialties];
   }
 
-  async getSpecialtyById(id: string) {
+  async getSpecialtyById(id: string): Promise<Specialty | null> {
     await this.delay();
     return this.store.specialties.find(s => s.id === id) ?? null;
   }
 
-  async getFeaturedSpecialties() {
+  async getFeaturedSpecialties(): Promise<Specialty[]> {
     await this.delay();
     return this.store.specialties.filter(s => s.featured);
   }
 
+  async updateSpecialty(id: string, updates: Partial<Specialty>): Promise<Specialty> {
+    await this.delay();
+    const idx = this.store.specialties.findIndex(s => s.id === id);
+    if (idx === -1) throw new Error('Specialty not found');
+    const updated = { ...this.store.specialties[idx], ...updates };
+    this.store.specialties[idx] = updated;
+    this.save();
+    return updated;
+  }
+
+  // ── Doctors (The 7 Ecosystem Specialists) ──────────────────────────────────
+  async getDoctors(): Promise<Doctor[]> {
+    await this.delay();
+    return [...this.store.doctors];
+  }
+
+  async getDoctorById(id: string): Promise<Doctor | null> {
+    await this.delay();
+    return this.store.doctors.find(d => d.id === id) ?? null;
+  }
+
+  async getDoctorsBySpecialty(specialtyId: string): Promise<Doctor[]> {
+    await this.delay();
+    return this.store.doctors.filter(d => d.specialties.includes(specialtyId));
+  }
+
+  async getDoctorsByHospital(hospitalId: string): Promise<Doctor[]> {
+    await this.delay();
+    return this.store.doctors.filter(d => d.hospitalId === hospitalId);
+  }
+
+  async updateDoctor(id: string, updates: Partial<Doctor>): Promise<Doctor> {
+    await this.delay();
+    const idx = this.store.doctors.findIndex(d => d.id === id);
+    if (idx === -1) throw new Error('Doctor not found');
+    const updated = { ...this.store.doctors[idx], ...updates };
+    this.store.doctors[idx] = updated;
+    this.save();
+    return updated;
+  }
+
   // ── Case Studies ───────────────────────────────────────────────────────────
-  async getCaseStudies() {
+  async getCaseStudies(): Promise<CaseStudy[]> {
     await this.delay();
     return [...this.store.caseStudies];
   }
 
-  async getCaseStudyById(id: string) {
+  async getCaseStudyById(id: string): Promise<CaseStudy | null> {
     await this.delay();
     return this.store.caseStudies.find(c => c.id === id) ?? null;
   }
 
-  async getFeaturedCaseStudies() {
+  async getFeaturedCaseStudies(): Promise<CaseStudy[]> {
     await this.delay();
     return this.store.caseStudies.filter(c => c.featured);
   }
 
-  async getCaseStudiesBySpecialty(specialtyId: string) {
+  async getCaseStudiesBySpecialty(specialtyId: string): Promise<CaseStudy[]> {
     await this.delay();
     return this.store.caseStudies.filter(c => c.specialtyId === specialtyId);
   }
 
+  async updateCaseStudy(id: string, updates: Partial<CaseStudy>): Promise<CaseStudy> {
+    await this.delay();
+    const idx = this.store.caseStudies.findIndex(c => c.id === id);
+    if (idx === -1) throw new Error('Case study not found');
+    const updated = { ...this.store.caseStudies[idx], ...updates };
+    this.store.caseStudies[idx] = updated;
+    this.save();
+    return updated;
+  }
+
   // ── Inquiries ──────────────────────────────────────────────────────────────
-  async getInquiries() {
+  async getInquiries(): Promise<Inquiry[]> {
     await this.delay();
     return [...this.store.inquiries].sort(
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
 
-  async getInquiryById(id: string) {
+  async getInquiryById(id: string): Promise<Inquiry | null> {
     await this.delay();
     return this.store.inquiries.find(i => i.id === id) ?? null;
   }
@@ -193,6 +304,12 @@ class MockEngine {
   async createInquiry(
     data: Omit<Inquiry, 'id' | 'createdAt' | 'updatedAt' | 'status' | 'notes' | 'documents'>
   ): Promise<Inquiry> {
+    const lastSubmission = parseInt(localStorage.getItem('med360_last_inquiry_time') || '0', 10);
+    if (Date.now() - lastSubmission < 10000) { // 10s rate limit for responsiveness
+      throw new Error('Please wait a few seconds before submitting another inquiry.');
+    }
+    localStorage.setItem('med360_last_inquiry_time', Date.now().toString());
+
     await this.delay();
     const now = new Date().toISOString();
     const newInquiry: Inquiry = {
@@ -209,14 +326,50 @@ class MockEngine {
     return newInquiry;
   }
 
-  async updateInquiryStatus(id: string, status: InquiryStatus): Promise<Inquiry | null> {
+  async updateInquiryStatus(id: string, status: InquiryStatus): Promise<Inquiry> {
     await this.delay();
-    const inquiry = this.store.inquiries.find(i => i.id === id);
-    if (!inquiry) return null;
-    inquiry.status = status;
-    inquiry.updatedAt = new Date().toISOString();
+    const idx = this.store.inquiries.findIndex(i => i.id === id);
+    if (idx === -1) throw new Error('Not found');
+    const updated = { ...this.store.inquiries[idx], status, updatedAt: new Date().toISOString() };
+    this.store.inquiries[idx] = updated;
     this.save();
-    return { ...inquiry };
+    return updated;
+  }
+
+  // ── CMS ───────────────────────────────────────────────────────────────────
+  async getCmsPage(id: string): Promise<CmsPage> {
+    await this.delay();
+    const page = this.store.cms[id] || cmsSeed[id];
+    if (!page) throw new Error(`CMS page ${id} not found`);
+    return JSON.parse(JSON.stringify(page));
+  }
+
+  async getAllCmsPages(): Promise<CmsPage[]> {
+    await this.delay();
+    return Object.values(this.store.cms);
+  }
+
+  async updateCmsPage(id: string, content: Record<string, any>): Promise<CmsPage> {
+    await this.delay();
+    const base = this.store.cms[id] || cmsSeed[id] || { id, title: id, content: {} };
+    
+    this.store.cms[id] = {
+      ...base,
+      content: { ...base.content, ...content }
+    };
+    this.save();
+    return this.store.cms[id];
+  }
+
+  async resetCmsPage(id: string): Promise<CmsPage> {
+    await this.delay();
+    const defaultPage = cmsSeed[id];
+    if (defaultPage) {
+      this.store.cms[id] = JSON.parse(JSON.stringify(defaultPage));
+      this.save();
+      return this.store.cms[id];
+    }
+    throw new Error(`Default seed for page ${id} not found`);
   }
 
   async getInquiryStats() {

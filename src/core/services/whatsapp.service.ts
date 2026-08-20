@@ -15,10 +15,10 @@ export function buildWhatsAppUrl(phone: string, message?: string): string {
 }
 
 /**
- * Builds the default Med360 WhatsApp URL (blank chat).
+ * Builds the default Med360 WhatsApp URL with optional message.
  */
-export function buildMed360WhatsAppUrl(): string {
-  return buildWhatsAppUrl(MED360_PHONE);
+export function buildMed360WhatsAppUrl(message?: string): string {
+  return buildWhatsAppUrl(MED360_PHONE, message);
 }
 
 /**
