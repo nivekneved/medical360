@@ -1,6 +1,7 @@
 # 🩺 Medical 360 — International Healthcare Concierge Platform
 
-> **Connecting Mauritian and Indian Ocean patients to accredited world-class hospitals and specialists.**
+> **Connecting Mauritian and Indian Ocean patients to accredited world-class hospitals and specialists.**  
+> Includes the **Web Application** (`medical360`) and **Cross-Platform Mobile App** (`medical360-mobile`).
 
 ---
 
@@ -10,9 +11,11 @@
 3. [Technology Stack & Design System](#-technology-stack--design-system)
 4. [Architecture & Folder Structure](#-architecture--folder-structure)
 5. [Getting Started](#-getting-started)
-6. [Admin Portal & CMS Guide](#-admin-portal--cms-guide)
-7. [Security & SEO Implementation](#-security--seo-implementation)
-8. [Documentation Links](#-documentation-links)
+6. [Cross-Platform Mobile App (iOS & Android)](#-cross-platform-mobile-app)
+7. [Admin Portal & CMS Guide](#-admin-portal--cms-guide)
+8. [Database Backup & 1-Click Restore](#-database-backup--1-click-restore)
+9. [Security & SEO Implementation](#-security--seo-implementation)
+10. [Documentation Links](#-documentation-links)
 
 ---
 
@@ -75,32 +78,17 @@
 
 ```
 medical360/
+├── backups/                   # Full SQL & JSON database backup snapshots
+│   └── backup_2026-08-20_23-50-00/
 ├── public/                    # Static assets (robots.txt, sitemap.xml)
 ├── src/
 │   ├── assets/                # Local brand images & media
-│   ├── components/            # Reusable UI components
-│   │   ├── FloatingWhatsApp/  # Global Floating WhatsApp widget
-│   │   ├── Footer/            # Global multi-column footer
-│   │   ├── Navbar/            # Responsive header with language/theme toggle
-│   │   └── SEO/               # Centralized Helmet SEO & Open Graph manager
+│   ├── components/            # Reusable UI components (FloatingWhatsApp, Footer, Navbar, SEO)
 │   ├── core/                  # Domain entities, types & mock services
 │   │   ├── mock/              # Mock engine singleton & data seeds
-│   │   │   ├── engine.ts      # Reactive mock store with deep merge & latency
-│   │   │   └── seeds/         # Seed files (hospitals, specialties, doctors, cms)
 │   │   ├── services/          # Pure helper services (format, whatsapp, hospital)
 │   │   └── types/             # TypeScript domain interfaces
-│   ├── features/              # Feature pages & routes
-│   │   ├── about/             # About Medical 360 page
-│   │   ├── admin/             # Admin portal (dashboard, inquiries, editors)
-│   │   │   └── components/    # Admin reusable components (ImageField)
-│   │   ├── case-studies/      # Patient testimonials & case studies
-│   │   ├── contact/           # Contact & office information
-│   │   ├── describe-need/     # Multi-step medical intake wizard
-│   │   ├── doctors/           # 7 Specialists directory
-│   │   ├── home/              # Homepage with live CMS integration
-│   │   ├── hospitals/         # Hospital list & HospitalDetailPage
-│   │   ├── services/          # Concierge services breakdown
-│   │   └── specialties/       # Specialties list & SpecialtyDetailPage
+│   ├── features/              # Feature pages & routes (hospitals, doctors, wizard, admin)
 │   ├── hooks/                 # Custom React data hooks (useCMS, useDoctors, etc.)
 │   ├── i18n/                  # Multi-language configuration & dictionaries
 │   ├── providers/             # Global Context Providers (Auth, Data, Theme)
@@ -111,25 +99,33 @@ medical360/
 
 ---
 
+## 📱 Cross-Platform Mobile App
+
+The mobile codebase is located in [`d:\WEB 2026\medical360-mobile`](file:///d:/WEB%202026/medical360-mobile):
+- **Framework**: React Native 0.76 + Expo SDK 52.
+- **100% Feature Parity**: Full Patient Portal, Intake Wizard, The 7 Specialists, and Admin & Live CMS suite.
+- **Store Compliance**: Aligned with Apple App Store 2025/2026 (Privacy Manifests, Guideline 1.4.1) and Google Play Android 15/16.
+
+---
+
+## 💾 Database Backup & 1-Click Restore
+
+All database schemas (SQL DDL & JSON Schema) and transactional seed data are archived under `backups/backup_2026-08-20_23-50-00/`.
+- **1-Click Restore verification**: `node backups/backup_2026-08-20_23-50-00/restore.js`
+- **SQL Restore**: `psql -U postgres -d medical360 -f backups/backup_2026-08-20_23-50-00/restore.sql`
+
+---
+
 ## 💻 Getting Started
 
-### Prerequisites
-- Node.js (v18 or higher recommended)
-- npm / yarn / pnpm
-
-### Installation & Development
 ```bash
-# 1. Clone repository
-git clone https://github.com/nivekneved/medical360.git
-cd medical360
-
-# 2. Install dependencies
+# 1. Install dependencies
 npm install
 
-# 3. Start local development server
+# 2. Start local development server
 npm run dev
 
-# 4. Run typecheck & build bundle
+# 3. Run typecheck & build bundle
 npm run build
 ```
 
@@ -142,24 +138,13 @@ Navigate to `/admin` or `/admin/login`:
 - **Case Manager Email**: `case@med360.mu`
 - **Password**: `med360admin`
 
-> **Note**: The login system includes client-side brute force protection (3 failed attempts locks out for 5 minutes) and obfuscated session storage tokens.
-
----
-
-## 🛡️ Security & SEO Measures
-
-1. **Content Security Policy (CSP)**, Referrer-Policy, and Permissions-Policy injected in `index.html`.
-2. **`react-helmet-async`** on every route managing dynamic canonical links, meta descriptions, and Open Graph tags.
-3. **Structured Data**: `MedicalOrganization` JSON-LD schema on homepage for Google Rich Snippets.
-4. **Search Directives**: `robots.txt` disallowing `/admin` and `sitemap.xml` for complete indexation.
-5. **Anti-Spam**: 10-second submission rate limiter on the inquiry wizard.
-
 ---
 
 ## 📚 Documentation Links
-- [Architectural Design Document](file:///d:/WEB%202026/medical360/docs/ARCHITECTURE.md)
-- [Admin & Content Manager Guide](file:///d:/WEB%202026/medical360/docs/ADMIN_GUIDE.md)
-- [SEO & Security Audit](file:///d:/WEB%202026/medical360/docs/SECURITY_AND_SEO.md)
+- [🏛️ Architectural Design Document](file:///d:/WEB%202026/medical360/docs/ARCHITECTURE.md)
+- [🛡️ Admin & Content Manager Guide](file:///d:/WEB%202026/medical360/docs/ADMIN_GUIDE.md)
+- [🛡️ SEO & Security Audit](file:///d:/WEB%202026/medical360/docs/SECURITY_AND_SEO.md)
+- [📱 Mobile Architecture & Store Compliance](file:///d:/WEB%202026/medical360-mobile/docs/ARCHITECTURE.md)
 
 ---
 *© 2026 Med360 Ltd. All rights reserved. Port Louis, Mauritius.*
