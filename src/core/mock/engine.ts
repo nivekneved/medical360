@@ -36,7 +36,12 @@ interface MockStore {
 function loadStore(): MockStore {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw) as MockStore;
+    if (raw) {
+      const parsed = JSON.parse(raw) as MockStore;
+      // Sync fresh seeds for specialties and hospitals so image updates reflect immediately
+      parsed.specialties = specialtiesSeed;
+      return parsed;
+    }
   } catch {
     // ignore parse errors
   }

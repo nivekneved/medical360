@@ -8,7 +8,7 @@ export const specialtiesSeed: Specialty[] = [
     icon: 'Heart',
     shortDescription: 'World-class heart care from diagnosis to complex bypass surgery.',
     description: 'Our network hospitals offer complete cardiac services — from non-invasive diagnostics and angioplasty to complex bypass grafts (CABG), valve replacements, TAVI, and heart transplants — performed by surgeons with 10,000+ procedure experience.',
-    imageUrl: 'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80', // Cardiac ECG diagnostics & heart doctor
     featured: true,
     procedures: [
       { id: 'proc-c1', specialtyId: 'sp-cardiology', name: 'Coronary Artery Bypass Graft (CABG)', description: 'Open-heart surgery to restore blood flow to the heart.', estimatedDurationDays: 10, estimatedCostUSD: { min: 5000, max: 9000 } },
@@ -24,7 +24,7 @@ export const specialtiesSeed: Specialty[] = [
     icon: 'Microscope',
     shortDescription: 'Advanced cancer diagnosis, treatment, and targeted therapy.',
     description: 'Access cutting-edge cancer treatments including CyberKnife radiosurgery, proton therapy, immunotherapy, targeted therapy, bone marrow transplants, and precision surgery — guided by internationally trained oncologists.',
-    imageUrl: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80', // Oncology specialist reviewing CT/radiation scans
     featured: true,
     procedures: [
       { id: 'proc-o1', specialtyId: 'sp-oncology', name: 'Bone Marrow / Stem Cell Transplant', description: 'Treatment for blood cancers including leukemia and lymphoma.', estimatedDurationDays: 30, estimatedCostUSD: { min: 20000, max: 40000 } },
@@ -40,7 +40,7 @@ export const specialtiesSeed: Specialty[] = [
     icon: 'Bone',
     shortDescription: 'From joint replacements to complex spine surgery.',
     description: 'Our partner hospitals perform thousands of knee and hip replacements, robotic joint surgery, and complex spine procedures annually using the latest computer-assisted navigation systems.',
-    imageUrl: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80', // Spine & joint bone X-ray diagnostics
     featured: true,
     procedures: [
       { id: 'proc-or1', specialtyId: 'sp-orthopedics', name: 'Total Knee Replacement', description: 'Surgical replacement of damaged knee joint with prosthetic.', estimatedDurationDays: 10, estimatedCostUSD: { min: 4000, max: 8000 } },
@@ -56,7 +56,7 @@ export const specialtiesSeed: Specialty[] = [
     icon: 'Brain',
     shortDescription: 'Expert care for brain, spine, and nervous system conditions.',
     description: 'From epilepsy management and stroke rehabilitation to brain tumour surgery and deep brain stimulation, our neurology centres are equipped with 3T MRI, intraoperative neuromonitoring, and expert neurosurgeons.',
-    imageUrl: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80', // Brain MRI / neuro scan
     featured: true,
     procedures: [
       { id: 'proc-n1', specialtyId: 'sp-neurology', name: 'Brain Tumour Surgery', description: 'Microsurgical removal of intracranial tumours.', estimatedDurationDays: 14, estimatedCostUSD: { min: 8000, max: 18000 } },
@@ -71,7 +71,7 @@ export const specialtiesSeed: Specialty[] = [
     icon: 'Activity',
     shortDescription: 'Kidney, liver, heart and bone marrow transplant programmes.',
     description: 'Our partner hospitals have performed thousands of successful organ transplants with internationally comparable success rates. Full pre-transplant evaluation, surgery, and long-term follow-up coordination.',
-    imageUrl: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=80', // Advanced surgical theater
     featured: true,
     procedures: [
       { id: 'proc-t1', specialtyId: 'sp-transplant', name: 'Kidney Transplant', description: 'Living or deceased donor kidney transplantation.', estimatedDurationDays: 21, estimatedCostUSD: { min: 13000, max: 22000 } },
@@ -86,7 +86,7 @@ export const specialtiesSeed: Specialty[] = [
     icon: 'Baby',
     shortDescription: 'Advanced fertility treatments with high success rates.',
     description: 'Our network\'s fertility centres offer IVF, ICSI, egg freezing, surrogacy evaluation, and male infertility treatments with internationally competitive success rates and compassionate care.',
-    imageUrl: 'https://images.unsplash.com/photo-1632053002928-1919051e0c33?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?w=800&q=80', // Newborn baby feet in parents hands
     featured: true,
     procedures: [
       { id: 'proc-i1', specialtyId: 'sp-ivf', name: 'IVF (In Vitro Fertilisation)', description: 'Complete IVF cycle with embryo transfer.', estimatedDurationDays: 21, estimatedCostUSD: { min: 3000, max: 6000 } },
@@ -101,7 +101,7 @@ export const specialtiesSeed: Specialty[] = [
     icon: 'Sparkles',
     shortDescription: 'Premium aesthetic procedures by board-certified surgeons.',
     description: 'From rhinoplasty and facelifts to bariatric surgery and body contouring, our cosmetic surgery partners combine artistic precision with clinical excellence at a fraction of European or Mauritian costs.',
-    imageUrl: 'https://images.unsplash.com/photo-1616391182219-e080b4d1043a?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1512290900672-1f4a9b6cfa4d?w=800&q=80',
     featured: false,
     procedures: [
       { id: 'proc-cs1', specialtyId: 'sp-cosmetic', name: 'Rhinoplasty (Nose Job)', description: 'Surgical reshaping of the nose for aesthetic or functional improvement.', estimatedDurationDays: 7, estimatedCostUSD: { min: 2500, max: 5000 } },
@@ -116,7 +116,7 @@ export const specialtiesSeed: Specialty[] = [
     icon: 'Eye',
     shortDescription: 'Vision correction, cataract surgery, and retinal treatments.',
     description: 'State-of-the-art eye care including LASIK/LASEK, cataract surgery with premium IOL implants, retinal detachment repair, glaucoma management, and corneal transplants.',
-    imageUrl: 'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1579684453423-f84349ef60b0?w=800&q=80',
     featured: false,
     procedures: [
       { id: 'proc-oph1', specialtyId: 'sp-ophthalmology', name: 'LASIK Eye Surgery', description: 'Laser vision correction for myopia, hyperopia and astigmatism.', estimatedDurationDays: 3, estimatedCostUSD: { min: 800, max: 2500 } },

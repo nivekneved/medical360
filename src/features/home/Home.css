@@ -16,10 +16,54 @@
   pointer-events: none;
 }
 
+.hero__image-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+[data-theme="light"] .hero__image-bg {
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(255, 255, 255, 0.90) 45%,
+      rgba(255, 255, 255, 0.65) 80%,
+      rgba(255, 255, 255, 0.40) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(248, 250, 252, 0.9) 0%,
+      transparent 30%
+    ),
+    url('/assets/hero-banner.jpg');
+}
+
+[data-theme="dark"] .hero__image-bg {
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(9, 13, 16, 0.96) 0%,
+      rgba(9, 13, 16, 0.88) 45%,
+      rgba(9, 13, 16, 0.65) 80%,
+      rgba(9, 13, 16, 0.35) 100%
+    ),
+    linear-gradient(
+      to top,
+      rgba(9, 13, 16, 0.9) 0%,
+      transparent 30%
+    ),
+    url('/assets/hero-banner.jpg');
+}
+
 .hero__orb {
   position: absolute;
   border-radius: 50%;
   filter: blur(90px);
+  z-index: 1;
 }
 
 [data-theme="light"] .hero__orb {
