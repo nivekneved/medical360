@@ -7,6 +7,7 @@ interface ImageFieldProps {
   onChange: (url: string) => void;
   required?: boolean;
   helpText?: string;
+  category?: string;
 }
 
 const PRESET_GALLERY = [

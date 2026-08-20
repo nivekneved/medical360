@@ -50,6 +50,14 @@ export function formatCostRange(min: number, max: number): string {
 }
 
 /**
+ * Formats a USD amount to estimated Mauritian Rupees (MUR).
+ */
+export function formatCostMur(usd: number, exchangeRate: number = 46): string {
+  const mur = Math.round(usd * exchangeRate);
+  return `MUR ${formatNumber(mur)}`;
+}
+
+/**
  * Converts a string to a URL-friendly slug.
  */
 export function slugify(text: string): string {
