@@ -149,11 +149,11 @@ export function HomePage() {
                 <div
                   key={sp.id}
                   className={`specialty-card-full animate-fade-in-up delay-${(i % 4) + 1}`}
-                  onClick={() => navigate(`/describe-need?specialty=${sp.id}`)}
+                  onClick={() => navigate(`/specialties/${sp.id}`)}
                   id={`specialty-card-${sp.id}`}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={e => e.key === 'Enter' && navigate(`/describe-need?specialty=${sp.id}`)}
+                  onKeyDown={e => e.key === 'Enter' && navigate(`/specialties/${sp.id}`)}
                 >
                   <img src={sp.imageUrl} alt={sp.name} className="specialty-card-full__img" loading="lazy" />
                   <div className="specialty-card-full__overlay" />
