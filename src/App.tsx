@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { ThemeProvider } from './providers/ThemeProvider';
 import { DataProvider } from './providers/DataProvider';
 import { AuthProvider, useAuth } from './providers/AuthProvider';
 
@@ -49,37 +50,39 @@ function AdminGuard() {
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   return (
-    <DataProvider>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* Public Routes */}
-            <Route element={<PublicLayout />}>
-              <Route path="/"             element={<HomePage />} />
-              <Route path="/about"        element={<AboutPage />} />
-              <Route path="/hospitals"    element={<HospitalsPage />} />
-              <Route path="/specialties"  element={<SpecialtiesPage />} />
-              <Route path="/describe-need" element={<DescribeNeedPage />} />
-              <Route path="/services"     element={<ServicesPage />} />
-              <Route path="/case-studies" element={<CaseStudiesPage />} />
-              <Route path="/contact"      element={<ContactPage />} />
-            </Route>
+    <ThemeProvider>
+      <DataProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Public Routes */}
+              <Route element={<PublicLayout />}>
+                <Route path="/"             element={<HomePage />} />
+                <Route path="/about"        element={<AboutPage />} />
+                <Route path="/hospitals"    element={<HospitalsPage />} />
+                <Route path="/specialties"  element={<SpecialtiesPage />} />
+                <Route path="/describe-need" element={<DescribeNeedPage />} />
+                <Route path="/services"     element={<ServicesPage />} />
+                <Route path="/case-studies" element={<CaseStudiesPage />} />
+                <Route path="/contact"      element={<ContactPage />} />
+              </Route>
 
-            {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLoginPage />} />
-            <Route path="/admin" element={<AdminGuard />}>
-              <Route index element={<Navigate to="/admin/dashboard" replace />} />
-              <Route path="dashboard"  element={<AdminDashboardPage />} />
-              <Route path="inquiries"  element={<AdminInquiriesPage />} />
-              <Route path="hospitals"  element={<AdminHospitalsPage />} />
-              <Route path="settings"   element={<AdminSettingsPage />} />
-            </Route>
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route path="/admin" element={<AdminGuard />}>
+                <Route index element={<Navigate to="/admin/dashboard" replace />} />
+                <Route path="dashboard"  element={<AdminDashboardPage />} />
+                <Route path="inquiries"  element={<AdminInquiriesPage />} />
+                <Route path="hospitals"  element={<AdminHospitalsPage />} />
+                <Route path="settings"   element={<AdminSettingsPage />} />
+              </Route>
 
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
-    </DataProvider>
+              {/* Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </DataProvider>
+    </ThemeProvider>
   );
 }

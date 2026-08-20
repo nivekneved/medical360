@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X, Phone, MessageCircle, ChevronDown } from 'lucide-react';
+import { Menu, X, MessageCircle, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../../providers/ThemeProvider';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import './Navbar.css';
 
@@ -14,8 +15,9 @@ const NAV_LINKS = [
 ];
 
 export function Navbar() {
-  const [isOpen,      setIsOpen]      = useState(false);
-  const [isScrolled,  setIsScrolled]  = useState(false);
+  const [isOpen, setIsOpen]         = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, toggleTheme }      = useTheme();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,8 +56,19 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* CTA */}
+        {/* Actions */}
         <div className="navbar__actions">
+          {/* Theme Toggle */}
+          <button
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            id="theme-toggle-btn"
+          >
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
+
           <a
             href={buildMed360WhatsAppUrl()}
             target="_blank"
@@ -100,6 +113,16 @@ export function Navbar() {
             </NavLink>
           ))}
           <div className="navbar__mobile-actions">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0' }}>
+              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-text)' }}>Appearance</span>
+              <button
+                className="theme-toggle-btn"
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+              >
+                {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+              </button>
+            </div>
             <a
               href={buildMed360WhatsAppUrl()}
               target="_blank"
