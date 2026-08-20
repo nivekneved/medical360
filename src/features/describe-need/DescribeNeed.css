@@ -1,16 +1,19 @@
-.page-hero--sm { padding: var(--space-12) 0 var(--space-10); }
+.page-hero--sm {
+  padding: var(--space-16) 0 var(--space-12);
+}
 
 .wizard-container {
-  max-width: 740px;
+  max-width: 780px;
   margin: 0 auto;
-  padding-top: var(--space-8);
-  padding-bottom: var(--space-16);
+  padding-top: var(--space-12);
+  padding-bottom: var(--space-20);
 }
 
 .wizard-steps {
   display: flex;
   align-items: center;
-  margin-bottom: var(--space-8);
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-10);
   gap: 0;
 }
 
