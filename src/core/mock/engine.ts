@@ -40,6 +40,7 @@ function loadStore(): MockStore {
       const parsed = JSON.parse(raw) as MockStore;
       // Sync fresh seeds for specialties and hospitals so image updates reflect immediately
       parsed.specialties = specialtiesSeed;
+      parsed.hospitals = hospitalsSeed;
       return parsed;
     }
   } catch {

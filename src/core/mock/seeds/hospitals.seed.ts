@@ -53,7 +53,7 @@ export const hospitalsSeed: Hospital[] = [
     city: 'Bangkok',
     country: 'Thailand',
     description: 'One of Southeast Asia\'s premier international hospitals, Bumrungrad treats over 1.3 million patients from 190 countries each year. Renowned for cosmetic surgery, orthopedics, and executive health screenings.',
-    imageUrl: 'https://images.unsplash.com/photo-1578496780896-7252e2e07b24?w=800&q=80',
+    imageUrl: '/assets/bumrungrad-hospital.jpg',
     gallery: [
       'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80',
     ],

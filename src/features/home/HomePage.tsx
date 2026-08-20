@@ -237,6 +237,12 @@ export function HomePage() {
               <p className="text-lead">
                 We are not just a referral service. Medical 360 is your dedicated health partner — from the moment you reach out to the day you return home recovered.
               </p>
+              <div className="why-image-card">
+                <img src="/assets/consultation-support.jpg" alt="Compassionate healthcare consultation" loading="lazy" />
+                <div className="why-image-badge">
+                  <span className="badge badge-accent">✦ Dedicated Case Managers</span>
+                </div>
+              </div>
               <button className="btn btn-primary" onClick={() => navigate('/about')} style={{ marginTop: '1.5rem' }}>
                 About Med360 <ArrowRight size={16} />
               </button>
