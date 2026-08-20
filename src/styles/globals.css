@@ -69,11 +69,11 @@
   --color-text-secondary: #475569; /* Slate 600 */
   --color-text-muted:     #94a3b8; /* Slate 400 */
 
-  /* Hero */
-  --color-hero-bg:        linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #ecfdf5 100%);
-  --color-hero-text:      #0f172a;
-  --color-hero-subtext:   #475569;
-  --color-hero-grid:      rgba(6, 95, 70, 0.05);
+  /* Hero / Header Themed Dark Banner */
+  --color-hero-bg:        #090d10;
+  --color-hero-text:      #ffffff;
+  --color-hero-subtext:   rgba(255, 255, 255, 0.85);
+  --color-hero-grid:      rgba(255, 255, 255, 0.04);
 
   /* Highlight / Contrast Banners */
   --color-process-bg:     linear-gradient(135deg, #090d10 0%, #1e293b 100%);
