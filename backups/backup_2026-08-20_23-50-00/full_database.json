@@ -1,0 +1,1499 @@
+{
+  "_backup_metadata": {
+    "backup_id": "backup_2026-08-20_23-50-00",
+    "timestamp": "2026-08-20T23:50:00+04:00",
+    "version": "1.0.0",
+    "app_name": "Medical 360 Platform & Mobile",
+    "company": "Med360 Ltd, Port Louis, Mauritius",
+    "repositories": {
+      "web": {
+        "path": "D:\\WEB 2026\\medical360",
+        "git": {
+          "branch": "main",
+          "commit": "96160fc0314239e85bdb66736808218f8204c07a",
+          "commitMessage": "refactor: consolidate routing, footer links, and homepage exploration flows"
+        }
+      },
+      "mobile": {
+        "path": "D:\\WEB 2026\\medical360-mobile",
+        "git": {
+          "branch": "main",
+          "commit": "66675bf373f9115b016cb4cb65ec2354dd0f8567",
+          "commitMessage": "feat(mobile): Complete Medical 360 iOS & Android application with 100% web parity and Google/Apple 2026 guidelines"
+        }
+      }
+    },
+    "tables_summary": {
+      "hospitals": 7,
+      "specialties": 6,
+      "procedures": 17,
+      "doctors": 7,
+      "doctor_specialties": 8,
+      "case_studies": 3,
+      "inquiries": 5,
+      "inquiry_notes": 2,
+      "admin_users": 2,
+      "cms_pages": 4
+    }
+  },
+  "tables": {
+    "hospitals": [
+      {
+        "id": "hosp-1",
+        "name": "Apollo Hospitals",
+        "name_fr": "Hôpitaux Apollo",
+        "name_kr": "Lopital Apollo",
+        "city": "Chennai",
+        "country": "India",
+        "description": "One of Asia's largest healthcare groups with world-class multi-specialty care. Apollo Hospitals Chennai is a pioneer in organ transplants, cardiac care, and oncology, serving over 100,000 international patients annually.",
+        "description_fr": "L'un des plus grands groupes de santé d'Asie avec des soins multi-spécialités de classe mondiale. Les Hôpitaux Apollo de Chennai sont pionniers dans les greffes d'organes, les soins cardiaques et l'oncologie, traitant plus de 100 000 patients internationaux par an.",
+        "description_kr": "Enn bann pli gran group lasante l'Asie avek swen spesialite klas mondial. Lopital Apollo Chennai enn pionie dan transplantasion lorgann, swen leker ek onkolizi. Zot tret plis ki 100 000 pasian etranze sak lane.",
+        "imageUrl": "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80",
+          "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80"
+        ],
+        "accreditations": [
+          "JCI",
+          "NABH",
+          "ISO 9001"
+        ],
+        "specialties": [
+          "sp-cardiology",
+          "sp-oncology",
+          "sp-transplant",
+          "sp-orthopedics",
+          "sp-neurology"
+        ],
+        "bedsCount": 2200,
+        "icuBeds": 340,
+        "foundedYear": 1983,
+        "rating": 4.8,
+        "reviewCount": 3240,
+        "internationalPatientsPerYear": 42000,
+        "languages": [
+          "English",
+          "Hindi",
+          "French",
+          "Arabic",
+          "Swahili"
+        ],
+        "website": "https://apollohospitals.com",
+        "featured": true,
+        "active": true
+      },
+      {
+        "id": "hosp-2",
+        "name": "Fortis Memorial Research Institute",
+        "name_fr": "Institut de Recherche Memorial Fortis",
+        "name_kr": "Lestiti Resers Memorial Fortis",
+        "city": "Gurugram",
+        "country": "India",
+        "description": "Fortis Memorial is a quaternary care multi-super-speciality hospital and a premier referral centre. Known globally for bone marrow transplants, complex cardiac surgeries, and advanced robotic procedures.",
+        "description_fr": "Fortis Memorial est un hôpital multi-super-spécialités de soins quaternaires et un centre de référence de premier plan. Reconnu mondialement pour les greffes de moelle osseuse, les chirurgies cardiaques complexes et les procédures robotiques avancées.",
+        "description_kr": "Fortis Memorial se enn gran lopital spesialite. Li rekonet mondialman pou transplantasion mwal ose, sirirzi leker konplex ek operasion robotik avanse.",
+        "imageUrl": "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80"
+        ],
+        "accreditations": [
+          "JCI",
+          "NABH"
+        ],
+        "specialties": [
+          "sp-cardiology",
+          "sp-oncology",
+          "sp-orthopedics",
+          "sp-neurology",
+          "sp-ivf"
+        ],
+        "bedsCount": 1000,
+        "icuBeds": 180,
+        "foundedYear": 2001,
+        "rating": 4.7,
+        "reviewCount": 2180,
+        "internationalPatientsPerYear": 28000,
+        "languages": [
+          "English",
+          "Hindi",
+          "Arabic",
+          "French"
+        ],
+        "featured": true,
+        "active": true
+      },
+      {
+        "id": "hosp-3",
+        "name": "Bumrungrad International Hospital",
+        "name_fr": "Hôpital International de Bumrungrad",
+        "name_kr": "Lopital Internasional Bumrungrad",
+        "city": "Bangkok",
+        "country": "Thailand",
+        "description": "One of Southeast Asia's premier international hospitals, Bumrungrad treats over 1.3 million patients from 190 countries each year. Renowned for cosmetic surgery, orthopedics, and executive health screenings.",
+        "description_fr": "L'un des premiers hôpitaux internationaux d'Asie du Sud-Est, Bumrungrad traite plus de 1,3 million de patients de 190 pays chaque année. Réputé pour la chirurgie esthétique, l'orthopédie et les bilans de santé pour cadres.",
+        "description_kr": "Enn parmi bann pli gran lopital internasional dan l'Asie Sud-Est. Bumrungrad tret plis ki 1.3 milion pasian sak lane. Li bien repite pou sirirzi estetik, ortopedi ek bilan lasante konple.",
+        "imageUrl": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80",
+        "gallery": [
+          "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80"
+        ],
+        "accreditations": [
+          "JCI",
+          "ISO 9001"
+        ],
+        "specialties": [
+          "sp-cosmetic",
+          "sp-orthopedics",
+          "sp-cardiology",
+          "sp-oncology",
+          "sp-ophthalmology"
+        ],
+        "bedsCount": 580,
+        "icuBeds": 120,
+        "foundedYear": 1980,
+        "rating": 4.9,
+        "reviewCount": 5600,
+        "internationalPatientsPerYear": 130000,
+        "languages": [
+          "English",
+          "Thai",
+          "Arabic",
+          "French",
+          "Japanese",
+          "Chinese"
+        ],
+        "website": "https://bumrungrad.com",
+        "featured": true,
+        "active": true
+      },
+      {
+        "id": "hosp-4",
+        "name": "Gleneagles Hospital",
+        "name_fr": "Hôpital Gleneagles",
+        "name_kr": "Lopital Gleneagles",
+        "city": "Kuala Lumpur",
+        "country": "Malaysia",
+        "description": "Gleneagles KL is a world-class hospital known for cardiovascular surgery, orthopedics, and neuroscience. Part of the IHH Healthcare network, one of the world's largest healthcare groups.",
+        "description_fr": "Gleneagles KL est un hôpital de classe mondiale reconnu pour la chirurgie cardiovasculaire, l'orthopédie et les neurosciences. Fait partie du réseau IHH Healthcare, l'un des plus grands groupes de santé au monde.",
+        "description_kr": "Gleneagles KL se enn lopital klas mondial ki konekt ar rezo IHH. Zot bien for dan sirirzi leker, ortopedi ek neurosians.",
+        "imageUrl": "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80",
+        "gallery": [],
+        "accreditations": [
+          "JCI",
+          "MSQH"
+        ],
+        "specialties": [
+          "sp-cardiology",
+          "sp-orthopedics",
+          "sp-neurology",
+          "sp-oncology"
+        ],
+        "bedsCount": 380,
+        "icuBeds": 60,
+        "foundedYear": 1996,
+        "rating": 4.6,
+        "reviewCount": 1420,
+        "internationalPatientsPerYear": 18000,
+        "languages": [
+          "English",
+          "Malay",
+          "Mandarin",
+          "Cantonese"
+        ],
+        "featured": false,
+        "active": true
+      },
+      {
+        "id": "hosp-5",
+        "name": "Bangkok Hospital",
+        "name_fr": "Hôpital de Bangkok",
+        "name_kr": "Lopital Bangkok",
+        "city": "Bangkok",
+        "country": "Thailand",
+        "description": "The flagship hospital of Bangkok Dusit Medical Services (BDMS), Thailand's largest hospital operator. BDMS is internationally certified for specialized cancer care, trauma, and neuroscience.",
+        "description_fr": "L'hôpital phare de Bangkok Dusit Medical Services (BDMS), le plus grand opérateur hospitalier de Thaïlande. BDMS est certifié internationalement pour les soins spécialisés contre le cancer, la traumatologie et les neurosciences.",
+        "description_kr": "Gran sant lopital BDMS an Thailand. Zot ena sertifikasion internasional pou kanser, traoma ek operasion servo.",
+        "imageUrl": "https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=800&q=80",
+        "gallery": [],
+        "accreditations": [
+          "JCI",
+          "TEMOS"
+        ],
+        "specialties": [
+          "sp-oncology",
+          "sp-cardiology",
+          "sp-neurology",
+          "sp-orthopedics",
+          "sp-cosmetic"
+        ],
+        "bedsCount": 650,
+        "icuBeds": 110,
+        "foundedYear": 1972,
+        "rating": 4.8,
+        "reviewCount": 4100,
+        "internationalPatientsPerYear": 95000,
+        "languages": [
+          "English",
+          "Thai",
+          "French",
+          "Arabic",
+          "German",
+          "Japanese"
+        ],
+        "featured": true,
+        "active": true
+      },
+      {
+        "id": "hosp-6",
+        "name": "Medanta – The Medicity",
+        "name_fr": "Medanta – La Ville Médicale",
+        "name_kr": "Medanta – Lavil Medikal",
+        "city": "Gurugram",
+        "country": "India",
+        "description": "Founded by world-renowned cardiac surgeon Dr. Naresh Trehan, Medanta spans 43 acres and features 1,250+ beds, 45 operating theatres, and India's highest volume heart and liver transplant programs.",
+        "description_fr": "Fondé par le chirurgien cardiaque de renommée mondiale Dr. Naresh Trehan, Medanta s'étend sur 43 acres et compte plus de 1 250 lits, 45 salles d'opération et les programmes de greffe de cœur et de foie au plus fort volume en Inde.",
+        "description_kr": "Lopital fonde par gran dokter Dr Naresh Trehan. Li ena 1250 lili, 45 lasam operasion ek gran program transplantasion fwa ek leker.",
+        "imageUrl": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80",
+        "gallery": [],
+        "accreditations": [
+          "JCI",
+          "NABH",
+          "NABL"
+        ],
+        "specialties": [
+          "sp-cardiology",
+          "sp-transplant",
+          "sp-neurology",
+          "sp-oncology",
+          "sp-orthopedics"
+        ],
+        "bedsCount": 1250,
+        "icuBeds": 350,
+        "foundedYear": 2009,
+        "rating": 4.8,
+        "reviewCount": 4890,
+        "internationalPatientsPerYear": 35000,
+        "languages": [
+          "English",
+          "Hindi",
+          "French",
+          "Russian",
+          "Arabic"
+        ],
+        "website": "https://medanta.org",
+        "featured": true,
+        "active": true
+      },
+      {
+        "id": "hosp-7",
+        "name": "Narayana Health City",
+        "name_fr": "Cité de la Santé Narayana",
+        "name_kr": "Lavil Lasante Narayana",
+        "city": "Bengaluru",
+        "country": "India",
+        "description": "Created by Dr. Devi Shetty, Narayana Health is globally renowned for performing one of the highest numbers of pediatric and adult cardiac surgeries worldwide with exceptional success rates and affordable cost structures.",
+        "description_fr": "Créé par le Dr Devi Shetty, Narayana Health est mondialement réputé pour réaliser l'un des plus grands nombres de chirurgies cardiaques pédiatriques et adultes au monde, avec des taux de réussite exceptionnels.",
+        "description_kr": "Kree par Dr Devi Shetty, Narayana koni partou pou operasion leker zanfan ek adilt avek bann gran sikse ek pri abordab.",
+        "imageUrl": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80",
+        "gallery": [],
+        "accreditations": [
+          "JCI",
+          "NABH"
+        ],
+        "specialties": [
+          "sp-cardiology",
+          "sp-transplant",
+          "sp-oncology",
+          "sp-neurology"
+        ],
+        "bedsCount": 3000,
+        "icuBeds": 600,
+        "foundedYear": 2000,
+        "rating": 4.9,
+        "reviewCount": 6100,
+        "internationalPatientsPerYear": 55000,
+        "languages": [
+          "English",
+          "Hindi",
+          "French",
+          "Bengali"
+        ],
+        "featured": true,
+        "active": true
+      }
+    ],
+    "specialties": [
+      {
+        "id": "sp-cardiology",
+        "name": "Cardiology & Cardiac Surgery",
+        "name_fr": "Cardiologie et Chirurgie Cardiaque",
+        "name_kr": "Kardiolizi & Sirirzi Leker",
+        "slug": "cardiology",
+        "icon": "Heart",
+        "shortDescription": "World-class heart care from diagnosis to complex bypass surgery.",
+        "shortDescription_fr": "Soins cardiaques de classe mondiale, du diagnostic au pontage complexe.",
+        "shortDescription_kr": "Swen leker klas mondial depi test ziska operasion konplex.",
+        "description": "Our network hospitals offer complete cardiac services — from non-invasive diagnostics and angioplasty to complex bypass grafts (CABG), valve replacements, TAVI, and heart transplants — performed by surgeons with 10,000+ procedure experience.",
+        "description_fr": "Nos hôpitaux partenaires offrent des services cardiaques complets — du diagnostic non invasif et de l'angioplastie aux pontages complexes (CABG), remplacements de valves, TAVI et greffes cardiaques — réalisés par des chirurgiens ayant plus de 10 000 interventions à leur actif.",
+        "description_kr": "Nou bann lopital rezo ofer servis leker konple — depi test ziska bypass konplex (CABG), sanzman valv, TAVI ek transplantasion leker — fer par bann sirirzien ki ena lexperyans dan plis ki 10 000 operasion.",
+        "imageUrl": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80",
+        "featured": true,
+        "procedures": [
+          {
+            "id": "proc-c1",
+            "specialtyId": "sp-cardiology",
+            "name": "Coronary Artery Bypass Graft (CABG)",
+            "name_fr": "Pontage Coronarien (CABG)",
+            "name_kr": "Bypass Leker (CABG)",
+            "description": "Open-heart surgery to restore blood flow to the heart.",
+            "description_fr": "Chirurgie à cœur ouvert pour restaurer le flux sanguin vers le cœur.",
+            "description_kr": "Operasion leker ouver pou re-donn disan leker.",
+            "estimatedDurationDays": 10,
+            "estimatedCostUSD": {
+              "min": 5000,
+              "max": 9000
+            }
+          },
+          {
+            "id": "proc-c2",
+            "specialtyId": "sp-cardiology",
+            "name": "Angioplasty & Stenting",
+            "name_fr": "Angioplastie et Pose de Stent",
+            "name_kr": "Anzioplasti & Stent",
+            "description": "Minimally invasive procedure to open blocked arteries.",
+            "description_fr": "Procédure mini-invasive pour ouvrir les artères bloquées.",
+            "description_kr": "Ti-operasion pou debous larter.",
+            "estimatedDurationDays": 4,
+            "estimatedCostUSD": {
+              "min": 3000,
+              "max": 6000
+            }
+          },
+          {
+            "id": "proc-c3",
+            "specialtyId": "sp-cardiology",
+            "name": "Valve Replacement / Repair",
+            "name_fr": "Remplacement / Réparation de Valve",
+            "name_kr": "Sanzman / Reparasion Valv",
+            "description": "Surgical correction of damaged heart valves.",
+            "description_fr": "Correction chirurgicale des valves cardiaques endommagées.",
+            "description_kr": "Operasion pou repar valv leker ki finn abime.",
+            "estimatedDurationDays": 12,
+            "estimatedCostUSD": {
+              "min": 6000,
+              "max": 12000
+            }
+          },
+          {
+            "id": "proc-c4",
+            "specialtyId": "sp-cardiology",
+            "name": "TAVI (Transcatheter Aortic Valve Implantation)",
+            "name_fr": "TAVI (Implantation de Valve Aortique Transcathéter)",
+            "name_kr": "TAVI (Inplantasion Valv)",
+            "description": "Minimally invasive heart valve replacement without open-heart surgery.",
+            "description_fr": "Remplacement de la valve cardiaque de manière mini-invasive sans chirurgie à cœur ouvert.",
+            "description_kr": "Sanzman valv leker san bizin ouver leker.",
+            "estimatedDurationDays": 7,
+            "estimatedCostUSD": {
+              "min": 18000,
+              "max": 30000
+            }
+          }
+        ]
+      },
+      {
+        "id": "sp-oncology",
+        "name": "Oncology & Cancer Care",
+        "name_fr": "Oncologie et Soins du Cancer",
+        "name_kr": "Onkolizi & Swen Kanser",
+        "slug": "oncology",
+        "icon": "Activity",
+        "shortDescription": "Advanced cancer diagnosis, treatment, and targeted therapy.",
+        "shortDescription_fr": "Diagnostic du cancer avancé, traitement et thérapie ciblée.",
+        "shortDescription_kr": "Bann test kanser avanse, tretman ek terapi sible.",
+        "description": "Access cutting-edge cancer treatments including CyberKnife radiosurgery, proton therapy, immunotherapy, targeted therapy, bone marrow transplants, and precision surgery — guided by internationally trained oncologists.",
+        "description_fr": "Accédez aux traitements de pointe contre le cancer, notamment la radiochirurgie CyberKnife, la protonthérapie, l'immunothérapie, les thérapies ciblées, les greffes de moelle osseuse et la chirurgie de précision — guidés par des oncologues formés à l'international.",
+        "description_kr": "Gagn akse ar bann tretman kanser de pwent, kouma CyberKnife, proton terapi, immunoterapi, terapi sible, transplantasion mwal ose ek sirirzi presizion — gid par bann spesialis form a linternasional.",
+        "imageUrl": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80",
+        "featured": true,
+        "procedures": [
+          {
+            "id": "proc-o1",
+            "specialtyId": "sp-oncology",
+            "name": "Bone Marrow / Stem Cell Transplant",
+            "name_fr": "Greffe de Moelle Osseuse / Cellules Souches",
+            "name_kr": "Transplantasion Mwal Ose",
+            "description": "Treatment for blood cancers including leukemia and lymphoma.",
+            "description_fr": "Traitement des cancers du sang, y compris la leucémie et le lymphome.",
+            "description_kr": "Tretman pou kanser disan (lesemi ek linfom).",
+            "estimatedDurationDays": 30,
+            "estimatedCostUSD": {
+              "min": 20000,
+              "max": 40000
+            }
+          },
+          {
+            "id": "proc-o2",
+            "specialtyId": "sp-oncology",
+            "name": "CyberKnife Radiosurgery",
+            "name_fr": "Radiochirurgie CyberKnife",
+            "name_kr": "CyberKnife",
+            "description": "Non-invasive tumor removal with pinpoint radiation accuracy.",
+            "description_fr": "Ablation non invasive des tumeurs avec une précision de radiation millimétrique.",
+            "description_kr": "Bann tretman lasan dimounn san bizin koup dimounn (lasazer).",
+            "estimatedDurationDays": 7,
+            "estimatedCostUSD": {
+              "min": 10000,
+              "max": 20000
+            }
+          },
+          {
+            "id": "proc-o3",
+            "specialtyId": "sp-oncology",
+            "name": "Chemotherapy Programs",
+            "name_fr": "Programmes de Chimiothérapie",
+            "name_kr": "Program Simioterapi",
+            "description": "Personalised chemotherapy cycles for various cancers.",
+            "description_fr": "Cycles de chimiothérapie personnalisés pour divers cancers.",
+            "description_kr": "Sik simioterapi personalize pou plizier kalite kanser.",
+            "estimatedDurationDays": 21,
+            "estimatedCostUSD": {
+              "min": 2000,
+              "max": 8000
+            }
+          },
+          {
+            "id": "proc-o4",
+            "specialtyId": "sp-oncology",
+            "name": "Immunotherapy",
+            "name_fr": "Immunothérapie",
+            "name_kr": "Imminoterapi",
+            "description": "Harnessing the immune system to fight cancer cells.",
+            "description_fr": "Exploitation du système immunitaire pour combattre les cellules cancéreuses.",
+            "description_kr": "Fer lekor dimounn re-konbat bann selil kanser.",
+            "estimatedDurationDays": 14,
+            "estimatedCostUSD": {
+              "min": 8000,
+              "max": 25000
+            }
+          }
+        ]
+      },
+      {
+        "id": "sp-orthopedics",
+        "name": "Orthopedics & Spine",
+        "name_fr": "Orthopédie et Colonne Vertébrale",
+        "name_kr": "Ortopedi & Kolonn Vertebral",
+        "slug": "orthopedics",
+        "icon": "Shield",
+        "shortDescription": "From joint replacements to complex spine surgery.",
+        "shortDescription_fr": "Des remplacements articulaires aux chirurgies complexes de la colonne vertébrale.",
+        "shortDescription_kr": "Depi ranplase zouintir ziska sirirzi konplex ledo.",
+        "description": "Our partner hospitals perform thousands of knee and hip replacements, robotic joint surgery, and complex spine procedures annually using the latest computer-assisted navigation systems.",
+        "description_fr": "Nos hôpitaux partenaires réalisent des milliers de remplacements de genou et de hanche, des chirurgies articulaires robotiques et des procédures vertébrales complexes chaque année en utilisant les derniers systèmes de navigation assistés par ordinateur.",
+        "description_kr": "Nou bann lopital partner fer plizier milye ranplasman zounou ek lans, operasion robotik, ek sirirzi ledo konplex sak lane an itilisan bann sistem navigasyon modern.",
+        "imageUrl": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80",
+        "featured": true,
+        "procedures": [
+          {
+            "id": "proc-or1",
+            "specialtyId": "sp-orthopedics",
+            "name": "Total Knee Replacement",
+            "name_fr": "Remplacement Total du Genou",
+            "name_kr": "Sanzman Total Zounou",
+            "description": "Surgical replacement of damaged knee joint with prosthetic.",
+            "description_fr": "Remplacement chirurgical de l'articulation du genou endommagée par une prothèse.",
+            "description_kr": "Sanzman zouintir zounou ki finn abime ek mete enn protez.",
+            "estimatedDurationDays": 10,
+            "estimatedCostUSD": {
+              "min": 4000,
+              "max": 8000
+            }
+          },
+          {
+            "id": "proc-or2",
+            "specialtyId": "sp-orthopedics",
+            "name": "Total Hip Replacement",
+            "name_fr": "Remplacement Total de la Hanche",
+            "name_kr": "Sanzman Total Lans",
+            "description": "Replacement of damaged hip joint to restore mobility.",
+            "description_fr": "Remplacement de l'articulation de la hanche endommagée pour restaurer la mobilité.",
+            "description_kr": "Sanzman zouintir lans pou regagn mobilite.",
+            "estimatedDurationDays": 10,
+            "estimatedCostUSD": {
+              "min": 4500,
+              "max": 9000
+            }
+          },
+          {
+            "id": "proc-or3",
+            "specialtyId": "sp-orthopedics",
+            "name": "Spine Surgery (TLIF / ALIF)",
+            "name_fr": "Chirurgie de la Colonne Vertébrale (TLIF / ALIF)",
+            "name_kr": "Sirirzi Ledo (TLIF / ALIF)",
+            "description": "Spinal fusion for degenerative disc disease or instability.",
+            "description_fr": "Fusion rachidienne pour la maladie dégénérative du disque ou l'instabilité.",
+            "description_kr": "Fizion kolonn vertebral pou disk ki finn ize.",
+            "estimatedDurationDays": 14,
+            "estimatedCostUSD": {
+              "min": 6000,
+              "max": 14000
+            }
+          },
+          {
+            "id": "proc-or4",
+            "specialtyId": "sp-orthopedics",
+            "name": "Robotic Knee/Hip Surgery",
+            "name_fr": "Chirurgie Robotique Genou/Hanche",
+            "name_kr": "Operasion Robotik Zounou/Lans",
+            "description": "Computer-guided precision joint replacement surgery.",
+            "description_fr": "Chirurgie de remplacement articulaire de précision guidée par ordinateur.",
+            "description_kr": "Sirirzi avek lasistans ordinateur pou plis presizion.",
+            "estimatedDurationDays": 8,
+            "estimatedCostUSD": {
+              "min": 7000,
+              "max": 12000
+            }
+          }
+        ]
+      },
+      {
+        "id": "sp-neurology",
+        "name": "Neurology & Neurosurgery",
+        "name_fr": "Neurologie et Neurochirurgie",
+        "name_kr": "Neurolozi & Neuro-Sirirzi",
+        "slug": "neurology",
+        "icon": "Zap",
+        "shortDescription": "Expert care for brain, spine, and nervous system conditions.",
+        "shortDescription_fr": "Soins experts pour les affections du cerveau, de la colonne vertébrale et du système nerveux.",
+        "shortDescription_kr": "Soins lexper pou problem servo, ledo, ek ner.",
+        "description": "From epilepsy management and stroke rehabilitation to brain tumour surgery and deep brain stimulation, our neurology centres are equipped with 3T MRI, intraoperative neuromonitoring, and expert neurosurgeons.",
+        "description_fr": "De la gestion de l'épilepsie et de la réadaptation après un AVC à la chirurgie des tumeurs cérébrales et à la stimulation cérébrale profonde, nos centres de neurologie sont équipés d'IRM 3T, de neuromonitoring peropératoire et de neurochirurgiens experts.",
+        "description_kr": "Pou problem epilepsi, AVC (la stroke), ziska operasion timer dan servo, nou bann sant neurolozi bien ekipe avek masinn modern ek bann meyer spesialis.",
+        "imageUrl": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80",
+        "featured": true,
+        "procedures": [
+          {
+            "id": "proc-n1",
+            "specialtyId": "sp-neurology",
+            "name": "Brain Tumour Surgery",
+            "name_fr": "Chirurgie des Tumeurs Cérébrales",
+            "name_kr": "Operasion Timer Servo",
+            "description": "Microsurgical removal of intracranial tumours.",
+            "description_fr": "Ablation microchirurgicale des tumeurs intracrâniennes.",
+            "description_kr": "Sirirzi pou tir timer dan servo.",
+            "estimatedDurationDays": 14,
+            "estimatedCostUSD": {
+              "min": 8000,
+              "max": 18000
+            }
+          },
+          {
+            "id": "proc-n2",
+            "specialtyId": "sp-neurology",
+            "name": "Deep Brain Stimulation (DBS)",
+            "name_fr": "Stimulation Cérébrale Profonde (DBS)",
+            "name_kr": "Stimilasion Servo (DBS)",
+            "description": "Treatment for Parkinson's disease and movement disorders.",
+            "description_fr": "Traitement de la maladie de Parkinson et des troubles du mouvement.",
+            "description_kr": "Tretman pou maladi Parkinson ek lot problem kontrol.",
+            "estimatedDurationDays": 10,
+            "estimatedCostUSD": {
+              "min": 20000,
+              "max": 35000
+            }
+          }
+        ]
+      },
+      {
+        "id": "sp-transplant",
+        "name": "Organ Transplants",
+        "name_fr": "Greffes d'Organes",
+        "name_kr": "Transplantasion Lorgann",
+        "slug": "organ-transplants",
+        "icon": "Award",
+        "shortDescription": "Kidney, liver, heart and bone marrow transplant programmes.",
+        "shortDescription_fr": "Programmes de transplantation rénale, hépatique, cardiaque et de moelle osseuse.",
+        "shortDescription_kr": "Program pou transplantasion lerin, fwa, leker ek mwal ose.",
+        "description": "Renowned organ transplant centers with high success rates for living and deceased donor transplants, comprehensive donor evaluation, and specialized post-transplant ICU suites.",
+        "description_fr": "Centres de transplantation d'organes réputés avec des taux de réussite élevés pour les greffes de donneurs vivants et décédés, une évaluation complète des donneurs et des unités de soins intensifs post-greffe spécialisées.",
+        "description_kr": "Bann sant transplantasion rekonet avek gran pousantaz sikse pou transplantasion lerin ek fwa.",
+        "imageUrl": "https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=80",
+        "featured": true,
+        "procedures": [
+          {
+            "id": "proc-t1",
+            "specialtyId": "sp-transplant",
+            "name": "Kidney Transplant (Living Donor)",
+            "name_fr": "Greffe de Rein (Donneur Vivant)",
+            "name_kr": "Transplantasion Lerin (Doner Vivan)",
+            "description": "Complete living donor kidney transplant with laparoscopic donor nephrectomy.",
+            "description_fr": "Greffe complète de rein avec néphrectomie laparoscopique du donneur.",
+            "description_kr": "Transplantasion lerin konple avek operasion laparoskopi.",
+            "estimatedDurationDays": 21,
+            "estimatedCostUSD": {
+              "min": 12000,
+              "max": 20000
+            }
+          },
+          {
+            "id": "proc-t2",
+            "specialtyId": "sp-transplant",
+            "name": "Liver Transplant (Living Donor)",
+            "name_fr": "Greffe de Foie (Donneur Vivant)",
+            "name_kr": "Transplantasion Fwa (Doner Vivan)",
+            "description": "Living donor liver transplantation (LDLT) with dual team surgery.",
+            "description_fr": "Transplantation hépatique à donneur vivant (LDLT) avec chirurgie en double équipe.",
+            "description_kr": "Transplantasion fwa avek de lekip sirirzien.",
+            "estimatedDurationDays": 30,
+            "estimatedCostUSD": {
+              "min": 28000,
+              "max": 48000
+            }
+          }
+        ]
+      },
+      {
+        "id": "sp-ivf",
+        "name": "IVF & Fertility Care",
+        "name_fr": "FIV et Fertilité",
+        "name_kr": "FIV & Fertilite",
+        "slug": "ivf-fertility",
+        "icon": "Smile",
+        "shortDescription": "Advanced reproductive technologies with high success rates.",
+        "shortDescription_fr": "Technologies de procréation médicalement assistée de pointe.",
+        "shortDescription_kr": "Teknolozi avanse pou ed bann koup gagn zanfan.",
+        "description": "Specialized fertility centers providing ICSI, IMSI, blastocyst culture, PGT-A genetic screening, egg freezing, and donor programs under the supervision of leading embryologists.",
+        "description_fr": "Centres de fertilité spécialisés proposant ICSI, IMSI, culture de blastocystes, dépistage génétique PGT-A et programmes de don.",
+        "description_kr": "Sant fertilite spesialize pou tretman FIV, ICSI ek tes zenetik avanse.",
+        "imageUrl": "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80",
+        "featured": true,
+        "procedures": [
+          {
+            "id": "proc-ivf1",
+            "specialtyId": "sp-ivf",
+            "name": "IVF + ICSI Complete Cycle",
+            "name_fr": "Cycle Complet FIV + ICSI",
+            "name_kr": "Sik Konple FIV + ICSI",
+            "description": "Ovarian stimulation, egg retrieval, ICSI, and embryo transfer.",
+            "description_fr": "Stimulation ovarienne, ponction d'ovocytes, ICSI et transfert d'embryons.",
+            "description_kr": "Stimulasion, rekolt dizef, ICSI ek transfert embrion.",
+            "estimatedDurationDays": 20,
+            "estimatedCostUSD": {
+              "min": 3500,
+              "max": 6500
+            }
+          }
+        ]
+      }
+    ],
+    "procedures": [
+      {
+        "id": "proc-c1",
+        "specialtyId": "sp-cardiology",
+        "name": "Coronary Artery Bypass Graft (CABG)",
+        "name_fr": "Pontage Coronarien (CABG)",
+        "name_kr": "Bypass Leker (CABG)",
+        "description": "Open-heart surgery to restore blood flow to the heart.",
+        "description_fr": "Chirurgie à cœur ouvert pour restaurer le flux sanguin vers le cœur.",
+        "description_kr": "Operasion leker ouver pou re-donn disan leker.",
+        "estimatedDurationDays": 10,
+        "estimatedCostUSD": {
+          "min": 5000,
+          "max": 9000
+        }
+      },
+      {
+        "id": "proc-c2",
+        "specialtyId": "sp-cardiology",
+        "name": "Angioplasty & Stenting",
+        "name_fr": "Angioplastie et Pose de Stent",
+        "name_kr": "Anzioplasti & Stent",
+        "description": "Minimally invasive procedure to open blocked arteries.",
+        "description_fr": "Procédure mini-invasive pour ouvrir les artères bloquées.",
+        "description_kr": "Ti-operasion pou debous larter.",
+        "estimatedDurationDays": 4,
+        "estimatedCostUSD": {
+          "min": 3000,
+          "max": 6000
+        }
+      },
+      {
+        "id": "proc-c3",
+        "specialtyId": "sp-cardiology",
+        "name": "Valve Replacement / Repair",
+        "name_fr": "Remplacement / Réparation de Valve",
+        "name_kr": "Sanzman / Reparasion Valv",
+        "description": "Surgical correction of damaged heart valves.",
+        "description_fr": "Correction chirurgicale des valves cardiaques endommagées.",
+        "description_kr": "Operasion pou repar valv leker ki finn abime.",
+        "estimatedDurationDays": 12,
+        "estimatedCostUSD": {
+          "min": 6000,
+          "max": 12000
+        }
+      },
+      {
+        "id": "proc-c4",
+        "specialtyId": "sp-cardiology",
+        "name": "TAVI (Transcatheter Aortic Valve Implantation)",
+        "name_fr": "TAVI (Implantation de Valve Aortique Transcathéter)",
+        "name_kr": "TAVI (Inplantasion Valv)",
+        "description": "Minimally invasive heart valve replacement without open-heart surgery.",
+        "description_fr": "Remplacement de la valve cardiaque de manière mini-invasive sans chirurgie à cœur ouvert.",
+        "description_kr": "Sanzman valv leker san bizin ouver leker.",
+        "estimatedDurationDays": 7,
+        "estimatedCostUSD": {
+          "min": 18000,
+          "max": 30000
+        }
+      },
+      {
+        "id": "proc-o1",
+        "specialtyId": "sp-oncology",
+        "name": "Bone Marrow / Stem Cell Transplant",
+        "name_fr": "Greffe de Moelle Osseuse / Cellules Souches",
+        "name_kr": "Transplantasion Mwal Ose",
+        "description": "Treatment for blood cancers including leukemia and lymphoma.",
+        "description_fr": "Traitement des cancers du sang, y compris la leucémie et le lymphome.",
+        "description_kr": "Tretman pou kanser disan (lesemi ek linfom).",
+        "estimatedDurationDays": 30,
+        "estimatedCostUSD": {
+          "min": 20000,
+          "max": 40000
+        }
+      },
+      {
+        "id": "proc-o2",
+        "specialtyId": "sp-oncology",
+        "name": "CyberKnife Radiosurgery",
+        "name_fr": "Radiochirurgie CyberKnife",
+        "name_kr": "CyberKnife",
+        "description": "Non-invasive tumor removal with pinpoint radiation accuracy.",
+        "description_fr": "Ablation non invasive des tumeurs avec une précision de radiation millimétrique.",
+        "description_kr": "Bann tretman lasan dimounn san bizin koup dimounn (lasazer).",
+        "estimatedDurationDays": 7,
+        "estimatedCostUSD": {
+          "min": 10000,
+          "max": 20000
+        }
+      },
+      {
+        "id": "proc-o3",
+        "specialtyId": "sp-oncology",
+        "name": "Chemotherapy Programs",
+        "name_fr": "Programmes de Chimiothérapie",
+        "name_kr": "Program Simioterapi",
+        "description": "Personalised chemotherapy cycles for various cancers.",
+        "description_fr": "Cycles de chimiothérapie personnalisés pour divers cancers.",
+        "description_kr": "Sik simioterapi personalize pou plizier kalite kanser.",
+        "estimatedDurationDays": 21,
+        "estimatedCostUSD": {
+          "min": 2000,
+          "max": 8000
+        }
+      },
+      {
+        "id": "proc-o4",
+        "specialtyId": "sp-oncology",
+        "name": "Immunotherapy",
+        "name_fr": "Immunothérapie",
+        "name_kr": "Imminoterapi",
+        "description": "Harnessing the immune system to fight cancer cells.",
+        "description_fr": "Exploitation du système immunitaire pour combattre les cellules cancéreuses.",
+        "description_kr": "Fer lekor dimounn re-konbat bann selil kanser.",
+        "estimatedDurationDays": 14,
+        "estimatedCostUSD": {
+          "min": 8000,
+          "max": 25000
+        }
+      },
+      {
+        "id": "proc-or1",
+        "specialtyId": "sp-orthopedics",
+        "name": "Total Knee Replacement",
+        "name_fr": "Remplacement Total du Genou",
+        "name_kr": "Sanzman Total Zounou",
+        "description": "Surgical replacement of damaged knee joint with prosthetic.",
+        "description_fr": "Remplacement chirurgical de l'articulation du genou endommagée par une prothèse.",
+        "description_kr": "Sanzman zouintir zounou ki finn abime ek mete enn protez.",
+        "estimatedDurationDays": 10,
+        "estimatedCostUSD": {
+          "min": 4000,
+          "max": 8000
+        }
+      },
+      {
+        "id": "proc-or2",
+        "specialtyId": "sp-orthopedics",
+        "name": "Total Hip Replacement",
+        "name_fr": "Remplacement Total de la Hanche",
+        "name_kr": "Sanzman Total Lans",
+        "description": "Replacement of damaged hip joint to restore mobility.",
+        "description_fr": "Remplacement de l'articulation de la hanche endommagée pour restaurer la mobilité.",
+        "description_kr": "Sanzman zouintir lans pou regagn mobilite.",
+        "estimatedDurationDays": 10,
+        "estimatedCostUSD": {
+          "min": 4500,
+          "max": 9000
+        }
+      },
+      {
+        "id": "proc-or3",
+        "specialtyId": "sp-orthopedics",
+        "name": "Spine Surgery (TLIF / ALIF)",
+        "name_fr": "Chirurgie de la Colonne Vertébrale (TLIF / ALIF)",
+        "name_kr": "Sirirzi Ledo (TLIF / ALIF)",
+        "description": "Spinal fusion for degenerative disc disease or instability.",
+        "description_fr": "Fusion rachidienne pour la maladie dégénérative du disque ou l'instabilité.",
+        "description_kr": "Fizion kolonn vertebral pou disk ki finn ize.",
+        "estimatedDurationDays": 14,
+        "estimatedCostUSD": {
+          "min": 6000,
+          "max": 14000
+        }
+      },
+      {
+        "id": "proc-or4",
+        "specialtyId": "sp-orthopedics",
+        "name": "Robotic Knee/Hip Surgery",
+        "name_fr": "Chirurgie Robotique Genou/Hanche",
+        "name_kr": "Operasion Robotik Zounou/Lans",
+        "description": "Computer-guided precision joint replacement surgery.",
+        "description_fr": "Chirurgie de remplacement articulaire de précision guidée par ordinateur.",
+        "description_kr": "Sirirzi avek lasistans ordinateur pou plis presizion.",
+        "estimatedDurationDays": 8,
+        "estimatedCostUSD": {
+          "min": 7000,
+          "max": 12000
+        }
+      },
+      {
+        "id": "proc-n1",
+        "specialtyId": "sp-neurology",
+        "name": "Brain Tumour Surgery",
+        "name_fr": "Chirurgie des Tumeurs Cérébrales",
+        "name_kr": "Operasion Timer Servo",
+        "description": "Microsurgical removal of intracranial tumours.",
+        "description_fr": "Ablation microchirurgicale des tumeurs intracrâniennes.",
+        "description_kr": "Sirirzi pou tir timer dan servo.",
+        "estimatedDurationDays": 14,
+        "estimatedCostUSD": {
+          "min": 8000,
+          "max": 18000
+        }
+      },
+      {
+        "id": "proc-n2",
+        "specialtyId": "sp-neurology",
+        "name": "Deep Brain Stimulation (DBS)",
+        "name_fr": "Stimulation Cérébrale Profonde (DBS)",
+        "name_kr": "Stimilasion Servo (DBS)",
+        "description": "Treatment for Parkinson's disease and movement disorders.",
+        "description_fr": "Traitement de la maladie de Parkinson et des troubles du mouvement.",
+        "description_kr": "Tretman pou maladi Parkinson ek lot problem kontrol.",
+        "estimatedDurationDays": 10,
+        "estimatedCostUSD": {
+          "min": 20000,
+          "max": 35000
+        }
+      },
+      {
+        "id": "proc-t1",
+        "specialtyId": "sp-transplant",
+        "name": "Kidney Transplant (Living Donor)",
+        "name_fr": "Greffe de Rein (Donneur Vivant)",
+        "name_kr": "Transplantasion Lerin (Doner Vivan)",
+        "description": "Complete living donor kidney transplant with laparoscopic donor nephrectomy.",
+        "description_fr": "Greffe complète de rein avec néphrectomie laparoscopique du donneur.",
+        "description_kr": "Transplantasion lerin konple avek operasion laparoskopi.",
+        "estimatedDurationDays": 21,
+        "estimatedCostUSD": {
+          "min": 12000,
+          "max": 20000
+        }
+      },
+      {
+        "id": "proc-t2",
+        "specialtyId": "sp-transplant",
+        "name": "Liver Transplant (Living Donor)",
+        "name_fr": "Greffe de Foie (Donneur Vivant)",
+        "name_kr": "Transplantasion Fwa (Doner Vivan)",
+        "description": "Living donor liver transplantation (LDLT) with dual team surgery.",
+        "description_fr": "Transplantation hépatique à donneur vivant (LDLT) avec chirurgie en double équipe.",
+        "description_kr": "Transplantasion fwa avek de lekip sirirzien.",
+        "estimatedDurationDays": 30,
+        "estimatedCostUSD": {
+          "min": 28000,
+          "max": 48000
+        }
+      },
+      {
+        "id": "proc-ivf1",
+        "specialtyId": "sp-ivf",
+        "name": "IVF + ICSI Complete Cycle",
+        "name_fr": "Cycle Complet FIV + ICSI",
+        "name_kr": "Sik Konple FIV + ICSI",
+        "description": "Ovarian stimulation, egg retrieval, ICSI, and embryo transfer.",
+        "description_fr": "Stimulation ovarienne, ponction d'ovocytes, ICSI et transfert d'embryons.",
+        "description_kr": "Stimulasion, rekolt dizef, ICSI ek transfert embrion.",
+        "estimatedDurationDays": 20,
+        "estimatedCostUSD": {
+          "min": 3500,
+          "max": 6500
+        }
+      }
+    ],
+    "doctors": [
+      {
+        "id": "doc-1",
+        "hospitalId": "hosp-narayana",
+        "name": "Dr. Devi Prasad Shetty",
+        "title": "Chairman & Chief Cardiac Surgeon",
+        "specialties": [
+          "sp-cardiology"
+        ],
+        "qualifications": [
+          "MBBS",
+          "MS (General Surgery)",
+          "FRCS (Cardiothoracic Surgery - UK)"
+        ],
+        "experience": 36,
+        "surgeries": 15000,
+        "languages": [
+          "English",
+          "Hindi",
+          "Kannada"
+        ],
+        "imageUrl": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=800&q=80",
+        "bio": "World-renowned cardiothoracic surgeon who has performed over 15,000 heart surgeries. Pioneer of high-volume, low-cost micro-precision cardiac care assisting patients across the Indian Ocean.",
+        "consultationFeeUSD": 60,
+        "featured": true
+      },
+      {
+        "id": "doc-2",
+        "hospitalId": "hosp-medanta",
+        "name": "Dr. Naresh Trehan",
+        "title": "Chairman & Managing Director, Cardiovascular Surgeon",
+        "specialties": [
+          "sp-cardiology"
+        ],
+        "qualifications": [
+          "MBBS",
+          "Diplomate American Board of Surgery",
+          "Diplomate American Board of Cardiothoracic Surgery"
+        ],
+        "experience": 42,
+        "surgeries": 48000,
+        "languages": [
+          "English",
+          "Hindi",
+          "Punjabi"
+        ],
+        "imageUrl": "https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=800&q=80",
+        "bio": "Former Assistant Professor of Surgery at NYU Medical Center. Pioneered robotic heart surgery and minimally invasive coronary artery bypass surgery in Asia.",
+        "consultationFeeUSD": 75,
+        "featured": true
+      },
+      {
+        "id": "doc-3",
+        "hospitalId": "hosp-bumrungrad",
+        "name": "Dr. Suthep Udomsawaengsup",
+        "title": "Director of Advanced Minimally Invasive & Bariatric Surgery",
+        "specialties": [
+          "sp-oncology",
+          "sp-orthopedics"
+        ],
+        "qualifications": [
+          "MD (Chulalongkorn)",
+          "Fellow of American College of Surgeons (FACS)",
+          "Fellowship in Laparoscopic Surgery (USA)"
+        ],
+        "experience": 25,
+        "surgeries": 8500,
+        "languages": [
+          "English",
+          "Thai",
+          "French (Basic)"
+        ],
+        "imageUrl": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80",
+        "bio": "Renowned expert in robotic surgical oncology and complex minimally invasive surgical interventions with international training in the United States and Japan.",
+        "consultationFeeUSD": 80,
+        "featured": true
+      },
+      {
+        "id": "doc-4",
+        "hospitalId": "hosp-gleneagles",
+        "name": "Dr. Wong Chiung Ing",
+        "title": "Senior Consultant Medical Oncologist",
+        "specialties": [
+          "sp-oncology"
+        ],
+        "qualifications": [
+          "MB ChB (UK)",
+          "MRCP (UK)",
+          "FAMS (Medical Oncology)"
+        ],
+        "experience": 22,
+        "surgeries": 4200,
+        "languages": [
+          "English",
+          "Mandarin",
+          "Cantonese",
+          "Malay"
+        ],
+        "imageUrl": "https://images.unsplash.com/photo-1594824813589-3253b27cf17b?w=800&q=80",
+        "bio": "Distinguished oncologist specializing in targeted therapies, precision immunotherapy, and breast, lung, and gastrointestinal cancers at Gleneagles Singapore.",
+        "consultationFeeUSD": 95,
+        "featured": true
+      },
+      {
+        "id": "doc-5",
+        "hospitalId": "hosp-apollo-chennai",
+        "name": "Prof. Dr. Subhash Gupta",
+        "title": "Chairman - Liver Transplant & Hepato-Pancreato-Biliary Surgery",
+        "specialties": [
+          "sp-transplant"
+        ],
+        "qualifications": [
+          "MBBS",
+          "MS",
+          "FRCS (Edinburgh)",
+          "FRCS (Glasgow)"
+        ],
+        "experience": 31,
+        "surgeries": 6000,
+        "languages": [
+          "English",
+          "Hindi",
+          "Tamil"
+        ],
+        "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80",
+        "bio": "Pioneering liver transplant surgeon who led the first successful living donor liver transplant programs across South Asia with over 3,000 successful liver transplants.",
+        "consultationFeeUSD": 70,
+        "featured": true
+      },
+      {
+        "id": "doc-6",
+        "hospitalId": "hosp-fortis",
+        "name": "Dr. Firuza R. Parikh",
+        "title": "Director - Assisted Reproduction & Genetics (IVF)",
+        "specialties": [
+          "sp-ivf"
+        ],
+        "qualifications": [
+          "MD (Obstetrics & Gynaecology)",
+          "DGO",
+          "Diplomate of National Board",
+          "Postdoctoral Fellow (Yale University, USA)"
+        ],
+        "experience": 34,
+        "surgeries": 12000,
+        "languages": [
+          "English",
+          "Hindi",
+          "Gujarati",
+          "French"
+        ],
+        "imageUrl": "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&q=80",
+        "bio": "Internationally acclaimed fertility specialist trained at Yale University School of Medicine. Has helped deliver over 12,000 babies to couples across 35 countries.",
+        "consultationFeeUSD": 65,
+        "featured": true
+      },
+      {
+        "id": "doc-7",
+        "hospitalId": "hosp-apollo-delhi",
+        "name": "Dr. Arun Saroha",
+        "title": "Senior Director - Neurosurgery & Spine Surgery",
+        "specialties": [
+          "sp-neurology"
+        ],
+        "qualifications": [
+          "MBBS",
+          "MS (General Surgery)",
+          "MCh (Neurosurgery - PGI Chandigarh)"
+        ],
+        "experience": 24,
+        "surgeries": 9000,
+        "languages": [
+          "English",
+          "Hindi"
+        ],
+        "imageUrl": "https://images.unsplash.com/photo-1622253694242-abeb37a33e97?w=800&q=80",
+        "bio": "Leading neurosurgeon and spine specialist specializing in minimally invasive brain tumor resections, complex spinal reconstructions, and neuro-endoscopy.",
+        "consultationFeeUSD": 60,
+        "featured": true
+      }
+    ],
+    "doctor_specialties": [
+      {
+        "doctorId": "doc-1",
+        "specialtyId": "sp-cardiology"
+      },
+      {
+        "doctorId": "doc-2",
+        "specialtyId": "sp-cardiology"
+      },
+      {
+        "doctorId": "doc-3",
+        "specialtyId": "sp-oncology"
+      },
+      {
+        "doctorId": "doc-3",
+        "specialtyId": "sp-orthopedics"
+      },
+      {
+        "doctorId": "doc-4",
+        "specialtyId": "sp-oncology"
+      },
+      {
+        "doctorId": "doc-5",
+        "specialtyId": "sp-transplant"
+      },
+      {
+        "doctorId": "doc-6",
+        "specialtyId": "sp-ivf"
+      },
+      {
+        "doctorId": "doc-7",
+        "specialtyId": "sp-neurology"
+      }
+    ],
+    "case_studies": [
+      {
+        "id": "cs-1",
+        "patientFirstName": "Marie-Claire",
+        "patientCountry": "Mauritius",
+        "patientAge": 58,
+        "condition": "Triple Vessel Coronary Artery Disease",
+        "condition_fr": "Maladie Coronarienne Tritronculaire",
+        "condition_kr": "Maladi Leker (3 Larter Bouse)",
+        "specialtyId": "sp-cardiology",
+        "hospitalId": "hosp-1",
+        "treatment": "Triple Bypass Surgery (CABG)",
+        "treatment_fr": "Triple Pontage Coronarien (CABG)",
+        "treatment_kr": "Operasion Bypass Leker",
+        "outcome": "Full recovery in 3 weeks. Returned to Mauritius with complete heart function restored. Follow-up confirmed excellent graft patency.",
+        "outcome_fr": "Rétablissement complet en 3 semaines. Retournée à l'île Maurice avec une fonction cardiaque entièrement restaurée. Le suivi a confirmé une excellente perméabilité des greffons.",
+        "outcome_kr": "Retabli net dan 3 semenn. Retourn Moris avek so leker ki pe bat bien. Test apre montre ki tout korek.",
+        "testimonial": "I was told in Mauritius that I needed surgery urgently but the wait was long. Medical 360 arranged everything within a week. Apollo's team was outstanding — I felt cared for from the moment I landed.",
+        "testimonial_fr": "On m'a dit à l'île Maurice que j'avais besoin d'une opération en urgence, mais l'attente était longue. Medical 360 a tout organisé en une semaine. L'équipe d'Apollo était exceptionnelle — je me suis sentie prise en charge dès mon arrivée.",
+        "testimonial_kr": "Dokter Moris ti dir mwa bizin oper an-irzans me ti pou bizin atann lontan. Medical 360 finn fer tou dan enn semenn. Lekip Apollo top — zot inn bien get mwa depi mo desann avion.",
+        "costSavedPercent": 65,
+        "durationDays": 18,
+        "year": 2024,
+        "imageUrl": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80",
+        "featured": true
+      },
+      {
+        "id": "cs-2",
+        "patientFirstName": "Rajesh",
+        "patientCountry": "Mauritius",
+        "patientAge": 45,
+        "condition": "Chronic Kidney Failure (Stage 5)",
+        "condition_fr": "Insuffisance Rénale Chronique (Stade 5)",
+        "condition_kr": "Problem Lerin Kronic (Stad 5)",
+        "specialtyId": "sp-transplant",
+        "hospitalId": "hosp-6",
+        "treatment": "Living Donor Kidney Transplant",
+        "treatment_fr": "Greffe de Rein (Donneur Vivant)",
+        "treatment_kr": "Transplantasion Lerin (Doner Vivan)",
+        "outcome": "Successful transplant with brother as donor. Creatinine levels normalised within 6 days. Discharged after 16 days.",
+        "outcome_fr": "Greffe réussie avec son frère comme donneur. Les niveaux de créatinine se sont normalisés en 6 jours. Sortie de l'hôpital après 16 jours.",
+        "outcome_kr": "Transplantasion korek avek so frer. Kreyatinin inn vinn normal dan 6 zour. Sorti lopital apre 16 zour.",
+        "testimonial": "Medanta's transplant team coordinated everything for us — my brother and I flew together. The entire team spoke French which made us both feel at ease.",
+        "testimonial_fr": "L'équipe de transplantation de Medanta a tout coordonné pour nous — mon frère et moi avons voyagé ensemble. Toute l'équipe parlait français, ce qui nous a mis à l'aise tous les deux.",
+        "testimonial_kr": "Lekip Medanta inn organiz tou pou nou — mo frer ek mwa inn voyaze ansam. Tou dimounn ti pe koz franse ek sa finn met nou bien a lez.",
+        "costSavedPercent": 60,
+        "durationDays": 22,
+        "year": 2024,
+        "imageUrl": "https://images.unsplash.com/photo-1612531385446-f7e6d131e1d0?w=800&q=80",
+        "featured": true
+      },
+      {
+        "id": "cs-3",
+        "patientFirstName": "Nathalie",
+        "patientCountry": "Réunion Island",
+        "patientAge": 38,
+        "condition": "Primary Infertility (3 failed IVF cycles)",
+        "condition_fr": "Infertilité Primaire (3 cycles de FIV échoués)",
+        "condition_kr": "Problem Gagn Zanfan (3 FIV pa finn marse)",
+        "specialtyId": "sp-ivf",
+        "hospitalId": "hosp-2",
+        "treatment": "Advanced IVF with PGT-A (Preimplantation Genetic Testing)",
+        "treatment_fr": "FIV avancée avec PGT-A (Test Génétique Préimplantatoire)",
+        "treatment_kr": "FIV avanse avek Test Zenetik (PGT-A)",
+        "outcome": "Successful pregnancy achieved on first cycle. Delivered a healthy baby girl 9 months later.",
+        "outcome_fr": "Grossesse réussie dès le premier cycle. A donné naissance à une petite fille en bonne santé 9 mois plus tard.",
+        "outcome_kr": "Tomansint depi premie esey. Finn gagn enn tifi an bonn-sante 9 mwa apre.",
+        "testimonial": "After 3 failed attempts elsewhere, Medical 360 connected us with a specialist who changed our protocol completely. We are now a family of three.",
+        "testimonial_fr": "Après 3 tentatives infructueuses ailleurs, Medical 360 nous a mis en contact avec un spécialiste qui a complètement changé notre protocole. Nous sommes maintenant une famille de trois.",
+        "testimonial_kr": "Apre 3 esey san sikse, Medical 360 inn konekt nou ar enn gran spesialist ki finn sanz tou nou tretman. Aster nou enn fami trwa.",
+        "costSavedPercent": 55,
+        "durationDays": 14,
+        "year": 2023,
+        "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80",
+        "featured": true
+      }
+    ],
+    "inquiries": [
+      {
+        "id": "inq-1",
+        "createdAt": "2026-08-18T08:30:00Z",
+        "updatedAt": "2026-08-19T10:00:00Z",
+        "firstName": "Sanjiv",
+        "lastName": "Ramkhelawon",
+        "email": "sanjiv.r@gmail.com",
+        "phone": "+23057123456",
+        "countryOfResidence": "Mauritius",
+        "specialtyId": "sp-cardiology",
+        "description": "My father, 71 years old, has been diagnosed with severe aortic stenosis. His cardiologist recommends TAVI but the wait in Mauritius is too long. Looking for options abroad.",
+        "urgency": "urgent",
+        "preferredCountry": "India",
+        "budgetRangeUSD": {
+          "min": 10000,
+          "max": 25000
+        },
+        "documents": [],
+        "status": "contacted",
+        "assignedCaseManagerId": "admin-2",
+        "notes": [
+          {
+            "id": "note-1",
+            "inquiryId": "inq-1",
+            "authorId": "admin-2",
+            "content": "Called patient. Sent hospital options for Apollo and Medanta. Awaiting decision.",
+            "createdAt": "2026-08-19T10:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "inq-2",
+        "createdAt": "2026-08-19T14:15:00Z",
+        "updatedAt": "2026-08-19T14:15:00Z",
+        "firstName": "Laetitia",
+        "lastName": "Bonnenfant",
+        "email": "laetitia.b@hotmail.com",
+        "phone": "+23058234567",
+        "countryOfResidence": "Mauritius",
+        "specialtyId": "sp-ivf",
+        "description": "We have been trying to conceive for 4 years. Had 2 IVF cycles in Mauritius with no success. Interested in exploring IVF abroad with better success rates.",
+        "urgency": "routine",
+        "preferredCountry": "India",
+        "budgetRangeUSD": {
+          "min": 4000,
+          "max": 8000
+        },
+        "documents": [],
+        "status": "new",
+        "notes": []
+      },
+      {
+        "id": "inq-3",
+        "createdAt": "2026-08-17T09:00:00Z",
+        "updatedAt": "2026-08-20T09:00:00Z",
+        "firstName": "Omar",
+        "lastName": "Abdallah",
+        "email": "omar.a@yahoo.com",
+        "phone": "+26961345678",
+        "countryOfResidence": "Comoros",
+        "specialtyId": "sp-oncology",
+        "description": "My wife has been diagnosed with breast cancer Stage II. Oncologist recommends surgery followed by chemotherapy. Looking for an affordable and trusted hospital in India.",
+        "urgency": "urgent",
+        "preferredCountry": "India",
+        "budgetRangeUSD": {
+          "min": 8000,
+          "max": 20000
+        },
+        "documents": [],
+        "status": "in_progress",
+        "assignedCaseManagerId": "admin-2",
+        "notes": [
+          {
+            "id": "note-2",
+            "inquiryId": "inq-3",
+            "authorId": "admin-2",
+            "content": "Arranged second opinion with Dr. Suresh at Fortis. Patient reports are being reviewed.",
+            "createdAt": "2026-08-18T11:00:00Z"
+          }
+        ]
+      },
+      {
+        "id": "inq-4",
+        "createdAt": "2026-08-15T11:30:00Z",
+        "updatedAt": "2026-08-20T16:00:00Z",
+        "firstName": "Deepa",
+        "lastName": "Luckhoo",
+        "email": "deepa.l@gmail.com",
+        "phone": "+23059345678",
+        "countryOfResidence": "Mauritius",
+        "specialtyId": "sp-orthopedics",
+        "description": "Both knees need replacement. I am 64 years old and very active. Would like to explore robotic knee replacement in Thailand or India.",
+        "urgency": "routine",
+        "preferredCountry": "Thailand",
+        "budgetRangeUSD": {
+          "min": 8000,
+          "max": 15000
+        },
+        "documents": [],
+        "status": "quoted",
+        "assignedCaseManagerId": "admin-2",
+        "notes": []
+      },
+      {
+        "id": "inq-5",
+        "createdAt": "2026-08-20T07:00:00Z",
+        "updatedAt": "2026-08-20T07:00:00Z",
+        "firstName": "Patrick",
+        "lastName": "Mounien",
+        "email": "p.mounien@orange.mu",
+        "phone": "+23057456789",
+        "countryOfResidence": "Mauritius",
+        "specialtyId": "sp-neurology",
+        "description": "I have a 3cm meningioma on my frontal lobe. My neurologist says it needs to be removed but I want a second opinion and possibly surgery abroad.",
+        "urgency": "urgent",
+        "preferredCountry": "Singapore",
+        "budgetRangeUSD": {
+          "min": 15000,
+          "max": 30000
+        },
+        "documents": [],
+        "status": "new",
+        "notes": []
+      }
+    ],
+    "inquiry_notes": [
+      {
+        "id": "note-1",
+        "inquiryId": "inq-1",
+        "authorId": "admin-2",
+        "content": "Called patient. Sent hospital options for Apollo and Medanta. Awaiting decision.",
+        "createdAt": "2026-08-19T10:00:00Z"
+      },
+      {
+        "id": "note-2",
+        "inquiryId": "inq-3",
+        "authorId": "admin-2",
+        "content": "Arranged second opinion with Dr. Suresh at Fortis. Patient reports are being reviewed.",
+        "createdAt": "2026-08-18T11:00:00Z"
+      }
+    ],
+    "admin_users": [
+      {
+        "id": "usr-admin-01",
+        "email": "admin@med360.mu",
+        "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+        "name": "Dr. Karuna Ramgoolam",
+        "role": "admin",
+        "createdAt": "2025-01-01T00:00:00Z",
+        "active": true
+      },
+      {
+        "id": "usr-case-01",
+        "email": "case@med360.mu",
+        "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+        "name": "Devina Appadoo",
+        "role": "case_manager",
+        "createdAt": "2025-01-15T00:00:00Z",
+        "active": true
+      }
+    ],
+    "cms_pages": [
+      {
+        "id": "home",
+        "title": "Homepage",
+        "content": {
+          "heroBadge": {
+            "en": "✦ Mauritius's Trusted Medical Concierge",
+            "fr": "✦ Votre Conciergerie Médicale de Confiance à l'Île Maurice",
+            "kr": "✦ Ou Konzierz Medikal de Konfians dan Moris"
+          },
+          "heroTitle": {
+            "en": "World-Class Healthcare, Close to Home",
+            "fr": "Des Soins de Classe Mondiale, Proche de Vous",
+            "kr": "Bann Swen Medikal Klas Mondial, Pre kot Ou"
+          },
+          "heroDesc": {
+            "en": "Medical 360 connects patients from Mauritius and the Indian Ocean region with the world's finest accredited hospitals and specialists — at a fraction of the local cost.",
+            "fr": "Medical 360 connecte les patients de l'île Maurice et de l'océan Indien avec les meilleurs hôpitaux et spécialistes mondiaux accrédités — à une fraction du coût local.",
+            "kr": "Medical 360 konekt bann pasian dan Moris ek l'osean Indien avek bann meyer lopital ek spesialist mondial — a enn fraksion pri lokal."
+          },
+          "trustText": {
+            "en": "Trusted by 12,000+ patients from Mauritius, Réunion & beyond",
+            "fr": "Approuvé par plus de 12 000 patients de l'île Maurice, de la Réunion et d'ailleurs",
+            "kr": "Plis ki 12 000 pasian depi Moris, Larenion ek lezot pei finn fer nou konfians"
+          },
+          "whyTitle": {
+            "en": "Your Health. Our Mission.",
+            "fr": "Votre Santé. Notre Mission.",
+            "kr": "Ou Lasante. Nou Mision."
+          },
+          "whyDesc": {
+            "en": "We are not just a referral service. Medical 360 is your dedicated health partner — from the moment you reach out to the day you return home recovered.",
+            "fr": "Nous ne sommes pas un simple service de mise en relation. Medical 360 est votre partenaire santé dédié — dès votre première prise de contact jusqu'à votre retour chez vous, guéri.",
+            "kr": "Nou pa zis enn servis ki refer ou. Medical 360 vinn ou partner lasante dedie — depi premie zour ziska zour ou retourn lakaz an bonn sante."
+          }
+        }
+      },
+      {
+        "id": "describe-need",
+        "title": "Inquiry Wizard",
+        "content": {
+          "heroTitle": {
+            "en": "Describe Your Need",
+            "fr": "Décrivez Votre Besoin",
+            "kr": "Dekrir Ou Bizin"
+          },
+          "heroDesc": {
+            "en": "Fill in the form below and our medical team will get back to you with personalised hospital recommendations — free of charge.",
+            "fr": "Remplissez le formulaire ci-dessous et notre équipe médicale vous répondra avec des recommandations personnalisées — gratuitement.",
+            "kr": "Ranpli form ki anba la e nou lekip medikal pou reponn ou avek bann rekomandasion lopital personalize — pou nanye ditou."
+          },
+          "successTitle": {
+            "en": "Inquiry Submitted!",
+            "fr": "Demande Soumise !",
+            "kr": "Demann Soumet !"
+          }
+        }
+      },
+      {
+        "id": "services",
+        "title": "Concierge Services",
+        "content": {
+          "heroTitle": {
+            "en": "End-to-End Medical Concierge",
+            "fr": "Conciergerie Médicale de Bout en Bout",
+            "kr": "Servis Konzierz Medikal Konple"
+          },
+          "heroDesc": {
+            "en": "We take care of every clinical, travel, logistical, and recovery detail so you can focus entirely on healing.",
+            "fr": "Nous prenons soin de chaque détail clinique, de voyage et de logistique afin que vous puissiez vous concentrer sur votre guérison.",
+            "kr": "Nou okip tou detay voyaz, lopital ek lozman pou ou kapav zis konsantre lor ou gerizon."
+          }
+        }
+      },
+      {
+        "id": "about",
+        "title": "About Medical 360",
+        "content": {
+          "heroTitle": {
+            "en": "Bridging Indian Ocean Patients to Global Medical Excellence",
+            "fr": "Relier les Patients de l'Océan Indien à l'Excellence Médicale Mondiale",
+            "kr": "Konekt Bann Pasian Moris ar Bann Meyeur Lopital Mondial"
+          },
+          "missionText": {
+            "en": "Medical 360 was founded in Port Louis, Mauritius with a simple yet life-changing vision: no patient should compromise on medical treatment due to geographic or financial boundaries.",
+            "fr": "Medical 360 a été fondé à Port-Louis, île Maurice, avec une vision simple : aucun patient ne devrait faire de compromis sur ses soins de santé en raison de contraintes géographiques.",
+            "kr": "Medical 360 finn kree dan Port-Louis avek enn sel lide: tou pasian dan Moris merit gagn bann meyer tretman posib."
+          }
+        }
+      }
+    ],
+    "mock_config": {
+      "latency": "normal",
+      "failureRate": 0,
+      "enablePersistence": true,
+      "storageKey": "@med360_mock_store_v1",
+      "version": "1.0.0"
+    }
+  }
+}

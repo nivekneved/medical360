@@ -1,0 +1,75 @@
+{
+  "backup_id": "backup_2026-08-20_23-50-00",
+  "created_at": "2026-08-20T23:50:00+04:00",
+  "format_version": "1.0",
+  "description": "Full Medical 360 Web & Mobile apps branch snapshot, database dump, schemas, and restore utilities.",
+  "workspaces": {
+    "web": {
+      "name": "medical360",
+      "path": "D:\\WEB 2026\\medical360",
+      "git": {
+        "branch": "main",
+        "commit": "96160fc0314239e85bdb66736808218f8204c07a",
+        "commitMessage": "refactor: consolidate routing, footer links, and homepage exploration flows"
+      }
+    },
+    "mobile": {
+      "name": "medical360-mobile",
+      "path": "D:\\WEB 2026\\medical360-mobile",
+      "git": {
+        "branch": "main",
+        "commit": "66675bf373f9115b016cb4cb65ec2354dd0f8567",
+        "commitMessage": "feat(mobile): Complete Medical 360 iOS & Android application with 100% web parity and Google/Apple 2026 guidelines"
+      }
+    }
+  },
+  "files": [
+    {
+      "name": "schema.sql",
+      "type": "SQL DDL",
+      "description": "ANSI SQL / PostgreSQL / MySQL table schema & indexes"
+    },
+    {
+      "name": "data.sql",
+      "type": "SQL DML",
+      "description": "Transactional seed insert statements"
+    },
+    {
+      "name": "restore.sql",
+      "type": "SQL Script",
+      "description": "Complete 1-step re-creation and data restore script"
+    },
+    {
+      "name": "full_database.json",
+      "type": "JSON Dump",
+      "description": "Complete structured database dump"
+    },
+    {
+      "name": "database_schema.json",
+      "type": "JSON Schema",
+      "description": "JSON Schema definitions"
+    },
+    {
+      "name": "restore.js",
+      "type": "Node Utility",
+      "description": "Cross-platform CLI restore utility"
+    },
+    {
+      "name": "README.md",
+      "type": "Documentation",
+      "description": "Restoration guide and schema reference"
+    }
+  ],
+  "tables_summary": {
+    "hospitals": 7,
+    "specialties": 6,
+    "procedures": 17,
+    "doctors": 7,
+    "doctor_specialties": 8,
+    "case_studies": 3,
+    "inquiries": 5,
+    "inquiry_notes": 2,
+    "admin_users": 2,
+    "cms_pages": 4
+  }
+}

@@ -1,0 +1,271 @@
+-- =============================================================================
+-- Medical 360 Full Database Re-creation and Restore Script
+-- Backup ID: backup_2026-08-20_23-50-00
+-- Generated: 2026-08-20T23:50:00+04:00
+-- =============================================================================
+
+DROP TABLE IF EXISTS inquiry_notes CASCADE;
+DROP TABLE IF EXISTS inquiries CASCADE;
+DROP TABLE IF EXISTS case_studies CASCADE;
+DROP TABLE IF EXISTS doctor_specialties CASCADE;
+DROP TABLE IF EXISTS doctors CASCADE;
+DROP TABLE IF EXISTS procedures CASCADE;
+DROP TABLE IF EXISTS specialties CASCADE;
+DROP TABLE IF EXISTS hospitals CASCADE;
+DROP TABLE IF EXISTS admin_users CASCADE;
+DROP TABLE IF EXISTS cms_pages CASCADE;
+
+-- =============================================================================
+-- Medical 360 Database DDL Schema
+-- Generated: 2026-08-20T23:50:00+04:00
+-- Compatible with: PostgreSQL 14+, SQLite 3.35+, MySQL 8.0+, Supabase, Neon
+-- =============================================================================
+
+-- 1. Hospitals Table
+CREATE TABLE IF NOT EXISTS hospitals (
+    id VARCHAR(64) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    address TEXT,
+    beds_count INT DEFAULT 0,
+    icu_beds INT DEFAULT 0,
+    founded_year INT,
+    rating DECIMAL(3,2) DEFAULT 4.80,
+    review_count INT DEFAULT 0,
+    international_patients_per_year INT DEFAULT 0,
+    languages JSON,
+    accreditations JSON,
+    specialties JSON,
+    gallery JSON,
+    featured BOOLEAN DEFAULT FALSE,
+    active BOOLEAN DEFAULT TRUE,
+    image_url TEXT,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2. Specialties Table
+CREATE TABLE IF NOT EXISTS specialties (
+    id VARCHAR(64) PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    name_fr VARCHAR(150),
+    name_kr VARCHAR(150),
+    icon VARCHAR(64),
+    featured BOOLEAN DEFAULT TRUE,
+    short_description TEXT,
+    overview TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 3. Procedures Table
+CREATE TABLE IF NOT EXISTS procedures (
+    id VARCHAR(64) PRIMARY KEY,
+    specialty_id VARCHAR(64) REFERENCES specialties(id) ON DELETE CASCADE,
+    name VARCHAR(200) NOT NULL,
+    name_fr VARCHAR(200),
+    cost_usd_min INT NOT NULL,
+    cost_usd_max INT NOT NULL,
+    typical_stay_days INT DEFAULT 5,
+    recovery_time_weeks INT DEFAULT 4,
+    description TEXT
+);
+
+-- 4. Doctors (The 7 Specialists) Table
+CREATE TABLE IF NOT EXISTS doctors (
+    id VARCHAR(64) PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    title_fr VARCHAR(200),
+    hospital_id VARCHAR(64) REFERENCES hospitals(id) ON DELETE SET NULL,
+    experience_years INT DEFAULT 15,
+    surgeries INT DEFAULT 0,
+    rating DECIMAL(3,2) DEFAULT 4.90,
+    reviews_count INT DEFAULT 0,
+    consultation_fee_usd INT DEFAULT 60,
+    languages JSON,
+    degrees JSON,
+    awards JSON,
+    featured BOOLEAN DEFAULT TRUE,
+    image_url TEXT,
+    bio TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 5. Doctor-Specialties Junction
+CREATE TABLE IF NOT EXISTS doctor_specialties (
+    doctor_id VARCHAR(64) REFERENCES doctors(id) ON DELETE CASCADE,
+    specialty_id VARCHAR(64) REFERENCES specialties(id) ON DELETE CASCADE,
+    PRIMARY KEY (doctor_id, specialty_id)
+);
+
+-- 6. Patient Case Studies Table
+CREATE TABLE IF NOT EXISTS case_studies (
+    id VARCHAR(64) PRIMARY KEY,
+    patient_first_name VARCHAR(100) NOT NULL,
+    patient_country VARCHAR(100) NOT NULL,
+    specialty_id VARCHAR(64) REFERENCES specialties(id) ON DELETE SET NULL,
+    hospital_id VARCHAR(64) REFERENCES hospitals(id) ON DELETE SET NULL,
+    doctor_id VARCHAR(64) REFERENCES doctors(id) ON DELETE SET NULL,
+    condition TEXT NOT NULL,
+    treatment TEXT NOT NULL,
+    cost_saved_percent INT DEFAULT 60,
+    recovery_time_weeks INT DEFAULT 4,
+    testimonial TEXT NOT NULL,
+    testimonial_fr TEXT,
+    year INT DEFAULT 2025,
+    featured BOOLEAN DEFAULT TRUE,
+    rating INT DEFAULT 5,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 7. Patient Inquiries Table
+CREATE TABLE IF NOT EXISTS inquiries (
+    id VARCHAR(64) PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100),
+    phone VARCHAR(50) NOT NULL,
+    email VARCHAR(150),
+    country_of_residence VARCHAR(100) NOT NULL,
+    specialty_id VARCHAR(64),
+    preferred_hospital_id VARCHAR(64),
+    preferred_country VARCHAR(100),
+    urgency VARCHAR(30) DEFAULT 'routine',
+    description TEXT NOT NULL,
+    status VARCHAR(30) DEFAULT 'new',
+    assigned_to VARCHAR(100),
+    documents JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 8. Inquiry Notes Table
+CREATE TABLE IF NOT EXISTS inquiry_notes (
+    id VARCHAR(64) PRIMARY KEY,
+    inquiry_id VARCHAR(64) REFERENCES inquiries(id) ON DELETE CASCADE,
+    author_id VARCHAR(100) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 9. Admin Users Table
+CREATE TABLE IF NOT EXISTS admin_users (
+    id VARCHAR(64) PRIMARY KEY,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    role VARCHAR(50) DEFAULT 'case_manager',
+    active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 10. Multi-Lingual CMS Pages Table
+CREATE TABLE IF NOT EXISTS cms_pages (
+    id VARCHAR(64) PRIMARY KEY,
+    page_key VARCHAR(64) UNIQUE NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    content JSON NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ─── Indexes for Performance ─────────────────────────────────────────────────
+CREATE INDEX IF NOT EXISTS idx_hospitals_country ON hospitals(country);
+CREATE INDEX IF NOT EXISTS idx_hospitals_featured ON hospitals(featured);
+CREATE INDEX IF NOT EXISTS idx_procedures_specialty ON procedures(specialty_id);
+CREATE INDEX IF NOT EXISTS idx_doctors_hospital ON doctors(hospital_id);
+CREATE INDEX IF NOT EXISTS idx_inquiries_status ON inquiries(status);
+CREATE INDEX IF NOT EXISTS idx_inquiries_urgency ON inquiries(urgency);
+CREATE INDEX IF NOT EXISTS idx_inquiry_notes_inquiry ON inquiry_notes(inquiry_id);
+
+
+-- =============================================================================
+-- Medical 360 Database DML Seed Data
+-- Generated: 2026-08-20T23:50:00+04:00
+-- =============================================================================
+
+BEGIN TRANSACTION;
+
+-- Hospitals
+INSERT INTO hospitals (id, name, city, country, address, beds_count, icu_beds, founded_year, rating, review_count, international_patients_per_year, languages, accreditations, specialties, gallery, featured, active, image_url, description) VALUES ('hosp-1', 'Apollo Hospitals', 'Chennai', 'India', NULL, 2200, 340, 1983, 4.8, 3240, 42000, '["English","Hindi","French","Arabic","Swahili"]', '["JCI","NABH","ISO 9001"]', '["sp-cardiology","sp-oncology","sp-transplant","sp-orthopedics","sp-neurology"]', '["https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80","https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80"]', TRUE, TRUE, 'https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&q=80', 'One of Asia''s largest healthcare groups with world-class multi-specialty care. Apollo Hospitals Chennai is a pioneer in organ transplants, cardiac care, and oncology, serving over 100,000 international patients annually.');
+INSERT INTO hospitals (id, name, city, country, address, beds_count, icu_beds, founded_year, rating, review_count, international_patients_per_year, languages, accreditations, specialties, gallery, featured, active, image_url, description) VALUES ('hosp-2', 'Fortis Memorial Research Institute', 'Gurugram', 'India', NULL, 1000, 180, 2001, 4.7, 2180, 28000, '["English","Hindi","Arabic","French"]', '["JCI","NABH"]', '["sp-cardiology","sp-oncology","sp-orthopedics","sp-neurology","sp-ivf"]', '["https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80"]', TRUE, TRUE, 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&q=80', 'Fortis Memorial is a quaternary care multi-super-speciality hospital and a premier referral centre. Known globally for bone marrow transplants, complex cardiac surgeries, and advanced robotic procedures.');
+INSERT INTO hospitals (id, name, city, country, address, beds_count, icu_beds, founded_year, rating, review_count, international_patients_per_year, languages, accreditations, specialties, gallery, featured, active, image_url, description) VALUES ('hosp-3', 'Bumrungrad International Hospital', 'Bangkok', 'Thailand', NULL, 580, 120, 1980, 4.9, 5600, 130000, '["English","Thai","Arabic","French","Japanese","Chinese"]', '["JCI","ISO 9001"]', '["sp-cosmetic","sp-orthopedics","sp-cardiology","sp-oncology","sp-ophthalmology"]', '["https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80"]', TRUE, TRUE, 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80', 'One of Southeast Asia''s premier international hospitals, Bumrungrad treats over 1.3 million patients from 190 countries each year. Renowned for cosmetic surgery, orthopedics, and executive health screenings.');
+INSERT INTO hospitals (id, name, city, country, address, beds_count, icu_beds, founded_year, rating, review_count, international_patients_per_year, languages, accreditations, specialties, gallery, featured, active, image_url, description) VALUES ('hosp-4', 'Gleneagles Hospital', 'Kuala Lumpur', 'Malaysia', NULL, 380, 60, 1996, 4.6, 1420, 18000, '["English","Malay","Mandarin","Cantonese"]', '["JCI","MSQH"]', '["sp-cardiology","sp-orthopedics","sp-neurology","sp-oncology"]', '[]', FALSE, TRUE, 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80', 'Gleneagles KL is a world-class hospital known for cardiovascular surgery, orthopedics, and neuroscience. Part of the IHH Healthcare network, one of the world''s largest healthcare groups.');
+INSERT INTO hospitals (id, name, city, country, address, beds_count, icu_beds, founded_year, rating, review_count, international_patients_per_year, languages, accreditations, specialties, gallery, featured, active, image_url, description) VALUES ('hosp-5', 'Bangkok Hospital', 'Bangkok', 'Thailand', NULL, 650, 110, 1972, 4.8, 4100, 95000, '["English","Thai","French","Arabic","German","Japanese"]', '["JCI","TEMOS"]', '["sp-oncology","sp-cardiology","sp-neurology","sp-orthopedics","sp-cosmetic"]', '[]', TRUE, TRUE, 'https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=800&q=80', 'The flagship hospital of Bangkok Dusit Medical Services (BDMS), Thailand''s largest hospital operator. BDMS is internationally certified for specialized cancer care, trauma, and neuroscience.');
+INSERT INTO hospitals (id, name, city, country, address, beds_count, icu_beds, founded_year, rating, review_count, international_patients_per_year, languages, accreditations, specialties, gallery, featured, active, image_url, description) VALUES ('hosp-6', 'Medanta – The Medicity', 'Gurugram', 'India', NULL, 1250, 350, 2009, 4.8, 4890, 35000, '["English","Hindi","French","Russian","Arabic"]', '["JCI","NABH","NABL"]', '["sp-cardiology","sp-transplant","sp-neurology","sp-oncology","sp-orthopedics"]', '[]', TRUE, TRUE, 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80', 'Founded by world-renowned cardiac surgeon Dr. Naresh Trehan, Medanta spans 43 acres and features 1,250+ beds, 45 operating theatres, and India''s highest volume heart and liver transplant programs.');
+INSERT INTO hospitals (id, name, city, country, address, beds_count, icu_beds, founded_year, rating, review_count, international_patients_per_year, languages, accreditations, specialties, gallery, featured, active, image_url, description) VALUES ('hosp-7', 'Narayana Health City', 'Bengaluru', 'India', NULL, 3000, 600, 2000, 4.9, 6100, 55000, '["English","Hindi","French","Bengali"]', '["JCI","NABH"]', '["sp-cardiology","sp-transplant","sp-oncology","sp-neurology"]', '[]', TRUE, TRUE, 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80', 'Created by Dr. Devi Shetty, Narayana Health is globally renowned for performing one of the highest numbers of pediatric and adult cardiac surgeries worldwide with exceptional success rates and affordable cost structures.');
+
+-- Specialties
+INSERT INTO specialties (id, name, name_fr, name_kr, icon, featured, short_description, overview) VALUES ('sp-cardiology', 'Cardiology & Cardiac Surgery', 'Cardiologie et Chirurgie Cardiaque', 'Kardiolizi & Sirirzi Leker', 'Heart', TRUE, 'World-class heart care from diagnosis to complex bypass surgery.', NULL);
+INSERT INTO specialties (id, name, name_fr, name_kr, icon, featured, short_description, overview) VALUES ('sp-oncology', 'Oncology & Cancer Care', 'Oncologie et Soins du Cancer', 'Onkolizi & Swen Kanser', 'Activity', TRUE, 'Advanced cancer diagnosis, treatment, and targeted therapy.', NULL);
+INSERT INTO specialties (id, name, name_fr, name_kr, icon, featured, short_description, overview) VALUES ('sp-orthopedics', 'Orthopedics & Spine', 'Orthopédie et Colonne Vertébrale', 'Ortopedi & Kolonn Vertebral', 'Shield', TRUE, 'From joint replacements to complex spine surgery.', NULL);
+INSERT INTO specialties (id, name, name_fr, name_kr, icon, featured, short_description, overview) VALUES ('sp-neurology', 'Neurology & Neurosurgery', 'Neurologie et Neurochirurgie', 'Neurolozi & Neuro-Sirirzi', 'Zap', TRUE, 'Expert care for brain, spine, and nervous system conditions.', NULL);
+INSERT INTO specialties (id, name, name_fr, name_kr, icon, featured, short_description, overview) VALUES ('sp-transplant', 'Organ Transplants', 'Greffes d''Organes', 'Transplantasion Lorgann', 'Award', TRUE, 'Kidney, liver, heart and bone marrow transplant programmes.', NULL);
+INSERT INTO specialties (id, name, name_fr, name_kr, icon, featured, short_description, overview) VALUES ('sp-ivf', 'IVF & Fertility Care', 'FIV et Fertilité', 'FIV & Fertilite', 'Smile', TRUE, 'Advanced reproductive technologies with high success rates.', NULL);
+
+-- Procedures
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-c1', 'sp-cardiology', 'Coronary Artery Bypass Graft (CABG)', 'Pontage Coronarien (CABG)', 1000, 5000, NULL, NULL, 'Open-heart surgery to restore blood flow to the heart.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-c2', 'sp-cardiology', 'Angioplasty & Stenting', 'Angioplastie et Pose de Stent', 1000, 5000, NULL, NULL, 'Minimally invasive procedure to open blocked arteries.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-c3', 'sp-cardiology', 'Valve Replacement / Repair', 'Remplacement / Réparation de Valve', 1000, 5000, NULL, NULL, 'Surgical correction of damaged heart valves.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-c4', 'sp-cardiology', 'TAVI (Transcatheter Aortic Valve Implantation)', 'TAVI (Implantation de Valve Aortique Transcathéter)', 1000, 5000, NULL, NULL, 'Minimally invasive heart valve replacement without open-heart surgery.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-o1', 'sp-oncology', 'Bone Marrow / Stem Cell Transplant', 'Greffe de Moelle Osseuse / Cellules Souches', 1000, 5000, NULL, NULL, 'Treatment for blood cancers including leukemia and lymphoma.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-o2', 'sp-oncology', 'CyberKnife Radiosurgery', 'Radiochirurgie CyberKnife', 1000, 5000, NULL, NULL, 'Non-invasive tumor removal with pinpoint radiation accuracy.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-o3', 'sp-oncology', 'Chemotherapy Programs', 'Programmes de Chimiothérapie', 1000, 5000, NULL, NULL, 'Personalised chemotherapy cycles for various cancers.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-o4', 'sp-oncology', 'Immunotherapy', 'Immunothérapie', 1000, 5000, NULL, NULL, 'Harnessing the immune system to fight cancer cells.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-or1', 'sp-orthopedics', 'Total Knee Replacement', 'Remplacement Total du Genou', 1000, 5000, NULL, NULL, 'Surgical replacement of damaged knee joint with prosthetic.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-or2', 'sp-orthopedics', 'Total Hip Replacement', 'Remplacement Total de la Hanche', 1000, 5000, NULL, NULL, 'Replacement of damaged hip joint to restore mobility.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-or3', 'sp-orthopedics', 'Spine Surgery (TLIF / ALIF)', 'Chirurgie de la Colonne Vertébrale (TLIF / ALIF)', 1000, 5000, NULL, NULL, 'Spinal fusion for degenerative disc disease or instability.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-or4', 'sp-orthopedics', 'Robotic Knee/Hip Surgery', 'Chirurgie Robotique Genou/Hanche', 1000, 5000, NULL, NULL, 'Computer-guided precision joint replacement surgery.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-n1', 'sp-neurology', 'Brain Tumour Surgery', 'Chirurgie des Tumeurs Cérébrales', 1000, 5000, NULL, NULL, 'Microsurgical removal of intracranial tumours.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-n2', 'sp-neurology', 'Deep Brain Stimulation (DBS)', 'Stimulation Cérébrale Profonde (DBS)', 1000, 5000, NULL, NULL, 'Treatment for Parkinson''s disease and movement disorders.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-t1', 'sp-transplant', 'Kidney Transplant (Living Donor)', 'Greffe de Rein (Donneur Vivant)', 1000, 5000, NULL, NULL, 'Complete living donor kidney transplant with laparoscopic donor nephrectomy.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-t2', 'sp-transplant', 'Liver Transplant (Living Donor)', 'Greffe de Foie (Donneur Vivant)', 1000, 5000, NULL, NULL, 'Living donor liver transplantation (LDLT) with dual team surgery.');
+INSERT INTO procedures (id, specialty_id, name, name_fr, cost_usd_min, cost_usd_max, typical_stay_days, recovery_time_weeks, description) VALUES ('proc-ivf1', 'sp-ivf', 'IVF + ICSI Complete Cycle', 'Cycle Complet FIV + ICSI', 1000, 5000, NULL, NULL, 'Ovarian stimulation, egg retrieval, ICSI, and embryo transfer.');
+
+-- Doctors
+INSERT INTO doctors (id, name, title, title_fr, hospital_id, experience_years, surgeries, rating, reviews_count, consultation_fee_usd, languages, degrees, awards, featured, image_url, bio) VALUES ('doc-1', 'Dr. Devi Prasad Shetty', 'Chairman & Chief Cardiac Surgeon', NULL, 'hosp-narayana', NULL, 15000, NULL, NULL, 60, '["English","Hindi","Kannada"]', NULL, NULL, TRUE, 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=800&q=80', 'World-renowned cardiothoracic surgeon who has performed over 15,000 heart surgeries. Pioneer of high-volume, low-cost micro-precision cardiac care assisting patients across the Indian Ocean.');
+INSERT INTO doctors (id, name, title, title_fr, hospital_id, experience_years, surgeries, rating, reviews_count, consultation_fee_usd, languages, degrees, awards, featured, image_url, bio) VALUES ('doc-2', 'Dr. Naresh Trehan', 'Chairman & Managing Director, Cardiovascular Surgeon', NULL, 'hosp-medanta', NULL, 48000, NULL, NULL, 75, '["English","Hindi","Punjabi"]', NULL, NULL, TRUE, 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=800&q=80', 'Former Assistant Professor of Surgery at NYU Medical Center. Pioneered robotic heart surgery and minimally invasive coronary artery bypass surgery in Asia.');
+INSERT INTO doctors (id, name, title, title_fr, hospital_id, experience_years, surgeries, rating, reviews_count, consultation_fee_usd, languages, degrees, awards, featured, image_url, bio) VALUES ('doc-3', 'Dr. Suthep Udomsawaengsup', 'Director of Advanced Minimally Invasive & Bariatric Surgery', NULL, 'hosp-bumrungrad', NULL, 8500, NULL, NULL, 80, '["English","Thai","French (Basic)"]', NULL, NULL, TRUE, 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80', 'Renowned expert in robotic surgical oncology and complex minimally invasive surgical interventions with international training in the United States and Japan.');
+INSERT INTO doctors (id, name, title, title_fr, hospital_id, experience_years, surgeries, rating, reviews_count, consultation_fee_usd, languages, degrees, awards, featured, image_url, bio) VALUES ('doc-4', 'Dr. Wong Chiung Ing', 'Senior Consultant Medical Oncologist', NULL, 'hosp-gleneagles', NULL, 4200, NULL, NULL, 95, '["English","Mandarin","Cantonese","Malay"]', NULL, NULL, TRUE, 'https://images.unsplash.com/photo-1594824813589-3253b27cf17b?w=800&q=80', 'Distinguished oncologist specializing in targeted therapies, precision immunotherapy, and breast, lung, and gastrointestinal cancers at Gleneagles Singapore.');
+INSERT INTO doctors (id, name, title, title_fr, hospital_id, experience_years, surgeries, rating, reviews_count, consultation_fee_usd, languages, degrees, awards, featured, image_url, bio) VALUES ('doc-5', 'Prof. Dr. Subhash Gupta', 'Chairman - Liver Transplant & Hepato-Pancreato-Biliary Surgery', NULL, 'hosp-apollo-chennai', NULL, 6000, NULL, NULL, 70, '["English","Hindi","Tamil"]', NULL, NULL, TRUE, 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80', 'Pioneering liver transplant surgeon who led the first successful living donor liver transplant programs across South Asia with over 3,000 successful liver transplants.');
+INSERT INTO doctors (id, name, title, title_fr, hospital_id, experience_years, surgeries, rating, reviews_count, consultation_fee_usd, languages, degrees, awards, featured, image_url, bio) VALUES ('doc-6', 'Dr. Firuza R. Parikh', 'Director - Assisted Reproduction & Genetics (IVF)', NULL, 'hosp-fortis', NULL, 12000, NULL, NULL, 65, '["English","Hindi","Gujarati","French"]', NULL, NULL, TRUE, 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&q=80', 'Internationally acclaimed fertility specialist trained at Yale University School of Medicine. Has helped deliver over 12,000 babies to couples across 35 countries.');
+INSERT INTO doctors (id, name, title, title_fr, hospital_id, experience_years, surgeries, rating, reviews_count, consultation_fee_usd, languages, degrees, awards, featured, image_url, bio) VALUES ('doc-7', 'Dr. Arun Saroha', 'Senior Director - Neurosurgery & Spine Surgery', NULL, 'hosp-apollo-delhi', NULL, 9000, NULL, NULL, 60, '["English","Hindi"]', NULL, NULL, TRUE, 'https://images.unsplash.com/photo-1622253694242-abeb37a33e97?w=800&q=80', 'Leading neurosurgeon and spine specialist specializing in minimally invasive brain tumor resections, complex spinal reconstructions, and neuro-endoscopy.');
+
+-- Doctor Specialties
+INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES ('doc-1', 'sp-cardiology');
+INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES ('doc-2', 'sp-cardiology');
+INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES ('doc-3', 'sp-oncology');
+INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES ('doc-3', 'sp-orthopedics');
+INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES ('doc-4', 'sp-oncology');
+INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES ('doc-5', 'sp-transplant');
+INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES ('doc-6', 'sp-ivf');
+INSERT INTO doctor_specialties (doctor_id, specialty_id) VALUES ('doc-7', 'sp-neurology');
+
+-- Case Studies
+INSERT INTO case_studies (id, patient_first_name, patient_country, specialty_id, hospital_id, doctor_id, condition, treatment, cost_saved_percent, recovery_time_weeks, testimonial, testimonial_fr, year, featured, rating) VALUES ('cs-1', 'Marie-Claire', 'Mauritius', 'sp-cardiology', 'hosp-1', NULL, 'Triple Vessel Coronary Artery Disease', 'Triple Bypass Surgery (CABG)', 65, NULL, 'I was told in Mauritius that I needed surgery urgently but the wait was long. Medical 360 arranged everything within a week. Apollo''s team was outstanding — I felt cared for from the moment I landed.', 'On m''a dit à l''île Maurice que j''avais besoin d''une opération en urgence, mais l''attente était longue. Medical 360 a tout organisé en une semaine. L''équipe d''Apollo était exceptionnelle — je me suis sentie prise en charge dès mon arrivée.', 2024, TRUE, NULL);
+INSERT INTO case_studies (id, patient_first_name, patient_country, specialty_id, hospital_id, doctor_id, condition, treatment, cost_saved_percent, recovery_time_weeks, testimonial, testimonial_fr, year, featured, rating) VALUES ('cs-2', 'Rajesh', 'Mauritius', 'sp-transplant', 'hosp-6', NULL, 'Chronic Kidney Failure (Stage 5)', 'Living Donor Kidney Transplant', 60, NULL, 'Medanta''s transplant team coordinated everything for us — my brother and I flew together. The entire team spoke French which made us both feel at ease.', 'L''équipe de transplantation de Medanta a tout coordonné pour nous — mon frère et moi avons voyagé ensemble. Toute l''équipe parlait français, ce qui nous a mis à l''aise tous les deux.', 2024, TRUE, NULL);
+INSERT INTO case_studies (id, patient_first_name, patient_country, specialty_id, hospital_id, doctor_id, condition, treatment, cost_saved_percent, recovery_time_weeks, testimonial, testimonial_fr, year, featured, rating) VALUES ('cs-3', 'Nathalie', 'Réunion Island', 'sp-ivf', 'hosp-2', NULL, 'Primary Infertility (3 failed IVF cycles)', 'Advanced IVF with PGT-A (Preimplantation Genetic Testing)', 55, NULL, 'After 3 failed attempts elsewhere, Medical 360 connected us with a specialist who changed our protocol completely. We are now a family of three.', 'Après 3 tentatives infructueuses ailleurs, Medical 360 nous a mis en contact avec un spécialiste qui a complètement changé notre protocole. Nous sommes maintenant une famille de trois.', 2023, TRUE, NULL);
+
+-- Inquiries
+INSERT INTO inquiries (id, first_name, last_name, phone, email, country_of_residence, specialty_id, preferred_hospital_id, preferred_country, urgency, description, status, assigned_to, documents, created_at, updated_at) VALUES ('inq-1', 'Sanjiv', 'Ramkhelawon', '+23057123456', 'sanjiv.r@gmail.com', 'Mauritius', 'sp-cardiology', NULL, 'India', 'urgent', 'My father, 71 years old, has been diagnosed with severe aortic stenosis. His cardiologist recommends TAVI but the wait in Mauritius is too long. Looking for options abroad.', 'contacted', NULL, '[]', '2026-08-18T08:30:00Z', '2026-08-19T10:00:00Z');
+INSERT INTO inquiries (id, first_name, last_name, phone, email, country_of_residence, specialty_id, preferred_hospital_id, preferred_country, urgency, description, status, assigned_to, documents, created_at, updated_at) VALUES ('inq-2', 'Laetitia', 'Bonnenfant', '+23058234567', 'laetitia.b@hotmail.com', 'Mauritius', 'sp-ivf', NULL, 'India', 'routine', 'We have been trying to conceive for 4 years. Had 2 IVF cycles in Mauritius with no success. Interested in exploring IVF abroad with better success rates.', 'new', NULL, '[]', '2026-08-19T14:15:00Z', '2026-08-19T14:15:00Z');
+INSERT INTO inquiries (id, first_name, last_name, phone, email, country_of_residence, specialty_id, preferred_hospital_id, preferred_country, urgency, description, status, assigned_to, documents, created_at, updated_at) VALUES ('inq-3', 'Omar', 'Abdallah', '+26961345678', 'omar.a@yahoo.com', 'Comoros', 'sp-oncology', NULL, 'India', 'urgent', 'My wife has been diagnosed with breast cancer Stage II. Oncologist recommends surgery followed by chemotherapy. Looking for an affordable and trusted hospital in India.', 'in_progress', NULL, '[]', '2026-08-17T09:00:00Z', '2026-08-20T09:00:00Z');
+INSERT INTO inquiries (id, first_name, last_name, phone, email, country_of_residence, specialty_id, preferred_hospital_id, preferred_country, urgency, description, status, assigned_to, documents, created_at, updated_at) VALUES ('inq-4', 'Deepa', 'Luckhoo', '+23059345678', 'deepa.l@gmail.com', 'Mauritius', 'sp-orthopedics', NULL, 'Thailand', 'routine', 'Both knees need replacement. I am 64 years old and very active. Would like to explore robotic knee replacement in Thailand or India.', 'quoted', NULL, '[]', '2026-08-15T11:30:00Z', '2026-08-20T16:00:00Z');
+INSERT INTO inquiries (id, first_name, last_name, phone, email, country_of_residence, specialty_id, preferred_hospital_id, preferred_country, urgency, description, status, assigned_to, documents, created_at, updated_at) VALUES ('inq-5', 'Patrick', 'Mounien', '+23057456789', 'p.mounien@orange.mu', 'Mauritius', 'sp-neurology', NULL, 'Singapore', 'urgent', 'I have a 3cm meningioma on my frontal lobe. My neurologist says it needs to be removed but I want a second opinion and possibly surgery abroad.', 'new', NULL, '[]', '2026-08-20T07:00:00Z', '2026-08-20T07:00:00Z');
+
+-- Inquiry Notes
+INSERT INTO inquiry_notes (id, inquiry_id, author_id, content, created_at) VALUES ('note-1', 'inq-1', 'admin-2', 'Called patient. Sent hospital options for Apollo and Medanta. Awaiting decision.', '2026-08-19T10:00:00Z');
+INSERT INTO inquiry_notes (id, inquiry_id, author_id, content, created_at) VALUES ('note-2', 'inq-3', 'admin-2', 'Arranged second opinion with Dr. Suresh at Fortis. Patient reports are being reviewed.', '2026-08-18T11:00:00Z');
+
+-- Admin Users
+INSERT INTO admin_users (id, email, password_hash, name, role, active, created_at) VALUES ('usr-admin-01', 'admin@med360.mu', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Dr. Karuna Ramgoolam', 'admin', TRUE, '2025-01-01T00:00:00Z');
+INSERT INTO admin_users (id, email, password_hash, name, role, active, created_at) VALUES ('usr-case-01', 'case@med360.mu', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'Devina Appadoo', 'case_manager', TRUE, '2025-01-15T00:00:00Z');
+
+-- CMS Pages
+INSERT INTO cms_pages (id, page_key, title, content, updated_at) VALUES ('home', NULL, 'Homepage', '{"heroBadge":{"en":"✦ Mauritius''s Trusted Medical Concierge","fr":"✦ Votre Conciergerie Médicale de Confiance à l''Île Maurice","kr":"✦ Ou Konzierz Medikal de Konfians dan Moris"},"heroTitle":{"en":"World-Class Healthcare, Close to Home","fr":"Des Soins de Classe Mondiale, Proche de Vous","kr":"Bann Swen Medikal Klas Mondial, Pre kot Ou"},"heroDesc":{"en":"Medical 360 connects patients from Mauritius and the Indian Ocean region with the world''s finest accredited hospitals and specialists — at a fraction of the local cost.","fr":"Medical 360 connecte les patients de l''île Maurice et de l''océan Indien avec les meilleurs hôpitaux et spécialistes mondiaux accrédités — à une fraction du coût local.","kr":"Medical 360 konekt bann pasian dan Moris ek l''osean Indien avek bann meyer lopital ek spesialist mondial — a enn fraksion pri lokal."},"trustText":{"en":"Trusted by 12,000+ patients from Mauritius, Réunion & beyond","fr":"Approuvé par plus de 12 000 patients de l''île Maurice, de la Réunion et d''ailleurs","kr":"Plis ki 12 000 pasian depi Moris, Larenion ek lezot pei finn fer nou konfians"},"whyTitle":{"en":"Your Health. Our Mission.","fr":"Votre Santé. Notre Mission.","kr":"Ou Lasante. Nou Mision."},"whyDesc":{"en":"We are not just a referral service. Medical 360 is your dedicated health partner — from the moment you reach out to the day you return home recovered.","fr":"Nous ne sommes pas un simple service de mise en relation. Medical 360 est votre partenaire santé dédié — dès votre première prise de contact jusqu''à votre retour chez vous, guéri.","kr":"Nou pa zis enn servis ki refer ou. Medical 360 vinn ou partner lasante dedie — depi premie zour ziska zour ou retourn lakaz an bonn sante."}}', NULL);
+INSERT INTO cms_pages (id, page_key, title, content, updated_at) VALUES ('describe-need', NULL, 'Inquiry Wizard', '{"heroTitle":{"en":"Describe Your Need","fr":"Décrivez Votre Besoin","kr":"Dekrir Ou Bizin"},"heroDesc":{"en":"Fill in the form below and our medical team will get back to you with personalised hospital recommendations — free of charge.","fr":"Remplissez le formulaire ci-dessous et notre équipe médicale vous répondra avec des recommandations personnalisées — gratuitement.","kr":"Ranpli form ki anba la e nou lekip medikal pou reponn ou avek bann rekomandasion lopital personalize — pou nanye ditou."},"successTitle":{"en":"Inquiry Submitted!","fr":"Demande Soumise !","kr":"Demann Soumet !"}}', NULL);
+INSERT INTO cms_pages (id, page_key, title, content, updated_at) VALUES ('services', NULL, 'Concierge Services', '{"heroTitle":{"en":"End-to-End Medical Concierge","fr":"Conciergerie Médicale de Bout en Bout","kr":"Servis Konzierz Medikal Konple"},"heroDesc":{"en":"We take care of every clinical, travel, logistical, and recovery detail so you can focus entirely on healing.","fr":"Nous prenons soin de chaque détail clinique, de voyage et de logistique afin que vous puissiez vous concentrer sur votre guérison.","kr":"Nou okip tou detay voyaz, lopital ek lozman pou ou kapav zis konsantre lor ou gerizon."}}', NULL);
+INSERT INTO cms_pages (id, page_key, title, content, updated_at) VALUES ('about', NULL, 'About Medical 360', '{"heroTitle":{"en":"Bridging Indian Ocean Patients to Global Medical Excellence","fr":"Relier les Patients de l''Océan Indien à l''Excellence Médicale Mondiale","kr":"Konekt Bann Pasian Moris ar Bann Meyeur Lopital Mondial"},"missionText":{"en":"Medical 360 was founded in Port Louis, Mauritius with a simple yet life-changing vision: no patient should compromise on medical treatment due to geographic or financial boundaries.","fr":"Medical 360 a été fondé à Port-Louis, île Maurice, avec une vision simple : aucun patient ne devrait faire de compromis sur ses soins de santé en raison de contraintes géographiques.","kr":"Medical 360 finn kree dan Port-Louis avek enn sel lide: tou pasian dan Moris merit gagn bann meyer tretman posib."}}', NULL);
+
+COMMIT;
+
