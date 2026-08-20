@@ -1,8 +1,17 @@
-.floating-whatsapp {
+.floating-actions-group {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* WhatsApp Button */
+.floating-whatsapp {
+  position: relative;
   width: 56px;
   height: 56px;
   border-radius: var(--radius-full);
@@ -18,13 +27,48 @@
 
 .floating-whatsapp:hover {
   background: #1ebe5d;
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
-.floating-whatsapp__tooltip {
+/* Scroll To Top Button (Positioned Below WhatsApp) */
+.floating-scroll-top {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.85);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-scroll-top--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.floating-scroll-top:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(26, 107, 255, 0.35);
+}
+
+/* Tooltips */
+.floating-action__tooltip {
   position: absolute;
   right: calc(100% + 12px);
-  background: var(--color-dark);
+  background: #080d1a;
   color: white;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -35,9 +79,11 @@
   pointer-events: none;
   transform: translateX(8px);
   transition: var(--transition-fast);
+  box-shadow: var(--shadow-md);
 }
 
-.floating-whatsapp:hover .floating-whatsapp__tooltip {
+.floating-whatsapp:hover .floating-action__tooltip,
+.floating-scroll-top:hover .floating-action__tooltip {
   opacity: 1;
   transform: translateX(0);
 }
@@ -45,4 +91,23 @@
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45); }
   50%       { box-shadow: 0 8px 32px rgba(37, 211, 102, 0.7); }
+}
+
+@media (max-width: 640px) {
+  .floating-actions-group {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    gap: 0.5rem;
+  }
+  .floating-whatsapp {
+    width: 50px;
+    height: 50px;
+  }
+  .floating-scroll-top {
+    width: 40px;
+    height: 40px;
+  }
+  .floating-action__tooltip {
+    display: none;
+  }
 }
