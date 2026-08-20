@@ -111,23 +111,29 @@ export function HomePage() {
           </div>
           <div className="specialties-grid">
             {specLoading
-              ? Array.from({ length: 6 }).map((_, i) => <div key={i} className="specialty-card skeleton" style={{ height: 180 }} />)
+              ? Array.from({ length: 6 }).map((_, i) => <div key={i} className="specialty-card-full skeleton" style={{ height: 320 }} />)
               : specialties.slice(0, 6).map((sp, i) => (
-                <button
+                <div
                   key={sp.id}
-                  className={`specialty-card animate-fade-in-up delay-${i % 4 + 1}`}
-                  onClick={() => navigate(`/specialties/${sp.id}`)}
+                  className={`specialty-card-full animate-fade-in-up delay-${(i % 4) + 1}`}
+                  onClick={() => navigate(`/describe-need?specialty=${sp.id}`)}
                   id={`specialty-card-${sp.id}`}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={e => e.key === 'Enter' && navigate(`/describe-need?specialty=${sp.id}`)}
                 >
-                  <div className="specialty-card__icon">
-                    <span className="specialty-card__emoji">🏥</span>
+                  <img src={sp.imageUrl} alt={sp.name} className="specialty-card-full__img" loading="lazy" />
+                  <div className="specialty-card-full__overlay" />
+                  <div className="specialty-card-full__content">
+                    <h3 className="specialty-card-full__title">{sp.name}</h3>
+                    <p className="specialty-card-full__desc">{sp.shortDescription}</p>
+                    <div className="specialty-card-full__action">
+                      <span className="specialty-card-full__btn">
+                        Explore Specialty <ArrowRight size={14} />
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="specialty-card__name">{sp.name}</h3>
-                  <p className="specialty-card__desc">{sp.shortDescription}</p>
-                  <div className="specialty-card__cta">
-                    Learn More <ChevronRight size={14} />
-                  </div>
-                </button>
+                </div>
               ))
             }
           </div>
