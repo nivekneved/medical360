@@ -336,6 +336,28 @@ class MockEngine {
     return updated;
   }
 
+  async addInquiryNote(id: string, content: string, authorId: string = 'admin'): Promise<Inquiry> {
+    await this.delay();
+    const idx = this.store.inquiries.findIndex(i => i.id === id);
+    if (idx === -1) throw new Error('Not found');
+    const inquiry = this.store.inquiries[idx];
+    const newNote = {
+      id: `note-${Date.now()}`,
+      inquiryId: id,
+      authorId,
+      content,
+      createdAt: new Date().toISOString(),
+    };
+    const updated = {
+      ...inquiry,
+      updatedAt: new Date().toISOString(),
+      notes: [...(inquiry.notes || []), newNote],
+    };
+    this.store.inquiries[idx] = updated;
+    this.save();
+    return updated;
+  }
+
   // ── CMS ───────────────────────────────────────────────────────────────────
   async getCmsPage(id: string): Promise<CmsPage> {
     await this.delay();
