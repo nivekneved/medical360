@@ -155,33 +155,35 @@ export function ServicesPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" style={{ paddingTop: '2.5rem', paddingBottom: '6rem' }}>
         <div className="container">
           {/* Unified List Toolbar */}
-          <ListToolbar
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder={l10n('Rechercher un service...', 'Rod enn servis...', 'Search services...')}
-            sortBy={sortBy}
-            onSortChange={setSortBy}
-            sortOptions={sortOptions}
-            totalCount={sortedServices.length}
-            countUnit={isFr ? 'service' : isKr ? 'servis' : 'service'}
-            countUnitPlural={isFr ? 'services' : isKr ? 'servis' : 'services'}
-            viewMode={viewMode}
-            onViewModeChange={setViewMode}
-            extraControls={
-              searchQuery ? (
-                <button
-                  type="button"
-                  className="list-toolbar__clear-btn"
-                  onClick={() => setSearchQuery('')}
-                >
-                  ↺ {l10n('Effacer', 'Efase', 'Clear')}
-                </button>
-              ) : null
-            }
-          />
+          <div style={{ marginBottom: '2.5rem' }}>
+            <ListToolbar
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              searchPlaceholder={l10n('Rechercher un service...', 'Rod enn servis...', 'Search services...')}
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              sortOptions={sortOptions}
+              totalCount={sortedServices.length}
+              countUnit={isFr ? 'service' : isKr ? 'servis' : 'service'}
+              countUnitPlural={isFr ? 'services' : isKr ? 'servis' : 'services'}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+              extraControls={
+                searchQuery ? (
+                  <button
+                    type="button"
+                    className="list-toolbar__clear-btn"
+                    onClick={() => setSearchQuery('')}
+                  >
+                    ↺ {l10n('Effacer', 'Efase', 'Clear')}
+                  </button>
+                ) : null
+              }
+            />
+          </div>
 
           <div className={`services-cards-grid ${viewMode === 'list' ? 'services-cards-grid--list-view' : ''}`}>
             {sortedServices.map((srv, i) => (
@@ -210,11 +212,11 @@ export function ServicesPage() {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '4rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need')} id="services-cta-btn">
+          <div style={{ textAlign: 'center', marginTop: '4.5rem', marginBottom: '2rem', display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+            <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need')} id="services-cta-btn" style={{ padding: '0.85rem 2rem' }}>
               {t('common.getStarted')} <ArrowRight size={18} />
             </button>
-            <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg">
+            <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg" style={{ padding: '0.85rem 2rem' }}>
               <MessageCircle size={18} /> {t('nav.whatsapp')}: 59188275
             </a>
           </div>

@@ -173,7 +173,7 @@ export const caseStudiesSeed: CaseStudy[] = [
     costSavedPercent: 58,
     durationDays: 12,
     year: 2023,
-    imageUrl: 'https://images.unsplash.com/photo-1597764690523-9bda1f42efbb?w=800&q=80',
+    imageUrl: '/assets/banners/corneal_case_study.jpg',
     featured: false,
   },
   {

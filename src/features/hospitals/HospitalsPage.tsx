@@ -187,7 +187,12 @@ export function HospitalsPage() {
                 return (
                   <div key={hospital.id} className="hospital-list-card" id={`hospital-${hospital.id}`}>
                     <div className="hospital-list-card__image">
-                      <img src={hospital.imageUrl} alt={hospital.name} loading="lazy" />
+                      <img
+                        src={hospital.imageUrl}
+                        alt={hospital.name}
+                        loading="lazy"
+                        onError={(e) => { e.currentTarget.src = '/assets/banners/hospitals_banner.jpg'; }}
+                      />
                       <button
                         onClick={(e) => {
                           e.stopPropagation();

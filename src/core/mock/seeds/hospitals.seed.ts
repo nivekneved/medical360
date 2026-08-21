@@ -164,7 +164,7 @@ export const hospitalsSeed: Hospital[] = [
     description: 'Max Saket is among Delhi\'s finest hospitals with state-of-the-art infrastructure for bone marrow transplants, neuro-oncology, and spine care. Serves a large Mauritius patient diaspora.',
     description_fr: 'Max Saket figure parmi les meilleurs hôpitaux de Delhi avec des infrastructures de pointe pour les greffes de moelle osseuse, la neuro-oncologie et les soins de la colonne vertébrale. Accueille une grande diaspora de patients mauriciens.',
     description_kr: 'Max Saket se enn bann meyer lopital dan Delhi. Zot bien avanse pou transplantasion mwal ose ek swen ledo. Zot akey boukou pasian depi Moris.',
-    imageUrl: 'https://images.unsplash.com/photo-1583912267550-d974498c4ce0?w=800&q=80',
+    imageUrl: '/assets/banners/max_hospital.jpg',
     gallery: [],
     accreditations: ['NABH', 'ISO 9001'],
     specialties: ['sp-oncology', 'sp-neurology', 'sp-orthopedics', 'sp-cardiology'],

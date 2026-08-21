@@ -113,7 +113,12 @@ export function SpecialtiesPage() {
             : sortedSpecialties.map((sp) => (
                 <div key={sp.id} className="spec-card" id={`spec-card-${sp.id}`} style={{ cursor: 'pointer' }}>
                   <div className="spec-card__image" onClick={() => navigate(`/specialties/${sp.id}`)}>
-                    <img src={sp.imageUrl} alt={l(sp, 'name')} loading="lazy" />
+                    <img
+                      src={sp.imageUrl}
+                      alt={l(sp, 'name')}
+                      loading="lazy"
+                      onError={(e) => { e.currentTarget.src = '/assets/banners/specialties_banner.jpg'; }}
+                    />
                     <div className="spec-card__overlay" />
                     <h2 className="spec-card__name">{l(sp, 'name')}</h2>
                   </div>

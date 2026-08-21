@@ -13,7 +13,7 @@ const DEFAULT_CONFIG: MockConfig = {
   errorRate: 0,
 };
 
-const STORAGE_KEY = 'med360_mock_store_v2';
+const STORAGE_KEY = 'med360_mock_store_v3';
 const CONFIG_KEY  = 'med360_mock_config';
 
 // ─── Latency Simulator ───────────────────────────────────────────────────────
@@ -69,11 +69,21 @@ function loadStore(): MockStore {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as MockStore;
+      const specMap = new Map(specialtiesSeed.map(s => [s.id, s.imageUrl]));
+      const docMap = new Map(doctorsSeed.map(d => [d.id, d.imageUrl]));
+      const hospMap = new Map(hospitalsSeed.map(h => [h.id, h.imageUrl]));
+      const csMap = new Map(caseStudiesSeed.map(c => [c.id, c.imageUrl]));
+
+      const hospitals = (parsed.hospitals?.length ? parsed.hospitals : hospitalsSeed).map(h => hospMap.has(h.id) ? { ...h, imageUrl: hospMap.get(h.id)! } : h);
+      const specialties = (parsed.specialties?.length ? parsed.specialties : specialtiesSeed).map(s => specMap.has(s.id) ? { ...s, imageUrl: specMap.get(s.id)! } : s);
+      const doctors = (parsed.doctors?.length ? parsed.doctors : doctorsSeed).map(d => docMap.has(d.id) ? { ...d, imageUrl: docMap.get(d.id)! } : d);
+      const caseStudies = (parsed.caseStudies?.length ? parsed.caseStudies : caseStudiesSeed).map(c => csMap.has(c.id) ? { ...c, imageUrl: csMap.get(c.id)! } : c);
+
       return {
-        hospitals: parsed.hospitals?.length ? parsed.hospitals : hospitalsSeed,
-        specialties: parsed.specialties?.length ? parsed.specialties : specialtiesSeed,
-        doctors: parsed.doctors?.length ? parsed.doctors : doctorsSeed,
-        caseStudies: parsed.caseStudies?.length ? parsed.caseStudies : caseStudiesSeed,
+        hospitals,
+        specialties,
+        doctors,
+        caseStudies,
         inquiries: parsed.inquiries ?? inquiriesSeed,
         cms: mergeCms(cmsSeed, parsed.cms ?? {}),
       };
