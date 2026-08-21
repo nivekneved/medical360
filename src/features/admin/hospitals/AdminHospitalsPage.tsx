@@ -1,17 +1,63 @@
-import { useState } from 'react';
-import { Building2, Edit3, Eye, Plus, Star, MapPin, Shield, CheckCircle2, X, Users, Bed } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Building2, Edit3, Eye, Plus, Star, MapPin, Shield, CheckCircle2, X, Users, Bed, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useHospitals } from '../../../hooks/useHospitals';
 import { formatNumber } from '../../../core/services/format.service';
 import { ImageField } from '../components/ImageField';
 import type { Hospital } from '../../../core/types';
+import '../AdminToolbar.css';
 
 export function AdminHospitalsPage() {
   const { hospitals, loading, refetch } = useHospitals({});
+  const [viewMode, setViewMode]         = useState<'grid' | 'list'>('grid');
+  
+  // Search, Filters, Sorting, Pagination
+  const [searchQuery, setSearchQuery]           = useState('');
+  const [selectedAccreditation, setSelectedAccreditation] = useState('all');
+  const [selectedCountry, setSelectedCountry]   = useState('all');
+  const [sortBy, setSortBy]                     = useState<'rating-desc' | 'beds-desc' | 'intl-desc' | 'name-asc' | 'name-desc'>('rating-desc');
+  const [currentPage, setCurrentPage]           = useState(1);
+  const [itemsPerPage, setItemsPerPage]         = useState(6);
+
   const [editingHospital, setEditingHospital] = useState<Hospital | null>(null);
   const [viewingHospital, setViewingHospital] = useState<Hospital | null>(null);
   const [saving, setSaving]             = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
+
+  // Filtered & Sorted Hospitals
+  const filteredHospitals = useMemo(() => {
+    return hospitals.filter((h) => {
+      const matchSearch =
+        searchQuery.trim() === '' ||
+        h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        h.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        h.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (h.description || '').toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchAccreditation =
+        selectedAccreditation === 'all' ||
+        (h.accreditations || []).includes(selectedAccreditation);
+
+      const matchCountry =
+        selectedCountry === 'all' || h.country === selectedCountry;
+
+      return matchSearch && matchAccreditation && matchCountry;
+    }).sort((a, b) => {
+      if (sortBy === 'rating-desc') return b.rating - a.rating;
+      if (sortBy === 'beds-desc') return (b.bedsCount || 0) - (a.bedsCount || 0);
+      if (sortBy === 'intl-desc') return (b.internationalPatientsPerYear || 0) - (a.internationalPatientsPerYear || 0);
+      if (sortBy === 'name-asc') return a.name.localeCompare(b.name);
+      if (sortBy === 'name-desc') return b.name.localeCompare(a.name);
+      return 0;
+    });
+  }, [hospitals, searchQuery, selectedAccreditation, selectedCountry, sortBy]);
+
+  // Pagination calculation
+  const totalPages = Math.ceil(filteredHospitals.length / itemsPerPage) || 1;
+  const paginatedHospitals = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredHospitals.slice(start, start + itemsPerPage);
+  }, [filteredHospitals, currentPage, itemsPerPage]);
 
   const handleEditClick = (h: Hospital) => {
     setEditingHospital(JSON.parse(JSON.stringify(h)));
@@ -44,14 +90,127 @@ export function AdminHospitalsPage() {
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: 1100, margin: '0 auto' }}>
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+    <div style={{ padding: '2rem' }}>
+      {/* Header with Grid / List Toggle */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Partner Hospitals Management</h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
             Manage hospital profiles, bed counts, JCI/NABH accreditations, and medical facility descriptions.
           </p>
+        </div>
+
+        {/* View Toggle */}
+        <div style={{
+          display: 'flex',
+          background: 'var(--color-surface-2)',
+          padding: 3,
+          borderRadius: 'var(--radius-lg)',
+          border: '1px solid var(--color-border)',
+          gap: 2,
+        }}>
+          <button
+            type="button"
+            className={`btn btn-sm ${viewMode === 'grid' ? 'btn-primary' : 'btn-ghost'}`}
+            onClick={() => setViewMode('grid')}
+            style={{ padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+          >
+            <LayoutGrid size={15} /> Grid
+          </button>
+          <button
+            type="button"
+            className={`btn btn-sm ${viewMode === 'list' ? 'btn-primary' : 'btn-ghost'}`}
+            onClick={() => setViewMode('list')}
+            style={{ padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+          >
+            <List size={15} /> List
+          </button>
+        </div>
+      </div>
+
+      {/* ─── SEARCH, FILTERS & SORTING TOOLBAR ────────────────────────────── */}
+      <div className="admin-toolbar">
+        {/* Search Input */}
+        <div className="admin-toolbar__left">
+          <div className="admin-toolbar__search-box">
+            <Search size={16} className="admin-toolbar__search-icon" />
+            <input
+              type="text"
+              className="admin-toolbar__search-input"
+              placeholder="Search hospitals, city, facilities..."
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            />
+            {searchQuery && (
+              <button
+                className="admin-toolbar__clear-search"
+                onClick={() => { setSearchQuery(''); setCurrentPage(1); }}
+                title="Clear search"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Filters and Sort */}
+        <div className="admin-toolbar__right">
+          {/* Accreditation Filter */}
+          <select
+            className="admin-toolbar__select"
+            value={selectedAccreditation}
+            onChange={(e) => { setSelectedAccreditation(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="all">All Accreditations</option>
+            <option value="JCI">JCI Accredited</option>
+            <option value="NABH">NABH Accredited</option>
+            <option value="ISO">ISO Certified</option>
+            <option value="NABL">NABL Labs</option>
+          </select>
+
+          {/* Country Filter */}
+          <select
+            className="admin-toolbar__select"
+            value={selectedCountry}
+            onChange={(e) => { setSelectedCountry(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="all">All Countries</option>
+            <option value="India">India</option>
+            <option value="Mauritius">Mauritius</option>
+            <option value="Reunion">Réunion</option>
+          </select>
+
+          {/* Sort By */}
+          <div className="admin-toolbar__sort-wrap">
+            <ArrowUpDown size={14} color="var(--color-text-muted)" />
+            <select
+              className="admin-toolbar__sort-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+            >
+              <option value="rating-desc">Highest Rated</option>
+              <option value="beds-desc">Most Hospital Beds</option>
+              <option value="intl-desc">Most Intl. Patients</option>
+              <option value="name-asc">Name (A → Z)</option>
+              <option value="name-desc">Name (Z → A)</option>
+            </select>
+          </div>
+
+          {/* Clear Filters Reset Button */}
+          {(searchQuery || selectedAccreditation !== 'all' || selectedCountry !== 'all') && (
+            <button
+              className="admin-toolbar__reset-btn"
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedAccreditation('all');
+                setSelectedCountry('all');
+                setCurrentPage(1);
+              }}
+              title="Reset all filters"
+            >
+              <RotateCcw size={12} /> Reset
+            </button>
+          )}
         </div>
       </div>
 
@@ -61,9 +220,29 @@ export function AdminHospitalsPage() {
             <div key={i} className="skeleton" style={{ height: 200, borderRadius: 16 }} />
           ))}
         </div>
-      ) : (
+      ) : paginatedHospitals.length === 0 ? (
+        <div style={{
+          textAlign: 'center',
+          padding: '3rem 1rem',
+          background: 'var(--color-surface)',
+          border: '1.5px dashed var(--color-border)',
+          borderRadius: 'var(--radius-xl)',
+          color: 'var(--color-text-muted)',
+        }}>
+          <Search size={36} style={{ margin: '0 auto 0.75rem', opacity: 0.4 }} />
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--color-text)' }}>No hospitals match your search</h3>
+          <p style={{ fontSize: '0.85rem', marginTop: 4 }}>Try clearing search keywords or adjusting your filters.</p>
+          <button
+            className="btn btn-outline btn-sm"
+            onClick={() => { setSearchQuery(''); setSelectedAccreditation('all'); setSelectedCountry('all'); }}
+            style={{ marginTop: '1rem' }}
+          >
+            Clear Filters
+          </button>
+        </div>
+      ) : viewMode === 'grid' ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
-          {hospitals.map((hospital) => {
+          {paginatedHospitals.map((hospital) => {
             const desc = hospital.description || hospital.description_fr || '';
             const accreditations = hospital.accreditations || [];
 
@@ -137,6 +316,124 @@ export function AdminHospitalsPage() {
               </div>
             );
           })}
+        </div>
+      ) : (
+        /* ─── COMPACT LIST VIEW ─── */
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          {paginatedHospitals.map((hospital) => (
+            <div
+              key={hospital.id}
+              style={{
+                background: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-xl)',
+                padding: '1rem 1.25rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '1.25rem',
+                flexWrap: 'wrap',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.02)',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 280, flex: 2 }}>
+                <img
+                  src={hospital.imageUrl}
+                  alt={hospital.name}
+                  style={{ width: 56, height: 56, borderRadius: 'var(--radius-md)', objectFit: 'cover', flexShrink: 0 }}
+                />
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0 }}>{hospital.name}</h3>
+                    {(hospital.accreditations || []).map((acc) => (
+                      <span key={acc} className="badge badge-accent" style={{ fontSize: '0.65rem' }}>{acc}</span>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                    <MapPin size={12} style={{ display: 'inline', marginRight: 3 }} /> {hospital.city}, {hospital.country}
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1.5, justifyContent: 'space-around' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#eab308' }}>{hospital.rating} ★</div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Rating</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{formatNumber(hospital.bedsCount || 0)}</div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Beds</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-primary)' }}>
+                    {formatNumber(hospital.internationalPatientsPerYear || 0)}+
+                  </div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Intl/Yr</div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => handleViewClick(hospital)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <Eye size={14} /> View
+                </button>
+                <button
+                  className="btn btn-outline btn-sm"
+                  onClick={() => handleEditClick(hospital)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <Edit3 size={14} /> Edit
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ─── PAGINATION BAR ────────────────────────────────────────────────── */}
+      {filteredHospitals.length > 0 && (
+        <div style={{
+          marginTop: '1.75rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          padding: '0.75rem 1rem',
+          background: 'var(--color-surface)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 'var(--radius-xl)',
+        }}>
+          <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
+            Showing <strong>{Math.min((currentPage - 1) * itemsPerPage + 1, filteredHospitals.length)}</strong> to{' '}
+            <strong>{Math.min(currentPage * itemsPerPage, filteredHospitals.length)}</strong> of{' '}
+            <strong>{filteredHospitals.length}</strong> partner hospitals
+          </span>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <button
+              className="btn btn-outline btn-sm"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage === 1 ? 0.5 : 1 }}
+            >
+              <ChevronLeft size={14} /> Prev
+            </button>
+            <span style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0 0.5rem' }}>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="btn btn-outline btn-sm"
+              disabled={currentPage >= totalPages}
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage >= totalPages ? 0.5 : 1 }}
+            >
+              Next <ChevronRight size={14} />
+            </button>
+          </div>
         </div>
       )}
 
