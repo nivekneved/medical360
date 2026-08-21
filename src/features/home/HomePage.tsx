@@ -28,10 +28,10 @@ export function HomePage() {
   };
 
   const STATS = [
-    { icon: Users,      value: '12,000+', label: tCms('statPatients', t('home.stats.patients')) },
-    { icon: Award,      value: '50+',     label: tCms('statHospitals', t('home.stats.hospitals')) },
-    { icon: Globe2,     value: '15+',     label: tCms('statCountries', t('home.stats.countries')) },
-    { icon: HeartPulse, value: '98%',     label: tCms('statSatisfaction', t('home.stats.satisfaction')) },
+    { icon: Users,      value: '1,200+', label: tCms('statPatients', t('home.stats.patients')) },
+    { icon: Award,      value: '15+',     label: tCms('statHospitals', t('home.stats.hospitals')) },
+    { icon: Globe2,     value: '7+',      label: tCms('statCountries', t('home.stats.countries')) },
+    { icon: HeartPulse, value: '100%',    label: tCms('statSatisfaction', t('home.stats.satisfaction')) },
   ];
 
   const PROCESS_STEPS = [

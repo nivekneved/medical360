@@ -13,12 +13,12 @@ const HIGHLIGHTS = [
   },
   { 
     icon: Users,  
-    label: '12,000+ Patients Assisted', label_fr: 'Plus de 12 000 Patients Assistés', label_kr: 'Plis ki 12 000 Pasian Asiste',
+    label: '1,200+ Patients Assisted', label_fr: 'Plus de 1 200 Patients Assistés', label_kr: 'Plis ki 1 200 Pasian Asiste',
     sub: 'From Mauritius, Reunion, Comoros and beyond', sub_fr: 'De l\'Île Maurice, de la Réunion, des Comores et d\'ailleurs', sub_kr: 'Depi Moris, Larenion, Komor ek lezot pei'
   },
   { 
     icon: Globe2, 
-    label: '15+ Countries', label_fr: 'Plus de 15 Pays', label_kr: 'Plis ki 15 Pei',
+    label: '7+ Countries', label_fr: 'Plus de 7 Pays', label_kr: 'Plis ki 7 Pei',
     sub: 'India, Thailand, Singapore, Malaysia, UAE', sub_fr: 'Inde, Thaïlande, Singapour, Malaisie, Émirats Arabes Unis', sub_kr: 'L\'inde, Taylann, Singapour, Malaisie, Dubai'
   },
   { 

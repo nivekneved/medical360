@@ -13,7 +13,7 @@ const DEFAULT_CONFIG: MockConfig = {
   errorRate: 0,
 };
 
-const STORAGE_KEY = 'med360_mock_store_v3';
+const STORAGE_KEY = 'med360_mock_store_v4';
 const CONFIG_KEY  = 'med360_mock_config';
 
 // ─── Latency Simulator ───────────────────────────────────────────────────────

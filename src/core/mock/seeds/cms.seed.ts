@@ -57,14 +57,14 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80'
       },
       trustText: {
-        en: 'Trusted by 12,000+ Mauritian Patients',
-        fr: 'Approuvé par plus de 12 000 patients mauriciens',
-        kr: 'Plis ki 12,000 pasian Morisien fer nou konfians'
+        en: 'Trusted by 1,200+ Mauritian Patients',
+        fr: 'Approuvé par plus de 1 200 patients mauriciens',
+        kr: 'Plis ki 1,200 pasian Morisien fer nou konfians'
       },
-      statPatients: { en: '12,000+ Patients Assisted', fr: '12 000+ Patients Accompagnés', kr: '12,000+ Pasian Asiste' },
-      statHospitals: { en: '50+ Accredited Hospitals', fr: '50+ Hôpitaux Accrédités', kr: '50+ Lopital Akredite' },
-      statCountries: { en: '8 Global Destinations', fr: '8 Destinations Mondiales', kr: '8 Destinasion Mondial' },
-      statSatisfaction: { en: '98% Satisfaction Rate', fr: '98% Taux de Satisfaction', kr: '98% Pousantaz Satisfe' },
+      statPatients: { en: '1,200+ Patients Assisted', fr: '1 200+ Patients Accompagnés', kr: '1,200+ Pasian Asiste' },
+      statHospitals: { en: '15+ Accredited Hospitals', fr: '15+ Hôpitaux Accrédités', kr: '15+ Lopital Akredite' },
+      statCountries: { en: '7+ Global Destinations', fr: '7+ Destinations Mondiales', kr: '7+ Destinasion Mondial' },
+      statSatisfaction: { en: '100% Satisfaction Rate', fr: '100% Taux de Satisfaction', kr: '100% Pousantaz Satisfe' },
       processLabel: { en: 'Simple 4-Step Process', fr: 'Processus en 4 Étapes', kr: 'Prosesis an 4 Letap' },
       processTitle: { en: 'Your Healthcare Journey in 4 Simple Steps', fr: 'Votre Parcours de Soins en 4 Étapes Simples', kr: 'Ou Vwayaz Lasante an 4 Letap' },
       processStep1Title: { en: '1. Describe Your Need', fr: '1. Décrivez Votre Besoin', kr: '1. Dekrir Ou Bizin' },
