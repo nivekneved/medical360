@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -5,6 +6,7 @@ import { useSpecialties } from '../../hooks/useSpecialties';
 import { formatCostRange } from '../../core/services/format.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
+import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import './Specialties.css';
 
 export function SpecialtiesPage() {
@@ -13,6 +15,11 @@ export function SpecialtiesPage() {
   const { specialties, loading } = useSpecialties();
   const { data: cms } = useCMS('specialties');
 
+  const [sortBy, setSortBy] = useState<string>('popular');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr';
   const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
   const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
 
@@ -20,6 +27,18 @@ export function SpecialtiesPage() {
     if (!cms?.content?.[key]) return fallback;
     return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
   };
+
+  const sortOptions: SortOption[] = [
+    { value: 'popular', label: isFr ? 'Plus Populaires' : isKr ? 'Plis Popiler' : 'Most Popular', icon: '⚡' },
+    { value: 'procedures', label: isFr ? 'Nombre d\'Actes' : isKr ? 'Kantite Loperasion' : 'Procedures Count', icon: '🩺' },
+    { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
+  ];
+
+  const sortedSpecialties = [...specialties].sort((a, b) => {
+    if (sortBy === 'procedures') return (b.procedures?.length || 0) - (a.procedures?.length || 0);
+    if (sortBy === 'name') return a.name.localeCompare(b.name);
+    return 0;
+  });
 
   return (
     <main className="specialties-page" style={{ paddingTop: 'var(--navbar-height)' }}>
@@ -47,13 +66,27 @@ export function SpecialtiesPage() {
         </div>
       </section>
 
-      <div className="container" style={{ padding: '3rem var(--space-6)' }}>
-        <div className="spec-grid">
+      <div className="container" style={{ padding: '2rem var(--space-6) 4rem' }}>
+        {/* Results Toolbar */}
+        {!loading && (
+          <ListToolbar
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            sortOptions={sortOptions}
+            totalCount={sortedSpecialties.length}
+            countUnit={isFr ? 'spécialité' : isKr ? 'spesialite' : 'specialty'}
+            countUnitPlural={isFr ? 'spécialités' : isKr ? 'spesialite' : 'specialties'}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+          />
+        )}
+
+        <div className={`spec-grid ${viewMode === 'list' ? 'spec-grid--list-view' : ''}`}>
           {loading
             ? Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 320, borderRadius: 16 }} />
               ))
-            : specialties.map((sp) => (
+            : sortedSpecialties.map((sp) => (
                 <div key={sp.id} className="spec-card" id={`spec-card-${sp.id}`} style={{ cursor: 'pointer' }}>
                   <div className="spec-card__image" onClick={() => navigate(`/specialties/${sp.id}`)}>
                     <img src={sp.imageUrl} alt={l(sp, 'name')} loading="lazy" />

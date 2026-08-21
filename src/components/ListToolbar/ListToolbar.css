@@ -1,0 +1,286 @@
+/* ─── Reusable List Toolbar (Matches Screenshot Design) ────────────────────────── */
+.list-toolbar-wrap {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.list-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.list-toolbar__left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 1 1 auto;
+}
+
+.list-toolbar__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-left: auto;
+}
+
+/* ─── 0. Search Input Pill ─────────────────────────────────────────────────── */
+.list-toolbar__search-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  min-width: 240px;
+  max-width: 380px;
+  flex: 1 1 240px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0 0.85rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.list-toolbar__search-pill:hover,
+.list-toolbar__search-pill:focus-within {
+  border-color: #db2777;
+  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.12);
+}
+
+.list-toolbar__search-icon {
+  font-size: 0.95rem;
+  margin-right: 0.45rem;
+  opacity: 0.7;
+}
+
+.list-toolbar__search-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.list-toolbar__search-input::placeholder {
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+}
+
+.list-toolbar__clear-search {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.list-toolbar__clear-search:hover {
+  color: #ef4444;
+}
+
+/* ─── 0. Custom Dropdown Filter Pill ────────────────────────────────────────── */
+.list-toolbar__filter-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 1rem;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.list-toolbar__filter-pill:hover,
+.list-toolbar__filter-pill:focus-within {
+  border-color: #db2777;
+  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.1);
+}
+
+.list-toolbar__filter-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230f172a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+  border: none;
+  height: 100%;
+  padding: 0 1.25rem 0 0.15rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+}
+
+[data-theme="dark"] .list-toolbar__filter-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23f8fafc' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+.list-toolbar__clear-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 40px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1.5px dashed var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.list-toolbar__clear-btn:hover {
+  border-color: #ef4444;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.05);
+}
+
+/* ─── 1. Sort Dropdown Pill ─────────────────────────────────────────────────── */
+.list-toolbar__sort-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 40px;
+  padding: 0 1rem 0 0.85rem;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.list-toolbar__sort-pill:hover,
+.list-toolbar__sort-pill:focus-within {
+  border-color: #db2777;
+  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.1);
+}
+
+.list-toolbar__sort-icon {
+  color: #db2777;
+  flex-shrink: 0;
+}
+
+.list-toolbar__sort-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.list-toolbar__sort-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%230f172a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+  border: none;
+  height: 100%;
+  padding: 0 1.25rem 0 0.15rem;
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--color-text);
+  cursor: pointer;
+  outline: none;
+  box-sizing: border-box;
+}
+
+[data-theme="dark"] .list-toolbar__sort-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23f8fafc' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+/* ─── 2. Count Badge Pill ───────────────────────────────────────────────────── */
+.list-toolbar__count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 40px;
+  padding: 0 1rem;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.list-toolbar__count-num {
+  font-size: 0.875rem;
+  font-weight: 900;
+  color: #db2777;
+}
+
+.list-toolbar__count-unit {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ─── 3. View Mode Switcher ─────────────────────────────────────────────────── */
+.list-toolbar__view-switcher {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
+}
+
+.list-toolbar__view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 100%;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.list-toolbar__view-btn:hover:not(.list-toolbar__view-btn--active) {
+  color: var(--color-text);
+  background: var(--color-surface-2);
+}
+
+.list-toolbar__view-btn--active {
+  background: #db2777;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(219, 39, 119, 0.35);
+}

@@ -69,26 +69,70 @@
 }
 
 .hospitals-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: var(--space-6);
+}
+
+.hospitals-list .hospital-list-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.hospitals-list .hospital-list-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.hospitals-list .hospital-list-card__image {
+  position: relative;
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hospitals-list .hospital-list-card__actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+/* ─── List View Mode ─────────────────────────────────────────────────────────── */
+.hospitals-list--list-view {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
 }
 
-.hospital-list-card {
+.hospitals-list--list-view .hospital-list-card {
   display: grid;
-  grid-template-columns: 240px 1fr auto;
+  grid-template-columns: 260px 1fr auto;
   gap: var(--space-5);
-  background: var(--color-surface);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  transition: var(--transition-base);
-  box-shadow: var(--shadow-sm);
+  flex-direction: initial;
 }
 
-.hospital-list-card:hover {
-  border-color: var(--color-primary);
-  box-shadow: var(--shadow-lg);
+.hospitals-list--list-view .hospital-list-card__image {
+  height: 100%;
+  min-height: 200px;
+}
+
+.hospitals-list--list-view .hospital-list-card__actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: none;
+  border-left: 1px solid var(--color-border);
+  min-width: 180px;
 }
 
 .hospital-list-card__image {

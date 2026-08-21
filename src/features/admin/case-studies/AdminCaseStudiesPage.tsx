@@ -103,41 +103,12 @@ export function AdminCaseStudiesPage() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      {/* Header with Grid / List Toggle */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-        <div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Patient Success Stories & Testimonials</h1>
-          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-            Manage verified Mauritian patient outcomes, cost savings statistics, and multilingual testimonials.
-          </p>
-        </div>
-
-        {/* View Toggle */}
-        <div style={{
-          display: 'flex',
-          background: 'var(--color-surface-2)',
-          padding: 3,
-          borderRadius: 'var(--radius-lg)',
-          border: '1px solid var(--color-border)',
-          gap: 2,
-        }}>
-          <button
-            type="button"
-            className={`btn btn-sm ${viewMode === 'grid' ? 'btn-primary' : 'btn-ghost'}`}
-            onClick={() => setViewMode('grid')}
-            style={{ padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-          >
-            <LayoutGrid size={15} /> Grid
-          </button>
-          <button
-            type="button"
-            className={`btn btn-sm ${viewMode === 'list' ? 'btn-primary' : 'btn-ghost'}`}
-            onClick={() => setViewMode('list')}
-            style={{ padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-          >
-            <List size={15} /> List
-          </button>
-        </div>
+      {/* Header */}
+      <div style={{ marginBottom: '1.5rem' }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Patient Success Stories & Testimonials</h1>
+        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
+          Manage verified Mauritian patient outcomes, cost savings statistics, and multilingual testimonials.
+        </p>
       </div>
 
       {/* ─── SEARCH, FILTERS & SORTING TOOLBAR ────────────────────────────── */}
@@ -192,19 +163,48 @@ export function AdminCaseStudiesPage() {
             <option value="Seychelles">Seychelles</option>
           </select>
 
-          {/* Sort By */}
-          <div className="admin-toolbar__sort-wrap">
-            <ArrowUpDown size={14} color="var(--color-text-muted)" />
+          {/* Sort By Pill */}
+          <div className="admin-toolbar__sort-pill">
+            <ArrowUpDown size={14} className="admin-toolbar__sort-icon" />
+            <span className="admin-toolbar__sort-label">Trier par :</span>
             <select
               className="admin-toolbar__sort-select"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
             >
-              <option value="saved-desc">Highest Cost Saved %</option>
-              <option value="year-desc">Most Recent Stories</option>
-              <option value="stay-asc">Shortest Hospital Stay</option>
-              <option value="name-asc">Patient Name (A → Z)</option>
+              <option value="saved-desc">💰 Cost Savings (%)</option>
+              <option value="year-desc">⚡ Most Recent</option>
+              <option value="stay-asc">⏱️ Shortest Stay</option>
+              <option value="name-asc">🔤 Patient Name (A-Z)</option>
             </select>
+          </div>
+
+          {/* Count Badge */}
+          <div className="admin-toolbar__count-badge">
+            <span className="admin-toolbar__count-num">{filteredCaseStudies.length}</span>
+            <span className="admin-toolbar__count-unit">{filteredCaseStudies.length <= 1 ? 'dossier' : 'dossiers'}</span>
+          </div>
+
+          {/* View Mode Switcher */}
+          <div className="admin-toolbar__view-switcher">
+            <button
+              type="button"
+              className={`admin-toolbar__view-btn ${viewMode === 'grid' ? 'admin-toolbar__view-btn--active' : ''}`}
+              onClick={() => setViewMode('grid')}
+              title="Vue Grille"
+            >
+              <LayoutGrid size={14} />
+              <span>Grille</span>
+            </button>
+            <button
+              type="button"
+              className={`admin-toolbar__view-btn ${viewMode === 'list' ? 'admin-toolbar__view-btn--active' : ''}`}
+              onClick={() => setViewMode('list')}
+              title="Vue Liste"
+            >
+              <List size={14} />
+              <span>Liste</span>
+            </button>
           </div>
 
           {/* Clear Filters Reset Button */}
