@@ -20,7 +20,7 @@ export function AdminSettingsPage() {
   ];
 
   return (
-    <div style={{ padding: '2rem', maxWidth: 640 }}>
+    <div style={{ padding: '2rem', maxWidth: 900 }}>
       <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem' }}>Settings</h1>
       <p style={{ color: 'var(--color-text-secondary)', marginBottom: '2rem' }}>
         Configure the Mock Data Center and application settings.

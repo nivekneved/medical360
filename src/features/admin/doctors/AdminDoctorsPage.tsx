@@ -1,16 +1,27 @@
-import { useState } from 'react';
-import { UserCheck, Edit3, Eye, Award, Globe, Building2, Save, X, CheckCircle2, DollarSign, Activity } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { UserCheck, Edit3, Eye, Award, Globe, Building2, Save, X, CheckCircle2, DollarSign, Activity, LayoutGrid, List, Search, Filter, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useDoctors } from '../../../hooks/useDoctors';
 import { useHospitals } from '../../../hooks/useHospitals';
 import { useSpecialties } from '../../../hooks/useSpecialties';
 import { ImageField } from '../components/ImageField';
 import type { Doctor } from '../../../core/types';
+import '../AdminToolbar.css';
 
 export function AdminDoctorsPage() {
   const { doctors, loading, refetch } = useDoctors();
   const { hospitals }                 = useHospitals({});
   const { specialties }               = useSpecialties();
+  const [viewMode, setViewMode]       = useState<'grid' | 'list'>('grid');
+  
+  // Search, Filters, Sorting, Pagination
+  const [searchQuery, setSearchQuery]           = useState('');
+  const [selectedSpecialty, setSelectedSpecialty] = useState('all');
+  const [selectedHospital, setSelectedHospital]   = useState('all');
+  const [sortBy, setSortBy]                     = useState<'name-asc' | 'name-desc' | 'surgeries-desc' | 'exp-desc' | 'fee-asc' | 'fee-desc'>('surgeries-desc');
+  const [currentPage, setCurrentPage]           = useState(1);
+  const [itemsPerPage, setItemsPerPage]         = useState(6);
+
   const [editingDoctor, setEditingDoctor] = useState<Doctor | null>(null);
   const [viewingDoctor, setViewingDoctor] = useState<Doctor | null>(null);
   const [saving, setSaving]           = useState(false);
@@ -25,6 +36,40 @@ export function AdminDoctorsPage() {
     const s = specialties.find(item => item.id === sId);
     return s ? s.name : sId;
   };
+
+  // Filtered & Sorted Doctors
+  const filteredDoctors = useMemo(() => {
+    return doctors.filter((doc) => {
+      const matchSearch =
+        searchQuery.trim() === '' ||
+        doc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.bio.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchSpecialty =
+        selectedSpecialty === 'all' || doc.specialties.includes(selectedSpecialty);
+
+      const matchHospital =
+        selectedHospital === 'all' || doc.hospitalId === selectedHospital;
+
+      return matchSearch && matchSpecialty && matchHospital;
+    }).sort((a, b) => {
+      if (sortBy === 'name-asc') return a.name.localeCompare(b.name);
+      if (sortBy === 'name-desc') return b.name.localeCompare(a.name);
+      if (sortBy === 'surgeries-desc') return b.surgeries - a.surgeries;
+      if (sortBy === 'exp-desc') return b.experience - a.experience;
+      if (sortBy === 'fee-asc') return a.consultationFeeUSD - b.consultationFeeUSD;
+      if (sortBy === 'fee-desc') return b.consultationFeeUSD - a.consultationFeeUSD;
+      return 0;
+    });
+  }, [doctors, searchQuery, selectedSpecialty, selectedHospital, sortBy]);
+
+  // Pagination calculation
+  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage) || 1;
+  const paginatedDoctors = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage;
+    return filteredDoctors.slice(start, start + itemsPerPage);
+  }, [filteredDoctors, currentPage, itemsPerPage]);
 
   const handleEditClick = (doc: Doctor) => {
     setEditingDoctor(JSON.parse(JSON.stringify(doc)));
@@ -57,9 +102,9 @@ export function AdminDoctorsPage() {
   };
 
   return (
-    <div style={{ padding: '2rem', maxWidth: 1100, margin: '0 auto' }}>
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+    <div style={{ padding: '2rem' }}>
+      {/* Header with Grid / List View Toggle */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
             <span className="badge badge-accent" style={{ fontSize: '0.7rem' }}>
@@ -68,20 +113,153 @@ export function AdminDoctorsPage() {
           </div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Medical Specialists Management</h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-            Manage profiles, hospital affiliations, credentials, and consultation fees for the 7 top surgeons.
+            Manage profiles, hospital affiliations, credentials, and consultation fees for the top surgeons.
           </p>
+        </div>
+
+        {/* View Toggle */}
+        <div style={{
+          display: 'flex',
+          background: 'var(--color-surface-2)',
+          padding: 3,
+          borderRadius: 'var(--radius-lg)',
+          border: '1px solid var(--color-border)',
+          gap: 2,
+        }}>
+          <button
+            type="button"
+            className={`btn btn-sm ${viewMode === 'grid' ? 'btn-primary' : 'btn-ghost'}`}
+            onClick={() => setViewMode('grid')}
+            style={{ padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+          >
+            <LayoutGrid size={15} /> Grid
+          </button>
+          <button
+            type="button"
+            className={`btn btn-sm ${viewMode === 'list' ? 'btn-primary' : 'btn-ghost'}`}
+            onClick={() => setViewMode('list')}
+            style={{ padding: '0.35rem 0.75rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+          >
+            <List size={15} /> List
+          </button>
+        </div>
+      </div>
+
+      {/* ─── SEARCH, FILTERS & SORTING TOOLBAR ────────────────────────────── */}
+      <div className="admin-toolbar">
+        {/* Search Input */}
+        <div className="admin-toolbar__left">
+          <div className="admin-toolbar__search-box">
+            <Search size={16} className="admin-toolbar__search-icon" />
+            <input
+              type="text"
+              className="admin-toolbar__search-input"
+              placeholder="Search doctors, bio, title..."
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            />
+            {searchQuery && (
+              <button
+                className="admin-toolbar__clear-search"
+                onClick={() => { setSearchQuery(''); setCurrentPage(1); }}
+                title="Clear search"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Filters and Sort */}
+        <div className="admin-toolbar__right">
+          {/* Specialty Filter */}
+          <select
+            className="admin-toolbar__select"
+            value={selectedSpecialty}
+            onChange={(e) => { setSelectedSpecialty(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="all">All Specialties</option>
+            {specialties.map((s) => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </select>
+
+          {/* Hospital Filter */}
+          <select
+            className="admin-toolbar__select"
+            value={selectedHospital}
+            onChange={(e) => { setSelectedHospital(e.target.value); setCurrentPage(1); }}
+          >
+            <option value="all">All Hospitals</option>
+            {hospitals.map((h) => (
+              <option key={h.id} value={h.id}>{h.name}</option>
+            ))}
+          </select>
+
+          {/* Sort By */}
+          <div className="admin-toolbar__sort-wrap">
+            <ArrowUpDown size={14} color="var(--color-text-muted)" />
+            <select
+              className="admin-toolbar__sort-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+            >
+              <option value="surgeries-desc">Most Surgeries</option>
+              <option value="exp-desc">Most Experience</option>
+              <option value="name-asc">Name (A → Z)</option>
+              <option value="name-desc">Name (Z → A)</option>
+              <option value="fee-asc">Fee (Low → High)</option>
+              <option value="fee-desc">Fee (High → Low)</option>
+            </select>
+          </div>
+
+          {/* Clear Filters Reset Button */}
+          {(searchQuery || selectedSpecialty !== 'all' || selectedHospital !== 'all') && (
+            <button
+              className="admin-toolbar__reset-btn"
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedSpecialty('all');
+                setSelectedHospital('all');
+                setCurrentPage(1);
+              }}
+              title="Reset all filters"
+            >
+              <RotateCcw size={12} /> Reset
+            </button>
+          )}
         </div>
       </div>
 
       {loading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-          {Array.from({ length: 7 }).map((_, i) => (
+          {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="skeleton" style={{ height: 260, borderRadius: 16 }} />
           ))}
         </div>
-      ) : (
+      ) : paginatedDoctors.length === 0 ? (
+        <div style={{
+          textAlign: 'center',
+          padding: '3rem 1rem',
+          background: 'var(--color-surface)',
+          border: '1.5px dashed var(--color-border)',
+          borderRadius: 'var(--radius-xl)',
+          color: 'var(--color-text-muted)',
+        }}>
+          <Search size={36} style={{ margin: '0 auto 0.75rem', opacity: 0.4 }} />
+          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--color-text)' }}>No specialists match your search</h3>
+          <p style={{ fontSize: '0.85rem', marginTop: 4 }}>Try clearing search keywords or adjusting your filters.</p>
+          <button
+            className="btn btn-outline btn-sm"
+            onClick={() => { setSearchQuery(''); setSelectedSpecialty('all'); setSelectedHospital('all'); }}
+            style={{ marginTop: '1rem' }}
+          >
+            Clear Filters
+          </button>
+        </div>
+      ) : viewMode === 'grid' ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-          {doctors.map((doc) => (
+          {paginatedDoctors.map((doc) => (
             <div
               key={doc.id}
               style={{
@@ -159,6 +337,122 @@ export function AdminDoctorsPage() {
               </div>
             </div>
           ))}
+        </div>
+      ) : (
+        /* ─── COMPACT LIST VIEW ─── */
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          {paginatedDoctors.map((doc) => (
+            <div
+              key={doc.id}
+              style={{
+                background: 'var(--color-surface)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-xl)',
+                padding: '1rem 1.25rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '1.25rem',
+                flexWrap: 'wrap',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.02)',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 260, flex: 2 }}>
+                <img
+                  src={doc.imageUrl}
+                  alt={doc.name}
+                  style={{ width: 56, height: 56, borderRadius: 'var(--radius-md)', objectFit: 'cover', flexShrink: 0 }}
+                />
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0 }}>{doc.name}</h3>
+                    <span className="badge badge-primary" style={{ fontSize: '0.65rem' }}>
+                      {doc.specialties.map(getSpecialtyName).join(', ')}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                    {doc.title} • <span style={{ color: 'var(--color-primary)' }}>{getHospitalName(doc.hospitalId)}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1.5, justifyContent: 'space-around' }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{doc.experience} yrs</div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Exp</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{doc.surgeries.toLocaleString()}+</div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Surgeries</div>
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-primary)' }}>${doc.consultationFeeUSD}</div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Fee</div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <button
+                  className="btn btn-secondary btn-sm"
+                  onClick={() => handleViewClick(doc)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <Eye size={14} /> View
+                </button>
+                <button
+                  className="btn btn-outline btn-sm"
+                  onClick={() => handleEditClick(doc)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <Edit3 size={14} /> Edit
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ─── PAGINATION BAR ────────────────────────────────────────────────── */}
+      {filteredDoctors.length > 0 && (
+        <div style={{
+          marginTop: '1.75rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '1rem',
+          padding: '0.75rem 1rem',
+          background: 'var(--color-surface)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 'var(--radius-xl)',
+        }}>
+          <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
+            Showing <strong>{Math.min((currentPage - 1) * itemsPerPage + 1, filteredDoctors.length)}</strong> to{' '}
+            <strong>{Math.min(currentPage * itemsPerPage, filteredDoctors.length)}</strong> of{' '}
+            <strong>{filteredDoctors.length}</strong> specialists
+          </span>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <button
+              className="btn btn-outline btn-sm"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage === 1 ? 0.5 : 1 }}
+            >
+              <ChevronLeft size={14} /> Prev
+            </button>
+            <span style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0 0.5rem' }}>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="btn btn-outline btn-sm"
+              disabled={currentPage >= totalPages}
+              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage >= totalPages ? 0.5 : 1 }}
+            >
+              Next <ChevronRight size={14} />
+            </button>
+          </div>
         </div>
       )}
 

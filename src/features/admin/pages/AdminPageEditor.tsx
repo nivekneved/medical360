@@ -107,7 +107,7 @@ export function AdminPageEditor() {
   const fieldEntries = Object.entries(formData);
 
   return (
-    <div style={{ padding: '2rem', maxWidth: 960, margin: '0 auto' }}>
+    <div style={{ padding: '2rem' }}>
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
