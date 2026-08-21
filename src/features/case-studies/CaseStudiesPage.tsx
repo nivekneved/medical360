@@ -159,7 +159,12 @@ export function CaseStudiesPage() {
             : sortedCaseStudies.map(cs => (
                 <div key={cs.id} className="cs-card" id={`cs-card-${cs.id}`}>
                   <div className="cs-card__image">
-                    <img src={cs.imageUrl} alt={l(cs, 'condition')} loading="lazy" />
+                    <img
+                      src={cs.imageUrl}
+                      alt={l(cs, 'condition')}
+                      loading="lazy"
+                      onError={(e) => { e.currentTarget.src = '/assets/banners/casestudies_banner.jpg'; }}
+                    />
                     <div className="cs-card__overlay" />
                     <div className="cs-card__savings">{l10n('Économisé', 'Sov', 'Saved')} {cs.costSavedPercent}%</div>
                     <div className="cs-card__specialty">{getSpecialtyName(cs.specialtyId)}</div>

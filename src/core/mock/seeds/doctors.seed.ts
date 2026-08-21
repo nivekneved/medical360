@@ -56,7 +56,7 @@ export const doctorsSeed: Doctor[] = [
     experience: 22,
     surgeries: 4200,
     languages: ['English', 'Mandarin', 'Cantonese', 'Malay'],
-    imageUrl: 'https://images.unsplash.com/photo-1594824813589-3253b27cf17b?w=800&q=80',
+    imageUrl: '/assets/banners/dr_wong_chiung_ing.jpg',
     bio: 'Distinguished oncologist specializing in targeted therapies, precision immunotherapy, and breast, lung, and gastrointestinal cancers at Gleneagles Singapore.',
     consultationFeeUSD: 95,
     featured: true,

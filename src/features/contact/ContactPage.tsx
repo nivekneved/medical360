@@ -23,16 +23,16 @@ export function ContactPage() {
         description={l10n('Contactez Med360 pour votre avis médical.', 'Kontakte Med360 pou ou lavi medikal.', 'Contact Med360 for your medical opinion.')}
         canonical="/contact"
       />
-      <section className="page-hero">
-        <div className="page-hero__bg" />
+      {/* Header Banner */}
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
         <div className="container page-hero__inner">
-          <span className="section-label" style={{ color: 'var(--color-accent)' }}>
+          <span className="section-label">
             {tCms('heroLabel', l10n('Contactez-Nous', 'Kontak Nou', 'Get in Touch'))}
           </span>
-          <h1 className="text-h1" style={{ color: 'white' }}>
+          <h1 className="text-h1">
             {tCms('heroTitle', l10n('Contact', 'Kontak', 'Contact Us'))}
           </h1>
-          <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 500 }}>
+          <p className="text-lead">
             {tCms('heroDesc', l10n(
               'Des questions ? Notre équipe est disponible 7 jours sur 7. Joignez-nous par WhatsApp, téléphone ou email.',
               'Ena kestion? Nou lekip la 7 zour lor 7. Kontak nou lor WhatsApp, telefonn ouswa email.',
@@ -42,7 +42,7 @@ export function ContactPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" style={{ paddingTop: '3rem', paddingBottom: '6rem' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'start' }}>
             {/* Contact Info */}

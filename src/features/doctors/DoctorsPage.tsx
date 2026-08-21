@@ -239,6 +239,7 @@ export function DoctorsPage() {
                       <img
                         src={doc.imageUrl}
                         alt={doc.name}
+                        onError={(e) => { e.currentTarget.src = '/assets/banners/doctors_banner.jpg'; }}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                       <div style={{
