@@ -99,3 +99,27 @@
 @media (max-width: 640px) {
   .spec-grid { grid-template-columns: 1fr; }
 }
+
+/* ─── List View Mode ─────────────────────────────────────────────────────────── */
+.spec-grid--list-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.spec-grid--list-view .spec-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  flex-direction: initial;
+}
+
+.spec-grid--list-view .spec-card__image {
+  height: 100%;
+  min-height: 180px;
+}
+
+@media (max-width: 768px) {
+  .spec-grid--list-view .spec-card {
+    grid-template-columns: 1fr;
+  }
+}

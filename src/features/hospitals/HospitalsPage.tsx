@@ -10,6 +10,7 @@ import type { Hospital } from '../../core/types';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { HospitalCompareModal } from './HospitalCompareModal';
+import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import './Hospitals.css';
 
 export function HospitalsPage() {
@@ -40,6 +41,8 @@ export function HospitalsPage() {
 
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [showCompareModal, setShowCompareModal] = useState(false);
+  const [sortBy, setSortBy] = useState<string>('rating');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const toggleCompare = (id: string) => {
     setCompareIds(prev => {
@@ -55,6 +58,22 @@ export function HospitalsPage() {
   };
 
   const comparedHospitals = allHospitals.filter(h => compareIds.includes(h.id));
+
+  // Sort hospitals
+  const sortedHospitals = [...hospitals].sort((a, b) => {
+    if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
+    if (sortBy === 'beds') return (b.bedsCount || 0) - (a.bedsCount || 0);
+    if (sortBy === 'patients') return (b.internationalPatientsPerYear || 0) - (a.internationalPatientsPerYear || 0);
+    if (sortBy === 'name') return a.name.localeCompare(b.name);
+    return 0;
+  });
+
+  const sortOptions: SortOption[] = [
+    { value: 'rating', label: isFr ? 'Meilleure Note' : isKr ? 'Mayer Not' : 'Highest Rated', icon: '★' },
+    { value: 'beds', label: isFr ? 'Capacité Lits' : isKr ? 'Lili Lopital' : 'Bed Capacity', icon: '🛏️' },
+    { value: 'patients', label: isFr ? 'Patients Intl' : isKr ? 'Pasian Intl' : 'Intl Patients', icon: '👥' },
+    { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
+  ];
 
   return (
     <main className="hospitals-page" style={{ paddingTop: 'var(--navbar-height)' }}>
@@ -83,78 +102,88 @@ export function HospitalsPage() {
         </div>
       </section>
 
-      <div className="container" style={{ paddingBottom: '6rem' }}>
-        {/* Filters */}
-        <div className="hospitals-filters">
-          <div className="search-box">
-            <Search size={18} className="search-box__icon" />
-            <input
-              type="text"
-              placeholder={tCms('searchPlaceholder', l10n('Rechercher par nom, ville ou pays...', 'Rod lopital par nom, lavil ouswa pei...', 'Search hospitals by name, city, or country...'))}
-              value={searchInput}
-              onChange={e => setSearchInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && handleSearch()}
-              id="hospital-search-input"
-            />
-            {searchInput && (
-              <button className="search-box__clear" onClick={() => { setSearchInput(''); setFilters(f => ({ ...f, searchQuery: undefined })); }}>
-                ✕
-              </button>
-            )}
-          </div>
-          <div className="filter-group">
-            <select
-              value={filters.country || ''}
-              onChange={e => setFilters(f => ({ ...f, country: e.target.value || undefined }))}
-              id="hospital-country-filter"
-            >
-              <option value="">{l10n('Tous les pays', 'Tou pei', 'All Countries')}</option>
-              {countries.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
-            <select
-              value={filters.accreditation || ''}
-              onChange={e => setFilters(f => ({ ...f, accreditation: e.target.value || undefined }))}
-              id="hospital-accreditation-filter"
-            >
-              <option value="">{l10n('Toutes les accréditations', 'Tou akreditasion', 'All Accreditations')}</option>
-              {accreditations.map(a => <option key={a} value={a}>{a}</option>)}
-            </select>
-            <button className="btn btn-outline btn-sm" onClick={() => { setFilters({}); setSearchInput(''); }} id="hospital-clear-filters-btn">
-              {l10n('Effacer les filtres', 'Efase', 'Clear Filters')}
-            </button>
-          </div>
-        </div>
-
-        {/* Results Count & Compare Button */}
+      <div className="container" style={{ padding: '2rem var(--space-6) 6rem' }}>
+        {/* Results Count, Search, Filters, Sort & View Mode Toolbar */}
         {!loading && (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <p className="text-muted" style={{ margin: 0, fontSize: '0.9rem' }}>
-              {l10n(
-                `Affichage de ${hospitals.length} hôpital${hospitals.length !== 1 ? 's' : ''}`,
-                `Pe montre ${hospitals.length} lopital`,
-                `Showing ${hospitals.length} hospital${hospitals.length !== 1 ? 's' : ''}`
-              )}
-            </p>
-            {compareIds.length > 0 && (
-              <button
-                onClick={() => setShowCompareModal(true)}
-                className="btn btn-primary btn-sm"
-                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}
-              >
-                <Scale size={16} />
-                <span>{isFr ? `Comparer (${compareIds.length})` : `Compare (${compareIds.length})`}</span>
-              </button>
-            )}
-          </div>
+          <ListToolbar
+            searchQuery={searchInput}
+            onSearchChange={(val) => {
+              setSearchInput(val);
+              setFilters(f => ({ ...f, searchQuery: val || undefined }));
+            }}
+            searchPlaceholder={tCms('searchPlaceholder', l10n('Rechercher un hôpital...', 'Rod enn lopital...', 'Search hospitals...'))}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            sortOptions={sortOptions}
+            totalCount={sortedHospitals.length}
+            countUnit={isFr ? 'hôpital' : isKr ? 'lopital' : 'hospital'}
+            countUnitPlural={isFr ? 'hôpitaux' : isKr ? 'lopital' : 'hospitals'}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+            extraControls={
+              <>
+                {/* Country Filter Pill */}
+                <div className="list-toolbar__filter-pill">
+                  <select
+                    className="list-toolbar__filter-select"
+                    value={filters.country || ''}
+                    onChange={e => setFilters(f => ({ ...f, country: e.target.value || undefined }))}
+                    id="hospital-country-filter"
+                  >
+                    <option value="">{l10n('🌐 Tous les pays', '🌐 Tou pei', '🌐 All Countries')}</option>
+                    {countries.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+
+                {/* Accreditation Filter Pill */}
+                <div className="list-toolbar__filter-pill">
+                  <select
+                    className="list-toolbar__filter-select"
+                    value={filters.accreditation || ''}
+                    onChange={e => setFilters(f => ({ ...f, accreditation: e.target.value || undefined }))}
+                    id="hospital-accreditation-filter"
+                  >
+                    <option value="">{l10n('🏅 Accréditations', '🏅 Akreditasion', '🏅 All Accreditations')}</option>
+                    {accreditations.map(a => <option key={a} value={a}>{a}</option>)}
+                  </select>
+                </div>
+
+                {/* Clear Active Filters */}
+                {(searchInput || filters.country || filters.accreditation) && (
+                  <button
+                    type="button"
+                    className="list-toolbar__clear-btn"
+                    onClick={() => { setFilters({}); setSearchInput(''); }}
+                    id="hospital-clear-filters-btn"
+                  >
+                    ↺ {l10n('Effacer', 'Efase', 'Clear')}
+                  </button>
+                )}
+
+                {/* Compare Float Trigger */}
+                {compareIds.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setShowCompareModal(true)}
+                    className="btn btn-primary btn-sm"
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 800, borderRadius: '999px', height: 40, padding: '0 1rem' }}
+                  >
+                    <Scale size={15} />
+                    <span>{isFr ? `Comparer (${compareIds.length})` : `Compare (${compareIds.length})`}</span>
+                  </button>
+                )}
+              </>
+            }
+          />
         )}
 
-        {/* Hospital Grid */}
-        <div className="hospitals-list">
+        {/* Hospital Grid / List */}
+        <div className={`hospitals-list ${viewMode === 'list' ? 'hospitals-list--list-view' : ''}`}>
           {loading
             ? Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 280, borderRadius: 16 }} />
               ))
-            : hospitals.map(hospital => {
+            : sortedHospitals.map(hospital => {
                 const isSelected = compareIds.includes(hospital.id);
                 return (
                   <div key={hospital.id} className="hospital-list-card" id={`hospital-${hospital.id}`}>

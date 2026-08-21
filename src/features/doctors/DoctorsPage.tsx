@@ -9,6 +9,7 @@ import { useCMS } from '../../hooks/useCMS';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { DoctorSecondOpinionModal } from './DoctorSecondOpinionModal';
+import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import type { Doctor } from '../../core/types';
 
 export function DoctorsPage() {
@@ -21,6 +22,8 @@ export function DoctorsPage() {
   const { hospitals } = useHospitals({});
   const { data: cms } = useCMS('doctors');
 
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr';
   const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
   const l = (obj: any, field: string) => obj?.[`${field}_${i18n.language}`] || obj?.[field] || '';
 
@@ -28,6 +31,22 @@ export function DoctorsPage() {
     if (!cms?.content?.[key]) return fallback;
     return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
   };
+
+  const [sortBy, setSortBy] = useState<string>('surgeries');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  const sortOptions: SortOption[] = [
+    { value: 'surgeries', label: isFr ? 'Interventions Réussies' : isKr ? 'Loperasion A-sikse' : 'Surgeries Done', icon: '🏆' },
+    { value: 'experience', label: isFr ? 'Années d\'Expérience' : isKr ? 'Lannen Eksperyans' : 'Years Experience', icon: '⚡' },
+    { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
+  ];
+
+  const sortedDoctors = [...doctors].sort((a, b) => {
+    if (sortBy === 'surgeries') return (b.surgeries || 0) - (a.surgeries || 0);
+    if (sortBy === 'experience') return (b.experience || 0) - (a.experience || 0);
+    if (sortBy === 'name') return a.name.localeCompare(b.name);
+    return 0;
+  });
 
   const getHospital = (hId: string) => hospitals.find(h => h.id === hId);
   const getSpecialtyName = (sId: string) => {
@@ -135,7 +154,21 @@ export function DoctorsPage() {
             ))}
           </div>
 
-          {/* Doctors Grid */}
+          {/* List Toolbar */}
+          {!loading && (
+            <ListToolbar
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+              sortOptions={sortOptions}
+              totalCount={sortedDoctors.length}
+              countUnit={isFr ? 'spécialiste' : isKr ? 'spesialist' : 'specialist'}
+              countUnitPlural={isFr ? 'spécialistes' : isKr ? 'spesialist' : 'specialists'}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+            />
+          )}
+
+          {/* Doctors Grid / List */}
           {loading ? (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
               {Array.from({ length: 7 }).map((_, i) => (
@@ -143,8 +176,12 @@ export function DoctorsPage() {
               ))}
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))', gap: '1.75rem' }}>
-              {doctors.map(doc => {
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: viewMode === 'list' ? '1fr' : 'repeat(auto-fill, minmax(330px, 1fr))',
+              gap: '1.75rem',
+            }}>
+              {sortedDoctors.map(doc => {
                 const hosp = getHospital(doc.hospitalId);
                 return (
                   <div

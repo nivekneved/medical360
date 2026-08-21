@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +7,7 @@ import { useSpecialties } from '../../hooks/useSpecialties';
 import { truncateText } from '../../core/services/format.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
+import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import './CaseStudies.css';
 
 export function CaseStudiesPage() {
@@ -15,6 +17,11 @@ export function CaseStudiesPage() {
   const { specialties } = useSpecialties();
   const { data: cms } = useCMS('case-studies');
 
+  const [sortBy, setSortBy] = useState<string>('savings');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr';
   const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
   const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
 
@@ -27,6 +34,19 @@ export function CaseStudiesPage() {
     const s = specialties.find(s => s.id === id);
     return s ? l(s, 'name') : id;
   }
+
+  const sortOptions: SortOption[] = [
+    { value: 'savings', label: isFr ? 'Économies Réalisées' : isKr ? 'Lekonomi Gagne' : 'Cost Saved (%)', icon: '💰' },
+    { value: 'recent', label: isFr ? 'Plus Récents' : isKr ? 'Plis Resan' : 'Most Recent', icon: '⚡' },
+    { value: 'duration', label: isFr ? 'Durée de Séjour' : isKr ? 'Dire Sezour' : 'Stay Duration', icon: '⏱️' },
+  ];
+
+  const sortedCaseStudies = [...caseStudies].sort((a, b) => {
+    if (sortBy === 'savings') return (b.costSavedPercent || 0) - (a.costSavedPercent || 0);
+    if (sortBy === 'recent') return (b.year || 0) - (a.year || 0);
+    if (sortBy === 'duration') return (a.durationDays || 0) - (b.durationDays || 0);
+    return 0;
+  });
 
   return (
     <main className="case-studies-page" style={{ paddingTop: 'var(--navbar-height)' }}>
@@ -54,13 +74,27 @@ export function CaseStudiesPage() {
         </div>
       </section>
 
-      <div className="container" style={{ padding: '3rem var(--space-6)' }}>
-        <div className="cs-grid">
+      <div className="container" style={{ padding: '2rem var(--space-6) 4rem' }}>
+        {/* Results Toolbar */}
+        {!loading && (
+          <ListToolbar
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            sortOptions={sortOptions}
+            totalCount={sortedCaseStudies.length}
+            countUnit={isFr ? 'dossier' : isKr ? 'dosie' : 'case'}
+            countUnitPlural={isFr ? 'dossiers' : isKr ? 'dosie' : 'cases'}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+          />
+        )}
+
+        <div className={`cs-grid ${viewMode === 'list' ? 'cs-grid--list-view' : ''}`}>
           {loading
             ? Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 400, borderRadius: 16 }} />
               ))
-            : caseStudies.map(cs => (
+            : sortedCaseStudies.map(cs => (
                 <div key={cs.id} className="cs-card" id={`cs-card-${cs.id}`}>
                   <div className="cs-card__image">
                     <img src={cs.imageUrl} alt={l(cs, 'condition')} loading="lazy" />
