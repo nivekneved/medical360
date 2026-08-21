@@ -15,6 +15,11 @@
   --color-accent-dark:    #064e3b; /* Dark Pine */
   --color-whatsapp:       #16a34a; /* WhatsApp Green */
 
+  /* Dark Theme Palette Fallbacks */
+  --color-dark:           #090d10; /* Deep Charcoal Black */
+  --color-dark-2:         #111822; /* Rich Dark Slate */
+  --color-dark-3:         #1a222e; /* Mid Charcoal */
+
   /* Functional Status */
   --color-danger:         #dc2626;
   --color-warning:        #d97706;

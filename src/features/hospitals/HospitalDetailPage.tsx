@@ -231,11 +231,12 @@ export function HospitalDetailPage() {
             {/* Right Column: Direct Booking & Fast-Track Card */}
             <div style={{ position: 'sticky', top: 'calc(var(--navbar-height) + 2rem)' }}>
               <div style={{
-                background: 'linear-gradient(135deg, var(--color-dark), var(--color-dark-3))',
+                background: 'linear-gradient(135deg, #090d10 0%, #111822 100%)',
+                border: '1.5px solid rgba(255, 255, 255, 0.12)',
                 borderRadius: 'var(--radius-2xl)',
                 padding: '2rem',
-                color: 'white',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+                color: '#ffffff',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
               }}>
                 <span className="badge badge-accent" style={{ marginBottom: '1rem' }}>
                   {l10n('Accès Direct Garanti', 'Akse Direk Garanti', 'Free Fast-Track Service')}
