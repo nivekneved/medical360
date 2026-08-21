@@ -15,6 +15,7 @@ export function SpecialtiesPage() {
   const { specialties, loading } = useSpecialties();
   const { data: cms } = useCMS('specialties');
 
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<string>('popular');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
@@ -34,7 +35,16 @@ export function SpecialtiesPage() {
     { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
   ];
 
-  const sortedSpecialties = [...specialties].sort((a, b) => {
+  const filteredSpecialties = specialties.filter((sp) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    const nameMatch = l(sp, 'name').toLowerCase().includes(q) || sp.name.toLowerCase().includes(q);
+    const descMatch = l(sp, 'shortDescription').toLowerCase().includes(q) || sp.shortDescription.toLowerCase().includes(q);
+    const procMatch = sp.procedures.some(p => l(p, 'name').toLowerCase().includes(q) || p.name.toLowerCase().includes(q));
+    return nameMatch || descMatch || procMatch;
+  });
+
+  const sortedSpecialties = [...filteredSpecialties].sort((a, b) => {
     if (sortBy === 'procedures') return (b.procedures?.length || 0) - (a.procedures?.length || 0);
     if (sortBy === 'name') return a.name.localeCompare(b.name);
     return 0;
@@ -70,6 +80,9 @@ export function SpecialtiesPage() {
         {/* Results Toolbar */}
         {!loading && (
           <ListToolbar
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder={l10n('Rechercher une spécialité ou traitement...', 'Rod spesialite ouswa tretman...', 'Search specialties or treatments...')}
             sortBy={sortBy}
             onSortChange={setSortBy}
             sortOptions={sortOptions}
@@ -78,6 +91,17 @@ export function SpecialtiesPage() {
             countUnitPlural={isFr ? 'spécialités' : isKr ? 'spesialite' : 'specialties'}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
+            extraControls={
+              searchQuery ? (
+                <button
+                  type="button"
+                  className="list-toolbar__clear-btn"
+                  onClick={() => setSearchQuery('')}
+                >
+                  ↺ {l10n('Effacer', 'Efase', 'Clear')}
+                </button>
+              ) : null
+            }
           />
         )}
 

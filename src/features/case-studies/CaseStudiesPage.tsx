@@ -17,6 +17,9 @@ export function CaseStudiesPage() {
   const { specialties } = useSpecialties();
   const { data: cms } = useCMS('case-studies');
 
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
+  const [selectedCountry, setSelectedCountry] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('savings');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
@@ -35,13 +38,27 @@ export function CaseStudiesPage() {
     return s ? l(s, 'name') : id;
   }
 
+  const countries = Array.from(new Set(caseStudies.map(cs => l(cs, 'patientCountry') || cs.patientCountry))).filter(Boolean);
+
   const sortOptions: SortOption[] = [
     { value: 'savings', label: isFr ? 'Économies Réalisées' : isKr ? 'Lekonomi Gagne' : 'Cost Saved (%)', icon: '💰' },
     { value: 'recent', label: isFr ? 'Plus Récents' : isKr ? 'Plis Resan' : 'Most Recent', icon: '⚡' },
     { value: 'duration', label: isFr ? 'Durée de Séjour' : isKr ? 'Dire Sezour' : 'Stay Duration', icon: '⏱️' },
   ];
 
-  const sortedCaseStudies = [...caseStudies].sort((a, b) => {
+  const filteredCaseStudies = caseStudies.filter((cs) => {
+    const matchSpecialty = selectedSpecialty === 'all' || cs.specialtyId === selectedSpecialty;
+    const matchCountry = selectedCountry === 'all' || (l(cs, 'patientCountry') || cs.patientCountry) === selectedCountry;
+    if (!searchQuery.trim()) return matchSpecialty && matchCountry;
+    const q = searchQuery.toLowerCase();
+    const condMatch = l(cs, 'condition').toLowerCase().includes(q) || cs.condition.toLowerCase().includes(q);
+    const treatMatch = l(cs, 'treatment').toLowerCase().includes(q) || cs.treatment.toLowerCase().includes(q);
+    const nameMatch = cs.patientFirstName.toLowerCase().includes(q);
+    const testMatch = (l(cs, 'testimonial') || '').toLowerCase().includes(q);
+    return matchSpecialty && matchCountry && (condMatch || treatMatch || nameMatch || testMatch);
+  });
+
+  const sortedCaseStudies = [...filteredCaseStudies].sort((a, b) => {
     if (sortBy === 'savings') return (b.costSavedPercent || 0) - (a.costSavedPercent || 0);
     if (sortBy === 'recent') return (b.year || 0) - (a.year || 0);
     if (sortBy === 'duration') return (a.durationDays || 0) - (b.durationDays || 0);
@@ -78,6 +95,9 @@ export function CaseStudiesPage() {
         {/* Results Toolbar */}
         {!loading && (
           <ListToolbar
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder={l10n('Rechercher un témoignage, maladie...', 'Rod temwagnaz, maladi...', 'Search patient stories, condition...')}
             sortBy={sortBy}
             onSortChange={setSortBy}
             sortOptions={sortOptions}
@@ -86,6 +106,48 @@ export function CaseStudiesPage() {
             countUnitPlural={isFr ? 'dossiers' : isKr ? 'dosie' : 'cases'}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
+            extraControls={
+              <>
+                {/* Specialty Filter Pill */}
+                <div className="list-toolbar__filter-pill">
+                  <select
+                    className="list-toolbar__filter-select"
+                    value={selectedSpecialty}
+                    onChange={e => setSelectedSpecialty(e.target.value)}
+                  >
+                    <option value="all">{l10n('🩺 Toutes les Spécialités', '🩺 Tou Spesialite', '🩺 All Specialties')}</option>
+                    {specialties.map(s => (
+                      <option key={s.id} value={s.id}>{l(s, 'name')}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Country Filter Pill */}
+                <div className="list-toolbar__filter-pill">
+                  <select
+                    className="list-toolbar__filter-select"
+                    value={selectedCountry}
+                    onChange={e => setSelectedCountry(e.target.value)}
+                  >
+                    <option value="all">{l10n('🌐 Tous les pays', '🌐 Tou pei', '🌐 All Countries')}</option>
+                    {countries.map(c => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Clear Active Filters */}
+                {(searchQuery || selectedSpecialty !== 'all' || selectedCountry !== 'all') && (
+                  <button
+                    type="button"
+                    className="list-toolbar__clear-btn"
+                    onClick={() => { setSearchQuery(''); setSelectedSpecialty('all'); setSelectedCountry('all'); }}
+                  >
+                    ↺ {l10n('Effacer', 'Efase', 'Clear')}
+                  </button>
+                )}
+              </>
+            }
           />
         )}
 
