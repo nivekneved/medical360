@@ -15,7 +15,9 @@ import type { Doctor } from '../../core/types';
 export function DoctorsPage() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
+  const [selectedHospital, setSelectedHospital] = useState<string>('all');
   const [secondOpinionDoctor, setSecondOpinionDoctor] = useState<Doctor | null>(null);
   const { doctors, loading } = useDoctors(selectedSpecialty === 'all' ? undefined : selectedSpecialty);
   const { specialties } = useSpecialties();
@@ -41,7 +43,17 @@ export function DoctorsPage() {
     { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
   ];
 
-  const sortedDoctors = [...doctors].sort((a, b) => {
+  const filteredDoctors = doctors.filter((doc) => {
+    const matchHospital = selectedHospital === 'all' || doc.hospitalId === selectedHospital;
+    if (!searchQuery.trim()) return matchHospital;
+    const q = searchQuery.toLowerCase();
+    const nameMatch = doc.name.toLowerCase().includes(q);
+    const titleMatch = l(doc, 'title').toLowerCase().includes(q) || doc.title.toLowerCase().includes(q);
+    const bioMatch = l(doc, 'bio').toLowerCase().includes(q) || doc.bio.toLowerCase().includes(q);
+    return matchHospital && (nameMatch || titleMatch || bioMatch);
+  });
+
+  const sortedDoctors = [...filteredDoctors].sort((a, b) => {
     if (sortBy === 'surgeries') return (b.surgeries || 0) - (a.surgeries || 0);
     if (sortBy === 'experience') return (b.experience || 0) - (a.experience || 0);
     if (sortBy === 'name') return a.name.localeCompare(b.name);
@@ -135,28 +147,12 @@ export function DoctorsPage() {
             </button>
           </div>
 
-          {/* Specialty Filter */}
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
-            <button
-              className={`btn btn-sm ${selectedSpecialty === 'all' ? 'btn-primary' : 'btn-ghost'}`}
-              onClick={() => setSelectedSpecialty('all')}
-            >
-              {l10n('Tous les Spécialistes (7)', 'Tou Dokter (7)', 'All Specialists (7)')}
-            </button>
-            {specialties.map(spec => (
-              <button
-                key={spec.id}
-                className={`btn btn-sm ${selectedSpecialty === spec.id ? 'btn-primary' : 'btn-ghost'}`}
-                onClick={() => setSelectedSpecialty(spec.id)}
-              >
-                {l(spec, 'name')}
-              </button>
-            ))}
-          </div>
-
-          {/* List Toolbar */}
+          {/* List Toolbar with Search, Specialty Pill, Hospital Pill, Sort By, Count & View Switcher */}
           {!loading && (
             <ListToolbar
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              searchPlaceholder={l10n('Rechercher un médecin...', 'Rod enn dokter...', 'Search specialists...')}
               sortBy={sortBy}
               onSortChange={setSortBy}
               sortOptions={sortOptions}
@@ -165,6 +161,48 @@ export function DoctorsPage() {
               countUnitPlural={isFr ? 'spécialistes' : isKr ? 'spesialist' : 'specialists'}
               viewMode={viewMode}
               onViewModeChange={setViewMode}
+              extraControls={
+                <>
+                  {/* Specialty Filter Pill */}
+                  <div className="list-toolbar__filter-pill">
+                    <select
+                      className="list-toolbar__filter-select"
+                      value={selectedSpecialty}
+                      onChange={e => setSelectedSpecialty(e.target.value)}
+                    >
+                      <option value="all">{l10n('🩺 Toutes les Spécialités', '🩺 Tou Spesialite', '🩺 All Specialties')}</option>
+                      {specialties.map(s => (
+                        <option key={s.id} value={s.id}>{l(s, 'name')}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Hospital Filter Pill */}
+                  <div className="list-toolbar__filter-pill">
+                    <select
+                      className="list-toolbar__filter-select"
+                      value={selectedHospital}
+                      onChange={e => setSelectedHospital(e.target.value)}
+                    >
+                      <option value="all">{l10n('🏥 Tous les Hôpitaux', '🏥 Tou Lopital', '🏥 All Hospitals')}</option>
+                      {hospitals.map(h => (
+                        <option key={h.id} value={h.id}>{h.name}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Clear Active Filters */}
+                  {(searchQuery || selectedSpecialty !== 'all' || selectedHospital !== 'all') && (
+                    <button
+                      type="button"
+                      className="list-toolbar__clear-btn"
+                      onClick={() => { setSearchQuery(''); setSelectedSpecialty('all'); setSelectedHospital('all'); }}
+                    >
+                      ↺ {l10n('Effacer', 'Efase', 'Clear')}
+                    </button>
+                  )}
+                </>
+              }
             />
           )}
 

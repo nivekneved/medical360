@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import './Services.css';
 
 const SERVICES = [
@@ -94,13 +96,38 @@ export function ServicesPage() {
   const { t, i18n } = useTranslation();
   const { data: cms } = useCMS('services');
 
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortBy, setSortBy] = useState<string>('recommended');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
   const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
   const l10n = (fr: string, cre: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'cre' || i18n.language === 'kr' ? cre : en;
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr' || i18n.language === 'cre';
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
     return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
   };
+
+  const sortOptions: SortOption[] = [
+    { value: 'recommended', label: isFr ? 'Recommandés' : isKr ? 'Rekommande' : 'Recommended', icon: '⚡' },
+    { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
+  ];
+
+  const filteredServices = SERVICES.filter((srv) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    const titleMatch = l(srv, 'title').toLowerCase().includes(q) || srv.title.toLowerCase().includes(q);
+    const descMatch = l(srv, 'desc').toLowerCase().includes(q) || srv.desc.toLowerCase().includes(q);
+    const tagMatch = (l(srv, 'tag') || '').toLowerCase().includes(q);
+    return titleMatch || descMatch || tagMatch;
+  });
+
+  const sortedServices = [...filteredServices].sort((a, b) => {
+    if (sortBy === 'name') return l(a, 'title').localeCompare(l(b, 'title'));
+    return 0;
+  });
 
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
@@ -130,8 +157,34 @@ export function ServicesPage() {
 
       <section className="section">
         <div className="container">
-          <div className="services-cards-grid">
-            {SERVICES.map((srv, i) => (
+          {/* Unified List Toolbar */}
+          <ListToolbar
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder={l10n('Rechercher un service...', 'Rod enn servis...', 'Search services...')}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            sortOptions={sortOptions}
+            totalCount={sortedServices.length}
+            countUnit={isFr ? 'service' : isKr ? 'servis' : 'service'}
+            countUnitPlural={isFr ? 'services' : isKr ? 'servis' : 'services'}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+            extraControls={
+              searchQuery ? (
+                <button
+                  type="button"
+                  className="list-toolbar__clear-btn"
+                  onClick={() => setSearchQuery('')}
+                >
+                  ↺ {l10n('Effacer', 'Efase', 'Clear')}
+                </button>
+              ) : null
+            }
+          />
+
+          <div className={`services-cards-grid ${viewMode === 'list' ? 'services-cards-grid--list-view' : ''}`}>
+            {sortedServices.map((srv, i) => (
               <div
                 key={srv.id}
                 className={`service-full-card animate-fade-in-up delay-${(i % 4) + 1}`}
