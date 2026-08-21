@@ -98,7 +98,16 @@ export function AboutPage() {
               </p>
             </div>
 
-            <div style={{ background: 'linear-gradient(135deg, var(--color-dark), var(--color-dark-3))', borderRadius: 'var(--radius-2xl)', padding: '2.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #090d10 0%, #111822 100%)',
+              border: '1.5px solid rgba(255, 255, 255, 0.12)',
+              borderRadius: 'var(--radius-2xl)',
+              padding: '2.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.5rem',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+            }}>
               {HIGHLIGHTS.map((item) => {
                 const Icon = item.icon;
                 return (
