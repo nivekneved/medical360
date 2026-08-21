@@ -21,6 +21,8 @@ import { DescribeNeedPage }    from './features/describe-need/DescribeNeedPage';
 import { ServicesPage }        from './features/services/ServicesPage';
 import { CaseStudiesPage }     from './features/case-studies/CaseStudiesPage';
 import { ContactPage }         from './features/contact/ContactPage';
+import { CostCalculatorPage }  from './features/cost-calculator/CostCalculatorPage';
+import { VisaGuidePage }       from './features/visa-guide/VisaGuidePage';
 
 // Admin pages
 import { AdminLoginPage }        from './features/admin/AdminLoginPage';
@@ -75,6 +77,8 @@ export default function App() {
                   <Route path="/doctors"          element={<DoctorsPage />} />
                   <Route path="/describe-need"    element={<DescribeNeedPage />} />
                   <Route path="/services"         element={<ServicesPage />} />
+                  <Route path="/cost-calculator"  element={<CostCalculatorPage />} />
+                  <Route path="/visa-guide"       element={<VisaGuidePage />} />
                   <Route path="/case-studies"     element={<CaseStudiesPage />} />
                   <Route path="/contact"          element={<ContactPage />} />
                 </Route>

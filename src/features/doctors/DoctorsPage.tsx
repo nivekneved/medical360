@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Award, Building2, Stethoscope, Star, Globe, MessageCircle, ArrowRight, CheckCircle2, Shield } from 'lucide-react';
+import { Award, Building2, Stethoscope, Star, Globe, MessageCircle, ArrowRight, CheckCircle2, Shield, HeartPulse } from 'lucide-react';
 import { useDoctors } from '../../hooks/useDoctors';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useCMS } from '../../hooks/useCMS';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
+import { DoctorSecondOpinionModal } from './DoctorSecondOpinionModal';
+import type { Doctor } from '../../core/types';
 
 export function DoctorsPage() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
+  const [secondOpinionDoctor, setSecondOpinionDoctor] = useState<Doctor | null>(null);
   const { doctors, loading } = useDoctors(selectedSpecialty === 'all' ? undefined : selectedSpecialty);
   const { specialties } = useSpecialties();
   const { hospitals } = useHospitals({});
@@ -64,41 +67,84 @@ export function DoctorsPage() {
         </div>
       </section>
 
-      {/* Filter Tabs */}
-      <section style={{ padding: '2rem 0 1rem', background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}>
+      {/* Content */}
+      <section className="section" style={{ paddingBottom: '5rem' }}>
         <div className="container">
-          <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
+          {/* Trust Banner */}
+          <div style={{
+            background: 'var(--color-surface)',
+            border: '1.5px solid var(--color-border)',
+            borderRadius: 'var(--radius-xl)',
+            padding: '1.25rem 1.75rem',
+            marginBottom: '2.5rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            flexWrap: 'wrap',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.03)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                background: 'rgba(16, 185, 129, 0.12)',
+                color: 'var(--color-primary)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}>
+                <Award size={20} />
+              </div>
+              <div>
+                <strong style={{ fontSize: '0.95rem', display: 'block' }}>
+                  {tCms('trustBadgeText', l10n('Avis Médical Direct & Deuxième Avis Sous 48h', 'Konsiltasion Direk ek Deziem Lavi Disponib', 'Direct Consultation & Second Opinion Available'))}
+                </strong>
+                <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                  {l10n('Comptes-rendus examinés directement par les chefs de département', 'Dosie medikal get direk par sef dokter', 'Reports reviewed directly by surgical department heads')}
+                </span>
+              </div>
+            </div>
             <button
-              className={`btn ${selectedSpecialty === 'all' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+              onClick={() => navigate('/cost-calculator')}
+              className="btn btn-outline btn-sm"
+              style={{ fontWeight: 700 }}
+            >
+              {l10n('Calculer les Coûts', 'Kalkil Pri', 'Compare Treatment Costs')} →
+            </button>
+          </div>
+
+          {/* Specialty Filter */}
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+            <button
+              className={`btn btn-sm ${selectedSpecialty === 'all' ? 'btn-primary' : 'btn-ghost'}`}
               onClick={() => setSelectedSpecialty('all')}
             >
-              {l10n('Tous les 7 Spécialistes', 'Tou 7 Dokter', 'All 7 Specialists')}
+              {l10n('Tous les Spécialistes (7)', 'Tou Dokter (7)', 'All Specialists (7)')}
             </button>
-            {specialties.map(sp => (
+            {specialties.map(spec => (
               <button
-                key={sp.id}
-                className={`btn ${selectedSpecialty === sp.id ? 'btn-primary' : 'btn-outline'} btn-sm`}
-                onClick={() => setSelectedSpecialty(sp.id)}
+                key={spec.id}
+                className={`btn btn-sm ${selectedSpecialty === spec.id ? 'btn-primary' : 'btn-ghost'}`}
+                onClick={() => setSelectedSpecialty(spec.id)}
               >
-                {l(sp, 'name')}
+                {l(spec, 'name')}
               </button>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Doctors Grid */}
-      <section className="section">
-        <div className="container">
+          {/* Doctors Grid */}
           {loading ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
               {Array.from({ length: 7 }).map((_, i) => (
-                <div key={i} className="skeleton" style={{ height: 380, borderRadius: 20 }} />
+                <div key={i} className="skeleton" style={{ height: 420, borderRadius: 16 }} />
               ))}
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '2rem' }}>
-              {doctors.map((doc) => {
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(330px, 1fr))', gap: '1.75rem' }}>
+              {doctors.map(doc => {
                 const hosp = getHospital(doc.hospitalId);
                 return (
                   <div
@@ -106,25 +152,25 @@ export function DoctorsPage() {
                     style={{
                       background: 'var(--color-surface)',
                       border: '1.5px solid var(--color-border)',
-                      borderRadius: 'var(--radius-2xl)',
+                      borderRadius: 'var(--radius-xl)',
                       overflow: 'hidden',
                       display: 'flex',
                       flexDirection: 'column',
-                      boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.03)',
                       transition: 'transform 0.2s, box-shadow 0.2s',
                     }}
                   >
-                    <div style={{ position: 'relative', height: 220 }}>
+                    {/* Doctor Photo Banner */}
+                    <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
                       <img
                         src={doc.imageUrl}
                         alt={doc.name}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
-                        loading="lazy"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                       <div style={{
                         position: 'absolute',
                         inset: 0,
-                        background: 'linear-gradient(to top, rgba(9,13,16,0.85) 0%, transparent 60%)',
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)',
                       }} />
                       <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
                         <span className="badge badge-accent" style={{ fontSize: '0.75rem' }}>
@@ -173,44 +219,20 @@ export function DoctorsPage() {
                         {doc.bio}
                       </p>
 
-                      {/* Qualifications */}
+                      {/* Credentials */}
                       <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', borderTop: '1px solid var(--color-border)', paddingTop: '0.75rem' }}>
                         <strong>Credentials:</strong> {doc.qualifications.join(' · ')}
                       </div>
 
-                      {/* Stats row */}
-                      <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
-                        gap: '0.5rem',
-                        background: 'rgba(0,0,0,0.02)',
-                        padding: '0.75rem',
-                        borderRadius: 'var(--radius-lg)',
-                        textAlign: 'center',
-                        marginTop: 'auto',
-                      }}>
-                        <div>
-                          <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                            {doc.surgeries.toLocaleString()}+
-                          </div>
-                          <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>Surgeries Done</div>
-                        </div>
-                        <div>
-                          <div style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                            {doc.languages.length}
-                          </div>
-                          <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)' }}>Languages</div>
-                        </div>
-                      </div>
-
                       {/* CTAs */}
-                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
                         <button
                           className="btn btn-primary btn-sm"
-                          style={{ flex: 1 }}
-                          onClick={() => navigate(`/describe-need?specialty=${doc.specialties[0]}`)}
+                          style={{ flex: 1, fontWeight: 700 }}
+                          onClick={() => setSecondOpinionDoctor(doc)}
                         >
-                          {l10n('Prendre Rendez-vous', 'Pran Randevou', 'Request Opinion')}
+                          <Stethoscope size={14} />
+                          <span>{l10n('2ème Avis Gratuit', '2em Lavi Medikal', '2nd Opinion')}</span>
                         </button>
                         <a
                           href={buildMed360WhatsAppUrl(`Bonjour Medical 360, je souhaite consulter ${doc.name}`)}
@@ -230,6 +252,15 @@ export function DoctorsPage() {
           )}
         </div>
       </section>
+
+      {/* Direct Second Opinion Modal */}
+      {secondOpinionDoctor && (
+        <DoctorSecondOpinionModal
+          doctor={secondOpinionDoctor}
+          hospital={getHospital(secondOpinionDoctor.hospitalId)}
+          onClose={() => setSecondOpinionDoctor(null)}
+        />
+      )}
     </main>
   );
 }
