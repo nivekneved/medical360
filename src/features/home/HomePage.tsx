@@ -170,7 +170,7 @@ export function HomePage() {
               ))
             }
           </div>
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/specialties')}>
               {t('home.specialties.viewAllBtn')} <ArrowRight size={16} />
             </button>
@@ -199,7 +199,7 @@ export function HomePage() {
               </div>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+          <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="process-cta-btn">
               {t('home.process.startBtn')} <ArrowRight size={18} />
             </button>
@@ -251,7 +251,7 @@ export function HomePage() {
               ))
             }
           </div>
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/hospitals')}>
               {t('home.network.viewAllBtn')} <ArrowRight size={16} />
             </button>
@@ -275,7 +275,7 @@ export function HomePage() {
                   <span className="badge badge-accent">{t('home.whyImageBadge')}</span>
                 </div>
               </div>
-              <button className="btn btn-primary" onClick={() => navigate('/about')} style={{ marginTop: '1.5rem' }}>
+              <button className="btn btn-primary" onClick={() => navigate('/about')} style={{ marginTop: '2rem' }}>
                 {t('home.aboutBtn')} <ArrowRight size={16} />
               </button>
             </div>
@@ -331,7 +331,7 @@ export function HomePage() {
               ))
             }
           </div>
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/case-studies')}>
               {t('home.cases.viewAllBtn')} <ArrowRight size={16} />
             </button>
