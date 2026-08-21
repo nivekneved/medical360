@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowLeft, KeyRound, Sparkles } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
-
 import { validateHoneypot, sanitizeInput, checkRateLimit } from '../../core/services/security.service';
 
 export function AdminLoginPage() {
@@ -14,6 +13,11 @@ export function AdminLoginPage() {
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const fillDemo = () => {
+    setEmail('admin@med360.mu');
+    setPassword('med360admin');
+  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -44,87 +48,283 @@ export function AdminLoginPage() {
   }
 
   return (
-    <main style={{ minHeight: '100vh', background: 'var(--color-dark)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
-      <div style={{ width: '100%', maxWidth: 420 }}>
-        {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-          <div style={{ width: 56, height: 56, background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))', borderRadius: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: '1.5rem', color: 'white', margin: '0 auto 1rem' }}>
-            M
-          </div>
-          <h1 style={{ color: 'white', fontSize: '1.5rem', fontWeight: 700, marginBottom: 8 }}>Admin Portal</h1>
-          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.9rem' }}>Medical 360 — Internal Access Only</p>
+    <main style={{
+      minHeight: '100vh',
+      background: 'radial-gradient(ellipse at top, #0f172a 0%, #090d10 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '2rem 1.5rem',
+      position: 'relative',
+      overflow: 'hidden',
+    }}>
+      {/* Background ambient glow */}
+      <div style={{
+        position: 'absolute',
+        top: '15%',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 450,
+        height: 450,
+        background: 'radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%)',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{ width: '100%', maxWidth: 440, position: 'relative', zIndex: 10 }}>
+        {/* Back Link */}
+        <div style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              color: 'rgba(255, 255, 255, 0.65)',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              textDecoration: 'none',
+              transition: 'color 0.2s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#34d399')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.65)')}
+          >
+            <ArrowLeft size={16} />
+            <span>Back to Medical 360</span>
+          </Link>
         </div>
 
-        {/* Form */}
-        <form
-          onSubmit={handleSubmit}
-          style={{ background: 'var(--color-dark-3)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 'var(--radius-2xl)', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
-        >
-          {/* Honeypot field */}
-          <div style={{ display: 'none', position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
-            <input
-              type="text"
-              name="user_verification_auth"
-              tabIndex={-1}
-              autoComplete="off"
-              value={honeypot}
-              onChange={e => setHoneypot(e.target.value)}
-            />
+        {/* Logo & Header */}
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <div style={{
+            width: 58,
+            height: 58,
+            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+            borderRadius: 16,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontFamily: 'var(--font-display)',
+            fontWeight: 900,
+            fontSize: '1.6rem',
+            color: '#ffffff',
+            margin: '0 auto 1.25rem',
+            boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)',
+            border: '2px solid rgba(255,255,255,0.2)',
+          }}>
+            M
           </div>
+          <h1 style={{ color: '#ffffff', fontSize: '1.75rem', fontWeight: 900, fontFamily: 'var(--font-display)', letterSpacing: '-0.02em', marginBottom: 6 }}>
+            Admin Portal
+          </h1>
+          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem' }}>
+            Medical 360 · Clinical & Content Management
+          </p>
+        </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="admin-email" style={{ color: 'rgba(255,255,255,0.7)' }}>Email</label>
-            <div style={{ position: 'relative' }}>
-              <Mail size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)' }} />
+        {/* Card Form */}
+        <div style={{
+          background: 'rgba(17, 24, 34, 0.95)',
+          border: '1.5px solid rgba(255, 255, 255, 0.12)',
+          borderRadius: 24,
+          padding: '2.25rem',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
+          backdropFilter: 'blur(20px)',
+        }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            {/* Honeypot field */}
+            <div style={{ display: 'none', position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
               <input
-                id="admin-email"
-                type="email"
-                className="form-input"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                style={{ paddingLeft: '2.75rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
-                required
+                type="text"
+                name="user_verification_auth"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={e => setHoneypot(e.target.value)}
               />
             </div>
-          </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="admin-password" style={{ color: 'rgba(255,255,255,0.7)' }}>Password</label>
-            <div style={{ position: 'relative' }}>
-              <Lock size={16} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.3)' }} />
-              <input
-                id="admin-password"
-                type={showPw ? 'text' : 'password'}
-                className="form-input"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                style={{ paddingLeft: '2.75rem', paddingRight: '3rem', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
-                required
-              />
+            {/* Email Field */}
+            <div>
+              <label htmlFor="admin-email" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#e2e8f0', marginBottom: 6 }}>
+                Admin Email Address
+              </label>
+              <div style={{ position: 'relative' }}>
+                <Mail size={17} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', pointerEvents: 'none' }} />
+                <input
+                  id="admin-email"
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  style={{
+                    width: '100%',
+                    height: 46,
+                    paddingLeft: '2.75rem',
+                    paddingRight: '1rem',
+                    background: '#1e293b',
+                    border: '1.5px solid #334155',
+                    borderRadius: 12,
+                    color: '#ffffff',
+                    fontSize: '0.95rem',
+                    fontWeight: 500,
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = '#10b981')}
+                  onBlur={(e) => (e.currentTarget.style.borderColor = '#334155')}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div>
+              <label htmlFor="admin-password" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#e2e8f0', marginBottom: 6 }}>
+                Password
+              </label>
+              <div style={{ position: 'relative' }}>
+                <Lock size={17} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#94a3b8', pointerEvents: 'none' }} />
+                <input
+                  id="admin-password"
+                  type={showPw ? 'text' : 'password'}
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  style={{
+                    width: '100%',
+                    height: 46,
+                    paddingLeft: '2.75rem',
+                    paddingRight: '3rem',
+                    background: '#1e293b',
+                    border: '1.5px solid #334155',
+                    borderRadius: 12,
+                    color: '#ffffff',
+                    fontSize: '0.95rem',
+                    fontWeight: 500,
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                  }}
+                  onFocus={(e) => (e.currentTarget.style.borderColor = '#10b981')}
+                  onBlur={(e) => (e.currentTarget.style.borderColor = '#334155')}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw(s => !s)}
+                  style={{
+                    position: 'absolute',
+                    right: 12,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    color: '#94a3b8',
+                    cursor: 'pointer',
+                    background: 'none',
+                    border: 'none',
+                    padding: 4,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  aria-label="Toggle password visibility"
+                >
+                  {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+
+            {/* Error message */}
+            {error && (
+              <div style={{
+                background: 'rgba(239, 68, 68, 0.15)',
+                border: '1.5px solid rgba(239, 68, 68, 0.4)',
+                borderRadius: 10,
+                padding: '0.75rem 1rem',
+                color: '#f87171',
+                fontSize: '0.85rem',
+                fontWeight: 600,
+              }}>
+                {error}
+              </div>
+            )}
+
+            {/* Sign In Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              id="admin-login-btn"
+              style={{
+                width: '100%',
+                height: 48,
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: 12,
+                fontSize: '1rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                marginTop: '0.5rem',
+                boxShadow: '0 4px 16px rgba(16, 185, 129, 0.35)',
+                transition: 'all 0.2s',
+              }}
+            >
+              {loading ? (
+                <span>Authenticating...</span>
+              ) : (
+                <>
+                  <KeyRound size={18} />
+                  <span>Sign In to Dashboard</span>
+                </>
+              )}
+            </button>
+
+            {/* Quick Demo Credentials Pill */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              borderRadius: 12,
+              padding: '0.75rem 1rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 8,
+              marginTop: '0.5rem',
+            }}>
+              <div>
+                <div style={{ fontSize: '0.75rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700 }}>
+                  Demo Credentials
+                </div>
+                <div style={{ fontSize: '0.8rem', color: '#e2e8f0', fontFamily: 'monospace', marginTop: 2 }}>
+                  admin@med360.mu / med360admin
+                </div>
+              </div>
               <button
                 type="button"
-                onClick={() => setShowPw(s => !s)}
-                style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', background: 'none', border: 'none' }}
+                onClick={fillDemo}
+                style={{
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  border: '1px solid rgba(16, 185, 129, 0.3)',
+                  color: '#34d399',
+                  borderRadius: 6,
+                  padding: '0.25rem 0.6rem',
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
               >
-                {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                Auto-Fill
               </button>
             </div>
-          </div>
+          </form>
+        </div>
 
-          {error && (
-            <div style={{ background: 'rgba(255,69,96,0.1)', border: '1px solid rgba(255,69,96,0.2)', borderRadius: 'var(--radius-md)', padding: '0.75rem 1rem', color: 'var(--color-danger)', fontSize: '0.875rem' }}>
-              {error}
-            </div>
-          )}
-
-          <button type="submit" className="btn btn-primary" id="admin-login-btn" disabled={loading} style={{ width: '100%', marginTop: '0.5rem' }}>
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-
-          <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'rgba(255,255,255,0.25)' }}>
-            Demo: admin@med360.mu / med360admin
-          </p>
-        </form>
+        {/* Security Footer Note */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem', marginTop: '1.5rem' }}>
+          <ShieldCheck size={14} color="#10b981" />
+          <span>Protected by 256-bit SSL & Role-Based Access Control</span>
+        </div>
       </div>
     </main>
   );
