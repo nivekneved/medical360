@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "backup": "node scripts/export_backup.js",
+    "restore:latest": "node backups/latest/restore.js"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",
