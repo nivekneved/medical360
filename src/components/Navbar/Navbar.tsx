@@ -26,13 +26,18 @@ export function Navbar() {
     i18n.changeLanguage(nextLang);
   };
 
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr';
+
   const NAV_LINKS = [
-    { label: t('nav.about'),            to: '/about' },
+    { label: isFr ? 'Calculateur Prix' : isKr ? 'Kalkil Pri' : 'Cost Calculator', to: '/cost-calculator' },
     { label: t('nav.hospitals'),        to: '/hospitals' },
     { label: t('nav.specialties'),      to: '/specialties' },
     { label: t('nav.doctors'),          to: '/doctors' },
+    { label: isFr ? 'Guide Visa' : isKr ? 'Gid Viza' : 'Visa & Travel', to: '/visa-guide' },
     { label: t('nav.services'),         to: '/services' },
     { label: t('nav.caseStudies'),      to: '/case-studies' },
+    { label: t('nav.about'),            to: '/about' },
     { label: t('nav.contact'),          to: '/contact' },
     { label: t('nav.admin'),            to: '/admin' },
   ];
