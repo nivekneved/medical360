@@ -110,9 +110,11 @@ The mobile codebase is located in [`d:\WEB 2026\medical360-mobile`](file:///d:/W
 
 ## 💾 Database Backup & 1-Click Restore
 
-All database schemas (SQL DDL & JSON Schema) and transactional seed data are archived under `backups/backup_2026-08-20_23-50-00/`.
-- **1-Click Restore verification**: `node backups/backup_2026-08-20_23-50-00/restore.js`
-- **SQL Restore**: `psql -U postgres -d medical360 -f backups/backup_2026-08-20_23-50-00/restore.sql`
+All database schemas (SQL DDL & JSON Schema), relational seed data, and CMS content are archived in versioned snapshots under `backups/`:
+- **Create New Full Backup**: `npm run backup`
+- **Verify & Restore Latest Backup**: `npm run restore:latest`
+- **PostgreSQL / MySQL / SQLite Import**: `psql -U postgres -d medical360 -f backups/latest/medical360_database.sql`
+- **Backup Manifest & Branch State**: See `backups/latest/manifest.json` and `backups/latest/branches_manifest.txt`.
 
 ---
 
@@ -122,10 +124,13 @@ All database schemas (SQL DDL & JSON Schema) and transactional seed data are arc
 # 1. Install dependencies
 npm install
 
-# 2. Start local development server
+# 2. Start local development server (Vite)
 npm run dev
 
-# 3. Run typecheck & build bundle
+# 3. Create a full database & git backup
+npm run backup
+
+# 4. Run typecheck & build bundle
 npm run build
 ```
 

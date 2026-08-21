@@ -1,0 +1,16 @@
+=============================================================================
+Medical 360 Git Branches & State Manifest
+Backup Timestamp: 2026-08-21T04:14:13.329Z
+=============================================================================
+
+1. Web Repository (medical360):
+-----------------------------------------------------------------------------
+* main                2f85561a3b54a2fc64316e2035816cc2bf3b4645 fix(ui): brighten page hero banner overlays to reveal people/imagery and fix section/button bottom spacing across all pages
+  remotes/origin/main 2f85561a3b54a2fc64316e2035816cc2bf3b4645 fix(ui): brighten page hero banner overlays to reveal people/imagery and fix section/button bottom spacing across all pages
+
+
+2. Mobile Repository (medical360-mobile):
+-----------------------------------------------------------------------------
+* main                7093e58813de215a7456bdd88f178845d74b255c fix(images): replace broken images with local assets in mobile seeds
+  remotes/origin/main 7093e58813de215a7456bdd88f178845d74b255c fix(images): replace broken images with local assets in mobile seeds
+
