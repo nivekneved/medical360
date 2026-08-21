@@ -1,24 +1,72 @@
-import { useState, useEffect } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X, MessageCircle, Sun, Moon, Globe } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import {
+  Menu,
+  X,
+  MessageCircle,
+  Sun,
+  Moon,
+  Globe,
+  ChevronDown,
+  Stethoscope,
+  Building2,
+  UserCheck,
+  Calculator,
+  Plane,
+  HeartHandshake,
+  MessageSquareQuote,
+  Info,
+  PhoneCall,
+  Sparkles,
+  ShieldCheck,
+  ArrowRight,
+  Lock,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../providers/ThemeProvider';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import './Navbar.css';
 
+interface NavSubItem {
+  label: string;
+  sublabel: string;
+  to: string;
+  icon: any;
+  badge?: string;
+}
+
+interface NavGroup {
+  id: string;
+  label: string;
+  items: NavSubItem[];
+}
+
 export function Navbar() {
-  const [isOpen, setIsOpen]         = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme, toggleTheme }      = useTheme();
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [mobileExpandedGroup, setMobileExpandedGroup] = useState<string | null>('treatments');
+  const dropdownTimeoutRef = useRef<any>(null);
+
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, i18n } = useTranslation();
 
+  // Close menus on route change
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    setIsOpen(false);
+    setActiveDropdown(null);
+  }, [location.pathname]);
+
+  // Scroll detection for sticky blur navbar
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 15);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Language switcher
   const toggleLanguage = () => {
     const langs = ['en', 'fr', 'kr'];
     const currentIndex = langs.indexOf(i18n.language);
@@ -29,18 +77,97 @@ export function Navbar() {
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
 
-  const NAV_LINKS = [
-    { label: isFr ? 'Calculateur Prix' : isKr ? 'Kalkil Pri' : 'Cost Calculator', to: '/cost-calculator' },
-    { label: t('nav.hospitals'),        to: '/hospitals' },
-    { label: t('nav.specialties'),      to: '/specialties' },
-    { label: t('nav.doctors'),          to: '/doctors' },
-    { label: isFr ? 'Guide Visa' : isKr ? 'Gid Viza' : 'Visa & Travel', to: '/visa-guide' },
-    { label: t('nav.services'),         to: '/services' },
-    { label: t('nav.caseStudies'),      to: '/case-studies' },
-    { label: t('nav.about'),            to: '/about' },
-    { label: t('nav.contact'),          to: '/contact' },
-    { label: t('nav.admin'),            to: '/admin' },
+  const NAV_GROUPS: NavGroup[] = [
+    {
+      id: 'treatments',
+      label: isFr ? 'Soins & Hôpitaux' : isKr ? 'Swen & Lopital' : 'Treatments & Care',
+      items: [
+        {
+          label: isFr ? 'Spécialités & Chirurgie' : isKr ? 'Spesialite & Sirizi' : 'Medical Specialties',
+          sublabel: isFr ? 'Cardiologie, Oncologie, Greffes & plus' : 'Cardiology, Oncology, Transplants & more',
+          to: '/specialties',
+          icon: Stethoscope,
+        },
+        {
+          label: isFr ? 'Nos 7 Spécialistes d\'Élite' : isKr ? 'Nou 7 Sef Dokter Spesialist' : 'Elite Specialists (7)',
+          sublabel: isFr ? 'Chirurgiens de renommée mondiale' : 'World-leading chief surgeons & consultants',
+          to: '/doctors',
+          icon: UserCheck,
+          badge: isFr ? 'Élite' : 'Top',
+        },
+        {
+          label: isFr ? 'Hôpitaux Associés' : isKr ? 'Lopital Partner' : 'Partner Hospitals',
+          sublabel: isFr ? 'Établissements accrédités JCI / NABH' : 'Accredited hospitals in India, Thailand, SG',
+          to: '/hospitals',
+          icon: Building2,
+        },
+      ],
+    },
+    {
+      id: 'travel-costs',
+      label: isFr ? 'Prix & Voyage' : isKr ? 'Pri & Vwayaz' : 'Travel & Costs',
+      items: [
+        {
+          label: isFr ? 'Calculateur de Coûts & Devis' : isKr ? 'Kalkilatris Pri & Lekonomi' : 'Cost & Savings Calculator',
+          sublabel: isFr ? 'Comparez les tarifs par pays en USD & MUR' : 'Interactive comparison across countries',
+          to: '/cost-calculator',
+          icon: Calculator,
+          badge: isFr ? 'Nouveau' : 'New',
+        },
+        {
+          label: isFr ? 'Guide Visa Médical' : isKr ? 'Gid Viza Medikal' : 'Medical Visa Guide',
+          sublabel: isFr ? 'Lettre officielle sous 24h & checklist' : 'Fast-track visa letters & patient checklist',
+          to: '/visa-guide',
+          icon: Plane,
+        },
+        {
+          label: isFr ? 'Services de Conciergerie' : isKr ? 'Nou Bann Servis' : 'Concierge Services',
+          sublabel: isFr ? 'Les 6 étapes de votre prise en charge' : 'End-to-end patient care & VIP transfers',
+          to: '/services',
+          icon: HeartHandshake,
+        },
+      ],
+    },
+    {
+      id: 'about-us',
+      label: isFr ? 'À Propos' : isKr ? 'A Propo' : 'About & Stories',
+      items: [
+        {
+          label: isFr ? 'Témoignages Patients' : isKr ? 'Temwagnaz Pasian' : 'Patient Stories & Case Studies',
+          sublabel: isFr ? 'Histoires de rétablissement et avis' : 'Real recoveries, cost savings & reviews',
+          to: '/case-studies',
+          icon: MessageSquareQuote,
+        },
+        {
+          label: isFr ? 'Notre Mission & Équipe' : isKr ? 'Nou Mision & Lekip' : 'About Medical 360',
+          sublabel: isFr ? 'Pionnier de la santé pour l\'océan Indien' : 'Our standards, leadership & story',
+          to: '/about',
+          icon: Info,
+        },
+        {
+          label: isFr ? 'Contact & Assistance' : isKr ? 'Kontak & Asistans' : 'Contact & Helpline',
+          sublabel: isFr ? 'Conseillers disponibles 7j/7' : 'Reach our local & international teams',
+          to: '/contact',
+          icon: PhoneCall,
+        },
+      ],
+    },
   ];
+
+  const handleMouseEnter = (groupId: string) => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setActiveDropdown(groupId);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
+
+  const toggleMobileGroup = (groupId: string) => {
+    setMobileExpandedGroup(prev => (prev === groupId ? null : groupId));
+  };
 
   return (
     <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
@@ -57,31 +184,74 @@ export function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Nav */}
+        {/* Desktop Grouped Navigation Menu */}
         <nav className="navbar__nav" aria-label="Main navigation">
-          {NAV_LINKS.map(link => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                `navbar__link ${isActive ? 'navbar__link--active' : ''}`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
+          {NAV_GROUPS.map(group => {
+            const isDropdownActive = activeDropdown === group.id;
+            const isGroupCurrent = group.items.some(item => location.pathname.startsWith(item.to));
+
+            return (
+              <div
+                key={group.id}
+                className="nav-dropdown-wrapper"
+                onMouseEnter={() => handleMouseEnter(group.id)}
+                onMouseLeave={handleMouseLeave}
+              >
+                <button
+                  className={`nav-dropdown-btn ${isGroupCurrent ? 'nav-dropdown-btn--current' : ''} ${isDropdownActive ? 'nav-dropdown-btn--open' : ''}`}
+                  onClick={() => setActiveDropdown(prev => (prev === group.id ? null : group.id))}
+                  aria-expanded={isDropdownActive}
+                >
+                  <span>{group.label}</span>
+                  <ChevronDown size={14} className={`nav-chevron ${isDropdownActive ? 'nav-chevron--rotated' : ''}`} />
+                </button>
+
+                {/* Dropdown Menu Panel */}
+                {isDropdownActive && (
+                  <div className="nav-dropdown-menu">
+                    <div className="nav-dropdown-menu__grid">
+                      {group.items.map(item => {
+                        const IconComponent = item.icon;
+                        const isItemActive = location.pathname === item.to;
+
+                        return (
+                          <Link
+                            key={item.to}
+                            to={item.to}
+                            className={`nav-dropdown-item ${isItemActive ? 'nav-dropdown-item--active' : ''}`}
+                            onClick={() => setActiveDropdown(null)}
+                          >
+                            <div className="nav-dropdown-item__icon">
+                              <IconComponent size={18} />
+                            </div>
+                            <div className="nav-dropdown-item__content">
+                              <div className="nav-dropdown-item__title-row">
+                                <span className="nav-dropdown-item__title">{item.label}</span>
+                                {item.badge && <span className="nav-dropdown-item__badge">{item.badge}</span>}
+                              </div>
+                              <span className="nav-dropdown-item__sublabel">{item.sublabel}</span>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
-        {/* Actions */}
+        {/* Action Controls */}
         <div className="navbar__actions">
-          {/* Language Toggle */}
+          {/* Language Switcher */}
           <button
             className="navbar-icon-btn"
             onClick={toggleLanguage}
             aria-label="Switch Language"
             title="Switch language (EN / FR / KR)"
           >
-            <Globe size={18} />
+            <Globe size={17} />
             <span className="lang-text">{i18n.language.toUpperCase()}</span>
           </button>
 
@@ -92,29 +262,44 @@ export function Navbar() {
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
-            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            {theme === 'light' ? <Moon size={17} /> : <Sun size={17} />}
           </button>
 
+          {/* WhatsApp Direct */}
           <a
             href={buildMed360WhatsAppUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="navbar__whatsapp"
-            aria-label={t('nav.whatsapp')}
+            aria-label="WhatsApp 24/7"
+            title="24/7 WhatsApp Medical Coordination"
           >
             <MessageCircle size={16} />
-            <span>{t('nav.whatsapp')}</span>
+            <span className="navbar__whatsapp-text">WhatsApp 24/7</span>
           </a>
+
+          {/* Primary Action CTA */}
           <button
-            className="btn btn-primary btn-sm"
+            className="btn btn-primary btn-sm navbar__cta"
             onClick={() => navigate('/describe-need')}
             id="navbar-cta-btn"
           >
-            {t('nav.freeOpinion')}
+            <span>{isFr ? 'Devis Gratuit' : isKr ? 'Devi Gratis' : 'Free Quote'}</span>
+            <ArrowRight size={14} />
           </button>
+
+          {/* Admin Lock link */}
+          <Link
+            to="/admin"
+            className="navbar-admin-link"
+            title="Admin Portal"
+            aria-label="Admin Portal"
+          >
+            <Lock size={15} />
+          </Link>
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Hamburger Toggle */}
         <button
           className="navbar__toggle"
           onClick={() => setIsOpen(!isOpen)}
@@ -125,57 +310,97 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Drawer / Accordion Menu */}
       <div className={`navbar__mobile ${isOpen ? 'navbar__mobile--open' : ''}`}>
-        <nav className="navbar__mobile-nav">
-          {NAV_LINKS.map(link => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className="navbar__mobile-link"
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </NavLink>
-          ))}
+        <div className="navbar__mobile-inner">
+          <nav className="navbar__mobile-nav">
+            {NAV_GROUPS.map(group => {
+              const isGroupExpanded = mobileExpandedGroup === group.id;
+
+              return (
+                <div key={group.id} className="mobile-group">
+                  <button
+                    className="mobile-group__header"
+                    onClick={() => toggleMobileGroup(group.id)}
+                  >
+                    <span className="mobile-group__title">{group.label}</span>
+                    <ChevronDown
+                      size={18}
+                      className={`mobile-group__chevron ${isGroupExpanded ? 'mobile-group__chevron--rotated' : ''}`}
+                    />
+                  </button>
+
+                  {isGroupExpanded && (
+                    <div className="mobile-group__items">
+                      {group.items.map(item => {
+                        const IconComponent = item.icon;
+                        const isItemActive = location.pathname === item.to;
+
+                        return (
+                          <Link
+                            key={item.to}
+                            to={item.to}
+                            className={`mobile-subitem ${isItemActive ? 'mobile-subitem--active' : ''}`}
+                            onClick={() => setIsOpen(false)}
+                          >
+                            <div className="mobile-subitem__icon">
+                              <IconComponent size={18} />
+                            </div>
+                            <div className="mobile-subitem__content">
+                              <div className="mobile-subitem__title-row">
+                                <span className="mobile-subitem__title">{item.label}</span>
+                                {item.badge && <span className="nav-dropdown-item__badge">{item.badge}</span>}
+                              </div>
+                              <span className="mobile-subitem__sublabel">{item.sublabel}</span>
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+
+          {/* Mobile Footer Actions */}
           <div className="navbar__mobile-actions">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-text)' }}>Language</span>
-              <button
-                className="navbar-icon-btn"
-                onClick={toggleLanguage}
-              >
-                <Globe size={18} />
-                <span className="lang-text">{i18n.language.toUpperCase()}</span>
+            <div className="mobile-utility-row">
+              <button className="mobile-utility-btn" onClick={toggleLanguage}>
+                <Globe size={18} color="var(--color-primary)" />
+                <span>Language: <strong>{i18n.language.toUpperCase()}</strong></span>
               </button>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-text)' }}>Appearance</span>
-              <button
-                className="navbar-icon-btn"
-                onClick={toggleTheme}
-              >
+              <button className="mobile-utility-btn" onClick={toggleTheme}>
                 {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+                <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
               </button>
             </div>
+
             <a
               href={buildMed360WhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-whatsapp"
+              style={{ width: '100%', justifyContent: 'center' }}
               onClick={() => setIsOpen(false)}
             >
               <MessageCircle size={18} />
-              {t('nav.whatsapp')}
+              <span>WhatsApp 24/7 Helpline</span>
             </a>
+
             <button
               className="btn btn-primary"
-              onClick={() => { navigate('/describe-need'); setIsOpen(false); }}
+              style={{ width: '100%', justifyContent: 'center' }}
+              onClick={() => {
+                navigate('/describe-need');
+                setIsOpen(false);
+              }}
             >
-              {t('nav.freeOpinion')}
+              <span>{isFr ? 'Demander un Devis & Avis Gratuit' : isKr ? 'Demann Devi & Lavi Gratis' : 'Get Free Opinion & Quote'}</span>
+              <ArrowRight size={16} />
             </button>
           </div>
-        </nav>
+        </div>
       </div>
     </header>
   );
