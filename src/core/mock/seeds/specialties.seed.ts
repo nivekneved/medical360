@@ -143,7 +143,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'From rhinoplasty and facelifts to bariatric surgery and body contouring, our cosmetic surgery partners combine artistic precision with clinical excellence at a fraction of European or Mauritian costs.',
     description_fr: 'De la rhinoplastie et des liftings à la chirurgie bariatrique et au remodelage corporel, nos partenaires en chirurgie esthétique allient précision artistique et excellence clinique à une fraction des coûts européens ou mauriciens.',
     description_kr: 'Nou bann partner sirirzi estetik (rinoplasti, bariatrik) marye presizion artistik ar lekzpertiz klinik, pou enn pri boukou pli bon marse.',
-    imageUrl: 'https://images.unsplash.com/photo-1512290900672-1f4a9b6cfa4d?w=800&q=80',
+    imageUrl: '/assets/banners/cosmetic_surgery.jpg',
     featured: false,
     procedures: [
       { id: 'proc-cs1', specialtyId: 'sp-cosmetic', name: 'Rhinoplasty (Nose Job)', name_fr: 'Rhinoplastie (Chirurgie du Nez)', name_kr: 'Rinoplasti (Operasion Nene)', description: 'Surgical reshaping of the nose for aesthetic or functional improvement.', description_fr: 'Remodelage chirurgical du nez pour une amélioration esthétique ou fonctionnelle.', description_kr: 'Sanz form nene pou rezon estetik ouswa medikal.', estimatedDurationDays: 7, estimatedCostUSD: { min: 2500, max: 5000 } },

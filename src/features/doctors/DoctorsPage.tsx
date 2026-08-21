@@ -78,17 +78,16 @@ export function DoctorsPage() {
         canonical="/doctors"
       />
 
-      {/* Hero */}
-      <section className="page-hero">
-        <div className="page-hero__bg" />
+      {/* Hero Banner */}
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/doctors_banner.jpg)' }}>
         <div className="container page-hero__inner">
-          <span className="section-label" style={{ color: 'var(--color-accent)' }}>
+          <span className="section-label">
             {tCms('heroLabel', l10n('Spécialistes de Renom Mondial', 'Dokter Klas Mondial', 'World-Renowned Specialists'))}
           </span>
-          <h1 className="text-h1" style={{ color: 'white' }}>
+          <h1 className="text-h1">
             {tCms('heroTitle', l10n('Nos 7 Chirurgiens et Médecins d\'Élite', 'Nou 7 Dokter ek Sirizien Spesialist', 'Our 7 Elite Medical Specialists'))}
           </h1>
-          <p className="text-lead" style={{ color: 'rgba(255,255,255,0.8)', maxWidth: 620 }}>
+          <p className="text-lead">
             {tCms('heroDesc', l10n(
               'Découvrez notre réseau exclusif de 7 chirurgiens et consultants de premier plan ayant réalisé plus de 100 000 interventions réussies.',
               'Dekouver nou rezo seleksione de 7 dokter ek sirizien klas mondial ki finn fer plis ki 100 000 loperasion a-sikse.',

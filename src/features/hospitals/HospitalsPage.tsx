@@ -82,17 +82,16 @@ export function HospitalsPage() {
         description={l10n('Découvrez nos hôpitaux partenaires.', 'Dekouver nou bann lopital partner.', 'Discover our partner hospitals.')}
         canonical="/hospitals"
       />
-      {/* Header */}
-      <section className="page-hero">
-        <div className="page-hero__bg" />
+      {/* Header Banner */}
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/hospitals_banner.jpg)' }}>
         <div className="container page-hero__inner">
-          <span className="section-label" style={{ color: 'var(--color-accent)' }}>
+          <span className="section-label">
             {tCms('heroLabel', l10n('Notre Réseau', 'Nou Rezo', 'Our Network'))}
           </span>
-          <h1 className="text-h1" style={{ color: 'white' }}>
+          <h1 className="text-h1">
             {tCms('heroTitle', l10n('Hôpitaux Associés', 'Lopital Partner', 'Associated Hospitals'))}
           </h1>
-          <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 560 }}>
+          <p className="text-lead">
             {tCms('heroDesc', l10n(
               'Chaque hôpital de notre réseau est accrédité au niveau international. Parcourez nos hôpitaux partenaires et explorez leurs spécialités, leurs installations et leurs services aux patients.',
               'Sak lopital dan nou rezo ena akreditasion internasional. Get nou bann lopital partner ek explor zot spesialite, fasilite, ek servis pou bann pasian.',

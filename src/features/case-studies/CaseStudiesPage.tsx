@@ -72,16 +72,16 @@ export function CaseStudiesPage() {
         description={l10n('Découvrez nos histoires de patients réussies.', 'Dekouver nou bann zistwar pasian ki finn reisi.', 'Discover our successful patient stories.')}
         canonical="/case-studies"
       />
-      <section className="page-hero">
-        <div className="page-hero__bg" />
+      {/* Header Banner */}
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/casestudies_banner.jpg)' }}>
         <div className="container page-hero__inner">
-          <span className="section-label" style={{ color: 'var(--color-accent)' }}>
+          <span className="section-label">
             {tCms('heroLabel', l10n('Témoignages de Patients', 'Zistwar Bann Pasian', 'Patient Stories'))}
           </span>
-          <h1 className="text-h1" style={{ color: 'white' }}>
+          <h1 className="text-h1">
             {tCms('heroTitle', l10n('Études de Cas', 'Temwagnaz', 'Case Studies'))}
           </h1>
-          <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 540 }}>
+          <p className="text-lead">
             {tCms('heroDesc', l10n(
               'Des histoires vraies de vrais patients. Lisez comment Medical 360 a facilité des traitements vitaux pour des patients de l\'Île Maurice et de l\'océan Indien.',
               'Vre zistwar depi vre pasian. Lir kouma Medical 360 finn ed bann pasian depi Moris ek l\'osean Indien gagn tretman ki finn sov zot lavi.',

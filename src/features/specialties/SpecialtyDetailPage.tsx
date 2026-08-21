@@ -248,13 +248,24 @@ export function SpecialtyDetailPage() {
                 color: '#ffffff',
                 boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
               }}>
-                <span className="badge badge-accent" style={{ marginBottom: '1rem' }}>
+                <span style={{
+                  display: 'inline-block',
+                  background: 'rgba(16, 185, 129, 0.18)',
+                  color: '#34d399',
+                  border: '1px solid rgba(52, 211, 153, 0.3)',
+                  padding: '0.35rem 0.85rem',
+                  borderRadius: '999px',
+                  fontSize: '0.75rem',
+                  fontWeight: 800,
+                  letterSpacing: '0.02em',
+                  marginBottom: '1rem',
+                }}>
                   {l10n('Service 100% Gratuit', 'Servis 100% Gratis', '100% Free Service')}
                 </span>
-                <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.75rem' }}>
+                <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.75rem', color: '#ffffff' }}>
                   {l10n('Obtenir un Avis Médical Sur Mesure', 'Gagn Lavi Medikal Personnaliser', 'Get a Tailored Opinion')}
                 </h3>
-                <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.6, marginBottom: '1.5rem' }}>
                   {l10n(
                     `Envoyez vos rapports médicaux pour ${l(specialty, 'name')}. Nos chefs de département évalueront votre dossier sous 48h.`,
                     `Avoy ou bann raport medikal pou ${l(specialty, 'name')}. Nou bann sef dokter pou evalie ou dosie dan 48h.`,

@@ -48,16 +48,16 @@ export function AboutPage() {
         description={l10n('Med360 connecte les patients mauriciens aux hôpitaux du monde.', 'Med360 konekte bann pasian Morisien ar bann pli bon lopital dan lemond.', 'Med360 connects Mauritian patients to the best hospitals globally.')}
         canonical="/about"
       />
-      <section className="page-hero">
-        <div className="page-hero__bg" />
+      {/* Header Banner */}
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
         <div className="container page-hero__inner">
-          <span className="section-label" style={{ color: 'var(--color-accent)' }}>
+          <span className="section-label">
             {tCms('heroLabel', l10n('Notre Histoire', 'Nou Zistwar', 'Our Story'))}
           </span>
-          <h1 className="text-h1" style={{ color: 'white' }}>
+          <h1 className="text-h1">
             {tCms('heroTitle', l10n('À Propos de Medical 360', 'A Propo Medical 360', 'About Medical 360'))}
           </h1>
-          <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 560 }}>
+          <p className="text-lead">
             {tCms('heroDesc', l10n(
               'Med360 Ltd a été fondée avec une mission claire : garantir à chaque patient de l\'Île Maurice et de l\'océan Indien l\'accès aux meilleurs soins de santé mondiaux.',
               'Med360 Ltd ti kree avek enn sel lobzektif: fer sir ki sak pasian dan Moris ek l\'osean Indien gagn akse ar bann meyer swen lasante klas mondial.',
