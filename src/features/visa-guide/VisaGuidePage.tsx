@@ -110,15 +110,8 @@ export function VisaGuidePage() {
       </Helmet>
 
       {/* Hero Banner */}
-      <section style={{
-        background: 'linear-gradient(135deg, #090d10 0%, #111822 100%)',
-        color: '#ffffff',
-        padding: '4rem 1.5rem 3.5rem',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        <div className="container" style={{ maxWidth: 1080, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2 }}>
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/visaguide_banner.jpg)' }}>
+        <div className="container page-hero__inner" style={{ maxWidth: 960, margin: '0 auto', textAlign: 'center', alignItems: 'center' }}>
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -136,7 +129,7 @@ export function VisaGuidePage() {
             <span>{isFr ? 'Guide Visa Médical & Voyage pour Patients Mauriciens' : isKr ? 'Gid Viza Medikal & Vwayaz' : 'Mauritian Patient Visa & Travel Readiness Guide'}</span>
           </div>
 
-          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 900, fontFamily: 'var(--font-display)', lineHeight: 1.15, marginBottom: '1rem' }}>
+          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 900, fontFamily: 'var(--font-display)', lineHeight: 1.15, marginBottom: '1rem', color: '#ffffff' }}>
             {isFr ? 'Voyagez en Toute Sérénité pour Vos Soins' : isKr ? 'Vwayaze San Traka Pou Ou Tretman' : 'Hassle-Free Medical Travel & Fast-Track Visas'}
           </h1>
           <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.7)', maxWidth: 720, margin: '0 auto 1.5rem', lineHeight: 1.6 }}>

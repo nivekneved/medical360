@@ -136,16 +136,16 @@ export function ServicesPage() {
         description={l10n('Découvrez nos services complets.', 'Dekouver nou bann servis konple.', 'Discover our comprehensive services.')}
         canonical="/services"
       />
-      <section className="page-hero">
-        <div className="page-hero__bg" />
+      {/* Header Banner */}
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/services_banner.jpg)' }}>
         <div className="container page-hero__inner">
-          <span className="section-label" style={{ color: 'var(--color-accent)' }}>
+          <span className="section-label">
             {tCms('heroLabel', l10n('Conciergerie Complète', 'Full Concierge', 'Full Concierge'))}
           </span>
-          <h1 className="text-h1" style={{ color: 'white' }}>
+          <h1 className="text-h1">
             {tCms('heroTitle', l10n('Nos Services Couvrent Tous Vos Besoins', 'Nou Bann Servis Kouver Tou Ou Bizin', 'Our Services Cover Every Need'))}
           </h1>
-          <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 560 }}>
+          <p className="text-lead">
             {tCms('heroDesc', l10n(
               'De votre première demande au suivi post-traitement, Medical 360 s\'occupe de chaque détail de votre parcours de santé à l\'étranger.',
               'Depi premie demann ziska swivi apre tretman, Medical 360 okip tou bann detay dan ou vwayaz medikal.',

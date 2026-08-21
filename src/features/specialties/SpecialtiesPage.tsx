@@ -57,16 +57,16 @@ export function SpecialtiesPage() {
         description={l10n('Découvrez nos spécialités médicales.', 'Dekouver nou bann spesialite medikal.', 'Discover our medical specialties.')}
         canonical="/specialties"
       />
-      <section className="page-hero">
-        <div className="page-hero__bg" />
+      {/* Header Banner */}
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/specialties_banner.jpg)' }}>
         <div className="container page-hero__inner">
-          <span className="section-label" style={{ color: 'var(--color-accent)' }}>
+          <span className="section-label">
             {tCms('heroLabel', l10n('Expertise Médicale', 'Exspertiz Medikal', 'Medical Expertise'))}
           </span>
-          <h1 className="text-h1" style={{ color: 'white' }}>
+          <h1 className="text-h1">
             {tCms('heroTitle', l10n('Sélectionnez Votre Spécialité', 'Swazir Ou Spesialite', 'Select Your Specialty'))}
           </h1>
-          <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 540 }}>
+          <p className="text-lead">
             {tCms('heroDesc', l10n(
               'Parcourez notre gamme complète de spécialités médicales. Cliquez sur une spécialité pour voir les procédures, les coûts estimés et obtenir un avis sur mesure.',
               'Get tou bann spesialite medikal ki nou ofer. Klik lor enn spesialite pou trouv bann tretman, pri estime, ek gagn enn lavi medikal personnaliser.',
