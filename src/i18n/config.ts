@@ -21,7 +21,7 @@ const resources = {
         heroTitleLine1: 'World-Class Healthcare,',
         heroTitleLine2: 'Close to Home',
         heroSubtitle: 'Medical 360 connects patients from Mauritius and the Indian Ocean region with the world\'s finest accredited hospitals and specialists — at a fraction of the local cost.',
-        trustText: 'Trusted by 12,000+ patients from Mauritius, Réunion & beyond',
+        trustText: 'Trusted by 1,200+ patients from Mauritius, Réunion & beyond',
         stats: {
           patients: 'Patients Assisted',
           hospitals: 'Accredited Hospitals',
