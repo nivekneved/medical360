@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import type { Inquiry, InquiryUrgency } from '../core/types';
 import { mockEngine } from '../core/mock/engine';
 import { buildInquiryWhatsAppUrl } from '../core/services/whatsapp.service';
+import { sendInquiryEmail } from '../core/services/email.service';
 import {
   validateHoneypot,
   validateSubmissionTiming,
@@ -117,6 +118,21 @@ export function useInquiry() {
       });
       setCreatedInquiry(inquiry);
       setSubmitted(true);
+
+      // Trigger Resend email notification
+      sendInquiryEmail({
+        firstName: cleanFirstName,
+        lastName: cleanLastName,
+        email: cleanEmail,
+        phone: cleanPhone,
+        countryOfResidence: formData.countryOfResidence,
+        specialtyId: formData.specialtyId,
+        description: cleanDesc,
+        urgency: formData.urgency,
+        preferredCountry: formData.preferredCountry,
+        budgetMin: formData.budgetMin,
+        budgetMax: formData.budgetMax,
+      }, specialtyName).catch(err => console.warn('Email dispatch failed:', err));
 
       // Open WhatsApp after submission
       const waUrl = buildInquiryWhatsAppUrl({

@@ -35,6 +35,8 @@ import { AdminDoctorsPage }      from './features/admin/doctors/AdminDoctorsPage
 import { AdminCaseStudiesPage }  from './features/admin/case-studies/AdminCaseStudiesPage';
 import { AdminSettingsPage }     from './features/admin/settings/AdminSettingsPage';
 import { AdminPageEditor }       from './features/admin/pages/AdminPageEditor';
+import { AdminEmailTemplatesPage } from './features/admin/email-templates/AdminEmailTemplatesPage';
+import { AdminCampaignsPage }      from './features/admin/campaigns/AdminCampaignsPage';
 
 import './styles/globals.css';
 
@@ -94,6 +96,8 @@ export default function App() {
                   <Route path="doctors"      element={<AdminDoctorsPage />} />
                   <Route path="case-studies" element={<AdminCaseStudiesPage />} />
                   <Route path="settings"     element={<AdminSettingsPage />} />
+                  <Route path="email-templates" element={<AdminEmailTemplatesPage />} />
+                  <Route path="campaigns"       element={<AdminCampaignsPage />} />
                   <Route path="pages/:pageId" element={<AdminPageEditor />} />
                 </Route>
 

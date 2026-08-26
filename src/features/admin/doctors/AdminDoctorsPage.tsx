@@ -1,10 +1,13 @@
 import { useState, useMemo } from 'react';
-import { UserCheck, Edit3, Eye, Award, Globe, Building2, Save, X, CheckCircle2, DollarSign, Activity, LayoutGrid, List, Search, Filter, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { UserCheck, Edit3, Eye, Award, Globe, Building2, Save, X, CheckCircle2, DollarSign, Activity, LayoutGrid, List, Search, Filter, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useDoctors } from '../../../hooks/useDoctors';
 import { useHospitals } from '../../../hooks/useHospitals';
 import { useSpecialties } from '../../../hooks/useSpecialties';
 import { ImageField } from '../components/ImageField';
+import { AdminPagination } from '../components/AdminPagination';
+import { AdminBulkActionBar } from '../components/AdminBulkActionBar';
+import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
 import type { Doctor } from '../../../core/types';
 import '../AdminToolbar.css';
 
@@ -21,6 +24,9 @@ export function AdminDoctorsPage() {
   const [sortBy, setSortBy]                     = useState<'name-asc' | 'name-desc' | 'surgeries-desc' | 'exp-desc' | 'fee-asc' | 'fee-desc'>('surgeries-desc');
   const [currentPage, setCurrentPage]           = useState(1);
   const [itemsPerPage, setItemsPerPage]         = useState(6);
+
+  // Row selection
+  const [selectedIds, setSelectedIds]           = useState<Set<string>>(new Set());
 
   const [editingDoctor, setEditingDoctor] = useState<Doctor | null>(null);
   const [viewingDoctor, setViewingDoctor] = useState<Doctor | null>(null);
@@ -71,6 +77,81 @@ export function AdminDoctorsPage() {
     return filteredDoctors.slice(start, start + itemsPerPage);
   }, [filteredDoctors, currentPage, itemsPerPage]);
 
+  // Selection Helpers
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleSelectAll = () => {
+    setSelectedIds(new Set(filteredDoctors.map(d => d.id)));
+  };
+
+  const handleClearSelection = () => {
+    setSelectedIds(new Set());
+  };
+
+  // Export Columns Definition
+  const exportColumns: ExportColumn[] = [
+    { header: 'Doctor Name', key: 'name' },
+    { header: 'Title / Role', key: 'title' },
+    { header: 'Hospital', key: 'hospitalId', format: (val) => getHospitalName(val) },
+    { header: 'Specialties', key: 'specialties', format: (val) => (val || []).map((s: string) => getSpecialtyName(s)).join(', ') },
+    { header: 'Experience (Yrs)', key: 'experience', format: (val) => String(val || 0) },
+    { header: 'Surgeries Performed', key: 'surgeries', format: (val) => String(val || 0) },
+    { header: 'Consultation Fee (USD)', key: 'consultationFeeUSD', format: (val) => `$${val || 0}` },
+  ];
+
+  const handleDeleteSelected = async () => {
+    if (selectedIds.size === 0) return;
+    if (confirm(`Are you sure you want to delete ${selectedIds.size} selected doctor profiles?`)) {
+      for (const id of selectedIds) {
+        await mockEngine.deleteDoctor(id);
+      }
+      handleClearSelection();
+      refetch();
+    }
+  };
+
+  const handleDeleteSingle = async (id: string, name: string) => {
+    if (confirm(`Are you sure you want to delete doctor "${name}"?`)) {
+      await mockEngine.deleteDoctor(id);
+      setSelectedIds(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      refetch();
+    }
+  };
+
+  const handlePrintPdfSelected = () => {
+    const targetData = selectedIds.size > 0
+      ? doctors.filter(d => selectedIds.has(d.id))
+      : filteredDoctors;
+    printOrExportPdf('Medical Specialists Directory Report', exportColumns, targetData, 'Leading Surgeons & Healthcare Consultants');
+  };
+
+  const handleExportCsvSelected = () => {
+    const targetData = selectedIds.size > 0
+      ? doctors.filter(d => selectedIds.has(d.id))
+      : filteredDoctors;
+    exportToCsv('medical360_doctors', exportColumns, targetData);
+  };
+
+  const handlePrintSingle = (doc: Doctor) => {
+    printOrExportPdf(
+      `Specialist Profile: ${doc.name}`,
+      exportColumns,
+      [doc],
+      `${doc.title} • ${getHospitalName(doc.hospitalId)}`
+    );
+  };
+
   const handleEditClick = (doc: Doctor) => {
     setEditingDoctor(JSON.parse(JSON.stringify(doc)));
     setViewingDoctor(null);
@@ -102,18 +183,42 @@ export function AdminDoctorsPage() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ padding: 'clamp(1rem, 3vw, 2rem)', maxWidth: 1440, margin: '0 auto' }}>
       {/* Header */}
-      <div style={{ marginBottom: '1.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-          <span className="badge badge-accent" style={{ fontSize: '0.7rem' }}>
-            Ecosystem Policy: Exactly 7 Elite Specialists
-          </span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+            <span className="badge badge-accent" style={{ fontSize: '0.7rem' }}>
+              Ecosystem Policy: Exactly 7 Elite Specialists
+            </span>
+          </div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.25rem 0' }}>Medical Specialists Management</h1>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', margin: 0 }}>
+            Manage profiles, hospital affiliations, credentials, and consultation fees for the top surgeons.
+          </p>
         </div>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Medical Specialists Management</h1>
-        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-          Manage profiles, hospital affiliations, credentials, and consultation fees for the top surgeons.
-        </p>
+
+        {/* Global Action Buttons */}
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => handlePrintPdfSelected()}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+            title="Print or Save current list as PDF"
+          >
+            <Printer size={15} /> Print / Export PDF
+          </button>
+          <button
+            type="button"
+            onClick={() => handleExportCsvSelected()}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+            title="Download CSV spreadsheet"
+          >
+            <Download size={15} /> Export CSV
+          </button>
+        </div>
       </div>
 
       {/* ─── SEARCH, FILTERS & SORTING TOOLBAR ────────────────────────────── */}
@@ -170,7 +275,7 @@ export function AdminDoctorsPage() {
           {/* Sort By Pill */}
           <div className="admin-toolbar__sort-pill">
             <ArrowUpDown size={14} className="admin-toolbar__sort-icon" />
-            <span className="admin-toolbar__sort-label">Trier par :</span>
+            <span className="admin-toolbar__sort-label">Sort:</span>
             <select
               className="admin-toolbar__sort-select"
               value={sortBy}
@@ -188,7 +293,7 @@ export function AdminDoctorsPage() {
           {/* Count Badge */}
           <div className="admin-toolbar__count-badge">
             <span className="admin-toolbar__count-num">{filteredDoctors.length}</span>
-            <span className="admin-toolbar__count-unit">{filteredDoctors.length <= 1 ? 'médecin' : 'médecins'}</span>
+            <span className="admin-toolbar__count-unit">{filteredDoctors.length <= 1 ? 'specialist' : 'specialists'}</span>
           </div>
 
           {/* View Mode Switcher */}
@@ -197,19 +302,19 @@ export function AdminDoctorsPage() {
               type="button"
               className={`admin-toolbar__view-btn ${viewMode === 'grid' ? 'admin-toolbar__view-btn--active' : ''}`}
               onClick={() => setViewMode('grid')}
-              title="Vue Grille"
+              title="Grid View"
             >
               <LayoutGrid size={14} />
-              <span>Grille</span>
+              <span>Grid</span>
             </button>
             <button
               type="button"
               className={`admin-toolbar__view-btn ${viewMode === 'list' ? 'admin-toolbar__view-btn--active' : ''}`}
               onClick={() => setViewMode('list')}
-              title="Vue Liste"
+              title="List View"
             >
               <List size={14} />
-              <span>Liste</span>
+              <span>List</span>
             </button>
           </div>
 
@@ -230,6 +335,18 @@ export function AdminDoctorsPage() {
           )}
         </div>
       </div>
+
+      {/* ─── BULK ACTION BAR ──────────────────────────────────────────────── */}
+      <AdminBulkActionBar
+        selectedCount={selectedIds.size}
+        totalCount={filteredDoctors.length}
+        onSelectAll={handleSelectAll}
+        onClearSelection={handleClearSelection}
+        onDeleteSelected={handleDeleteSelected}
+        onPrintPdfSelected={handlePrintPdfSelected}
+        onExportCsvSelected={handleExportCsvSelected}
+        unitName="specialists"
+      />
 
       {loading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
@@ -258,202 +375,227 @@ export function AdminDoctorsPage() {
           </button>
         </div>
       ) : viewMode === 'grid' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-          {paginatedDoctors.map((doc) => (
-            <div
-              key={doc.id}
-              style={{
-                background: 'var(--color-surface)',
-                border: '1.5px solid var(--color-border)',
-                borderRadius: 'var(--radius-xl)',
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.03)',
-              }}
-            >
-              <div style={{ display: 'flex', padding: '1.25rem', gap: '1rem', borderBottom: '1px solid var(--color-border)' }}>
-                <img
-                  src={doc.imageUrl}
-                  alt={doc.name}
-                  style={{ width: 80, height: 80, borderRadius: 'var(--radius-lg)', objectFit: 'cover', flexShrink: 0 }}
-                />
-                <div>
-                  <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.25rem' }}>
-                    {doc.specialties.map((sId) => (
-                      <span key={sId} className="badge badge-primary" style={{ fontSize: '0.65rem' }}>
-                        {getSpecialtyName(sId)}
-                      </span>
-                    ))}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
+          {paginatedDoctors.map((doc) => {
+            const isSelected = selectedIds.has(doc.id);
+            return (
+              <div
+                key={doc.id}
+                style={{
+                  background: 'var(--color-surface)',
+                  border: isSelected ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
+                  borderRadius: 'var(--radius-xl)',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  boxShadow: isSelected ? '0 4px 14px rgba(6,95,70,0.15)' : '0 2px 12px rgba(0,0,0,0.03)',
+                  transition: 'all 0.15s ease',
+                  position: 'relative',
+                }}
+              >
+                <div style={{ display: 'flex', padding: '1.25rem', gap: '1rem', borderBottom: '1px solid var(--color-border)', position: 'relative' }}>
+                  {/* Card Checkbox */}
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelect(doc.id)}
+                    style={{ position: 'absolute', top: 12, right: 12, width: 18, height: 18, cursor: 'pointer', accentColor: 'var(--color-primary)', zIndex: 2 }}
+                    title="Select doctor"
+                  />
+
+                  <img
+                    src={doc.imageUrl}
+                    alt={doc.name}
+                    style={{ width: 80, height: 80, borderRadius: 'var(--radius-lg)', objectFit: 'cover', flexShrink: 0 }}
+                  />
+                  <div style={{ paddingRight: 20 }}>
+                    <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.25rem' }}>
+                      {doc.specialties.map((sId) => (
+                        <span key={sId} className="badge badge-primary" style={{ fontSize: '0.65rem' }}>
+                          {getSpecialtyName(sId)}
+                        </span>
+                      ))}
+                    </div>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: '0 0 2px 0' }}>{doc.name}</h3>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginTop: '0.15rem' }}>
+                      {doc.title}
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-primary)', fontWeight: 600, marginTop: '0.25rem' }}>
+                      <Building2 size={12} style={{ display: 'inline', marginRight: 3 }} />
+                      {getHospitalName(doc.hospitalId)}
+                    </div>
                   </div>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: '0 0 2px 0' }}>{doc.name}</h3>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)', marginTop: '0.15rem' }}>
-                    {doc.title}
+                </div>
+
+                <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                    {doc.bio}
+                  </p>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', background: 'var(--color-surface-2)', padding: '0.75rem', borderRadius: 'var(--radius-md)', textAlign: 'center', marginTop: 'auto' }}>
+                    <div>
+                      <div style={{ fontSize: '0.9rem', fontWeight: 700 }}>{doc.experience} yrs</div>
+                      <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>Experience</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.9rem', fontWeight: 700 }}>{doc.surgeries.toLocaleString()}+</div>
+                      <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>Surgeries</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '0.9rem', fontWeight: 700 }}>${doc.consultationFeeUSD}</div>
+                      <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>Online Fee</div>
+                    </div>
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-primary)', fontWeight: 600, marginTop: '0.25rem' }}>
-                    <Building2 size={12} style={{ display: 'inline', marginRight: 3 }} />
-                    {getHospitalName(doc.hospitalId)}
+
+                  {/* Action Buttons */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto auto', gap: '0.4rem', marginTop: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid var(--color-border-light)' }}>
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => handleViewClick(doc)}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem', fontSize: '0.78rem' }}
+                    >
+                      <Eye size={13} /> View
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handleEditClick(doc)}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem', fontSize: '0.78rem' }}
+                    >
+                      <Edit3 size={13} /> Edit
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handlePrintSingle(doc)}
+                      style={{ padding: '4px 8px' }}
+                      title="Print / Save PDF Dossier"
+                    >
+                      <Printer size={13} />
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handleDeleteSingle(doc.id, doc.name)}
+                      style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)', padding: '4px 8px' }}
+                      title="Delete Specialist"
+                    >
+                      <Trash2 size={13} />
+                    </button>
                   </div>
                 </div>
               </div>
-
-              <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
-                  {doc.bio}
-                </p>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem', background: 'var(--color-surface-2)', padding: '0.75rem', borderRadius: 'var(--radius-md)', textAlign: 'center', marginTop: 'auto' }}>
-                  <div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 700 }}>{doc.experience} yrs</div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>Experience</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 700 }}>{doc.surgeries.toLocaleString()}+</div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>Surgeries</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 700 }}>${doc.consultationFeeUSD}</div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>Online Fee</div>
-                  </div>
-                </div>
-
-                {/* Dual Action Buttons: View Profile & Edit */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: '0.5rem' }}>
-                  <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => handleViewClick(doc)}
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
-                  >
-                    <Eye size={14} /> View Profile
-                  </button>
-                  <button
-                    className="btn btn-outline btn-sm"
-                    onClick={() => handleEditClick(doc)}
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
-                  >
-                    <Edit3 size={14} /> Edit
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         /* ─── COMPACT LIST VIEW ─── */
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          {paginatedDoctors.map((doc) => (
-            <div
-              key={doc.id}
-              style={{
-                background: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 'var(--radius-xl)',
-                padding: '1rem 1.25rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '1.25rem',
-                flexWrap: 'wrap',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.02)',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 260, flex: 2 }}>
-                <img
-                  src={doc.imageUrl}
-                  alt={doc.name}
-                  style={{ width: 56, height: 56, borderRadius: 'var(--radius-md)', objectFit: 'cover', flexShrink: 0 }}
-                />
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0 }}>{doc.name}</h3>
-                    <span className="badge badge-primary" style={{ fontSize: '0.65rem' }}>
-                      {doc.specialties.map(getSpecialtyName).join(', ')}
-                    </span>
+          {paginatedDoctors.map((doc) => {
+            const isSelected = selectedIds.has(doc.id);
+            return (
+              <div
+                key={doc.id}
+                style={{
+                  background: isSelected ? 'rgba(6, 95, 70, 0.04)' : 'var(--color-surface)',
+                  border: isSelected ? '1.5px solid var(--color-primary)' : '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: '0.85rem 1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '1rem',
+                  flexWrap: 'wrap',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.02)',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', minWidth: 260, flex: 2 }}>
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelect(doc.id)}
+                    style={{ width: 16, height: 16, cursor: 'pointer', accentColor: 'var(--color-primary)', flexShrink: 0 }}
+                  />
+                  <img
+                    src={doc.imageUrl}
+                    alt={doc.name}
+                    style={{ width: 50, height: 50, borderRadius: 'var(--radius-md)', objectFit: 'cover', flexShrink: 0 }}
+                  />
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>{doc.name}</h3>
+                      <span className="badge badge-primary" style={{ fontSize: '0.65rem' }}>
+                        {doc.specialties.map(getSpecialtyName).join(', ')}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                      {doc.title} • <span style={{ color: 'var(--color-primary)' }}>{getHospitalName(doc.hospitalId)}</span>
+                    </div>
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
-                    {doc.title} • <span style={{ color: 'var(--color-primary)' }}>{getHospitalName(doc.hospitalId)}</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flex: 1.5, justifyContent: 'space-around' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>{doc.experience} yrs</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Exp</div>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>{doc.surgeries.toLocaleString()}+</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Surgeries</div>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-primary)' }}>${doc.consultationFeeUSD}</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Fee</div>
                   </div>
                 </div>
-              </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1.5, justifyContent: 'space-around' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{doc.experience} yrs</div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Exp</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{doc.surgeries.toLocaleString()}+</div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Surgeries</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-primary)' }}>${doc.consultationFeeUSD}</div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Fee</div>
+                <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => handleViewClick(doc)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.78rem', padding: '4px 8px' }}
+                  >
+                    <Eye size={13} /> View
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handleEditClick(doc)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.78rem', padding: '4px 8px' }}
+                  >
+                    <Edit3 size={13} /> Edit
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handlePrintSingle(doc)}
+                    style={{ padding: '4px 7px' }}
+                    title="Print / Save PDF Dossier"
+                  >
+                    <Printer size={13} />
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handleDeleteSingle(doc.id, doc.name)}
+                    style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)', padding: '4px 7px' }}
+                    title="Delete Specialist"
+                  >
+                    <Trash2 size={13} />
+                  </button>
                 </div>
               </div>
-
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => handleViewClick(doc)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-                >
-                  <Eye size={14} /> View
-                </button>
-                <button
-                  className="btn btn-outline btn-sm"
-                  onClick={() => handleEditClick(doc)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-                >
-                  <Edit3 size={14} /> Edit
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
       {/* ─── PAGINATION BAR ────────────────────────────────────────────────── */}
       {filteredDoctors.length > 0 && (
-        <div style={{
-          marginTop: '1.75rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          padding: '0.75rem 1rem',
-          background: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
-          borderRadius: 'var(--radius-xl)',
-        }}>
-          <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-            Showing <strong>{Math.min((currentPage - 1) * itemsPerPage + 1, filteredDoctors.length)}</strong> to{' '}
-            <strong>{Math.min(currentPage * itemsPerPage, filteredDoctors.length)}</strong> of{' '}
-            <strong>{filteredDoctors.length}</strong> specialists
-          </span>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <button
-              className="btn btn-outline btn-sm"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage === 1 ? 0.5 : 1 }}
-            >
-              <ChevronLeft size={14} /> Prev
-            </button>
-            <span style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0 0.5rem' }}>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              className="btn btn-outline btn-sm"
-              disabled={currentPage >= totalPages}
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage >= totalPages ? 0.5 : 1 }}
-            >
-              Next <ChevronRight size={14} />
-            </button>
-          </div>
-        </div>
+        <AdminPagination
+          currentPage={currentPage}
+          totalItems={filteredDoctors.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
+          pageSizeOptions={[6, 12, 24, 48]}
+          unitName="specialists"
+        />
       )}
 
       {/* ─── VIEW DOCTOR MODAL ─────────────────────────────────────────────── */}

@@ -1,9 +1,12 @@
 import { useState, useMemo } from 'react';
-import { Building2, Edit3, Eye, Plus, Star, MapPin, Shield, CheckCircle2, X, Users, Bed, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { Building2, Edit3, Eye, Plus, Star, MapPin, Shield, CheckCircle2, X, Users, Bed, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useHospitals } from '../../../hooks/useHospitals';
 import { formatNumber } from '../../../core/services/format.service';
 import { ImageField } from '../components/ImageField';
+import { AdminPagination } from '../components/AdminPagination';
+import { AdminBulkActionBar } from '../components/AdminBulkActionBar';
+import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
 import type { Hospital } from '../../../core/types';
 import '../AdminToolbar.css';
 
@@ -18,6 +21,9 @@ export function AdminHospitalsPage() {
   const [sortBy, setSortBy]                     = useState<'rating-desc' | 'beds-desc' | 'intl-desc' | 'name-asc' | 'name-desc'>('rating-desc');
   const [currentPage, setCurrentPage]           = useState(1);
   const [itemsPerPage, setItemsPerPage]         = useState(6);
+
+  // Row selection
+  const [selectedIds, setSelectedIds]           = useState<Set<string>>(new Set());
 
   const [editingHospital, setEditingHospital] = useState<Hospital | null>(null);
   const [viewingHospital, setViewingHospital] = useState<Hospital | null>(null);
@@ -59,6 +65,81 @@ export function AdminHospitalsPage() {
     return filteredHospitals.slice(start, start + itemsPerPage);
   }, [filteredHospitals, currentPage, itemsPerPage]);
 
+  // Selection Helpers
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleSelectAll = () => {
+    setSelectedIds(new Set(filteredHospitals.map(h => h.id)));
+  };
+
+  const handleClearSelection = () => {
+    setSelectedIds(new Set());
+  };
+
+  // Export Columns Definition
+  const exportColumns: ExportColumn[] = [
+    { header: 'Hospital Name', key: 'name' },
+    { header: 'City', key: 'city' },
+    { header: 'Country', key: 'country' },
+    { header: 'Rating', key: 'rating', format: (val) => `${val} ★` },
+    { header: 'Accreditations', key: 'accreditations', format: (val) => (val || []).join(', ') },
+    { header: 'Beds', key: 'bedsCount', format: (val) => String(val || 0) },
+    { header: 'Intl Patients/Yr', key: 'internationalPatientsPerYear', format: (val) => String(val || 0) },
+  ];
+
+  const handleDeleteSelected = async () => {
+    if (selectedIds.size === 0) return;
+    if (confirm(`Are you sure you want to delete ${selectedIds.size} selected hospital partner records?`)) {
+      for (const id of selectedIds) {
+        await mockEngine.deleteHospital(id);
+      }
+      handleClearSelection();
+      refetch();
+    }
+  };
+
+  const handleDeleteSingle = async (id: string, name: string) => {
+    if (confirm(`Are you sure you want to delete "${name}"?`)) {
+      await mockEngine.deleteHospital(id);
+      setSelectedIds(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      refetch();
+    }
+  };
+
+  const handlePrintPdfSelected = () => {
+    const targetData = selectedIds.size > 0
+      ? hospitals.filter(h => selectedIds.has(h.id))
+      : filteredHospitals;
+    printOrExportPdf('Partner Hospitals Directory Report', exportColumns, targetData, 'Accredited Medical Centers & Global Healthcare Partners');
+  };
+
+  const handleExportCsvSelected = () => {
+    const targetData = selectedIds.size > 0
+      ? hospitals.filter(h => selectedIds.has(h.id))
+      : filteredHospitals;
+    exportToCsv('medical360_hospitals', exportColumns, targetData);
+  };
+
+  const handlePrintSingle = (h: Hospital) => {
+    printOrExportPdf(
+      `Hospital Partner Dossier: ${h.name}`,
+      exportColumns,
+      [h],
+      `${h.city}, ${h.country} • Accredited Clinical Facility`
+    );
+  };
+
   const handleEditClick = (h: Hospital) => {
     setEditingHospital(JSON.parse(JSON.stringify(h)));
     setViewingHospital(null);
@@ -92,11 +173,35 @@ export function AdminHospitalsPage() {
   return (
     <div style={{ padding: '2rem' }}>
       {/* Header */}
-      <div style={{ marginBottom: '1.5rem' }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Partner Hospitals Directory</h1>
-        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-          Manage hospital credentials, clinical facilities, photos, and international patient volume.
-        </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.25rem 0' }}>Partner Hospitals Directory</h1>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', margin: 0 }}>
+            Manage hospital credentials, clinical facilities, photos, and international patient volume.
+          </p>
+        </div>
+
+        {/* Global Action Buttons */}
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => handlePrintPdfSelected()}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+            title="Print or Save current list as PDF"
+          >
+            <Printer size={15} /> Print / Export PDF
+          </button>
+          <button
+            type="button"
+            onClick={() => handleExportCsvSelected()}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+            title="Download CSV spreadsheet"
+          >
+            <Download size={15} /> Export CSV
+          </button>
+        </div>
       </div>
 
       {/* ─── SEARCH, FILTERS & SORTING TOOLBAR ────────────────────────────── */}
@@ -154,7 +259,7 @@ export function AdminHospitalsPage() {
           {/* Sort By Pill */}
           <div className="admin-toolbar__sort-pill">
             <ArrowUpDown size={14} className="admin-toolbar__sort-icon" />
-            <span className="admin-toolbar__sort-label">Trier par :</span>
+            <span className="admin-toolbar__sort-label">Sort:</span>
             <select
               className="admin-toolbar__sort-select"
               value={sortBy}
@@ -171,7 +276,7 @@ export function AdminHospitalsPage() {
           {/* Count Badge */}
           <div className="admin-toolbar__count-badge">
             <span className="admin-toolbar__count-num">{filteredHospitals.length}</span>
-            <span className="admin-toolbar__count-unit">{filteredHospitals.length <= 1 ? 'hôpital' : 'hôpitaux'}</span>
+            <span className="admin-toolbar__count-unit">{filteredHospitals.length <= 1 ? 'hospital' : 'hospitals'}</span>
           </div>
 
           {/* View Mode Switcher */}
@@ -180,19 +285,19 @@ export function AdminHospitalsPage() {
               type="button"
               className={`admin-toolbar__view-btn ${viewMode === 'grid' ? 'admin-toolbar__view-btn--active' : ''}`}
               onClick={() => setViewMode('grid')}
-              title="Vue Grille"
+              title="Grid View"
             >
               <LayoutGrid size={14} />
-              <span>Grille</span>
+              <span>Grid</span>
             </button>
             <button
               type="button"
               className={`admin-toolbar__view-btn ${viewMode === 'list' ? 'admin-toolbar__view-btn--active' : ''}`}
               onClick={() => setViewMode('list')}
-              title="Vue Liste"
+              title="List View"
             >
               <List size={14} />
-              <span>Liste</span>
+              <span>List</span>
             </button>
           </div>
 
@@ -213,6 +318,18 @@ export function AdminHospitalsPage() {
           )}
         </div>
       </div>
+
+      {/* ─── BULK ACTION BAR ──────────────────────────────────────────────── */}
+      <AdminBulkActionBar
+        selectedCount={selectedIds.size}
+        totalCount={filteredHospitals.length}
+        onSelectAll={handleSelectAll}
+        onClearSelection={handleClearSelection}
+        onDeleteSelected={handleDeleteSelected}
+        onPrintPdfSelected={handlePrintPdfSelected}
+        onExportCsvSelected={handleExportCsvSelected}
+        unitName="hospitals"
+      />
 
       {loading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
@@ -245,27 +362,38 @@ export function AdminHospitalsPage() {
           {paginatedHospitals.map((hospital) => {
             const desc = hospital.description || hospital.description_fr || '';
             const accreditations = hospital.accreditations || [];
+            const isSelected = selectedIds.has(hospital.id);
 
             return (
               <div
                 key={hospital.id}
                 style={{
                   background: 'var(--color-surface)',
-                  border: '1.5px solid var(--color-border)',
+                  border: isSelected ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
                   borderRadius: 'var(--radius-xl)',
                   overflow: 'hidden',
                   display: 'flex',
                   flexDirection: 'column',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.03)',
+                  boxShadow: isSelected ? '0 4px 14px rgba(6,95,70,0.15)' : '0 2px 12px rgba(0,0,0,0.03)',
+                  transition: 'all 0.15s ease',
                 }}
               >
-                <div style={{ display: 'flex', gap: '1rem', padding: '1.25rem', borderBottom: '1px solid var(--color-border)' }}>
+                <div style={{ display: 'flex', gap: '1rem', padding: '1.25rem', borderBottom: '1px solid var(--color-border)', position: 'relative' }}>
+                  {/* Card Checkbox */}
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelect(hospital.id)}
+                    style={{ position: 'absolute', top: 12, right: 12, width: 18, height: 18, cursor: 'pointer', accentColor: 'var(--color-primary)', zIndex: 2 }}
+                    title="Select hospital"
+                  />
+
                   <img
                     src={hospital.imageUrl}
                     alt={hospital.name}
-                    style={{ width: 90, height: 90, borderRadius: 'var(--radius-lg)', objectFit: 'cover', flexShrink: 0 }}
+                    style={{ width: 85, height: 85, borderRadius: 'var(--radius-lg)', objectFit: 'cover', flexShrink: 0 }}
                   />
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.25rem', paddingRight: 20 }}>
                     <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginBottom: '0.25rem' }}>
                       {accreditations.map((acc) => (
                         <span key={acc} className="badge badge-accent" style={{ fontSize: '0.65rem' }}>
@@ -291,25 +419,41 @@ export function AdminHospitalsPage() {
                     <span style={{ color: 'var(--color-text-muted)' }}>{formatNumber(hospital.bedsCount || 0)} beds</span>
                   </div>
 
-                  <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+                  <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, margin: 0 }}>
                     {desc.length > 100 ? `${desc.slice(0, 100)}...` : desc}
                   </p>
 
-                  {/* Dual Action Buttons: View Hospital & Edit */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: 'auto' }}>
+                  {/* Action Buttons */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto auto', gap: '0.4rem', marginTop: 'auto', paddingTop: '0.75rem', borderTop: '1px solid var(--color-border-light)' }}>
                     <button
                       className="btn btn-secondary btn-sm"
                       onClick={() => handleViewClick(hospital)}
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem', fontSize: '0.78rem' }}
                     >
-                      <Eye size={14} /> View
+                      <Eye size={13} /> View
                     </button>
                     <button
                       className="btn btn-outline btn-sm"
                       onClick={() => handleEditClick(hospital)}
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem', fontSize: '0.78rem' }}
                     >
-                      <Edit3 size={14} /> Edit
+                      <Edit3 size={13} /> Edit
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handlePrintSingle(hospital)}
+                      style={{ padding: '4px 8px' }}
+                      title="Print / Export PDF Dossier"
+                    >
+                      <Printer size={13} />
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handleDeleteSingle(hospital.id, hospital.name)}
+                      style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)', padding: '4px 8px' }}
+                      title="Delete Hospital"
+                    >
+                      <Trash2 size={13} />
                     </button>
                   </div>
                 </div>
@@ -320,121 +464,116 @@ export function AdminHospitalsPage() {
       ) : (
         /* ─── COMPACT LIST VIEW ─── */
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          {paginatedHospitals.map((hospital) => (
-            <div
-              key={hospital.id}
-              style={{
-                background: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 'var(--radius-xl)',
-                padding: '1rem 1.25rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '1.25rem',
-                flexWrap: 'wrap',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.02)',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 280, flex: 2 }}>
-                <img
-                  src={hospital.imageUrl}
-                  alt={hospital.name}
-                  style={{ width: 56, height: 56, borderRadius: 'var(--radius-md)', objectFit: 'cover', flexShrink: 0 }}
-                />
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0 }}>{hospital.name}</h3>
-                    {(hospital.accreditations || []).map((acc) => (
-                      <span key={acc} className="badge badge-accent" style={{ fontSize: '0.65rem' }}>{acc}</span>
-                    ))}
-                  </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
-                    <MapPin size={12} style={{ display: 'inline', marginRight: 3 }} /> {hospital.city}, {hospital.country}
+          {paginatedHospitals.map((hospital) => {
+            const isSelected = selectedIds.has(hospital.id);
+            return (
+              <div
+                key={hospital.id}
+                style={{
+                  background: isSelected ? 'rgba(6, 95, 70, 0.04)' : 'var(--color-surface)',
+                  border: isSelected ? '1.5px solid var(--color-primary)' : '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: '0.85rem 1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '1rem',
+                  flexWrap: 'wrap',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.02)',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', minWidth: 260, flex: 2 }}>
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelect(hospital.id)}
+                    style={{ width: 16, height: 16, cursor: 'pointer', accentColor: 'var(--color-primary)', flexShrink: 0 }}
+                  />
+                  <img
+                    src={hospital.imageUrl}
+                    alt={hospital.name}
+                    style={{ width: 50, height: 50, borderRadius: 'var(--radius-md)', objectFit: 'cover', flexShrink: 0 }}
+                  />
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>{hospital.name}</h3>
+                      {(hospital.accreditations || []).map((acc) => (
+                        <span key={acc} className="badge badge-accent" style={{ fontSize: '0.65rem' }}>{acc}</span>
+                      ))}
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                      <MapPin size={12} style={{ display: 'inline', marginRight: 3 }} /> {hospital.city}, {hospital.country}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1.5, justifyContent: 'space-around' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#eab308' }}>{hospital.rating} ★</div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Rating</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{formatNumber(hospital.bedsCount || 0)}</div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Beds</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-primary)' }}>
-                    {formatNumber(hospital.internationalPatientsPerYear || 0)}+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flex: 1.5, justifyContent: 'space-around' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#eab308' }}>{hospital.rating} ★</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Rating</div>
                   </div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Intl/Yr</div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>{formatNumber(hospital.bedsCount || 0)}</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Beds</div>
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-primary)' }}>
+                      {formatNumber(hospital.internationalPatientsPerYear || 0)}+
+                    </div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Intl/Yr</div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => handleViewClick(hospital)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.78rem', padding: '4px 8px' }}
+                  >
+                    <Eye size={13} /> View
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handleEditClick(hospital)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.78rem', padding: '4px 8px' }}
+                  >
+                    <Edit3 size={13} /> Edit
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handlePrintSingle(hospital)}
+                    style={{ padding: '4px 7px' }}
+                    title="Print / Save PDF Dossier"
+                  >
+                    <Printer size={13} />
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handleDeleteSingle(hospital.id, hospital.name)}
+                    style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)', padding: '4px 7px' }}
+                    title="Delete Hospital"
+                  >
+                    <Trash2 size={13} />
+                  </button>
                 </div>
               </div>
-
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => handleViewClick(hospital)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-                >
-                  <Eye size={14} /> View
-                </button>
-                <button
-                  className="btn btn-outline btn-sm"
-                  onClick={() => handleEditClick(hospital)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-                >
-                  <Edit3 size={14} /> Edit
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
       {/* ─── PAGINATION BAR ────────────────────────────────────────────────── */}
       {filteredHospitals.length > 0 && (
-        <div style={{
-          marginTop: '1.75rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          padding: '0.75rem 1rem',
-          background: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
-          borderRadius: 'var(--radius-xl)',
-        }}>
-          <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-            Showing <strong>{Math.min((currentPage - 1) * itemsPerPage + 1, filteredHospitals.length)}</strong> to{' '}
-            <strong>{Math.min(currentPage * itemsPerPage, filteredHospitals.length)}</strong> of{' '}
-            <strong>{filteredHospitals.length}</strong> partner hospitals
-          </span>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <button
-              className="btn btn-outline btn-sm"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage === 1 ? 0.5 : 1 }}
-            >
-              <ChevronLeft size={14} /> Prev
-            </button>
-            <span style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0 0.5rem' }}>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              className="btn btn-outline btn-sm"
-              disabled={currentPage >= totalPages}
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage >= totalPages ? 0.5 : 1 }}
-            >
-              Next <ChevronRight size={14} />
-            </button>
-          </div>
-        </div>
+        <AdminPagination
+          currentPage={currentPage}
+          totalItems={filteredHospitals.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
+          pageSizeOptions={[6, 12, 24, 48]}
+          unitName="partner hospitals"
+        />
       )}
 
       {/* ─── VIEW HOSPITAL MODAL ───────────────────────────────────────────── */}

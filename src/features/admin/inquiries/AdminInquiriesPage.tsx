@@ -1,9 +1,38 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Eye, MessageCircle, Phone, Mail, Clock, CheckCircle2, X, Plus, AlertTriangle, ShieldCheck, User, Globe, Stethoscope, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import {
+  Eye,
+  MessageCircle,
+  Phone,
+  Mail,
+  Clock,
+  CheckCircle2,
+  X,
+  Plus,
+  AlertTriangle,
+  ShieldCheck,
+  User,
+  Globe,
+  Stethoscope,
+  LayoutGrid,
+  List,
+  Search,
+  ArrowUpDown,
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
+  Trash2,
+  Printer,
+  Download,
+  CheckSquare,
+  Square,
+} from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useSpecialties } from '../../../hooks/useSpecialties';
 import { formatRelativeTime, formatDate, formatCostRange } from '../../../core/services/format.service';
 import { buildInquiryWhatsAppUrl } from '../../../core/services/whatsapp.service';
+import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
+import { AdminPagination } from '../components/AdminPagination';
+import { AdminBulkActionBar } from '../components/AdminBulkActionBar';
 import type { Inquiry, InquiryStatus } from '../../../core/types';
 import '../AdminToolbar.css';
 
@@ -26,6 +55,9 @@ export function AdminInquiriesPage() {
   const [currentPage, setCurrentPage]           = useState(1);
   const [itemsPerPage, setItemsPerPage]         = useState(8);
 
+  // Row selection
+  const [selectedIds, setSelectedIds]       = useState<Set<string>>(new Set());
+
   const [viewingInquiry, setViewingInquiry] = useState<Inquiry | null>(null);
   const [newNoteText, setNewNoteText]       = useState('');
   const [savingNote, setSavingNote]         = useState(false);
@@ -36,6 +68,10 @@ export function AdminInquiriesPage() {
   }
 
   useEffect(() => { load(); }, []);
+
+  function getSpecialtyName(id: string) {
+    return specialties.find((s) => s.id === id)?.name ?? id;
+  }
 
   // Filtered & Sorted Inquiries
   const filteredInquiries = useMemo(() => {
@@ -77,6 +113,83 @@ export function AdminInquiriesPage() {
     return filteredInquiries.slice(start, start + itemsPerPage);
   }, [filteredInquiries, currentPage, itemsPerPage]);
 
+  // Row Selection Helpers
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleSelectAll = () => {
+    const allIds = filteredInquiries.map(i => i.id);
+    setSelectedIds(new Set(allIds));
+  };
+
+  const handleClearSelection = () => {
+    setSelectedIds(new Set());
+  };
+
+  // Export Columns Definition
+  const exportColumns: ExportColumn[] = [
+    { header: 'Patient Name', key: 'firstName', format: (_, r) => `${r.firstName} ${r.lastName}` },
+    { header: 'Specialty', key: 'specialtyId', format: (val) => getSpecialtyName(val) },
+    { header: 'Urgency', key: 'urgency', format: (val) => String(val).toUpperCase() },
+    { header: 'Status', key: 'status', format: (val) => String(val).replace(/_/g, ' ') },
+    { header: 'Country', key: 'countryOfResidence' },
+    { header: 'Phone', key: 'phone' },
+    { header: 'Email', key: 'email' },
+    { header: 'Description', key: 'description' },
+    { header: 'Submitted', key: 'createdAt', format: (val) => formatDate(val) },
+  ];
+
+  // Actions: Delete, Print, Export
+  const handleDeleteSelected = async () => {
+    if (selectedIds.size === 0) return;
+    if (confirm(`Are you sure you want to delete ${selectedIds.size} selected inquiry records?`)) {
+      await mockEngine.deleteInquiries(Array.from(selectedIds));
+      handleClearSelection();
+      load();
+    }
+  };
+
+  const handleDeleteSingle = async (id: string, name: string) => {
+    if (confirm(`Are you sure you want to delete the inquiry for "${name}"?`)) {
+      await mockEngine.deleteInquiry(id);
+      setSelectedIds(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      load();
+    }
+  };
+
+  const handlePrintPdfSelected = () => {
+    const targetData = selectedIds.size > 0
+      ? inquiries.filter(i => selectedIds.has(i.id))
+      : filteredInquiries;
+    printOrExportPdf('Patient Inquiries & Triage Report', exportColumns, targetData, 'Medical360 Referral System Dossier');
+  };
+
+  const handleExportCsvSelected = () => {
+    const targetData = selectedIds.size > 0
+      ? inquiries.filter(i => selectedIds.has(i.id))
+      : filteredInquiries;
+    exportToCsv('medical360_inquiries', exportColumns, targetData);
+  };
+
+  const handlePrintSingle = (inq: Inquiry) => {
+    printOrExportPdf(
+      `Patient Inquiry: ${inq.firstName} ${inq.lastName}`,
+      exportColumns,
+      [inq],
+      `Inquiry #${inq.id} • Registered: ${formatDate(inq.createdAt)}`
+    );
+  };
+
   async function updateStatus(id: string, status: InquiryStatus) {
     await mockEngine.updateInquiryStatus(id, status);
     load();
@@ -102,20 +215,42 @@ export function AdminInquiriesPage() {
     }
   }
 
-  function getSpecialtyName(id: string) {
-    return specialties.find((s) => s.id === id)?.name ?? id;
-  }
-
   const urgencyColor = (u: string) =>
     u === 'emergency' ? '#dc2626' : u === 'urgent' ? '#d97706' : '#059669';
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <div style={{ marginBottom: '1.5rem' }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Patient Inquiries & Triage</h1>
-        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-          Review, triage, and manage incoming patient treatment requests from Mauritius and the Indian Ocean.
-        </p>
+    <div style={{ padding: 'clamp(1rem, 3vw, 2rem)', maxWidth: 1440, margin: '0 auto' }}>
+      
+      {/* Top Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.25rem 0' }}>Patient Inquiries & Triage</h1>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', margin: 0 }}>
+            Review, triage, and manage incoming patient treatment requests from Mauritius and the Indian Ocean.
+          </p>
+        </div>
+
+        {/* Global Print / Export Buttons */}
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => handlePrintPdfSelected()}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+            title="Print or Save current list as PDF"
+          >
+            <Printer size={15} /> Print / Export PDF
+          </button>
+          <button
+            type="button"
+            onClick={() => handleExportCsvSelected()}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+            title="Download CSV spreadsheet"
+          >
+            <Download size={15} /> Export CSV
+          </button>
+        </div>
       </div>
 
       {/* ─── SEARCH, FILTERS & SORTING TOOLBAR ────────────────────────────── */}
@@ -127,7 +262,7 @@ export function AdminInquiriesPage() {
             <input
               type="text"
               className="admin-toolbar__search-input"
-              placeholder="Search patient, phone, email, notes..."
+              placeholder="Search patient, phone, specialty..."
               value={searchQuery}
               onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
             />
@@ -143,7 +278,7 @@ export function AdminInquiriesPage() {
           </div>
         </div>
 
-        {/* Filters and Sort */}
+        {/* Filters and View Switcher */}
         <div className="admin-toolbar__right">
           {/* Status Filter */}
           <select
@@ -184,7 +319,7 @@ export function AdminInquiriesPage() {
           {/* Sort By Pill */}
           <div className="admin-toolbar__sort-pill">
             <ArrowUpDown size={14} className="admin-toolbar__sort-icon" />
-            <span className="admin-toolbar__sort-label">Trier par :</span>
+            <span className="admin-toolbar__sort-label">Sort:</span>
             <select
               className="admin-toolbar__sort-select"
               value={sortBy}
@@ -200,7 +335,7 @@ export function AdminInquiriesPage() {
           {/* Count Badge */}
           <div className="admin-toolbar__count-badge">
             <span className="admin-toolbar__count-num">{filteredInquiries.length}</span>
-            <span className="admin-toolbar__count-unit">{filteredInquiries.length <= 1 ? 'dossier' : 'dossiers'}</span>
+            <span className="admin-toolbar__count-unit">{filteredInquiries.length <= 1 ? 'record' : 'records'}</span>
           </div>
 
           {/* View Mode Switcher */}
@@ -209,19 +344,19 @@ export function AdminInquiriesPage() {
               type="button"
               className={`admin-toolbar__view-btn ${viewMode === 'grid' ? 'admin-toolbar__view-btn--active' : ''}`}
               onClick={() => setViewMode('grid')}
-              title="Vue Grille"
+              title="Grid View"
             >
               <LayoutGrid size={14} />
-              <span>Grille</span>
+              <span>Grid</span>
             </button>
             <button
               type="button"
               className={`admin-toolbar__view-btn ${viewMode === 'list' ? 'admin-toolbar__view-btn--active' : ''}`}
               onClick={() => setViewMode('list')}
-              title="Vue Liste"
+              title="List View"
             >
               <List size={14} />
-              <span>Liste</span>
+              <span>List</span>
             </button>
           </div>
 
@@ -244,174 +379,274 @@ export function AdminInquiriesPage() {
         </div>
       </div>
 
+      {/* ─── BULK ACTION BAR (ACTIVE WHEN ROWS SELECTED) ──────────────────── */}
+      <AdminBulkActionBar
+        selectedCount={selectedIds.size}
+        totalCount={filteredInquiries.length}
+        onSelectAll={handleSelectAll}
+        onClearSelection={handleClearSelection}
+        onDeleteSelected={handleDeleteSelected}
+        onPrintPdfSelected={handlePrintPdfSelected}
+        onExportCsvSelected={handleExportCsvSelected}
+        unitName="inquiries"
+      />
+
       {loading ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="skeleton" style={{ height: 72, borderRadius: 12 }} />
+            <div key={i} style={{ height: 72, background: 'var(--color-surface)', borderRadius: 12, border: '1px solid var(--color-border)', animation: 'pulse 1.5s infinite' }} />
           ))}
         </div>
-      ) : paginatedInquiries.length === 0 ? (
-        <div style={{
-          textAlign: 'center',
-          padding: '3rem 1rem',
-          background: 'var(--color-surface)',
-          border: '1.5px dashed var(--color-border)',
-          borderRadius: 'var(--radius-xl)',
-          color: 'var(--color-text-muted)',
-        }}>
-          <Search size={36} style={{ margin: '0 auto 0.75rem', opacity: 0.4 }} />
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--color-text)' }}>No patient inquiries match your search</h3>
-          <p style={{ fontSize: '0.85rem', marginTop: 4 }}>Try clearing search keywords or adjusting your filters.</p>
-          <button
-            className="btn btn-outline btn-sm"
-            onClick={() => { setSearchQuery(''); setSelectedStatus('all'); setSelectedUrgency('all'); setSelectedSpecialty('all'); }}
-            style={{ marginTop: '1rem' }}
-          >
-            Clear Filters
-          </button>
+      ) : filteredInquiries.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', border: '1.5px dashed var(--color-border)' }}>
+          <User size={48} color="var(--color-text-muted)" style={{ margin: '0 auto 1rem' }} />
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>No Inquiries Found</h3>
+          <p style={{ color: 'var(--color-text-secondary)', maxWidth: 450, margin: '0.5rem auto 1.5rem' }}>
+            No patient inquiries matched your search or filter criteria. Try resetting the filters.
+          </p>
         </div>
       ) : viewMode === 'grid' ? (
-        /* ─── TRIAGE CARDS GRID VIEW ─── */
+        /* ─── GRID CARDS VIEW ─── */
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.25rem' }}>
-          {paginatedInquiries.map((inq) => (
-            <div
-              key={inq.id}
-              style={{
-                background: 'var(--color-surface)',
-                border: '1.5px solid var(--color-border)',
-                borderRadius: 'var(--radius-xl)',
-                padding: '1.25rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.75rem',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 800, margin: 0 }}>
-                    {inq.firstName} {inq.lastName}
-                  </h3>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: 2 }}>
-                    <Globe size={11} style={{ display: 'inline', marginRight: 3 }} />
-                    {inq.countryOfResidence} • {formatRelativeTime(inq.createdAt)}
+          {paginatedInquiries.map((inq) => {
+            const isSelected = selectedIds.has(inq.id);
+            return (
+              <div
+                key={inq.id}
+                style={{
+                  background: 'var(--color-surface)',
+                  border: isSelected ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: '1.25rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.75rem',
+                  boxShadow: isSelected ? '0 4px 14px rgba(6,95,70,0.15)' : '0 2px 8px rgba(0,0,0,0.03)',
+                  position: 'relative',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem' }}>
+                    {/* Row Checkbox */}
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => toggleSelect(inq.id)}
+                      style={{ marginTop: 3, width: 16, height: 16, cursor: 'pointer', accentColor: 'var(--color-primary)' }}
+                    />
+                    <div>
+                      <h3 style={{ fontSize: '1rem', fontWeight: 800, margin: 0 }}>
+                        {inq.firstName} {inq.lastName}
+                      </h3>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: 2 }}>
+                        <Globe size={11} style={{ display: 'inline', marginRight: 3 }} />
+                        {inq.countryOfResidence} • {formatRelativeTime(inq.createdAt)}
+                      </div>
+                    </div>
+                  </div>
+
+                  <span style={{
+                    background: `${urgencyColor(inq.urgency)}15`,
+                    color: urgencyColor(inq.urgency),
+                    fontWeight: 700,
+                    fontSize: '0.68rem',
+                    padding: '3px 8px',
+                    borderRadius: 6,
+                    textTransform: 'uppercase',
+                  }}>
+                    {inq.urgency}
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span className="badge badge-primary" style={{ fontSize: '0.7rem' }}>
+                    {getSpecialtyName(inq.specialtyId)}
+                  </span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                    {inq.phone}
+                  </span>
+                </div>
+
+                <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, margin: 0, flex: 1 }}>
+                  {inq.description.length > 90 ? `${inq.description.slice(0, 90)}...` : inq.description}
+                </p>
+
+                {/* Card Action Row */}
+                <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <select
+                    value={inq.status}
+                    onChange={e => updateStatus(inq.id, e.target.value as InquiryStatus)}
+                    style={{ fontSize: '0.75rem', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--color-border)', background: 'var(--color-surface)', fontWeight: 600 }}
+                  >
+                    {STATUS_OPTIONS.map(s => (
+                      <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
+                    ))}
+                  </select>
+
+                  <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handlePrintSingle(inq)}
+                      style={{ padding: '3px 6px' }}
+                      title="Print / PDF Dossier"
+                    >
+                      <Printer size={13} />
+                    </button>
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => setViewingInquiry(inq)}
+                      style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.78rem', padding: '3px 8px' }}
+                    >
+                      <Eye size={13} /> View
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handleDeleteSingle(inq.id, `${inq.firstName} ${inq.lastName}`)}
+                      style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)', padding: '3px 6px' }}
+                      title="Delete Inquiry"
+                    >
+                      <Trash2 size={13} />
+                    </button>
                   </div>
                 </div>
-                <span style={{
-                  background: `${urgencyColor(inq.urgency)}15`,
-                  color: urgencyColor(inq.urgency),
-                  fontWeight: 700,
-                  fontSize: '0.68rem',
-                  padding: '3px 8px',
-                  borderRadius: 6,
-                  textTransform: 'uppercase',
-                }}>
-                  {inq.urgency}
-                </span>
               </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span className="badge badge-primary" style={{ fontSize: '0.7rem' }}>
-                  {getSpecialtyName(inq.specialtyId)}
-                </span>
-                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                  {inq.phone}
-                </span>
-              </div>
-
-              <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, margin: 0, flex: 1 }}>
-                {inq.description.length > 90 ? `${inq.description.slice(0, 90)}...` : inq.description}
-              </p>
-
-              <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem' }}>
-                <select
-                  value={inq.status}
-                  onChange={e => updateStatus(inq.id, e.target.value as InquiryStatus)}
-                  style={{ fontSize: '0.75rem', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--color-border)', background: 'var(--color-surface)', fontWeight: 600 }}
-                >
-                  {STATUS_OPTIONS.map(s => (
-                    <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
-                  ))}
-                </select>
-
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => setViewingInquiry(inq)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem' }}
-                >
-                  <Eye size={13} /> View Details
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         /* ─── DATA TABLE LIST VIEW ─── */
         <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', overflow: 'auto', boxShadow: '0 2px 12px rgba(0,0,0,0.03)' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 960 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 980 }}>
             <thead>
               <tr style={{ background: 'var(--color-surface-2)' }}>
-                {['Patient', 'Country', 'Specialty', 'Description', 'Urgency', 'Status', 'Submitted', 'Action'].map(h => (
-                  <th key={h} style={{ padding: '0.875rem 1rem', textAlign: 'left', fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
+                {/* Select All Checkbox */}
+                <th style={{ width: 44, padding: '0.875rem 0.75rem', textAlign: 'center' }}>
+                  <input
+                    type="checkbox"
+                    checked={filteredInquiries.length > 0 && selectedIds.size === filteredInquiries.length}
+                    onChange={selectedIds.size === filteredInquiries.length ? handleClearSelection : handleSelectAll}
+                    style={{ width: 16, height: 16, cursor: 'pointer', accentColor: 'var(--color-primary)' }}
+                    title="Select all rows"
+                  />
+                </th>
+                {['Patient', 'Country', 'Specialty', 'Description', 'Urgency', 'Status', 'Submitted', 'Actions'].map(h => (
+                  <th key={h} style={{ padding: '0.875rem 0.85rem', textAlign: h === 'Actions' ? 'right' : 'left', fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
                     {h}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {paginatedInquiries.map((inq, i) => (
-                <tr key={inq.id} id={`inquiry-row-${inq.id}`} style={{ borderTop: '1px solid var(--color-border)', background: i % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-2)' }}>
-                  <td style={{ padding: '0.875rem 1rem', fontWeight: 600, fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
-                    {inq.firstName} {inq.lastName}
-                    <br />
-                    <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 400 }}>{inq.phone}</span>
-                  </td>
-                  <td style={{ padding: '0.875rem 1rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)', whiteSpace: 'nowrap' }}>
-                    {inq.countryOfResidence}
-                  </td>
-                  <td style={{ padding: '0.875rem 1rem', fontSize: '0.8125rem', color: 'var(--color-text-secondary)', whiteSpace: 'nowrap' }}>
-                    {getSpecialtyName(inq.specialtyId)}
-                  </td>
-                  <td style={{ padding: '0.875rem 1rem', fontSize: '0.8125rem', color: 'var(--color-text-secondary)', maxWidth: 220 }}>
-                    {inq.description.slice(0, 75)}...
-                  </td>
-                  <td style={{ padding: '0.875rem 1rem', textTransform: 'capitalize', fontSize: '0.8125rem', fontWeight: 700, color: urgencyColor(inq.urgency) }}>
-                    <span style={{
-                      background: `${urgencyColor(inq.urgency)}15`,
-                      color: urgencyColor(inq.urgency),
-                      padding: '3px 8px',
-                      borderRadius: 6,
-                      display: 'inline-block'
-                    }}>
-                      {inq.urgency}
-                    </span>
-                  </td>
-                  <td style={{ padding: '0.875rem 1rem' }}>
-                    <select
-                      id={`inquiry-status-${inq.id}`}
-                      value={inq.status}
-                      onChange={e => updateStatus(inq.id, e.target.value as InquiryStatus)}
-                      style={{ fontSize: '0.8rem', padding: '5px 8px', borderRadius: 8, border: '1px solid var(--color-border)', background: 'var(--color-surface)', cursor: 'pointer', fontWeight: 600 }}
-                    >
-                      {STATUS_OPTIONS.map(s => (
-                        <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
-                      ))}
-                    </select>
-                  </td>
-                  <td style={{ padding: '0.875rem 1rem', fontSize: '0.8rem', color: 'var(--color-text-muted)', whiteSpace: 'nowrap' }}>
-                    {formatRelativeTime(inq.createdAt)}
-                  </td>
-                  <td style={{ padding: '0.875rem 1rem', whiteSpace: 'nowrap' }}>
-                    <button
-                      className="btn btn-secondary btn-sm"
-                      onClick={() => setViewingInquiry(inq)}
-                      style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem' }}
-                    >
-                      <Eye size={13} /> View Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {paginatedInquiries.map((inq, idx) => {
+                const isSelected = selectedIds.has(inq.id);
+                return (
+                  <tr
+                    key={inq.id}
+                    style={{
+                      borderTop: '1px solid var(--color-border)',
+                      background: isSelected ? 'rgba(6, 95, 70, 0.05)' : idx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-2)',
+                      transition: 'background 0.15s ease',
+                    }}
+                  >
+                    {/* Row Checkbox */}
+                    <td style={{ padding: '0.875rem 0.75rem', textAlign: 'center' }}>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleSelect(inq.id)}
+                        style={{ width: 16, height: 16, cursor: 'pointer', accentColor: 'var(--color-primary)' }}
+                      />
+                    </td>
+
+                    <td style={{ padding: '0.875rem 0.85rem' }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.875rem', color: 'var(--color-text)' }}>
+                        {inq.firstName} {inq.lastName}
+                      </div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                        {inq.phone}
+                      </div>
+                    </td>
+
+                    <td style={{ padding: '0.875rem 0.85rem', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
+                      {inq.countryOfResidence}
+                    </td>
+
+                    <td style={{ padding: '0.875rem 0.85rem' }}>
+                      <span className="badge badge-primary" style={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>
+                        {getSpecialtyName(inq.specialtyId)}
+                      </span>
+                    </td>
+
+                    <td style={{ padding: '0.875rem 0.85rem', maxWidth: 220 }}>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--color-text-secondary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {inq.description}
+                      </p>
+                    </td>
+
+                    <td style={{ padding: '0.875rem 0.85rem' }}>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        textTransform: 'uppercase',
+                        background: `${urgencyColor(inq.urgency)}15`,
+                        color: urgencyColor(inq.urgency),
+                        padding: '3px 8px',
+                        borderRadius: 6,
+                        display: 'inline-block'
+                      }}>
+                        {inq.urgency}
+                      </span>
+                    </td>
+
+                    <td style={{ padding: '0.875rem 0.85rem' }}>
+                      <select
+                        id={`inquiry-status-${inq.id}`}
+                        value={inq.status}
+                        onChange={e => updateStatus(inq.id, e.target.value as InquiryStatus)}
+                        style={{ fontSize: '0.8rem', padding: '5px 8px', borderRadius: 8, border: '1px solid var(--color-border)', background: 'var(--color-surface)', cursor: 'pointer', fontWeight: 600 }}
+                      >
+                        {STATUS_OPTIONS.map(s => (
+                          <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
+                        ))}
+                      </select>
+                    </td>
+
+                    <td style={{ padding: '0.875rem 0.85rem', fontSize: '0.8rem', color: 'var(--color-text-muted)', whiteSpace: 'nowrap' }}>
+                      {formatRelativeTime(inq.createdAt)}
+                    </td>
+
+                    {/* Actions Column */}
+                    <td style={{ padding: '0.875rem 0.85rem', whiteSpace: 'nowrap', textAlign: 'right' }}>
+                      <div style={{ display: 'inline-flex', gap: '0.35rem', alignItems: 'center' }}>
+                        <button
+                          className="btn btn-outline btn-sm"
+                          onClick={() => handlePrintSingle(inq)}
+                          style={{ padding: '4px 7px' }}
+                          title="Print / Save PDF Dossier"
+                        >
+                          <Printer size={13} />
+                        </button>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => setViewingInquiry(inq)}
+                          style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.78rem', padding: '4px 8px' }}
+                        >
+                          <Eye size={13} /> View
+                        </button>
+                        <button
+                          className="btn btn-outline btn-sm"
+                          onClick={() => handleDeleteSingle(inq.id, `${inq.firstName} ${inq.lastName}`)}
+                          style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)', padding: '4px 7px' }}
+                          title="Delete Inquiry"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
@@ -419,294 +654,227 @@ export function AdminInquiriesPage() {
 
       {/* ─── PAGINATION BAR ────────────────────────────────────────────────── */}
       {filteredInquiries.length > 0 && (
-        <div style={{
-          marginTop: '1.75rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          padding: '0.75rem 1rem',
-          background: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
-          borderRadius: 'var(--radius-xl)',
-        }}>
-          <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-            Showing <strong>{Math.min((currentPage - 1) * itemsPerPage + 1, filteredInquiries.length)}</strong> to{' '}
-            <strong>{Math.min(currentPage * itemsPerPage, filteredInquiries.length)}</strong> of{' '}
-            <strong>{filteredInquiries.length}</strong> patient inquiries
-          </span>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <button
-              className="btn btn-outline btn-sm"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage === 1 ? 0.5 : 1 }}
-            >
-              <ChevronLeft size={14} /> Prev
-            </button>
-            <span style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0 0.5rem' }}>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              className="btn btn-outline btn-sm"
-              disabled={currentPage >= totalPages}
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage >= totalPages ? 0.5 : 1 }}
-            >
-              Next <ChevronRight size={14} />
-            </button>
-          </div>
-        </div>
+        <AdminPagination
+          currentPage={currentPage}
+          totalItems={filteredInquiries.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
+          pageSizeOptions={[8, 16, 32, 64]}
+          unitName="patient inquiries"
+        />
       )}
 
       {/* ─── VIEW INQUIRY DETAILS MODAL ────────────────────────────────────── */}
       {viewingInquiry && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.65)',
-          backdropFilter: 'blur(4px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          padding: '1.5rem',
-        }}>
-          <div style={{
-            background: 'var(--color-surface)',
-            borderRadius: 'var(--radius-2xl)',
-            width: '100%',
-            maxWidth: 680,
-            maxHeight: '90vh',
-            overflowY: 'auto',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
-            border: '1px solid var(--color-border)',
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
+          <div style={{ background: 'var(--color-surface)', width: '100%', maxWidth: 720, borderRadius: 'var(--radius-2xl)', border: '1px solid var(--color-border)', boxShadow: '0 20px 40px rgba(0,0,0,0.2)', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
+            
             {/* Modal Header */}
-            <div style={{
-              padding: '1.5rem',
-              borderBottom: '1px solid var(--color-border)',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              position: 'sticky',
-              top: 0,
-              background: 'var(--color-surface)',
-              zIndex: 2,
-            }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: `${urgencyColor(viewingInquiry.urgency)}15`, color: urgencyColor(viewingInquiry.urgency), display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <User size={20} />
+                </div>
+                <div>
+                  <h2 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>
                     {viewingInquiry.firstName} {viewingInquiry.lastName}
                   </h2>
-                  <span style={{
-                    background: `${urgencyColor(viewingInquiry.urgency)}15`,
-                    color: urgencyColor(viewingInquiry.urgency),
-                    fontWeight: 700,
-                    fontSize: '0.72rem',
-                    padding: '3px 8px',
-                    borderRadius: 6,
-                    textTransform: 'uppercase',
-                  }}>
-                    {viewingInquiry.urgency}
-                  </span>
-                </div>
-                <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.8125rem', marginTop: 2 }}>
-                  Case ID: #{viewingInquiry.id} · Submitted {formatDate(viewingInquiry.createdAt)}
+                  <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', display: 'flex', gap: '0.5rem', alignItems: 'center', marginTop: 2 }}>
+                    <span>Inquiry #{viewingInquiry.id}</span>
+                    <span>•</span>
+                    <span>{formatDate(viewingInquiry.createdAt)}</span>
+                  </div>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => setViewingInquiry(null)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
-              >
-                <X size={20} />
-              </button>
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <button
+                  onClick={() => handlePrintSingle(viewingInquiry)}
+                  className="btn btn-outline btn-sm"
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <Printer size={14} /> Print / PDF
+                </button>
+                <button
+                  onClick={() => setViewingInquiry(null)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)', padding: 4 }}
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
 
             {/* Modal Body */}
-            <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              {/* Contact Actions Bar */}
-              <div style={{
-                display: 'flex',
-                gap: '0.75rem',
-                flexWrap: 'wrap',
-                background: 'var(--color-surface-2)',
-                padding: '1rem',
-                borderRadius: 'var(--radius-lg)',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>
-                    Patient Direct Contact
-                  </div>
-                  <div style={{ fontSize: '0.95rem', fontWeight: 700 }}>
-                    {viewingInquiry.phone} · {viewingInquiry.email}
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <a
-                    href={buildInquiryWhatsAppUrl({
-                      firstName: viewingInquiry.firstName,
-                      lastName: viewingInquiry.lastName,
-                      country: viewingInquiry.countryOfResidence,
-                      specialty: getSpecialtyName(viewingInquiry.specialtyId),
-                      description: viewingInquiry.description,
-                    })}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-whatsapp btn-sm"
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            <div style={{ padding: '1.5rem', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              
+              {/* Quick Status Bar */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--color-surface-2)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-lg)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Triage Status:</span>
+                  <select
+                    value={viewingInquiry.status}
+                    onChange={e => updateStatus(viewingInquiry.id, e.target.value as InquiryStatus)}
+                    style={{ fontSize: '0.85rem', padding: '4px 10px', borderRadius: 6, border: '1px solid var(--color-border)', background: 'var(--color-surface)', fontWeight: 700 }}
                   >
-                    <MessageCircle size={15} /> WhatsApp
-                  </a>
-                  <a
-                    href={`tel:${viewingInquiry.phone}`}
-                    className="btn btn-outline btn-sm"
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-                  >
-                    <Phone size={15} /> Call
-                  </a>
+                    {STATUS_OPTIONS.map(s => (
+                      <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
+                    ))}
+                  </select>
                 </div>
-              </div>
 
-              {/* Patient Info Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-                <div style={{ background: 'var(--color-surface-2)', padding: '0.875rem', borderRadius: 'var(--radius-md)' }}>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Specialty</div>
-                  <div style={{ fontSize: '0.875rem', fontWeight: 700, marginTop: 2 }}>{getSpecialtyName(viewingInquiry.specialtyId)}</div>
-                </div>
-                <div style={{ background: 'var(--color-surface-2)', padding: '0.875rem', borderRadius: 'var(--radius-md)' }}>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Country</div>
-                  <div style={{ fontSize: '0.875rem', fontWeight: 700, marginTop: 2 }}>{viewingInquiry.countryOfResidence}</div>
-                </div>
-                <div style={{ background: 'var(--color-surface-2)', padding: '0.875rem', borderRadius: 'var(--radius-md)' }}>
-                  <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', fontWeight: 700 }}>Preferred Destination</div>
-                  <div style={{ fontSize: '0.875rem', fontWeight: 700, marginTop: 2 }}>{viewingInquiry.preferredCountry || 'Best Option'}</div>
-                </div>
-              </div>
-
-              {/* Medical Description */}
-              <div>
-                <h4 style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
-                  Full Medical Description & Clinical Needs
-                </h4>
-                <div style={{
-                  background: 'var(--color-surface-2)',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 'var(--radius-lg)',
-                  padding: '1rem',
-                  fontSize: '0.9rem',
-                  lineHeight: 1.6,
-                  color: 'var(--color-text)',
-                  whiteSpace: 'pre-wrap',
+                <span style={{
+                  fontSize: '0.78rem',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  background: `${urgencyColor(viewingInquiry.urgency)}20`,
+                  color: urgencyColor(viewingInquiry.urgency),
+                  padding: '4px 10px',
+                  borderRadius: 999,
                 }}>
+                  {viewingInquiry.urgency} Urgency
+                </span>
+              </div>
+
+              {/* Patient Contact & Medical Info */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                <div style={{ background: 'var(--color-surface-2)', padding: '1rem', borderRadius: 'var(--radius-lg)' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                    Contact Details
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.875rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <Phone size={14} color="var(--color-text-muted)" />
+                      <a href={`tel:${viewingInquiry.phone}`} style={{ color: 'var(--color-primary)', fontWeight: 600 }}>
+                        {viewingInquiry.phone}
+                      </a>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <Mail size={14} color="var(--color-text-muted)" />
+                      <a href={`mailto:${viewingInquiry.email}`} style={{ color: 'var(--color-text)' }}>
+                        {viewingInquiry.email}
+                      </a>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <Globe size={14} color="var(--color-text-muted)" />
+                      <span>{viewingInquiry.countryOfResidence}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ background: 'var(--color-surface-2)', padding: '1rem', borderRadius: 'var(--radius-lg)' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                    Treatment Preferences
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.875rem' }}>
+                    <div>
+                      <span style={{ color: 'var(--color-text-muted)' }}>Specialty: </span>
+                      <strong>{getSpecialtyName(viewingInquiry.specialtyId)}</strong>
+                    </div>
+                    <div>
+                      <span style={{ color: 'var(--color-text-muted)' }}>Destination: </span>
+                      <strong>{viewingInquiry.preferredCountry || 'Any accredited country'}</strong>
+                    </div>
+                    {viewingInquiry.budgetRangeUSD && (
+                      <div>
+                        <span style={{ color: 'var(--color-text-muted)' }}>Budget: </span>
+                        <strong>{formatCostRange(viewingInquiry.budgetRangeUSD.min, viewingInquiry.budgetRangeUSD.max)}</strong>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Patient Clinical Need Description */}
+              <div>
+                <h3 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
+                  Medical Need & Symptoms
+                </h3>
+                <div style={{ background: 'var(--color-surface-2)', padding: '1rem', borderRadius: 'var(--radius-lg)', fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--color-text)' }}>
                   {viewingInquiry.description}
                 </div>
               </div>
 
-              {/* Status Update Dropdown */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', background: 'rgba(6,95,70,0.05)', padding: '1rem', borderRadius: 'var(--radius-lg)', border: '1px solid rgba(6,95,70,0.15)' }}>
-                <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-primary)' }}>
-                  Current Triage Status:
-                </label>
-                <select
-                  value={viewingInquiry.status}
-                  onChange={(e) => updateStatus(viewingInquiry.id, e.target.value as InquiryStatus)}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: 8,
-                    border: '1px solid var(--color-primary)',
-                    background: 'var(--color-surface)',
-                    fontWeight: 700,
-                    fontSize: '0.85rem',
-                    cursor: 'pointer',
-                  }}
-                >
-                  {STATUS_OPTIONS.map((s) => (
-                    <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
-                  ))}
-                </select>
-              </div>
+              {/* Clinical Notes & History */}
+              <div>
+                <h3 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
+                  Internal Clinical Notes ({viewingInquiry.notes?.length || 0})
+                </h3>
 
-              {/* Case Coordinator Notes Timeline */}
-              <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '1.25rem' }}>
-                <h4 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.75rem' }}>
-                  Internal Case Coordinator Notes ({viewingInquiry.notes?.length || 0})
-                </h4>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem' }}>
-                  {viewingInquiry.notes && viewingInquiry.notes.length > 0 ? (
-                    viewingInquiry.notes.map((note) => (
-                      <div
-                        key={note.id}
-                        style={{
-                          background: 'var(--color-surface-2)',
-                          padding: '0.75rem 1rem',
-                          borderRadius: 'var(--radius-md)',
-                          fontSize: '0.85rem',
-                        }}
-                      >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: 4 }}>
-                          <strong>{note.authorId}</strong>
-                          <span>{formatRelativeTime(note.createdAt)}</span>
-                        </div>
-                        <div style={{ color: 'var(--color-text)', lineHeight: 1.5 }}>
-                          {note.content}
-                        </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                  {(viewingInquiry.notes || []).map((n) => (
+                    <div key={n.id} style={{ background: 'var(--color-surface-2)', padding: '0.75rem 1rem', borderRadius: 'var(--radius-md)', borderLeft: '3px solid var(--color-primary)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>
+                        <strong>{n.authorId}</strong>
+                        <span>{formatRelativeTime(n.createdAt)}</span>
                       </div>
-                    ))
-                  ) : (
-                    <div style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
-                      No internal notes recorded for this patient case yet.
+                      <div style={{ fontSize: '0.85rem' }}>{n.content}</div>
                     </div>
-                  )}
+                  ))}
                 </div>
 
-                {/* Add Note Form */}
                 <form onSubmit={handleAddNote} style={{ display: 'flex', gap: '0.5rem' }}>
                   <input
+                    type="text"
                     className="form-input"
-                    placeholder="Add internal note (e.g. Sent MRI scans to Apollo Hospitals)..."
+                    placeholder="Add clinical note or follow-up update..."
                     value={newNoteText}
-                    onChange={(e) => setNewNoteText(e.target.value)}
-                    style={{ flex: 1 }}
+                    onChange={e => setNewNoteText(e.target.value)}
+                    style={{ flex: 1, fontSize: '0.85rem' }}
                   />
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-sm"
-                    disabled={savingNote || !newNoteText.trim()}
-                  >
+                  <button type="submit" disabled={savingNote || !newNoteText.trim()} className="btn btn-primary btn-sm">
                     {savingNote ? 'Adding...' : 'Add Note'}
                   </button>
                 </form>
               </div>
+
             </div>
 
             {/* Modal Footer */}
-            <div style={{
-              padding: '1.25rem 1.5rem',
-              borderTop: '1px solid var(--color-border)',
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}>
+            <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--color-surface-2)' }}>
               <button
                 type="button"
-                className="btn btn-outline"
-                onClick={() => setViewingInquiry(null)}
+                onClick={() => {
+                  const id = viewingInquiry.id;
+                  const name = `${viewingInquiry.firstName} ${viewingInquiry.lastName}`;
+                  setViewingInquiry(null);
+                  handleDeleteSingle(id, name);
+                }}
+                className="btn btn-outline btn-sm"
+                style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)' }}
               >
-                Close Details
+                <Trash2 size={14} /> Delete Record
               </button>
+
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <a
+                  href={buildInquiryWhatsAppUrl({
+                    firstName: viewingInquiry.firstName,
+                    lastName: viewingInquiry.lastName,
+                    country: viewingInquiry.countryOfResidence,
+                    specialty: getSpecialtyName(viewingInquiry.specialtyId),
+                    description: viewingInquiry.description,
+                  })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline"
+                  style={{ color: '#25D366', borderColor: '#25D366', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                >
+                  <MessageCircle size={16} /> Open WhatsApp
+                </a>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => setViewingInquiry(null)}
+                >
+                  Close
+                </button>
+              </div>
             </div>
+
           </div>
         </div>
       )}
+
     </div>
   );
 }
