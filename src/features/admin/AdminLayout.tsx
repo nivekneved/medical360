@@ -20,6 +20,10 @@ import {
   Layers,
   FolderKanban,
   FileCode2,
+  Mail,
+  Send,
+  Menu,
+  X,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { useDataConfig } from '../../providers/DataProvider';
@@ -35,8 +39,10 @@ const DATA_NAV = [
 ];
 
 const CMS_GLOBAL_NAV = [
-  { to: '/admin/pages/header', label: 'Header & Navigation', icon: PanelTop },
-  { to: '/admin/pages/footer', label: 'Footer & Legal',      icon: PanelBottom },
+  { to: '/admin/pages/header',     label: 'Header & Navigation',     icon: PanelTop },
+  { to: '/admin/pages/footer',     label: 'Footer & Legal',          icon: PanelBottom },
+  { to: '/admin/campaigns',       label: 'Email Campaigns (Nexus)', icon: Send },
+  { to: '/admin/email-templates', label: 'Email Templates',         icon: Mail },
 ];
 
 const CMS_PAGES_NAV = [
@@ -59,11 +65,12 @@ export function AdminLayout() {
   const navigate           = useNavigate();
   const location           = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   // Accordion state: only one section can be open at a time
   const [openSection, setOpenSection] = useState<MenuSection | null>(() => {
     const path = location.pathname;
-    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer')) {
+    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns')) {
       return 'global';
     }
     if (path.startsWith('/admin/pages/')) {
@@ -72,10 +79,11 @@ export function AdminLayout() {
     return 'data';
   });
 
-  // Auto-expand active section on navigation if none is open
+  // Auto-expand active section and close mobile menu on navigation
   useEffect(() => {
+    setMobileOpen(false);
     const path = location.pathname;
-    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer')) {
+    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns')) {
       setOpenSection('global');
     } else if (path.startsWith('/admin/pages/')) {
       setOpenSection('cms');
@@ -102,7 +110,45 @@ export function AdminLayout() {
 
   return (
     <div className="admin-layout">
-      <aside className={`admin-sidebar${collapsed ? ' admin-sidebar--collapsed' : ''}`}>
+      {/* Mobile Top Navigation Header */}
+      <header className="admin-mobile-header">
+        <button
+          type="button"
+          className="admin-mobile-header__toggle"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle Navigation Menu"
+        >
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+
+        <div className="admin-sidebar__logo" style={{ padding: 0, border: 'none' }}>
+          <div className="admin-sidebar__logo-icon" style={{ width: 30, height: 30, fontSize: '0.85rem' }}>M</div>
+          <div className="admin-sidebar__logo-text" style={{ fontSize: '0.95rem' }}>
+            <span>Medical</span>
+            <span className="admin-sidebar__logo-accent">360</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="admin-mobile-header__logout"
+          title="Logout"
+        >
+          <LogOut size={18} />
+        </button>
+      </header>
+
+      {/* Mobile Backdrop Overlay */}
+      {mobileOpen && (
+        <div
+          className="admin-mobile-backdrop"
+          onClick={() => setMobileOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      <aside className={`admin-sidebar${collapsed ? ' admin-sidebar--collapsed' : ''}${mobileOpen ? ' admin-sidebar--mobile-open' : ''}`}>
         {/* Logo */}
         <div className="admin-sidebar__logo">
           <div className="admin-sidebar__logo-icon">M</div>

@@ -1,8 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Stethoscope, Edit3, Eye, Plus, X, Save, CheckCircle2, DollarSign, Clock, FileText, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { Stethoscope, Edit3, Eye, Plus, X, Save, CheckCircle2, DollarSign, Clock, FileText, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { formatCostRange, formatCostMur } from '../../../core/services/format.service';
 import { ImageField } from '../components/ImageField';
+import { AdminPagination } from '../components/AdminPagination';
+import { AdminBulkActionBar } from '../components/AdminBulkActionBar';
+import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
 import type { Specialty, Procedure } from '../../../core/types';
 import '../AdminToolbar.css';
 
@@ -16,6 +19,9 @@ export function AdminSpecialtiesPage() {
   const [sortBy, setSortBy]                     = useState<'name-asc' | 'name-desc' | 'procs-desc'>('name-asc');
   const [currentPage, setCurrentPage]           = useState(1);
   const [itemsPerPage, setItemsPerPage]         = useState(6);
+
+  // Row selection
+  const [selectedIds, setSelectedIds]           = useState<Set<string>>(new Set());
 
   const [editingSpecialty, setEditingSpecialty] = useState<Specialty | null>(null);
   const [viewingSpecialty, setViewingSpecialty] = useState<Specialty | null>(null);
@@ -53,6 +59,83 @@ export function AdminSpecialtiesPage() {
     const start = (currentPage - 1) * itemsPerPage;
     return filteredSpecialties.slice(start, start + itemsPerPage);
   }, [filteredSpecialties, currentPage, itemsPerPage]);
+
+  // Selection Helpers
+  const toggleSelect = (id: string) => {
+    setSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const handleSelectAll = () => {
+    setSelectedIds(new Set(filteredSpecialties.map(s => s.id)));
+  };
+
+  const handleClearSelection = () => {
+    setSelectedIds(new Set());
+  };
+
+  // Export Columns Definition
+  const exportColumns: ExportColumn[] = [
+    { header: 'Specialty Name (EN)', key: 'name' },
+    { header: 'Specialty Name (FR)', key: 'name_fr' },
+    { header: 'Description', key: 'shortDescription' },
+    { header: 'Procedures Count', key: 'procedures', format: (val) => String((val || []).length) },
+    {
+      header: 'Sample Cost Range (USD)',
+      key: 'procedures',
+      format: (val) => val?.[0] ? formatCostRange(val[0].estimatedCostUSD.min, val[0].estimatedCostUSD.max) : 'N/A',
+    },
+  ];
+
+  const handleDeleteSelected = async () => {
+    if (selectedIds.size === 0) return;
+    if (confirm(`Are you sure you want to delete ${selectedIds.size} selected specialties?`)) {
+      for (const id of selectedIds) {
+        await mockEngine.deleteSpecialty(id);
+      }
+      handleClearSelection();
+      load();
+    }
+  };
+
+  const handleDeleteSingle = async (id: string, name: string) => {
+    if (confirm(`Are you sure you want to delete specialty "${name}"?`)) {
+      await mockEngine.deleteSpecialty(id);
+      setSelectedIds(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+      load();
+    }
+  };
+
+  const handlePrintPdfSelected = () => {
+    const targetData = selectedIds.size > 0
+      ? specialties.filter(s => selectedIds.has(s.id))
+      : filteredSpecialties;
+    printOrExportPdf('Medical Specialties Directory Report', exportColumns, targetData, 'Medical360 Clinical Specialties & Surgical Procedures');
+  };
+
+  const handleExportCsvSelected = () => {
+    const targetData = selectedIds.size > 0
+      ? specialties.filter(s => selectedIds.has(s.id))
+      : filteredSpecialties;
+    exportToCsv('medical360_specialties', exportColumns, targetData);
+  };
+
+  const handlePrintSingle = (sp: Specialty) => {
+    printOrExportPdf(
+      `Medical Specialty: ${sp.name}`,
+      exportColumns,
+      [sp],
+      `${sp.shortDescription} • ${sp.procedures.length} Procedures`
+    );
+  };
 
   const handleEditClick = (sp: Specialty) => {
     setEditingSpecialty(JSON.parse(JSON.stringify(sp)));
@@ -105,13 +188,37 @@ export function AdminSpecialtiesPage() {
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ padding: 'clamp(1rem, 3vw, 2rem)', maxWidth: 1440, margin: '0 auto' }}>
       {/* Header */}
-      <div style={{ marginBottom: '1.5rem' }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Medical Specialties Management</h1>
-        <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-          Manage medical departments, procedures, multi-language descriptions, and estimated pricing.
-        </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.25rem 0' }}>Medical Specialties Management</h1>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', margin: 0 }}>
+            Manage medical departments, procedures, multi-language descriptions, and estimated pricing.
+          </p>
+        </div>
+
+        {/* Global Action Buttons */}
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => handlePrintPdfSelected()}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+            title="Print or Save current list as PDF"
+          >
+            <Printer size={15} /> Print / Export PDF
+          </button>
+          <button
+            type="button"
+            onClick={() => handleExportCsvSelected()}
+            className="btn btn-outline btn-sm"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600 }}
+            title="Download CSV spreadsheet"
+          >
+            <Download size={15} /> Export CSV
+          </button>
+        </div>
       </div>
 
       {/* ─── SEARCH & SORT TOOLBAR ────────────────────────────────────────── */}
@@ -144,7 +251,7 @@ export function AdminSpecialtiesPage() {
           {/* Sort By Pill */}
           <div className="admin-toolbar__sort-pill">
             <ArrowUpDown size={14} className="admin-toolbar__sort-icon" />
-            <span className="admin-toolbar__sort-label">Trier par :</span>
+            <span className="admin-toolbar__sort-label">Sort:</span>
             <select
               className="admin-toolbar__sort-select"
               value={sortBy}
@@ -159,7 +266,7 @@ export function AdminSpecialtiesPage() {
           {/* Count Badge */}
           <div className="admin-toolbar__count-badge">
             <span className="admin-toolbar__count-num">{filteredSpecialties.length}</span>
-            <span className="admin-toolbar__count-unit">{filteredSpecialties.length <= 1 ? 'spécialité' : 'spécialités'}</span>
+            <span className="admin-toolbar__count-unit">{filteredSpecialties.length <= 1 ? 'specialty' : 'specialties'}</span>
           </div>
 
           {/* View Mode Switcher */}
@@ -168,19 +275,19 @@ export function AdminSpecialtiesPage() {
               type="button"
               className={`admin-toolbar__view-btn ${viewMode === 'grid' ? 'admin-toolbar__view-btn--active' : ''}`}
               onClick={() => setViewMode('grid')}
-              title="Vue Grille"
+              title="Grid View"
             >
               <LayoutGrid size={14} />
-              <span>Grille</span>
+              <span>Grid</span>
             </button>
             <button
               type="button"
               className={`admin-toolbar__view-btn ${viewMode === 'list' ? 'admin-toolbar__view-btn--active' : ''}`}
               onClick={() => setViewMode('list')}
-              title="Vue Liste"
+              title="List View"
             >
               <List size={14} />
-              <span>Liste</span>
+              <span>List</span>
             </button>
           </div>
 
@@ -199,6 +306,18 @@ export function AdminSpecialtiesPage() {
           )}
         </div>
       </div>
+
+      {/* ─── BULK ACTION BAR ──────────────────────────────────────────────── */}
+      <AdminBulkActionBar
+        selectedCount={selectedIds.size}
+        totalCount={filteredSpecialties.length}
+        onSelectAll={handleSelectAll}
+        onClearSelection={handleClearSelection}
+        onDeleteSelected={handleDeleteSelected}
+        onPrintPdfSelected={handlePrintPdfSelected}
+        onExportCsvSelected={handleExportCsvSelected}
+        unitName="specialties"
+      />
 
       {loading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
@@ -227,223 +346,248 @@ export function AdminSpecialtiesPage() {
           </button>
         </div>
       ) : viewMode === 'grid' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
-          {paginatedSpecialties.map((sp) => (
-            <div
-              key={sp.id}
-              style={{
-                background: 'var(--color-surface)',
-                border: '1.5px solid var(--color-border)',
-                borderRadius: 'var(--radius-xl)',
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '0 2px 12px rgba(0,0,0,0.03)',
-              }}
-            >
-              {/* Image Banner with High Contrast Text */}
-              <div style={{ position: 'relative', height: 140, background: '#0b131b' }}>
-                <img
-                  src={sp.imageUrl}
-                  alt={sp.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-                <div
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.2) 100%)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'flex-end',
-                    padding: '1rem',
-                  }}
-                >
-                  <span
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
+          {paginatedSpecialties.map((sp) => {
+            const isSelected = selectedIds.has(sp.id);
+            return (
+              <div
+                key={sp.id}
+                style={{
+                  background: 'var(--color-surface)',
+                  border: isSelected ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
+                  borderRadius: 'var(--radius-xl)',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  boxShadow: isSelected ? '0 4px 14px rgba(6,95,70,0.15)' : '0 2px 12px rgba(0,0,0,0.03)',
+                  transition: 'all 0.15s ease',
+                  position: 'relative',
+                }}
+              >
+                {/* Image Banner with High Contrast Text */}
+                <div style={{ position: 'relative', height: 140, background: '#0b131b' }}>
+                  {/* Card Checkbox */}
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelect(sp.id)}
+                    style={{ position: 'absolute', top: 12, right: 12, width: 18, height: 18, cursor: 'pointer', accentColor: 'var(--color-primary)', zIndex: 2 }}
+                    title="Select specialty"
+                  />
+
+                  <img
+                    src={sp.imageUrl}
+                    alt={sp.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
                     style={{
-                      display: 'inline-block',
-                      alignSelf: 'flex-start',
-                      fontSize: '0.68rem',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      color: '#34d399',
-                      letterSpacing: '0.04em',
-                      marginBottom: '2px',
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.2) 100%)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'flex-end',
+                      padding: '1rem',
                     }}
                   >
-                    {sp.name_fr || 'Specialty'}
-                  </span>
-                  <h3
-                    style={{
-                      color: '#ffffff !important' as any,
-                      fontWeight: 800,
-                      fontSize: '1.15rem',
-                      margin: 0,
-                      textShadow: '0 2px 4px rgba(0,0,0,0.85)',
-                    }}
-                  >
-                    {sp.name}
-                  </h3>
-                </div>
-              </div>
-
-              <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, marginBottom: '1rem' }}>
-                  {sp.shortDescription}
-                </p>
-
-                {/* Key Procedures Preview */}
-                <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '0.75rem', marginBottom: '1rem' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                    Key Procedures ({sp.procedures.length})
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-                    {sp.procedures.slice(0, 3).map((proc) => (
-                      <div key={proc.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
-                        <span>{proc.name}</span>
-                        <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>
-                          {formatCostRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
-                        </span>
-                      </div>
-                    ))}
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        alignSelf: 'flex-start',
+                        fontSize: '0.68rem',
+                        fontWeight: 700,
+                        textTransform: 'uppercase',
+                        color: '#34d399',
+                        letterSpacing: '0.04em',
+                        marginBottom: '2px',
+                      }}
+                    >
+                      {sp.name_fr || 'Specialty'}
+                    </span>
+                    <h3
+                      style={{
+                        color: '#ffffff !important' as any,
+                        fontWeight: 800,
+                        fontSize: '1.15rem',
+                        margin: 0,
+                        textShadow: '0 2px 4px rgba(0,0,0,0.85)',
+                      }}
+                    >
+                      {sp.name}
+                    </h3>
                   </div>
                 </div>
 
-                {/* Dual Action Buttons: View & Edit */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: 'auto' }}>
-                  <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => handleViewClick(sp)}
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
-                  >
-                    <Eye size={14} /> View
-                  </button>
-                  <button
-                    className="btn btn-outline btn-sm"
-                    onClick={() => handleEditClick(sp)}
-                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
-                  >
-                    <Edit3 size={14} /> Edit
-                  </button>
+                <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5, marginBottom: '1rem' }}>
+                    {sp.shortDescription}
+                  </p>
+
+                  {/* Key Procedures Preview */}
+                  <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '0.75rem', marginBottom: '1rem' }}>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                      Key Procedures ({sp.procedures.length})
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                      {sp.procedures.slice(0, 3).map((proc) => (
+                        <div key={proc.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}>
+                          <span>{proc.name}</span>
+                          <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>
+                            {formatCostRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto auto', gap: '0.4rem', marginTop: 'auto', paddingTop: '0.75rem', borderTop: '1px solid var(--color-border-light)' }}>
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => handleViewClick(sp)}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem', fontSize: '0.78rem' }}
+                    >
+                      <Eye size={13} /> View
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handleEditClick(sp)}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem', fontSize: '0.78rem' }}
+                    >
+                      <Edit3 size={13} /> Edit
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handlePrintSingle(sp)}
+                      style={{ padding: '4px 8px' }}
+                      title="Print / Save PDF Dossier"
+                    >
+                      <Printer size={13} />
+                    </button>
+                    <button
+                      className="btn btn-outline btn-sm"
+                      onClick={() => handleDeleteSingle(sp.id, sp.name)}
+                      style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)', padding: '4px 8px' }}
+                      title="Delete Specialty"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         /* ─── COMPACT LIST VIEW ─── */
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          {paginatedSpecialties.map((sp) => (
-            <div
-              key={sp.id}
-              style={{
-                background: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 'var(--radius-xl)',
-                padding: '1rem 1.25rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '1.25rem',
-                flexWrap: 'wrap',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.02)',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', minWidth: 280, flex: 2 }}>
-                <img
-                  src={sp.imageUrl}
-                  alt={sp.name}
-                  style={{ width: 56, height: 56, borderRadius: 'var(--radius-md)', objectFit: 'cover', flexShrink: 0 }}
-                />
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: 0 }}>{sp.name}</h3>
-                    {sp.name_fr && (
-                      <span className="badge badge-secondary" style={{ fontSize: '0.65rem' }}>{sp.name_fr}</span>
-                    )}
-                  </div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
-                    {sp.shortDescription.length > 80 ? `${sp.shortDescription.slice(0, 80)}...` : sp.shortDescription}
+          {paginatedSpecialties.map((sp) => {
+            const isSelected = selectedIds.has(sp.id);
+            return (
+              <div
+                key={sp.id}
+                style={{
+                  background: isSelected ? 'rgba(6, 95, 70, 0.04)' : 'var(--color-surface)',
+                  border: isSelected ? '1.5px solid var(--color-primary)' : '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: '0.85rem 1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '1rem',
+                  flexWrap: 'wrap',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.02)',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', minWidth: 260, flex: 2 }}>
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelect(sp.id)}
+                    style={{ width: 16, height: 16, cursor: 'pointer', accentColor: 'var(--color-primary)', flexShrink: 0 }}
+                  />
+                  <img
+                    src={sp.imageUrl}
+                    alt={sp.name}
+                    style={{ width: 50, height: 50, borderRadius: 'var(--radius-md)', objectFit: 'cover', flexShrink: 0 }}
+                  />
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <h3 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>{sp.name}</h3>
+                      {sp.name_fr && (
+                        <span className="badge badge-secondary" style={{ fontSize: '0.65rem' }}>{sp.name_fr}</span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                      {sp.shortDescription.length > 80 ? `${sp.shortDescription.slice(0, 80)}...` : sp.shortDescription}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: 1.5, justifyContent: 'space-around' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-primary)' }}>{sp.procedures.length}</div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Procedures</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>
-                    {sp.procedures[0] ? formatCostRange(sp.procedures[0].estimatedCostUSD.min, sp.procedures[0].estimatedCostUSD.max) : 'N/A'}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flex: 1.5, justifyContent: 'space-around' }}>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--color-primary)' }}>{sp.procedures.length}</div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Procedures</div>
                   </div>
-                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>From (USD)</div>
+                  <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>
+                      {sp.procedures[0] ? formatCostRange(sp.procedures[0].estimatedCostUSD.min, sp.procedures[0].estimatedCostUSD.max) : 'N/A'}
+                    </div>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>From (USD)</div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => handleViewClick(sp)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.78rem', padding: '4px 8px' }}
+                  >
+                    <Eye size={13} /> View
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handleEditClick(sp)}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', fontSize: '0.78rem', padding: '4px 8px' }}
+                  >
+                    <Edit3 size={13} /> Edit
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handlePrintSingle(sp)}
+                    style={{ padding: '4px 7px' }}
+                    title="Print / Save PDF Dossier"
+                  >
+                    <Printer size={13} />
+                  </button>
+                  <button
+                    className="btn btn-outline btn-sm"
+                    onClick={() => handleDeleteSingle(sp.id, sp.name)}
+                    style={{ color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)', padding: '4px 7px' }}
+                    title="Delete Specialty"
+                  >
+                    <Trash2 size={13} />
+                  </button>
                 </div>
               </div>
-
-              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <button
-                  className="btn btn-secondary btn-sm"
-                  onClick={() => handleViewClick(sp)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-                >
-                  <Eye size={14} /> View
-                </button>
-                <button
-                  className="btn btn-outline btn-sm"
-                  onClick={() => handleEditClick(sp)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
-                >
-                  <Edit3 size={14} /> Edit
-                </button>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
       {/* ─── PAGINATION BAR ────────────────────────────────────────────────── */}
       {filteredSpecialties.length > 0 && (
-        <div style={{
-          marginTop: '1.75rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          padding: '0.75rem 1rem',
-          background: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
-          borderRadius: 'var(--radius-xl)',
-        }}>
-          <span style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-            Showing <strong>{Math.min((currentPage - 1) * itemsPerPage + 1, filteredSpecialties.length)}</strong> to{' '}
-            <strong>{Math.min(currentPage * itemsPerPage, filteredSpecialties.length)}</strong> of{' '}
-            <strong>{filteredSpecialties.length}</strong> specialties
-          </span>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <button
-              className="btn btn-outline btn-sm"
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage === 1 ? 0.5 : 1 }}
-            >
-              <ChevronLeft size={14} /> Prev
-            </button>
-            <span style={{ fontSize: '0.85rem', fontWeight: 600, padding: '0 0.5rem' }}>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              className="btn btn-outline btn-sm"
-              disabled={currentPage >= totalPages}
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', opacity: currentPage >= totalPages ? 0.5 : 1 }}
-            >
-              Next <ChevronRight size={14} />
-            </button>
-          </div>
-        </div>
+        <AdminPagination
+          currentPage={currentPage}
+          totalItems={filteredSpecialties.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={setCurrentPage}
+          onItemsPerPageChange={setItemsPerPage}
+          pageSizeOptions={[6, 12, 24, 48]}
+          unitName="specialties"
+        />
       )}
 
       {/* ─── VIEW SPECIALTY MODAL ──────────────────────────────────────────── */}

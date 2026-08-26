@@ -418,6 +418,49 @@ class MockEngine {
       bySpecialty,
     };
   }
+
+  async deleteInquiry(id: string): Promise<boolean> {
+    await this.delay();
+    this.store.inquiries = this.store.inquiries.filter(i => i.id !== id);
+    this.save();
+    return true;
+  }
+
+  async deleteInquiries(ids: string[]): Promise<boolean> {
+    await this.delay();
+    const idSet = new Set(ids);
+    this.store.inquiries = this.store.inquiries.filter(i => !idSet.has(i.id));
+    this.save();
+    return true;
+  }
+
+  async deleteHospital(id: string): Promise<boolean> {
+    await this.delay();
+    this.store.hospitals = this.store.hospitals.filter(h => h.id !== id);
+    this.save();
+    return true;
+  }
+
+  async deleteSpecialty(id: string): Promise<boolean> {
+    await this.delay();
+    this.store.specialties = this.store.specialties.filter(s => s.id !== id);
+    this.save();
+    return true;
+  }
+
+  async deleteDoctor(id: string): Promise<boolean> {
+    await this.delay();
+    this.store.doctors = this.store.doctors.filter(d => d.id !== id);
+    this.save();
+    return true;
+  }
+
+  async deleteCaseStudy(id: string): Promise<boolean> {
+    await this.delay();
+    this.store.caseStudies = this.store.caseStudies.filter(c => c.id !== id);
+    this.save();
+    return true;
+  }
 }
 
 // ─── Singleton Export ─────────────────────────────────────────────────────────
