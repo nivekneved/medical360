@@ -175,6 +175,18 @@ export function AdminPageEditor() {
     return `/${pid}`;
   };
 
+  const [activeSectionTab, setActiveSectionTab] = useState<'all' | 'hero' | 'features' | 'metrics' | 'cta' | 'media'>('all');
+
+  const getFieldCategory = (key: string, val: any): 'hero' | 'features' | 'metrics' | 'cta' | 'media' => {
+    const k = key.toLowerCase();
+    const strVal = typeof val === 'string' ? val : (val?.['en'] || val?.['fr'] || '');
+    if (k.includes('image') || k.includes('img') || k.includes('photo') || k.includes('banner') || k.includes('logo') || (typeof strVal === 'string' && (strVal.startsWith('http') || strVal.startsWith('/assets')) && (strVal.endsWith('.jpg') || strVal.endsWith('.png') || strVal.endsWith('.webp')))) return 'media';
+    if (k.includes('hero') || k.includes('badge') || k.includes('title') || k.includes('headline') || k.includes('tagline') || k.includes('subtitle') || k.includes('intro')) return 'hero';
+    if (k.includes('stat') || k.includes('metric') || k.includes('step') || k.includes('process') || k.includes('num') || k.includes('hour') || k.includes('duration') || k.includes('cost') || k.includes('price')) return 'metrics';
+    if (k.includes('testimonial') || k.includes('cta') || k.includes('action') || k.includes('quote') || k.includes('contact') || k.includes('button') || k.includes('link') || k.includes('review') || k.includes('feedback')) return 'cta';
+    return 'features';
+  };
+
   const filteredFieldEntries = useMemo(() => {
     const entries = Object.entries(formData);
     if (!searchFilter.trim()) return entries;
@@ -186,6 +198,20 @@ export function AdminPageEditor() {
       return keyMatch || valMatch;
     });
   }, [formData, searchFilter]);
+
+  const categorizedEntries = useMemo(() => {
+    if (activeSectionTab === 'all') return filteredFieldEntries;
+    return filteredFieldEntries.filter(([key, val]) => getFieldCategory(key, val) === activeSectionTab);
+  }, [filteredFieldEntries, activeSectionTab]);
+
+  const sectionCounts = useMemo(() => {
+    const counts = { all: filteredFieldEntries.length, hero: 0, features: 0, metrics: 0, cta: 0, media: 0 };
+    filteredFieldEntries.forEach(([key, val]) => {
+      const cat = getFieldCategory(key, val);
+      counts[cat] = (counts[cat] || 0) + 1;
+    });
+    return counts;
+  }, [filteredFieldEntries]);
 
   if (loading) {
     return (
@@ -381,26 +407,73 @@ export function AdminPageEditor() {
         gap: '1.75rem',
         boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--color-border)', paddingBottom: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--color-border)', paddingBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, fontSize: '1.1rem' }}>
             <Sparkles size={18} style={{ color: 'var(--color-accent)' }} />
-            Editable Content Fields ({filteredFieldEntries.length} of {Object.keys(formData).length})
+            Page Content Fields ({categorizedEntries.length} of {Object.keys(formData).length})
           </div>
           <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-            Editing tab: <strong style={{ textTransform: 'uppercase', color: 'var(--color-primary)' }}>{activeLang}</strong>
+            Language: <strong style={{ textTransform: 'uppercase', color: 'var(--color-primary)' }}>{activeLang}</strong>
           </span>
         </div>
 
-        {filteredFieldEntries.length === 0 ? (
+        {/* Section Navigation Tabs */}
+        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', background: 'var(--color-surface-2)', padding: '4px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)' }}>
+          {[
+            { key: 'all', label: '✨ All Sections', count: sectionCounts.all },
+            { key: 'hero', label: '🌟 Hero & Header', count: sectionCounts.hero },
+            { key: 'features', label: '💎 Features & Body', count: sectionCounts.features },
+            { key: 'metrics', label: '📊 Metrics & Steps', count: sectionCounts.metrics },
+            { key: 'cta', label: '💬 Testimonials & CTA', count: sectionCounts.cta },
+            { key: 'media', label: '🖼️ Images & Media', count: sectionCounts.media },
+          ].map(tab => {
+            const isActive = activeSectionTab === tab.key;
+            if (tab.count === 0 && tab.key !== 'all') return null;
+            return (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => setActiveSectionTab(tab.key as any)}
+                style={{
+                  padding: '6px 12px',
+                  borderRadius: 6,
+                  border: 'none',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  background: isActive ? 'var(--color-primary)' : 'transparent',
+                  color: isActive ? '#ffffff' : 'var(--color-text-secondary)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <span>{tab.label}</span>
+                <span style={{
+                  background: isActive ? 'rgba(255,255,255,0.25)' : 'var(--color-border)',
+                  color: isActive ? '#ffffff' : 'var(--color-text-muted)',
+                  fontSize: '0.7rem',
+                  padding: '1px 6px',
+                  borderRadius: 999,
+                }}>
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {categorizedEntries.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--color-text-muted)' }}>
             <SlidersHorizontal size={36} style={{ margin: '0 auto 0.75rem', opacity: 0.5 }} />
-            <p style={{ fontWeight: 600 }}>No matching fields found.</p>
+            <p style={{ fontWeight: 600 }}>No matching fields in this section.</p>
             <p style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>
-              {searchFilter ? 'Try clearing your search filter.' : 'Click "Add New Field" or "Reset Defaults" to seed content.'}
+              {searchFilter ? 'Try clearing your search filter.' : 'Switch section tab or click "Add New Field".'}
             </p>
           </div>
         ) : (
-          filteredFieldEntries.map(([fieldKey, fieldVal]) => {
+          categorizedEntries.map(([fieldKey, fieldVal]) => {
             const currentValue = typeof fieldVal === 'string'
               ? fieldVal
               : (fieldVal?.[activeLang] ?? fieldVal?.['en'] ?? '');
