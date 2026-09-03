@@ -130,14 +130,8 @@ export function Navbar() {
     },
     {
       id: 'about-us',
-      label: isFr ? 'À Propos' : isKr ? 'A Propo' : 'About & Stories',
+      label: isFr ? 'À Propos & Avis' : isKr ? 'A Propo & Temwagnaz' : 'About & Stories',
       items: [
-        {
-          label: isFr ? 'Témoignages Patients' : isKr ? 'Temwagnaz Pasian' : 'Patient Stories & Case Studies',
-          sublabel: isFr ? 'Histoires de rétablissement et avis' : 'Real recoveries, cost savings & reviews',
-          to: '/case-studies',
-          icon: MessageSquareQuote,
-        },
         {
           label: isFr ? 'Notre Mission & Équipe' : isKr ? 'Nou Mision & Lekip' : 'About Medical 360',
           sublabel: isFr ? 'Pionnier de la santé pour l\'océan Indien' : 'Our standards, leadership & story',
@@ -145,10 +139,10 @@ export function Navbar() {
           icon: Info,
         },
         {
-          label: isFr ? 'Contact & Assistance' : isKr ? 'Kontak & Asistans' : 'Contact & Helpline',
-          sublabel: isFr ? 'Conseillers disponibles 7j/7' : 'Reach our local & international teams',
-          to: '/contact',
-          icon: PhoneCall,
+          label: isFr ? 'Témoignages & Rétablissements' : isKr ? 'Temwagnaz Pasian' : 'Patient Recovery Stories',
+          sublabel: isFr ? 'Histoires de guérison et économies réelles' : 'Real recoveries, verified savings & reviews',
+          to: '/about#stories',
+          icon: MessageSquareQuote,
         },
       ],
     },
@@ -240,6 +234,13 @@ export function Navbar() {
               </div>
             );
           })}
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => `nav-dropdown-btn ${isActive ? 'nav-dropdown-btn--current' : ''}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <span>{isFr ? 'Contact' : isKr ? 'Kontak' : 'Contact'}</span>
+          </NavLink>
         </nav>
 
         {/* Action Controls */}
@@ -361,6 +362,14 @@ export function Navbar() {
                 </div>
               );
             })}
+            <Link
+              to="/contact"
+              className="mobile-group__header"
+              style={{ textDecoration: 'none', color: 'var(--color-text-main)' }}
+              onClick={() => setIsOpen(false)}
+            >
+              <span className="mobile-group__title">{isFr ? 'Contact' : isKr ? 'Kontak' : 'Contact Us'}</span>
+            </Link>
           </nav>
 
           {/* Mobile Footer Actions */}
