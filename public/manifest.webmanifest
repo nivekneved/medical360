@@ -1,0 +1,25 @@
+{
+  "name": "Medical 360 Mauritius",
+  "short_name": "Medical 360",
+  "description": "Premier international healthcare concierge connecting patients from Mauritius and the Indian Ocean to top accredited hospitals abroad.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d10",
+  "theme_color": "#065f46",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "health",
+    "medical",
+    "travel"
+  ],
+  "lang": "en",
+  "dir": "ltr"
+}

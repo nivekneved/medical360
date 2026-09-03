@@ -14,6 +14,9 @@ import { FloatingWhatsApp } from './components/FloatingWhatsApp/FloatingWhatsApp
 // Eager primary pages
 import { HomePage } from './features/home/HomePage';
 
+import { ScrollToTop } from './components/common/ScrollToTop';
+import { CookieConsentBanner } from './components/common/CookieConsentBanner';
+
 // Lazy public pages (code-split)
 const AboutPage           = lazy(() => import('./features/about/AboutPage').then(m => ({ default: m.AboutPage })));
 const HospitalsPage       = lazy(() => import('./features/hospitals/HospitalsPage').then(m => ({ default: m.HospitalsPage })));
@@ -29,6 +32,7 @@ const CostCalculatorPage  = lazy(() => import('./features/cost-calculator/CostCa
 const VisaGuidePage       = lazy(() => import('./features/visa-guide/VisaGuidePage').then(m => ({ default: m.VisaGuidePage })));
 const PrivacyPolicyPage   = lazy(() => import('./features/legal/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
 const TermsPage           = lazy(() => import('./features/legal/TermsPage').then(m => ({ default: m.TermsPage })));
+const NotFoundPage        = lazy(() => import('./features/not-found/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
 
 // Lazy admin pages
 const AdminLoginPage        = lazy(() => import('./features/admin/AdminLoginPage').then(m => ({ default: m.AdminLoginPage })));
@@ -81,6 +85,7 @@ function PublicLayout() {
       </Suspense>
       <Footer />
       <FloatingWhatsApp />
+      <CookieConsentBanner />
     </>
   );
 }
@@ -105,6 +110,7 @@ export default function App() {
           <DataProvider>
             <AuthProvider>
               <BrowserRouter>
+                <ScrollToTop />
                 <Routes>
                   {/* Public Routes */}
                   <Route element={<PublicLayout />}>
@@ -145,8 +151,12 @@ export default function App() {
                     <Route path="pages/:pageId" element={<AdminPageEditor />} />
                   </Route>
 
-                  {/* Fallback */}
-                  <Route path="*" element={<Navigate to="/" replace />} />
+                  {/* Fallback 404 Page */}
+                  <Route path="*" element={
+                    <Suspense fallback={<PageLoader />}>
+                      <NotFoundPage />
+                    </Suspense>
+                  } />
                 </Routes>
               </BrowserRouter>
             </AuthProvider>
