@@ -200,10 +200,10 @@ export function ServicesPage() {
                 key={srv.id}
                 className={`service-full-card animate-fade-in-up delay-${(i % 4) + 1}`}
                 id={`service-card-${srv.id}`}
-                onClick={() => navigate('/describe-need')}
+                onClick={() => navigate(`/describe-need?service=${srv.id}&serviceName=${encodeURIComponent(l(srv, 'title'))}`)}
                 role="button"
                 tabIndex={0}
-                onKeyDown={e => e.key === 'Enter' && navigate('/describe-need')}
+                onKeyDown={e => e.key === 'Enter' && navigate(`/describe-need?service=${srv.id}&serviceName=${encodeURIComponent(l(srv, 'title'))}`)}
               >
                 <img src={srv.imageUrl} alt={l(srv, 'title')} className="service-full-card__img" loading="lazy" />
                 <div className="service-full-card__overlay" />

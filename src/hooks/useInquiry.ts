@@ -18,6 +18,8 @@ export interface InquiryFormData {
   phone: string;
   countryOfResidence: string;
   specialtyId: string;
+  serviceId?: string;
+  serviceName?: string;
   description: string;
   urgency: InquiryUrgency;
   preferredCountry: string;
@@ -32,6 +34,8 @@ const INITIAL_FORM: InquiryFormData = {
   phone: '',
   countryOfResidence: 'Mauritius',
   specialtyId: '',
+  serviceId: '',
+  serviceName: '',
   description: '',
   urgency: 'routine',
   preferredCountry: '',
@@ -108,6 +112,8 @@ export function useInquiry() {
         phone: cleanPhone,
         countryOfResidence: formData.countryOfResidence,
         specialtyId: formData.specialtyId,
+        serviceId: formData.serviceId || undefined,
+        serviceName: formData.serviceName || undefined,
         description: cleanDesc,
         urgency: formData.urgency,
         preferredCountry: formData.preferredCountry || undefined,
@@ -127,6 +133,8 @@ export function useInquiry() {
         phone: cleanPhone,
         countryOfResidence: formData.countryOfResidence,
         specialtyId: formData.specialtyId,
+        serviceId: formData.serviceId,
+        serviceName: formData.serviceName,
         description: cleanDesc,
         urgency: formData.urgency,
         preferredCountry: formData.preferredCountry,
@@ -140,6 +148,7 @@ export function useInquiry() {
         lastName: cleanLastName,
         country: formData.countryOfResidence,
         specialty: specialtyName,
+        serviceName: formData.serviceName,
         description: cleanDesc,
       });
       window.open(waUrl, '_blank');

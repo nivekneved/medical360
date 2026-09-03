@@ -126,6 +126,8 @@ export interface Inquiry {
   phone: string;
   countryOfResidence: string;
   specialtyId: string;
+  serviceId?: string;
+  serviceName?: string;
   description: string;
   urgency: InquiryUrgency;
   preferredCountry?: string;

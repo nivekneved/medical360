@@ -41,9 +41,16 @@ export function DescribeNeedPage() {
     ? ['Detay Personel', 'Bizin Medikal', 'Preferans', 'Revize & Soumet']
     : ['Personal Details', 'Medical Need', 'Preferences', 'Review & Submit'];
 
-  // Pre-select specialty from URL param
+  // Pre-select specialty & service from URL param
   const preSpecialty = params.get('specialty');
   if (preSpecialty && !formData.specialtyId) updateField('specialtyId', preSpecialty);
+
+  const preService = params.get('service');
+  const preServiceName = params.get('serviceName');
+  if (preService && !formData.serviceId) {
+    updateField('serviceId', preService);
+    if (preServiceName) updateField('serviceName', decodeURIComponent(preServiceName));
+  }
 
   const selectedSpecialty = specialties.find(s => s.id === formData.specialtyId);
 
@@ -165,6 +172,33 @@ export function DescribeNeedPage() {
           {step === 2 && (
             <div className="wizard-body animate-fade-in">
               <h2 className="wizard-title">{l10n('Décrivez Votre Besoin Médical', 'Dekrir Ou Maladi', 'Describe Your Medical Need')}</h2>
+              
+              {formData.serviceName && (
+                <div style={{
+                  background: 'rgba(6, 95, 70, 0.08)',
+                  border: '1.5px solid var(--color-primary)',
+                  borderRadius: 'var(--radius-md)',
+                  padding: '0.85rem 1.25rem',
+                  marginBottom: '1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '0.75rem',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary)', fontWeight: 700, fontSize: '0.9rem' }}>
+                    <span>🎯</span>
+                    <span>{l10n('Service Sélectionné :', 'Servis Seleksione :', 'Requested Service:')} <strong>{formData.serviceName}</strong></span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => { updateField('serviceId', ''); updateField('serviceName', ''); }}
+                    style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textDecoration: 'underline', cursor: 'pointer' }}
+                  >
+                    {l10n('Changer', 'Sanze', 'Change')}
+                  </button>
+                </div>
+              )}
+
               <div className="form-group">
                 <label className="form-label" htmlFor="wiz-specialty">{l10n('Spécialité Médicale *', 'Spesialite Medikal *', 'Medical Specialty *')}</label>
                 <select id="wiz-specialty" className="form-select" value={formData.specialtyId} onChange={e => updateField('specialtyId', e.target.value)}>
@@ -250,6 +284,12 @@ export function DescribeNeedPage() {
                 <div className="review-row"><span>Email</span><strong>{formData.email}</strong></div>
                 <div className="review-row"><span>{l10n('Téléphone', 'Telefonn', 'Phone')}</span><strong>{formData.phone}</strong></div>
                 <div className="review-row"><span>{l10n('Pays', 'Pei', 'Country')}</span><strong>{formData.countryOfResidence}</strong></div>
+                {formData.serviceName && (
+                  <div className="review-row" style={{ background: 'rgba(6, 95, 70, 0.05)', padding: '0.4rem 0.6rem', borderRadius: 6 }}>
+                    <span>{l10n('Service Demandé', 'Servis Demande', 'Requested Service')}</span>
+                    <strong style={{ color: 'var(--color-primary)' }}>{formData.serviceName}</strong>
+                  </div>
+                )}
                 <div className="review-row"><span>{l10n('Spécialité', 'Spesialite', 'Specialty')}</span><strong>{selectedSpecialty ? l(selectedSpecialty, 'name') : formData.specialtyId}</strong></div>
                 <div className="review-row"><span>{l10n('Urgence', 'Irzans', 'Urgency')}</span><strong style={{ textTransform: 'capitalize' }}>{formData.urgency}</strong></div>
                 {formData.preferredCountry && <div className="review-row"><span>{l10n('Destination', 'Destinasion', 'Destination')}</span><strong>{formData.preferredCountry}</strong></div>}

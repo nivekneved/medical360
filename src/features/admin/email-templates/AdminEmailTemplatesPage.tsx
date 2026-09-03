@@ -36,6 +36,7 @@ const SAMPLE_SCENARIOS = {
       phone: '+230 5918 8275',
       countryOfResidence: 'Mauritius',
       specialtyName: 'Cardiology & Heart Surgery',
+      serviceName: 'Medical Visa & Travel Planning',
       description: 'Seeking a second opinion for triple coronary artery bypass graft. Current angiogram reports attached for evaluation.',
       urgency: 'urgent',
       preferredCountry: 'India',
@@ -52,6 +53,7 @@ const SAMPLE_SCENARIOS = {
       phone: '+230 5723 4410',
       countryOfResidence: 'Mauritius',
       specialtyName: 'Orthopedic Surgery & Joint Replacement',
+      serviceName: 'Free Expert Medical Opinion',
       description: 'Severe bilateral knee osteoarthritis. Inquiring about robotic total knee replacement surgery options.',
       urgency: 'routine',
       preferredCountry: 'Thailand',
@@ -68,6 +70,7 @@ const SAMPLE_SCENARIOS = {
       phone: '+230 5255 1199',
       countryOfResidence: 'Mauritius',
       specialtyName: 'Oncology & Cancer Care',
+      serviceName: 'Priority Hospital Admission & Transfer',
       description: 'Immediate specialized oncology consultation required for metastatic gastrointestinal tumor staging.',
       urgency: 'emergency',
       preferredCountry: 'Singapore',
@@ -100,6 +103,7 @@ export function AdminEmailTemplatesPage() {
       firstName: sampleData.firstName,
       lastName: sampleData.lastName,
       specialtyName: sampleData.specialtyName,
+      serviceName: sampleData.serviceName,
       urgency: sampleData.urgency,
       countryOfResidence: sampleData.countryOfResidence,
     });
@@ -403,6 +407,14 @@ export function AdminEmailTemplatesPage() {
                   />
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}>
+                    <input
+                      type="checkbox"
+                      checked={config.medicalDetails.showService !== false}
+                      onChange={e => setConfig(prev => ({ ...prev, medicalDetails: { ...prev.medicalDetails, showService: e.target.checked } }))}
+                    />
+                    Include Requested Service
+                  </label>
                   <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.8125rem' }}>
                     <input
                       type="checkbox"

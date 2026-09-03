@@ -82,6 +82,7 @@ export function AdminInquiriesPage() {
         inq.phone.toLowerCase().includes(searchQuery.toLowerCase()) ||
         inq.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
         inq.countryOfResidence.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (inq.serviceName && inq.serviceName.toLowerCase().includes(searchQuery.toLowerCase())) ||
         inq.description.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchStatus =
@@ -135,6 +136,7 @@ export function AdminInquiriesPage() {
   // Export Columns Definition
   const exportColumns: ExportColumn[] = [
     { header: 'Patient Name', key: 'firstName', format: (_, r) => `${r.firstName} ${r.lastName}` },
+    { header: 'Requested Service', key: 'serviceName', format: (val) => val || 'General Facilitation' },
     { header: 'Specialty', key: 'specialtyId', format: (val) => getSpecialtyName(val) },
     { header: 'Urgency', key: 'urgency', format: (val) => String(val).toUpperCase() },
     { header: 'Status', key: 'status', format: (val) => String(val).replace(/_/g, ' ') },
@@ -459,10 +461,15 @@ export function AdminInquiriesPage() {
                   </span>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                   <span className="badge badge-primary" style={{ fontSize: '0.7rem' }}>
                     {getSpecialtyName(inq.specialtyId)}
                   </span>
+                  {inq.serviceName && (
+                    <span style={{ fontSize: '0.68rem', color: 'var(--color-primary)', fontWeight: 700, background: 'rgba(6, 95, 70, 0.08)', padding: '2px 6px', borderRadius: 4 }}>
+                      ✦ {inq.serviceName}
+                    </span>
+                  )}
                   <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
                     {inq.phone}
                   </span>
@@ -573,9 +580,16 @@ export function AdminInquiriesPage() {
                     </td>
 
                     <td style={{ padding: '0.875rem 0.85rem' }}>
-                      <span className="badge badge-primary" style={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>
-                        {getSpecialtyName(inq.specialtyId)}
-                      </span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                        <span className="badge badge-primary" style={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>
+                          {getSpecialtyName(inq.specialtyId)}
+                        </span>
+                        {inq.serviceName && (
+                          <span style={{ fontSize: '0.7rem', color: 'var(--color-primary)', fontWeight: 700, background: 'rgba(6, 95, 70, 0.08)', padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', display: 'inline-block', width: 'fit-content' }}>
+                            ✦ {inq.serviceName}
+                          </span>
+                        )}
+                      </div>
                     </td>
 
                     <td style={{ padding: '0.875rem 0.85rem', maxWidth: 220 }}>
@@ -766,6 +780,12 @@ export function AdminInquiriesPage() {
                     Treatment Preferences
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.875rem' }}>
+                    {viewingInquiry.serviceName && (
+                      <div>
+                        <span style={{ color: 'var(--color-text-muted)' }}>Requested Service: </span>
+                        <strong style={{ color: 'var(--color-primary)' }}>✦ {viewingInquiry.serviceName}</strong>
+                      </div>
+                    )}
                     <div>
                       <span style={{ color: 'var(--color-text-muted)' }}>Specialty: </span>
                       <strong>{getSpecialtyName(viewingInquiry.specialtyId)}</strong>
