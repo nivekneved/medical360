@@ -14,6 +14,7 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { ImageField } from './ImageField';
+import { RichTextEditor } from './RichTextEditor';
 import { AdminPagination } from './AdminPagination';
 import { AdminBulkActionBar } from './AdminBulkActionBar';
 import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
@@ -413,14 +414,11 @@ export function AdminEntityManager<T extends { id: string }>({
                         label={f.label}
                       />
                     ) : f.type === 'textarea' ? (
-                      <textarea
-                        className="form-input"
-                        rows={3}
+                      <RichTextEditor
                         value={val || ''}
-                        onChange={e => updateItemField(f.key, e.target.value)}
-                        placeholder={f.placeholder}
-                        required={f.required}
-                        style={{ width: '100%', fontSize: '0.875rem' }}
+                        onChange={(newVal) => updateItemField(f.key, newVal)}
+                        placeholder={f.placeholder || `Enter ${f.label.toLowerCase()}...`}
+                        minHeight={130}
                       />
                     ) : f.type === 'number' ? (
                       <input

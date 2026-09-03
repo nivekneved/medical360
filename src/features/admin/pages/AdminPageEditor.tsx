@@ -21,6 +21,7 @@ import {
 import { useCMS } from '../../../hooks/useCMS';
 import { mockEngine } from '../../../core/mock/engine';
 import { ImageField } from '../components/ImageField';
+import { RichTextEditor } from '../components/RichTextEditor';
 
 export function AdminPageEditor() {
   const { pageId } = useParams<{ pageId: string }>();
@@ -481,14 +482,12 @@ export function AdminPageEditor() {
                     helpText={`Field Key: ${fieldKey} • ${activeLang.toUpperCase()}`}
                   />
                 ) : isMultiline ? (
-                  <textarea
+                  <RichTextEditor
                     id={`cms-field-${fieldKey}`}
-                    className="form-textarea"
-                    rows={4}
                     value={currentValue}
                     placeholder={`Enter ${labelText} in ${activeLang.toUpperCase()}...`}
-                    onChange={(e) => handleUpdate(fieldKey, activeLang, e.target.value)}
-                    style={{ width: '100%', resize: 'vertical', lineHeight: 1.6 }}
+                    onChange={(newVal) => handleUpdate(fieldKey, activeLang, newVal)}
+                    minHeight={140}
                   />
                 ) : (
                   <input
