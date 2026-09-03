@@ -6,7 +6,7 @@
 .wizard-container {
   max-width: 780px;
   margin: 0 auto;
-  padding-top: 4rem; /* Generous top separation from hero container */
+  padding-top: 2.5rem;
   padding-bottom: var(--space-24);
 }
 

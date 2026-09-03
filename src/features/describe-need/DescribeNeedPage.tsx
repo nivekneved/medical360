@@ -91,13 +91,15 @@ export function DescribeNeedPage() {
         description={l10n('Obtenez un avis médical gratuit.', 'Gagn ou lavi medikal gratis.', 'Get a free medical opinion.')}
         canonical="/describe-need"
       />
-      <section className="page-hero page-hero--sm">
-        <div className="page-hero__bg" />
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/home_banner.jpg)', minHeight: 280, padding: '4rem 0 3rem' }}>
         <div className="container page-hero__inner">
-          <h1 className="text-h1" style={{ color: 'white' }}>
+          <span className="section-label">
+            {tCms('heroLabel', l10n('Consultation Gratuite', 'Konsiltasion Gratis', 'Free Medical Assessment'))}
+          </span>
+          <h1 className="text-h1">
             {tCms('heroTitle', l10n('Décrivez Votre Besoin', 'Dekrir Ou Bizin', 'Describe Your Need'))}
           </h1>
-          <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 500 }}>
+          <p className="text-lead" style={{ maxWidth: 640 }}>
             {tCms('heroDesc', l10n(
               'Remplissez le formulaire ci-dessous et notre équipe médicale vous répondra avec des recommandations personnalisées — gratuitement.',
               'Ranpli form ki anba la e nou lekip medikal pou reponn ou avek bann rekomandasion lopital personalize — pou nanye ditou.',
