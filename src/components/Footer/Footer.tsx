@@ -5,7 +5,7 @@ import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import './Footer.css';
 
 export function Footer() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <footer className="footer">

@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Edit3, Eye, X, CheckCircle2, User, Building2, Stethoscope, DollarSign, Quote, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
+import { Edit3, Eye, X, CheckCircle2, Quote, LayoutGrid, List, Search, ArrowUpDown, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useCaseStudies } from '../../../hooks/useCaseStudies';
 import { useSpecialties } from '../../../hooks/useSpecialties';
@@ -28,10 +28,10 @@ export function AdminCaseStudiesPage() {
   // Row selection
   const [selectedIds, setSelectedIds]           = useState<Set<string>>(new Set());
 
-  const [editingCase, setEditingCase]     = useState<CaseStudy | null>(null);
-  const [viewingCase, setViewingCase]     = useState<CaseStudy | null>(null);
-  const [saving, setSaving]               = useState(false);
-  const [savedSuccess, setSavedSuccess]   = useState(false);
+  const [editingCase, setEditingCase]           = useState<CaseStudy | null>(null);
+  const [viewingCase, setViewingCase]           = useState<CaseStudy | null>(null);
+  const [saving, setSaving]                     = useState(false);
+  const [savedSuccess, setSavedSuccess]         = useState(false);
 
   const getSpecialtyName = (sId: string) => {
     const s = specialties.find(item => item.id === sId);
@@ -50,15 +50,12 @@ export function AdminCaseStudiesPage() {
         searchQuery.trim() === '' ||
         cs.patientFirstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         cs.condition.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (cs.condition_fr || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
         cs.treatment.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        cs.testimonial.toLowerCase().includes(searchQuery.toLowerCase()) ||
         cs.patientCountry.toLowerCase().includes(searchQuery.toLowerCase());
 
-      const matchSpecialty =
-        selectedSpecialty === 'all' || cs.specialtyId === selectedSpecialty;
-
-      const matchCountry =
-        selectedCountry === 'all' || cs.patientCountry === selectedCountry;
+      const matchSpecialty = selectedSpecialty === 'all' || cs.specialtyId === selectedSpecialty;
+      const matchCountry   = selectedCountry === 'all' || cs.patientCountry === selectedCountry;
 
       return matchSearch && matchSpecialty && matchCountry;
     }).sort((a, b) => {
@@ -71,7 +68,6 @@ export function AdminCaseStudiesPage() {
   }, [caseStudies, searchQuery, selectedSpecialty, selectedCountry, sortBy]);
 
   // Pagination calculation
-  const totalPages = Math.ceil(filteredCaseStudies.length / itemsPerPage) || 1;
   const paginatedCaseStudies = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
     return filteredCaseStudies.slice(start, start + itemsPerPage);

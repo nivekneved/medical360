@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Building2, Edit3, Eye, Plus, Star, MapPin, Shield, CheckCircle2, X, Users, Bed, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
+import { Edit3, Eye, Star, MapPin, Shield, CheckCircle2, X, LayoutGrid, List, Search, ArrowUpDown, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useHospitals } from '../../../hooks/useHospitals';
 import { formatNumber } from '../../../core/services/format.service';
@@ -36,13 +36,15 @@ export function AdminHospitalsPage() {
       const matchSearch =
         searchQuery.trim() === '' ||
         h.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (h.name_fr || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
         h.city.toLowerCase().includes(searchQuery.toLowerCase()) ||
         h.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (h.description || '').toLowerCase().includes(searchQuery.toLowerCase());
+        h.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        h.specialties.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
 
       const matchAccreditation =
         selectedAccreditation === 'all' ||
-        (h.accreditations || []).includes(selectedAccreditation);
+        h.accreditations.includes(selectedAccreditation);
 
       const matchCountry =
         selectedCountry === 'all' || h.country === selectedCountry;
@@ -50,8 +52,8 @@ export function AdminHospitalsPage() {
       return matchSearch && matchAccreditation && matchCountry;
     }).sort((a, b) => {
       if (sortBy === 'rating-desc') return b.rating - a.rating;
-      if (sortBy === 'beds-desc') return (b.bedsCount || 0) - (a.bedsCount || 0);
-      if (sortBy === 'intl-desc') return (b.internationalPatientsPerYear || 0) - (a.internationalPatientsPerYear || 0);
+      if (sortBy === 'beds-desc') return b.bedsCount - a.bedsCount;
+      if (sortBy === 'intl-desc') return b.internationalPatientsPerYear - a.internationalPatientsPerYear;
       if (sortBy === 'name-asc') return a.name.localeCompare(b.name);
       if (sortBy === 'name-desc') return b.name.localeCompare(a.name);
       return 0;
@@ -59,7 +61,6 @@ export function AdminHospitalsPage() {
   }, [hospitals, searchQuery, selectedAccreditation, selectedCountry, sortBy]);
 
   // Pagination calculation
-  const totalPages = Math.ceil(filteredHospitals.length / itemsPerPage) || 1;
   const paginatedHospitals = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
     return filteredHospitals.slice(start, start + itemsPerPage);

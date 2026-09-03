@@ -1,4 +1,4 @@
-import { Trash2, Printer, Download, X, CheckSquare, Square, FileText } from 'lucide-react';
+import { Trash2, Printer, Download, X, CheckSquare, Square } from 'lucide-react';
 
 interface AdminBulkActionBarProps {
   selectedCount: number;

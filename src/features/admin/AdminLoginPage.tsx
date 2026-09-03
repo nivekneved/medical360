@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowLeft, KeyRound, Sparkles } from 'lucide-react';
+import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowLeft, KeyRound } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { validateHoneypot, sanitizeInput, checkRateLimit } from '../../core/services/security.service';
 

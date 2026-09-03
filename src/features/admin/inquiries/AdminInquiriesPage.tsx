@@ -4,27 +4,17 @@ import {
   MessageCircle,
   Phone,
   Mail,
-  Clock,
-  CheckCircle2,
   X,
-  Plus,
-  AlertTriangle,
-  ShieldCheck,
   User,
   Globe,
-  Stethoscope,
   LayoutGrid,
   List,
   Search,
   ArrowUpDown,
-  ChevronLeft,
-  ChevronRight,
   RotateCcw,
   Trash2,
   Printer,
   Download,
-  CheckSquare,
-  Square,
 } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useSpecialties } from '../../../hooks/useSpecialties';
@@ -42,9 +32,10 @@ const STATUS_OPTIONS: InquiryStatus[] = [
 ];
 
 export function AdminInquiriesPage() {
-  const [inquiries, setInquiries]           = useState<Inquiry[]>([]);
-  const [loading, setLoading]               = useState(true);
-  const [viewMode, setViewMode]             = useState<'list' | 'grid'>('list');
+  const [inquiries, setInquiries]       = useState<Inquiry[]>([]);
+  const [loading, setLoading]           = useState(true);
+  const { specialties }                 = useSpecialties();
+  const [viewMode, setViewMode]         = useState<'list' | 'grid'>('list');
   
   // Search, Filters, Sorting, Pagination
   const [searchQuery, setSearchQuery]           = useState('');
@@ -56,12 +47,11 @@ export function AdminInquiriesPage() {
   const [itemsPerPage, setItemsPerPage]         = useState(8);
 
   // Row selection
-  const [selectedIds, setSelectedIds]       = useState<Set<string>>(new Set());
+  const [selectedIds, setSelectedIds]           = useState<Set<string>>(new Set());
 
   const [viewingInquiry, setViewingInquiry] = useState<Inquiry | null>(null);
   const [newNoteText, setNewNoteText]       = useState('');
   const [savingNote, setSavingNote]         = useState(false);
-  const { specialties }                     = useSpecialties();
 
   function load() {
     mockEngine.getInquiries().then(setInquiries).finally(() => setLoading(false));
@@ -69,9 +59,19 @@ export function AdminInquiriesPage() {
 
   useEffect(() => { load(); }, []);
 
-  function getSpecialtyName(id: string) {
-    return specialties.find((s) => s.id === id)?.name ?? id;
-  }
+  const getSpecialtyName = (sId: string) => {
+    const s = specialties.find(item => item.id === sId);
+    return s ? s.name : sId;
+  };
+
+  const urgencyWeight = (u: string) => {
+    switch (u) {
+      case 'emergency': return 4;
+      case 'urgent': return 3;
+      case 'soon': return 2;
+      default: return 1;
+    }
+  };
 
   // Filtered & Sorted Inquiries
   const filteredInquiries = useMemo(() => {
@@ -98,17 +98,13 @@ export function AdminInquiriesPage() {
     }).sort((a, b) => {
       if (sortBy === 'date-desc') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       if (sortBy === 'date-asc') return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      if (sortBy === 'urgency-desc') {
-        const priority: Record<string, number> = { emergency: 3, urgent: 2, routine: 1 };
-        return (priority[b.urgency] || 0) - (priority[a.urgency] || 0);
-      }
+      if (sortBy === 'urgency-desc') return urgencyWeight(b.urgency) - urgencyWeight(a.urgency);
       if (sortBy === 'name-asc') return a.firstName.localeCompare(b.firstName);
       return 0;
     });
   }, [inquiries, searchQuery, selectedStatus, selectedUrgency, selectedSpecialty, sortBy]);
 
   // Pagination calculation
-  const totalPages = Math.ceil(filteredInquiries.length / itemsPerPage) || 1;
   const paginatedInquiries = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
     return filteredInquiries.slice(start, start + itemsPerPage);

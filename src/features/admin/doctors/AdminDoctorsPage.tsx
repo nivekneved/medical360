@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { UserCheck, Edit3, Eye, Award, Globe, Building2, Save, X, CheckCircle2, DollarSign, Activity, LayoutGrid, List, Search, Filter, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
+import { Edit3, Eye, Building2, X, CheckCircle2, LayoutGrid, List, Search, ArrowUpDown, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useDoctors } from '../../../hooks/useDoctors';
 import { useHospitals } from '../../../hooks/useHospitals';
@@ -28,10 +28,10 @@ export function AdminDoctorsPage() {
   // Row selection
   const [selectedIds, setSelectedIds]           = useState<Set<string>>(new Set());
 
-  const [editingDoctor, setEditingDoctor] = useState<Doctor | null>(null);
-  const [viewingDoctor, setViewingDoctor] = useState<Doctor | null>(null);
-  const [saving, setSaving]           = useState(false);
-  const [savedSuccess, setSavedSuccess] = useState(false);
+  const [editingDoctor, setEditingDoctor]       = useState<Doctor | null>(null);
+  const [viewingDoctor, setViewingDoctor]       = useState<Doctor | null>(null);
+  const [saving, setSaving]                     = useState(false);
+  const [savedSuccess, setSavedSuccess]         = useState(false);
 
   const getHospitalName = (hId: string) => {
     const h = hospitals.find(item => item.id === hId);
@@ -50,13 +50,12 @@ export function AdminDoctorsPage() {
         searchQuery.trim() === '' ||
         doc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        doc.bio.toLowerCase().includes(searchQuery.toLowerCase());
+        doc.bio.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        doc.languages.some(l => l.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        doc.qualifications.some(q => q.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      const matchSpecialty =
-        selectedSpecialty === 'all' || doc.specialties.includes(selectedSpecialty);
-
-      const matchHospital =
-        selectedHospital === 'all' || doc.hospitalId === selectedHospital;
+      const matchSpecialty = selectedSpecialty === 'all' || doc.specialties.includes(selectedSpecialty);
+      const matchHospital  = selectedHospital === 'all' || doc.hospitalId === selectedHospital;
 
       return matchSearch && matchSpecialty && matchHospital;
     }).sort((a, b) => {
@@ -71,7 +70,6 @@ export function AdminDoctorsPage() {
   }, [doctors, searchQuery, selectedSpecialty, selectedHospital, sortBy]);
 
   // Pagination calculation
-  const totalPages = Math.ceil(filteredDoctors.length / itemsPerPage) || 1;
   const paginatedDoctors = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
     return filteredDoctors.slice(start, start + itemsPerPage);

@@ -1,11 +1,10 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, ArrowRight, Star, MapPin, Shield, CheckCircle2, MessageCircle, Clock, Building2, Stethoscope, Award } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, MessageCircle, Clock } from 'lucide-react';
 import { useSpecialty } from '../../hooks/useSpecialties';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useDoctors } from '../../hooks/useDoctors';
-import { useCaseStudies } from '../../hooks/useCaseStudies';
-import { formatCostRange, formatNumber, truncateText } from '../../core/services/format.service';
+import { formatCostRange } from '../../core/services/format.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import './Specialties.css';
@@ -17,7 +16,6 @@ export function SpecialtyDetailPage() {
   const { specialty, loading } = useSpecialty(id);
   const { hospitals } = useHospitals({});
   const { doctors } = useDoctors(id);
-  const { caseStudies } = useCaseStudies();
 
   const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
   const l = (obj: any, field: string) => obj?.[`${field}_${i18n.language}`] || obj?.[field] || '';
@@ -45,7 +43,6 @@ export function SpecialtyDetailPage() {
   }
 
   const affiliatedHospitals = hospitals.filter(h => h.specialties.includes(specialty.id));
-  const relatedCaseStudies = caseStudies.filter(cs => cs.specialtyId === specialty.id);
 
   return (
     <main className="specialty-detail-page" style={{ paddingTop: 'var(--navbar-height)' }}>

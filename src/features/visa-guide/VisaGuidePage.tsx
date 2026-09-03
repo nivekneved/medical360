@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Plane, FileText, CheckCircle2, ShieldCheck, Clock, AlertCircle, HelpCircle, PhoneCall, ArrowRight, UserCheck, Calendar, DollarSign, Download } from 'lucide-react';
+import { Plane, CheckCircle2, ShieldCheck, PhoneCall } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

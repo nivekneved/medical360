@@ -10,7 +10,6 @@ import {
   Settings,
   LogOut,
   Database,
-  Globe,
   FileText,
   PanelTop,
   PanelBottom,
@@ -27,7 +26,6 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   ExternalLink,
-  ShieldCheck,
   HardDriveDownload,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';

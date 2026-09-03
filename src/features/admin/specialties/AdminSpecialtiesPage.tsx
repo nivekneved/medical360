@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Stethoscope, Edit3, Eye, Plus, X, Save, CheckCircle2, DollarSign, Clock, FileText, LayoutGrid, List, Search, ArrowUpDown, ChevronLeft, ChevronRight, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
+import { Edit3, Eye, X, CheckCircle2, LayoutGrid, List, Search, ArrowUpDown, RotateCcw, Trash2, Printer, Download } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { formatCostRange, formatCostMur } from '../../../core/services/format.service';
 import { ImageField } from '../components/ImageField';
@@ -54,7 +54,6 @@ export function AdminSpecialtiesPage() {
   }, [specialties, searchQuery, sortBy]);
 
   // Pagination calculation
-  const totalPages = Math.ceil(filteredSpecialties.length / itemsPerPage) || 1;
   const paginatedSpecialties = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
     return filteredSpecialties.slice(start, start + itemsPerPage);
