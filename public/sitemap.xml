@@ -1,43 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Home Page -->
   <url>
-    <loc>https://medical360.com/</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://medical360-zeta.vercel.app/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://medical360-zeta.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://medical360-zeta.vercel.app/" />
+    <xhtml:link rel="alternate" hreflang="kr" href="https://medical360-zeta.vercel.app/" />
+    <image:image>
+      <image:loc>https://medical360-zeta.vercel.app/assets/banners/home_banner.jpg</image:loc>
+      <image:title>Medical 360 Mauritius - International Healthcare Concierge</image:title>
+    </image:image>
   </url>
+
+  <!-- About Us -->
   <url>
-    <loc>https://medical360.com/about</loc>
-    <changefreq>monthly</changefreq>
+    <loc>https://medical360-zeta.vercel.app/about</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://medical360-zeta.vercel.app/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://medical360-zeta.vercel.app/about" />
   </url>
+
+  <!-- Services -->
   <url>
-    <loc>https://medical360.com/hospitals</loc>
+    <loc>https://medical360-zeta.vercel.app/services</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+
+  <!-- Hospitals Directory -->
   <url>
-    <loc>https://medical360.com/specialties</loc>
+    <loc>https://medical360-zeta.vercel.app/hospitals</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Medical Specialties -->
+  <url>
+    <loc>https://medical360-zeta.vercel.app/specialties</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Specialists / Doctors -->
+  <url>
+    <loc>https://medical360-zeta.vercel.app/doctors</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Patient Stories / Case Studies -->
+  <url>
+    <loc>https://medical360-zeta.vercel.app/case-studies</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Cost Calculator -->
+  <url>
+    <loc>https://medical360-zeta.vercel.app/cost-calculator</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+
+  <!-- Visa & Travel Guide -->
   <url>
-    <loc>https://medical360.com/services</loc>
+    <loc>https://medical360-zeta.vercel.app/visa-guide</loc>
+    <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Describe Need (Inquiry Wizard) -->
   <url>
-    <loc>https://medical360.com/case-studies</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://medical360-zeta.vercel.app/describe-need</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Contact Us -->
+  <url>
+    <loc>https://medical360-zeta.vercel.app/contact</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Privacy Policy -->
   <url>
-    <loc>https://medical360.com/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://medical360-zeta.vercel.app/privacy</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
+
+  <!-- Terms of Service -->
   <url>
-    <loc>https://medical360.com/describe-need</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://medical360-zeta.vercel.app/terms</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

@@ -1,0 +1,25 @@
+# Medical 360 (Mauritius) — AI & LLM Context File
+> Medical 360 (Med360 Ltd) is Mauritius's premier international medical concierge service connecting patients across the Indian Ocean (Mauritius, Réunion, Madagascar, Seychelles, Comoros) with accredited top-tier hospitals in India, Thailand, Singapore, Malaysia, and Europe.
+
+## Core Capabilities & Services
+- **Free Medical Second Opinion**: Review of medical records by world-renowned specialists within 24–48 hours.
+- **Accredited Hospital Network**: Apollo Hospitals (India), Fortis Healthcare (India), Medanta - The Medicity (India), Bumrungrad International Hospital (Thailand), Gleneagles (Malaysia), Mount Elizabeth (Singapore).
+- **Cost Estimation & Savings**: Up to 70% savings on major cardiac surgery, cancer therapies, robotic joint replacement, organ transplantation, and neurosurgery compared to European or local private rates.
+- **Full End-to-End Travel Concierge**: Medical visa assistance, priority hospital appointment scheduling, airport transfers, local accommodation, and dedicated Mauritian patient coordinator.
+
+## Key URLs & Resources
+- Home Page: https://medical360-zeta.vercel.app/
+- Free Medical Assessment / Inquiry Wizard: https://medical360-zeta.vercel.app/describe-need
+- Hospitals Directory: https://medical360-zeta.vercel.app/hospitals
+- Medical Specialties: https://medical360-zeta.vercel.app/specialties
+- Specialists Directory: https://medical360-zeta.vercel.app/doctors
+- Interactive Treatment Cost Calculator: https://medical360-zeta.vercel.app/cost-calculator
+- Patient Recovery Stories: https://medical360-zeta.vercel.app/case-studies
+- Visa & Medical Travel Guide: https://medical360-zeta.vercel.app/visa-guide
+- Contact & 24/7 Patient Coordination: https://medical360-zeta.vercel.app/contact
+
+## Contact Information
+- Patient Coordination Hotline: +230 59188275
+- WhatsApp: +230 59188275
+- Headquarters: Port Louis, Mauritius
+- Languages: English, French, Mauritian Creole

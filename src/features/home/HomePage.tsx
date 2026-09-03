@@ -8,6 +8,7 @@ import { useFeaturedCaseStudies } from '../../hooks/useCaseStudies';
 import { SEO } from '../../components/SEO/SEO';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
+import { getMedicalOrganizationSchema } from '../../core/services/schema.service';
 import './Home.css';
 
 export function HomePage() {
@@ -48,18 +49,8 @@ export function HomePage() {
     { icon: MessageCircle, title: t('home.features.caseManager.title'),   desc: t('home.features.caseManager.desc') },
   ];
 
-  // JSON-LD schema for Homepage
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "MedicalOrganization",
-    "name": "Medical 360",
-    "url": "https://medical360.com",
-    "description": "Connecting patients from Mauritius to leading accredited hospitals globally.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "MU"
-    }
-  };
+  // Rich Schema.org JSON-LD for Homepage
+  const schema = getMedicalOrganizationSchema();
 
   return (
     <main className="home">

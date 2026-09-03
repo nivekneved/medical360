@@ -8,51 +8,76 @@ export interface SEOProps {
   canonical?: string;
   type?: 'website' | 'article';
   image?: string;
-  schema?: Record<string, any>;
+  schema?: Record<string, any> | Array<Record<string, any>>;
+  noIndex?: boolean;
 }
+
+const PRODUCTION_DOMAIN = 'https://medical360-zeta.vercel.app';
 
 export function SEO({
   title,
   description,
-  canonical,
+  canonical = '',
   type = 'website',
-  image = 'https://medical360.com/og-image.jpg',
+  image = `${PRODUCTION_DOMAIN}/assets/banners/home_banner.jpg`,
   schema,
+  noIndex = false,
 }: SEOProps) {
   const { i18n } = useTranslation();
-  const lang = i18n.language || 'en';
-  
+  const currentLang = i18n.language || 'en';
+
   const siteName = 'Medical 360';
-  const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
-  const url = canonical ? `https://medical360.com${canonical}` : 'https://medical360.com';
+  const cleanTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+  const cleanPath = canonical ? (canonical.startsWith('/') ? canonical : `/${canonical}`) : '';
+  const canonicalUrl = `${PRODUCTION_DOMAIN}${cleanPath}`;
+  const fullImageUrl = image.startsWith('http') ? image : `${PRODUCTION_DOMAIN}${image.startsWith('/') ? image : `/${image}`}`;
 
   useEffect(() => {
-    // Dynamic lang update on the HTML tag
-    document.documentElement.lang = lang;
-  }, [lang]);
+    // Dynamic lang attribute on <html> element
+    document.documentElement.lang = currentLang;
+  }, [currentLang]);
 
   return (
     <Helmet>
-      {/* Standard SEO */}
-      <title>{fullTitle}</title>
+      {/* ── 1. Standard Search Engine Metadata ── */}
+      <title>{cleanTitle}</title>
       <meta name="description" content={description} />
-      {canonical && <link rel="canonical" href={url} />}
+      <link rel="canonical" href={canonicalUrl} />
       
-      {/* Open Graph */}
+      {/* ── 2. Robots Directives ── */}
+      {noIndex ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+      )}
+
+      {/* ── 3. Multi-Lingual Hreflang Alternates ── */}
+      <link rel="alternate" hrefLang="en" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="fr" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="kr" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+
+      {/* ── 4. Open Graph Protocol (Facebook, WhatsApp, LinkedIn) ── */}
       <meta property="og:type" content={type} />
-      <meta property="og:title" content={fullTitle} />
-      <meta property="og:description" content={description} />
-      <meta property="og:url" content={url} />
-      <meta property="og:image" content={image} />
       <meta property="og:site_name" content={siteName} />
+      <meta property="og:title" content={cleanTitle} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:image" content={fullImageUrl} />
+      <meta property="og:image:alt" content={cleanTitle} />
+      <meta property="og:locale" content={currentLang === 'fr' ? 'fr_FR' : currentLang === 'kr' ? 'mfe_MU' : 'en_US'} />
+      <meta property="og:locale:alternate" content="fr_FR" />
+      <meta property="og:locale:alternate" content="en_US" />
 
-      {/* Twitter */}
+      {/* ── 5. Twitter Card Protocol ── */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:site" content="@Medical360Mu" />
+      <meta name="twitter:creator" content="@Medical360Mu" />
+      <meta name="twitter:title" content={cleanTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={fullImageUrl} />
 
-      {/* JSON-LD Schema */}
+      {/* ── 6. Schema.org JSON-LD Structured Data ── */}
       {schema && (
         <script type="application/ld+json">
           {JSON.stringify(schema)}
