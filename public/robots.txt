@@ -1,6 +1,25 @@
+# Medical 360 Robots Policy
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /admin/
+Allow: /about
+Allow: /services
+Allow: /hospitals
+Allow: /hospitals/*
+Allow: /specialties
+Allow: /specialties/*
+Allow: /doctors
+Allow: /case-studies
+Allow: /cost-calculator
+Allow: /visa-guide
+Allow: /describe-need
+Allow: /contact
+Allow: /privacy
+Allow: /terms
 
-Sitemap: https://medical360.com/sitemap.xml
+# Disallow Private Administrative Routes
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /api/
+
+# XML Sitemap Directive
+Sitemap: https://medical360-zeta.vercel.app/sitemap.xml
