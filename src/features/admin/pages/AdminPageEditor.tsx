@@ -481,23 +481,13 @@ export function AdminPageEditor() {
                     onChange={(url) => handleUpdate(fieldKey, activeLang, url)}
                     helpText={`Field Key: ${fieldKey} • ${activeLang.toUpperCase()}`}
                   />
-                ) : isMultiline ? (
+                ) : (
                   <RichTextEditor
                     id={`cms-field-${fieldKey}`}
                     value={currentValue}
                     placeholder={`Enter ${labelText} in ${activeLang.toUpperCase()}...`}
                     onChange={(newVal) => handleUpdate(fieldKey, activeLang, newVal)}
-                    minHeight={140}
-                  />
-                ) : (
-                  <input
-                    id={`cms-field-${fieldKey}`}
-                    type="text"
-                    className="form-input"
-                    value={currentValue}
-                    placeholder={`Enter ${labelText} in ${activeLang.toUpperCase()}...`}
-                    onChange={(e) => handleUpdate(fieldKey, activeLang, e.target.value)}
-                    style={{ width: '100%' }}
+                    minHeight={isMultiline ? 140 : 90}
                   />
                 )}
 
