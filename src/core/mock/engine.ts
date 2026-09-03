@@ -295,15 +295,20 @@ class MockEngine {
   }
 
   async deleteHospital(id: string): Promise<boolean> {
+    return this.deleteHospitals([id]);
+  }
+
+  async deleteHospitals(ids: string[]): Promise<boolean> {
     if (this.isLive()) {
       try {
-        await supabase.from('hospitals').delete().eq('id', id);
+        await supabase.from('hospitals').delete().in('id', ids);
       } catch (e) {
-        console.warn('Supabase deleteHospital failed:', e);
+        console.warn('Supabase deleteHospitals failed:', e);
       }
     }
     await this.delay();
-    this.store.hospitals = this.store.hospitals.filter(h => h.id !== id);
+    const idSet = new Set(ids);
+    this.store.hospitals = this.store.hospitals.filter(h => !idSet.has(h.id));
     this.save();
     return true;
   }
@@ -350,6 +355,23 @@ class MockEngine {
     return this.store.specialties.filter(s => s.featured);
   }
 
+  async createSpecialty(specialty: Specialty): Promise<Specialty> {
+    const id = specialty.id || `sp-${Date.now()}`;
+    const newSpecialty: Specialty = { ...specialty, id };
+    if (this.isLive()) {
+      try {
+        const { data, error } = await supabase.from('specialties').insert([newSpecialty]).select().single();
+        if (!error && data) return this.mapSpecialtyRow(data);
+      } catch (e) {
+        console.warn('Supabase createSpecialty failed:', e);
+      }
+    }
+    await this.delay();
+    this.store.specialties.unshift(newSpecialty);
+    this.save();
+    return newSpecialty;
+  }
+
   async updateSpecialty(id: string, updates: Partial<Specialty>): Promise<Specialty> {
     if (this.isLive()) {
       try {
@@ -372,15 +394,20 @@ class MockEngine {
   }
 
   async deleteSpecialty(id: string): Promise<boolean> {
+    return this.deleteSpecialties([id]);
+  }
+
+  async deleteSpecialties(ids: string[]): Promise<boolean> {
     if (this.isLive()) {
       try {
-        await supabase.from('specialties').delete().eq('id', id);
+        await supabase.from('specialties').delete().in('id', ids);
       } catch (e) {
-        console.warn('Supabase deleteSpecialty failed:', e);
+        console.warn('Supabase deleteSpecialties failed:', e);
       }
     }
     await this.delay();
-    this.store.specialties = this.store.specialties.filter(s => s.id !== id);
+    const idSet = new Set(ids);
+    this.store.specialties = this.store.specialties.filter(s => !idSet.has(s.id));
     this.save();
     return true;
   }
@@ -424,6 +451,23 @@ class MockEngine {
     return list.filter(d => d.hospitalId === hospitalId);
   }
 
+  async createDoctor(doctor: Doctor): Promise<Doctor> {
+    const id = doctor.id || `doc-${Date.now()}`;
+    const newDoctor: Doctor = { ...doctor, id };
+    if (this.isLive()) {
+      try {
+        const { data, error } = await supabase.from('doctors').insert([newDoctor]).select().single();
+        if (!error && data) return this.mapDoctorRow(data);
+      } catch (e) {
+        console.warn('Supabase createDoctor failed:', e);
+      }
+    }
+    await this.delay();
+    this.store.doctors.unshift(newDoctor);
+    this.save();
+    return newDoctor;
+  }
+
   async updateDoctor(id: string, updates: Partial<Doctor>): Promise<Doctor> {
     if (this.isLive()) {
       try {
@@ -448,15 +492,20 @@ class MockEngine {
   }
 
   async deleteDoctor(id: string): Promise<boolean> {
+    return this.deleteDoctors([id]);
+  }
+
+  async deleteDoctors(ids: string[]): Promise<boolean> {
     if (this.isLive()) {
       try {
-        await supabase.from('doctors').delete().eq('id', id);
+        await supabase.from('doctors').delete().in('id', ids);
       } catch (e) {
-        console.warn('Supabase deleteDoctor failed:', e);
+        console.warn('Supabase deleteDoctors failed:', e);
       }
     }
     await this.delay();
-    this.store.doctors = this.store.doctors.filter(d => d.id !== id);
+    const idSet = new Set(ids);
+    this.store.doctors = this.store.doctors.filter(d => !idSet.has(d.id));
     this.save();
     return true;
   }
@@ -508,6 +557,23 @@ class MockEngine {
     return list.filter(c => c.specialtyId === specialtyId);
   }
 
+  async createCaseStudy(caseStudy: CaseStudy): Promise<CaseStudy> {
+    const id = caseStudy.id || `cs-${Date.now()}`;
+    const newCase: CaseStudy = { ...caseStudy, id };
+    if (this.isLive()) {
+      try {
+        const { data, error } = await supabase.from('case_studies').insert([newCase]).select().single();
+        if (!error && data) return this.mapCaseStudyRow(data);
+      } catch (e) {
+        console.warn('Supabase createCaseStudy failed:', e);
+      }
+    }
+    await this.delay();
+    this.store.caseStudies.unshift(newCase);
+    this.save();
+    return newCase;
+  }
+
   async updateCaseStudy(id: string, updates: Partial<CaseStudy>): Promise<CaseStudy> {
     if (this.isLive()) {
       try {
@@ -532,15 +598,20 @@ class MockEngine {
   }
 
   async deleteCaseStudy(id: string): Promise<boolean> {
+    return this.deleteCaseStudies([id]);
+  }
+
+  async deleteCaseStudies(ids: string[]): Promise<boolean> {
     if (this.isLive()) {
       try {
-        await supabase.from('case_studies').delete().eq('id', id);
+        await supabase.from('case_studies').delete().in('id', ids);
       } catch (e) {
-        console.warn('Supabase deleteCaseStudy failed:', e);
+        console.warn('Supabase deleteCaseStudies failed:', e);
       }
     }
     await this.delay();
-    this.store.caseStudies = this.store.caseStudies.filter(c => c.id !== id);
+    const idSet = new Set(ids);
+    this.store.caseStudies = this.store.caseStudies.filter(c => !idSet.has(c.id));
     this.save();
     return true;
   }
