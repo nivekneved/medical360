@@ -205,7 +205,13 @@ export function ServicesPage() {
                 tabIndex={0}
                 onKeyDown={e => e.key === 'Enter' && navigate(`/describe-need?service=${srv.id}&serviceName=${encodeURIComponent(l(srv, 'title'))}`)}
               >
-                <img src={srv.imageUrl} alt={l(srv, 'title')} className="service-full-card__img" loading="lazy" />
+                <img
+                  src={srv.imageUrl}
+                  alt={l(srv, 'title')}
+                  className="service-full-card__img"
+                  loading="lazy"
+                  onError={(e) => { e.currentTarget.src = '/assets/banners/services_banner.jpg'; }}
+                />
                 <div className="service-full-card__overlay" />
                 <span className="service-full-card__tag">{l(srv, 'tag')}</span>
                 <div className="service-full-card__content">
