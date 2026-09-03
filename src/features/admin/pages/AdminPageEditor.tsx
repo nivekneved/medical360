@@ -310,7 +310,19 @@ export function AdminPageEditor() {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          {getPublicLink(activePageId) !== '#' && (
+            <a
+              href={getPublicLink(activePageId)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary btn-sm"
+              title={`Open live page (${getPublicLink(activePageId)}) in a new tab`}
+              style={{ fontWeight: 700, gap: '0.4rem', textDecoration: 'none' }}
+            >
+              <ExternalLink size={14} /> Open Live Page ({getPublicLink(activePageId)})
+            </a>
+          )}
           <button
             type="button"
             className="btn btn-outline btn-sm"
@@ -319,15 +331,6 @@ export function AdminPageEditor() {
           >
             <Plus size={15} /> Add New Field
           </button>
-          <a
-            href={getPublicLink(activePageId)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-outline btn-sm"
-            title="View this page on the live website"
-          >
-            <ExternalLink size={14} /> Preview Live Page
-          </a>
           <button
             className="btn btn-outline btn-sm"
             onClick={handleResetToDefault}
