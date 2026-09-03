@@ -255,8 +255,8 @@ export function AboutPage() {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))',
-              gap: '1.5rem',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '1.75rem',
             }}>
               {AWARDS.map((award) => {
                 const Icon = award.icon;
@@ -265,50 +265,106 @@ export function AboutPage() {
                     key={award.id}
                     style={{
                       background: 'rgba(255, 255, 255, 0.04)',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: 'var(--radius-xl)',
-                      padding: '1.75rem',
+                      overflow: 'hidden',
                       display: 'flex',
                       flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      transition: 'transform 0.2s, border-color 0.2s',
+                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.3)',
+                      transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+                      e.currentTarget.style.boxShadow = '0 20px 35px -10px rgba(0, 0, 0, 0.5)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                      e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
                     }}
                   >
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                        <div style={{
-                          width: 44,
-                          height: 44,
-                          borderRadius: 'var(--radius-md)',
-                          background: `${award.color}22`,
-                          color: award.color,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                          <Icon size={22} />
-                        </div>
-                        <span style={{
-                          fontSize: '0.75rem',
-                          fontWeight: 700,
-                          padding: '0.25rem 0.65rem',
-                          borderRadius: '9999px',
-                          background: 'rgba(255, 255, 255, 0.1)',
-                          color: '#ffffff',
-                        }}>
-                          {l(award, 'badge')}
-                        </span>
+                    {/* Award Trophy Image Header */}
+                    <div style={{
+                      position: 'relative',
+                      height: 180,
+                      width: '100%',
+                      overflow: 'hidden',
+                      background: '#090d10',
+                    }}>
+                      <img
+                        src="/assets/banners/medical_award_trophy.jpg"
+                        alt={l(award, 'title')}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          objectPosition: 'center 30%',
+                          transition: 'transform 0.4s ease',
+                        }}
+                        loading="lazy"
+                      />
+                      {/* Gradient overlay */}
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.3) 60%, transparent 100%)',
+                      }} />
+
+                      {/* Badge */}
+                      <div style={{
+                        position: 'absolute',
+                        top: '0.85rem',
+                        right: '0.85rem',
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        padding: '0.3rem 0.75rem',
+                        borderRadius: '9999px',
+                        background: 'rgba(15, 23, 42, 0.8)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        color: '#fbbf24',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.35rem',
+                      }}>
+                        <Trophy size={12} color="#fbbf24" />
+                        {l(award, 'badge')}
                       </div>
 
-                      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.4rem', lineHeight: 1.35 }}>
-                        {l(award, 'title')}
-                      </h3>
-                      <div style={{ fontSize: '0.85rem', color: award.color, fontWeight: 600, marginBottom: '0.85rem' }}>
-                        {l(award, 'organization')} • {award.year}
+                      {/* Floating Icon */}
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '0.85rem',
+                        left: '1rem',
+                        width: 38,
+                        height: 38,
+                        borderRadius: 'var(--radius-md)',
+                        background: `${award.color}22`,
+                        backdropFilter: 'blur(8px)',
+                        border: `1px solid ${award.color}55`,
+                        color: award.color,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        <Icon size={20} />
                       </div>
-                      <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6, margin: 0 }}>
-                        {l(award, 'description')}
-                      </p>
+                    </div>
+
+                    {/* Award Card Body */}
+                    <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                      <div>
+                        <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.35rem', lineHeight: 1.35 }}>
+                          {l(award, 'title')}
+                        </h3>
+                        <div style={{ fontSize: '0.825rem', color: award.color, fontWeight: 600, marginBottom: '0.75rem' }}>
+                          {l(award, 'organization')} • {award.year}
+                        </div>
+                        <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6, margin: 0 }}>
+                          {l(award, 'description')}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );
