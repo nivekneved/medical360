@@ -1,6 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Save, RotateCcw, ExternalLink, Globe, CheckCircle2, AlertCircle, Sparkles } from 'lucide-react';
+import {
+  Save,
+  RotateCcw,
+  ExternalLink,
+  Globe,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles,
+  Plus,
+  Trash2,
+  Search,
+  Copy,
+  SlidersHorizontal,
+  X,
+  Image as ImageIcon,
+  Type,
+  FileText as FileTextIcon,
+} from 'lucide-react';
 import { useCMS } from '../../../hooks/useCMS';
 import { mockEngine } from '../../../core/mock/engine';
 import { ImageField } from '../components/ImageField';
@@ -14,6 +31,15 @@ export function AdminPageEditor() {
   const [resetting, setResetting] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [activeLang, setActiveLang] = useState<'en' | 'fr' | 'kr'>('fr');
+  const [searchFilter, setSearchFilter] = useState('');
+
+  // Add field modal state
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newFieldKey, setNewFieldKey] = useState('');
+  const [newFieldType, setNewFieldType] = useState<'text' | 'multiline' | 'image'>('text');
+  const [newFieldValFr, setNewFieldValFr] = useState('');
+  const [newFieldValEn, setNewFieldValEn] = useState('');
+  const [newFieldValKr, setNewFieldValKr] = useState('');
 
   useEffect(() => {
     if (data && data.content) {
@@ -36,6 +62,64 @@ export function AdminPageEditor() {
         },
       };
     });
+  };
+
+  const handleAddField = () => {
+    const key = newFieldKey.trim();
+    if (!key) {
+      alert('Please enter a valid unique field key.');
+      return;
+    }
+    if (formData[key]) {
+      alert(`Field key "${key}" already exists on this page.`);
+      return;
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [key]: {
+        fr: newFieldValFr.trim(),
+        en: newFieldValEn.trim() || newFieldValFr.trim(),
+        kr: newFieldValKr.trim() || newFieldValFr.trim(),
+      },
+    }));
+
+    setNewFieldKey('');
+    setNewFieldValFr('');
+    setNewFieldValEn('');
+    setNewFieldValKr('');
+    setShowAddModal(false);
+  };
+
+  const handleDeleteField = (fieldKey: string) => {
+    if (!confirm(`Are you sure you want to remove the field "${fieldKey}"?`)) {
+      return;
+    }
+    setFormData((prev) => {
+      const next = { ...prev };
+      delete next[fieldKey];
+      return next;
+    });
+  };
+
+  const handleCopyLang = (fromLang: 'fr' | 'en' | 'kr', toLang: 'fr' | 'en' | 'kr') => {
+    if (fromLang === toLang) return;
+    if (!confirm(`Copy all text values from ${fromLang.toUpperCase()} into ${toLang.toUpperCase()} for any empty fields?`)) {
+      return;
+    }
+    setFormData((prev) => {
+      const next = { ...prev };
+      Object.keys(next).forEach((key) => {
+        const val = next[key];
+        if (val && typeof val === 'object') {
+          if (!val[toLang] || val[toLang] === '') {
+            val[toLang] = val[fromLang] || '';
+          }
+        }
+      });
+      return next;
+    });
+    alert(`Copied text from ${fromLang.toUpperCase()} to ${toLang.toUpperCase()}!`);
   };
 
   const handleSave = async () => {
@@ -80,8 +164,27 @@ export function AdminPageEditor() {
     if (pid === 'specialties') return '/specialties';
     if (pid === 'hospitals') return '/hospitals';
     if (pid === 'doctors') return '/doctors';
+    if (pid === 'visa-guide') return '/visa-guide';
+    if (pid === 'cost-calculator') return '/cost-calculator';
+    if (pid === 'privacy') return '/privacy';
+    if (pid === 'terms') return '/terms';
+    if (pid === 'contact') return '/contact';
+    if (pid === 'about') return '/about';
+    if (pid === 'services') return '/services';
     return `/${pid}`;
   };
+
+  const filteredFieldEntries = useMemo(() => {
+    const entries = Object.entries(formData);
+    if (!searchFilter.trim()) return entries;
+    const q = searchFilter.toLowerCase();
+    return entries.filter(([key, val]) => {
+      const keyMatch = key.toLowerCase().includes(q);
+      const strVal = typeof val === 'string' ? val : Object.values(val || {}).join(' ');
+      const valMatch = strVal.toLowerCase().includes(q);
+      return keyMatch || valMatch;
+    });
+  }, [formData, searchFilter]);
 
   if (loading) {
     return (
@@ -104,8 +207,6 @@ export function AdminPageEditor() {
     );
   }
 
-  const fieldEntries = Object.entries(formData);
-
   return (
     <div style={{ padding: '2rem' }}>
       {/* Header */}
@@ -122,11 +223,19 @@ export function AdminPageEditor() {
             Editing: {data.title}
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
-            Edit live text & copy across English, French, and Kreol Morisien with instant front-end synchronization.
+            Live content management with instant preview, field addition, and multilingual synchronization (EN / FR / KR).
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            className="btn btn-outline btn-sm"
+            onClick={() => setShowAddModal(true)}
+            style={{ fontWeight: 700, borderColor: 'var(--color-primary)', color: 'var(--color-primary)' }}
+          >
+            <Plus size={15} /> Add New Field
+          </button>
           <a
             href={getPublicLink(activePageId)}
             target="_blank"
@@ -143,14 +252,14 @@ export function AdminPageEditor() {
             title="Revert back to default seed text"
             style={{ color: 'var(--color-text-secondary)' }}
           >
-            <RotateCcw size={14} /> {resetting ? 'Resetting...' : 'Reset to Default'}
+            <RotateCcw size={14} /> {resetting ? 'Resetting...' : 'Reset Defaults'}
           </button>
           <button
             className="btn btn-primary btn-sm"
             onClick={handleSave}
             disabled={saving}
             id="admin-cms-save-btn"
-            style={{ minWidth: 130 }}
+            style={{ minWidth: 140, fontWeight: 700 }}
           >
             <Save size={14} /> {saving ? 'Saving...' : 'Save Changes'}
           </button>
@@ -173,11 +282,11 @@ export function AdminPageEditor() {
           fontSize: '0.9375rem',
         }}>
           <CheckCircle2 size={18} />
-          Content saved successfully! The front-end has been updated in real-time.
+          Content saved successfully! All updates are live.
         </div>
       )}
 
-      {/* Language Tabs Card */}
+      {/* Language Tabs & Toolbar Card */}
       <div style={{
         background: 'var(--color-surface)',
         border: '1.5px solid var(--color-border)',
@@ -190,35 +299,72 @@ export function AdminPageEditor() {
         flexWrap: 'wrap',
         gap: '1rem',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Globe size={18} style={{ color: 'var(--color-primary)' }} />
-          <span style={{ fontWeight: 700, fontSize: '0.9375rem' }}>Active Language Tab:</span>
+        {/* Left: Language Selection */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <Globe size={18} style={{ color: 'var(--color-primary)' }} />
+            <span style={{ fontWeight: 700, fontSize: '0.9375rem' }}>Language:</span>
+          </div>
+
+          <div style={{ display: 'flex', gap: '0.4rem' }}>
+            <button
+              type="button"
+              className={`btn ${activeLang === 'fr' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+              onClick={() => setActiveLang('fr')}
+              style={{ fontWeight: 700 }}
+            >
+              🇫🇷 Français (French)
+            </button>
+            <button
+              type="button"
+              className={`btn ${activeLang === 'kr' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+              onClick={() => setActiveLang('kr')}
+              style={{ fontWeight: 700 }}
+            >
+              🇲🇺 Kreol Morisien
+            </button>
+            <button
+              type="button"
+              className={`btn ${activeLang === 'en' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+              onClick={() => setActiveLang('en')}
+              style={{ fontWeight: 700 }}
+            >
+              🇬🇧 English
+            </button>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        {/* Right: Search Filter and Language Tools */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <div style={{ position: 'relative', width: 220 }}>
+            <Search size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} />
+            <input
+              type="text"
+              className="form-input"
+              placeholder="Filter fields..."
+              value={searchFilter}
+              onChange={(e) => setSearchFilter(e.target.value)}
+              style={{ paddingLeft: '2rem', height: 36, fontSize: '0.8125rem' }}
+            />
+            {searchFilter && (
+              <button
+                type="button"
+                onClick={() => setSearchFilter('')}
+                style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)', cursor: 'pointer' }}
+              >
+                <X size={12} />
+              </button>
+            )}
+          </div>
+
           <button
             type="button"
-            className={`btn ${activeLang === 'fr' ? 'btn-primary' : 'btn-outline'} btn-sm`}
-            onClick={() => setActiveLang('fr')}
-            style={{ fontWeight: 600 }}
+            className="btn btn-outline btn-sm"
+            onClick={() => handleCopyLang('fr', activeLang === 'fr' ? 'en' : activeLang)}
+            title="Pre-populate empty fields from French"
+            style={{ fontSize: '0.78rem', gap: '0.35rem' }}
           >
-            🇫🇷 Français (French)
-          </button>
-          <button
-            type="button"
-            className={`btn ${activeLang === 'kr' ? 'btn-primary' : 'btn-outline'} btn-sm`}
-            onClick={() => setActiveLang('kr')}
-            style={{ fontWeight: 600 }}
-          >
-            🇲🇺 Kreol Morisien
-          </button>
-          <button
-            type="button"
-            className={`btn ${activeLang === 'en' ? 'btn-primary' : 'btn-outline'} btn-sm`}
-            onClick={() => setActiveLang('en')}
-            style={{ fontWeight: 600 }}
-          >
-            🇬🇧 English
+            <Copy size={13} /> Copy from FR
           </button>
         </div>
       </div>
@@ -237,63 +383,53 @@ export function AdminPageEditor() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--color-border)', paddingBottom: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, fontSize: '1.1rem' }}>
             <Sparkles size={18} style={{ color: 'var(--color-accent)' }} />
-            Prefilled Editable Copy ({fieldEntries.length} text blocks)
+            Editable Content Fields ({filteredFieldEntries.length} of {Object.keys(formData).length})
           </div>
           <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
-            Showing values for: <strong style={{ textTransform: 'uppercase' }}>{activeLang}</strong>
+            Editing tab: <strong style={{ textTransform: 'uppercase', color: 'var(--color-primary)' }}>{activeLang}</strong>
           </span>
         </div>
 
-        {fieldEntries.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--color-text-muted)' }}>
-            No editable text fields found for this page. Click "Reset to Default" to load prefilled seeds.
+        {filteredFieldEntries.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '3rem 1rem', color: 'var(--color-text-muted)' }}>
+            <SlidersHorizontal size={36} style={{ margin: '0 auto 0.75rem', opacity: 0.5 }} />
+            <p style={{ fontWeight: 600 }}>No matching fields found.</p>
+            <p style={{ fontSize: '0.85rem', marginTop: '0.25rem' }}>
+              {searchFilter ? 'Try clearing your search filter.' : 'Click "Add New Field" or "Reset Defaults" to seed content.'}
+            </p>
           </div>
         ) : (
-          fieldEntries.map(([fieldKey, fieldVal]) => {
+          filteredFieldEntries.map(([fieldKey, fieldVal]) => {
             const currentValue = typeof fieldVal === 'string'
               ? fieldVal
               : (fieldVal?.[activeLang] ?? fieldVal?.['en'] ?? '');
 
             const isMultiline = typeof currentValue === 'string' && (
-              currentValue.length > 80 ||
+              currentValue.length > 70 ||
               currentValue.includes('\n') ||
               fieldKey.toLowerCase().includes('desc') ||
               fieldKey.toLowerCase().includes('subtitle') ||
               fieldKey.toLowerCase().includes('p1') ||
               fieldKey.toLowerCase().includes('p2') ||
               fieldKey.toLowerCase().includes('p3') ||
-              fieldKey.toLowerCase().includes('tagline')
+              fieldKey.toLowerCase().includes('tagline') ||
+              fieldKey.toLowerCase().includes('disclaimer') ||
+              fieldKey.toLowerCase().includes('guidance') ||
+              fieldKey.toLowerCase().includes('hours')
             );
 
-            // Format human-readable title
+            // Format human-readable label
             const labelText = fieldKey
               .replace(/([A-Z])/g, ' $1')
               .replace(/_/g, ' ')
               .trim()
               .replace(/^./, (str) => str.toUpperCase());
 
-            const isImage = fieldKey.toLowerCase().includes('image') || fieldKey.toLowerCase().includes('banner') || fieldKey.toLowerCase().includes('img') || fieldKey.toLowerCase().includes('photo') || (typeof currentValue === 'string' && (currentValue.startsWith('http') || currentValue.startsWith('data:image')) && (currentValue.includes('.jpg') || currentValue.includes('.png') || currentValue.includes('.webp') || currentValue.includes('unsplash') || currentValue.includes('data:image')));
-
-            if (isImage) {
-              return (
-                <div
-                  key={fieldKey}
-                  style={{
-                    background: 'rgba(0,0,0,0.015)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-lg)',
-                    padding: '1.25rem',
-                  }}
-                >
-                  <ImageField
-                    label={labelText}
-                    value={currentValue}
-                    onChange={(url) => handleUpdate(fieldKey, activeLang, url)}
-                    helpText={`Key: ${fieldKey} (${activeLang.toUpperCase()})`}
-                  />
-                </div>
-              );
-            }
+            const isImage = fieldKey.toLowerCase().includes('image') ||
+              fieldKey.toLowerCase().includes('banner') ||
+              fieldKey.toLowerCase().includes('img') ||
+              fieldKey.toLowerCase().includes('photo') ||
+              (typeof currentValue === 'string' && (currentValue.startsWith('http') || currentValue.startsWith('data:image')) && (currentValue.includes('.jpg') || currentValue.includes('.png') || currentValue.includes('.webp') || currentValue.includes('unsplash') || currentValue.includes('data:image')));
 
             return (
               <div
@@ -304,21 +440,47 @@ export function AdminPageEditor() {
                   borderRadius: 'var(--radius-lg)',
                   padding: '1.25rem',
                   transition: 'border-color 0.2s',
+                  position: 'relative',
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <label
-                    htmlFor={`cms-field-${fieldKey}`}
-                    style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--color-text-primary)' }}
-                  >
-                    {labelText}
-                  </label>
-                  <code style={{ fontSize: '0.75rem', background: 'rgba(0,0,0,0.05)', padding: '0.15rem 0.4rem', borderRadius: 4, color: 'var(--color-text-muted)' }}>
-                    {fieldKey}
-                  </code>
+                {/* Field Top Bar */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.65rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <label
+                      htmlFor={`cms-field-${fieldKey}`}
+                      style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--color-text-primary)' }}
+                    >
+                      {labelText}
+                    </label>
+                    <code style={{ fontSize: '0.75rem', background: 'rgba(0,0,0,0.05)', padding: '0.15rem 0.4rem', borderRadius: 4, color: 'var(--color-text-muted)' }}>
+                      {fieldKey}
+                    </code>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ fontSize: '0.725rem', color: 'var(--color-text-muted)' }}>
+                      {isImage ? 'Image' : isMultiline ? 'Long Text' : 'Text'}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteField(fieldKey)}
+                      style={{ color: 'var(--color-danger)', opacity: 0.6, cursor: 'pointer', padding: 2 }}
+                      title={`Delete field "${fieldKey}"`}
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
                 </div>
 
-                {isMultiline ? (
+                {/* Field Control */}
+                {isImage ? (
+                  <ImageField
+                    label={labelText}
+                    value={currentValue}
+                    onChange={(url) => handleUpdate(fieldKey, activeLang, url)}
+                    helpText={`Field Key: ${fieldKey} • ${activeLang.toUpperCase()}`}
+                  />
+                ) : isMultiline ? (
                   <textarea
                     id={`cms-field-${fieldKey}`}
                     className="form-textarea"
@@ -340,8 +502,9 @@ export function AdminPageEditor() {
                   />
                 )}
 
+                {/* Field Footer Info */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                  <span>Language: <strong>{activeLang.toUpperCase()}</strong></span>
+                  <span>Tab: <strong>{activeLang.toUpperCase()}</strong></span>
                   <span>{currentValue.length} characters</span>
                 </div>
               </div>
@@ -350,26 +513,180 @@ export function AdminPageEditor() {
         )}
 
         {/* Bottom Save Bar */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '1rem', paddingTop: '1.5rem', borderTop: '1px solid var(--color-border)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', paddingTop: '1.5rem', borderTop: '1px solid var(--color-border)' }}>
           <button
             type="button"
-            className="btn btn-outline"
-            onClick={handleResetToDefault}
-            disabled={resetting || saving}
+            className="btn btn-outline btn-sm"
+            onClick={() => setShowAddModal(true)}
           >
-            Revert to Defaults
+            <Plus size={14} /> Add Another Field
           </button>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleSave}
-            disabled={saving}
-            style={{ minWidth: 150 }}
-          >
-            <Save size={16} /> {saving ? 'Saving...' : 'Save All Changes'}
-          </button>
+
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <button
+              type="button"
+              className="btn btn-outline"
+              onClick={handleResetToDefault}
+              disabled={resetting || saving}
+            >
+              Revert to Defaults
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSave}
+              disabled={saving}
+              style={{ minWidth: 160, fontWeight: 700 }}
+            >
+              <Save size={16} /> {saving ? 'Saving...' : 'Save All Changes'}
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Add New Field Modal */}
+      {showAddModal && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0,0,0,0.6)',
+          backdropFilter: 'blur(4px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          padding: '1rem',
+        }}>
+          <div style={{
+            background: 'var(--color-surface)',
+            border: '1.5px solid var(--color-border)',
+            borderRadius: 'var(--radius-xl)',
+            width: '100%',
+            maxWidth: 520,
+            padding: '2rem',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Plus size={20} color="var(--color-primary)" /> Add Content Field
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowAddModal(false)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div>
+                <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
+                  Field Key (camelCase) *
+                </label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="e.g. heroBannerTitle, awardsSubtext, ctaNotice"
+                  value={newFieldKey}
+                  onChange={(e) => setNewFieldKey(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))}
+                  style={{ width: '100%' }}
+                />
+                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                  Use unique camelCase (alphanumeric only).
+                </span>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
+                  Field Type
+                </label>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+                  <button
+                    type="button"
+                    className={`btn ${newFieldType === 'text' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+                    onClick={() => setNewFieldType('text')}
+                  >
+                    <Type size={14} /> Short Text
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${newFieldType === 'multiline' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+                    onClick={() => setNewFieldType('multiline')}
+                  >
+                    <FileTextIcon size={14} /> Long Text
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${newFieldType === 'image' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+                    onClick={() => setNewFieldType('image')}
+                  >
+                    <ImageIcon size={14} /> Image URL
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
+                  Initial French Value (FR)
+                </label>
+                {newFieldType === 'multiline' ? (
+                  <textarea
+                    className="form-textarea"
+                    rows={3}
+                    placeholder="Texte en français..."
+                    value={newFieldValFr}
+                    onChange={(e) => setNewFieldValFr(e.target.value)}
+                    style={{ width: '100%' }}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    className="form-input"
+                    placeholder="Texte en français..."
+                    value={newFieldValFr}
+                    onChange={(e) => setNewFieldValFr(e.target.value)}
+                    style={{ width: '100%' }}
+                  />
+                )}
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
+                  Initial English Value (EN)
+                </label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Text in English (optional)..."
+                  value={newFieldValEn}
+                  onChange={(e) => setNewFieldValEn(e.target.value)}
+                  style={{ width: '100%' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.75rem' }}>
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleAddField}
+                  disabled={!newFieldKey.trim()}
+                  style={{ fontWeight: 700 }}
+                >
+                  Add Field
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

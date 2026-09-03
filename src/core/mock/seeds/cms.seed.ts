@@ -172,6 +172,124 @@ export const cmsSeed: Record<string, CmsPage> = {
         en: 'Get a free medical opinion from our partner specialists within 48 hours.',
         fr: 'Obtenez un avis médical gratuit de nos spécialistes partenaires dans les 48 heures.',
         kr: 'Gagn enn lavi medikal gratis avek nou bann dokter partner dan 48h.'
+      },
+      awardsLabel: {
+        en: 'Awards & Recognition',
+        fr: 'Reconnaissances & Distinctions',
+        kr: 'Rekonpans & Onerr'
+      },
+      awardsTitle: {
+        en: 'Honored for Facilitation Excellence',
+        fr: 'Récompensé pour l\'Excellence Médicale',
+        kr: 'Rekonpanse pou Nou Servis Medikal'
+      },
+      awardsDesc: {
+        en: 'Our patient-first standards, zero-cost policy, and rigorous hospital vetting are internationally recognized across the healthcare travel industry.',
+        fr: 'Nos standards rigoureux de qualité, de gratuité pour le patient et de sécurité hospitalière sont régulièrement primés à l\'international.',
+        kr: 'Nou gran langazman pou donn servis de kalite, gratis ek an sekirite finn gagn bann gran pri internasional.'
+      },
+      storiesTitle: {
+        en: 'Verified Patient Stories & Recoveries',
+        fr: 'Témoignages & Récits de Rétablissement',
+        kr: 'Temwagnaz & Zistwar Pasian'
+      },
+      storiesDesc: {
+        en: 'Real Mauritian patients who trusted Medical 360 for complex surgeries abroad.',
+        fr: 'De vrais patients mauriciens qui ont confié leur santé à Medical 360 pour des chirurgies complexes à l\'étranger.',
+        kr: 'Bann vre pasian Morisien ki finn fer Medical 360 konfians pou zot loperasion letranze.'
+      }
+    }
+  },
+  'visa-guide': {
+    id: 'visa-guide',
+    title: 'Visa & Travel Guide',
+    category: 'Inside Pages',
+    content: {
+      heroLabel: {
+        en: 'Medical Travel Guide',
+        fr: 'Guide Voyage Médical',
+        kr: 'Gid Voyaz Medikal'
+      },
+      heroTitle: {
+        en: 'Mauritius Medical Visa & Travel Guide',
+        fr: 'Guide Visa Médical & Voyage pour Mauriciens',
+        kr: 'Gid Viza Medikal & Voyaz pou Morisien'
+      },
+      heroDesc: {
+        en: 'Everything you need to know about medical visas, passport requirements, companion travel, and flights from SSR International Airport to world-leading hospital destinations.',
+        fr: 'Tout ce que vous devez savoir sur les visas médicaux, le passeport, les accompagnateurs et les vols depuis l\'Aéroport SSR vers les meilleurs hôpitaux internationaux.',
+        kr: 'Tou seki ou bizin kone lor viza medikal, paspor, akonpagnan, ek vol depi Plaisance (SSR) ziska bann pli gran lopital internasional.'
+      },
+      ctaTitle: {
+        en: 'Need Assistance With Your Medical Visa?',
+        fr: 'Besoin d\'aide pour votre visa médical ?',
+        kr: 'Bizin led pou ou viza medikal ?'
+      },
+      ctaDesc: {
+        en: 'Our dedicated travel concierge issues hospital invitation letters and coordinates your visa application free of charge.',
+        fr: 'Notre équipe émet vos lettres d\'invitation hospitalières et coordonne vos démarches de visa gratuitement.',
+        kr: 'Nou lekip prepar ou let linvitasion lopital ek ed ou dan tou demars viza gratis.'
+      }
+    }
+  },
+  'cost-calculator': {
+    id: 'cost-calculator',
+    title: 'Cost Calculator',
+    category: 'Inside Pages',
+    content: {
+      heroLabel: {
+        en: 'Instant Pricing Estimation',
+        fr: 'Estimation Tarifaire Immédiate',
+        kr: 'Estimasion Pri Deswit'
+      },
+      heroTitle: {
+        en: 'Medical Treatment Cost Calculator',
+        fr: 'Calculateur de Coût de Traitement Médical',
+        kr: 'Kalkilatris Pri Tretman Medikal'
+      },
+      heroDesc: {
+        en: 'Select your specialty, procedure, and destination to get a transparent estimate including hospital package, companion stay, and flights with estimated savings of 50–80%.',
+        fr: 'Sélectionnez votre spécialité, procédure et destination pour obtenir une estimation transparente incluant l\'hôpital, l\'hébergement et les vols avec 50 à 80% d\'économies.',
+        kr: 'Swazir ou spesialite, tretman ek destinasion pou gagn estimasion kler ar lopital, lotel ek vol avek 50–80% lekonomi.'
+      },
+      disclaimerText: {
+        en: 'All costs are indicative estimates based on accredited hospital tariffs and standard hospital stays.',
+        fr: 'Tous les tarifs sont des estimations indicatives basées sur les forfaits des hôpitaux partenaires agréés.',
+        kr: 'Tou bann pri se bann estimasion baze lor forfay bann lopital akredite.'
+      }
+    }
+  },
+  privacy: {
+    id: 'privacy',
+    title: 'Privacy Policy Page',
+    category: 'Legal',
+    content: {
+      heroTitle: {
+        en: 'Privacy & Data Protection Policy',
+        fr: 'Politique de Confidentialité & Protection des Données',
+        kr: 'Politis Konfidansialite & Proteksion Done'
+      },
+      heroDesc: {
+        en: 'Our commitment to safeguarding your sensitive medical data under the Mauritius Data Protection Act 2017 and international healthcare privacy standards.',
+        fr: 'Notre engagement pour la protection de vos données médicales confidentielles conformément au Data Protection Act 2017 de Maurice et aux normes internationales.',
+        kr: 'Nou langazman pou protez ou bann done medikal prive dapre Data Protection Act 2017 Moris ek bann lalwa internasional.'
+      }
+    }
+  },
+  terms: {
+    id: 'terms',
+    title: 'Terms of Service Page',
+    category: 'Legal',
+    content: {
+      heroTitle: {
+        en: 'Terms & Conditions of Service',
+        fr: 'Conditions Générales d\'Utilisation & de Facilitation',
+        kr: 'Kondision Zeneral Servis & Fasilitasion'
+      },
+      heroDesc: {
+        en: 'Important legal terms and conditions governing medical facilitation services provided by Med360 Ltd in Mauritius.',
+        fr: 'Conditions juridiques importantes régissant les services de facilitation médicale fournis par Med360 Ltd à l\'Île Maurice.',
+        kr: 'Bann kondision legal inportan konsernan bann servis fasilitasion medikal par Med360 Ltd dan Moris.'
       }
     }
   },
