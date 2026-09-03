@@ -4,6 +4,7 @@ import { Calculator, ArrowRight, CheckCircle2, ShieldCheck, Clock, Sparkles, Hea
 import { Helmet } from 'react-helmet-async';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useTranslation } from 'react-i18next';
+import { useCMS } from '../../hooks/useCMS';
 
 interface CountryCostProfile {
   country: string;
@@ -28,9 +29,15 @@ const MUR_RATE = 46.5; // 1 USD = 46.5 Mauritian Rupees
 export function CostCalculatorPage() {
   const { specialties } = useSpecialties();
   const { i18n } = useTranslation();
+  const { data: cms } = useCMS('cost-calculator');
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
   const navigate = useNavigate();
+
+  const tCms = (key: string, fallback: string) => {
+    if (!cms?.content?.[key]) return fallback;
+    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+  };
 
   const [selectedSpecialtyId, setSelectedSpecialtyId] = useState<string>('sp-cardiology');
   const [selectedProcedureId, setSelectedProcedureId] = useState<string>('proc-c1');
@@ -81,43 +88,32 @@ export function CostCalculatorPage() {
       {/* Hero Header */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/calculator_banner.jpg)' }}>
         <div className="container page-hero__inner">
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            background: 'rgba(16, 185, 129, 0.12)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            borderRadius: '999px',
-            padding: '0.35rem 1rem',
-            color: '#34d399',
-            fontSize: '0.8rem',
-            fontWeight: 700,
-            marginBottom: '1rem',
-          }}>
-            <Calculator size={15} />
-            <span>{isFr ? 'Simulateur & Comparateur de Coûts Médicaux' : isKr ? 'Kalkilatris Pri & Konparater Lasante' : 'Interactive Medical Treatment Cost Calculator'}</span>
-          </div>
+          <span className="section-label">
+            <Calculator size={14} />
+            <span>{tCms('heroLabel', isFr ? 'Simulateur & Comparateur de Coûts Médicaux' : isKr ? 'Kalkilatris Pri & Konparater Lasante' : 'Interactive Medical Treatment Cost Calculator')}</span>
+          </span>
 
-          <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 900, fontFamily: 'var(--font-display)', lineHeight: 1.15, marginBottom: '1rem', color: '#ffffff' }}>
-            {isFr ? 'Comparez les Prix des Soins dans le Monde' : isKr ? 'Konpar Pri Tretman dan Lemond' : 'Compare Treatment Costs Across Global Hospitals'}
+          <h1 className="text-h1">
+            {tCms('heroTitle', isFr ? 'Comparez les Prix des Soins dans le Monde' : isKr ? 'Konpar Pri Tretman dan Lemond' : 'Compare Treatment Costs Across Global Hospitals')}
           </h1>
-          <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.7)', maxWidth: 700, margin: '0 auto 1.5rem', lineHeight: 1.6 }}>
-            {isFr
+          
+          <p className="text-lead" style={{ marginBottom: '1.5rem' }}>
+            {tCms('heroDesc', isFr
               ? 'Sélectionnez votre intervention chirurgicale et visualisez instantanément les économies réalisables en Inde, Thaïlande et Singapour par rapport aux tarifs locaux et européens.'
               : isKr
               ? 'Swazir ou loperasion e trouv toutswit komie ou kapav sove dan l\'Inde, Tayland ek Singapour konpare ar tarif lokal.'
-              : 'Select your surgical procedure to see instant, transparent cost estimates and real savings in India, Thailand, Singapore, and Europe compared to local private care.'}
+              : 'Select your surgical procedure to see instant, transparent cost estimates and real savings in India, Thailand, Singapore, and Europe compared to local private care.')}
           </p>
 
           {/* Currency Switcher */}
-          <div style={{ display: 'inline-flex', background: 'rgba(255,255,255,0.08)', padding: 4, borderRadius: '999px', border: '1px solid rgba(255,255,255,0.15)', gap: 4 }}>
+          <div style={{ display: 'inline-flex', background: 'rgba(255,255,255,0.1)', padding: 4, borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', gap: 4 }}>
             <button
               onClick={() => setCurrency('USD')}
               style={{
                 background: currency === 'USD' ? 'var(--color-primary)' : 'transparent',
-                color: currency === 'USD' ? '#ffffff' : 'rgba(255,255,255,0.7)',
+                color: currency === 'USD' ? '#ffffff' : 'rgba(255,255,255,0.85)',
                 border: 'none',
-                padding: '0.4rem 1.25rem',
+                padding: '0.45rem 1.25rem',
                 borderRadius: '999px',
                 fontWeight: 700,
                 fontSize: '0.85rem',
@@ -131,9 +127,9 @@ export function CostCalculatorPage() {
               onClick={() => setCurrency('MUR')}
               style={{
                 background: currency === 'MUR' ? 'var(--color-primary)' : 'transparent',
-                color: currency === 'MUR' ? '#ffffff' : 'rgba(255,255,255,0.7)',
+                color: currency === 'MUR' ? '#ffffff' : 'rgba(255,255,255,0.85)',
                 border: 'none',
-                padding: '0.4rem 1.25rem',
+                padding: '0.45rem 1.25rem',
                 borderRadius: '999px',
                 fontWeight: 700,
                 fontSize: '0.85rem',
@@ -141,7 +137,7 @@ export function CostCalculatorPage() {
                 transition: 'all 0.2s',
               }}
             >
-              Mauritian Rupee (MUR Rs)
+              MUR (Rs)
             </button>
           </div>
         </div>
