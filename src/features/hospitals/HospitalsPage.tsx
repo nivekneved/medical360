@@ -11,6 +11,7 @@ import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { HospitalCompareModal } from './HospitalCompareModal';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
+import { Pagination } from '../../components/Pagination/Pagination';
 import './Hospitals.css';
 
 export function HospitalsPage() {
@@ -22,11 +23,15 @@ export function HospitalsPage() {
   const { hospitals: allHospitals } = useHospitals({});
   const { data: cms } = useCMS('hospitals');
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
+
   const countries = getUniqueCountries(allHospitals);
   const accreditations = getUniqueAccreditations(allHospitals);
 
   function handleSearch() {
     setFilters(f => ({ ...f, searchQuery: searchInput || undefined }));
+    setCurrentPage(1);
   }
 
   const isFr = i18n.language === 'fr';
@@ -67,6 +72,11 @@ export function HospitalsPage() {
     if (sortBy === 'name') return a.name.localeCompare(b.name);
     return 0;
   });
+
+  const paginatedHospitals = sortedHospitals.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const sortOptions: SortOption[] = [
     { value: 'rating', label: isFr ? 'Meilleure Note' : isKr ? 'Mayer Not' : 'Highest Rated', icon: '★' },
@@ -182,7 +192,7 @@ export function HospitalsPage() {
             ? Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 280, borderRadius: 16 }} />
               ))
-            : sortedHospitals.map(hospital => {
+            : paginatedHospitals.map(hospital => {
                 const isSelected = compareIds.includes(hospital.id);
                 return (
                   <div key={hospital.id} className="hospital-list-card" id={`hospital-${hospital.id}`}>
@@ -264,6 +274,20 @@ export function HospitalsPage() {
               })
           }
         </div>
+
+        {/* Pagination */}
+        <Pagination
+          currentPage={currentPage}
+          totalItems={sortedHospitals.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={(p) => {
+            setCurrentPage(p);
+            window.scrollTo({ top: 380, behavior: 'smooth' });
+          }}
+          onItemsPerPageChange={setItemsPerPage}
+          pageSizeOptions={[6, 9, 15]}
+          unitName={isFr ? 'hôpitaux' : isKr ? 'lopital' : 'hospitals'}
+        />
       </div>
 
       {/* Floating Bottom Compare Bar */}

@@ -10,6 +10,7 @@ import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { DoctorSecondOpinionModal } from './DoctorSecondOpinionModal';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
+import { Pagination } from '../../components/Pagination/Pagination';
 import type { Doctor } from '../../core/types';
 
 export function DoctorsPage() {
@@ -23,6 +24,9 @@ export function DoctorsPage() {
   const { specialties } = useSpecialties();
   const { hospitals } = useHospitals({});
   const { data: cms } = useCMS('doctors');
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
@@ -59,6 +63,11 @@ export function DoctorsPage() {
     if (sortBy === 'name') return a.name.localeCompare(b.name);
     return 0;
   });
+
+  const paginatedDoctors = sortedDoctors.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const getHospital = (hId: string) => hospitals.find(h => h.id === hId);
   const getSpecialtyName = (sId: string) => {
@@ -213,117 +222,133 @@ export function DoctorsPage() {
               ))}
             </div>
           ) : (
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: viewMode === 'list' ? '1fr' : 'repeat(auto-fill, minmax(330px, 1fr))',
-              gap: '1.75rem',
-            }}>
-              {sortedDoctors.map(doc => {
-                const hosp = getHospital(doc.hospitalId);
-                return (
-                  <div
-                    key={doc.id}
-                    style={{
-                      background: 'var(--color-surface)',
-                      border: '1.5px solid var(--color-border)',
-                      borderRadius: 'var(--radius-xl)',
-                      overflow: 'hidden',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      boxShadow: '0 4px 16px rgba(0,0,0,0.03)',
-                      transition: 'transform 0.2s, box-shadow 0.2s',
-                    }}
-                  >
-                    {/* Doctor Photo Banner */}
-                    <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
-                      <img
-                        src={doc.imageUrl}
-                        alt={doc.name}
-                        onError={(e) => { e.currentTarget.src = '/assets/banners/doctors_banner.jpg'; }}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                      <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)',
-                      }} />
-                      <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-                        <span className="badge badge-accent" style={{ fontSize: '0.75rem' }}>
-                          <Shield size={12} /> {doc.experience}+ Years Exp.
-                        </span>
-                      </div>
-                      <div style={{ position: 'absolute', bottom: '1rem', left: '1.25rem', right: '1.25rem', color: 'white' }}>
-                        <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{doc.name}</h2>
-                        <p style={{ fontSize: '0.8125rem', opacity: 0.9, color: 'var(--color-accent)' }}>
-                          {doc.title}
-                        </p>
-                      </div>
-                    </div>
-
-                    <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                      {/* Hospital Link */}
-                      {hosp && (
-                        <Link
-                          to={`/hospitals/${hosp.id}`}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.5rem',
-                            fontSize: '0.85rem',
-                            fontWeight: 600,
-                            color: 'var(--color-primary)',
-                            textDecoration: 'none',
-                          }}
-                        >
-                          <Building2 size={14} />
-                          <span>{hosp.name} · {hosp.city}, {hosp.country}</span>
-                        </Link>
-                      )}
-
-                      {/* Specialties tags */}
-                      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
-                        {doc.specialties.map(sId => (
-                          <span key={sId} className="badge badge-primary" style={{ fontSize: '0.7rem' }}>
-                            {getSpecialtyName(sId)}
+            <>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: viewMode === 'list' ? '1fr' : 'repeat(auto-fill, minmax(330px, 1fr))',
+                gap: '1.75rem',
+              }}>
+                {paginatedDoctors.map(doc => {
+                  const hosp = getHospital(doc.hospitalId);
+                  return (
+                    <div
+                      key={doc.id}
+                      style={{
+                        background: 'var(--color-surface)',
+                        border: '1.5px solid var(--color-border)',
+                        borderRadius: 'var(--radius-xl)',
+                        overflow: 'hidden',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        boxShadow: '0 4px 16px rgba(0,0,0,0.03)',
+                        transition: 'transform 0.2s, box-shadow 0.2s',
+                      }}
+                    >
+                      {/* Doctor Photo Banner */}
+                      <div style={{ position: 'relative', height: 220, overflow: 'hidden' }}>
+                        <img
+                          src={doc.imageUrl}
+                          alt={doc.name}
+                          onError={(e) => { e.currentTarget.src = '/assets/banners/doctors_banner.jpg'; }}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                        <div style={{
+                          position: 'absolute',
+                          inset: 0,
+                          background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%)',
+                        }} />
+                        <div style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
+                          <span className="badge badge-accent" style={{ fontSize: '0.75rem' }}>
+                            <Shield size={12} /> {doc.experience}+ Years Exp.
                           </span>
-                        ))}
+                        </div>
+                        <div style={{ position: 'absolute', bottom: '1rem', left: '1.25rem', right: '1.25rem', color: 'white' }}>
+                          <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{doc.name}</h2>
+                          <p style={{ fontSize: '0.8125rem', opacity: 0.9, color: 'var(--color-accent)' }}>
+                            {doc.title}
+                          </p>
+                        </div>
                       </div>
 
-                      {/* Bio */}
-                      <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                        {doc.bio}
-                      </p>
+                      <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        {/* Hospital Link */}
+                        {hosp && (
+                          <Link
+                            to={`/hospitals/${hosp.id}`}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.5rem',
+                              fontSize: '0.85rem',
+                              fontWeight: 600,
+                              color: 'var(--color-primary)',
+                              textDecoration: 'none',
+                            }}
+                          >
+                            <Building2 size={14} />
+                            <span>{hosp.name} · {hosp.city}, {hosp.country}</span>
+                          </Link>
+                        )}
 
-                      {/* Credentials */}
-                      <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', borderTop: '1px solid var(--color-border)', paddingTop: '0.75rem' }}>
-                        <strong>Credentials:</strong> {doc.qualifications.join(' · ')}
-                      </div>
+                        {/* Specialties tags */}
+                        <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+                          {doc.specialties.map(sId => (
+                            <span key={sId} className="badge badge-primary" style={{ fontSize: '0.7rem' }}>
+                              {getSpecialtyName(sId)}
+                            </span>
+                          ))}
+                        </div>
 
-                      {/* CTAs */}
-                      <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
-                        <button
-                          className="btn btn-primary btn-sm"
-                          style={{ flex: 1, fontWeight: 700 }}
-                          onClick={() => setSecondOpinionDoctor(doc)}
-                        >
-                          <Stethoscope size={14} />
-                          <span>{l10n('2ème Avis Gratuit', '2em Lavi Medikal', '2nd Opinion')}</span>
-                        </button>
-                        <a
-                          href={buildMed360WhatsAppUrl(`Bonjour Medical 360, je souhaite consulter ${doc.name}`)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn btn-whatsapp btn-sm btn-icon"
-                          title="Chat on WhatsApp"
-                        >
-                          <MessageCircle size={16} />
-                        </a>
+                        {/* Bio */}
+                        <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+                          {doc.bio}
+                        </p>
+
+                        {/* Credentials */}
+                        <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', borderTop: '1px solid var(--color-border)', paddingTop: '0.75rem' }}>
+                          <strong>Credentials:</strong> {doc.qualifications.join(' · ')}
+                        </div>
+
+                        {/* CTAs */}
+                        <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto' }}>
+                          <button
+                            className="btn btn-primary btn-sm"
+                            style={{ flex: 1, fontWeight: 700 }}
+                            onClick={() => setSecondOpinionDoctor(doc)}
+                          >
+                            <Stethoscope size={14} />
+                            <span>{l10n('2ème Avis Gratuit', '2em Lavi Medikal', '2nd Opinion')}</span>
+                          </button>
+                          <a
+                            href={buildMed360WhatsAppUrl(`Bonjour Medical 360, je souhaite consulter ${doc.name}`)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-whatsapp btn-sm btn-icon"
+                            title="Chat on WhatsApp"
+                          >
+                            <MessageCircle size={16} />
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+
+              {/* Pagination */}
+              <Pagination
+                currentPage={currentPage}
+                totalItems={sortedDoctors.length}
+                itemsPerPage={itemsPerPage}
+                onPageChange={(p) => {
+                  setCurrentPage(p);
+                  window.scrollTo({ top: 380, behavior: 'smooth' });
+                }}
+                onItemsPerPageChange={setItemsPerPage}
+                pageSizeOptions={[6, 9, 15]}
+                unitName={isFr ? 'spécialistes' : isKr ? 'spesialist' : 'specialists'}
+              />
+            </>
           )}
         </div>
       </section>
