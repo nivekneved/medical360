@@ -22,6 +22,7 @@ import { useCMS } from '../../../hooks/useCMS';
 import { mockEngine } from '../../../core/mock/engine';
 import { ImageField } from '../components/ImageField';
 import { RichTextEditor } from '../components/RichTextEditor';
+import { FeaturedShowcaseManager } from '../components/FeaturedShowcaseManager';
 
 const CMS_PAGES = [
   { id: 'home', label: 'Home', icon: '🏠' },
@@ -370,6 +371,19 @@ export function AdminPageEditor() {
           <CheckCircle2 size={18} />
           Content saved successfully! All updates are live.
         </div>
+      )}
+
+      {/* Featured Items Selection Hub (for Home, Specialties, Hospitals, Doctors, Case Studies) */}
+      {['home', 'specialties', 'hospitals', 'doctors', 'case-studies'].includes(activePageId) && (
+        <FeaturedShowcaseManager
+          initialType={
+            activePageId === 'specialties' ? 'specialties' :
+            activePageId === 'hospitals' ? 'hospitals' :
+            activePageId === 'doctors' ? 'doctors' :
+            activePageId === 'case-studies' ? 'case-studies' :
+            'specialties'
+          }
+        />
       )}
 
       {/* Language Tabs & Toolbar Card */}
