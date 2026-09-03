@@ -1,4 +1,4 @@
-import { ArrowRight, MessageCircle, Shield, Users, Globe2, Heart, Star, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, MessageCircle, Shield, Users, Globe2, Heart, Star, Sparkles, Trophy, Award, Medal } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +30,81 @@ const HIGHLIGHTS = [
   },
 ];
 
+const AWARDS = [
+  {
+    id: 'award-1',
+    year: '2025',
+    title: 'Best Medical Travel Facilitator — Indian Ocean',
+    title_fr: 'Meilleur Facilitateur de Tourisme Médical — Océan Indien',
+    title_kr: 'Pli Bon Facilitateur Vwayaz Medikal — Losean Indien',
+    organization: 'Global Health & Travel Asia-Pacific Awards',
+    organization_fr: 'Prix Asie-Pacifique Santé & Tourisme Mondial',
+    organization_kr: 'Global Health & Travel Asia-Pacific',
+    description: 'Awarded for outstanding patient satisfaction (98.4%), rapid 24-hour second opinion coordination, and highest standard of partner hospital accreditation compliance.',
+    description_fr: 'Décerné pour un taux de satisfaction patient exceptionnel (98,4%), une coordination d\'avis en 24h et le respect rigoureux des normes JCI/NABH.',
+    description_kr: 'Rekonpans pou meyer satisfaksion pasian (98.4%), kordonasion deziem lavi dan 24h ek respe bann gran sertifikasion JCI.',
+    icon: Trophy,
+    color: '#f59e0b',
+    badge: 'Winner 2025',
+    badge_fr: 'Lauréat 2025',
+    badge_kr: 'Gagnan 2025',
+  },
+  {
+    id: 'award-2',
+    year: '2024',
+    title: 'Excellence in Patient Concierge & Bedside Care',
+    title_fr: 'Excellence en Conciergerie Médicale & Soins aux Patients',
+    title_kr: 'Lekselans dan Konsierzri & Akonpanyeman Pasian',
+    organization: 'African Healthcare Leadership Summit',
+    organization_fr: 'Sommet des Leaders de la Santé Africaine',
+    organization_kr: 'African Healthcare Leadership',
+    description: 'Recognized for compassionate, end-to-end patient logistics, dedicated multilingual bedside coordinators, and completely free-for-patient facilitation.',
+    description_fr: 'Reconnu pour son accompagnement humain de bout en bout, ses coordinateurs multilingues dédiés sur place et sa gratuité totale pour le patient.',
+    description_kr: 'Rekonet pou enn servis bien imin, kordonater lor plas ek servis 100% gratis pou bann pasian.',
+    icon: Award,
+    color: '#10b981',
+    badge: 'Gold Distinction',
+    badge_fr: 'Distinction Or',
+    badge_kr: 'Distinksion Lor',
+  },
+  {
+    id: 'award-3',
+    year: '2024',
+    title: 'Cross-Border Healthcare Innovation Award',
+    title_fr: 'Prix de l\'Innovation en Santé Transfrontalière',
+    title_kr: 'Pri Inovasion dan Swen Transfrontalie',
+    organization: 'Indian Ocean Healthcare & Wellness Forum',
+    organization_fr: 'Forum Santé & Bien-être de l\'Océan Indien',
+    organization_kr: 'Forum Sante Losean Indien',
+    description: 'Honored for pioneering digital triage and telehealth connectivity bridging island patients directly with leading overseas chief surgeons.',
+    description_fr: 'Récompensé pour son innovation dans le triage médical digital et la mise en relation directe des patients insulaires avec les plus grands chirurgiens mondiaux.',
+    description_kr: 'Pri inovasion pou koneksyon digital rapid ant pasian Morisien ek bann sef sirizien renome.',
+    icon: Sparkles,
+    color: '#3b82f6',
+    badge: 'Innovation Award',
+    badge_fr: 'Prix Innovation',
+    badge_kr: 'Pri Inovasion',
+  },
+  {
+    id: 'award-4',
+    year: '2023–2026',
+    title: 'Quality Standards & Patient Safety Accreditation',
+    title_fr: 'Accréditation Qualité & Sécurité des Patients',
+    title_kr: 'Akreditasion Kalite & Sekirite Pasian',
+    organization: 'International Healthcare Travel Standards Board',
+    organization_fr: 'Conseil International des Normes de Voyage Médical',
+    organization_kr: 'International Healthcare Travel Board',
+    description: 'Certified for strict data privacy adherence, verified partner hospital selection (JCI/NABH only), and transparent medical cost modeling.',
+    description_fr: 'Certifié pour la confidentialité stricte des données médicales, le choix exclusif d\'hôpitaux accrédités et la transparence totale des coûts.',
+    description_kr: 'Sertifie pou sekirite done medikal, swa strik bann lopital JCI ek transparans total dan bann pri.',
+    icon: Medal,
+    color: '#8b5cf6',
+    badge: 'Certified Quality',
+    badge_fr: 'Qualité Certifiée',
+    badge_kr: 'Kalite Sertifie',
+  },
+];
+
 export function AboutPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -55,8 +130,8 @@ export function AboutPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('À Propos de Med360 & Témoignages', 'Lor Nou & Zistwar Pasian', 'About Med360 & Patient Stories')}
-        description={l10n('Med360 connecte les patients mauriciens aux hôpitaux du monde. Découvrez notre mission et nos témoignages vérifiés.', 'Med360 konekte bann pasian Morisien ar bann pli bon lopital dan lemond. Dekouver nou mision ek temwagnaz.', 'Med360 connects Mauritian patients to the best hospitals globally. Explore our mission and verified recovery stories.')}
+        title={l10n('À Propos de Med360, Prix & Témoignages', 'Lor Nou, Pri & Zistwar Pasian', 'About Med360, Awards & Patient Stories')}
+        description={l10n('Med360 connecte les patients mauriciens aux hôpitaux du monde. Découvrez nos récompenses internationales et nos témoignages vérifiés.', 'Med360 konekte bann pasian Morisien ar bann pli bon lopital dan lemond. Dekouver nou bann rekonpans ek temwagnaz.', 'Med360 connects Mauritian patients to the best hospitals globally. Explore our industry awards, accreditations, and verified recovery stories.')}
         canonical="/about"
       />
 
@@ -133,6 +208,107 @@ export function AboutPage() {
                     <div>
                       <div style={{ color: 'white', fontWeight: 700, fontSize: '0.9375rem' }}>{l(item, 'label')}</div>
                       <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.8125rem' }}>{l(item, 'sub')}</div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Awards & Recognitions Section */}
+          <div style={{
+            marginBottom: '5rem',
+            background: 'radial-gradient(ellipse at top, #0f172a 0%, #090d10 100%)',
+            borderRadius: 'var(--radius-2xl)',
+            padding: 'clamp(2rem, 5vw, 3.5rem)',
+            color: '#ffffff',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.4)',
+          }}>
+            <div style={{ textAlign: 'center', maxWidth: 680, margin: '0 auto 3rem' }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.35rem 0.9rem',
+                borderRadius: '9999px',
+                background: 'rgba(245, 158, 11, 0.15)',
+                border: '1px solid rgba(245, 158, 11, 0.3)',
+                color: '#fbbf24',
+                fontSize: '0.825rem',
+                fontWeight: 700,
+                marginBottom: '1rem',
+              }}>
+                <Trophy size={15} /> {l10n('Reconnaissances & Distinctions', 'Rekonpans & Onerr', 'Awards & Recognition')}
+              </div>
+              <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.35rem)', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
+                {l10n('Récompensé pour l\'Excellence Médicale', 'Rekonpanse pou Nou Servis Medikal', 'Honored for Facilitation Excellence')}
+              </h2>
+              <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.975rem', lineHeight: 1.6 }}>
+                {l10n(
+                  'Nos standards rigoureux de qualité, de gratuité pour le patient et de sécurité hospitalière sont régulièrement primés à l\'international.',
+                  'Nou gran langazman pou donn servis de kalite, gratis ek an sekirite finn gagn bann gran pri internasional.',
+                  'Our patient-first standards, zero-cost policy, and rigorous hospital vetting are internationally recognized across the healthcare travel industry.'
+                )}
+              </p>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))',
+              gap: '1.5rem',
+            }}>
+              {AWARDS.map((award) => {
+                const Icon = award.icon;
+                return (
+                  <div
+                    key={award.id}
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: 'var(--radius-xl)',
+                      padding: '1.75rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      transition: 'transform 0.2s, border-color 0.2s',
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                        <div style={{
+                          width: 44,
+                          height: 44,
+                          borderRadius: 'var(--radius-md)',
+                          background: `${award.color}22`,
+                          color: award.color,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                          <Icon size={22} />
+                        </div>
+                        <span style={{
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          padding: '0.25rem 0.65rem',
+                          borderRadius: '9999px',
+                          background: 'rgba(255, 255, 255, 0.1)',
+                          color: '#ffffff',
+                        }}>
+                          {l(award, 'badge')}
+                        </span>
+                      </div>
+
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: '#ffffff', marginBottom: '0.4rem', lineHeight: 1.35 }}>
+                        {l(award, 'title')}
+                      </h3>
+                      <div style={{ fontSize: '0.85rem', color: award.color, fontWeight: 600, marginBottom: '0.85rem' }}>
+                        {l(award, 'organization')} • {award.year}
+                      </div>
+                      <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: 1.6, margin: 0 }}>
+                        {l(award, 'description')}
+                      </p>
                     </div>
                   </div>
                 );
