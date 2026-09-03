@@ -4,8 +4,8 @@ import { ArrowRight, MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
-import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
+import { Pagination } from '../../components/Pagination/Pagination';
 import './Services.css';
 
 const SERVICES = [
@@ -91,6 +91,8 @@ const SERVICES = [
   },
 ];
 
+import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+
 export function ServicesPage() {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -99,6 +101,8 @@ export function ServicesPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<string>('recommended');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
   const l10n = (fr: string, cre: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'cre' || i18n.language === 'kr' ? cre : en;
@@ -128,6 +132,11 @@ export function ServicesPage() {
     if (sortBy === 'name') return l(a, 'title').localeCompare(l(b, 'title'));
     return 0;
   });
+
+  const paginatedServices = sortedServices.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
@@ -186,7 +195,7 @@ export function ServicesPage() {
           </div>
 
           <div className={`services-cards-grid ${viewMode === 'list' ? 'services-cards-grid--list-view' : ''}`}>
-            {sortedServices.map((srv, i) => (
+            {paginatedServices.map((srv, i) => (
               <div
                 key={srv.id}
                 className={`service-full-card animate-fade-in-up delay-${(i % 4) + 1}`}
@@ -211,6 +220,20 @@ export function ServicesPage() {
               </div>
             ))}
           </div>
+
+          {/* Pagination */}
+          <Pagination
+            currentPage={currentPage}
+            totalItems={sortedServices.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={(p) => {
+              setCurrentPage(p);
+              window.scrollTo({ top: 380, behavior: 'smooth' });
+            }}
+            onItemsPerPageChange={setItemsPerPage}
+            pageSizeOptions={[6, 9, 12]}
+            unitName={isFr ? 'services' : isKr ? 'servis' : 'services'}
+          />
 
           <div style={{ textAlign: 'center', marginTop: '4.5rem', marginBottom: '2rem', display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
             <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need')} id="services-cta-btn" style={{ padding: '0.85rem 2rem' }}>

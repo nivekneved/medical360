@@ -7,6 +7,7 @@ import { formatCostRange } from '../../core/services/format.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
+import { Pagination } from '../../components/Pagination/Pagination';
 import './Specialties.css';
 
 export function SpecialtiesPage() {
@@ -18,6 +19,8 @@ export function SpecialtiesPage() {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<string>('popular');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
@@ -49,6 +52,11 @@ export function SpecialtiesPage() {
     if (sortBy === 'name') return a.name.localeCompare(b.name);
     return 0;
   });
+
+  const paginatedSpecialties = sortedSpecialties.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <main className="specialties-page" style={{ paddingTop: 'var(--navbar-height)' }}>
@@ -110,7 +118,7 @@ export function SpecialtiesPage() {
             ? Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 320, borderRadius: 16 }} />
               ))
-            : sortedSpecialties.map((sp) => (
+            : paginatedSpecialties.map((sp) => (
                 <div key={sp.id} className="spec-card" id={`spec-card-${sp.id}`} style={{ cursor: 'pointer' }}>
                   <div className="spec-card__image" onClick={() => navigate(`/specialties/${sp.id}`)}>
                     <img
@@ -155,6 +163,20 @@ export function SpecialtiesPage() {
                 </div>
               ))}
         </div>
+
+        {/* Pagination */}
+        <Pagination
+          currentPage={currentPage}
+          totalItems={sortedSpecialties.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={(p) => {
+            setCurrentPage(p);
+            window.scrollTo({ top: 380, behavior: 'smooth' });
+          }}
+          onItemsPerPageChange={setItemsPerPage}
+          pageSizeOptions={[6, 9, 15]}
+          unitName={isFr ? 'spécialités' : isKr ? 'spesialite' : 'specialties'}
+        />
       </div>
     </main>
   );

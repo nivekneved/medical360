@@ -8,6 +8,7 @@ import { truncateText } from '../../core/services/format.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
+import { Pagination } from '../../components/Pagination/Pagination';
 import './CaseStudies.css';
 
 export function CaseStudiesPage() {
@@ -22,6 +23,8 @@ export function CaseStudiesPage() {
   const [selectedCountry, setSelectedCountry] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('savings');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
@@ -64,6 +67,11 @@ export function CaseStudiesPage() {
     if (sortBy === 'duration') return (a.durationDays || 0) - (b.durationDays || 0);
     return 0;
   });
+
+  const paginatedCaseStudies = sortedCaseStudies.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <main className="case-studies-page" style={{ paddingTop: 'var(--navbar-height)' }}>
@@ -156,7 +164,7 @@ export function CaseStudiesPage() {
             ? Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 400, borderRadius: 16 }} />
               ))
-            : sortedCaseStudies.map(cs => (
+            : paginatedCaseStudies.map(cs => (
                 <div key={cs.id} className="cs-card" id={`cs-card-${cs.id}`}>
                   <div className="cs-card__image">
                     <img
@@ -192,6 +200,20 @@ export function CaseStudiesPage() {
               ))
           }
         </div>
+
+        {/* Pagination */}
+        <Pagination
+          currentPage={currentPage}
+          totalItems={sortedCaseStudies.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={(p) => {
+            setCurrentPage(p);
+            window.scrollTo({ top: 380, behavior: 'smooth' });
+          }}
+          onItemsPerPageChange={setItemsPerPage}
+          pageSizeOptions={[6, 9, 12]}
+          unitName={isFr ? 'témoignages' : isKr ? 'temwagnaz' : 'case studies'}
+        />
 
         <div style={{ textAlign: 'center', marginTop: '3rem', background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-2xl)', padding: '3rem' }}>
           <h2 className="text-h2" style={{ marginBottom: '1rem' }}>

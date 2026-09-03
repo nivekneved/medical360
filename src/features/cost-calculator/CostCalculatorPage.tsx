@@ -80,7 +80,7 @@ export function CostCalculatorPage() {
 
       {/* Hero Header */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/calculator_banner.jpg)' }}>
-        <div className="container page-hero__inner" style={{ maxWidth: 960, margin: '0 auto', textAlign: 'center', alignItems: 'center' }}>
+        <div className="container page-hero__inner">
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',

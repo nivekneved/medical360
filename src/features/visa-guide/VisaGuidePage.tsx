@@ -111,7 +111,7 @@ export function VisaGuidePage() {
 
       {/* Hero Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/visaguide_banner.jpg)' }}>
-        <div className="container page-hero__inner" style={{ maxWidth: 960, margin: '0 auto', textAlign: 'center', alignItems: 'center' }}>
+        <div className="container page-hero__inner">
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
