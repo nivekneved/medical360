@@ -4,6 +4,7 @@
 
 export interface Hospital {
   id: string;
+  slug?: string;
   name: string;
   name_fr?: string;
   name_kr?: string;

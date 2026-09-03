@@ -200,7 +200,7 @@ class MockEngine {
       }
     }
     await this.delay();
-    return this.store.hospitals.find(h => h.id === id) ?? null;
+    return this.store.hospitals.find(h => h.id === id || h.slug === id) ?? null;
   }
 
   async getFeaturedHospitals(): Promise<Hospital[]> {
@@ -339,7 +339,7 @@ class MockEngine {
       }
     }
     await this.delay();
-    return this.store.specialties.find(s => s.id === id) ?? null;
+    return this.store.specialties.find(s => s.id === id || s.slug === id) ?? null;
   }
 
   async getFeaturedSpecialties(): Promise<Specialty[]> {
