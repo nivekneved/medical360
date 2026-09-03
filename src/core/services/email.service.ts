@@ -21,6 +21,7 @@ export interface EmailTemplateConfig {
     enabled: boolean;
     title: string;
     showSpecialty: boolean;
+    showService: boolean;
     showUrgency: boolean;
     showDescription: boolean;
     accentColor: string;
@@ -45,7 +46,7 @@ export interface EmailTemplateConfig {
 }
 
 export const DEFAULT_TEMPLATE_CONFIG: EmailTemplateConfig = {
-  subject: '[New Inquiry] {{patientName}} - {{specialty}}',
+  subject: '[New Inquiry] {{patientName}} - {{service}} ({{specialty}})',
   banner: {
     enabled: true,
     title: 'New Patient Medical Inquiry',
@@ -63,8 +64,9 @@ export const DEFAULT_TEMPLATE_CONFIG: EmailTemplateConfig = {
   },
   medicalDetails: {
     enabled: true,
-    title: 'Medical Requirements',
+    title: 'Medical Requirements & Requested Service',
     showSpecialty: true,
+    showService: true,
     showUrgency: true,
     showDescription: true,
     accentColor: '#065f46',
@@ -128,6 +130,7 @@ export function renderEmailHtml(
     phone: string;
     countryOfResidence: string;
     specialtyName: string;
+    serviceName?: string;
     description: string;
     urgency: string;
     preferredCountry?: string;
@@ -221,9 +224,23 @@ export function renderEmailHtml(
     }
   }
 
-  // 3. Medical Details Component
+  // 3. Medical Details Component & Requested Service
   if (config.medicalDetails?.enabled) {
     const medRows: string[] = [];
+
+    if (config.medicalDetails.showService !== false && data.serviceName) {
+      medRows.push(`
+        <tr style="border-bottom: 1px solid #f1f5f9; background-color: rgba(6, 95, 70, 0.04);">
+          <td style="padding: 10px 8px; color: #065f46; font-size: 14px; width: 38%; font-weight: 700;">🎯 Requested Service:</td>
+          <td style="padding: 10px 8px; color: #065f46; font-size: 14px; font-weight: 800;">
+            <span style="display: inline-block; background: #065f46; color: #ffffff; padding: 3px 10px; border-radius: 999px; font-size: 12px; letter-spacing: 0.2px;">
+              ${data.serviceName}
+            </span>
+          </td>
+        </tr>
+      `);
+    }
+
     if (config.medicalDetails.showSpecialty) {
       medRows.push(`
         <tr style="border-bottom: 1px solid #f1f5f9;">
@@ -232,6 +249,7 @@ export function renderEmailHtml(
         </tr>
       `);
     }
+
     if (config.medicalDetails.showUrgency) {
       medRows.push(`
         <tr style="border-bottom: 1px solid #f1f5f9;">
@@ -294,7 +312,7 @@ export function renderEmailHtml(
   // 5. Call To Action Component
   if (config.callToAction?.enabled) {
     const cleanPhoneDigits = (data.phone || '').replace(/[^0-9]/g, '');
-    const waLink = `https://wa.me/${cleanPhoneDigits}?text=${encodeURIComponent(`Hello ${data.firstName}, thank you for contacting Medical360 regarding your inquiry.`)}`;
+    const waLink = `https://wa.me/${cleanPhoneDigits}?text=${encodeURIComponent(`Hello ${data.firstName}, thank you for contacting Medical360 regarding your inquiry for ${data.serviceName || data.specialtyName}.`)}`;
 
     sections.push(`
       <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #e2e8f0;">
@@ -349,11 +367,20 @@ export function renderEmailHtml(
 
 export function formatSubject(
   subjectTemplate: string,
-  data: { firstName: string; lastName: string; specialtyName: string; urgency: string; countryOfResidence: string }
+  data: {
+    firstName: string;
+    lastName: string;
+    specialtyName: string;
+    serviceName?: string;
+    urgency: string;
+    countryOfResidence: string;
+  }
 ): string {
   const patientFullName = `${data.firstName} ${data.lastName}`.trim() || 'Patient';
+  const displayService = data.serviceName || 'General Facilitation';
   return subjectTemplate
     .replace(/\{\{patientName\}\}/g, patientFullName)
+    .replace(/\{\{service\}\}/g, displayService)
     .replace(/\{\{specialty\}\}/g, data.specialtyName || 'Medical Need')
     .replace(/\{\{urgency\}\}/g, data.urgency)
     .replace(/\{\{country\}\}/g, data.countryOfResidence);
@@ -368,6 +395,7 @@ export async function sendInquiryEmail(formData: InquiryFormData, specialtyName:
     firstName: formData.firstName,
     lastName: formData.lastName,
     specialtyName,
+    serviceName: formData.serviceName,
     urgency: formData.urgency,
     countryOfResidence: formData.countryOfResidence,
   });
@@ -379,6 +407,7 @@ export async function sendInquiryEmail(formData: InquiryFormData, specialtyName:
     phone: formData.phone,
     countryOfResidence: formData.countryOfResidence,
     specialtyName,
+    serviceName: formData.serviceName,
     description: formData.description,
     urgency: formData.urgency,
     preferredCountry: formData.preferredCountry,
@@ -423,6 +452,7 @@ export async function sendTestEmail(recipientEmail: string, config: EmailTemplat
     phone: '+230 5918 8275',
     countryOfResidence: 'Mauritius',
     specialtyName: 'Cardiology & Heart Surgery',
+    serviceName: 'Medical Visa & Travel Planning',
     description: 'Seeking a second opinion for coronary artery bypass vs stenting. Previous angiography results available for review.',
     urgency: 'urgent',
     preferredCountry: 'India',
@@ -434,6 +464,7 @@ export async function sendTestEmail(recipientEmail: string, config: EmailTemplat
     firstName: mockData.firstName,
     lastName: mockData.lastName,
     specialtyName: mockData.specialtyName,
+    serviceName: mockData.serviceName,
     urgency: mockData.urgency,
     countryOfResidence: mockData.countryOfResidence,
   });

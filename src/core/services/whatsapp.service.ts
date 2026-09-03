@@ -29,8 +29,10 @@ export function buildInquiryWhatsAppUrl(params: {
   lastName: string;
   country: string;
   specialty: string;
+  serviceName?: string;
   description: string;
 }): string {
-  const message = `Hello Medical 360,\n\nMy name is ${params.firstName} ${params.lastName} from ${params.country}.\n\nI need assistance with: ${params.specialty}\n\n${params.description}\n\nPlease contact me at your earliest convenience.`;
+  const serviceLine = params.serviceName ? `\nRequested Service: ${params.serviceName}` : '';
+  const message = `Hello Medical 360,\n\nMy name is ${params.firstName} ${params.lastName} from ${params.country}.${serviceLine}\n\nMedical Specialty: ${params.specialty}\n\n${params.description}\n\nPlease contact me at your earliest convenience.`;
   return buildWhatsAppUrl(MED360_PHONE, message);
 }

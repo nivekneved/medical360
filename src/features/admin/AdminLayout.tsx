@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, NavLink, useNavigate, useLocation, Link } from 'react-router-dom';
 import {
   LayoutDashboard,
   Inbox,
@@ -24,18 +24,23 @@ import {
   Send,
   Menu,
   X,
+  PanelLeftClose,
+  PanelLeftOpen,
+  ExternalLink,
+  ShieldCheck,
+  HardDriveDownload,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { useDataConfig } from '../../providers/DataProvider';
 import './AdminLayout.css';
 
 const DATA_NAV = [
-  { to: '/admin/dashboard',    label: 'Dashboard',             icon: LayoutDashboard },
-  { to: '/admin/inquiries',    label: 'Patient Inquiries',     icon: Inbox },
-  { to: '/admin/hospitals',    label: 'Partner Hospitals',     icon: Building2 },
-  { to: '/admin/specialties',  label: 'Medical Specialties',   icon: Stethoscope },
-  { to: '/admin/doctors',      label: '7 Elite Specialists',   icon: UserCheck },
-  { to: '/admin/case-studies',  label: 'Patient Stories',       icon: Award },
+  { to: '/admin/dashboard',    label: 'Dashboard',                     icon: LayoutDashboard },
+  { to: '/admin/inquiries',    label: 'All Patient Requests & Inquiries', icon: Inbox },
+  { to: '/admin/hospitals',    label: 'Partner Hospitals',             icon: Building2 },
+  { to: '/admin/specialties',  label: 'Medical Specialties',           icon: Stethoscope },
+  { to: '/admin/doctors',      label: '7 Elite Specialists',           icon: UserCheck },
+  { to: '/admin/case-studies',  label: 'Patient Stories',               icon: Award },
 ];
 
 const CMS_GLOBAL_NAV = [
@@ -68,8 +73,40 @@ export function AdminLayout() {
   const { mockConfig }     = useDataConfig();
   const navigate           = useNavigate();
   const location           = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
+
+  // Persistent sidebar collapsed state
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    try {
+      const saved = localStorage.getItem('med360_admin_sidebar_collapsed');
+      return saved === 'true';
+    } catch {
+      return false;
+    }
+  });
+
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const toggleCollapsed = () => {
+    setCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('med360_admin_sidebar_collapsed', String(next));
+      } catch { /* ignore */ }
+      return next;
+    });
+  };
+
+  // Keyboard shortcut Ctrl+B or Cmd+B to toggle sidebar
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+        e.preventDefault();
+        toggleCollapsed();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Accordion state: only one section can be open at a time
   const [openSection, setOpenSection] = useState<MenuSection | null>(() => {
@@ -112,6 +149,26 @@ export function AdminLayout() {
     navigate('/admin/login');
   }
 
+  // Get active page breadcrumb name
+  const getCurrentPageTitle = () => {
+    const path = location.pathname;
+    if (path === '/admin/dashboard') return 'Dashboard';
+    if (path === '/admin/inquiries') return 'All Patient Requests';
+    if (path === '/admin/hospitals') return 'Partner Hospitals';
+    if (path === '/admin/specialties') return 'Medical Specialties';
+    if (path === '/admin/doctors') return 'Elite Specialists';
+    if (path === '/admin/case-studies') return 'Patient Stories';
+    if (path === '/admin/settings') return 'System & Database Backup';
+    if (path === '/admin/email-templates') return 'Email Templates';
+    if (path === '/admin/campaigns') return 'Campaigns';
+    if (path.startsWith('/admin/pages/')) {
+      const pageId = path.replace('/admin/pages/', '');
+      const found = CMS_PAGES_NAV.find(p => p.to === path);
+      return found ? `CMS: ${found.label}` : `CMS: ${pageId}`;
+    }
+    return 'Admin Portal';
+  };
+
   return (
     <div className="admin-layout">
       {/* Mobile Top Navigation Header */}
@@ -152,23 +209,38 @@ export function AdminLayout() {
         />
       )}
 
+      {/* ─── SIDEBAR ─── */}
       <aside className={`admin-sidebar${collapsed ? ' admin-sidebar--collapsed' : ''}${mobileOpen ? ' admin-sidebar--mobile-open' : ''}`}>
-        {/* Logo */}
+        
+        {/* Logo & Header Toggle */}
         <div className="admin-sidebar__logo">
-          <div className="admin-sidebar__logo-icon">M</div>
-          {!collapsed && (
-            <div className="admin-sidebar__logo-text">
-              <span>Medical</span>
-              <span className="admin-sidebar__logo-accent">360</span>
-            </div>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1, minWidth: 0 }}>
+            <div className="admin-sidebar__logo-icon">M</div>
+            {!collapsed && (
+              <div className="admin-sidebar__logo-text">
+                <span>Medical</span>
+                <span className="admin-sidebar__logo-accent">360</span>
+              </div>
+            )}
+          </div>
+
+          {/* Top Collapse / Expand Button */}
+          <button
+            type="button"
+            className="admin-sidebar__toggle-header-btn"
+            onClick={toggleCollapsed}
+            title={collapsed ? 'Open sidebar (Ctrl+B)' : 'Close sidebar (Ctrl+B)'}
+            aria-label={collapsed ? 'Open sidebar' : 'Close sidebar'}
+          >
+            {collapsed ? <PanelLeftOpen size={17} /> : <PanelLeftClose size={17} />}
+          </button>
         </div>
 
         {/* Data Source Badge */}
         <NavLink
           to="/admin/settings"
           className={mockConfig.enabled ? 'admin-mock-badge' : 'admin-live-badge'}
-          title={mockConfig.enabled ? 'Running on Mock Data Center (Click to change)' : 'Running on Live Supabase Database (Click to change)'}
+          title={mockConfig.enabled ? 'Running on Mock Data Center (Click to configure & backup)' : 'Running on Live Supabase Database (Click to configure & backup)'}
         >
           {mockConfig.enabled ? (
             <>
@@ -218,9 +290,12 @@ export function AdminLayout() {
                   <NavLink
                     key={to}
                     to={to}
-                    className={({ isActive }) => `admin-sidebar__link${isActive ? ' admin-sidebar__link--active' : ''}`}
+                    className={({ isActive }) =>
+                      `admin-sidebar__nav-link ${isActive ? 'admin-sidebar__nav-link--active' : ''}`
+                    }
+                    title={collapsed ? label : undefined}
                   >
-                    <Icon size={17} />
+                    <Icon size={16} />
                     {!collapsed && <span>{label}</span>}
                   </NavLink>
                 ))}
@@ -228,18 +303,18 @@ export function AdminLayout() {
             )}
           </div>
 
-          {/* ─── SECTION 2: GLOBAL SECTIONS ─── */}
+          {/* ─── SECTION 2: GLOBAL & SYSTEM ─── */}
           <div className="admin-sidebar__section">
             <button
               type="button"
               className={`admin-sidebar__section-header ${openSection === 'global' ? 'admin-sidebar__section-header--open' : ''}`}
               onClick={() => toggleSection('global')}
-              title="Global Sections"
+              title="Global & System Layouts"
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1, minWidth: 0 }}>
                 <Layers size={15} className="admin-sidebar__section-icon" />
                 {!collapsed && (
-                  <span className="admin-sidebar__section-title">Global Sections</span>
+                  <span className="admin-sidebar__section-title">Global Layouts</span>
                 )}
               </div>
               {!collapsed && (
@@ -253,16 +328,18 @@ export function AdminLayout() {
               )}
             </button>
 
-            {/* Submenu Links */}
             {(openSection === 'global' || collapsed) && (
               <div className="admin-sidebar__submenu">
                 {CMS_GLOBAL_NAV.map(({ to, label, icon: Icon }) => (
                   <NavLink
                     key={to}
                     to={to}
-                    className={({ isActive }) => `admin-sidebar__link${isActive ? ' admin-sidebar__link--active' : ''}`}
+                    className={({ isActive }) =>
+                      `admin-sidebar__nav-link ${isActive ? 'admin-sidebar__nav-link--active' : ''}`
+                    }
+                    title={collapsed ? label : undefined}
                   >
-                    <Icon size={17} />
+                    <Icon size={16} />
                     {!collapsed && <span>{label}</span>}
                   </NavLink>
                 ))}
@@ -270,18 +347,18 @@ export function AdminLayout() {
             )}
           </div>
 
-          {/* ─── SECTION 3: PAGE CMS TEXT (EN/FR/KR) ─── */}
+          {/* ─── SECTION 3: PAGES CONTENT CMS ─── */}
           <div className="admin-sidebar__section">
             <button
               type="button"
               className={`admin-sidebar__section-header ${openSection === 'cms' ? 'admin-sidebar__section-header--open' : ''}`}
               onClick={() => toggleSection('cms')}
-              title="Page CMS Text (EN/FR/KR)"
+              title="Pages Content CMS"
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1, minWidth: 0 }}>
                 <FileCode2 size={15} className="admin-sidebar__section-icon" />
                 {!collapsed && (
-                  <span className="admin-sidebar__section-title">Page CMS Text</span>
+                  <span className="admin-sidebar__section-title">Pages CMS</span>
                 )}
               </div>
               {!collapsed && (
@@ -295,16 +372,18 @@ export function AdminLayout() {
               )}
             </button>
 
-            {/* Submenu Links */}
             {(openSection === 'cms' || collapsed) && (
               <div className="admin-sidebar__submenu">
                 {CMS_PAGES_NAV.map(({ to, label }) => (
                   <NavLink
                     key={to}
                     to={to}
-                    className={({ isActive }) => `admin-sidebar__link${isActive ? ' admin-sidebar__link--active' : ''}`}
+                    className={({ isActive }) =>
+                      `admin-sidebar__nav-link admin-sidebar__nav-link--sub ${isActive ? 'admin-sidebar__nav-link--active' : ''}`
+                    }
+                    title={collapsed ? label : undefined}
                   >
-                    <FileText size={15} />
+                    <FileText size={14} />
                     {!collapsed && <span>{label}</span>}
                   </NavLink>
                 ))}
@@ -312,14 +391,17 @@ export function AdminLayout() {
             )}
           </div>
 
-          {/* ─── SECTION: SETTINGS ─── */}
-          <div style={{ marginTop: 'auto', paddingTop: '0.75rem' }}>
+          {/* ─── SYSTEM SETTINGS & BACKUP ─── */}
+          <div style={{ marginTop: 'auto', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <NavLink
               to="/admin/settings"
-              className={({ isActive }) => `admin-sidebar__link${isActive ? ' admin-sidebar__link--active' : ''}`}
+              className={({ isActive }) =>
+                `admin-sidebar__nav-link ${isActive ? 'admin-sidebar__nav-link--active' : ''}`
+              }
+              title={collapsed ? 'System Settings & Backup' : undefined}
             >
               <Settings size={18} />
-              {!collapsed && <span>System Settings</span>}
+              {!collapsed && <span>System & Backup</span>}
             </NavLink>
           </div>
         </nav>
@@ -343,8 +425,9 @@ export function AdminLayout() {
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: collapsed ? 0 : '0.75rem' }}>
             <button
               className="admin-sidebar__collapse-btn"
-              onClick={() => setCollapsed(!collapsed)}
-              title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              onClick={toggleCollapsed}
+              title={collapsed ? 'Expand sidebar (Ctrl+B)' : 'Collapse sidebar (Ctrl+B)'}
+              aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
               {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
             </button>
@@ -361,9 +444,66 @@ export function AdminLayout() {
         </div>
       </aside>
 
-      <main className="admin-main">
-        <Outlet />
-      </main>
+      {/* ─── MAIN CONTENT AREA ─── */}
+      <div className={`admin-main-wrapper${collapsed ? ' admin-main-wrapper--collapsed' : ''}`}>
+        
+        {/* Desktop Sticky Header Bar with Sidebar Open/Close Toggle */}
+        <header className="admin-topbar">
+          <div className="admin-topbar__left">
+            <button
+              type="button"
+              className="admin-topbar__toggle"
+              onClick={toggleCollapsed}
+              title={collapsed ? 'Open sidebar (Ctrl + B)' : 'Close sidebar (Ctrl + B)'}
+              aria-label={collapsed ? 'Open sidebar' : 'Close sidebar'}
+            >
+              {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+              <span className="admin-topbar__toggle-label">
+                {collapsed ? 'Open Menu' : 'Close Menu'}
+              </span>
+            </button>
+
+            <div className="admin-topbar__breadcrumb">
+              <span className="admin-topbar__breadcrumb-root">Medical360 Admin</span>
+              <span className="admin-topbar__breadcrumb-separator">/</span>
+              <span className="admin-topbar__breadcrumb-active">{getCurrentPageTitle()}</span>
+            </div>
+          </div>
+
+          <div className="admin-topbar__right">
+            <Link
+              to="/admin/settings"
+              className="admin-topbar__action-btn"
+              title="Database Backup & Restore Hub"
+            >
+              <HardDriveDownload size={14} />
+              <span>Backup</span>
+            </Link>
+
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="admin-topbar__action-btn"
+              title="Open Public Website in new tab"
+            >
+              <ExternalLink size={14} />
+              <span>Live Site</span>
+            </a>
+
+            <div className="admin-topbar__user-pill">
+              <div className="admin-sidebar__avatar" style={{ width: 26, height: 26, fontSize: '0.75rem' }}>
+                {user?.name?.[0] || 'A'}
+              </div>
+              <span style={{ fontSize: '0.8125rem', fontWeight: 600 }}>{user?.name || 'Administrator'}</span>
+            </div>
+          </div>
+        </header>
+
+        <main className="admin-main">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
