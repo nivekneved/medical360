@@ -78,22 +78,23 @@
 
 ```
 medical360/
-├── backups/                   # Full SQL & JSON database backup snapshots
-│   └── backup_2026-08-20_23-50-00/
-├── public/                    # Static assets (robots.txt, sitemap.xml)
+├── public/                    # Static assets & optimized local banner imagery
+│   └── assets/banners/        # High-definition local banners & medical imagery
 ├── src/
-│   ├── assets/                # Local brand images & media
-│   ├── components/            # Reusable UI components (FloatingWhatsApp, Footer, Navbar, SEO)
-│   ├── core/                  # Domain entities, types & mock services
-│   │   ├── mock/              # Mock engine singleton & data seeds
-│   │   ├── services/          # Pure helper services (format, whatsapp, hospital)
-│   │   └── types/             # TypeScript domain interfaces
+│   ├── components/            # Reusable UI components (Navbar, Footer, Pagination, SEO, WhatsApp)
+│   ├── core/                  # Core domain architecture, types & services
+│   │   ├── mock/              # Mock engine singleton & multilingual data seeds
+│   │   ├── services/          # Services (backup, email, whatsapp, security, format, export)
+│   │   ├── supabase/          # Supabase client & live PostgreSQL integration
+│   │   └── types/             # Domain TypeScript interfaces
 │   ├── features/              # Feature pages & routes (hospitals, doctors, wizard, admin)
-│   ├── hooks/                 # Custom React data hooks (useCMS, useDoctors, etc.)
-│   ├── i18n/                  # Multi-language configuration & dictionaries
+│   │   ├── admin/             # Complete Admin CMS, Inquiries, Settings, Campaigns
+│   │   └── ...                # Public pages (home, about, services, specialties, etc.)
+│   ├── hooks/                 # Custom React data hooks (useCMS, useInquiry, useDoctors, etc.)
+│   ├── i18n/                  # Multi-language configuration (EN / FR / KR)
 │   ├── providers/             # Global Context Providers (Auth, Data, Theme)
-│   └── styles/                # Global design system tokens & utilities
-├── docs/                      # Architectural & Admin documentation
+│   └── styles/                # Design system tokens, typography & global utilities
+├── docs/                      # Technical documentation & admin guides
 └── package.json
 ```
 
