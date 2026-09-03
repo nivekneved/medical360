@@ -1,6 +1,6 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Star, MapPin, Shield, Calendar, BedDouble, CheckCircle2, ArrowRight, MessageCircle, Stethoscope, Award, Globe } from 'lucide-react';
+import { ArrowLeft, Star, MapPin, Shield, Calendar, BedDouble, CheckCircle2, ArrowRight, MessageCircle } from 'lucide-react';
 import { useHospital } from '../../hooks/useHospitals';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useDoctors } from '../../hooks/useDoctors';

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Award, Building2, Stethoscope, Star, Globe, MessageCircle, ArrowRight, CheckCircle2, Shield, HeartPulse } from 'lucide-react';
+import { Award, Building2, Stethoscope, MessageCircle, Shield } from 'lucide-react';
 import { useDoctors } from '../../hooks/useDoctors';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useHospitals } from '../../hooks/useHospitals';
@@ -15,7 +15,7 @@ import type { Doctor } from '../../core/types';
 
 export function DoctorsPage() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
   const [selectedHospital, setSelectedHospital] = useState<string>('all');

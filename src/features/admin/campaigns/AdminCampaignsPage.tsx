@@ -12,21 +12,12 @@ import {
   Eye,
   CheckCircle2,
   AlertCircle,
-  Clock,
   Sparkles,
   Smartphone,
   Monitor,
   Download,
   Search,
-  Filter,
-  ArrowRight,
-  MessageCircle,
-  Check,
-  ChevronRight,
   X,
-  Layers,
-  Palette,
-  ExternalLink,
   LayoutGrid,
   List,
   Printer,
@@ -506,22 +497,7 @@ export function AdminCampaignsPage() {
     showToast(`Successfully imported ${newAdditions.length} new senders/contacts to "${aud.name}"!`);
   };
 
-  const handleExportCSV = () => {
-    if (!activeAudience || activeAudience.contacts.length === 0) {
-      alert('No contacts to export.');
-      return;
-    }
-    const header = 'Name,Email,Phone,Country,AddedAt\n';
-    const rows = activeAudience.contacts.map(c => `"${c.name}","${c.email}","${c.phone || ''}","${c.country || ''}","${c.addedAt}"`).join('\n');
-    const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.setAttribute('href', url);
-    link.setAttribute('download', `${activeAudience.name.toLowerCase().replace(/\s+/g, '_')}_contacts.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+
 
   return (
     <div style={{ padding: '2rem', maxWidth: 1440, margin: '0 auto' }}>

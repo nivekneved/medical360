@@ -16,9 +16,6 @@ import {
   HeartHandshake,
   MessageSquareQuote,
   Info,
-  PhoneCall,
-  Sparkles,
-  ShieldCheck,
   ArrowRight,
   Lock,
 } from 'lucide-react';
@@ -51,7 +48,7 @@ export function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   // Close menus on route change
   useEffect(() => {

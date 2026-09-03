@@ -6,11 +6,6 @@ import {
   Clock,
   Eye,
   MessageCircle,
-  Phone,
-  Mail,
-  User,
-  Globe,
-  Stethoscope,
   X,
   LayoutGrid,
   List,
@@ -22,7 +17,7 @@ import {
 } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { useSpecialties } from '../../../hooks/useSpecialties';
-import { formatRelativeTime, formatDate, formatCostRange } from '../../../core/services/format.service';
+import { formatRelativeTime, formatDate } from '../../../core/services/format.service';
 import { buildInquiryWhatsAppUrl } from '../../../core/services/whatsapp.service';
 import { AdminPagination } from '../components/AdminPagination';
 import { AdminBulkActionBar } from '../components/AdminBulkActionBar';
@@ -49,7 +44,6 @@ const STATUS_OPTIONS: InquiryStatus[] = [
 export function AdminDashboardPage() {
   const [stats, setStats]               = useState({ total: 0, new: 0, inProgress: 0, completed: 0 });
   const [inquiries, setInquiries]       = useState<Inquiry[]>([]);
-  const [loading, setLoading]           = useState(true);
   const { specialties }                 = useSpecialties();
 
   // Controls for Inquiries List
@@ -67,10 +61,7 @@ export function AdminDashboardPage() {
 
   function loadData() {
     mockEngine.getInquiryStats().then(setStats);
-    mockEngine.getInquiries().then((inqs) => {
-      setInquiries(inqs);
-      setLoading(false);
-    });
+    mockEngine.getInquiries().then(setInquiries);
   }
 
   useEffect(() => {

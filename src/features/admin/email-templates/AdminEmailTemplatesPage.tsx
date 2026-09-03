@@ -1,6 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
-  Mail,
   Save,
   RotateCcw,
   Send,
@@ -9,15 +8,10 @@ import {
   AlertCircle,
   Smartphone,
   Monitor,
-  Sparkles,
   Layers,
-  Palette,
-  Check,
-  Info,
 } from 'lucide-react';
 import {
   EmailTemplateConfig,
-  DEFAULT_TEMPLATE_CONFIG,
   getEmailTemplateConfig,
   saveEmailTemplateConfig,
   resetEmailTemplateConfig,

@@ -3,7 +3,6 @@ import { useDataConfig } from '../../../providers/DataProvider';
 import {
   Database,
   Zap,
-  Wifi,
   CheckCircle2,
   AlertCircle,
   RotateCcw,
@@ -17,15 +16,12 @@ import {
   History,
   Trash2,
   Clock,
-  ShieldCheck,
   Check,
   X,
   Copy,
   Eye,
   Plus,
-  ArrowRight,
   HardDriveDownload,
-  Layers,
 } from 'lucide-react';
 import type { MockConfig } from '../../../core/types';
 import { supabase, isSupabaseConfigured } from '../../../core/supabase/client';
@@ -55,7 +51,6 @@ export function AdminSettingsPage() {
 
   // ─── Backup & Restore State ────────────────────────────────────────────────
   const [backups, setBackups] = useState<DatabaseBackup[]>([]);
-  const [loadingBackups, setLoadingBackups] = useState(false);
   const [actionProgress, setActionProgress] = useState<string | null>(null);
   const [alertMessage, setAlertMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [sqlModalContent, setSqlModalContent] = useState<string | null>(null);

@@ -7,7 +7,7 @@ import { useCMS } from '../../hooks/useCMS';
 
 export function ContactPage() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { data: cms } = useCMS('contact');
   const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
 

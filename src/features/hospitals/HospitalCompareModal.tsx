@@ -1,4 +1,4 @@
-import { X, Check, Star, Building2, Globe, Shield, Award, Users, Bed, Activity, ArrowRight } from 'lucide-react';
+import { X, Star, Building2, Globe, Award, Users, Bed, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Hospital } from '../../core/types';
 import { useTranslation } from 'react-i18next';

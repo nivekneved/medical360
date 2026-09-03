@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Calculator, DollarSign, ArrowRight, CheckCircle2, ShieldCheck, Clock, Plane, Sparkles, Building2, HelpCircle, HeartPulse, RefreshCw } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Calculator, ArrowRight, CheckCircle2, ShieldCheck, Clock, Sparkles, HeartPulse } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,7 @@ const COUNTRY_PROFILES: CountryCostProfile[] = [
 const MUR_RATE = 46.5; // 1 USD = 46.5 Mauritian Rupees
 
 export function CostCalculatorPage() {
-  const { specialties, loading } = useSpecialties();
+  const { specialties } = useSpecialties();
   const { i18n } = useTranslation();
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';

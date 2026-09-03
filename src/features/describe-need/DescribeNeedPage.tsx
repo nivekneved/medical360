@@ -13,7 +13,7 @@ const COUNTRIES = ['Mauritius', 'Réunion Island', 'Comoros', 'Madagascar', 'Sey
 export function DescribeNeedPage() {
   const navigate   = useNavigate();
   const [params]   = useSearchParams();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { specialties } = useSpecialties();
   const {
     step, totalSteps, formData, honeypot, setHoneypot, submitting, submitted,

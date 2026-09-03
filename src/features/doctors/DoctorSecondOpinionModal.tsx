@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, CheckCircle2, User, Phone, Mail, FileText, Send, ShieldCheck, Stethoscope, AlertCircle } from 'lucide-react';
+import { X, CheckCircle2, Send, ShieldCheck, Stethoscope } from 'lucide-react';
 import type { Doctor, Hospital } from '../../core/types';
 import { mockEngine } from '../../core/mock/engine';
 import { useTranslation } from 'react-i18next';

@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Filter, Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X } from 'lucide-react';
+import { Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X } from 'lucide-react';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useTranslation } from 'react-i18next';
 import { getUniqueCountries, getUniqueAccreditations } from '../../core/services/hospital.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
 import type { HospitalFilters } from '../../core/services/hospital.service';
-import type { Hospital } from '../../core/types';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { HospitalCompareModal } from './HospitalCompareModal';
@@ -18,7 +17,7 @@ export function HospitalsPage() {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<HospitalFilters>({});
   const [searchInput, setSearchInput] = useState('');
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { hospitals, loading } = useHospitals(filters);
   const { hospitals: allHospitals } = useHospitals({});
   const { data: cms } = useCMS('hospitals');
@@ -28,11 +27,6 @@ export function HospitalsPage() {
 
   const countries = getUniqueCountries(allHospitals);
   const accreditations = getUniqueAccreditations(allHospitals);
-
-  function handleSearch() {
-    setFilters(f => ({ ...f, searchQuery: searchInput || undefined }));
-    setCurrentPage(1);
-  }
 
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';

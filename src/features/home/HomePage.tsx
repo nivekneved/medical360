@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Star, Users, Award, Globe2, HeartPulse, ShieldCheck, Clock, MessageCircle, ChevronRight } from 'lucide-react';
+import { ArrowRight, Star, Users, Award, Globe2, HeartPulse, ShieldCheck, Clock, MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCMS } from '../../hooks/useCMS';
 import { useFeaturedSpecialties } from '../../hooks/useSpecialties';
@@ -7,7 +7,7 @@ import { useFeaturedHospitals } from '../../hooks/useHospitals';
 import { useFeaturedCaseStudies } from '../../hooks/useCaseStudies';
 import { SEO } from '../../components/SEO/SEO';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
-import { formatNumber, truncateText, formatRatingLabel } from '../../core/services/format.service';
+import { formatNumber, truncateText } from '../../core/services/format.service';
 import './Home.css';
 
 export function HomePage() {
