@@ -80,7 +80,7 @@ export function HomePage() {
         <div className="container hero__inner">
           <div className="hero__content animate-fade-in-up">
             <div className="hero__eyebrow">
-              <span className="badge badge-accent">{t('home.heroBadge')}</span>
+              <span className="badge badge-accent">{tCms('heroBadge', t('home.heroBadge'))}</span>
             </div>
             <h1 className="hero__title">
               {tCms('heroTitleLine1', t('home.heroTitleLine1'))}<br />
@@ -95,7 +95,7 @@ export function HomePage() {
                 onClick={() => navigate('/describe-need')}
                 id="hero-cta-btn"
               >
-                {t('nav.freeOpinion')}
+                {tCms('heroPrimaryCta', t('nav.freeOpinion'))}
                 <ArrowRight size={18} />
               </button>
               <a
@@ -106,7 +106,7 @@ export function HomePage() {
                 id="hero-whatsapp-btn"
               >
                 <MessageCircle size={18} />
-                {t('nav.whatsapp')}
+                {tCms('heroSecondaryCta', t('nav.whatsapp'))}
               </a>
             </div>
             <div className="hero__trust">
@@ -138,9 +138,9 @@ export function HomePage() {
       <section className="section home-specialties">
         <div className="container">
           <div className="section-header">
-            <span className="section-label">{t('home.specialties.label')}</span>
-            <h2 className="text-h2">{t('home.specialties.title')}</h2>
-            <p className="text-lead">{t('home.specialties.desc')}</p>
+            <span className="section-label">{tCms('specialtiesLabel', t('home.specialties.label'))}</span>
+            <h2 className="text-h2">{tCms('specialtiesTitle', t('home.specialties.title'))}</h2>
+            <p className="text-lead">{tCms('specialtiesDesc', t('home.specialties.desc'))}</p>
           </div>
           <div className="specialties-grid">
             {specLoading
@@ -162,7 +162,7 @@ export function HomePage() {
                     <p className="specialty-card-full__desc">{l(sp, 'shortDescription')}</p>
                     <div className="specialty-card-full__action">
                       <span className="specialty-card-full__btn">
-                        {t('home.specialties.exploreBtn')} <ArrowRight size={14} />
+                        {tCms('exploreBtnText', t('home.specialties.exploreBtn'))} <ArrowRight size={14} />
                       </span>
                     </div>
                   </div>
@@ -172,7 +172,7 @@ export function HomePage() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/specialties')}>
-              {t('home.specialties.viewAllBtn')} <ArrowRight size={16} />
+              {tCms('specialtiesViewAllBtn', t('home.specialties.viewAllBtn'))} <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -183,25 +183,25 @@ export function HomePage() {
         <div className="home-process__bg" />
         <div className="container">
           <div className="section-header">
-            <span className="section-label">{t('home.process.label')}</span>
-            <h2 className="text-h2" style={{ color: '#fff' }}>{t('home.process.title')}</h2>
+            <span className="section-label">{tCms('processLabel', t('home.process.label'))}</span>
+            <h2 className="text-h2" style={{ color: '#fff' }}>{tCms('processTitle', t('home.process.title'))}</h2>
             <p className="text-lead" style={{ color: 'rgba(255,255,255,0.7)' }}>
-              {t('home.process.desc')}
+              {tCms('processDesc', t('home.process.desc'))}
             </p>
           </div>
           <div className="process-steps">
             {PROCESS_STEPS.map((step, i) => (
               <div key={step.num} className={`process-step animate-fade-in-up delay-${i + 1}`}>
                 <div className="process-step__num">{step.num}</div>
-                <h3 className="process-step__title">{t(`home.process.step${i + 1}.title` as any) || step.title}</h3>
-                <p className="process-step__desc">{t(`home.process.step${i + 1}.desc` as any) || step.desc}</p>
+                <h3 className="process-step__title">{step.title}</h3>
+                <p className="process-step__desc">{step.desc}</p>
                 {i < PROCESS_STEPS.length - 1 && <div className="process-step__connector" />}
               </div>
             ))}
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="process-cta-btn">
-              {t('home.process.startBtn')} <ArrowRight size={18} />
+              {tCms('processStartBtn', t('home.process.startBtn'))} <ArrowRight size={18} />
             </button>
           </div>
         </div>
@@ -211,9 +211,9 @@ export function HomePage() {
       <section className="section home-hospitals">
         <div className="container">
           <div className="section-header">
-            <span className="section-label">{t('home.network.label')}</span>
-            <h2 className="text-h2">{t('home.network.title')}</h2>
-            <p className="text-lead">{t('home.network.desc')}</p>
+            <span className="section-label">{tCms('networkLabel', t('home.network.label'))}</span>
+            <h2 className="text-h2">{tCms('networkTitle', t('home.network.title'))}</h2>
+            <p className="text-lead">{tCms('networkDesc', t('home.network.desc'))}</p>
           </div>
           <div className="hospitals-grid">
             {hospLoading
@@ -253,7 +253,7 @@ export function HomePage() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/hospitals')}>
-              {t('home.network.viewAllBtn')} <ArrowRight size={16} />
+              {tCms('networkViewAllBtn', t('home.network.viewAllBtn'))} <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -264,19 +264,19 @@ export function HomePage() {
         <div className="container">
           <div className="why-grid">
             <div className="why-content">
-              <span className="section-label">{t('home.whyBadge')}</span>
-              <h2 className="text-h2">{t('home.whyTitle')}</h2>
+              <span className="section-label">{tCms('whyBadge', t('home.whyBadge'))}</span>
+              <h2 className="text-h2">{tCms('whyTitle', t('home.whyTitle'))}</h2>
               <p className="text-lead">
-                {t('home.whyDesc')}
+                {tCms('whyDesc', t('home.whyDesc'))}
               </p>
               <div className="why-image-card">
                 <img src="/assets/consultation-support.jpg" alt="Compassionate healthcare consultation" loading="lazy" />
                 <div className="why-image-badge">
-                  <span className="badge badge-accent">{t('home.whyImageBadge')}</span>
+                  <span className="badge badge-accent">{tCms('whyImageBadge', t('home.whyImageBadge'))}</span>
                 </div>
               </div>
               <button className="btn btn-primary" onClick={() => navigate('/about')} style={{ marginTop: '2rem' }}>
-                {t('home.aboutBtn')} <ArrowRight size={16} />
+                {tCms('whyAboutBtn', t('home.aboutBtn'))} <ArrowRight size={16} />
               </button>
             </div>
             <div className="why-features">
@@ -286,8 +286,8 @@ export function HomePage() {
                     <Icon size={22} />
                   </div>
                   <div>
-                    <h4 className="why-feature__title">{title}</h4>
-                    <p className="why-feature__desc">{desc}</p>
+                    <h4 className="why-feature__title">{tCms(`whyFeature${i + 1}Title`, title)}</h4>
+                    <p className="why-feature__desc">{tCms(`whyFeature${i + 1}Desc`, desc)}</p>
                   </div>
                 </div>
               ))}
@@ -300,9 +300,9 @@ export function HomePage() {
       <section className="section home-cases">
         <div className="container">
           <div className="section-header">
-            <span className="section-label">{t('home.cases.label')}</span>
-            <h2 className="text-h2">{t('home.cases.title')}</h2>
-            <p className="text-lead">{t('home.cases.desc')}</p>
+            <span className="section-label">{tCms('casesLabel', t('home.cases.label'))}</span>
+            <h2 className="text-h2">{tCms('casesTitle', t('home.cases.title'))}</h2>
+            <p className="text-lead">{tCms('casesDesc', t('home.cases.desc'))}</p>
           </div>
           <div className="cases-grid">
             {csLoading
@@ -333,24 +333,24 @@ export function HomePage() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/case-studies')}>
-              {t('home.cases.viewAllBtn')} <ArrowRight size={16} />
+              {tCms('casesViewAllBtn', t('home.cases.viewAllBtn'))} <ArrowRight size={16} />
             </button>
           </div>
         </div>
       </section>
 
-      {/* ── Final CTA ──────────────────────────────────────────────────────────── */}
+      {/* ── Final CTA ──────────────────────────────────────────────────── */}
       <section className="home-cta">
         <div className="home-cta__bg" />
         <div className="container home-cta__inner">
           <div className="home-cta__content">
-            <h2 className="home-cta__title">{t('home.cta.title')}</h2>
+            <h2 className="home-cta__title">{tCms('ctaTitle', t('home.cta.title'))}</h2>
             <p className="home-cta__subtitle">
-              {t('home.cta.desc')}
+              {tCms('ctaDesc', t('home.cta.desc'))}
             </p>
             <div className="home-cta__actions">
               <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="home-final-cta-btn">
-                {t('nav.freeOpinion')} <ArrowRight size={18} />
+                {tCms('ctaPrimaryBtn', t('nav.freeOpinion'))} <ArrowRight size={18} />
               </button>
               <a
                 href={buildMed360WhatsAppUrl()}
@@ -359,7 +359,7 @@ export function HomePage() {
                 className="btn btn-ghost btn-lg"
               >
                 <MessageCircle size={18} />
-                WhatsApp: 59188275
+                {tCms('ctaWhatsAppBtn', 'WhatsApp: 59188275')}
               </a>
             </div>
           </div>
