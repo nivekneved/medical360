@@ -88,10 +88,24 @@ export function Footer() {
           </div>
         </div>
 
+        <div style={{
+          marginTop: '2rem',
+          paddingTop: '1.5rem',
+          borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+          fontSize: '0.78rem',
+          color: 'rgba(255, 255, 255, 0.45)',
+          lineHeight: 1.6,
+          textAlign: 'center',
+        }}>
+          Medical 360 (Med360 Ltd) is an independent healthcare concierge and medical travel coordinator, not a hospital or licensed clinic. All medical diagnoses and surgical procedures are performed by accredited partner hospitals and licensed doctors.
+        </div>
+
         <div className="footer__bottom">
-          <p>© {new Date().getFullYear()} Med360 Ltd. {t('footer.rights')} | Port Louis, Mauritius</p>
-          <div className="footer__bottom-links">
-            <Link to="/admin">{t('footer.adminPortal')}</Link>
+          <p>© {new Date().getFullYear()} Med360 Ltd. All rights reserved. | Port Louis, Mauritius</p>
+          <div className="footer__bottom-links" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
+            <Link to="/privacy" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Privacy Policy</Link>
+            <Link to="/terms" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Terms of Service</Link>
+            <Link to="/admin" style={{ color: 'rgba(255,255,255,0.4)', textDecoration: 'none', fontSize: '0.8rem' }}>Staff Portal</Link>
           </div>
         </div>
       </div>

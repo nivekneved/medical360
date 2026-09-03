@@ -5,7 +5,7 @@ import { doctorsSeed } from './seeds/doctors.seed';
 import { caseStudiesSeed } from './seeds/case-studies.seed';
 import { inquiriesSeed } from './seeds/inquiries.seed';
 import { cmsSeed, CmsPage } from './seeds/cms.seed';
-import { supabase } from '../supabase/client';
+import { supabase, isSupabaseConfigured } from '../supabase/client';
 
 // ─── Default Config ──────────────────────────────────────────────────────────
 const DEFAULT_CONFIG: MockConfig = {
@@ -591,7 +591,8 @@ class MockEngine {
       notes: [],
     };
 
-    if (this.isLive()) {
+    // Persist to live Supabase cloud database if configured
+    if (isSupabaseConfigured) {
       try {
         const row = {
           id,
@@ -614,9 +615,14 @@ class MockEngine {
           updated_at: now,
         };
         const { data: resData, error } = await supabase.from('inquiries').insert([row]).select().single();
-        if (!error && resData) return this.mapInquiryRow(resData);
+        if (!error && resData) {
+          const mapped = this.mapInquiryRow(resData);
+          this.store.inquiries.unshift(mapped);
+          this.save();
+          return mapped;
+        }
       } catch (e) {
-        console.warn('Supabase createInquiry failed:', e);
+        console.warn('Supabase createInquiry error (falling back to local store):', e);
       }
     }
 
