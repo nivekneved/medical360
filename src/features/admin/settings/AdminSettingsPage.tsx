@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDataConfig } from '../../../providers/DataProvider';
 import { Database, Zap, Wifi, CheckCircle2, AlertCircle, RotateCcw, Cloud, Server, RefreshCw } from 'lucide-react';
 import type { MockConfig } from '../../../core/types';
-import { supabase } from '../../../core/supabase/client';
+import { supabase, isSupabaseConfigured } from '../../../core/supabase/client';
 
 export function AdminSettingsPage() {
   const { mockConfig, updateMockConfig, resetMock } = useDataConfig();
@@ -24,6 +24,15 @@ export function AdminSettingsPage() {
   }
 
   const testSupabaseConnection = async () => {
+    if (!isSupabaseConfigured) {
+      setConnectionStatus({
+        tested: true,
+        online: false,
+        message: 'VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are not configured in environment variables. Running in Local Mock Data mode.',
+      });
+      return;
+    }
+
     setTestingConnection(true);
     try {
       const [hospRes, inqRes] = await Promise.all([
