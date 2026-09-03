@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   Save,
   RotateCcw,
@@ -22,6 +22,21 @@ import { useCMS } from '../../../hooks/useCMS';
 import { mockEngine } from '../../../core/mock/engine';
 import { ImageField } from '../components/ImageField';
 import { RichTextEditor } from '../components/RichTextEditor';
+
+const CMS_PAGES = [
+  { id: 'home', label: 'Home', icon: '🏠' },
+  { id: 'about', label: 'About Us', icon: 'ℹ️' },
+  { id: 'services', label: 'Services', icon: '🩺' },
+  { id: 'hospitals', label: 'Hospitals', icon: '🏢' },
+  { id: 'specialties', label: 'Specialties', icon: '⭐' },
+  { id: 'doctors', label: 'Doctors', icon: '👨‍⚕️' },
+  { id: 'case-studies', label: 'Stories', icon: '📖' },
+  { id: 'cost-calculator', label: 'Calculator', icon: '🧮' },
+  { id: 'visa-guide', label: 'Visa Guide', icon: '✈️' },
+  { id: 'contact', label: 'Contact', icon: '✉️' },
+  { id: 'privacy', label: 'Privacy', icon: '🔒' },
+  { id: 'terms', label: 'Terms', icon: '📜' },
+];
 
 export function AdminPageEditor() {
   const { pageId } = useParams<{ pageId: string }>();
@@ -235,7 +250,48 @@ export function AdminPageEditor() {
   }
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ padding: 'clamp(1rem, 2.5vw, 2rem)' }}>
+      
+      {/* ─── Horizontal CMS Pages Navigation Tabs ─── */}
+      <div style={{
+        display: 'flex',
+        gap: '0.4rem',
+        overflowX: 'auto',
+        padding: '6px',
+        background: 'var(--color-surface)',
+        border: '1.5px solid var(--color-border)',
+        borderRadius: 'var(--radius-xl)',
+        marginBottom: '1.75rem',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
+      }}>
+        {CMS_PAGES.map((page) => {
+          const isActive = activePageId === page.id;
+          return (
+            <Link
+              key={page.id}
+              to={`/admin/pages/${page.id}`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.45rem',
+                padding: '8px 14px',
+                borderRadius: 'var(--radius-md)',
+                textDecoration: 'none',
+                fontSize: '0.8125rem',
+                fontWeight: isActive ? 800 : 600,
+                background: isActive ? 'var(--color-primary)' : 'transparent',
+                color: isActive ? '#ffffff' : 'var(--color-text-secondary)',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <span>{page.icon}</span>
+              <span>{page.label}</span>
+            </Link>
+          );
+        })}
+      </div>
+
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
