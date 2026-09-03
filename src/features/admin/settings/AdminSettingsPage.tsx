@@ -54,6 +54,7 @@ export function AdminSettingsPage() {
   const [actionProgress, setActionProgress] = useState<string | null>(null);
   const [alertMessage, setAlertMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [sqlModalContent, setSqlModalContent] = useState<string | null>(null);
+  const [settingsTab, setSettingsTab] = useState<'backup' | 'supabase' | 'simulation'>('backup');
   const [copiedSql, setCopiedSql] = useState(false);
   const [newSnapshotLabel, setNewSnapshotLabel] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -314,9 +315,66 @@ export function AdminSettingsPage() {
         </div>
       )}
 
+      {/* Settings Navigation Tabs */}
+      <div style={{
+        display: 'flex',
+        gap: '0.5rem',
+        background: 'var(--color-surface)',
+        border: '1.5px solid var(--color-border)',
+        padding: '6px',
+        borderRadius: 'var(--radius-xl)',
+        marginBottom: '1.75rem',
+        flexWrap: 'wrap',
+      }}>
+        {[
+          { key: 'backup', label: '💾 Backup & Restore Hub', badge: `${backups.length} Snapshots` },
+          { key: 'supabase', label: '☁️ Live Supabase Connection', badge: isLive ? '🟢 Connected' : '🟡 Standby' },
+          { key: 'simulation', label: '⚡ Simulation & Cache', badge: mockConfig.latency.toUpperCase() },
+        ].map(tab => {
+          const isActive = settingsTab === tab.key;
+          return (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => setSettingsTab(tab.key as any)}
+              style={{
+                flex: 1,
+                minWidth: 200,
+                padding: '10px 16px',
+                borderRadius: 'var(--radius-md)',
+                border: 'none',
+                background: isActive ? 'var(--color-primary)' : 'transparent',
+                color: isActive ? '#ffffff' : 'var(--color-text-secondary)',
+                fontWeight: 700,
+                fontSize: '0.875rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.6rem',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              <span>{tab.label}</span>
+              <span style={{
+                background: isActive ? 'rgba(255,255,255,0.25)' : 'var(--color-surface-2)',
+                color: isActive ? '#ffffff' : 'var(--color-text-muted)',
+                fontSize: '0.72rem',
+                padding: '2px 8px',
+                borderRadius: 999,
+                fontWeight: 700,
+              }}>
+                {tab.badge}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
         
         {/* ─── 1. ONE-CLICK DATABASE BACKUP & RESTORE CENTER ────────────────── */}
+        {settingsTab === 'backup' && (
         <div style={{
           background: 'var(--color-surface)',
           border: '1.5px solid var(--color-border)',
@@ -565,8 +623,10 @@ export function AdminSettingsPage() {
             )}
           </div>
         </div>
+        )}
 
         {/* ─── 2. DATA SOURCE SELECTION CARDS ──────────────────────────────── */}
+        {settingsTab === 'supabase' && (
         <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', padding: '1.5rem', boxShadow: '0 2px 10px rgba(0,0,0,0.02)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
             <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
@@ -661,23 +721,17 @@ export function AdminSettingsPage() {
 
           </div>
 
-          {/* Connection Status Banner */}
+          {/* Connection Status Box */}
           {connectionStatus.tested && (
             <div style={{
-              background: connectionStatus.online ? '#ecfdf5' : '#fef2f2',
-              border: `1px solid ${connectionStatus.online ? '#a7f3d0' : '#fecaca'}`,
-              color: connectionStatus.online ? '#065f46' : '#991b1b',
-              padding: '0.75rem 1rem',
-              borderRadius: 8,
-              fontSize: '0.8125rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '0.5rem',
+              background: connectionStatus.online ? 'rgba(5, 150, 105, 0.08)' : 'rgba(239, 68, 68, 0.08)',
+              border: `1.5px solid ${connectionStatus.online ? 'rgba(5, 150, 105, 0.25)' : 'rgba(239, 68, 68, 0.25)'}`,
+              borderRadius: 10,
+              padding: '1rem',
+              color: connectionStatus.online ? '#059669' : '#ef4444',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 600 }}>
-                {connectionStatus.online ? <CheckCircle2 size={16} color="#059669" /> : <AlertCircle size={16} color="#dc2626" />}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.25rem' }}>
+                {connectionStatus.online ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
                 <span>{connectionStatus.message}</span>
               </div>
               {connectionStatus.online && (
@@ -688,9 +742,11 @@ export function AdminSettingsPage() {
             </div>
           )}
         </div>
+        )}
 
-        {/* ─── 3. SIMULATED LATENCY (For Mock Mode) ─────────────────────────── */}
-        {!isLive && (
+        {/* ─── 3. SIMULATED LATENCY & CACHE RESET ─────────────────────────── */}
+        {settingsTab === 'simulation' && (
+        <>
           <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', padding: '1.5rem', boxShadow: '0 2px 8px rgba(0,0,0,0.02)' }}>
             <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', marginBottom: '1rem' }}>
               <div style={{ width: 38, height: 38, borderRadius: 8, background: 'rgba(26,107,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)' }}>
@@ -726,37 +782,36 @@ export function AdminSettingsPage() {
               ))}
             </div>
           </div>
-        )}
 
-        {/* ─── 4. RESET SEEDS ──────────────────────────────────────────────── */}
-        <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', padding: '1.5rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-              <div style={{ width: 38, height: 38, borderRadius: 8, background: 'rgba(239,68,68,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-danger)' }}>
-                <RotateCcw size={18} />
+          <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', padding: '1.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+                <div style={{ width: 38, height: 38, borderRadius: 8, background: 'rgba(239,68,68,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-danger)' }}>
+                  <RotateCcw size={18} />
+                </div>
+                <div>
+                  <h3 style={{ fontWeight: 800, fontSize: '1rem', margin: 0 }}>Reset Local Data Cache</h3>
+                  <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', margin: 0 }}>Reset local storage data to initial fresh seed state</p>
+                </div>
               </div>
-              <div>
-                <h3 style={{ fontWeight: 800, fontSize: '1rem', margin: 0 }}>Reset Local Data Cache</h3>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', margin: 0 }}>Reset local storage data to initial fresh seed state</p>
-              </div>
+              <button
+                onClick={resetMock}
+                id="settings-reset-btn"
+                className="btn btn-outline btn-sm"
+                style={{ color: 'var(--color-danger)', borderColor: 'rgba(239,68,68,0.3)', fontWeight: 700 }}
+              >
+                Reset Local Storage
+              </button>
             </div>
-            <button
-              onClick={resetMock}
-              id="settings-reset-btn"
-              className="btn btn-outline btn-sm"
-              style={{ color: 'var(--color-danger)', borderColor: 'rgba(239,68,68,0.3)', fontWeight: 700 }}
-            >
-              Reset Local Storage
-            </button>
           </div>
-        </div>
 
-        {/* ─── 5. DEMO CREDENTIALS QUICK REFERENCE ─────────────────────────── */}
-        <div style={{ background: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '1rem 1.25rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-          <div style={{ fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: 4 }}>System Access Credentials:</div>
-          <div>👑 <strong>Administrator (Full Access):</strong> <code style={{ color: 'var(--color-primary)' }}>admin@med360.mu</code> / <code style={{ color: 'var(--color-primary)' }}>med360admin</code></div>
-          <div>📋 <strong>Case Manager (Inquiries):</strong> <code style={{ color: '#0284c7' }}>case@med360.mu</code> / <code style={{ color: '#0284c7' }}>med360admin</code></div>
-        </div>
+          <div style={{ background: 'var(--color-surface-2)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-lg)', padding: '1rem 1.25rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+            <div style={{ fontWeight: 800, color: 'var(--color-text-primary)', marginBottom: 4 }}>System Access Credentials:</div>
+            <div>👑 <strong>Administrator (Full Access):</strong> <code style={{ color: 'var(--color-primary)' }}>admin@med360.mu</code> / <code style={{ color: 'var(--color-primary)' }}>med360admin</code></div>
+            <div>📋 <strong>Case Manager (Inquiries):</strong> <code style={{ color: '#0284c7' }}>case@med360.mu</code> / <code style={{ color: '#0284c7' }}>med360admin</code></div>
+          </div>
+        </>
+        )}
 
       </div>
 
