@@ -9,24 +9,24 @@ import { useCaseStudies } from '../../hooks/useCaseStudies';
 
 const HIGHLIGHTS = [
   { 
-    icon: Shield, 
-    label: 'Only Accredited Partners', label_fr: 'Partenaires Accrédités Uniquement', label_kr: 'Zis Partner Akredite',
-    sub: 'JCI · NABH · ISO certified hospitals', sub_fr: 'Hôpitaux certifiés JCI · NABH · ISO', sub_kr: 'Lopital sertifie JCI · NABH · ISO'
+    icon: Heart, 
+    label: 'Owned by NGO Enn Rev Enn Sourir', label_fr: 'Détenu par l\'ONG Enn Rev Enn Sourir', label_kr: 'Apartenir a l\'ONG Enn Rev Enn Sourir',
+    sub: '100% of profits fund medical care for the needy', sub_fr: '100 % des bénéfices financent les soins des démunis', sub_kr: '100% profi al dan swen pou bann ki dan bezwin'
   },
   { 
     icon: Users,  
-    label: '1,200+ Patients Assisted', label_fr: 'Plus de 1 200 Patients Assistés', label_kr: 'Plis ki 1 200 Pasian Asiste',
-    sub: 'From Mauritius, Reunion, Comoros and beyond', sub_fr: 'De l\'Île Maurice, de la Réunion, des Comores et d\'ailleurs', sub_kr: 'Depi Moris, Larenion, Komor ek lezot pei'
+    label: '10+ Years Helping the Needy', label_fr: '10+ Ans aux Côtés des Plus Démunis', label_kr: '10+ Banlane pe Ed Dimounn dan Bezwin',
+    sub: 'Specialised care in private clinics & abroad', sub_fr: 'Soins spécialisés en clinique privée et à l\'étranger', sub_kr: 'Swen spesialize dan klinik prive ek a letranze'
   },
   { 
     icon: Globe2, 
-    label: '7+ Countries', label_fr: 'Plus de 7 Pays', label_kr: 'Plis ki 7 Pei',
-    sub: 'India, Thailand, Singapore, Malaysia, UAE', sub_fr: 'Inde, Thaïlande, Singapour, Malaisie, Émirats Arabes Unis', sub_kr: 'L\'inde, Taylann, Singapour, Malaisie, Dubai'
+    label: 'Accredited Hospitals & Clinics', label_fr: 'Hôpitaux & Cliniques Accrédités', label_kr: 'Lopital & Klinik Akredite',
+    sub: 'Mauritius, India, Thailand & premier global centres', sub_fr: 'Maurice, Inde, Thaïlande et grands centres mondiaux', sub_kr: 'Moris, L\'inde, Taylann ek lezot gran pei'
   },
   { 
-    icon: Heart,  
-    label: 'Free for Patients', label_fr: 'Gratuit pour les Patients', label_kr: 'Gratis pou Pasian',
-    sub: 'We are compensated by hospitals, not patients', sub_fr: 'Nous sommes rémunérés par les hôpitaux, pas par les patients', sub_kr: 'Lopital ki pey nou, pa bann pasian'
+    icon: Shield,  
+    label: 'Free Guidance & Medical Opinion', label_fr: 'Avis Médical & Orientation Gratuits', label_kr: 'Lavi Medikal & Gid Gratis',
+    sub: 'Complete personalized concierge for every patient', sub_fr: 'Accompagnement personnalisé pour chaque patient', sub_kr: 'Sipor konzierz konple pou sak pasian'
   },
 ];
 
@@ -130,8 +130,8 @@ export function AboutPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('À Propos de Med360, Prix & Témoignages', 'Lor Nou, Pri & Zistwar Pasian', 'About Med360, Awards & Patient Stories')}
-        description={l10n('Med360 connecte les patients mauriciens aux hôpitaux du monde. Découvrez nos récompenses internationales et nos témoignages vérifiés.', 'Med360 konekte bann pasian Morisien ar bann pli bon lopital dan lemond. Dekouver nou bann rekonpans ek temwagnaz.', 'Med360 connects Mauritian patients to the best hospitals globally. Explore our industry awards, accreditations, and verified recovery stories.')}
+        title={l10n('À Propos de Med360 · ONG Enn Rev Enn Sourir', 'Lor Med360 · ONG Enn Rev Enn Sourir', 'About Med360 · Owned by NGO Enn Rev Enn Sourir')}
+        description={l10n('Medical 360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. 10 ans d\'aide médicale spécialisée pour les démunis. 100 % des bénéfices reversés à l\'ONG.', 'Medical 360 apartenir a l\'ONG Enn Rev Enn Sourir. 10 banlane led medikal spesialize. 100% profi retourn dan l\'ONG.', 'Medical 360 is a company owned by NGO Enn Rev Enn Sourir. 10+ years helping needy patients access specialised care in private clinics and abroad. 100% profits return to the NGO.')}
         canonical="/about"
       />
 
@@ -139,16 +139,16 @@ export function AboutPage() {
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Notre Histoire & Valeurs', 'Nou Zistwar & Valer', 'Our Story & Purpose'))}
+            {tCms('heroLabel', l10n('✦ Détenu par l\'ONG Enn Rev Enn Sourir · 10+ Ans d\'Aide Médicale', '✦ Apartenir a l\'ONG Enn Rev Enn Sourir · 10+ Banlane dan Swen', '✦ Owned by NGO Enn Rev Enn Sourir · 10+ Years of Care'))}
           </span>
           <h1 className="text-h1">
             {tCms('heroTitle', l10n('À Propos de Medical 360', 'A Propo Medical 360', 'About Medical 360'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Pionnier de la conciergerie médicale à l\'Île Maurice et dans l\'océan Indien, nous guidons chaque patient vers des soins de classe mondiale.',
-              'Pionie dan konsierzri medikal dan Moris ek losean Indien, nou gid sak pasian ver bann swen de klas mondial.',
-              'Pioneering medical concierge care across Mauritius and the Indian Ocean, guiding every patient to world-class treatment.'
+              'Entreprise sociale détenue par l\'ONG Enn Rev Enn Sourir, Med360 met 10 ans d\'expertise médicale au service de tous — 100 % de nos bénéfices sont reversés à l\'ONG pour continuer de soigner les plus démunis.',
+              'Lakonpanyi sosyal apartenir a l\'ONG Enn Rev Enn Sourir, Med360 met 10 banlane lexperyans medikal o-servis tou dimounn — 100% nou bann profi retourn dan l\'ONG pou swany bann ki dan bezwin.',
+              'A social enterprise owned by the NGO Enn Rev Enn Sourir, Med360 brings 10 years of medical coordination expertise to everyone — with 100% of profits returned to the NGO to continue funding care for the needy.'
             ))}
           </p>
         </div>
@@ -160,30 +160,30 @@ export function AboutPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center', marginBottom: '5rem' }}>
             <div>
               <span className="section-label">
-                {tCms('missionLabel', l10n('Notre Mission', 'Nou Mision', 'Our Mission'))}
+                {tCms('missionLabel', l10n('Notre Histoire & Mission', 'Nou Zistwar & Mision', 'Our Story & Purpose'))}
               </span>
               <h2 className="text-h2" style={{ marginBottom: '1.25rem' }}>
-                {tCms('missionTitle', l10n('Rendre les Meilleurs Soins Mondiaux Accessibles', 'Rann Bann Pli Bon Swen Aksesib', 'Making World-Class Care Accessible'))}
+                {tCms('missionTitle', l10n('10 Ans d\'Engagement Humanitaire, Désormais Étendu à Tous', '10 Banlane Led Imaniter, Aster Ouver pou Tou Dimounn', '10 Years of Compassionate Care, Now Extended to All'))}
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: '1rem' }}>
                 {tCms('missionP1', l10n(
-                  'Fondé à Port Louis, Medical 360 est né d\'un constat simple : les patients de l\'océan Indien méritent un accès direct, transparent et sans stress aux technologies médicales les plus avancées.',
-                  'Bati dan Porlwi, Medical 360 inn ne depi enn konsta kler: bann pasian losean Indien merit enn akse direk, transparan ek san stres ar bann teknologi medikal pli avanse.',
-                  'Founded in Port Louis, Medical 360 was born from a clear realization: patients in the Indian Ocean region deserve direct, transparent, stress-free access to the world\'s most advanced medical treatments.'
+                  'Medical 360 est une entreprise détenue à 100 % par l\'ONG Enn Rev Enn Sourir. Depuis plus de 10 ans, notre ONG s\'est consacrée sans relâche à aider les personnes dans le besoin et les familles vulnérables à accéder à des traitements spécialisés vitaux dans des cliniques privées de référence ou dans de grands hôpitaux à l\'étranger.',
+                  'Medical 360 li enn lakonpanyi ki apartenir a 100% ar l\'ONG Enn Rev Enn Sourir. Pandan plis ki 10 banlane, nou ONG finn lite pou ed bann dimounn dan bezwin ek bann fami vilnerab gagn akse a bann tretman spesialize dan bann klinik prive ouswa gran lopital a letranze.',
+                  'Medical 360 is a company owned by the NGO Enn Rev Enn Sourir. For over 10 years, our NGO has been devoted to helping needy and vulnerable patients access critical, specialised medical treatments in private clinics or renowned hospitals abroad.'
                 ))}
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: '1rem' }}>
                 {tCms('missionP2', l10n(
-                  'Nous sélectionnons rigoureusement des hôpitaux accrédités JCI et NABH en Inde, en Thaïlande, à Singapour et en Malaisie. Nous coordonnons chaque étape : du second avis médical gratuit jusqu\'au suivi post-opératoire.',
-                  'Nou swazir ar gran rigerr bann lopital akredite JCI ek NABH dan L\'inde, Taylann, Singapour ek Malaisie. Nou kordonn tou: depi deziem lavi medikal gratis ziska swivi apre loperasion.',
-                  'We rigorously vet JCI and NABH accredited hospitals in India, Thailand, Singapore, and Malaysia. We coordinate everything from your free second opinion to post-operative follow-up.'
+                  'Après une décennie passée à tisser des liens étroits avec les meilleurs spécialistes et des hôpitaux accrédités JCI en Inde, en Thaïlande et à l\'international, nous avons décidé d\'ouvrir nos compétences et notre conciergerie médicale à toutes les personnes qui ont les moyens de financer leurs soins.',
+                  'Apre enn deseni kot nou finn aranze bann rezo solid avek bann meyer sef sirizien ek lopital akredite JCI dan L\'inde, Taylann ek lezot pei, nou finn deside ouver nou konsierzri medikal pou bann ki kapav pey zot prop swen.',
+                  'After a decade of building relationships with top surgeons and JCI-accredited hospitals in India, Thailand, and globally, we decided to extend our medical concierge service to individuals and families who can afford private specialised care.'
                 ))}
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
                 {tCms('missionP3', l10n(
-                  'Notre service est toujours 100% gratuit pour les patients. Nous sommes rémunérés directement par nos hôpitaux partenaires, jamais par les patients que nous aidons.',
-                  'Nou servis li touzour 100% gratis pou bann pasian. Se bann lopital partner ki pey nou direk, zame bann pasian ki nou ed.',
-                  'Our service is always 100% free for patients. We are compensated directly by our hospital partners, never by the patients we serve.'
+                  'Le cœur de notre modèle est vertueux : 100 % des bénéfices réalisés par Medical 360 sont réinjectés directement dans l\'ONG Enn Rev Enn Sourir. Ainsi, chaque patient qui fait appel à nos services pour ses soins privés contribue directement à sauver des vies et à soigner les plus démunis.',
+                  'Nou model li kler ek transparan: 100% bann profi ki Medical 360 fer retourn direk dan l\'ONG Enn Rev Enn Sourir. Sak pasian ki swazir Med360 pou so bann swen prive pe ed finansie tretman ek loperasion pou enn lot dimounn ki pena mwayen.',
+                  'Our model is driven by pure social impact: 100% of profits generated by Medical 360 go straight back into the NGO Enn Rev Enn Sourir. Every patient who chooses Med360 for private medical care directly finances life-saving surgeries and treatments for those who cannot afford them.'
                 ))}
               </p>
             </div>

@@ -97,7 +97,7 @@ export function Footer() {
           lineHeight: 1.6,
           textAlign: 'center',
         }}>
-          Medical 360 (Med360 Ltd) is an independent healthcare concierge and medical travel coordinator, not a hospital or licensed clinic. All medical diagnoses and surgical procedures are performed by accredited partner hospitals and licensed doctors.
+          Medical 360 (Med360 Ltd) is a social enterprise owned by the NGO Enn Rev Enn Sourir. Backed by 10+ years of humanitarian care, 100% of company profits are returned to the NGO to fund medical treatments and surgeries for patients in need. Medical diagnoses and surgical procedures are performed by accredited partner hospitals and licensed doctors.
         </div>
 
         <div className="footer__bottom">
