@@ -27,6 +27,7 @@ import {
   PanelLeftOpen,
   ExternalLink,
   HardDriveDownload,
+  Palette,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { useDataConfig } from '../../providers/DataProvider';
@@ -42,10 +43,11 @@ const DATA_NAV = [
 ];
 
 const CMS_GLOBAL_NAV = [
-  { to: '/admin/pages/header',     label: 'Header & Navigation',     icon: PanelTop },
-  { to: '/admin/pages/footer',     label: 'Footer & Legal',          icon: PanelBottom },
-  { to: '/admin/campaigns',       label: 'Email Campaigns (Nexus)', icon: Send },
-  { to: '/admin/email-templates', label: 'Email Templates',         icon: Mail },
+  { to: '/admin/settings?tab=themes', label: 'Themes & Branding',      icon: Palette },
+  { to: '/admin/pages/header',        label: 'Header & Navigation',    icon: PanelTop },
+  { to: '/admin/pages/footer',        label: 'Footer & Legal',         icon: PanelBottom },
+  { to: '/admin/campaigns',          label: 'Email Campaigns (Nexus)', icon: Send },
+  { to: '/admin/email-templates',    label: 'Email Templates',        icon: Mail },
 ];
 
 const CMS_PAGES_NAV = [
@@ -109,7 +111,8 @@ export function AdminLayout() {
   // Accordion state: only one section can be open at a time
   const [openSection, setOpenSection] = useState<MenuSection | null>(() => {
     const path = location.pathname;
-    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns')) {
+    const search = location.search;
+    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
       return 'global';
     }
     if (path.startsWith('/admin/pages/')) {
@@ -122,7 +125,8 @@ export function AdminLayout() {
   useEffect(() => {
     setMobileOpen(false);
     const path = location.pathname;
-    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns')) {
+    const search = location.search;
+    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
       setOpenSection('global');
     } else if (path.startsWith('/admin/pages/')) {
       setOpenSection('cms');
@@ -136,7 +140,7 @@ export function AdminLayout() {
     ) {
       setOpenSection('data');
     }
-  }, [location.pathname]);
+  }, [location.pathname, location.search]);
 
   const toggleSection = (section: MenuSection) => {
     setOpenSection((prev) => (prev === section ? null : section));
@@ -156,7 +160,11 @@ export function AdminLayout() {
     if (path === '/admin/specialties') return 'Medical Specialties';
     if (path === '/admin/doctors') return 'Elite Specialists';
     if (path === '/admin/case-studies') return 'Patient Stories';
-    if (path === '/admin/settings') return 'System & Database Backup';
+    if (path === '/admin/settings') {
+      const params = new URLSearchParams(location.search);
+      if (params.get('tab') === 'themes') return 'Themes & Branding';
+      return 'System & Database Backup';
+    }
     if (path === '/admin/email-templates') return 'Email Templates';
     if (path === '/admin/campaigns') return 'Campaigns';
     if (path.startsWith('/admin/pages/')) {
@@ -332,19 +340,22 @@ export function AdminLayout() {
 
             {(openSection === 'global' || collapsed) && (
               <div className="admin-sidebar__submenu">
-                {CMS_GLOBAL_NAV.map(({ to, label, icon: Icon }) => (
-                  <NavLink
-                    key={to}
-                    to={to}
-                    className={({ isActive }) =>
-                      `admin-sidebar__nav-link ${isActive ? 'admin-sidebar__nav-link--active' : ''}`
-                    }
-                    title={collapsed ? label : undefined}
-                  >
-                    <Icon size={16} />
-                    {!collapsed && <span>{label}</span>}
-                  </NavLink>
-                ))}
+                {CMS_GLOBAL_NAV.map(({ to, label, icon: Icon }) => {
+                  const isActive = to.includes('?') 
+                    ? (location.pathname + location.search) === to 
+                    : location.pathname === to;
+                  return (
+                    <NavLink
+                      key={to}
+                      to={to}
+                      className={`admin-sidebar__nav-link ${isActive ? 'admin-sidebar__nav-link--active' : ''}`}
+                      title={collapsed ? label : undefined}
+                    >
+                      <Icon size={16} />
+                      {!collapsed && <span>{label}</span>}
+                    </NavLink>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -360,7 +371,7 @@ export function AdminLayout() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1, minWidth: 0 }}>
                 <FileCode2 size={15} className="admin-sidebar__section-icon" />
                 {!collapsed && (
-                  <span className="admin-sidebar__section-title">Pages CMS</span>
+                  <span className="admin-sidebar__section-title">Pages Content CMS</span>
                 )}
               </div>
               {!collapsed && (
@@ -397,9 +408,7 @@ export function AdminLayout() {
           <div style={{ marginTop: 'auto', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <NavLink
               to="/admin/settings"
-              className={({ isActive }) =>
-                `admin-sidebar__nav-link ${isActive ? 'admin-sidebar__nav-link--active' : ''}`
-              }
+              className={`admin-sidebar__nav-link ${location.pathname === '/admin/settings' && !location.search.includes('tab=themes') ? 'admin-sidebar__nav-link--active' : ''}`}
               title={collapsed ? 'System Settings & Backup' : undefined}
             >
               <Settings size={18} />
