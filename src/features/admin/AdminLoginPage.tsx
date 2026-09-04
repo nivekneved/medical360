@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowLeft, KeyRound } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
-import { validateHoneypot, sanitizeInput, checkRateLimit } from '../../core/services/security.service';
+import { sanitizeInput, checkRateLimit } from '../../core/services/security.service';
+import { Honeypot } from '../../components/Honeypot/Honeypot';
+import { validateEmail, validatePassword, isHoneypotClean } from '../../core/services/validation.service';
 
 export function AdminLoginPage() {
   const { login } = useAuth();
@@ -12,30 +14,44 @@ export function AdminLoginPage() {
   const [honeypot, setHoneypot] = useState('');
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
   const [loading, setLoading] = useState(false);
 
   const fillAdmin = () => {
     setEmail('admin@med360.mu');
     setPassword('med360admin');
     setError('');
+    setFieldErrors({});
   };
 
   const fillCaseManager = () => {
     setEmail('case@med360.mu');
     setPassword('med360admin');
     setError('');
+    setFieldErrors({});
   };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     // 1. Honeypot Check
-    if (!validateHoneypot(honeypot)) {
+    if (!isHoneypotClean(honeypot)) {
       setError('Authentication failed.');
       return;
     }
 
-    // 2. Rate Limit
+    // 2. Field Validations
+    const errors: typeof fieldErrors = {};
+    const emVal = validateEmail(email, true);
+    if (!emVal.isValid) errors.email = emVal.error;
+
+    const pwVal = validatePassword(password, 6);
+    if (!pwVal.isValid) errors.password = pwVal.error;
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
+    // 3. Rate Limit
     const rateCheck = checkRateLimit('web_admin_login', 5, 5 * 60 * 1000);
     if (!rateCheck.allowed) {
       setError(`Too many login attempts. Please wait ${rateCheck.remainingCooldownSeconds}s.`);
@@ -132,18 +148,9 @@ export function AdminLoginPage() {
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
           backdropFilter: 'blur(20px)',
         }}>
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            {/* Honeypot field */}
-            <div style={{ display: 'none', position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
-              <input
-                type="text"
-                name="user_verification_auth"
-                tabIndex={-1}
-                autoComplete="off"
-                value={honeypot}
-                onChange={e => setHoneypot(e.target.value)}
-              />
-            </div>
+          <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            {/* Anti-Bot Honeypot */}
+            <Honeypot value={honeypot} onChange={setHoneypot} id="admin_auth_hp" name="admin_auth_hp" />
 
             {/* Email Field */}
             <div>
@@ -156,14 +163,17 @@ export function AdminLoginPage() {
                   id="admin-email"
                   type="email"
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={e => {
+                    setEmail(e.target.value);
+                    if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: undefined }));
+                  }}
                   style={{
                     width: '100%',
                     height: 46,
                     paddingLeft: '2.75rem',
                     paddingRight: '1rem',
                     background: '#1e293b',
-                    border: '1.5px solid #334155',
+                    border: `1.5px solid ${fieldErrors.email ? '#ef4444' : '#334155'}`,
                     borderRadius: 12,
                     color: '#ffffff',
                     fontSize: '0.95rem',
@@ -171,11 +181,15 @@ export function AdminLoginPage() {
                     outline: 'none',
                     transition: 'border-color 0.2s',
                   }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = '#10b981')}
-                  onBlur={(e) => (e.currentTarget.style.borderColor = '#334155')}
-                  required
+                  onFocus={(e) => (e.currentTarget.style.borderColor = fieldErrors.email ? '#ef4444' : '#10b981')}
+                  onBlur={(e) => (e.currentTarget.style.borderColor = fieldErrors.email ? '#ef4444' : '#334155')}
                 />
               </div>
+              {fieldErrors.email && (
+                <span style={{ color: '#f87171', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>
+                  {fieldErrors.email}
+                </span>
+              )}
             </div>
 
             {/* Password Field */}
@@ -189,14 +203,17 @@ export function AdminLoginPage() {
                   id="admin-password"
                   type={showPw ? 'text' : 'password'}
                   value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  onChange={e => {
+                    setPassword(e.target.value);
+                    if (fieldErrors.password) setFieldErrors(prev => ({ ...prev, password: undefined }));
+                  }}
                   style={{
                     width: '100%',
                     height: 46,
                     paddingLeft: '2.75rem',
                     paddingRight: '3rem',
                     background: '#1e293b',
-                    border: '1.5px solid #334155',
+                    border: `1.5px solid ${fieldErrors.password ? '#ef4444' : '#334155'}`,
                     borderRadius: 12,
                     color: '#ffffff',
                     fontSize: '0.95rem',
@@ -204,9 +221,8 @@ export function AdminLoginPage() {
                     outline: 'none',
                     transition: 'border-color 0.2s',
                   }}
-                  onFocus={(e) => (e.currentTarget.style.borderColor = '#10b981')}
-                  onBlur={(e) => (e.currentTarget.style.borderColor = '#334155')}
-                  required
+                  onFocus={(e) => (e.currentTarget.style.borderColor = fieldErrors.password ? '#ef4444' : '#10b981')}
+                  onBlur={(e) => (e.currentTarget.style.borderColor = fieldErrors.password ? '#ef4444' : '#334155')}
                 />
                 <button
                   type="button"
@@ -230,6 +246,11 @@ export function AdminLoginPage() {
                   {showPw ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+              {fieldErrors.password && (
+                <span style={{ color: '#f87171', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>
+                  {fieldErrors.password}
+                </span>
+              )}
             </div>
 
             {/* Error message */}
