@@ -419,7 +419,7 @@ export function AdminInquiriesPage() {
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '0.75rem',
-                  boxShadow: isSelected ? '0 4px 14px rgba(6,95,70,0.15)' : '0 2px 8px rgba(0,0,0,0.03)',
+                  boxShadow: isSelected ? 'var(--shadow-primary)' : '0 2px 8px rgba(0,0,0,0.03)',
                   position: 'relative',
                   transition: 'all 0.15s ease',
                 }}
@@ -462,7 +462,7 @@ export function AdminInquiriesPage() {
                     {getSpecialtyName(inq.specialtyId)}
                   </span>
                   {inq.serviceName && (
-                    <span style={{ fontSize: '0.68rem', color: 'var(--color-primary)', fontWeight: 700, background: 'rgba(6, 95, 70, 0.08)', padding: '2px 6px', borderRadius: 4 }}>
+                    <span style={{ fontSize: '0.68rem', color: 'var(--color-primary)', fontWeight: 700, background: 'color-mix(in srgb, var(--color-primary) 8%, transparent)', padding: '2px 6px', borderRadius: 4 }}>
                       ✦ {inq.serviceName}
                     </span>
                   )}
@@ -548,7 +548,7 @@ export function AdminInquiriesPage() {
                     key={inq.id}
                     style={{
                       borderTop: '1px solid var(--color-border)',
-                      background: isSelected ? 'rgba(6, 95, 70, 0.05)' : idx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-2)',
+                      background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : idx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-2)',
                       transition: 'background 0.15s ease',
                     }}
                   >
@@ -581,7 +581,7 @@ export function AdminInquiriesPage() {
                           {getSpecialtyName(inq.specialtyId)}
                         </span>
                         {inq.serviceName && (
-                          <span style={{ fontSize: '0.7rem', color: 'var(--color-primary)', fontWeight: 700, background: 'rgba(6, 95, 70, 0.08)', padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', display: 'inline-block', width: 'fit-content' }}>
+                          <span style={{ fontSize: '0.7rem', color: 'var(--color-primary)', fontWeight: 700, background: 'color-mix(in srgb, var(--color-primary) 8%, transparent)', padding: '2px 6px', borderRadius: 4, whiteSpace: 'nowrap', display: 'inline-block', width: 'fit-content' }}>
                             ✦ {inq.serviceName}
                           </span>
                         )}

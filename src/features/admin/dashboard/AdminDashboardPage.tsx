@@ -473,7 +473,7 @@ export function AdminDashboardPage() {
                       key={inq.id}
                       style={{
                         borderBottom: '1px solid var(--color-border-light)',
-                        background: isSelected ? 'rgba(6, 95, 70, 0.05)' : i % 2 === 0 ? 'transparent' : 'rgba(0,0,0,0.01)',
+                        background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : i % 2 === 0 ? 'transparent' : 'rgba(0,0,0,0.01)',
                       }}
                     >
                       {/* Row Checkbox */}
@@ -598,7 +598,7 @@ export function AdminDashboardPage() {
                 <div
                   key={inq.id}
                   style={{
-                    background: isSelected ? 'rgba(6, 95, 70, 0.04)' : 'var(--color-surface-2)',
+                    background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'var(--color-surface-2)',
                     border: isSelected ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
                     borderRadius: 10,
                     padding: '1.1rem',

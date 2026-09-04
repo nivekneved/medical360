@@ -525,9 +525,9 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(16, 185, 129, 0.2);
-  color: #34d399;
-  border: 1px solid rgba(52, 211, 153, 0.35);
+  background: color-mix(in srgb, var(--color-primary) 25%, transparent);
+  color: #ffffff;
+  border: 1px solid color-mix(in srgb, var(--color-accent-light) 45%, transparent);
   padding: 0.35rem 0.9rem;
   border-radius: 999px;
   font-size: 0.78rem;
@@ -712,11 +712,11 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.02em;
 }
 
-.badge-primary { background: rgba(6, 95, 70, 0.12); color: var(--color-primary); }
-.badge-accent   { background: rgba(5, 150, 105, 0.12); color: var(--color-accent); }
-.badge-success  { background: rgba(5, 150, 105, 0.12); color: var(--color-success); }
-.badge-warning  { background: rgba(217, 119, 6, 0.12); color: var(--color-warning); }
-.badge-danger   { background: rgba(220, 38, 38, 0.12);  color: var(--color-danger); }
+.badge-primary { background: color-mix(in srgb, var(--color-primary) 14%, transparent); color: var(--color-primary); }
+.badge-accent   { background: color-mix(in srgb, var(--color-accent) 14%, transparent); color: var(--color-accent); }
+.badge-success  { background: color-mix(in srgb, var(--color-success) 14%, transparent); color: var(--color-success); }
+.badge-warning  { background: color-mix(in srgb, var(--color-warning) 14%, transparent); color: var(--color-warning); }
+.badge-danger   { background: color-mix(in srgb, var(--color-danger) 14%, transparent);  color: var(--color-danger); }
 
 /* ─── Section Layout ─────────────────────────────────────────────────────────── */
 .section {
@@ -759,9 +759,9 @@ h1, h2, h3, h4, h5, h6 {
   gap: var(--space-6);
 }
 
-/* ─── Gradient Text (Medical Green to Dark Green) ────────────────────────────── */
+/* ─── Gradient Text ──────────────────────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, #047857 0%, #065f46 50%, #059669 100%);
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 50%, var(--color-accent) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -792,8 +792,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
-  50%       { box-shadow: 0 0 0 12px rgba(22, 163, 74, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 35%, transparent); }
+  50%       { box-shadow: 0 0 0 12px color-mix(in srgb, var(--color-primary) 0%, transparent); }
 }
 
 @keyframes float {
@@ -841,7 +841,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-select:focus,
 .form-textarea:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(6, 95, 70, 0.15);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent);
 }
 
 .form-textarea {
@@ -851,10 +851,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ─── Status Badges ──────────────────────────────────────────────────────────── */
-.status-new             { background: rgba(6, 95, 70, 0.12);  color: var(--color-primary); }
-.status-contacted       { background: rgba(5, 150, 105, 0.12); color: var(--color-accent); }
-.status-in_progress     { background: rgba(217, 119, 6, 0.12); color: var(--color-warning); }
-.status-completed       { background: rgba(5, 150, 105, 0.15); color: var(--color-primary); }
+.status-new             { background: color-mix(in srgb, var(--color-primary) 14%, transparent); color: var(--color-primary); }
+.status-contacted       { background: color-mix(in srgb, var(--color-accent) 14%, transparent);  color: var(--color-accent); }
+.status-in_progress     { background: color-mix(in srgb, var(--color-warning) 14%, transparent); color: var(--color-warning); }
+.status-completed       { background: color-mix(in srgb, var(--color-success) 14%, transparent); color: var(--color-success); }
 
 /* ─── Responsive ─────────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {

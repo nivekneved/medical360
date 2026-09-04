@@ -135,7 +135,7 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
         {/* Form Body */}
         {submitted ? (
           <div style={{ padding: '3rem 2rem', textAlign: 'center' }}>
-            <CheckCircle2 size={54} color="#10b981" style={{ margin: '0 auto 1rem' }} />
+            <CheckCircle2 size={54} color="var(--color-primary)" style={{ margin: '0 auto 1rem' }} />
             <h4 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-text)' }}>
               {isFr ? 'Demande Transmise avec Succès !' : 'Second Opinion Request Submitted!'}
             </h4>
@@ -247,7 +247,7 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>
-              <ShieldCheck size={14} color="#10b981" />
+              <ShieldCheck size={14} color="var(--color-primary)" />
               <span>{isFr ? 'Vos données de santé sont strictement confidentielles et traitées par nos médecins.' : 'Your medical records are encrypted and reviewed only by licensed medical coordinators.'}</span>
             </div>
 

@@ -160,11 +160,11 @@ export function HospitalCompareModal({ hospitals, onClose, onRemove }: HospitalC
                     style={{
                       fontSize: '0.75rem',
                       fontWeight: 700,
-                      background: 'rgba(16,185,129,0.12)',
-                      color: '#059669',
+                      background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)',
+                      color: 'var(--color-primary)',
                       padding: '0.2rem 0.5rem',
                       borderRadius: 4,
-                      border: '1px solid rgba(16,185,129,0.25)',
+                      border: '1px solid color-mix(in srgb, var(--color-primary) 25%, transparent)',
                     }}
                   >
                     ★ {acc}

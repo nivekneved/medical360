@@ -189,7 +189,7 @@ export function AdminDoctorsPage() {
 
             <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
               {d.specialties.map(s => (
-                <span key={s} style={{ fontSize: '0.7rem', fontWeight: 700, background: 'rgba(6, 95, 70, 0.08)', color: 'var(--color-primary)', padding: '2px 6px', borderRadius: 4 }}>
+                <span key={s} style={{ fontSize: '0.7rem', fontWeight: 700, background: 'color-mix(in srgb, var(--color-primary) 8%, transparent)', color: 'var(--color-primary)', padding: '2px 6px', borderRadius: 4 }}>
                   {getSpecialtyName(s)}
                 </span>
               ))}
@@ -217,7 +217,7 @@ export function AdminDoctorsPage() {
           key={d.id}
           style={{
             borderTop: '1px solid var(--color-border)',
-            background: isSelected ? 'rgba(6, 95, 70, 0.05)' : 'transparent',
+            background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'transparent',
             transition: 'background 0.15s ease',
           }}
         >

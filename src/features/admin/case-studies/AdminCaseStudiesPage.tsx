@@ -225,7 +225,7 @@ export function AdminCaseStudiesPage() {
           key={cs.id}
           style={{
             borderTop: '1px solid var(--color-border)',
-            background: isSelected ? 'rgba(6, 95, 70, 0.05)' : 'transparent',
+            background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'transparent',
             transition: 'background 0.15s ease',
           }}
         >

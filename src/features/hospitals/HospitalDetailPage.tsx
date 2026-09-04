@@ -240,9 +240,9 @@ export function HospitalDetailPage() {
               }}>
                 <span style={{
                   display: 'inline-block',
-                  background: 'rgba(16, 185, 129, 0.18)',
-                  color: '#34d399',
-                  border: '1px solid rgba(52, 211, 153, 0.3)',
+                  background: 'color-mix(in srgb, var(--color-accent) 20%, transparent)',
+                  color: 'var(--color-accent-light)',
+                  border: '1px solid color-mix(in srgb, var(--color-accent) 35%, transparent)',
                   padding: '0.35rem 0.85rem',
                   borderRadius: '999px',
                   fontSize: '0.75rem',
@@ -284,13 +284,13 @@ export function HospitalDetailPage() {
 
                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)', marginTop: '1.5rem', paddingTop: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.7)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <CheckCircle2 size={14} color="#10b981" /> 100% Free for Mauritian Patients
+                    <CheckCircle2 size={14} color="var(--color-accent-light)" /> 100% Free for Mauritian Patients
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <CheckCircle2 size={14} color="#10b981" /> Visa, Flights & Hotel Assistance
+                    <CheckCircle2 size={14} color="var(--color-accent-light)" /> Visa, Flights & Hotel Assistance
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <CheckCircle2 size={14} color="#10b981" /> On-ground Coordinator at Destination
+                    <CheckCircle2 size={14} color="var(--color-accent-light)" /> On-ground Coordinator at Destination
                   </div>
                 </div>
               </div>

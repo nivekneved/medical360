@@ -191,7 +191,7 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
                     padding: '10px 14px',
                     borderRadius: 'var(--radius-lg)',
                     border: `1.5px solid ${sp.featured ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                    background: sp.featured ? 'rgba(6, 95, 70, 0.05)' : 'var(--color-surface)',
+                    background: sp.featured ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'var(--color-surface)',
                     cursor: 'pointer',
                     transition: 'all 0.15s ease',
                   }}
@@ -224,7 +224,7 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
                     fontWeight: 700,
                     padding: '2px 8px',
                     borderRadius: 999,
-                    background: sp.featured ? 'rgba(6, 95, 70, 0.15)' : 'var(--color-surface-2)',
+                    background: sp.featured ? 'color-mix(in srgb, var(--color-primary) 15%, transparent)' : 'var(--color-surface-2)',
                     color: sp.featured ? 'var(--color-primary)' : 'var(--color-text-muted)',
                   }}>
                     {isUpdating ? 'Saving...' : sp.featured ? '⭐ Featured' : 'Hidden'}

@@ -25,9 +25,9 @@ export function PrivacyPolicyPage() {
             gap: '0.5rem',
             padding: '0.4rem 1rem',
             borderRadius: '9999px',
-            background: 'rgba(16, 185, 129, 0.15)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            color: '#34d399',
+            background: 'color-mix(in srgb, var(--color-accent) 15%, transparent)',
+            border: '1px solid color-mix(in srgb, var(--color-accent) 30%, transparent)',
+            color: 'var(--color-accent-light)',
             fontSize: '0.85rem',
             fontWeight: 600,
             marginBottom: '1rem',
@@ -58,7 +58,7 @@ export function PrivacyPolicyPage() {
           {/* Section 1 */}
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Lock size={20} color="#10b981" /> 1. Commitment to Medical Confidentiality
+              <Lock size={20} color="var(--color-primary)" /> 1. Commitment to Medical Confidentiality
             </h2>
             <p>
               At <strong>Med360 Ltd ("Medical 360")</strong>, we understand the deeply sensitive nature of medical data. We are committed to protecting your personal identity, medical inquiries, diagnostic reports, and communication records in strict compliance with the <strong>Mauritius Data Protection Act 2017</strong> and international data protection standards (GDPR).
@@ -68,7 +68,7 @@ export function PrivacyPolicyPage() {
           {/* Section 2 */}
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <FileText size={20} color="#10b981" /> 2. Information We Collect
+              <FileText size={20} color="var(--color-primary)" /> 2. Information We Collect
             </h2>
             <p style={{ marginBottom: '0.75rem' }}>We collect information necessary to facilitate medical second opinions, hospital bookings, and medical travel coordination:</p>
             <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -81,7 +81,7 @@ export function PrivacyPolicyPage() {
           {/* Section 3 */}
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Eye size={20} color="#10b981" /> 3. How We Use & Share Your Data
+              <Eye size={20} color="var(--color-primary)" /> 3. How We Use & Share Your Data
             </h2>
             <p style={{ marginBottom: '0.75rem' }}>Your data is strictly utilized for the purpose of coordinating your healthcare inquiry:</p>
             <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -95,10 +95,10 @@ export function PrivacyPolicyPage() {
           {/* Section 4 */}
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <CheckCircle2 size={20} color="#10b981" /> 4. Your Rights & Data Retention
+              <CheckCircle2 size={20} color="var(--color-primary)" /> 4. Your Rights & Data Retention
             </h2>
             <p>
-              You maintain full ownership of your records. You have the right to request access to your records, request rectification, or request immediate permanent deletion of all records held by Med360 Ltd by emailing our Data Protection Officer at <a href="mailto:privacy@med360.mu" style={{ color: '#10b981', fontWeight: 600 }}>privacy@med360.mu</a>.
+              You maintain full ownership of your records. You have the right to request access to your records, request rectification, or request immediate permanent deletion of all records held by Med360 Ltd by emailing our Data Protection Officer at <a href="mailto:privacy@med360.mu" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>privacy@med360.mu</a>.
             </p>
           </div>
 

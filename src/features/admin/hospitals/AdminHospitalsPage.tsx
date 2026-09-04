@@ -194,7 +194,7 @@ export function AdminHospitalsPage() {
 
             <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
               {h.accreditations.slice(0, 3).map(acc => (
-                <span key={acc} style={{ fontSize: '0.7rem', fontWeight: 700, background: 'rgba(6, 95, 70, 0.08)', color: 'var(--color-primary)', padding: '2px 6px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+                <span key={acc} style={{ fontSize: '0.7rem', fontWeight: 700, background: 'color-mix(in srgb, var(--color-primary) 8%, transparent)', color: 'var(--color-primary)', padding: '2px 6px', borderRadius: 4, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
                   <Shield size={10} /> {acc}
                 </span>
               ))}
@@ -223,7 +223,7 @@ export function AdminHospitalsPage() {
           key={h.id}
           style={{
             borderTop: '1px solid var(--color-border)',
-            background: isSelected ? 'rgba(6, 95, 70, 0.05)' : 'transparent',
+            background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'transparent',
             transition: 'background 0.15s ease',
           }}
         >
@@ -262,7 +262,7 @@ export function AdminHospitalsPage() {
           <td style={{ padding: '0.875rem 0.85rem' }}>
             <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap' }}>
               {h.accreditations.map(a => (
-                <span key={a} style={{ fontSize: '0.68rem', fontWeight: 700, background: 'rgba(6, 95, 70, 0.08)', color: 'var(--color-primary)', padding: '2px 6px', borderRadius: 4 }}>
+                <span key={a} style={{ fontSize: '0.68rem', fontWeight: 700, background: 'color-mix(in srgb, var(--color-primary) 8%, transparent)', color: 'var(--color-primary)', padding: '2px 6px', borderRadius: 4 }}>
                   {a}
                 </span>
               ))}

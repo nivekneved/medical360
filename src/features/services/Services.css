@@ -20,7 +20,7 @@
 
 .service-full-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(6, 95, 70, 0.3);
+  box-shadow: 0 16px 40px var(--shadow-primary);
   border-color: var(--color-primary);
 }
 
@@ -55,7 +55,7 @@
 .service-full-card:hover .service-full-card__overlay {
   background: linear-gradient(
     to top,
-    rgba(6, 44, 34, 0.96) 0%,
+    color-mix(in srgb, var(--color-primary-dark) 92%, #090d10) 0%,
     rgba(9, 13, 16, 0.75) 50%,
     rgba(9, 13, 16, 0.20) 100%
   );
@@ -66,7 +66,7 @@
   top: 1rem;
   left: 1rem;
   z-index: 3;
-  background: rgba(6, 95, 70, 0.85);
+  background: color-mix(in srgb, var(--color-primary) 85%, transparent);
   color: #ffffff;
   font-size: 0.72rem;
   font-weight: 700;
@@ -115,14 +115,14 @@
   border-radius: var(--radius-full);
   font-size: 0.78rem;
   font-weight: 600;
-  box-shadow: 0 4px 14px rgba(6, 95, 70, 0.4);
+  box-shadow: 0 4px 14px var(--shadow-primary);
   transition: all 0.2s ease;
 }
 
 .service-full-card:hover .service-full-card__btn {
   background: var(--color-accent);
   transform: translateX(3px);
-  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.5);
+  box-shadow: 0 6px 18px var(--shadow-accent);
 }
 
 @media (max-width: 1200px) {

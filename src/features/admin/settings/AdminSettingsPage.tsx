@@ -389,7 +389,7 @@ export function AdminSettingsPage() {
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(6, 95, 70, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)' }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)' }}>
                 <HardDriveDownload size={24} />
               </div>
               <div>
@@ -551,8 +551,8 @@ export function AdminSettingsPage() {
                             fontSize: '0.68rem',
                             fontWeight: 700,
                             textTransform: 'uppercase',
-                            background: isRollback ? 'rgba(234, 179, 8, 0.2)' : 'rgba(6, 95, 70, 0.12)',
-                            color: isRollback ? '#b45309' : '#065f46',
+                            background: isRollback ? 'rgba(234, 179, 8, 0.2)' : 'color-mix(in srgb, var(--color-primary) 12%, transparent)',
+                            color: isRollback ? '#b45309' : 'var(--color-primary)',
                             padding: '2px 8px',
                             borderRadius: 999,
                           }}>

@@ -247,9 +247,9 @@ export function SpecialtyDetailPage() {
               }}>
                 <span style={{
                   display: 'inline-block',
-                  background: 'rgba(16, 185, 129, 0.18)',
-                  color: '#34d399',
-                  border: '1px solid rgba(52, 211, 153, 0.3)',
+                  background: 'color-mix(in srgb, var(--color-accent) 20%, transparent)',
+                  color: 'var(--color-accent-light)',
+                  border: '1px solid color-mix(in srgb, var(--color-accent) 35%, transparent)',
                   padding: '0.35rem 0.85rem',
                   borderRadius: '999px',
                   fontSize: '0.75rem',

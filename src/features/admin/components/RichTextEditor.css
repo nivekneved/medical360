@@ -11,8 +11,8 @@
 }
 
 .rich-editor:focus-within {
-  border-color: var(--color-primary, #065f46);
-  box-shadow: 0 0 0 3px rgba(6, 95, 70, 0.12);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 12%, transparent);
 }
 
 /* Header & Tabs */
@@ -128,13 +128,13 @@
   gap: 4px;
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--color-primary, #065f46);
-  background: rgba(6, 95, 70, 0.08);
-  border: 1px solid rgba(6, 95, 70, 0.2);
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
 }
 
 .rich-editor__btn--snippet:hover {
-  background: rgba(6, 95, 70, 0.15);
+  background: color-mix(in srgb, var(--color-primary) 15%, transparent);
 }
 
 /* Color Picker Popover */

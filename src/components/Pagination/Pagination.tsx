@@ -190,7 +190,7 @@ export function Pagination({
                 fontSize: '0.85rem',
                 cursor: 'pointer',
                 transition: 'all 0.15s ease',
-                boxShadow: isCurrent ? '0 2px 8px rgba(6, 95, 70, 0.25)' : 'none',
+                boxShadow: isCurrent ? '0 2px 8px color-mix(in srgb, var(--color-primary) 35%, transparent)' : 'none',
               }}
             >
               {p}
