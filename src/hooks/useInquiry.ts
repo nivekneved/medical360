@@ -8,6 +8,7 @@ import {
   validateSubmissionTiming,
   checkRateLimit,
   sanitizeInput,
+  detectSqlInjection,
 } from '../core/services/security.service';
 
 // ─── Step form data shape ─────────────────────────────────────────────────────
@@ -91,14 +92,17 @@ export function useInquiry() {
 
     // 3. Client Rate Limit
     const rateCheck = checkRateLimit('web_inquiry_submit', 5, 10 * 60 * 1000);
-    if (!rateCheck.allowed) {
-      setError(`Too many submissions. Please wait ${rateCheck.remainingCooldownSeconds}s before trying again.`);
+    // 4. SQL Injection Check
+    const rawInputs = [formData.firstName, formData.lastName, formData.email, formData.phone, formData.description];
+    if (rawInputs.some(detectSqlInjection)) {
+      console.warn('🛡️ Security: SQL Injection payload detected in inquiry submission.');
+      setError('Invalid characters or prohibited database syntax detected. Please review your input.');
       setSubmitting(false);
       return;
     }
 
     try {
-      // 4. Input Sanitization
+      // 5. Input Sanitization (XSS & Injection Protection)
       const cleanFirstName = sanitizeInput(formData.firstName);
       const cleanLastName  = sanitizeInput(formData.lastName);
       const cleanPhone     = sanitizeInput(formData.phone);

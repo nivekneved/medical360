@@ -19,6 +19,7 @@ import {
   formatSubject,
   sendTestEmail,
 } from '../../../core/services/email.service';
+import { sanitizeHtml } from '../../../core/services/security.service';
 
 const SAMPLE_SCENARIOS = {
   cardiology: {
@@ -663,7 +664,7 @@ export function AdminEmailTemplatesPage() {
                 maxWidth: viewMode === 'desktop' ? 580 : 380,
                 transition: 'max-width 0.25s ease',
               }}
-              dangerouslySetInnerHTML={{ __html: renderedHtml }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(renderedHtml) }}
             />
           </div>
 

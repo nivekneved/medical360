@@ -18,7 +18,7 @@ import { RichTextEditor } from './RichTextEditor';
 import { AdminPagination } from './AdminPagination';
 import { AdminBulkActionBar } from './AdminBulkActionBar';
 import { Honeypot } from '../../../components/Honeypot/Honeypot';
-import { isHoneypotClean } from '../../../core/services/validation.service';
+import { isHoneypotClean, detectSqlInjection, deepSanitize } from '../../../core/services/validation.service';
 import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
 import '../AdminToolbar.css';
 
@@ -195,7 +195,7 @@ export function AdminEntityManager<T extends { id: string }>({
       return;
     }
 
-    // 2. Validate required fields
+    // 2. Validate required fields & SQL injection security
     const errors: Record<string, string> = {};
     for (const f of fields) {
       const val = (editingItem as any)[f.key];
@@ -208,6 +208,10 @@ export function AdminEntityManager<T extends { id: string }>({
           errors[f.key] = `${f.label} must be a valid number.`;
         }
       }
+      // Check SQL injection on textual fields
+      if (typeof val === 'string' && detectSqlInjection(val)) {
+        errors[f.key] = `${f.label} contains invalid or prohibited database query characters.`;
+      }
     }
 
     setModalFieldErrors(errors);
@@ -215,7 +219,8 @@ export function AdminEntityManager<T extends { id: string }>({
 
     setSaving(true);
     try {
-      await onSave(editingItem, isNewItem);
+      const cleanItem = deepSanitize(editingItem);
+      await onSave(cleanItem, isNewItem);
       setSavedSuccess(true);
       setTimeout(() => {
         setSavedSuccess(false);

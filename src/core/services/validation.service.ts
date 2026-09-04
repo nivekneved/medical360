@@ -1,27 +1,38 @@
 /**
- * Med360 — Universal Form Input Validation & Anti-Spam Suite
+ * Med360 — Universal Form Input Validation, Anti-Spam & Security Suite
  * 
- * Provides unified, strict, and localized validation rules for all customer & admin forms.
+ * Provides unified, strict, and localized validation rules with built-in
+ * SQL Injection (SQLi) & Cross-Site Scripting (XSS) detection for all customer & admin forms.
  */
+
+import {
+  detectSqlInjection,
+  sanitizeInput,
+  sanitizeHtml,
+  stripHtmlTags,
+  escapeHtml,
+  deepSanitize,
+} from './security.service';
 
 export interface ValidationResult {
   isValid: boolean;
   error?: string;
+  sanitizedValue?: string;
 }
 
 // RFC 5322 simplified regex for robust email validation
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
 
-// International & Mauritian phone regex: digits, +, spaces, hyphens, parentheses (7 to 15 digits total)
+// International & Mauritian phone regex: digits, +, spaces, hyphens, parentheses (7 to 25 chars)
 const PHONE_CHARS_REGEX = /^[+0-9\s\-().]{7,25}$/;
 
 /**
- * Validates Email Address format
+ * Validates Email Address format with XSS & SQLi checks
  */
 export function validateEmail(email: string, isRequired: boolean = true): ValidationResult {
   const trimmed = (email || '').trim();
   if (!trimmed) {
-    if (!isRequired) return { isValid: true };
+    if (!isRequired) return { isValid: true, sanitizedValue: '' };
     return { isValid: false, error: 'Email address is required.' };
   }
 
@@ -29,11 +40,16 @@ export function validateEmail(email: string, isRequired: boolean = true): Valida
     return { isValid: false, error: 'Email address cannot exceed 254 characters.' };
   }
 
+  // Check for dangerous injection payloads
+  if (detectSqlInjection(trimmed) || /<|>|javascript:|script/i.test(trimmed)) {
+    return { isValid: false, error: 'Email contains forbidden characters or injection patterns.' };
+  }
+
   if (!EMAIL_REGEX.test(trimmed)) {
     return { isValid: false, error: 'Please enter a valid email address (e.g. name@example.com).' };
   }
 
-  return { isValid: true };
+  return { isValid: true, sanitizedValue: sanitizeInput(trimmed) };
 }
 
 /**
@@ -42,8 +58,13 @@ export function validateEmail(email: string, isRequired: boolean = true): Valida
 export function validatePhone(phone: string, isRequired: boolean = true): ValidationResult {
   const trimmed = (phone || '').trim();
   if (!trimmed) {
-    if (!isRequired) return { isValid: true };
+    if (!isRequired) return { isValid: true, sanitizedValue: '' };
     return { isValid: false, error: 'Phone or WhatsApp number is required.' };
+  }
+
+  // Disallow scripts or SQL characters in phone numbers
+  if (detectSqlInjection(trimmed) || /['";<>\\]/.test(trimmed)) {
+    return { isValid: false, error: 'Phone number contains unauthorized characters.' };
   }
 
   if (!PHONE_CHARS_REGEX.test(trimmed)) {
@@ -59,7 +80,7 @@ export function validatePhone(phone: string, isRequired: boolean = true): Valida
     return { isValid: false, error: 'Phone number exceeds international maximum (15 digits).' };
   }
 
-  return { isValid: true };
+  return { isValid: true, sanitizedValue: trimmed };
 }
 
 /**
@@ -68,7 +89,7 @@ export function validatePhone(phone: string, isRequired: boolean = true): Valida
 export function validateEmailOrPhone(input: string, isRequired: boolean = true): ValidationResult {
   const trimmed = (input || '').trim();
   if (!trimmed) {
-    if (!isRequired) return { isValid: true };
+    if (!isRequired) return { isValid: true, sanitizedValue: '' };
     return { isValid: false, error: 'Please provide either an email or phone/WhatsApp number.' };
   }
 
@@ -79,7 +100,7 @@ export function validateEmailOrPhone(input: string, isRequired: boolean = true):
 }
 
 /**
- * Validates Name fields (First Name, Last Name, Full Name)
+ * Validates Name fields (First Name, Last Name, Full Name) with SQLi/XSS defense
  */
 export function validateName(name: string, fieldLabel: string = 'Name', minLength: number = 2): ValidationResult {
   const trimmed = (name || '').trim();
@@ -95,18 +116,28 @@ export function validateName(name: string, fieldLabel: string = 'Name', minLengt
     return { isValid: false, error: `${fieldLabel} cannot exceed 70 characters.` };
   }
 
+  // SQLi & XSS Detection
+  if (detectSqlInjection(trimmed) || /<|>|script|onload|onerror/i.test(trimmed)) {
+    return { isValid: false, error: `${fieldLabel} contains disallowed syntax or injection patterns.` };
+  }
+
   // Disallow purely numeric or symbols
   if (!/^[a-zA-ZÀ-ÿ\s'\-\.]+$/.test(trimmed)) {
     return { isValid: false, error: `${fieldLabel} should only contain letters, spaces, hyphens, or apostrophes.` };
   }
 
-  return { isValid: true };
+  return { isValid: true, sanitizedValue: sanitizeInput(trimmed) };
 }
 
 /**
- * Validates text descriptions, notes, and inquiries
+ * Validates text descriptions, clinical notes, messages, and inquiries with SQLi & XSS defense
  */
-export function validateDescription(text: string, fieldLabel: string = 'Description', minLength: number = 10, maxLength: number = 3000): ValidationResult {
+export function validateDescription(
+  text: string,
+  fieldLabel: string = 'Description',
+  minLength: number = 10,
+  maxLength: number = 3000
+): ValidationResult {
   const trimmed = (text || '').trim();
   if (!trimmed) {
     return { isValid: false, error: `${fieldLabel} is required.` };
@@ -120,7 +151,30 @@ export function validateDescription(text: string, fieldLabel: string = 'Descript
     return { isValid: false, error: `${fieldLabel} cannot exceed ${maxLength} characters.` };
   }
 
-  return { isValid: true };
+  // SQL Injection Pattern Flagging
+  if (detectSqlInjection(trimmed)) {
+    return { isValid: false, error: `${fieldLabel} contains invalid special characters or database query syntax.` };
+  }
+
+  return { isValid: true, sanitizedValue: sanitizeInput(trimmed) };
+}
+
+/**
+ * Validates search query input against SQLi & XSS payloads
+ */
+export function validateSearchQuery(query: string, maxLength: number = 100): ValidationResult {
+  const trimmed = (query || '').trim();
+  if (!trimmed) return { isValid: true, sanitizedValue: '' };
+
+  if (trimmed.length > maxLength) {
+    return { isValid: false, error: `Search query cannot exceed ${maxLength} characters.` };
+  }
+
+  if (detectSqlInjection(trimmed)) {
+    return { isValid: false, error: 'Search query contains forbidden characters.' };
+  }
+
+  return { isValid: true, sanitizedValue: sanitizeInput(trimmed) };
 }
 
 /**
@@ -169,3 +223,13 @@ export function isHoneypotClean(honeypotVal?: string | null): boolean {
   if (!honeypotVal) return true;
   return honeypotVal.trim().length === 0;
 }
+
+// Re-export core sanitization utilities for convenience
+export {
+  detectSqlInjection,
+  sanitizeInput,
+  sanitizeHtml,
+  stripHtmlTags,
+  escapeHtml,
+  deepSanitize,
+};

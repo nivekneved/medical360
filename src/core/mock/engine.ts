@@ -6,6 +6,7 @@ import { caseStudiesSeed } from './seeds/case-studies.seed';
 import { inquiriesSeed } from './seeds/inquiries.seed';
 import { cmsSeed, CmsPage } from './seeds/cms.seed';
 import { supabase, isSupabaseConfigured } from '../supabase/client';
+import { deepSanitize, sanitizeInput } from '../services/security.service';
 
 // ─── Default Config ──────────────────────────────────────────────────────────
 const DEFAULT_CONFIG: MockConfig = {
@@ -747,10 +748,11 @@ class MockEngine {
   async createInquiry(
     data: Omit<Inquiry, 'id' | 'createdAt' | 'updatedAt' | 'status' | 'notes' | 'documents'>
   ): Promise<Inquiry> {
+    const cleanData = deepSanitize(data);
     const id = `inq-${Date.now()}`;
     const now = new Date().toISOString();
     const newInquiry: Inquiry = {
-      ...data,
+      ...cleanData,
       id,
       createdAt: now,
       updatedAt: now,
@@ -764,17 +766,17 @@ class MockEngine {
       try {
         const row = {
           id,
-          first_name: data.firstName,
-          last_name: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          country_of_residence: data.countryOfResidence,
-          specialty_id: data.specialtyId,
-          description: data.description,
-          urgency: data.urgency || 'routine',
-          preferred_country: data.preferredCountry || null,
-          budget_min: data.budgetRangeUSD?.min || null,
-          budget_max: data.budgetRangeUSD?.max || null,
+          first_name: cleanData.firstName,
+          last_name: cleanData.lastName,
+          email: cleanData.email,
+          phone: cleanData.phone,
+          country_of_residence: cleanData.countryOfResidence,
+          specialty_id: cleanData.specialtyId,
+          description: cleanData.description,
+          urgency: cleanData.urgency || 'routine',
+          preferred_country: cleanData.preferredCountry || null,
+          budget_min: cleanData.budgetRangeUSD?.min || null,
+          budget_max: cleanData.budgetRangeUSD?.max || null,
           documents: [],
           status: 'new',
           assigned_case_manager_id: null,
@@ -821,11 +823,12 @@ class MockEngine {
 
   async addInquiryNote(id: string, content: string, authorId: string = 'admin'): Promise<Inquiry> {
     const inq = await this.getInquiryById(id);
+    const cleanContent = sanitizeInput(content);
     const newNote = {
       id: `note-${Date.now()}`,
       inquiryId: id,
-      authorId,
-      content,
+      authorId: sanitizeInput(authorId),
+      content: cleanContent,
       createdAt: new Date().toISOString(),
     };
     const updatedNotes = [...(inq?.notes || []), newNote];
