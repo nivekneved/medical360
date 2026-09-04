@@ -64,9 +64,6 @@ export function HomePage() {
       <section className="hero" aria-label="Hero section">
         <div className="hero__bg">
           <div className="hero__image-bg" />
-          <div className="hero__orb hero__orb--1" />
-          <div className="hero__orb hero__orb--2" />
-          <div className="hero__grid" />
         </div>
         <div className="container hero__inner">
           <div className="hero__content animate-fade-in-up">
