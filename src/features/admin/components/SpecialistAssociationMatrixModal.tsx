@@ -21,8 +21,8 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
 
   // Local state for doctor-specialty links: doctorId -> Set<specialtyId>
   const [doctorSpecialties, setDoctorSpecialties] = useState<Record<string, Set<string>>>({});
-  // Local state for doctor-hospital link: doctorId -> hospitalId
-  const [doctorHospitals, setDoctorHospitals] = useState<Record<string, string>>({});
+  // Local state for doctor-hospitals link: doctorId -> Set<hospitalId> (MULTIPLE HOSPITALS)
+  const [doctorHospitals, setDoctorHospitals] = useState<Record<string, Set<string>>>({});
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -32,6 +32,7 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
   const [searchDoc, setSearchDoc] = useState('');
   const [hospitalFilter, setHospitalFilter] = useState('all');
   const [searchSpec, setSearchSpec] = useState('');
+  const [countryFilter, setCountryFilter] = useState('all');
 
   const loadData = async () => {
     setLoading(true);
@@ -46,11 +47,12 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
       setSpecialties(specList);
 
       const specMap: Record<string, Set<string>> = {};
-      const hospMap: Record<string, string> = {};
+      const hospMap: Record<string, Set<string>> = {};
 
       docList.forEach((d) => {
         specMap[d.id] = new Set(d.specialties || []);
-        hospMap[d.id] = d.hospitalId || '';
+        const hIds = d.hospitalIds?.length ? d.hospitalIds : (d.hospitalId ? [d.hospitalId] : []);
+        hospMap[d.id] = new Set(hIds);
       });
 
       setDoctorSpecialties(specMap);
@@ -70,6 +72,7 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
 
   if (!isOpen) return null;
 
+  // Toggle Doctor <-> Specialty
   const toggleSpecialtyCell = (doctorId: string, specialtyId: string) => {
     setDoctorSpecialties((prev) => {
       const next = { ...prev };
@@ -112,21 +115,61 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
     });
   };
 
-  const setDoctorHospital = (doctorId: string, hospitalId: string) => {
-    setDoctorHospitals((prev) => ({
-      ...prev,
-      [doctorId]: hospitalId,
-    }));
+  // Toggle Doctor <-> Hospital (Multi-hospital)
+  const toggleHospitalCell = (doctorId: string, hospitalId: string) => {
+    setDoctorHospitals((prev) => {
+      const next = { ...prev };
+      const currentSet = new Set(next[doctorId] || []);
+      if (currentSet.has(hospitalId)) {
+        currentSet.delete(hospitalId);
+      } else {
+        currentSet.add(hospitalId);
+      }
+      next[doctorId] = currentSet;
+      return next;
+    });
+  };
+
+  const toggleDoctorAllHospitals = (doctorId: string, value: boolean) => {
+    setDoctorHospitals((prev) => {
+      const next = { ...prev };
+      if (value) {
+        next[doctorId] = new Set(hospitals.map((h) => h.id));
+      } else {
+        next[doctorId] = new Set();
+      }
+      return next;
+    });
+  };
+
+  const toggleHospitalAllDoctors = (hospitalId: string, value: boolean) => {
+    setDoctorHospitals((prev) => {
+      const next = { ...prev };
+      doctors.forEach((d) => {
+        const currentSet = new Set(next[d.id] || []);
+        if (value) {
+          currentSet.add(hospitalId);
+        } else {
+          currentSet.delete(hospitalId);
+        }
+        next[d.id] = currentSet;
+      });
+      return next;
+    });
   };
 
   const handleSave = async () => {
     setSaving(true);
     try {
-      const batchPayload = doctors.map((d) => ({
-        doctorId: d.id,
-        hospitalId: doctorHospitals[d.id],
-        specialtyIds: Array.from(doctorSpecialties[d.id] || []),
-      }));
+      const batchPayload = doctors.map((d) => {
+        const hList = Array.from(doctorHospitals[d.id] || []);
+        return {
+          doctorId: d.id,
+          hospitalId: hList[0] || '',
+          hospitalIds: hList,
+          specialtyIds: Array.from(doctorSpecialties[d.id] || []),
+        };
+      });
 
       await mockEngine.saveAllDoctorAssociations(batchPayload);
       setSavedSuccess(true);
@@ -144,14 +187,12 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
   };
 
   const filteredDoctors = doctors.filter((d) => {
-    if (hospitalFilter !== 'all' && doctorHospitals[d.id] !== hospitalFilter) return false;
+    if (hospitalFilter !== 'all' && !doctorHospitals[d.id]?.has(hospitalFilter)) return false;
     if (searchDoc.trim()) {
       const q = searchDoc.toLowerCase();
-      const hosp = hospitals.find((h) => h.id === doctorHospitals[d.id]);
       return (
         d.name.toLowerCase().includes(q) ||
-        d.title.toLowerCase().includes(q) ||
-        (hosp && hosp.name.toLowerCase().includes(q))
+        d.title.toLowerCase().includes(q)
       );
     }
     return true;
@@ -168,9 +209,21 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
     return true;
   });
 
+  const filteredHospitals = hospitals.filter((h) => {
+    if (countryFilter !== 'all' && h.country !== countryFilter) return false;
+    return true;
+  });
+
+  const countries = ['all', ...Array.from(new Set(hospitals.map((h) => h.country))).sort()];
+
   let totalSpecialtyLinks = 0;
   Object.values(doctorSpecialties).forEach((set) => {
     totalSpecialtyLinks += set.size;
+  });
+
+  let totalHospitalLinks = 0;
+  Object.values(doctorHospitals).forEach((set) => {
+    totalHospitalLinks += set.size;
   });
 
   return (
@@ -220,7 +273,7 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
               </h2>
             </div>
             <p style={{ margin: '0.25rem 0 0', fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
-              Link surgeons and specialists to medical departments and affiliated partner hospitals.
+              Link surgeons and specialists to medical departments and multiple partner hospitals simultaneously.
             </p>
           </div>
 
@@ -236,7 +289,7 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
                 border: '1px solid rgba(139, 92, 246, 0.25)',
               }}
             >
-              {totalSpecialtyLinks} Specialty Links
+              {totalSpecialtyLinks} Specialty Links · {totalHospitalLinks} Hospital Links
             </span>
             <button
               onClick={onClose}
@@ -300,7 +353,7 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
               gap: 6,
             }}
           >
-            <Building2 size={16} /> Specialists ⟷ Hospital Affiliations
+            <Building2 size={16} /> Specialists ⟷ Multi-Hospital Matrix
           </button>
         </div>
 
@@ -329,25 +382,7 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
             />
           </div>
 
-          {/* Hospital Filter */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <Filter size={14} color="var(--color-text-muted)" />
-            <select
-              className="form-input"
-              value={hospitalFilter}
-              onChange={(e) => setHospitalFilter(e.target.value)}
-              style={{ width: 170, fontSize: '0.82rem', height: 34 }}
-            >
-              <option value="all">All Hospitals</option>
-              {hospitals.map((h) => (
-                <option key={h.id} value={h.id}>
-                  {h.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {activeTab === 'specialties' && (
+          {activeTab === 'specialties' ? (
             <div style={{ position: 'relative', flex: '1 1 200px' }}>
               <Search size={14} style={{ position: 'absolute', left: 10, top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)' }} />
               <input
@@ -358,6 +393,22 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
                 onChange={(e) => setSearchSpec(e.target.value)}
                 style={{ width: '100%', paddingLeft: 30, fontSize: '0.82rem', height: 34 }}
               />
+            </div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <Filter size={14} color="var(--color-text-muted)" />
+              <select
+                className="form-input"
+                value={countryFilter}
+                onChange={(e) => setCountryFilter(e.target.value)}
+                style={{ width: 150, fontSize: '0.82rem', height: 34 }}
+              >
+                {countries.map((c) => (
+                  <option key={c} value={c}>
+                    {c === 'all' ? 'All Countries' : c}
+                  </option>
+                ))}
+              </select>
             </div>
           )}
 
@@ -479,7 +530,7 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
                 {filteredDoctors.map((doc, rowIdx) => {
                   const linkedCount = doctorSpecialties[doc.id]?.size || 0;
                   const allSelected = specialties.length > 0 && linkedCount === specialties.length;
-                  const hosp = hospitals.find((h) => h.id === doctorHospitals[doc.id]);
+                  const hospCount = doctorHospitals[doc.id]?.size || 0;
 
                   return (
                     <tr
@@ -511,7 +562,7 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
                             <div>
                               <div style={{ color: 'var(--color-text)', fontSize: '0.85rem' }}>{doc.name}</div>
                               <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>
-                                {hosp ? hosp.name : 'No hospital assigned'} · {linkedCount} specs
+                                {hospCount} hospital(s) · {linkedCount} specs
                               </div>
                             </div>
                           </div>
@@ -572,70 +623,188 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
               </tbody>
             </table>
           ) : (
-            /* Tab 2: Specialists ⟷ Hospital Affiliations */
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1rem' }}>
-              {filteredDoctors.map((doc) => {
-                const currentHospId = doctorHospitals[doc.id];
-                const currentHosp = hospitals.find((h) => h.id === currentHospId);
-
-                return (
-                  <div
-                    key={doc.id}
+            /* Tab 2: Specialists ⟷ Multi-Hospital Matrix */
+            <table
+              style={{
+                width: '100%',
+                borderCollapse: 'separate',
+                borderSpacing: 0,
+                fontSize: '0.8125rem',
+              }}
+            >
+              <thead>
+                <tr>
+                  <th
                     style={{
-                      background: 'var(--color-surface)',
-                      border: '1.5px solid var(--color-border)',
-                      borderRadius: 'var(--radius-lg)',
-                      padding: '1.25rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '0.75rem',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                      position: 'sticky',
+                      top: 0,
+                      left: 0,
+                      zIndex: 30,
+                      background: 'var(--color-surface-2)',
+                      padding: '0.75rem 1rem',
+                      textAlign: 'left',
+                      fontWeight: 800,
+                      borderBottom: '2px solid var(--color-border)',
+                      borderRight: '2px solid var(--color-border)',
+                      minWidth: 260,
+                      color: 'var(--color-text)',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <img
-                        src={doc.imageUrl}
-                        alt={doc.name}
-                        style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover' }}
-                        onError={(e) => { e.currentTarget.src = '/assets/banners/dr_wong_chiung_ing.jpg'; }}
-                      />
-                      <div style={{ minWidth: 0, flex: 1 }}>
-                        <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--color-text)' }}>{doc.name}</div>
-                        <div style={{ fontSize: '0.78rem', color: 'var(--color-text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {doc.title}
-                        </div>
-                      </div>
-                    </div>
+                    Specialist ({filteredDoctors.length}) \ Partner Hospital ({filteredHospitals.length})
+                  </th>
 
-                    <div>
-                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', display: 'block', marginBottom: 4 }}>
-                        Affiliated Hospital
-                      </label>
-                      <select
-                        className="form-input"
-                        value={currentHospId || ''}
-                        onChange={(e) => setDoctorHospital(doc.id, e.target.value)}
-                        style={{ width: '100%', fontSize: '0.85rem' }}
+                  {filteredHospitals.map((h) => {
+                    let count = 0;
+                    doctors.forEach((d) => {
+                      if (doctorHospitals[d.id]?.has(h.id)) count++;
+                    });
+                    const allSelected = doctors.length > 0 && count === doctors.length;
+
+                    return (
+                      <th
+                        key={h.id}
+                        style={{
+                          position: 'sticky',
+                          top: 0,
+                          zIndex: 20,
+                          background: 'var(--color-surface-2)',
+                          padding: '0.6rem 0.5rem',
+                          textAlign: 'center',
+                          borderBottom: '2px solid var(--color-border)',
+                          borderRight: '1px solid var(--color-border)',
+                          minWidth: 140,
+                          maxWidth: 180,
+                          fontWeight: 700,
+                          color: 'var(--color-text)',
+                        }}
                       >
-                        <option value="">-- No Affiliated Hospital --</option>
-                        {hospitals.map((h) => (
-                          <option key={h.id} value={h.id}>
-                            {h.name} ({h.city}, {h.country})
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                        <div style={{ fontSize: '0.8rem', fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={h.name}>
+                          {h.name}
+                        </div>
+                        <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)' }}>
+                          {h.city}, {h.country}
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, marginTop: 4 }}>
+                          <span style={{ fontSize: '0.68rem', color: '#2563eb', fontWeight: 600 }}>
+                            {count} doctors
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => toggleHospitalAllDoctors(h.id, !allSelected)}
+                            style={{
+                              background: 'none',
+                              border: 'none',
+                              fontSize: '0.65rem',
+                              color: '#2563eb',
+                              cursor: 'pointer',
+                              padding: '1px 4px',
+                              fontWeight: 700,
+                            }}
+                            title={allSelected ? 'Unlink all doctors' : 'Link all doctors'}
+                          >
+                            {allSelected ? 'Clear' : 'All'}
+                          </button>
+                        </div>
+                      </th>
+                    );
+                  })}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredDoctors.map((doc, rowIdx) => {
+                  const linkedCount = doctorHospitals[doc.id]?.size || 0;
+                  const allSelected = hospitals.length > 0 && linkedCount === hospitals.length;
 
-                    {currentHosp && (
-                      <div style={{ background: 'var(--color-surface-2)', padding: '0.5rem 0.75rem', borderRadius: 6, fontSize: '0.75rem', color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <Building2 size={13} color="var(--color-primary)" />
-                        <span>{currentHosp.city}, {currentHosp.country} · {currentHosp.rating} ★</span>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
+                  return (
+                    <tr
+                      key={doc.id}
+                      style={{
+                        background: rowIdx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-2)',
+                      }}
+                    >
+                      <td
+                        style={{
+                          position: 'sticky',
+                          left: 0,
+                          zIndex: 10,
+                          background: rowIdx % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-2)',
+                          padding: '0.65rem 1rem',
+                          borderBottom: '1px solid var(--color-border)',
+                          borderRight: '2px solid var(--color-border)',
+                          fontWeight: 700,
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                            <img
+                              src={doc.imageUrl}
+                              alt={doc.name}
+                              style={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover' }}
+                              onError={(e) => { e.currentTarget.src = '/assets/banners/dr_wong_chiung_ing.jpg'; }}
+                            />
+                            <div>
+                              <div style={{ color: 'var(--color-text)', fontSize: '0.85rem' }}>{doc.name}</div>
+                              <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>
+                                {linkedCount} hospital(s) practicing
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => toggleDoctorAllHospitals(doc.id, !allSelected)}
+                            style={{
+                              background: 'none',
+                              border: '1px solid var(--color-border)',
+                              borderRadius: 4,
+                              fontSize: '0.65rem',
+                              color: '#2563eb',
+                              cursor: 'pointer',
+                              padding: '2px 5px',
+                              fontWeight: 700,
+                            }}
+                            title={allSelected ? 'Unlink all hospitals' : 'Link all hospitals'}
+                          >
+                            {allSelected ? 'Clear' : 'All'}
+                          </button>
+                        </div>
+                      </td>
+
+                      {filteredHospitals.map((h) => {
+                        const isChecked = !!doctorHospitals[doc.id]?.has(h.id);
+                        return (
+                          <td
+                            key={h.id}
+                            onClick={() => toggleHospitalCell(doc.id, h.id)}
+                            style={{
+                              padding: '0.5rem',
+                              textAlign: 'center',
+                              borderBottom: '1px solid var(--color-border)',
+                              borderRight: '1px solid var(--color-border)',
+                              cursor: 'pointer',
+                              background: isChecked ? 'rgba(59, 130, 246, 0.08)' : 'transparent',
+                              transition: 'background 0.15s ease',
+                            }}
+                          >
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={() => {}}
+                              style={{
+                                width: 18,
+                                height: 18,
+                                accentColor: '#2563eb',
+                                cursor: 'pointer',
+                                verticalAlign: 'middle',
+                              }}
+                            />
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           )}
         </div>
 

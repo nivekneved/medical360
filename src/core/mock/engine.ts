@@ -479,7 +479,7 @@ class MockEngine {
 
   async getDoctorsByHospital(hospitalId: string): Promise<Doctor[]> {
     const list = await this.getDoctors();
-    return list.filter(d => d.hospitalId === hospitalId);
+    return list.filter(d => (d.hospitalIds || (d.hospitalId ? [d.hospitalId] : [])).includes(hospitalId));
   }
 
   async associateDoctorSpecialties(doctorId: string, specialtyIds: string[]): Promise<Doctor> {
@@ -487,7 +487,15 @@ class MockEngine {
   }
 
   async associateDoctorHospital(doctorId: string, hospitalId: string): Promise<Doctor> {
-    return this.updateDoctor(doctorId, { hospitalId });
+    const doc = await this.getDoctorById(doctorId);
+    const existing = doc?.hospitalIds || (doc?.hospitalId ? [doc.hospitalId] : []);
+    const updated = Array.from(new Set([...existing, hospitalId]));
+    return this.updateDoctor(doctorId, { hospitalId, hospitalIds: updated });
+  }
+
+  async associateDoctorHospitals(doctorId: string, hospitalIds: string[]): Promise<Doctor> {
+    const clean = Array.from(new Set(hospitalIds));
+    return this.updateDoctor(doctorId, { hospitalIds: clean, hospitalId: clean[0] || '' });
   }
 
   async associateSpecialtyDoctors(specialtyId: string, doctorIds: string[]): Promise<void> {
@@ -508,17 +516,32 @@ class MockEngine {
     const targetDocSet = new Set(doctorIds);
     const allDoctors = await this.getDoctors();
     for (const doc of allDoctors) {
-      if (targetDocSet.has(doc.id) && doc.hospitalId !== hospitalId) {
-        await this.updateDoctor(doc.id, { hospitalId });
+      const currentHospIds = doc.hospitalIds?.length ? [...doc.hospitalIds] : (doc.hospitalId ? [doc.hospitalId] : []);
+      const hasHosp = currentHospIds.includes(hospitalId);
+      const shouldHave = targetDocSet.has(doc.id);
+      if (shouldHave && !hasHosp) {
+        const updated = [...currentHospIds, hospitalId];
+        await this.updateDoctor(doc.id, { hospitalIds: updated, hospitalId: updated[0] });
+      } else if (!shouldHave && hasHosp) {
+        const updated = currentHospIds.filter(id => id !== hospitalId);
+        await this.updateDoctor(doc.id, { hospitalIds: updated, hospitalId: updated[0] || '' });
       }
     }
   }
 
-  async saveAllDoctorAssociations(mapping: { doctorId: string; hospitalId?: string; specialtyIds?: string[] }[]): Promise<void> {
+  async saveAllDoctorAssociations(mapping: { doctorId: string; hospitalId?: string; hospitalIds?: string[]; specialtyIds?: string[] }[]): Promise<void> {
     for (const item of mapping) {
       const updates: Partial<Doctor> = {};
-      if (item.hospitalId !== undefined) updates.hospitalId = item.hospitalId;
-      if (item.specialtyIds !== undefined) updates.specialties = Array.from(new Set(item.specialtyIds));
+      if (item.hospitalIds !== undefined) {
+        updates.hospitalIds = Array.from(new Set(item.hospitalIds));
+        updates.hospitalId = updates.hospitalIds[0] || '';
+      } else if (item.hospitalId !== undefined) {
+        updates.hospitalId = item.hospitalId;
+        updates.hospitalIds = item.hospitalId ? [item.hospitalId] : [];
+      }
+      if (item.specialtyIds !== undefined) {
+        updates.specialties = Array.from(new Set(item.specialtyIds));
+      }
       if (Object.keys(updates).length > 0) {
         await this.updateDoctor(item.doctorId, updates);
       }
@@ -953,9 +976,11 @@ class MockEngine {
   }
 
   private mapDoctorRow(r: any): Doctor {
+    const hospitalIds: string[] = r.hospital_ids || r.hospitalIds || (r.hospital_id || r.hospitalId ? [r.hospital_id || r.hospitalId] : []);
     return {
       id: r.id,
-      hospitalId: r.hospital_id || r.hospitalId || '',
+      hospitalId: hospitalIds[0] || r.hospital_id || r.hospitalId || '',
+      hospitalIds: hospitalIds,
       name: r.name,
       title: r.title,
       specialties: r.specialties || (r.specialty_id ? [r.specialty_id] : []),
