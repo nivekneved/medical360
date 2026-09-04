@@ -158,7 +158,7 @@ export function renderEmailHtml(
         <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 14px;">
           <tr>
             <td style="vertical-align: middle;">
-              <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Medical 360" height="34" style="height: 34px; max-width: 160px; display: block; border: 0;" />
+              <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Medical 360" height="44" style="height: 44px; max-width: 200px; display: block; border: 0;" />
             </td>
           </tr>
         </table>

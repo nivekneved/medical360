@@ -86,7 +86,7 @@ export function printOrExportPdf(
             align-items: center;
           }
           .logo img {
-            height: 36px;
+            height: 48px;
             width: auto;
             object-fit: contain;
           }

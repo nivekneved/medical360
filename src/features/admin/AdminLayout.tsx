@@ -192,7 +192,7 @@ export function AdminLayout() {
           <img 
             src="/assets/logo.png" 
             alt="Medical 360" 
-            style={{ height: 32, width: 'auto', maxWidth: 140, objectFit: 'contain' }} 
+            style={{ height: 38, width: 'auto', maxWidth: 170, objectFit: 'contain' }} 
           />
         </div>
 
@@ -225,8 +225,8 @@ export function AdminLayout() {
               src="/assets/logo.png" 
               alt="Medical 360" 
               style={{ 
-                height: collapsed ? 26 : 34, 
-                maxWidth: collapsed ? 32 : 140, 
+                height: collapsed ? 30 : 42, 
+                maxWidth: collapsed ? 36 : 170, 
                 objectFit: 'contain',
                 objectPosition: 'left center',
                 transition: 'all 0.2s ease'
