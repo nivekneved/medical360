@@ -340,7 +340,7 @@
 }
 
 .admin-topbar__toggle:hover {
-  background: rgba(6, 95, 70, 0.08);
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
   border-color: var(--color-primary);
   color: var(--color-primary);
 }

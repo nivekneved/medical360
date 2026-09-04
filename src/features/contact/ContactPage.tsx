@@ -66,7 +66,7 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(6,95,70,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
                     <Phone size={20} />
                   </div>
                   <div>
@@ -78,7 +78,7 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(6,95,70,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
                     <Mail size={20} />
                   </div>
                   <div>
@@ -88,7 +88,7 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(6,95,70,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
                     <Clock size={20} />
                   </div>
                   <div>
@@ -106,7 +106,7 @@ export function ContactPage() {
                 </div>
 
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'rgba(6,95,70,0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
+                  <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)', flexShrink: 0 }}>
                     <MapPin size={20} />
                   </div>
                   <div>

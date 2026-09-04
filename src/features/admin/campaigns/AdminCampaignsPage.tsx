@@ -782,7 +782,7 @@ export function AdminCampaignsPage() {
                   <div
                     key={camp.id}
                     style={{
-                      background: isSelected ? 'rgba(6, 95, 70, 0.05)' : 'var(--color-surface)',
+                      background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'var(--color-surface)',
                       border: isSelected ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
                       borderRadius: 12,
                       padding: '1.25rem 1.5rem',
@@ -915,7 +915,7 @@ export function AdminCampaignsPage() {
                   <div
                     key={camp.id}
                     style={{
-                      background: isSelected ? 'rgba(6, 95, 70, 0.04)' : 'var(--color-surface)',
+                      background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'var(--color-surface)',
                       border: isSelected ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
                       borderRadius: 12,
                       overflow: 'hidden',
@@ -1032,7 +1032,7 @@ export function AdminCampaignsPage() {
                       padding: '0.75rem 1rem',
                       borderRadius: 8,
                       border: '1.5px solid ' + (isSelected ? 'var(--color-primary)' : 'var(--color-border)'),
-                      background: isSelected ? 'rgba(6, 95, 70, 0.08)' : 'var(--color-surface-2)',
+                      background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'var(--color-surface-2)',
                       cursor: 'pointer',
                       display: 'flex',
                       justifyContent: 'space-between',
@@ -1194,7 +1194,7 @@ export function AdminCampaignsPage() {
                               key={contact.id}
                               style={{
                                 borderBottom: '1px solid var(--color-border-light)',
-                                background: isSelected ? 'rgba(6, 95, 70, 0.05)' : 'transparent',
+                                background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'transparent',
                               }}
                             >
                               <td style={{ padding: '0.75rem 0.5rem', textAlign: 'center' }}>
@@ -1237,7 +1237,7 @@ export function AdminCampaignsPage() {
                         <div
                           key={contact.id}
                           style={{
-                            background: isSelected ? 'rgba(6, 95, 70, 0.04)' : 'var(--color-surface-2)',
+                            background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'var(--color-surface-2)',
                             border: isSelected ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                             borderRadius: 8,
                             padding: '1rem',
@@ -1691,7 +1691,7 @@ export function AdminCampaignsPage() {
                 padding: '2rem 1.5rem',
                 textAlign: 'center',
                 cursor: 'pointer',
-                background: 'rgba(6, 95, 70, 0.04)',
+                background: 'color-mix(in srgb, var(--color-primary) 6%, transparent)',
                 marginBottom: '1.25rem',
               }}
             >
@@ -1918,7 +1918,7 @@ export function AdminCampaignsPage() {
             
             {!dispatchingModal.isDone ? (
               <>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(6, 95, 70, 0.1)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
+                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
                   <Send size={28} className="animate-pulse" />
                 </div>
                 <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>

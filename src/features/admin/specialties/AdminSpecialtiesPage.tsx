@@ -151,7 +151,7 @@ export function AdminSpecialtiesPage() {
 
             <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap', marginTop: 'auto', paddingTop: '0.5rem' }}>
               {s.procedures.slice(0, 2).map(proc => (
-                <span key={proc.id} style={{ fontSize: '0.7rem', fontWeight: 600, background: 'rgba(6, 95, 70, 0.08)', color: 'var(--color-primary)', padding: '2px 6px', borderRadius: 4 }}>
+                <span key={proc.id} style={{ fontSize: '0.7rem', fontWeight: 600, background: 'color-mix(in srgb, var(--color-primary) 8%, transparent)', color: 'var(--color-primary)', padding: '2px 6px', borderRadius: 4 }}>
                   {proc.name}
                 </span>
               ))}
@@ -177,7 +177,7 @@ export function AdminSpecialtiesPage() {
           key={s.id}
           style={{
             borderTop: '1px solid var(--color-border)',
-            background: isSelected ? 'rgba(6, 95, 70, 0.05)' : 'transparent',
+            background: isSelected ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'transparent',
             transition: 'background 0.15s ease',
           }}
         >
@@ -220,7 +220,7 @@ export function AdminSpecialtiesPage() {
           </td>
           <td style={{ padding: '0.875rem 0.85rem' }}>
             {s.featured ? (
-              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.1)', padding: '2px 6px', borderRadius: 4 }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--color-primary)', background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', padding: '2px 6px', borderRadius: 4 }}>
                 Active
               </span>
             ) : (

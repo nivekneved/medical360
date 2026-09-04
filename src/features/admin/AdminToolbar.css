@@ -58,7 +58,7 @@
 .admin-toolbar__search-input:focus {
   background: var(--color-surface);
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(6, 95, 70, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
 }
 
 .admin-toolbar__clear-search {
@@ -118,7 +118,7 @@
 .admin-toolbar__select:focus {
   background-color: var(--color-surface);
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(6, 95, 70, 0.12);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
 }
 
 /* ─── Exact Screenshot Controls (Sort Pill, Count Badge, View Switcher) ──────── */
@@ -138,12 +138,12 @@
 
 .admin-toolbar__sort-pill:hover,
 .admin-toolbar__sort-pill:focus-within {
-  border-color: #db2777;
-  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 12%, transparent);
 }
 
 .admin-toolbar__sort-icon {
-  color: #db2777;
+  color: var(--color-primary);
   flex-shrink: 0;
 }
 
@@ -194,7 +194,7 @@
 .admin-toolbar__count-num {
   font-size: 0.875rem;
   font-weight: 900;
-  color: #db2777;
+  color: var(--color-primary);
 }
 
 .admin-toolbar__count-unit {
@@ -238,9 +238,9 @@
 }
 
 .admin-toolbar__view-btn--active {
-  background: #db2777;
+  background: var(--color-primary);
   color: #ffffff !important;
-  box-shadow: 0 2px 8px rgba(219, 39, 119, 0.35);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-primary) 35%, transparent);
 }
 
 .admin-toolbar__reset-btn {

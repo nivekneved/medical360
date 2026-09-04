@@ -236,8 +236,8 @@ export function CostCalculatorPage() {
 
         {/* Savings Highlight Banner */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(5,150,105,0.06) 100%)',
-          border: '1.5px solid rgba(16,185,129,0.3)',
+          background: 'var(--color-surface)',
+          border: '1.5px solid color-mix(in srgb, var(--color-primary) 30%, transparent)',
           borderRadius: 'var(--radius-xl)',
           padding: '1.5rem 2rem',
           display: 'flex',
@@ -248,7 +248,7 @@ export function CostCalculatorPage() {
           marginBottom: '2.5rem',
         }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#059669', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-primary)', fontWeight: 800, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               <Sparkles size={16} />
               <span>{isFr ? 'Économie Estimée pour Patient Mauricien' : isKr ? 'Lekonomi Estime Pou Pasian Morisien' : 'Estimated Patient Savings'}</span>
             </div>
@@ -294,7 +294,7 @@ export function CostCalculatorPage() {
                   display: 'flex',
                   flexDirection: 'column',
                   position: 'relative',
-                  boxShadow: isBestValue ? '0 8px 24px rgba(16,185,129,0.12)' : '0 2px 10px rgba(0,0,0,0.02)',
+                  boxShadow: isBestValue ? 'var(--shadow-primary)' : '0 2px 10px rgba(0,0,0,0.02)',
                 }}
               >
                 {isBestValue && (
@@ -325,7 +325,7 @@ export function CostCalculatorPage() {
 
                 {/* Estimated Price Range */}
                 <div style={{
-                  background: isBestValue ? 'rgba(16,185,129,0.08)' : 'var(--color-surface-2)',
+                  background: isBestValue ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'var(--color-surface-2)',
                   borderRadius: 'var(--radius-lg)',
                   padding: '1rem',
                   textAlign: 'center',
@@ -342,19 +342,19 @@ export function CostCalculatorPage() {
                 {/* Inclusions checklist for this destination */}
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.25rem' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--color-text-secondary)' }}>
-                    <CheckCircle2 size={14} color="#10b981" />
+                    <CheckCircle2 size={14} color="var(--color-primary)" />
                     <span>{isFr ? 'Honoraires chirurgicaux & bloc opératoire' : 'Surgeon & OT charges included'}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--color-text-secondary)' }}>
-                    <CheckCircle2 size={14} color="#10b981" />
+                    <CheckCircle2 size={14} color="var(--color-primary)" />
                     <span>{isFr ? `Séjour hospitalier (${activeProcedure?.estimatedDurationDays || 10} jours)` : `Hospital stay (${activeProcedure?.estimatedDurationDays || 10} days)`}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--color-text-secondary)' }}>
-                    <CheckCircle2 size={14} color="#10b981" />
+                    <CheckCircle2 size={14} color="var(--color-primary)" />
                     <span>{isFr ? 'Accompagnement Med360 gratuit' : '100% Free Med360 Concierge Support'}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.825rem', color: 'var(--color-text-secondary)' }}>
-                    <CheckCircle2 size={14} color="#10b981" />
+                    <CheckCircle2 size={14} color="var(--color-primary)" />
                     <span>{isFr ? 'Accueil VIP aéroport & transferts' : 'VIP Airport meet & transfer'}</span>
                   </div>
                 </div>

@@ -54,7 +54,7 @@ export function CookieConsentBanner() {
           width: 36,
           height: 36,
           borderRadius: 'var(--radius-md)',
-          background: 'rgba(6, 95, 70, 0.12)',
+          background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)',
           color: 'var(--color-primary)',
           display: 'flex',
           alignItems: 'center',

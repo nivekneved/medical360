@@ -292,7 +292,7 @@ export function HospitalsPage() {
           left: '50%',
           transform: 'translateX(-50%)',
           background: 'rgba(9, 13, 16, 0.94)',
-          border: '1.5px solid rgba(16,185,129,0.4)',
+          border: '1.5px solid color-mix(in srgb, var(--color-accent) 40%, transparent)',
           borderRadius: '999px',
           padding: '0.6rem 1.25rem',
           display: 'flex',
@@ -303,7 +303,7 @@ export function HospitalsPage() {
           zIndex: 1000,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ffffff', fontSize: '0.875rem', fontWeight: 700 }}>
-            <Scale size={18} color="#34d399" />
+            <Scale size={18} color="var(--color-accent-light)" />
             <span>{compareIds.length} {isFr ? 'hôpital(s) sélectionné(s)' : 'hospital(s) selected'}</span>
           </div>
 

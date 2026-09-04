@@ -177,7 +177,7 @@ export function DescribeNeedPage() {
               
               {formData.serviceName && (
                 <div style={{
-                  background: 'rgba(6, 95, 70, 0.08)',
+                  background: 'color-mix(in srgb, var(--color-primary) 8%, transparent)',
                   border: '1.5px solid var(--color-primary)',
                   borderRadius: 'var(--radius-md)',
                   padding: '0.85rem 1.25rem',
@@ -287,7 +287,7 @@ export function DescribeNeedPage() {
                 <div className="review-row"><span>{l10n('Téléphone', 'Telefonn', 'Phone')}</span><strong>{formData.phone}</strong></div>
                 <div className="review-row"><span>{l10n('Pays', 'Pei', 'Country')}</span><strong>{formData.countryOfResidence}</strong></div>
                 {formData.serviceName && (
-                  <div className="review-row" style={{ background: 'rgba(6, 95, 70, 0.05)', padding: '0.4rem 0.6rem', borderRadius: 6 }}>
+                  <div className="review-row" style={{ background: 'color-mix(in srgb, var(--color-primary) 6%, transparent)', padding: '0.4rem 0.6rem', borderRadius: 6 }}>
                     <span>{l10n('Service Demandé', 'Servis Demande', 'Requested Service')}</span>
                     <strong style={{ color: 'var(--color-primary)' }}>{formData.serviceName}</strong>
                   </div>

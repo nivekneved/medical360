@@ -108,7 +108,7 @@ export function NotFoundPage() {
         }}>
           <Link to="/" style={{ textDecoration: 'none' }} className="card card--interactive">
             <div style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(6, 95, 70, 0.1)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'color-mix(in srgb, var(--color-primary) 10%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Home size={18} />
               </div>
               <div>
@@ -120,7 +120,7 @@ export function NotFoundPage() {
 
           <Link to="/specialties" style={{ textDecoration: 'none' }} className="card card--interactive">
             <div style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(6, 95, 70, 0.1)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'color-mix(in srgb, var(--color-primary) 10%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Stethoscope size={18} />
               </div>
               <div>
@@ -132,7 +132,7 @@ export function NotFoundPage() {
 
           <Link to="/hospitals" style={{ textDecoration: 'none' }} className="card card--interactive">
             <div style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(6, 95, 70, 0.1)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'color-mix(in srgb, var(--color-primary) 10%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Building2 size={18} />
               </div>
               <div>
@@ -144,7 +144,7 @@ export function NotFoundPage() {
 
           <Link to="/cost-calculator" style={{ textDecoration: 'none' }} className="card card--interactive">
             <div style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'rgba(6, 95, 70, 0.1)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'color-mix(in srgb, var(--color-primary) 10%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Calculator size={18} />
               </div>
               <div>

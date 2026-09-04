@@ -46,8 +46,8 @@
 .wizard-step--active .wizard-step__num {
   border-color: var(--color-primary);
   color: var(--color-primary);
-  background: rgba(6, 95, 70, 0.08);
-  box-shadow: 0 0 0 4px rgba(6, 95, 70, 0.15);
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary) 18%, transparent);
 }
 
 .wizard-step--done .wizard-step__num {
@@ -128,14 +128,14 @@
 
 .urgency-option--selected {
   border-color: var(--color-primary);
-  background: rgba(6, 95, 70, 0.06);
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
 }
 
 .urgency-option--selected strong { color: var(--color-primary); }
 
 .wizard-info {
-  background: rgba(6, 95, 70, 0.06);
-  border: 1px solid rgba(6, 95, 70, 0.2);
+  background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
   border-radius: var(--radius-lg);
   padding: var(--space-4) var(--space-5);
   font-size: 0.9rem;
@@ -163,7 +163,7 @@
 .review-row span { color: var(--color-text-muted); }
 
 .review-note {
-  background: rgba(6, 95, 70, 0.04);
+  background: color-mix(in srgb, var(--color-primary) 5%, transparent);
   border: 1px solid var(--color-border-light);
   border-radius: var(--radius-lg);
   padding: var(--space-4) var(--space-5);

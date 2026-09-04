@@ -116,11 +116,11 @@ export function VisaGuidePage() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.5rem',
-            background: 'rgba(16, 185, 129, 0.12)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
+            background: 'color-mix(in srgb, var(--color-primary) 25%, transparent)',
+            border: '1px solid color-mix(in srgb, var(--color-accent-light) 45%, transparent)',
             borderRadius: '999px',
             padding: '0.35rem 1rem',
-            color: '#34d399',
+            color: '#ffffff',
             fontSize: '0.8rem',
             fontWeight: 700,
             marginBottom: '1rem',
@@ -244,15 +244,15 @@ export function VisaGuidePage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
             {selectedDestination.keyRequirements.map((req, idx) => (
               <div key={idx} style={{
-                padding: '1rem',
-                background: 'var(--color-surface-2)',
-                borderRadius: 'var(--radius-lg)',
+                background: 'var(--color-surface)',
+                padding: '0.85rem 1rem',
+                borderRadius: 'var(--radius-md)',
                 border: '1px solid var(--color-border)',
                 display: 'flex',
                 gap: '0.75rem',
                 alignItems: 'flex-start',
               }}>
-                <CheckCircle2 size={18} color="#10b981" style={{ flexShrink: 0, marginTop: 2 }} />
+                <CheckCircle2 size={18} color="var(--color-primary)" style={{ flexShrink: 0, marginTop: 2 }} />
                 <span style={{ fontSize: '0.875rem', color: 'var(--color-text)', lineHeight: 1.45 }}>{req}</span>
               </div>
             ))}
@@ -260,8 +260,8 @@ export function VisaGuidePage() {
 
           {/* Med360 Free Concierge Value-Add Box */}
           <div style={{
-            background: 'linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(5,150,105,0.05) 100%)',
-            border: '1.5px solid rgba(16,185,129,0.3)',
+            background: 'color-mix(in srgb, var(--color-primary) 8%, var(--color-surface-2))',
+            border: '1.5px solid color-mix(in srgb, var(--color-primary) 30%, var(--color-border))',
             borderRadius: 'var(--radius-lg)',
             padding: '1.25rem 1.5rem',
             display: 'flex',
@@ -271,7 +271,7 @@ export function VisaGuidePage() {
             flexWrap: 'wrap',
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: '1 1 300px' }}>
-              <ShieldCheck size={28} color="#059669" style={{ flexShrink: 0 }} />
+              <ShieldCheck size={28} color="var(--color-primary)" style={{ flexShrink: 0 }} />
               <div>
                 <div style={{ fontWeight: 800, color: 'var(--color-text)', fontSize: '0.95rem' }}>
                   {isFr ? 'Notre Prise en Charge 100% Gratuite' : 'Medical 360 Full Concierge Commitment'}
@@ -299,7 +299,7 @@ export function VisaGuidePage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem', marginBottom: '3rem' }}>
           <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', padding: '1.5rem' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(16,185,129,0.15)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, marginBottom: '0.75rem' }}>1</div>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'color-mix(in srgb, var(--color-primary) 15%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, marginBottom: '0.75rem' }}>1</div>
             <h4 style={{ fontWeight: 800, fontSize: '1rem', marginBottom: 4 }}>{isFr ? 'Jours 1 – 2 : Avis Médical' : 'Days 1 – 2: Free Opinion'}</h4>
             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
               {isFr ? 'Examen de vos comptes-rendus par les chirurgiens chefs de service et devis détaillé.' : 'Your clinical records are reviewed directly by chief surgeons to form treatment plan & quote.'}
@@ -307,7 +307,7 @@ export function VisaGuidePage() {
           </div>
 
           <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', padding: '1.5rem' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(16,185,129,0.15)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, marginBottom: '0.75rem' }}>2</div>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'color-mix(in srgb, var(--color-primary) 15%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, marginBottom: '0.75rem' }}>2</div>
             <h4 style={{ fontWeight: 800, fontSize: '1rem', marginBottom: 4 }}>{isFr ? 'Jours 3 – 4 : Lettre & Visa' : 'Days 3 – 4: Fast Visa'}</h4>
             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
               {isFr ? 'Émission de la lettre officielle de l\'hôpital et dépôt express de votre visa e-Medical.' : 'Official hospital letter issued, expedited e-Medical Visa and flight tickets booked.'}
@@ -315,7 +315,7 @@ export function VisaGuidePage() {
           </div>
 
           <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', padding: '1.5rem' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(16,185,129,0.15)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, marginBottom: '0.75rem' }}>3</div>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'color-mix(in srgb, var(--color-primary) 15%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, marginBottom: '0.75rem' }}>3</div>
             <h4 style={{ fontWeight: 800, fontSize: '1rem', marginBottom: 4 }}>{isFr ? 'Jour 5 : Accueil VIP & Soins' : 'Day 5: VIP Arrival & Surgery'}</h4>
             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
               {isFr ? 'Accueil à la descente d\'avion, transfert à la clinique et admission directe sans attente.' : 'Airside VIP meet & greet, chauffeur transfer to hospital, direct admission to private room.'}
@@ -323,7 +323,7 @@ export function VisaGuidePage() {
           </div>
 
           <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', padding: '1.5rem' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'rgba(16,185,129,0.15)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, marginBottom: '0.75rem' }}>4</div>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'color-mix(in srgb, var(--color-primary) 15%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, marginBottom: '0.75rem' }}>4</div>
             <h4 style={{ fontWeight: 800, fontSize: '1rem', marginBottom: 4 }}>{isFr ? 'Retour : Téléconsultation' : 'Recovery & Telemedicine'}</h4>
             <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
               {isFr ? 'Vol de retour à Maurice en cabine adaptée et suivi médical à distance avec le médecin traitant.' : 'Safe return flight to Mauritius and scheduled follow-up telemedicine consultations.'}
@@ -363,9 +363,9 @@ export function VisaGuidePage() {
                   alignItems: 'center',
                   gap: '0.75rem',
                   padding: '0.85rem 1rem',
-                  background: checkedItems[item.id] ? 'rgba(16,185,129,0.08)' : 'var(--color-surface-2)',
+                  background: checkedItems[item.id] ? 'color-mix(in srgb, var(--color-primary) 10%, transparent)' : 'var(--color-surface-2)',
                   borderRadius: 'var(--radius-lg)',
-                  border: checkedItems[item.id] ? '1.5px solid rgba(16,185,129,0.3)' : '1px solid var(--color-border)',
+                  border: checkedItems[item.id] ? '1.5px solid var(--color-primary)' : '1px solid var(--color-border)',
                   cursor: 'pointer',
                   transition: 'all 0.15s',
                 }}
