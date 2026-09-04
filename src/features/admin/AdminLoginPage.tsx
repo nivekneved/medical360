@@ -107,9 +107,9 @@ export function AdminLoginPage() {
             src="/assets/logo.png" 
             alt="Medical 360" 
             style={{ 
-              height: 52, 
+              height: 64, 
               width: 'auto', 
-              maxWidth: 220, 
+              maxWidth: 260, 
               objectFit: 'contain', 
               margin: '0 auto 1.25rem', 
               display: 'block' 

@@ -48,12 +48,19 @@
 }
 
 .navbar__logo-img {
-  height: 44px;
+  height: 52px;
   width: auto;
-  max-width: 200px;
+  max-width: 230px;
   object-fit: contain;
   display: block;
   transition: transform var(--transition-base), filter var(--transition-base);
+}
+
+@media (max-width: 768px) {
+  .navbar__logo-img {
+    height: 44px;
+    max-width: 180px;
+  }
 }
 
 .navbar__logo:hover .navbar__logo-img {
