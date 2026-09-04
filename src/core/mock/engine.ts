@@ -474,12 +474,55 @@ class MockEngine {
 
   async getDoctorsBySpecialty(specialtyId: string): Promise<Doctor[]> {
     const list = await this.getDoctors();
-    return list.filter(d => d.specialties.includes(specialtyId));
+    return list.filter(d => (d.specialties || []).includes(specialtyId));
   }
 
   async getDoctorsByHospital(hospitalId: string): Promise<Doctor[]> {
     const list = await this.getDoctors();
     return list.filter(d => d.hospitalId === hospitalId);
+  }
+
+  async associateDoctorSpecialties(doctorId: string, specialtyIds: string[]): Promise<Doctor> {
+    return this.updateDoctor(doctorId, { specialties: Array.from(new Set(specialtyIds)) });
+  }
+
+  async associateDoctorHospital(doctorId: string, hospitalId: string): Promise<Doctor> {
+    return this.updateDoctor(doctorId, { hospitalId });
+  }
+
+  async associateSpecialtyDoctors(specialtyId: string, doctorIds: string[]): Promise<void> {
+    const targetDocSet = new Set(doctorIds);
+    const allDoctors = await this.getDoctors();
+    for (const doc of allDoctors) {
+      const hasSpec = (doc.specialties || []).includes(specialtyId);
+      const shouldHave = targetDocSet.has(doc.id);
+      if (shouldHave && !hasSpec) {
+        await this.updateDoctor(doc.id, { specialties: [...(doc.specialties || []), specialtyId] });
+      } else if (!shouldHave && hasSpec) {
+        await this.updateDoctor(doc.id, { specialties: (doc.specialties || []).filter(s => s !== specialtyId) });
+      }
+    }
+  }
+
+  async associateHospitalDoctors(hospitalId: string, doctorIds: string[]): Promise<void> {
+    const targetDocSet = new Set(doctorIds);
+    const allDoctors = await this.getDoctors();
+    for (const doc of allDoctors) {
+      if (targetDocSet.has(doc.id) && doc.hospitalId !== hospitalId) {
+        await this.updateDoctor(doc.id, { hospitalId });
+      }
+    }
+  }
+
+  async saveAllDoctorAssociations(mapping: { doctorId: string; hospitalId?: string; specialtyIds?: string[] }[]): Promise<void> {
+    for (const item of mapping) {
+      const updates: Partial<Doctor> = {};
+      if (item.hospitalId !== undefined) updates.hospitalId = item.hospitalId;
+      if (item.specialtyIds !== undefined) updates.specialties = Array.from(new Set(item.specialtyIds));
+      if (Object.keys(updates).length > 0) {
+        await this.updateDoctor(item.doctorId, updates);
+      }
+    }
   }
 
   async createDoctor(doctor: Doctor): Promise<Doctor> {
