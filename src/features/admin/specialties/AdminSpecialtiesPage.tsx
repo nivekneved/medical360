@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Edit3, Eye, Network, Building2, MapPin } from 'lucide-react';
+import { Edit3, Eye, Network, Building2, MapPin, Stethoscope } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
 import { formatCostRange, formatCostMur } from '../../../core/services/format.service';
 import { AdminEntityManager, type FieldDefinition, type SortOption } from '../components/AdminEntityManager';
 import { HospitalSelector } from '../components/HospitalSelector';
 import { HospitalSpecialtyMatrixModal } from '../components/HospitalSpecialtyMatrixModal';
+import { ProcedureManagerModal } from '../../specialties/components/ProcedureManagerModal';
 import type { Specialty, Hospital } from '../../../core/types';
 
 // Extended specialty form item to include affiliated hospitals
@@ -44,6 +45,7 @@ export function AdminSpecialtiesPage() {
   const [hospitals, setHospitals]     = useState<Hospital[]>([]);
   const [loading, setLoading]         = useState(true);
   const [isMatrixOpen, setIsMatrixOpen] = useState(false);
+  const [managingProceduresSpecialty, setManagingProceduresSpecialty] = useState<Specialty | null>(null);
 
   const loadData = () => {
     setLoading(true);
@@ -245,12 +247,31 @@ export function AdminSpecialtiesPage() {
                   )}
                 </div>
 
-                <div style={{ display: 'flex', gap: '0.5rem', paddingTop: '0.75rem', borderTop: '1px solid var(--color-border)' }}>
-                  <button onClick={onView} className="btn btn-outline btn-sm" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}>
-                    <Eye size={13} /> View
+                <div style={{ display: 'flex', gap: '0.4rem', paddingTop: '0.75rem', borderTop: '1px solid var(--color-border)' }}>
+                  <button
+                    type="button"
+                    onClick={() => setManagingProceduresSpecialty(s)}
+                    className="btn btn-outline btn-sm"
+                    style={{
+                      flex: 1.2,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.3rem',
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      borderColor: 'var(--color-primary)',
+                      color: 'var(--color-primary)',
+                    }}
+                    title="Manage Procedures & Estimated Costs"
+                  >
+                    <Stethoscope size={13} /> Procedures ({(s.procedures || []).length})
                   </button>
-                  <button onClick={onEdit} className="btn btn-primary btn-sm" style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}>
-                    <Edit3 size={13} /> Edit
+                  <button onClick={onView} className="btn btn-outline btn-sm" style={{ padding: '4px 8px' }} title="View Specialty">
+                    <Eye size={13} />
+                  </button>
+                  <button onClick={onEdit} className="btn btn-primary btn-sm" style={{ padding: '4px 8px' }} title="Edit Specialty">
+                    <Edit3 size={13} />
                   </button>
                 </div>
               </div>
@@ -296,7 +317,23 @@ export function AdminSpecialtiesPage() {
                 <span style={{ fontWeight: 700, color: 'var(--color-primary)' }}>{affiliatedHospitals.length}</span> hospitals
               </td>
               <td style={{ padding: '0.875rem 0.85rem', fontSize: '0.85rem' }}>
-                <strong>{(s.procedures || []).length}</strong> cataloged
+                <button
+                  type="button"
+                  onClick={() => setManagingProceduresSpecialty(s)}
+                  className="btn btn-outline btn-sm"
+                  style={{
+                    padding: '3px 8px',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                  title="Click to view and edit procedures"
+                >
+                  <Stethoscope size={12} color="var(--color-primary)" />
+                  <strong>{(s.procedures || []).length}</strong> cataloged
+                </button>
               </td>
               <td style={{ padding: '0.875rem 0.85rem', fontSize: '0.8125rem' }}>
                 {s.procedures?.[0]?.estimatedCostUSD ? (
@@ -321,6 +358,15 @@ export function AdminSpecialtiesPage() {
               </td>
               <td style={{ padding: '0.875rem 0.85rem', textAlign: 'right' }}>
                 <div style={{ display: 'inline-flex', gap: '0.4rem' }}>
+                  <button
+                    type="button"
+                    onClick={() => setManagingProceduresSpecialty(s)}
+                    className="btn btn-outline btn-sm"
+                    style={{ padding: '4px 8px', borderColor: 'var(--color-primary)', color: 'var(--color-primary)' }}
+                    title="Manage Procedures"
+                  >
+                    <Stethoscope size={14} />
+                  </button>
                   <button onClick={onView} className="btn btn-outline btn-sm" style={{ padding: '4px 8px' }} title="View Specialty">
                     <Eye size={14} />
                   </button>
@@ -395,6 +441,16 @@ export function AdminSpecialtiesPage() {
         isOpen={isMatrixOpen}
         onClose={() => setIsMatrixOpen(false)}
         onSaved={loadData}
+      />
+
+      {/* Procedure Cards Manager Modal */}
+      <ProcedureManagerModal
+        isOpen={managingProceduresSpecialty !== null}
+        specialty={managingProceduresSpecialty}
+        onClose={() => setManagingProceduresSpecialty(null)}
+        onSaved={() => {
+          loadData();
+        }}
       />
     </>
   );
