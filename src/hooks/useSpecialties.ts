@@ -28,10 +28,15 @@ export function useSpecialty(id: string | undefined) {
   const [specialty, setSpecialty] = useState<Specialty | null>(null);
   const [loading, setLoading]     = useState(true);
 
-  useEffect(() => {
+  const fetchSpecialty = () => {
     if (!id) { setLoading(false); return; }
+    setLoading(true);
     mockEngine.getSpecialtyById(id).then(setSpecialty).finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchSpecialty();
   }, [id]);
 
-  return { specialty, loading };
+  return { specialty, loading, refetch: fetchSpecialty, setSpecialty };
 }
