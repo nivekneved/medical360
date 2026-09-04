@@ -4,8 +4,6 @@ import {
   Menu,
   X,
   MessageCircle,
-  Sun,
-  Moon,
   Globe,
   ChevronDown,
   Stethoscope,
@@ -18,6 +16,8 @@ import {
   Info,
   ArrowRight,
   Lock,
+  Palette,
+  Check,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../providers/ThemeProvider';
@@ -43,16 +43,30 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileExpandedGroup, setMobileExpandedGroup] = useState<string | null>('treatments');
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const dropdownTimeoutRef = useRef<any>(null);
+  const themeMenuRef = useRef<HTMLDivElement>(null);
 
-  const { theme, toggleTheme } = useTheme();
+  const { theme, currentTheme, availableThemes, setTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const { i18n } = useTranslation();
 
+  // Close menus on outside click or route change
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (themeMenuRef.current && !themeMenuRef.current.contains(e.target as Node)) {
+        setThemeMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   // Close menus on route change
   useEffect(() => {
     setIsOpen(false);
+    setThemeMenuOpen(false);
     setActiveDropdown(null);
   }, [location.pathname]);
 
@@ -250,15 +264,64 @@ export function Navbar() {
             <span className="lang-text">{i18n.language.toUpperCase()}</span>
           </button>
 
-          {/* Theme Toggle */}
-          <button
-            className="navbar-icon-btn"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-          >
-            {theme === 'light' ? <Moon size={17} /> : <Sun size={17} />}
-          </button>
+          {/* Theme Dropdown */}
+          <div className="navbar-theme-dropdown" ref={themeMenuRef}>
+            <button
+              className="navbar-icon-btn navbar-theme-btn"
+              onClick={() => setThemeMenuOpen(!themeMenuOpen)}
+              aria-label="Select website theme"
+              title={`Active Theme: ${currentTheme.name}`}
+              aria-expanded={themeMenuOpen}
+            >
+              <Palette size={17} />
+              <span
+                className="theme-indicator-dot"
+                style={{ background: `linear-gradient(135deg, ${currentTheme.primaryColor}, ${currentTheme.accentColor})` }}
+              />
+            </button>
+
+            {themeMenuOpen && (
+              <div className="navbar-theme-menu" role="menu">
+                <div className="navbar-theme-menu__header">
+                  <span>Theme Presets</span>
+                  <span className="navbar-theme-menu__tag">{availableThemes.length} Themes</span>
+                </div>
+                <div className="navbar-theme-menu__list">
+                  {availableThemes.map(t => {
+                    const isActive = theme === t.id;
+                    return (
+                      <button
+                        key={t.id}
+                        type="button"
+                        className={`navbar-theme-item ${isActive ? 'navbar-theme-item--active' : ''}`}
+                        onClick={() => {
+                          setTheme(t.id);
+                          setThemeMenuOpen(false);
+                        }}
+                      >
+                        <div
+                          className="navbar-theme-swatch"
+                          style={{
+                            background: `linear-gradient(135deg, ${t.primaryColor} 0%, ${t.accentColor} 100%)`,
+                          }}
+                        />
+                        <div className="navbar-theme-info">
+                          <div className="navbar-theme-name-row">
+                            <span className="navbar-theme-name">{t.name}</span>
+                            {t.badge && (
+                              <span className="navbar-theme-badge">{t.badge}</span>
+                            )}
+                          </div>
+                          <span className="navbar-theme-desc">{t.description}</span>
+                        </div>
+                        {isActive && <Check size={16} className="navbar-theme-check" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* WhatsApp Direct */}
           <a
@@ -366,16 +429,40 @@ export function Navbar() {
             </Link>
           </nav>
 
+          {/* Mobile Theme Selector */}
+          <div className="mobile-theme-section">
+            <div className="mobile-theme-section__title">
+              <Palette size={15} />
+              <span>Theme: <strong>{currentTheme.shortName}</strong></span>
+            </div>
+            <div className="mobile-theme-grid">
+              {availableThemes.map(t => {
+                const isActive = theme === t.id;
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    className={`mobile-theme-card ${isActive ? 'mobile-theme-card--active' : ''}`}
+                    onClick={() => setTheme(t.id)}
+                  >
+                    <span
+                      className="mobile-theme-card__swatch"
+                      style={{ background: `linear-gradient(135deg, ${t.primaryColor}, ${t.accentColor})` }}
+                    />
+                    <span className="mobile-theme-card__name">{t.shortName}</span>
+                    {isActive && <Check size={12} className="mobile-theme-card__check" />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Mobile Footer Actions */}
           <div className="navbar__mobile-actions">
             <div className="mobile-utility-row">
-              <button className="mobile-utility-btn" onClick={toggleLanguage}>
+              <button className="mobile-utility-btn" onClick={toggleLanguage} style={{ width: '100%' }}>
                 <Globe size={18} color="var(--color-primary)" />
                 <span>Language: <strong>{i18n.language.toUpperCase()}</strong></span>
-              </button>
-              <button className="mobile-utility-btn" onClick={toggleTheme}>
-                {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-                <span>{theme === 'light' ? 'Dark Mode' : 'Light Mode'}</span>
               </button>
             </div>
 

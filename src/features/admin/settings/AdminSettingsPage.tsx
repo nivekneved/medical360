@@ -21,10 +21,13 @@ import {
   Copy,
   Eye,
   Plus,
+  Palette,
+  Sparkles,
   HardDriveDownload,
 } from 'lucide-react';
 import type { MockConfig } from '../../../core/types';
 import { supabase, isSupabaseConfigured } from '../../../core/supabase/client';
+import { useTheme } from '../../../providers/ThemeProvider';
 import {
   DatabaseBackup,
   createDatabaseSnapshot,
@@ -40,6 +43,7 @@ import {
 
 export function AdminSettingsPage() {
   const { mockConfig, updateMockConfig, resetMock } = useDataConfig();
+  const { theme, currentTheme, availableThemes, setTheme } = useTheme();
   const [testingConnection, setTestingConnection] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<{
     tested: boolean;
@@ -54,7 +58,7 @@ export function AdminSettingsPage() {
   const [actionProgress, setActionProgress] = useState<string | null>(null);
   const [alertMessage, setAlertMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [sqlModalContent, setSqlModalContent] = useState<string | null>(null);
-  const [settingsTab, setSettingsTab] = useState<'backup' | 'supabase' | 'simulation'>('backup');
+  const [settingsTab, setSettingsTab] = useState<'backup' | 'supabase' | 'simulation' | 'themes'>('backup');
   const [copiedSql, setCopiedSql] = useState(false);
   const [newSnapshotLabel, setNewSnapshotLabel] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -327,6 +331,7 @@ export function AdminSettingsPage() {
         flexWrap: 'wrap',
       }}>
         {[
+          { key: 'themes', label: '🎨 Themes & Branding', badge: currentTheme.shortName },
           { key: 'backup', label: '💾 Backup & Restore Hub', badge: `${backups.length} Snapshots` },
           { key: 'supabase', label: '☁️ Live Supabase Connection', badge: isLive ? '🟢 Connected' : '🟡 Standby' },
           { key: 'simulation', label: '⚡ Simulation & Cache', badge: mockConfig.latency.toUpperCase() },
@@ -811,6 +816,225 @@ export function AdminSettingsPage() {
             <div>📋 <strong>Case Manager (Inquiries):</strong> <code style={{ color: '#0284c7' }}>case@med360.mu</code> / <code style={{ color: '#0284c7' }}>med360admin</code></div>
           </div>
         </>
+        )}
+
+        {/* ─── 4. THEMES & BRANDING MANAGER ───────────────────────────────── */}
+        {settingsTab === 'themes' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {/* Active Theme Highlight Banner */}
+            <div style={{
+              background: 'var(--color-surface)',
+              border: '1.5px solid var(--color-border)',
+              borderRadius: 'var(--radius-2xl)',
+              padding: '2rem',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                  <div style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 14,
+                    background: `linear-gradient(135deg, ${currentTheme.primaryColor}, ${currentTheme.accentColor})`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#ffffff',
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.15)',
+                  }}>
+                    <Palette size={24} />
+                  </div>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <h2 style={{ fontSize: '1.35rem', fontWeight: 800, margin: 0, color: 'var(--color-text)' }}>
+                        Current Theme: {currentTheme.name}
+                      </h2>
+                      {currentTheme.badge && (
+                        <span className="badge badge-primary" style={{ fontSize: '0.7rem' }}>
+                          {currentTheme.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', margin: '4px 0 0 0' }}>
+                      {currentTheme.description}
+                    </p>
+                  </div>
+                </div>
+
+                {theme !== 'Med-default' && (
+                  <button
+                    type="button"
+                    className="btn btn-outline btn-sm"
+                    onClick={() => {
+                      setTheme('Med-default');
+                      setAlertMessage({ type: 'success', text: 'Reset theme to Med-default signature design!' });
+                      setTimeout(() => setAlertMessage(null), 4000);
+                    }}
+                    style={{ fontWeight: 700 }}
+                  >
+                    <RotateCcw size={14} /> Reset to Med-default
+                  </button>
+                )}
+              </div>
+
+              {/* Live Preview Strip */}
+              <div style={{
+                background: 'var(--color-surface-2)',
+                border: '1px solid var(--color-border)',
+                borderRadius: 'var(--radius-xl)',
+                padding: '1.25rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                gap: '1rem',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-text-secondary)' }}>
+                    Active Color Swatches:
+                  </span>
+                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 600 }}>
+                      <span style={{ width: 16, height: 16, borderRadius: '50%', background: currentTheme.primaryColor, display: 'inline-block', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                      <span>Primary ({currentTheme.primaryColor})</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.75rem', fontWeight: 600 }}>
+                      <span style={{ width: 16, height: 16, borderRadius: '50%', background: currentTheme.accentColor, display: 'inline-block', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                      <span>Accent ({currentTheme.accentColor})</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '0.6rem' }}>
+                  <button type="button" className="btn btn-primary btn-sm" style={{ pointerEvents: 'none' }}>
+                    Primary Button Preview
+                  </button>
+                  <button type="button" className="btn btn-outline btn-sm" style={{ pointerEvents: 'none' }}>
+                    Outline Button
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Theme Presets Catalog */}
+            <div style={{
+              background: 'var(--color-surface)',
+              border: '1.5px solid var(--color-border)',
+              borderRadius: 'var(--radius-2xl)',
+              padding: '2rem',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+            }}>
+              <div style={{ marginBottom: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '0 0 0.35rem 0', color: 'var(--color-text)' }}>
+                  Available Theme Presets
+                </h3>
+                <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', margin: 0 }}>
+                  Select any preset below to instantaneously switch the visual design system across patient portals, calculators, and admin views.
+                </p>
+              </div>
+
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: '1.25rem',
+              }}>
+                {availableThemes.map(t => {
+                  const isActive = theme === t.id;
+                  return (
+                    <div
+                      key={t.id}
+                      style={{
+                        border: `2px solid ${isActive ? 'var(--color-primary)' : 'var(--color-border)'}`,
+                        borderRadius: 'var(--radius-xl)',
+                        padding: '1.25rem',
+                        background: isActive ? 'var(--color-surface-2)' : 'var(--color-surface)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        gap: '1rem',
+                        transition: 'all 0.2s ease',
+                        boxShadow: isActive ? '0 8px 24px var(--shadow-primary)' : 'none',
+                        position: 'relative',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {/* Top Bar */}
+                      <div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                            <div style={{
+                              width: 32,
+                              height: 32,
+                              borderRadius: 8,
+                              background: `linear-gradient(135deg, ${t.primaryColor}, ${t.accentColor})`,
+                              boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                            }} />
+                            <div>
+                              <h4 style={{ margin: 0, fontSize: '0.98rem', fontWeight: 800, color: 'var(--color-text)' }}>
+                                {t.name}
+                              </h4>
+                              <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
+                                ID: <code>{t.id}</code>
+                              </span>
+                            </div>
+                          </div>
+                          {t.badge && (
+                            <span style={{
+                              fontSize: '0.68rem',
+                              fontWeight: 700,
+                              padding: '2px 8px',
+                              borderRadius: 6,
+                              background: t.isDark ? '#1e293b' : 'var(--color-surface-3)',
+                              color: t.isDark ? '#f8fafc' : 'var(--color-text-secondary)',
+                            }}>
+                              {t.badge}
+                            </span>
+                          )}
+                        </div>
+
+                        <p style={{ fontSize: '0.82rem', color: 'var(--color-text-secondary)', lineHeight: 1.45, margin: '0 0 1rem 0' }}>
+                          {t.description}
+                        </p>
+
+                        {/* Palette Swatches Bar */}
+                        <div style={{ display: 'flex', gap: '6px', marginBottom: '1rem' }}>
+                          <div title="Primary" style={{ flex: 1, height: 10, borderRadius: 3, background: t.primaryColor }} />
+                          <div title="Accent" style={{ flex: 1, height: 10, borderRadius: 3, background: t.accentColor }} />
+                          <div title="Surface" style={{ flex: 1, height: 10, borderRadius: 3, background: t.previewBg, border: '1px solid #cbd5e1' }} />
+                        </div>
+                      </div>
+
+                      {/* Action Button */}
+                      <button
+                        type="button"
+                        className={`btn ${isActive ? 'btn-primary' : 'btn-outline'} btn-sm`}
+                        onClick={() => {
+                          setTheme(t.id);
+                          setAlertMessage({ type: 'success', text: `Theme successfully set to ${t.name}!` });
+                          setTimeout(() => setAlertMessage(null), 4000);
+                        }}
+                        style={{
+                          width: '100%',
+                          justifyContent: 'center',
+                          fontWeight: 700,
+                        }}
+                      >
+                        {isActive ? (
+                          <>
+                            <Check size={14} /> Active Theme
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles size={14} /> Activate {t.shortName}
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         )}
 
       </div>

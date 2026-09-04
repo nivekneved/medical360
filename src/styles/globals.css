@@ -62,8 +62,18 @@
   --sidebar-width:  260px;
 }
 
-/* ─── Light Mode (White + Grey Variations + Medical Dark Green) ──────────────── */
-:root, [data-theme="light"] {
+/* ─── 1. Med-default (Signature Medical 360: White + Grey Variations + Medical Dark Green) ─── */
+:root,
+[data-theme="Med-default"],
+[data-theme="light"] {
+  --color-primary:        #065f46; /* Rich Medical Dark Green */
+  --color-primary-light:  #047857; /* Medium Medical Green */
+  --color-primary-dark:   #022c22; /* Deepest Forest Green */
+  --color-accent:         #059669; /* Vibrant Medical Emerald */
+  --color-accent-light:   #10b981; /* Mint Green */
+  --color-accent-dark:    #064e3b; /* Dark Pine */
+  --color-whatsapp:       #16a34a; /* WhatsApp Green */
+
   --color-bg:             #f8fafc; /* Grey 50 */
   --color-surface:        #ffffff; /* Pure White */
   --color-surface-2:      #f1f5f9; /* Grey 100 */
@@ -95,20 +105,29 @@
   --glass-blur:           blur(16px);
 
   /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-md:  0 4px 20px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03);
-  --shadow-lg:  0 12px 40px rgba(15, 23, 42, 0.08), 0 4px 16px rgba(15, 23, 42, 0.04);
-  --shadow-xl:  0 20px 50px rgba(15, 23, 42, 0.12);
-  --shadow-primary: 0 8px 24px rgba(6, 95, 70, 0.25);
-  --shadow-accent:  0 8px 24px rgba(5, 150, 105, 0.25);
+  --shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md:            0 4px 20px rgba(15, 23, 42, 0.06), 0 2px 6px rgba(15, 23, 42, 0.03);
+  --shadow-lg:            0 12px 40px rgba(15, 23, 42, 0.08), 0 4px 16px rgba(15, 23, 42, 0.04);
+  --shadow-xl:            0 20px 50px rgba(15, 23, 42, 0.12);
+  --shadow-primary:       0 8px 24px rgba(6, 95, 70, 0.25);
+  --shadow-accent:        0 8px 24px rgba(5, 150, 105, 0.25);
 
   --card-bg:              #ffffff;
   --card-border:          #e2e8f0;
   --footer-bg:            #090d10;
 }
 
-/* ─── Dark Mode (Deep Black + Dark Greys + Medical Dark Green) ──────────────── */
+/* ─── 2. Med-dark (Midnight Onyx + Emerald Radiance) ─────────────────────────── */
+[data-theme="Med-dark"],
 [data-theme="dark"] {
+  --color-primary:        #10b981; /* Radiant Emerald */
+  --color-primary-light:  #34d399; /* Mint Light */
+  --color-primary-dark:   #059669; /* Deep Pine */
+  --color-accent:         #059669; /* Emerald */
+  --color-accent-light:   #6ee7b7; /* Soft Mint */
+  --color-accent-dark:    #064e3b; /* Dark Forest */
+  --color-whatsapp:       #16a34a;
+
   --color-bg:             #090d10; /* Deep Onyx Black */
   --color-surface:        #111822; /* Charcoal Grey */
   --color-surface-2:      #1a222e; /* Dark Slate Grey */
@@ -130,7 +149,7 @@
   --color-process-text:   #ffffff;
 
   /* Navbar */
-  --color-nav-bg:         rgba(9, 13, 16, 0.90);
+  --color-nav-bg:         rgba(9, 13, 16, 0.92);
   --color-nav-border:     rgba(255, 255, 255, 0.08);
 
   /* Glassmorphism */
@@ -140,16 +159,160 @@
   --glass-blur:           blur(16px);
 
   /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.5);
-  --shadow-md:  0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-lg:  0 12px 40px rgba(0, 0, 0, 0.6);
-  --shadow-xl:  0 20px 60px rgba(0, 0, 0, 0.7);
-  --shadow-primary: 0 8px 32px rgba(6, 95, 70, 0.4);
-  --shadow-accent:  0 8px 32px rgba(5, 150, 105, 0.4);
+  --shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-md:            0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg:            0 12px 40px rgba(0, 0, 0, 0.6);
+  --shadow-xl:            0 20px 60px rgba(0, 0, 0, 0.7);
+  --shadow-primary:       0 8px 32px rgba(16, 185, 129, 0.35);
+  --shadow-accent:        0 8px 32px rgba(5, 150, 105, 0.35);
 
   --card-bg:              #111822;
   --card-border:          #1e293b;
   --footer-bg:            #05080a;
+}
+
+/* ─── 3. Ocean-Blue (Pacific Azure & Clinical Cyan) ──────────────────────────── */
+[data-theme="Ocean-Blue"] {
+  --color-primary:        #0369a1; /* Ocean Sapphire */
+  --color-primary-light:  #0284c7; /* Sky Blue */
+  --color-primary-dark:   #075985; /* Deep Navy Blue */
+  --color-accent:         #0284c7; /* Clinical Cyan */
+  --color-accent-light:   #38bdf8; /* Bright Cyan */
+  --color-accent-dark:    #0369a1; /* Dark Sapphire */
+  --color-whatsapp:       #16a34a;
+
+  --color-bg:             #f8fafc;
+  --color-surface:        #ffffff;
+  --color-surface-2:      #f0f9ff; /* Soft Cyan Tint */
+  --color-surface-3:      #e0f2fe;
+  --color-border:         #e2e8f0;
+  --color-border-light:   #f1f5f9;
+  --color-text:           #0f172a;
+  --color-text-secondary: #334155;
+  --color-text-muted:     #64748b;
+
+  --color-hero-bg:        #ffffff;
+  --color-hero-text:      #0f172a;
+  --color-hero-subtext:   #334155;
+  --color-hero-grid:      rgba(3, 105, 161, 0.04);
+
+  --color-process-bg:     linear-gradient(135deg, #075985 0%, #0c4a6e 100%);
+  --color-process-text:   #ffffff;
+
+  --color-nav-bg:         rgba(255, 255, 255, 0.92);
+  --color-nav-border:     rgba(224, 242, 254, 0.8);
+
+  --glass-bg:             rgba(255, 255, 255, 0.85);
+  --glass-bg-strong:      rgba(255, 255, 255, 0.95);
+  --glass-border:         rgba(224, 242, 254, 0.8);
+  --glass-blur:           blur(16px);
+
+  --shadow-sm:            0 1px 3px rgba(3, 105, 161, 0.04);
+  --shadow-md:            0 4px 20px rgba(3, 105, 161, 0.07);
+  --shadow-lg:            0 12px 40px rgba(3, 105, 161, 0.1);
+  --shadow-xl:            0 20px 50px rgba(3, 105, 161, 0.14);
+  --shadow-primary:       0 8px 24px rgba(3, 105, 161, 0.28);
+  --shadow-accent:        0 8px 24px rgba(2, 132, 199, 0.28);
+
+  --card-bg:              #ffffff;
+  --card-border:          #e2e8f0;
+  --footer-bg:            #081726;
+}
+
+/* ─── 4. Royal-Amethyst (Luxury Concierge & Royal Violet) ─────────────────────── */
+[data-theme="Royal-Amethyst"] {
+  --color-primary:        #4338ca; /* Royal Indigo */
+  --color-primary-light:  #6366f1; /* Lavender Violet */
+  --color-primary-dark:   #312e81; /* Deep Midnight Purple */
+  --color-accent:         #7c3aed; /* Vibrant Amethyst */
+  --color-accent-light:   #a855f7; /* Soft Orchid */
+  --color-accent-dark:    #5b21b6; /* Deep Violet */
+  --color-whatsapp:       #16a34a;
+
+  --color-bg:             #faf5ff; /* Lavender Tint */
+  --color-surface:        #ffffff;
+  --color-surface-2:      #f5f3ff;
+  --color-surface-3:      #ede9fe;
+  --color-border:         #e9d5ff;
+  --color-border-light:   #f3e8ff;
+  --color-text:           #1e1b4b;
+  --color-text-secondary: #4338ca;
+  --color-text-muted:     #7c3aed;
+
+  --color-hero-bg:        #ffffff;
+  --color-hero-text:      #1e1b4b;
+  --color-hero-subtext:   #3730a3;
+  --color-hero-grid:      rgba(67, 56, 202, 0.04);
+
+  --color-process-bg:     linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  --color-process-text:   #ffffff;
+
+  --color-nav-bg:         rgba(255, 255, 255, 0.92);
+  --color-nav-border:     rgba(233, 213, 255, 0.8);
+
+  --glass-bg:             rgba(255, 255, 255, 0.85);
+  --glass-bg-strong:      rgba(255, 255, 255, 0.96);
+  --glass-border:         rgba(233, 213, 255, 0.8);
+  --glass-blur:           blur(16px);
+
+  --shadow-sm:            0 1px 3px rgba(67, 56, 202, 0.04);
+  --shadow-md:            0 4px 20px rgba(67, 56, 202, 0.07);
+  --shadow-lg:            0 12px 40px rgba(67, 56, 202, 0.1);
+  --shadow-xl:            0 20px 50px rgba(67, 56, 202, 0.14);
+  --shadow-primary:       0 8px 24px rgba(67, 56, 202, 0.28);
+  --shadow-accent:        0 8px 24px rgba(124, 58, 237, 0.28);
+
+  --card-bg:              #ffffff;
+  --card-border:          #e9d5ff;
+  --footer-bg:            #13112c;
+}
+
+/* ─── 5. Rose-Bronze (Aesthetic Medicine, Dermatology & Warm Rose) ─────────────── */
+[data-theme="Rose-Bronze"] {
+  --color-primary:        #9f1239; /* Deep Rose Bronze */
+  --color-primary-light:  #be123c; /* Bright Rose */
+  --color-primary-dark:   #881337; /* Deep Velvet Rose */
+  --color-accent:         #e11d48; /* Vibrant Rose */
+  --color-accent-light:   #fb7185; /* Soft Blush */
+  --color-accent-dark:    #9f1239;
+  --color-whatsapp:       #16a34a;
+
+  --color-bg:             #fff1f2; /* Soft Rose Mist */
+  --color-surface:        #ffffff;
+  --color-surface-2:      #ffe4e6;
+  --color-surface-3:      #fecdd3;
+  --color-border:         #fecdd3;
+  --color-border-light:   #ffe4e6;
+  --color-text:           #4c0519;
+  --color-text-secondary: #881337;
+  --color-text-muted:     #be123c;
+
+  --color-hero-bg:        #ffffff;
+  --color-hero-text:      #4c0519;
+  --color-hero-subtext:   #881337;
+  --color-hero-grid:      rgba(159, 18, 57, 0.04);
+
+  --color-process-bg:     linear-gradient(135deg, #4c0519 0%, #881337 100%);
+  --color-process-text:   #ffffff;
+
+  --color-nav-bg:         rgba(255, 255, 255, 0.92);
+  --color-nav-border:     rgba(254, 205, 211, 0.8);
+
+  --glass-bg:             rgba(255, 255, 255, 0.85);
+  --glass-bg-strong:      rgba(255, 255, 255, 0.96);
+  --glass-border:         rgba(254, 205, 211, 0.8);
+  --glass-blur:           blur(16px);
+
+  --shadow-sm:            0 1px 3px rgba(159, 18, 57, 0.04);
+  --shadow-md:            0 4px 20px rgba(159, 18, 57, 0.07);
+  --shadow-lg:            0 12px 40px rgba(159, 18, 57, 0.1);
+  --shadow-xl:            0 20px 50px rgba(159, 18, 57, 0.14);
+  --shadow-primary:       0 8px 24px rgba(159, 18, 57, 0.28);
+  --shadow-accent:        0 8px 24px rgba(225, 29, 72, 0.28);
+
+  --card-bg:              #ffffff;
+  --card-border:          #fecdd3;
+  --footer-bg:            #24060e;
 }
 
 /* ─── Reset & Base ───────────────────────────────────────────────────────────── */
