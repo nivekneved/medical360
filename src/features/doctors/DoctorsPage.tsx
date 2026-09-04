@@ -320,7 +320,7 @@ export function DoctorsPage() {
                             <span>{l10n('2ème Avis Gratuit', '2em Lavi Medikal', '2nd Opinion')}</span>
                           </button>
                           <a
-                            href={buildMed360WhatsAppUrl(`Bonjour Medical 360, je souhaite consulter ${doc.name}`)}
+                            href={buildMed360WhatsAppUrl(`Bonjour Med360, je souhaite consulter ${doc.name}`)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn btn-whatsapp btn-sm btn-icon"

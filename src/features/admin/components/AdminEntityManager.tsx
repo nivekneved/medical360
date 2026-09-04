@@ -59,6 +59,8 @@ export interface AdminEntityManagerProps<T extends { id: string }> {
   renderTableColumns: string[];
   renderTableRow: (item: T, onEdit: () => void, onView: () => void, isSelected: boolean, onToggleSelect: () => void) => ReactNode;
   renderViewModalContent?: (item: T) => ReactNode;
+  renderCustomField?: (key: string, value: any, onChange: (newVal: any) => void, item: T) => ReactNode;
+  headerActions?: ReactNode;
   onSave: (item: T, isNew: boolean) => Promise<void>;
   onDelete: (ids: string[]) => Promise<void>;
   getInitialItem: () => T;
@@ -79,6 +81,8 @@ export function AdminEntityManager<T extends { id: string }>({
   renderTableColumns,
   renderTableRow,
   renderViewModalContent,
+  renderCustomField,
+  headerActions,
   onSave,
   onDelete,
   getInitialItem,
@@ -220,7 +224,8 @@ export function AdminEntityManager<T extends { id: string }>({
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          {headerActions}
           <button onClick={handlePrintPdf} className="btn btn-outline btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
             <Printer size={14} /> Print / PDF
           </button>
@@ -401,6 +406,14 @@ export function AdminEntityManager<T extends { id: string }>({
             <form onSubmit={handleFormSave} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {fields.map(f => {
                 const val = (editingItem as any)[f.key];
+
+                if (renderCustomField) {
+                  const custom = renderCustomField(f.key, val, (newVal) => updateItemField(f.key, newVal), editingItem);
+                  if (custom) {
+                    return <div key={f.key}>{custom}</div>;
+                  }
+                }
+
                 return (
                   <div key={f.key}>
                     <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-secondary)', marginBottom: '0.35rem' }}>

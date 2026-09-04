@@ -26,7 +26,7 @@ export function SEO({
   const { i18n } = useTranslation();
   const currentLang = i18n.language || 'en';
 
-  const siteName = 'Medical 360';
+  const siteName = 'Med360';
   const cleanTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
   const cleanPath = canonical ? (canonical.startsWith('/') ? canonical : `/${canonical}`) : '';
   const canonicalUrl = `${PRODUCTION_DOMAIN}${cleanPath}`;

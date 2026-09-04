@@ -16,7 +16,7 @@ export function Footer() {
             <Link to="/" className="footer__logo">
               <img 
                 src="/assets/logo.png" 
-                alt="Medical 360" 
+                alt="Med360" 
                 className="footer__logo-img" 
               />
             </Link>
@@ -97,11 +97,11 @@ export function Footer() {
           lineHeight: 1.6,
           textAlign: 'center',
         }}>
-          Medical 360 (Med360 Ltd) is a social enterprise owned by the NGO Enn Rev Enn Sourir. Backed by 10+ years of humanitarian care, 100% of company profits are returned to the NGO to fund medical treatments and surgeries for patients in need. Medical diagnoses and surgical procedures are performed by accredited partner hospitals and licensed doctors.
+          Med360 is a social enterprise owned by the NGO Enn Rev Enn Sourir. Backed by 10+ years of humanitarian care, 100% of company profits are returned to the NGO to fund medical treatments and surgeries for patients in need. Medical diagnoses and surgical procedures are performed by accredited partner hospitals and licensed doctors.
         </div>
 
         <div className="footer__bottom">
-          <p>© {new Date().getFullYear()} Med360 Ltd. All rights reserved. | Port Louis, Mauritius</p>
+          <p>© {new Date().getFullYear()} Med360. All rights reserved. | Port Louis, Mauritius</p>
           <div className="footer__bottom-links" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
             <Link to="/privacy" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Privacy Policy</Link>
             <Link to="/terms" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Terms of Service</Link>

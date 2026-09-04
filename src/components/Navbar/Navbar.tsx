@@ -144,8 +144,8 @@ export function Navbar() {
       label: isFr ? 'À Propos & Avis' : isKr ? 'A Propo & Temwagnaz' : 'About & Stories',
       items: [
         {
-          label: isFr ? 'Notre Mission & Équipe' : isKr ? 'Nou Mision & Lekip' : 'About Medical 360',
-          sublabel: isFr ? 'Pionnier de la santé pour l\'océan Indien' : 'Our standards, leadership & story',
+          label: isFr ? 'Notre Mission & Équipe' : isKr ? 'Nou Mision & Lekip' : 'About Med360',
+          sublabel: isFr ? 'Détenu par l\'ONG Enn Rev Enn Sourir' : 'Our NGO heritage & mission',
           to: '/about',
           icon: Info,
         },
@@ -181,7 +181,7 @@ export function Navbar() {
         <Link to="/" className="navbar__logo">
           <img 
             src="/assets/logo.png" 
-            alt="Medical 360" 
+            alt="Med360" 
             className="navbar__logo-img" 
           />
         </Link>

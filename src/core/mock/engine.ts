@@ -223,6 +223,37 @@ class MockEngine {
     return list.filter(h => h.specialties.includes(specialtyId) && h.active);
   }
 
+  async getSpecialtiesByHospital(hospitalId: string): Promise<Specialty[]> {
+    const hospital = await this.getHospitalById(hospitalId);
+    if (!hospital) return [];
+    const allSpecialties = await this.getSpecialties();
+    return allSpecialties.filter(s => hospital.specialties.includes(s.id));
+  }
+
+  async associateHospitalSpecialties(hospitalId: string, specialtyIds: string[]): Promise<Hospital> {
+    return this.updateHospital(hospitalId, { specialties: Array.from(new Set(specialtyIds)) });
+  }
+
+  async associateSpecialtyHospitals(specialtyId: string, hospitalIds: string[]): Promise<void> {
+    const targetHospSet = new Set(hospitalIds);
+    const allHospitals = await this.getHospitals();
+    for (const hosp of allHospitals) {
+      const hasSpec = hosp.specialties.includes(specialtyId);
+      const shouldHave = targetHospSet.has(hosp.id);
+      if (shouldHave && !hasSpec) {
+        await this.updateHospital(hosp.id, { specialties: [...hosp.specialties, specialtyId] });
+      } else if (!shouldHave && hasSpec) {
+        await this.updateHospital(hosp.id, { specialties: hosp.specialties.filter(s => s !== specialtyId) });
+      }
+    }
+  }
+
+  async saveAllHospitalSpecialtyAssociations(mapping: Record<string, string[]>): Promise<void> {
+    for (const [hospitalId, specialtyIds] of Object.entries(mapping)) {
+      await this.updateHospital(hospitalId, { specialties: Array.from(new Set(specialtyIds)) });
+    }
+  }
+
   async updateHospital(id: string, updates: Partial<Hospital>): Promise<Hospital> {
     if (this.isLive()) {
       try {

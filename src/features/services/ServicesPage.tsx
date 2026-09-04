@@ -142,23 +142,23 @@ export function ServicesPage() {
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
         title={l10n('Nos Services', 'Nou Bann Servis', 'Our Services')}
-        description={l10n('Découvrez nos services complets.', 'Dekouver nou bann servis konple.', 'Discover our comprehensive services.')}
+        description={l10n('Découvrez nos services de conciergerie médicale Med360. Détenu par l\'ONG Enn Rev Enn Sourir, 100 % des bénéfices financent les soins des démunis.', 'Dekouver nou bann servis Med360. Apartenir a l\'ONG Enn Rev Enn Sourir, 100% profi al dan swen.', 'Discover Med360 comprehensive medical concierge services. Owned by NGO Enn Rev Enn Sourir, 100% of profits fund healthcare for the needy.')}
         canonical="/services"
       />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/services_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Conciergerie Complète', 'Full Concierge', 'Full Concierge'))}
+            {tCms('heroLabel', l10n('✦ Conciergerie Médicale Med360 · 10+ Ans d\'Expérience', '✦ Konzierz Medikal Med360 · 10+ Banlane Lexperyans', '✦ Med360 Medical Concierge · 10+ Years Experience'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Nos Services Couvrent Tous Vos Besoins', 'Nou Bann Servis Kouver Tou Ou Bizin', 'Our Services Cover Every Need'))}
+            {tCms('heroTitle', l10n('Des Services Complets en Clinique & à l\'Étranger', 'Nou Bann Servis dan Klinik & a Letranze', 'Comprehensive Care in Clinics & Abroad'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'De votre première demande au suivi post-traitement, Medical 360 s\'occupe de chaque détail de votre parcours de santé à l\'étranger.',
-              'Depi premie demann ziska swivi apre tretman, Medical 360 okip tou bann detay dan ou vwayaz medikal.',
-              'From your first inquiry to post-treatment follow-up, Medical 360 handles every detail of your healthcare journey abroad.'
+              'De votre premier avis médical au suivi post-opératoire, Med360 organise l\'intégralité de vos soins dans des cliniques privées et hôpitaux de pointe. Tous nos bénéfices sont reversés à l\'ONG Enn Rev Enn Sourir.',
+              'Depi premie lavi medikal ziska swivi apre loperasion, Med360 okip tou dan klinik prive ek lopital a letranze. Tou nou bann profi retourn dan l\'ONG Enn Rev Enn Sourir.',
+              'From your first medical opinion to post-operative recovery, Med360 coordinates every step of your specialized care in private clinics and premier hospitals abroad — with 100% of profits returned to NGO Enn Rev Enn Sourir.'
             ))}
           </p>
         </div>

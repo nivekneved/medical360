@@ -20,7 +20,7 @@ const resources = {
         heroBadge: '✦ Owned by NGO Enn Rev Enn Sourir · 10+ Years of Care',
         heroTitleLine1: 'Specialised Medical Care,',
         heroTitleLine2: 'In Private Clinics & Abroad',
-        heroSubtitle: 'Medical 360 is a company owned by the NGO Enn Rev Enn Sourir. After 10 years of helping needy patients access specialised treatment in private clinics and abroad, we now extend our expert concierge to those who can afford it — with 100% of profits going back to the NGO to continue helping others in need.',
+        heroSubtitle: 'Med360 is a company owned by the NGO Enn Rev Enn Sourir. After 10 years of helping needy patients access specialised treatment in private clinics and abroad, we now extend our expert concierge to those who can afford it — with 100% of profits going back to the NGO to continue helping others in need.',
         trustText: 'Backed by 10+ years of humanitarian care & 1,200+ patients assisted',
         stats: {
           patients: 'Patients Assisted',
@@ -76,7 +76,7 @@ const resources = {
         }
       },
       footer: {
-        tagline: 'Medical 360 is a company owned by the NGO Enn Rev Enn Sourir. 10+ years coordinating specialised treatment in private clinics and abroad. 100% of profits return to the NGO to help the needy.',
+        tagline: 'Med360 is a company owned by the NGO Enn Rev Enn Sourir. 10+ years coordinating specialised treatment in private clinics and abroad. 100% of profits return to the NGO to help the needy.',
         quickLinks: 'Quick Links',
         services: 'Services',
         legal: 'Legal',
@@ -121,7 +121,7 @@ const resources = {
         heroBadge: '✦ Détenu par l\'ONG Enn Rev Enn Sourir · 10+ Ans de Soins',
         heroTitleLine1: 'Des Soins Spécialisés,',
         heroTitleLine2: 'En Clinique Privée & à l\'Étranger',
-        heroSubtitle: 'Medical 360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans à aider les personnes dans le besoin à accéder à des traitements spécialisés en clinique privée ou à l\'étranger, nous étendons désormais nos services à ceux qui peuvent se le permettre — 100 % des bénéfices sont reversés à l\'ONG pour continuer d\'aider les plus démunis.',
+        heroSubtitle: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans à aider les personnes dans le besoin à accéder à des traitements spécialisés en clinique privée ou à l\'étranger, nous étendons désormais nos services à ceux qui peuvent se le permettre — 100 % des bénéfices sont reversés à l\'ONG pour continuer d\'aider les plus démunis.',
         trustText: 'Soutenu par 10+ ans d\'action humanitaire et plus de 1 200 patients accompagnés',
         stats: {
           patients: 'Patients Accompagnés',
@@ -155,7 +155,7 @@ const resources = {
         },
         whyBadge: '✦ 10 Ans d\'Héritage ONG',
         whyTitle: 'Excellence Médicale. 100 % Vocation Sociale.',
-        whyDesc: 'Medical 360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Depuis plus de 10 ans, notre équipe coordonne des soins spécialisés vitaux en clinique privée et à l\'étranger pour les personnes dans le besoin. En choisissant Med360 pour vos soins privés, vous bénéficiez d\'un service conciergerie haut de gamme tout en finançant directement les soins de familles défavorisées.',
+        whyDesc: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Depuis plus de 10 ans, notre équipe coordonne des soins spécialisés vitaux en clinique privée et à l\'étranger pour les personnes dans le besoin. En choisissant Med360 pour vos soins privés, vous bénéficiez d\'un service conciergerie haut de gamme tout en finançant directement les soins de familles défavorisées.',
         whyImageBadge: '✦ 100 % des Bénéfices Reversés à l\'ONG',
         aboutBtn: 'Découvrir Notre Histoire',
         features: {
@@ -177,7 +177,7 @@ const resources = {
         }
       },
       footer: {
-        tagline: 'Medical 360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. 10+ ans à organiser des soins spécialisés en clinique privée et à l\'étranger. 100 % des bénéfices reversés à l\'ONG pour aider les personnes dans le besoin.',
+        tagline: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. 10+ ans à organiser des soins spécialisés en clinique privée et à l\'étranger. 100 % des bénéfices reversés à l\'ONG pour aider les personnes dans le besoin.',
         quickLinks: 'Liens Rapides',
         services: 'Services',
         legal: 'Légal',
@@ -222,7 +222,7 @@ const resources = {
         heroBadge: '✦ Apartenir a l\'ONG Enn Rev Enn Sourir · 10+ Banlane dan Swen',
         heroTitleLine1: 'Bann Swen Medikal Spesialize,',
         heroTitleLine2: 'Dan Klinik Prive & a Letranze',
-        heroSubtitle: 'Medical 360 li enn lakonpanyi ki apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane pe ed bann dimounn dan bezwin gagn akse a bann tretman spesialize dan klinik prive ouswa a letranze, nou finn deside elarzi nou servis pou bann ki kapav peye. Tou profi retourn dan l\'ONG pou kontinie ed bann ki pli dan bezwin.',
+        heroSubtitle: 'Med360 li enn lakonpanyi ki apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane pe ed bann dimounn dan bezwin gagn akse a bann tretman spesialize dan klinik prive ouswa a letranze, nou finn deside elarzi nou servis pou bann ki kapav peye. Tou profi retourn dan l\'ONG pou kontinie ed bann ki pli dan bezwin.',
         trustText: 'Pote par 10+ banlane led imaniter ek plis ki 1 200 pasian asiste',
         stats: {
           patients: 'Pasian Asiste',
@@ -256,7 +256,7 @@ const resources = {
         },
         whyBadge: '✦ 10 Banlane Leritaz ONG',
         whyTitle: 'Gran Kalite Swen. 100% Misyon Sosyal.',
-        whyDesc: 'Medical 360 li apartenir a l\'ONG Enn Rev Enn Sourir. Pandan plis ki 10 banlane, nou lekip finn kordonn bann swen spesialize dan klinik prive ek a letranze pou bann pasian dan bezwin. Kan ou swazir Med360 pou ou bann swen prive, ou gagn enn servis 5 zetwal, e tou profi al direk dan l\'ONG pou pey lopital pou bann fami ki pa kapav peye.',
+        whyDesc: 'Med360 li apartenir a l\'ONG Enn Rev Enn Sourir. Pandan plis ki 10 banlane, nou lekip finn kordonn bann swen spesialize dan klinik prive ek a letranze pou bann pasian dan bezwin. Kan ou swazir Med360 pou ou bann swen prive, ou gagn enn servis 5 zetwal, e tou profi al direk dan l\'ONG pou pey lopital pou bann fami ki pa kapav peye.',
         whyImageBadge: '✦ 100% Bann Profi Retourn dan ONG',
         aboutBtn: 'Dekouver Nou Zistwar',
         features: {
@@ -278,7 +278,7 @@ const resources = {
         }
       },
       footer: {
-        tagline: 'Medical 360 li enn lakonpanyi ki apartenir a l\'ONG Enn Rev Enn Sourir. 10+ banlane pe kordonn bann swen spesialize dan klinik prive ek a letranze. 100% profi retourn dan l\'ONG pou ed bann ki dan bezwin.',
+        tagline: 'Med360 li enn lakonpanyi ki apartenir a l\'ONG Enn Rev Enn Sourir. 10+ banlane pe kordonn bann swen spesialize dan klinik prive ek a letranze. 100% profi retourn dan l\'ONG pou ed bann ki dan bezwin.',
         quickLinks: 'Lien Rapid',
         services: 'Bann Servis',
         legal: 'Lalwa',
