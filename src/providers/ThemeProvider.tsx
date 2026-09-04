@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
-export type ThemeId = 'Med-default' | 'Med-dark' | 'Ocean-Blue' | 'Royal-Amethyst' | 'Rose-Bronze' | string;
+export type ThemeId = 'Med-default' | 'Med-Logo' | 'Med-dark' | 'Ocean-Blue' | 'Royal-Amethyst' | 'Rose-Bronze' | string;
 
 export interface ThemeDefinition {
   id: ThemeId;
@@ -26,7 +26,19 @@ export const THEME_PRESETS: ThemeDefinition[] = [
     previewBg: '#f8fafc',
     textColor: '#0f172a',
     isDark: false,
-    badge: 'Signature',
+    badge: 'Default',
+  },
+  {
+    id: 'Med-Logo',
+    name: 'Logo Brand (Cyan & Navy)',
+    shortName: 'Logo Match',
+    description: 'Exact color match from official Medical360 logo (Cyan #0EBCC6, Navy #03528C & Coral #F2443A).',
+    primaryColor: '#03528c',
+    accentColor: '#0ebcc6',
+    previewBg: '#f8fcfe',
+    textColor: '#081a2e',
+    isDark: false,
+    badge: 'Logo Exact',
   },
   {
     id: 'Med-dark',
