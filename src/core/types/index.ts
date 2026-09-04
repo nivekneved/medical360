@@ -64,7 +64,8 @@ export interface Procedure {
 
 export interface Doctor {
   id: string;
-  hospitalId: string;
+  hospitalId?: string;
+  hospitalIds?: string[];
   name: string;
   title: string;
   specialties: string[];

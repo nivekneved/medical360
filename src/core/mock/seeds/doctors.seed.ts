@@ -3,7 +3,8 @@ import type { Doctor } from '../../types';
 export const doctorsSeed: Doctor[] = [
   {
     id: 'doc-1',
-    hospitalId: 'hosp-narayana',
+    hospitalId: 'hosp-7',
+    hospitalIds: ['hosp-7', 'hosp-1'],
     name: 'Dr. Devi Prasad Shetty',
     title: 'Chairman & Chief Cardiac Surgeon',
     specialties: ['sp-cardiology'],
@@ -18,7 +19,8 @@ export const doctorsSeed: Doctor[] = [
   },
   {
     id: 'doc-2',
-    hospitalId: 'hosp-medanta',
+    hospitalId: 'hosp-6',
+    hospitalIds: ['hosp-6', 'hosp-2'],
     name: 'Dr. Naresh Trehan',
     title: 'Chairman & Managing Director, Cardiovascular Surgeon',
     specialties: ['sp-cardiology'],
@@ -33,7 +35,8 @@ export const doctorsSeed: Doctor[] = [
   },
   {
     id: 'doc-3',
-    hospitalId: 'hosp-bumrungrad',
+    hospitalId: 'hosp-3',
+    hospitalIds: ['hosp-3', 'hosp-5'],
     name: 'Dr. Suthep Udomsawaengsup',
     title: 'Director of Advanced Minimally Invasive & Bariatric Surgery',
     specialties: ['sp-oncology', 'sp-orthopedics'],
@@ -48,7 +51,8 @@ export const doctorsSeed: Doctor[] = [
   },
   {
     id: 'doc-4',
-    hospitalId: 'hosp-gleneagles',
+    hospitalId: 'hosp-4',
+    hospitalIds: ['hosp-4', 'hosp-8'],
     name: 'Dr. Wong Chiung Ing',
     title: 'Senior Consultant Medical Oncologist',
     specialties: ['sp-oncology'],
@@ -63,7 +67,8 @@ export const doctorsSeed: Doctor[] = [
   },
   {
     id: 'doc-5',
-    hospitalId: 'hosp-apollo-chennai',
+    hospitalId: 'hosp-1',
+    hospitalIds: ['hosp-1', 'hosp-6', 'hosp-9'],
     name: 'Prof. Dr. Subhash Gupta',
     title: 'Chairman - Liver Transplant & Hepato-Pancreato-Biliary Surgery',
     specialties: ['sp-transplant'],
@@ -78,7 +83,8 @@ export const doctorsSeed: Doctor[] = [
   },
   {
     id: 'doc-6',
-    hospitalId: 'hosp-fortis',
+    hospitalId: 'hosp-2',
+    hospitalIds: ['hosp-2', 'hosp-10'],
     name: 'Dr. Firuza R. Parikh',
     title: 'Director - Assisted Reproduction & Genetics (IVF)',
     specialties: ['sp-ivf'],
@@ -93,7 +99,8 @@ export const doctorsSeed: Doctor[] = [
   },
   {
     id: 'doc-7',
-    hospitalId: 'hosp-apollo-delhi',
+    hospitalId: 'hosp-1',
+    hospitalIds: ['hosp-1', 'hosp-10'],
     name: 'Dr. Arun Saroha',
     title: 'Senior Director - Neurosurgery & Spine Surgery',
     specialties: ['sp-neurology'],

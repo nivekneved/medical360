@@ -11,7 +11,7 @@ import { SEO } from '../../components/SEO/SEO';
 import { DoctorSecondOpinionModal } from './DoctorSecondOpinionModal';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import { Pagination } from '../../components/Pagination/Pagination';
-import type { Doctor } from '../../core/types';
+import type { Doctor, Hospital } from '../../core/types';
 
 export function DoctorsPage() {
   const navigate = useNavigate();
@@ -47,8 +47,15 @@ export function DoctorsPage() {
     { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
   ];
 
+  const getDocHospitalIds = (doc: Doctor): string[] => {
+    if (doc.hospitalIds && doc.hospitalIds.length > 0) return doc.hospitalIds;
+    if (doc.hospitalId) return [doc.hospitalId];
+    return [];
+  };
+
   const filteredDoctors = doctors.filter((doc) => {
-    const matchHospital = selectedHospital === 'all' || doc.hospitalId === selectedHospital;
+    const hospIds = getDocHospitalIds(doc);
+    const matchHospital = selectedHospital === 'all' || hospIds.includes(selectedHospital);
     if (!searchQuery.trim()) return matchHospital;
     const q = searchQuery.toLowerCase();
     const nameMatch = doc.name.toLowerCase().includes(q);
@@ -229,7 +236,9 @@ export function DoctorsPage() {
                 gap: '1.75rem',
               }}>
                 {paginatedDoctors.map(doc => {
-                  const hosp = getHospital(doc.hospitalId);
+                  const docHospIds = getDocHospitalIds(doc);
+                  const affiliatedHospitals = docHospIds.map(hId => getHospital(hId)).filter(Boolean) as Hospital[];
+
                   return (
                     <div
                       key={doc.id}
@@ -271,23 +280,28 @@ export function DoctorsPage() {
                       </div>
 
                       <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        {/* Hospital Link */}
-                        {hosp && (
-                          <Link
-                            to={`/hospitals/${hosp.id}`}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '0.5rem',
-                              fontSize: '0.85rem',
-                              fontWeight: 600,
-                              color: 'var(--color-primary)',
-                              textDecoration: 'none',
-                            }}
-                          >
-                            <Building2 size={14} />
-                            <span>{hosp.name} · {hosp.city}, {hosp.country}</span>
-                          </Link>
+                        {/* Affiliated Hospitals Links */}
+                        {affiliatedHospitals.length > 0 && (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                            {affiliatedHospitals.map(hosp => (
+                              <Link
+                                key={hosp.id}
+                                to={`/hospitals/${hosp.id}`}
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '0.45rem',
+                                  fontSize: '0.82rem',
+                                  fontWeight: 600,
+                                  color: 'var(--color-primary)',
+                                  textDecoration: 'none',
+                                }}
+                              >
+                                <Building2 size={13} style={{ flexShrink: 0 }} />
+                                <span>{hosp.name} · {hosp.city}, {hosp.country}</span>
+                              </Link>
+                            ))}
+                          </div>
                         )}
 
                         {/* Specialties tags */}
@@ -357,7 +371,7 @@ export function DoctorsPage() {
       {secondOpinionDoctor && (
         <DoctorSecondOpinionModal
           doctor={secondOpinionDoctor}
-          hospital={getHospital(secondOpinionDoctor.hospitalId)}
+          hospital={getHospital(getDocHospitalIds(secondOpinionDoctor)[0])}
           onClose={() => setSecondOpinionDoctor(null)}
         />
       )}
