@@ -1,8 +1,17 @@
 import { useState } from 'react';
-import { X, CheckCircle2, Send, ShieldCheck, Stethoscope } from 'lucide-react';
+import { X, CheckCircle2, Send, ShieldCheck, Stethoscope, AlertCircle } from 'lucide-react';
 import type { Doctor, Hospital } from '../../core/types';
 import { mockEngine } from '../../core/mock/engine';
 import { useTranslation } from 'react-i18next';
+import { Honeypot } from '../../components/Honeypot/Honeypot';
+import {
+  validateName,
+  validateEmail,
+  validatePhone,
+  validateDescription,
+  isHoneypotClean,
+} from '../../core/services/validation.service';
+import { sanitizeInput, checkRateLimit } from '../../core/services/security.service';
 
 interface DoctorSecondOpinionModalProps {
   doctor: Doctor;
@@ -14,6 +23,7 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
   const { i18n } = useTranslation();
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
+  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -21,29 +31,73 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
   const [phone, setPhone] = useState('');
   const [condition, setCondition] = useState('');
   const [urgency, setUrgency] = useState<'urgent' | 'routine' | 'emergency'>('urgent');
+  const [honeypot, setHoneypot] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{ firstName?: string; email?: string; phone?: string; condition?: string }>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const validateInputs = () => {
+    const errors: typeof fieldErrors = {};
+    const fnVal = validateName(firstName, l10n('Prénom', 'Prenon', 'First Name'), 2);
+    if (!fnVal.isValid) errors.firstName = fnVal.error;
+
+    if (email.trim()) {
+      const emVal = validateEmail(email, false);
+      if (!emVal.isValid) errors.email = emVal.error;
+    }
+
+    const phVal = validatePhone(phone, true);
+    if (!phVal.isValid) errors.phone = phVal.error;
+
+    const descVal = validateDescription(condition, l10n('Description médicale', 'Deskripsion medikal', 'Medical Description'), 10);
+    if (!descVal.isValid) errors.condition = descVal.error;
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!firstName || !phone || !condition) {
-      setError(isFr ? 'Veuillez remplir votre prénom, téléphone et décrire votre cas.' : 'Please fill in your name, phone number, and brief description.');
+
+    // 1. Honeypot check
+    if (!isHoneypotClean(honeypot)) {
+      console.warn('🛡️ Security: Honeypot triggered in Doctor Second Opinion Modal. Bot discarded.');
+      setSubmitted(true);
+      setTimeout(onClose, 2500);
+      return;
+    }
+
+    // 2. Validate all inputs
+    if (!validateInputs()) {
+      return;
+    }
+
+    // 3. Rate limiting check
+    const rateCheck = checkRateLimit('doctor_second_opinion_submit', 5, 10 * 60 * 1000);
+    if (!rateCheck.allowed) {
+      setFormError(`Too many requests. Please wait ${rateCheck.remainingCooldownSeconds}s before trying again.`);
       return;
     }
 
     setSubmitting(true);
-    setError(null);
+    setFormError(null);
 
     try {
+      const cleanFirst = sanitizeInput(firstName);
+      const cleanLast = sanitizeInput(lastName);
+      const cleanEmail = sanitizeInput(email);
+      const cleanPhone = sanitizeInput(phone);
+      const cleanCondition = sanitizeInput(condition);
+
       await mockEngine.createInquiry({
-        firstName,
-        lastName: lastName || '-',
-        email: email || `${firstName.toLowerCase()}@patient.mu`,
-        phone,
+        firstName: cleanFirst,
+        lastName: cleanLast || '-',
+        email: cleanEmail || `${cleanFirst.toLowerCase()}@patient.mu`,
+        phone: cleanPhone,
         countryOfResidence: 'Mauritius',
         specialtyId: doctor.specialties[0] || 'sp-cardiology',
-        description: `[Direct Second Opinion with ${doctor.name} - ${doctor.title}]: ${condition}`,
+        description: `[Direct Second Opinion with ${doctor.name} - ${doctor.title}]: ${cleanCondition}`,
         urgency,
         preferredCountry: hospital?.country || 'India',
         budgetRangeUSD: { min: 3000, max: 15000 },
@@ -54,7 +108,7 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
         onClose();
       }, 3000);
     } catch (err: any) {
-      setError(err.message || 'Failed to submit inquiry.');
+      setFormError(err.message || 'Failed to submit inquiry.');
     } finally {
       setSubmitting(false);
     }
@@ -122,6 +176,7 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
             src={doctor.imageUrl}
             alt={doctor.name}
             style={{ width: 52, height: 52, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--color-primary)' }}
+            onError={(e) => { e.currentTarget.src = '/assets/banners/doctors_banner.jpg'; }}
           />
           <div>
             <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--color-text)' }}>{doctor.name}</div>
@@ -146,10 +201,13 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {error && (
-              <div style={{ padding: '0.75rem', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 'var(--radius-md)', color: '#ef4444', fontSize: '0.85rem' }}>
-                {error}
+          <form onSubmit={handleSubmit} noValidate style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {/* Anti-Bot Honeypot */}
+            <Honeypot value={honeypot} onChange={setHoneypot} id="doc_opinion_hp" name="doc_opinion_hp" />
+
+            {formError && (
+              <div style={{ padding: '0.75rem', background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: 'var(--radius-md)', color: '#ef4444', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: 6 }}>
+                <AlertCircle size={16} /> {formError}
               </div>
             )}
 
@@ -161,12 +219,19 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
                 <input
                   type="text"
                   className="form-input"
-                  required
                   placeholder="e.g. Jean / Priya"
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  style={{ height: 40, fontSize: '0.875rem' }}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                    if (fieldErrors.firstName) setFieldErrors(prev => ({ ...prev, firstName: undefined }));
+                  }}
+                  style={{ height: 40, fontSize: '0.875rem', borderColor: fieldErrors.firstName ? '#ef4444' : undefined }}
                 />
+                {fieldErrors.firstName && (
+                  <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 3, display: 'block', fontWeight: 600 }}>
+                    {fieldErrors.firstName}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -192,12 +257,19 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
                 <input
                   type="tel"
                   className="form-input"
-                  required
                   placeholder="+230 5..."
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  style={{ height: 40, fontSize: '0.875rem' }}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                    if (fieldErrors.phone) setFieldErrors(prev => ({ ...prev, phone: undefined }));
+                  }}
+                  style={{ height: 40, fontSize: '0.875rem', borderColor: fieldErrors.phone ? '#ef4444' : undefined }}
                 />
+                {fieldErrors.phone && (
+                  <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 3, display: 'block', fontWeight: 600 }}>
+                    {fieldErrors.phone}
+                  </span>
+                )}
               </div>
 
               <div>
@@ -209,9 +281,17 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
                   className="form-input"
                   placeholder="patient@example.com"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{ height: 40, fontSize: '0.875rem' }}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: undefined }));
+                  }}
+                  style={{ height: 40, fontSize: '0.875rem', borderColor: fieldErrors.email ? '#ef4444' : undefined }}
                 />
+                {fieldErrors.email && (
+                  <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 3, display: 'block', fontWeight: 600 }}>
+                    {fieldErrors.email}
+                  </span>
+                )}
               </div>
             </div>
 
@@ -238,12 +318,19 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
               <textarea
                 className="form-input"
                 rows={3}
-                required
                 placeholder={isFr ? 'Résumez vos derniers examens, scanners ou l\'avis de votre médecin local...' : 'Briefly describe your diagnosis, current symptoms, or local doctor recommendations...'}
                 value={condition}
-                onChange={(e) => setCondition(e.target.value)}
-                style={{ fontSize: '0.875rem', resize: 'vertical' }}
+                onChange={(e) => {
+                  setCondition(e.target.value);
+                  if (fieldErrors.condition) setFieldErrors(prev => ({ ...prev, condition: undefined }));
+                }}
+                style={{ fontSize: '0.875rem', resize: 'vertical', borderColor: fieldErrors.condition ? '#ef4444' : undefined }}
               />
+              {fieldErrors.condition && (
+                <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 3, display: 'block', fontWeight: 600 }}>
+                  {fieldErrors.condition}
+                </span>
+              )}
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>

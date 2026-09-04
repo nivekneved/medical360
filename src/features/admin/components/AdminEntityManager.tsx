@@ -17,6 +17,8 @@ import { ImageField } from './ImageField';
 import { RichTextEditor } from './RichTextEditor';
 import { AdminPagination } from './AdminPagination';
 import { AdminBulkActionBar } from './AdminBulkActionBar';
+import { Honeypot } from '../../../components/Honeypot/Honeypot';
+import { isHoneypotClean } from '../../../core/services/validation.service';
 import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
 import '../AdminToolbar.css';
 
@@ -59,7 +61,7 @@ export interface AdminEntityManagerProps<T extends { id: string }> {
   renderTableColumns: string[];
   renderTableRow: (item: T, onEdit: () => void, onView: () => void, isSelected: boolean, onToggleSelect: () => void) => ReactNode;
   renderViewModalContent?: (item: T) => ReactNode;
-  renderCustomField?: (key: string, value: any, onChange: (newVal: any) => void, item: T) => ReactNode;
+  renderCustomField?: (key: string, value: any, onChange: (v: any) => void, item: T) => ReactNode | null;
   headerActions?: ReactNode;
   onSave: (item: T, isNew: boolean) => Promise<void>;
   onDelete: (ids: string[]) => Promise<void>;
@@ -105,6 +107,8 @@ export function AdminEntityManager<T extends { id: string }>({
   const [isNewItem, setIsNewItem] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
+  const [modalFieldErrors, setModalFieldErrors] = useState<Record<string, string>>({});
 
   // Filter & Sort Logic
   const filteredItems = useMemo(() => {
@@ -175,10 +179,40 @@ export function AdminEntityManager<T extends { id: string }>({
     printOrExportPdf(title, exportColumns, exportData, subtitle);
   };
 
-  // Form Save
+  // Form Save with Validation & Honeypot
   const handleFormSave = async (e: FormEvent) => {
     e.preventDefault();
     if (!editingItem) return;
+
+    // 1. Honeypot check
+    if (!isHoneypotClean(honeypot)) {
+      console.warn('🛡️ Security: Admin form honeypot triggered. Bot discarded.');
+      setSavedSuccess(true);
+      setTimeout(() => {
+        setSavedSuccess(false);
+        setEditingItem(null);
+      }, 500);
+      return;
+    }
+
+    // 2. Validate required fields
+    const errors: Record<string, string> = {};
+    for (const f of fields) {
+      const val = (editingItem as any)[f.key];
+      if (f.required) {
+        if (val === undefined || val === null || val === '') {
+          errors[f.key] = `${f.label} is required.`;
+        } else if (Array.isArray(val) && val.length === 0) {
+          errors[f.key] = `Please select or add at least one ${f.label.toLowerCase()}.`;
+        } else if (f.type === 'number' && isNaN(Number(val))) {
+          errors[f.key] = `${f.label} must be a valid number.`;
+        }
+      }
+    }
+
+    setModalFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
+
     setSaving(true);
     try {
       await onSave(editingItem, isNewItem);
@@ -186,6 +220,7 @@ export function AdminEntityManager<T extends { id: string }>({
       setTimeout(() => {
         setSavedSuccess(false);
         setEditingItem(null);
+        setModalFieldErrors({});
       }, 700);
     } catch (err) {
       console.error('Save failed:', err);
@@ -198,16 +233,27 @@ export function AdminEntityManager<T extends { id: string }>({
   const openNewItemModal = () => {
     setIsNewItem(true);
     setEditingItem(getInitialItem());
+    setModalFieldErrors({});
+    setHoneypot('');
   };
 
   const openEditModal = (item: T) => {
     setIsNewItem(false);
     setEditingItem({ ...item });
+    setModalFieldErrors({});
+    setHoneypot('');
   };
 
   const updateItemField = (key: string, value: any) => {
     if (!editingItem) return;
     setEditingItem({ ...editingItem, [key]: value });
+    if (modalFieldErrors[key]) {
+      setModalFieldErrors(prev => {
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
+    }
   };
 
   return (
@@ -248,36 +294,52 @@ export function AdminEntityManager<T extends { id: string }>({
             className="admin-toolbar__search-input"
             placeholder={`Search ${entityName}s by name, details, tags…`}
             value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+            onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
           />
         </div>
 
-        {/* Dynamic Filters */}
-        {filterDefinitions.map(f => (
-          <div key={f.key} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)' }}>{f.label}:</span>
+        {/* Custom Filters */}
+        {filterDefinitions.map(filter => (
+          <div key={filter.key} className="admin-toolbar__filter-pill">
             <select
-              className="admin-toolbar__select"
-              value={activeFilters[f.key] || 'all'}
-              onChange={(e) => {
-                setActiveFilters(prev => ({ ...prev, [f.key]: e.target.value }));
+              className="admin-toolbar__filter-select"
+              value={activeFilters[filter.key] || 'all'}
+              onChange={e => {
+                setActiveFilters(prev => ({ ...prev, [filter.key]: e.target.value }));
                 setCurrentPage(1);
               }}
             >
-              {f.options.map(opt => (
+              {filter.options.map(opt => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
           </div>
         ))}
 
+        {/* Clear Filters */}
+        {(searchQuery || Object.values(activeFilters).some(v => v !== 'all')) && (
+          <button
+            type="button"
+            className="admin-toolbar__clear-btn"
+            onClick={() => {
+              setSearchQuery('');
+              const resetFilters: Record<string, string> = {};
+              filterDefinitions.forEach(f => { resetFilters[f.key] = 'all'; });
+              setActiveFilters(resetFilters);
+              setCurrentPage(1);
+            }}
+          >
+            <RotateCcw size={13} /> Clear
+          </button>
+        )}
+
         {/* Sort */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          <ArrowUpDown size={14} color="var(--color-text-muted)" />
+        <div className="admin-toolbar__sort">
+          <ArrowUpDown size={15} className="admin-toolbar__sort-icon" />
           <select
-            className="admin-toolbar__select"
+            className="admin-toolbar__sort-select"
             value={activeSort}
-            onChange={(e) => { setActiveSort(e.target.value); setCurrentPage(1); }}
+            onChange={e => setActiveSort(e.target.value)}
           >
             {sortOptions.map(opt => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -285,8 +347,8 @@ export function AdminEntityManager<T extends { id: string }>({
           </select>
         </div>
 
-        {/* View Mode */}
-        <div className="admin-toolbar__views">
+        {/* View Mode Switcher */}
+        <div className="admin-toolbar__view-switcher">
           <button
             type="button"
             className={`admin-toolbar__view-btn ${viewMode === 'grid' ? 'admin-toolbar__view-btn--active' : ''}`}
@@ -299,76 +361,81 @@ export function AdminEntityManager<T extends { id: string }>({
             type="button"
             className={`admin-toolbar__view-btn ${viewMode === 'list' ? 'admin-toolbar__view-btn--active' : ''}`}
             onClick={() => setViewMode('list')}
-            title="Table List View"
+            title="List View"
           >
             <List size={16} />
           </button>
         </div>
       </div>
 
-      {/* ── Bulk Action Bar ── */}
+      {/* ── Bulk Actions Floating Bar ── */}
       <AdminBulkActionBar
         selectedCount={selectedIds.size}
         totalCount={filteredItems.length}
+        unitName={entityName.toLowerCase()}
         onSelectAll={handleSelectAll}
         onClearSelection={handleClearSelection}
         onDeleteSelected={handleDeleteSelected}
-        onPrintPdfSelected={handlePrintPdf}
-        onExportCsvSelected={handleExportCsv}
-        unitName={entityName.toLowerCase() + 's'}
       />
 
       {/* ── Content View ── */}
       {loading ? (
-        <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--color-text-muted)' }}>
-          Loading {entityName}s…
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="skeleton" style={{ height: 260, borderRadius: 'var(--radius-xl)' }} />
+          ))}
         </div>
       ) : filteredItems.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', border: '1.5px dashed var(--color-border)' }}>
-          <p style={{ margin: 0, fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-text)' }}>No {entityName}s found</p>
-          <p style={{ margin: '0.5rem 0 1.25rem', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Try clearing filters or search query.</p>
-          <button onClick={() => { setSearchQuery(''); setActiveFilters({}); }} className="btn btn-outline btn-sm">
-            <RotateCcw size={14} /> Reset Filters
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', border: '1.5px dashed var(--color-border)', marginTop: '1.5rem' }}>
+          <p style={{ fontSize: '1.1rem', color: 'var(--color-text-secondary)', margin: '0 0 1rem' }}>
+            No {entityName.toLowerCase()}s found matching your criteria.
+          </p>
+          <button onClick={openNewItemModal} className="btn btn-primary btn-sm">
+            <Plus size={15} /> Create First {entityName}
           </button>
         </div>
       ) : viewMode === 'grid' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
-          {paginatedItems.map(item => renderCard(
-            item,
-            () => openEditModal(item),
-            () => setViewingItem(item),
-            selectedIds.has(item.id),
-            () => toggleSelect(item.id)
-          ))}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+          {paginatedItems.map(item =>
+            renderCard(
+              item,
+              () => openEditModal(item),
+              () => setViewingItem(item),
+              selectedIds.has(item.id),
+              () => toggleSelect(item.id)
+            )
+          )}
         </div>
       ) : (
-        <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-xl)', overflow: 'auto', marginBottom: '2rem', boxShadow: '0 2px 12px rgba(0,0,0,0.03)' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 800 }}>
+        <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', border: '1.5px solid var(--color-border)', overflow: 'hidden', marginTop: '1.5rem' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
             <thead>
-              <tr style={{ background: 'var(--color-surface-2)' }}>
+              <tr style={{ background: 'var(--color-surface-2)', borderBottom: '1px solid var(--color-border)' }}>
                 <th style={{ width: 44, padding: '0.875rem 0.75rem', textAlign: 'center' }}>
                   <input
                     type="checkbox"
-                    checked={filteredItems.length > 0 && selectedIds.size === filteredItems.length}
-                    onChange={selectedIds.size === filteredItems.length ? handleClearSelection : handleSelectAll}
+                    checked={selectedIds.size > 0 && selectedIds.size === filteredItems.length}
+                    onChange={(e) => { e.target.checked ? handleSelectAll() : handleClearSelection(); }}
                     style={{ width: 16, height: 16, cursor: 'pointer', accentColor: 'var(--color-primary)' }}
                   />
                 </th>
-                {renderTableColumns.map((col, idx) => (
-                  <th key={col} style={{ padding: '0.875rem 0.85rem', textAlign: idx === renderTableColumns.length - 1 ? 'right' : 'left', fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>
+                {renderTableColumns.map(col => (
+                  <th key={col} style={{ padding: '0.875rem 0.85rem', fontWeight: 700, color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>
                     {col}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {paginatedItems.map((item) => renderTableRow(
-                item,
-                () => openEditModal(item),
-                () => setViewingItem(item),
-                selectedIds.has(item.id),
-                () => toggleSelect(item.id)
-              ))}
+              {paginatedItems.map(item =>
+                renderTableRow(
+                  item,
+                  () => openEditModal(item),
+                  () => setViewingItem(item),
+                  selectedIds.has(item.id),
+                  () => toggleSelect(item.id)
+                )
+              )}
             </tbody>
           </table>
         </div>
@@ -381,36 +448,42 @@ export function AdminEntityManager<T extends { id: string }>({
           totalItems={filteredItems.length}
           itemsPerPage={itemsPerPage}
           onPageChange={setCurrentPage}
-          onItemsPerPageChange={(num) => { setItemsPerPage(num); setCurrentPage(1); }}
+          onItemsPerPageChange={setItemsPerPage}
           pageSizeOptions={[6, 12, 24, 48]}
-          unitName={entityName.toLowerCase() + 's'}
+          unitName={`${entityName.toLowerCase()}s`}
         />
       )}
 
       {/* ── Edit / Add Modal ── */}
       {editingItem && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', maxWidth: 720, width: '100%', maxHeight: '90vh', overflowY: 'auto', border: '1.5px solid var(--color-border)', boxShadow: '0 24px 48px rgba(0,0,0,0.25)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--color-border)', position: 'sticky', top: 0, background: 'var(--color-surface)', zIndex: 10 }}>
-              <div>
-                <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800 }}>
-                  {isNewItem ? `Add New ${entityName}` : `Edit ${entityName}`}
-                </h3>
-                <p style={{ margin: '0.2rem 0 0', fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>ID: {editingItem.id}</p>
-              </div>
+          <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', maxWidth: 640, width: '100%', maxHeight: '90vh', overflowY: 'auto', border: '1.5px solid var(--color-border)', boxShadow: '0 24px 48px rgba(0,0,0,0.25)' }}>
+            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800 }}>
+                {isNewItem ? `Add New ${entityName}` : `Edit ${entityName}`}
+              </h3>
               <button onClick={() => setEditingItem(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}>
                 <X size={20} />
               </button>
             </div>
 
-            <form onSubmit={handleFormSave} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <form onSubmit={handleFormSave} noValidate style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              {/* Anti-Bot Honeypot */}
+              <Honeypot value={honeypot} onChange={setHoneypot} id="admin_edit_modal_hp" name="admin_edit_modal_hp" />
+
               {fields.map(f => {
                 const val = (editingItem as any)[f.key];
+                const hasError = !!modalFieldErrors[f.key];
 
                 if (renderCustomField) {
                   const custom = renderCustomField(f.key, val, (newVal) => updateItemField(f.key, newVal), editingItem);
                   if (custom) {
-                    return <div key={f.key}>{custom}</div>;
+                    return (
+                      <div key={f.key}>
+                        {custom}
+                        {hasError && <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{modalFieldErrors[f.key]}</span>}
+                      </div>
+                    );
                   }
                 }
 
@@ -440,8 +513,7 @@ export function AdminEntityManager<T extends { id: string }>({
                         value={val !== undefined ? val : ''}
                         onChange={e => updateItemField(f.key, Number(e.target.value))}
                         placeholder={f.placeholder}
-                        required={f.required}
-                        style={{ width: '100%', fontSize: '0.875rem' }}
+                        style={{ width: '100%', fontSize: '0.875rem', borderColor: hasError ? '#ef4444' : undefined }}
                       />
                     ) : f.type === 'boolean' ? (
                       <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.875rem' }}>
@@ -458,8 +530,7 @@ export function AdminEntityManager<T extends { id: string }>({
                         className="form-input"
                         value={val || ''}
                         onChange={e => updateItemField(f.key, e.target.value)}
-                        required={f.required}
-                        style={{ width: '100%', fontSize: '0.875rem' }}
+                        style={{ width: '100%', fontSize: '0.875rem', borderColor: hasError ? '#ef4444' : undefined }}
                       >
                         {f.options.map(o => (
                           <option key={o.value} value={o.value}>{o.label}</option>
@@ -473,7 +544,7 @@ export function AdminEntityManager<T extends { id: string }>({
                           placeholder="Comma-separated items (e.g. Item 1, Item 2)"
                           value={Array.isArray(val) ? val.join(', ') : ''}
                           onChange={e => updateItemField(f.key, e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
-                          style={{ width: '100%', fontSize: '0.875rem' }}
+                          style={{ width: '100%', fontSize: '0.875rem', borderColor: hasError ? '#ef4444' : undefined }}
                         />
                         <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>Separate items with commas</span>
                       </div>
@@ -484,10 +555,10 @@ export function AdminEntityManager<T extends { id: string }>({
                         value={val || ''}
                         onChange={e => updateItemField(f.key, e.target.value)}
                         placeholder={f.placeholder}
-                        required={f.required}
-                        style={{ width: '100%', fontSize: '0.875rem' }}
+                        style={{ width: '100%', fontSize: '0.875rem', borderColor: hasError ? '#ef4444' : undefined }}
                       />
                     )}
+                    {hasError && <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 3, display: 'block', fontWeight: 600 }}>{modalFieldErrors[f.key]}</span>}
                     {f.help && <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', marginTop: 2 }}>{f.help}</div>}
                   </div>
                 );

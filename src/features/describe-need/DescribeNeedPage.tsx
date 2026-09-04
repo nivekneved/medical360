@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Check, MessageCircle, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +7,13 @@ import { useSpecialties } from '../../hooks/useSpecialties';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
+import { Honeypot } from '../../components/Honeypot/Honeypot';
+import {
+  validateName,
+  validateEmail,
+  validatePhone,
+  validateDescription,
+} from '../../core/services/validation.service';
 import './DescribeNeed.css';
 
 const COUNTRIES = ['Mauritius', 'Réunion Island', 'Comoros', 'Madagascar', 'Seychelles', 'Maldives', 'South Africa', 'Kenya', 'France', 'United Kingdom', 'Other'];
@@ -20,6 +28,16 @@ export function DescribeNeedPage() {
     updateField, nextStep, prevStep, submit, reset, error
   } = useInquiry();
   const { data: cms } = useCMS('describe-need');
+
+  const [fieldErrors, setFieldErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+    specialtyId?: string;
+    description?: string;
+    budget?: string;
+  }>({});
 
   const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
   const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
@@ -53,6 +71,42 @@ export function DescribeNeedPage() {
   }
 
   const selectedSpecialty = specialties.find(s => s.id === formData.specialtyId);
+
+  const handleNext = () => {
+    const errors: typeof fieldErrors = {};
+
+    if (step === 1) {
+      const fnVal = validateName(formData.firstName, l10n('Prénom', 'Prenon', 'First Name'), 2);
+      if (!fnVal.isValid) errors.firstName = fnVal.error;
+
+      const lnVal = validateName(formData.lastName, l10n('Nom', 'Nom', 'Last Name'), 1);
+      if (!lnVal.isValid) errors.lastName = lnVal.error;
+
+      const emVal = validateEmail(formData.email, true);
+      if (!emVal.isValid) errors.email = emVal.error;
+
+      const phVal = validatePhone(formData.phone, true);
+      if (!phVal.isValid) errors.phone = phVal.error;
+    } else if (step === 2) {
+      if (!formData.specialtyId) {
+        errors.specialtyId = l10n('Veuillez sélectionner une spécialité médicale.', 'Swazir enn spesialite medikal silvouple.', 'Please select a medical specialty.');
+      }
+      const descVal = validateDescription(formData.description, l10n('Description de votre besoin', 'Deskripsion ou bizin', 'Medical Need Description'), 10);
+      if (!descVal.isValid) errors.description = descVal.error;
+    } else if (step === 3) {
+      if (formData.budgetMin && formData.budgetMax) {
+        if (Number(formData.budgetMin) > Number(formData.budgetMax)) {
+          errors.budget = l10n('Le budget minimum ne peut pas dépasser le budget maximum.', 'Bidze minimum pa kapav pli gran ki maximum.', 'Minimum budget cannot exceed maximum budget.');
+        }
+      }
+    }
+
+    setFieldErrors(errors);
+
+    if (Object.keys(errors).length === 0) {
+      nextStep();
+    }
+  };
 
   if (submitted) {
     return (
@@ -129,36 +183,77 @@ export function DescribeNeedPage() {
           {step === 1 && (
             <div className="wizard-body animate-fade-in">
               {/* Security Honeypot */}
-              <div style={{ display: 'none', position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
-                <input
-                  type="text"
-                  name="website_url_check"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={honeypot}
-                  onChange={e => setHoneypot(e.target.value)}
-                />
-              </div>
+              <Honeypot value={honeypot} onChange={setHoneypot} id="wiz_security_hp" name="wiz_security_hp" />
 
               <h2 className="wizard-title">{l10n('Vos Détails Personnels', 'Ou Bann Detay', 'Your Personal Details')}</h2>
               <div className="form-row">
                 <div className="form-group">
                   <label className="form-label" htmlFor="wiz-firstName">{l10n('Prénom *', 'Prenon *', 'First Name *')}</label>
-                  <input id="wiz-firstName" className="form-input" value={formData.firstName} onChange={e => updateField('firstName', e.target.value)} placeholder="e.g. Rajesh" required />
+                  <input
+                    id="wiz-firstName"
+                    className={`form-input ${fieldErrors.firstName ? 'form-input--error' : ''}`}
+                    value={formData.firstName}
+                    onChange={e => {
+                      updateField('firstName', e.target.value);
+                      if (fieldErrors.firstName) setFieldErrors(prev => ({ ...prev, firstName: undefined }));
+                    }}
+                    placeholder="e.g. Rajesh"
+                    style={{ borderColor: fieldErrors.firstName ? '#ef4444' : undefined }}
+                    required
+                  />
+                  {fieldErrors.firstName && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.firstName}</span>}
                 </div>
                 <div className="form-group">
                   <label className="form-label" htmlFor="wiz-lastName">{l10n('Nom *', 'Nom *', 'Last Name *')}</label>
-                  <input id="wiz-lastName" className="form-input" value={formData.lastName} onChange={e => updateField('lastName', e.target.value)} placeholder="e.g. Ramkhelawon" required />
+                  <input
+                    id="wiz-lastName"
+                    className={`form-input ${fieldErrors.lastName ? 'form-input--error' : ''}`}
+                    value={formData.lastName}
+                    onChange={e => {
+                      updateField('lastName', e.target.value);
+                      if (fieldErrors.lastName) setFieldErrors(prev => ({ ...prev, lastName: undefined }));
+                    }}
+                    placeholder="e.g. Ramkhelawon"
+                    style={{ borderColor: fieldErrors.lastName ? '#ef4444' : undefined }}
+                    required
+                  />
+                  {fieldErrors.lastName && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.lastName}</span>}
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group">
                   <label className="form-label" htmlFor="wiz-email">{l10n('Adresse Email *', 'Adres Email *', 'Email Address *')}</label>
-                  <input id="wiz-email" className="form-input" type="email" value={formData.email} onChange={e => updateField('email', e.target.value)} placeholder="your@email.com" required />
+                  <input
+                    id="wiz-email"
+                    className={`form-input ${fieldErrors.email ? 'form-input--error' : ''}`}
+                    type="email"
+                    value={formData.email}
+                    onChange={e => {
+                      updateField('email', e.target.value);
+                      if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: undefined }));
+                    }}
+                    placeholder="your@email.com"
+                    style={{ borderColor: fieldErrors.email ? '#ef4444' : undefined }}
+                    required
+                  />
+                  {fieldErrors.email && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.email}</span>}
                 </div>
                 <div className="form-group">
                   <label className="form-label" htmlFor="wiz-phone">{l10n('Téléphone / WhatsApp *', 'Telefonn / WhatsApp *', 'Phone / WhatsApp *')}</label>
-                  <input id="wiz-phone" className="form-input" type="tel" value={formData.phone} onChange={e => updateField('phone', e.target.value)} placeholder="+230 5x xxx xxx" required />
+                  <input
+                    id="wiz-phone"
+                    className={`form-input ${fieldErrors.phone ? 'form-input--error' : ''}`}
+                    type="tel"
+                    value={formData.phone}
+                    onChange={e => {
+                      updateField('phone', e.target.value);
+                      if (fieldErrors.phone) setFieldErrors(prev => ({ ...prev, phone: undefined }));
+                    }}
+                    placeholder="+230 5x xxx xxx"
+                    style={{ borderColor: fieldErrors.phone ? '#ef4444' : undefined }}
+                    required
+                  />
+                  {fieldErrors.phone && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.phone}</span>}
                 </div>
               </div>
               <div className="form-group">
@@ -203,26 +298,40 @@ export function DescribeNeedPage() {
 
               <div className="form-group">
                 <label className="form-label" htmlFor="wiz-specialty">{l10n('Spécialité Médicale *', 'Spesialite Medikal *', 'Medical Specialty *')}</label>
-                <select id="wiz-specialty" className="form-select" value={formData.specialtyId} onChange={e => updateField('specialtyId', e.target.value)}>
+                <select
+                  id="wiz-specialty"
+                  className={`form-select ${fieldErrors.specialtyId ? 'form-input--error' : ''}`}
+                  value={formData.specialtyId}
+                  onChange={e => {
+                    updateField('specialtyId', e.target.value);
+                    if (fieldErrors.specialtyId) setFieldErrors(prev => ({ ...prev, specialtyId: undefined }));
+                  }}
+                  style={{ borderColor: fieldErrors.specialtyId ? '#ef4444' : undefined }}
+                >
                   <option value="">{l10n('-- Sélectionnez la Spécialité --', '-- Swazir Spesialite --', '-- Select Specialty --')}</option>
                   {specialties.map(s => <option key={s.id} value={s.id}>{l(s, 'name')}</option>)}
                 </select>
+                {fieldErrors.specialtyId && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.specialtyId}</span>}
               </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="wiz-description">{l10n('Décrivez Votre Condition *', 'Dekrir Ou Problem Sant *', 'Describe Your Condition *')}</label>
                 <textarea
                   id="wiz-description"
-                  className="form-textarea"
+                  className={`form-textarea ${fieldErrors.description ? 'form-input--error' : ''}`}
                   value={formData.description}
-                  onChange={e => updateField('description', e.target.value)}
+                  onChange={e => {
+                    updateField('description', e.target.value);
+                    if (fieldErrors.description) setFieldErrors(prev => ({ ...prev, description: undefined }));
+                  }}
                   placeholder={l10n(
                     'Veuillez décrire votre état de santé, tout diagnostic que vous avez reçu et le type de traitement ou d\'avis que vous recherchez…',
                     'Silvouple dekrir ou maladi, si dokter inn dir ou kitsoz, ek ki kalite tretman ou pe rode…',
                     'Please describe your medical condition, any diagnosis you have received, and what type of treatment or opinion you are looking for…'
                   )}
-                  style={{ minHeight: 160 }}
+                  style={{ minHeight: 160, borderColor: fieldErrors.description ? '#ef4444' : undefined }}
                   required
                 />
+                {fieldErrors.description && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.description}</span>}
               </div>
               <div className="form-group">
                 <label className="form-label">{l10n('Urgence *', 'Irzans *', 'Urgency *')}</label>
@@ -270,6 +379,7 @@ export function DescribeNeedPage() {
                     <input id="wiz-budgetMax" className="form-input" type="number" placeholder={l10n('Max (ex. 20000)', 'Max (ex. 20000)', 'Max (e.g. 20000)')} value={formData.budgetMax} onChange={e => updateField('budgetMax', e.target.value)} />
                   </div>
                 </div>
+                {fieldErrors.budget && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.budget}</span>}
               </div>
               <div className="wizard-info">
                 <p>💡 <strong>{l10n('Pas de budget ?', 'Pena bidze ?', 'No budget?')}</strong> {l10n('Ne vous inquiétez pas — nous vous fournirons les meilleures options à tous les prix. Le service de Med360 est toujours', 'Pa trakase — nou pou donn ou bann meyer opsion pou tou pri. Servis Med360 li touzour', 'Don\'t worry — we\'ll provide you with the best options across all price points. Med360\'s service is always')} <strong>{l10n('gratuit pour les patients', 'gratis pou bann pasian', 'free for patients')}</strong>.</p>
@@ -315,12 +425,8 @@ export function DescribeNeedPage() {
             {step < totalSteps ? (
               <button
                 className="btn btn-primary"
-                onClick={nextStep}
+                onClick={handleNext}
                 id="wiz-next-btn"
-                disabled={
-                  (step === 1 && (!formData.firstName || !formData.email || !formData.phone)) ||
-                  (step === 2 && (!formData.specialtyId || !formData.description))
-                }
               >
                 {l10n('Continuer', 'Kontinie', 'Continue')} <ArrowRight size={16} />
               </button>
