@@ -18,6 +18,7 @@ import {
   RotateCcw,
   CornerDownLeft,
 } from 'lucide-react';
+import { sanitizeHtml } from '../../../core/services/security.service';
 import './RichTextEditor.css';
 
 export interface RichTextEditorProps {
@@ -503,7 +504,7 @@ export function RichTextEditor({
         {activeTab === 'preview' && (
           <div className="rich-editor__preview-area" style={{ minHeight }}>
             {value ? (
-              <div dangerouslySetInnerHTML={{ __html: value }} />
+              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(value) }} />
             ) : (
               <span style={{ color: 'var(--color-text-muted)', fontStyle: 'italic', fontSize: '0.85rem' }}>
                 No content entered yet. Switch to Visual Editor or HTML Code Area to add text.

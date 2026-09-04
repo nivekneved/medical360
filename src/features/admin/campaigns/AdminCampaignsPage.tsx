@@ -37,6 +37,7 @@ import {
   sendTestCampaignEmail,
   dispatchCampaign,
 } from '../../../core/services/campaign.service';
+import { sanitizeHtml } from '../../../core/services/security.service';
 import { AdminPagination } from '../components/AdminPagination';
 import { AdminBulkActionBar } from '../components/AdminBulkActionBar';
 import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
@@ -1608,7 +1609,7 @@ export function AdminCampaignsPage() {
                   transition: 'max-width 0.25s ease',
                 }}
                 dangerouslySetInnerHTML={{
-                  __html: renderCampaignHtml(editingCampaign, { name: 'Jean-Luc', country: 'Mauritius' }),
+                  __html: sanitizeHtml(renderCampaignHtml(editingCampaign, { name: 'Jean-Luc', country: 'Mauritius' })),
                 }}
               />
             </div>
@@ -1888,7 +1889,7 @@ export function AdminCampaignsPage() {
             </div>
 
             <div style={{ flex: 1, overflowY: 'auto', background: '#cbd5e1', padding: '1rem', borderRadius: 8 }}>
-              <div dangerouslySetInnerHTML={{ __html: renderCampaignHtml(previewCampaign, { name: 'Jean-Luc Marie', country: 'Mauritius' }) }} />
+              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(renderCampaignHtml(previewCampaign, { name: 'Jean-Luc Marie', country: 'Mauritius' })) }} />
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1rem' }}>
