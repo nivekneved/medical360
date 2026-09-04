@@ -450,10 +450,10 @@ export function AboutPage() {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
               gap: '1.75rem',
             }}>
-              {caseStudies.map((cs) => (
+              {caseStudies.slice(0, 3).map((cs) => (
                 <div
                   key={cs.id}
                   style={{
@@ -525,6 +525,17 @@ export function AboutPage() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+              <button
+                className="btn btn-outline"
+                onClick={() => navigate('/case-studies')}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontWeight: 700 }}
+              >
+                <span>{l10n('Voir Tous les Témoignages & Études de Cas', 'Get Tou Bann Zistwar & Temwagnaz', 'View All Patient Stories & Case Studies')}</span>
+                <ArrowRight size={16} />
+              </button>
             </div>
           </div>
 
