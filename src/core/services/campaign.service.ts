@@ -356,11 +356,8 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
         <div style="background-color: ${t.bannerBg}; color: ${t.bannerTextColor}; padding: 20px 24px; text-align: left;">
           <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
             <tr>
-              <td style="width: 32px; height: 32px; background: linear-gradient(135deg, #065f46, #059669); background-color: #065f46; border-radius: 8px; text-align: center; vertical-align: middle; color: #ffffff; font-weight: 900; font-size: 16px; font-family: 'Outfit', 'Inter', -apple-system, sans-serif;">
-                M
-              </td>
-              <td style="padding-left: 10px; vertical-align: middle;">
-                <span style="font-family: 'Outfit', 'Inter', -apple-system, sans-serif; font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: -0.3px;">Medical</span><span style="font-family: 'Outfit', 'Inter', -apple-system, sans-serif; font-size: 18px; font-weight: 700; color: #10b981;">360</span>
+              <td style="vertical-align: middle;">
+                <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Medical 360" height="32" style="height: 32px; max-width: 150px; display: block; border: 0;" />
               </td>
             </tr>
           </table>

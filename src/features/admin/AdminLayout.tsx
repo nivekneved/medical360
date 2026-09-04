@@ -181,11 +181,11 @@ export function AdminLayout() {
         </button>
 
         <div className="admin-sidebar__logo" style={{ padding: 0, border: 'none' }}>
-          <div className="admin-sidebar__logo-icon" style={{ width: 30, height: 30, fontSize: '0.85rem' }}>M</div>
-          <div className="admin-sidebar__logo-text" style={{ fontSize: '0.95rem' }}>
-            <span>Medical</span>
-            <span className="admin-sidebar__logo-accent">360</span>
-          </div>
+          <img 
+            src="/assets/logo.png" 
+            alt="Medical 360" 
+            style={{ height: 32, width: 'auto', maxWidth: 140, objectFit: 'contain' }} 
+          />
         </div>
 
         <button
@@ -213,13 +213,17 @@ export function AdminLayout() {
         {/* Logo & Header Toggle */}
         <div className="admin-sidebar__logo">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1, minWidth: 0 }}>
-            <div className="admin-sidebar__logo-icon">M</div>
-            {!collapsed && (
-              <div className="admin-sidebar__logo-text">
-                <span>Medical</span>
-                <span className="admin-sidebar__logo-accent">360</span>
-              </div>
-            )}
+            <img 
+              src="/assets/logo.png" 
+              alt="Medical 360" 
+              style={{ 
+                height: collapsed ? 26 : 34, 
+                maxWidth: collapsed ? 32 : 140, 
+                objectFit: 'contain',
+                objectPosition: 'left center',
+                transition: 'all 0.2s ease'
+              }} 
+            />
           </div>
 
           {/* Top Collapse / Expand Button */}

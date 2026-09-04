@@ -13,13 +13,13 @@ export function Footer() {
         <div className="footer__grid">
           {/* Brand */}
           <div className="footer__brand">
-            <div className="footer__logo">
-              <div className="footer__logo-icon">M</div>
-              <div>
-                <span className="footer__logo-name">Medical</span>
-                <span className="footer__logo-accent">360</span>
-              </div>
-            </div>
+            <Link to="/" className="footer__logo">
+              <img 
+                src="/assets/logo.png" 
+                alt="Medical 360" 
+                className="footer__logo-img" 
+              />
+            </Link>
             <p className="footer__tagline">
               {t('footer.tagline')}
             </p>

@@ -84,27 +84,11 @@ export function printOrExportPdf(
           .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
           }
-          .logo-badge {
-            background: #065f46;
-            color: white;
-            font-size: 16px;
-            font-weight: 900;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-          }
-          .logo-text {
-            font-size: 18px;
-            font-weight: 800;
-            color: #065f46;
-          }
-          .logo-accent {
-            color: #10b981;
+          .logo img {
+            height: 36px;
+            width: auto;
+            object-fit: contain;
           }
           .meta {
             text-align: right;
@@ -160,8 +144,7 @@ export function printOrExportPdf(
 
         <div class="header">
           <div class="logo">
-            <div class="logo-badge">M</div>
-            <div class="logo-text">Medical<span class="logo-accent">360</span></div>
+            <img src="/assets/logo.png" alt="Medical 360" />
           </div>
           <div class="meta">
             <div><strong>Generated:</strong> ${generatedDate}</div>
