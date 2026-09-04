@@ -29,10 +29,10 @@ export function HomePage() {
   };
 
   const STATS = [
-    { icon: Users,      value: '1,200+', label: tCms('statPatients', t('home.stats.patients')) },
-    { icon: Award,      value: '15+',     label: tCms('statHospitals', t('home.stats.hospitals')) },
-    { icon: Globe2,     value: '7+',      label: tCms('statCountries', t('home.stats.countries')) },
-    { icon: HeartPulse, value: '100%',    label: tCms('statSatisfaction', t('home.stats.satisfaction')) },
+    { icon: Award,      value: '10+ Years', label: tCms('statSavings', t('home.stats.savings')) },
+    { icon: Users,      value: '1,200+',   label: tCms('statPatients', t('home.stats.patients')) },
+    { icon: Globe2,     value: '15+',      label: tCms('statHospitals', t('home.stats.hospitals')) },
+    { icon: HeartPulse, value: '100%',     label: tCms('statSatisfaction', t('home.stats.satisfaction')) },
   ];
 
   const PROCESS_STEPS = [
@@ -43,10 +43,10 @@ export function HomePage() {
   ];
 
   const WHY_CHOOSE = [
-    { icon: ShieldCheck, title: t('home.features.jci.title'),  desc: t('home.features.jci.desc') },
-    { icon: Globe2,      title: t('home.features.concierge.title'),     desc: t('home.features.concierge.desc') },
-    { icon: Clock,       title: t('home.features.turnaround.title'),            desc: t('home.features.turnaround.desc') },
-    { icon: MessageCircle, title: t('home.features.caseManager.title'),   desc: t('home.features.caseManager.desc') },
+    { icon: Award,       title: t('home.features.jci.title'),         desc: t('home.features.jci.desc') },
+    { icon: Globe2,      title: t('home.features.concierge.title'),   desc: t('home.features.concierge.desc') },
+    { icon: ShieldCheck, title: t('home.features.turnaround.title'),  desc: t('home.features.turnaround.desc') },
+    { icon: HeartPulse,  title: t('home.features.caseManager.title'), desc: t('home.features.caseManager.desc') },
   ];
 
   // Rich Schema.org JSON-LD for Homepage

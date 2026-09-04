@@ -25,7 +25,7 @@ export function getMedicalOrganizationSchema() {
     legalName: 'Med360 Ltd',
     url: BASE_URL,
     logo: `${BASE_URL}/assets/logo.png`,
-    description: 'Premier medical concierge service in Mauritius connecting patients to top accredited international hospitals in India, Thailand, Singapore, and Europe.',
+    description: 'Medical 360 is a company owned by the NGO Enn Rev Enn Sourir. 10+ years coordinating specialised treatment in private clinics and abroad, with 100% of profits returned to the NGO to fund medical care for the needy.',
     telephone: '+230 59188275',
     email: 'contact@medical360.mu',
     address: {
