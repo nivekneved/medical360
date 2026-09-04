@@ -97,7 +97,7 @@ export function AdminLoginPage() {
             onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.65)')}
           >
             <ArrowLeft size={16} />
-            <span>Back to Medical 360</span>
+            <span>Back to Med360</span>
           </Link>
         </div>
 
@@ -105,7 +105,7 @@ export function AdminLoginPage() {
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <img 
             src="/assets/logo.png" 
-            alt="Medical 360" 
+            alt="Med360" 
             style={{ 
               height: 64, 
               width: 'auto', 
@@ -119,7 +119,7 @@ export function AdminLoginPage() {
             Admin Portal
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem' }}>
-            Medical 360 · Clinical & Content Management
+            Med360 · Owned by NGO Enn Rev Enn Sourir
           </p>
         </div>
 

@@ -6,7 +6,7 @@ export function PrivacyPolicyPage() {
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
         title="Privacy Policy & Medical Data Protection"
-        description="Learn how Medical 360 protects your personal and medical information under the Mauritius Data Protection Act 2017 and GDPR standards."
+        description="Learn how Med360 protects your personal and medical information under the Mauritius Data Protection Act 2017 and GDPR standards."
         canonical="/privacy"
       />
       
@@ -61,7 +61,7 @@ export function PrivacyPolicyPage() {
               <Lock size={20} color="var(--color-primary)" /> 1. Commitment to Medical Confidentiality
             </h2>
             <p>
-              At <strong>Med360 Ltd ("Medical 360")</strong>, we understand the deeply sensitive nature of medical data. We are committed to protecting your personal identity, medical inquiries, diagnostic reports, and communication records in strict compliance with the <strong>Mauritius Data Protection Act 2017</strong> and international data protection standards (GDPR).
+              At <strong>Med360 Ltd ("Med360")</strong>, a social enterprise owned by the NGO Enn Rev Enn Sourir, we understand the deeply sensitive nature of medical data. We are committed to protecting your personal identity, medical inquiries, diagnostic reports, and communication records in strict compliance with the <strong>Mauritius Data Protection Act 2017</strong> and international data protection standards (GDPR).
             </p>
           </div>
 
@@ -114,7 +114,7 @@ export function PrivacyPolicyPage() {
               ⚠️ Medical Facilitator Disclaimer
             </h3>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-muted, #64748b)', margin: 0 }}>
-              Medical 360 (Med360 Ltd) is a medical travel facilitator and concierge, not a licensed healthcare clinic or diagnostic hospital. Any preliminary information provided does not substitute professional in-person medical evaluation by licensed healthcare practitioners.
+              Med360 is a medical travel facilitator and concierge owned by NGO Enn Rev Enn Sourir, not a licensed healthcare clinic or diagnostic hospital. Any preliminary information provided does not substitute professional in-person medical evaluation by licensed healthcare practitioners.
             </p>
           </div>
 

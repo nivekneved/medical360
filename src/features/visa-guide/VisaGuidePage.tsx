@@ -32,7 +32,7 @@ const DESTINATIONS: VisaDestination[] = [
       'Recent medical history, doctor referral letter or diagnosis report',
       'e-Medical Attendant Visa for up to 2 family members/caregivers',
     ],
-    med360Assistance: 'Medical 360 secures and delivers your official hospital visa invitation letter within 24 hours at zero cost.',
+    med360Assistance: 'Med360 secures and delivers your official hospital visa invitation letter within 24 hours at zero cost.',
   },
   {
     id: 'thailand',
@@ -105,7 +105,7 @@ export function VisaGuidePage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', paddingBottom: '5rem' }}>
       <Helmet>
-        <title>Medical Visa & Travel Guide for Mauritian Patients | Medical 360</title>
+        <title>Medical Visa & Travel Guide for Mauritian Patients | Med360</title>
         <meta name="description" content="Complete step-by-step medical visa and travel coordination guide for patients travelling from Mauritius to India, Thailand, Singapore, and Malaysia." />
       </Helmet>
 
@@ -134,10 +134,10 @@ export function VisaGuidePage() {
           </h1>
           <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.7)', maxWidth: 720, margin: '0 auto 1.5rem', lineHeight: 1.6 }}>
             {isFr
-              ? 'Medical 360 s\'occupe gratuitement de vos démarches de visa médical : obtention des lettres d\'invitation officielles des hôpitaux sous 24h, visas pour accompagnants et transferts aéroport VIP.'
+              ? 'Med360 s\'occupe gratuitement de vos démarches de visa médical : obtention des lettres d\'invitation officielles des hôpitaux sous 24h, visas pour accompagnants et transferts aéroport VIP.'
               : isKr
-              ? 'Medical 360 okip tou ou bann demars viza medikal gratis : let linvitasion lopital dan 24h, viza akonpagnan, ek transpor VIP.'
-              : 'Medical 360 manages your medical visa assistance free of charge: 24h hospital invitation letters, family companion visas, priority flights, and VIP airport reception.'}
+              ? 'Med360 okip tou ou bann demars viza medikal gratis : let linvitasion lopital dan 24h, viza akonpagnan, ek transpor VIP.'
+              : 'Med360 manages your medical visa assistance free of charge: 24h hospital invitation letters, family companion visas, priority flights, and VIP airport reception.'}
           </p>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
@@ -274,7 +274,7 @@ export function VisaGuidePage() {
               <ShieldCheck size={28} color="var(--color-primary)" style={{ flexShrink: 0 }} />
               <div>
                 <div style={{ fontWeight: 800, color: 'var(--color-text)', fontSize: '0.95rem' }}>
-                  {isFr ? 'Notre Prise en Charge 100% Gratuite' : 'Medical 360 Full Concierge Commitment'}
+                  {isFr ? 'Notre Prise en Charge 100% Gratuite' : 'Med360 Full Concierge Commitment'}
                 </div>
                 <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginTop: 2 }}>
                   {selectedDestination.med360Assistance}

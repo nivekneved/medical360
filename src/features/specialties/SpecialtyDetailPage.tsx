@@ -47,7 +47,7 @@ export function SpecialtyDetailPage() {
   return (
     <main className="specialty-detail-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO
-        title={`${l(specialty, 'name')} - Procedures & Costs | Medical 360`}
+        title={`${l(specialty, 'name')} - Procedures & Costs | Med360`}
         description={l(specialty, 'shortDescription') || `Explore world-class ${specialty.name} treatments.`}
         canonical={`/specialties/${specialty.id}`}
       />
@@ -279,7 +279,7 @@ export function SpecialtyDetailPage() {
                     {t('nav.freeOpinion')} <ArrowRight size={16} />
                   </button>
                   <a
-                    href={buildMed360WhatsAppUrl(`Bonjour Medical 360, j'aimerais avoir des informations sur la spécialité ${l(specialty, 'name')}`)}
+                    href={buildMed360WhatsAppUrl(`Bonjour Med360, j'aimerais avoir des informations sur la spécialité ${l(specialty, 'name')}`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-whatsapp btn-lg"

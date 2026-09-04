@@ -31,7 +31,7 @@ export function FloatingWhatsApp() {
         target="_blank"
         rel="noopener noreferrer"
         className="floating-whatsapp"
-        aria-label="Chat with Medical 360 on WhatsApp"
+        aria-label="Chat with Med360 on WhatsApp"
         id="floating-whatsapp-btn"
       >
         <MessageCircle size={26} />

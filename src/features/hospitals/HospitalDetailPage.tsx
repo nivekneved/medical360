@@ -48,7 +48,7 @@ export function HospitalDetailPage() {
   return (
     <main className="hospital-detail-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO
-        title={`${hospital.name} - ${hospital.city}, ${hospital.country} | Medical 360`}
+        title={`${hospital.name} - ${hospital.city}, ${hospital.country} | Med360`}
         description={l(hospital, 'overview') || `Explore ${hospital.name} accredited healthcare services.`}
         canonical={`/hospitals/${hospital.id}`}
       />
@@ -272,7 +272,7 @@ export function HospitalDetailPage() {
                     {t('nav.freeOpinion')} <ArrowRight size={16} />
                   </button>
                   <a
-                    href={buildMed360WhatsAppUrl(`Bonjour Medical 360, je souhaite obtenir un avis médical pour ${hospital.name}`)}
+                    href={buildMed360WhatsAppUrl(`Bonjour Med360, je souhaite obtenir un avis médical pour ${hospital.name}`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-whatsapp btn-lg"

@@ -66,10 +66,10 @@ export function DescribeNeedPage() {
           </h1>
           <p className="text-lead" style={{ marginBottom: '2rem' }}>
             {i18n.language === 'fr' 
-              ? <>Merci ! Votre dossier a été reçu. Un gestionnaire de cas dédié de Medical 360 vous contactera dans les <strong>24 heures</strong>. Nous avons également ouvert WhatsApp pour que vous puissiez discuter avec nous dès maintenant.</>
+              ? <>Merci ! Votre dossier a été reçu. Un gestionnaire de cas dédié de Med360 vous contactera dans les <strong>24 heures</strong>. Nous avons également ouvert WhatsApp pour que vous puissiez discuter avec nous dès maintenant.</>
               : i18n.language === 'kr'
-              ? <>Mersi! Nou finn gagn ou dosie. Enn koordinater Medical 360 pou pran kontak ar ou dan <strong>24 er-tan</strong>. Nou finn osi ouver WhatsApp pou ou kapav koz ar nou lamem.</>
-              : <>Thank you! Your case has been received. A dedicated case manager from Medical 360 will contact you within <strong>24 hours</strong>. We've also opened WhatsApp for you to chat with us right now.</>}
+              ? <>Mersi! Nou finn gagn ou dosie. Enn koordinater Med360 pou pran kontak ar ou dan <strong>24 er-tan</strong>. Nou finn osi ouver WhatsApp pou ou kapav koz ar nou lamem.</>
+              : <>Thank you! Your case has been received. A dedicated case manager from Med360 will contact you within <strong>24 hours</strong>. We've also opened WhatsApp for you to chat with us right now.</>}
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg">
@@ -297,7 +297,7 @@ export function DescribeNeedPage() {
                 {formData.preferredCountry && <div className="review-row"><span>{l10n('Destination', 'Destinasion', 'Destination')}</span><strong>{formData.preferredCountry}</strong></div>}
               </div>
               <div className="review-note">
-                <p>{l10n('En soumettant, vous acceptez que Medical 360 vous contacte concernant votre demande. Vos informations sont strictement confidentielles.', 'Kan ou soumet form la, ou dakor ki Medical 360 kontakte ou. Tou ou linformasion pou res sekre.', 'By submitting, you agree that Medical 360 will contact you regarding your inquiry. Your information is kept strictly confidential.')}</p>
+                <p>{l10n('En soumettant, vous acceptez que Med360 vous contacte concernant votre demande. Vos informations sont strictement confidentielles.', 'Kan ou soumet form la, ou dakor ki Med360 kontakte ou. Tou ou linformasion pou res sekre.', 'By submitting, you agree that Med360 will contact you regarding your inquiry. Your information is kept strictly confidential.')}</p>
                 <p>{l10n('Après la soumission, WhatsApp s\'ouvrira pour vous connecter instantanément avec nous.', 'Apre ki ou finn soumet form la, WhatsApp pou ouver otomatikman pou ou kapav koz ar nou lamem.', 'After submission, WhatsApp will open so you can connect with us instantly.')}</p>
               </div>
               {error && <div className="wizard-error">{error}</div>}

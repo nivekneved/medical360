@@ -21,11 +21,11 @@ export function getMedicalOrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'MedicalOrganization',
     '@id': `${BASE_URL}/#organization`,
-    name: 'Medical 360',
+    name: 'Med360',
     legalName: 'Med360 Ltd',
     url: BASE_URL,
     logo: `${BASE_URL}/assets/logo.png`,
-    description: 'Medical 360 is a company owned by the NGO Enn Rev Enn Sourir. 10+ years coordinating specialised treatment in private clinics and abroad, with 100% of profits returned to the NGO to fund medical care for the needy.',
+    description: 'Med360 is a company owned by the NGO Enn Rev Enn Sourir. 10+ years coordinating specialised treatment in private clinics and abroad, with 100% of profits returned to the NGO to fund medical care for the needy.',
     telephone: '+230 59188275',
     email: 'contact@medical360.mu',
     address: {

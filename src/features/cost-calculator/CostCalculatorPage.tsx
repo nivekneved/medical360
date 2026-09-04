@@ -81,7 +81,7 @@ export function CostCalculatorPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', paddingBottom: '5rem' }}>
       <Helmet>
-        <title>Medical Treatment Cost Calculator & Comparison | Medical 360</title>
+        <title>Medical Treatment Cost Calculator & Comparison | Med360</title>
         <meta name="description" content="Calculate and compare international medical treatment costs for Mauritian patients across India, Thailand, Singapore, and Europe. Save up to 70% with transparent pricing." />
       </Helmet>
 
@@ -390,7 +390,7 @@ export function CostCalculatorPage() {
             <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
               {isFr
                 ? 'Contrairement à une démarche individuelle, nos forfaits négociés auprès des hôpitaux partenaires couvrent l\'ensemble du séjour médical.'
-                : 'Every package arranged through Medical 360 includes end-to-end clinical and concierge coordination with zero extra fees for the patient.'}
+                : 'Every package arranged through Med360 includes end-to-end clinical and concierge coordination with zero extra fees for the patient.'}
             </p>
           </div>
 

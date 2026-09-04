@@ -91,9 +91,9 @@ export function CaseStudiesPage() {
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Des histoires vraies de vrais patients. Lisez comment Medical 360 a facilité des traitements vitaux pour des patients de l\'Île Maurice et de l\'océan Indien.',
-              'Vre zistwar depi vre pasian. Lir kouma Medical 360 finn ed bann pasian depi Moris ek l\'osean Indien gagn tretman ki finn sov zot lavi.',
-              'Real stories from real patients. Read how Medical 360 facilitated life-changing treatments for patients from Mauritius and across the Indian Ocean region.'
+              'Des histoires vraies de vrais patients. Découvrez comment 10 ans d\'expérience avec l\'ONG Enn Rev Enn Sourir et Med360 ont permis à plus de 1 200 patients d\'accéder à des traitements vitaux en clinique et à l\'étranger.',
+              'Vre zistwar depi vre pasian. Dekouver kouma 10 banlane lexperyans avek l\'ONG Enn Rev Enn Sourir ek Med360 finn ed plis ki 1 200 pasian gagn tretman ki finn sov zot lavi.',
+              'Real stories from real patients. Discover how 10+ years of healthcare coordination with NGO Enn Rev Enn Sourir and Med360 have helped over 1,200 patients access life-saving treatment in private clinics and abroad.'
             ))}
           </p>
         </div>
@@ -221,9 +221,9 @@ export function CaseStudiesPage() {
           </h2>
           <p className="text-lead" style={{ marginBottom: '2rem', maxWidth: 500, margin: '0 auto 2rem' }}>
             {tCms('ctaDesc', l10n(
-              'Rejoignez des milliers de patients qui ont fait confiance à Medical 360 pour trouver les meilleurs soins au bon prix.',
-              'Rezwenn milye pasian ki finn fer Medical 360 konfians pou gagn pli bon swen ek pli bon pri.',
-              'Join thousands of patients who trusted Medical 360 to find them the best care at the right price.'
+              'Rejoignez des milliers de patients qui ont fait confiance à Med360 pour trouver les meilleurs soins au bon prix.',
+              'Rezwenn milye pasian ki finn fer Med360 konfians pou gagn pli bon swen ek pli bon pri.',
+              'Join thousands of patients who trusted Med360 to find them the best care at the right price.'
             ))}
           </p>
           <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need')} id="cs-cta-btn">

@@ -6,7 +6,7 @@ export function TermsPage() {
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
         title="Terms of Service & Healthcare Disclaimer"
-        description="Review the terms, conditions, and facilitator obligations of Medical 360 (Med360 Ltd)."
+        description="Review the terms, conditions, and facilitator obligations of Med360 (owned by NGO Enn Rev Enn Sourir)."
         canonical="/terms"
       />
       
@@ -38,7 +38,7 @@ export function TermsPage() {
             Terms of Service
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            Med360 Ltd • Port Louis, Mauritius
+            Med360 • A company owned by NGO Enn Rev Enn Sourir • Port Louis, Mauritius
           </p>
         </div>
       </section>
@@ -61,7 +61,7 @@ export function TermsPage() {
               <FileCheck size={20} color="#3b82f6" /> 1. Nature of Concierge Services
             </h2>
             <p>
-              Med360 Ltd acts solely as an independent medical travel coordinator, concierge, and communication bridge between patients seeking international healthcare and accredited healthcare providers / hospitals overseas. Our preliminary inquiry facilitation, cost calculation estimates, and advisory coordination are offered free of direct charge to the patient.
+              Med360 is a social enterprise company wholly owned by the NGO Enn Rev Enn Sourir. Building on 10+ years of humanitarian medical assistance, Med360 coordinates specialized care in private clinics and abroad for self-funding patients, with 100% of profits reinvested into the NGO to fund medical treatment for the needy.
             </p>
           </div>
 
@@ -71,7 +71,7 @@ export function TermsPage() {
               <ShieldAlert size={20} color="#3b82f6" /> 2. No Doctor-Patient Relationship
             </h2>
             <p>
-              Using our website, completing an inquiry form, or conversing with a Medical 360 case coordinator does not create a doctor-patient relationship. All clinical decisions, diagnostic interpretations, surgical interventions, and medical care plans are made exclusively between the patient and the licensed medical practitioners at the selected hospital.
+              Using our website, completing an inquiry form, or conversing with a Med360 case coordinator does not create a doctor-patient relationship. All clinical decisions, diagnostic interpretations, surgical interventions, and medical care plans are made exclusively between the patient and the licensed medical practitioners at the selected hospital or clinic.
             </p>
           </div>
 
@@ -81,7 +81,7 @@ export function TermsPage() {
               <AlertCircle size={20} color="#3b82f6" /> 3. Cost Estimates & Hospital Billing
             </h2>
             <p>
-              Package prices, cost comparisons, and financial calculators displayed on Medical 360 are benchmark estimates based on hospital tariff guides. Actual medical expenses may vary depending on patient clinical complexity, pre-existing comorbidities, length of ICU stay, or unforeseen complications determined during treatment by the hospital.
+              Package prices, cost comparisons, and financial calculators displayed on Med360 are benchmark estimates based on hospital tariff guides. Actual medical expenses may vary depending on patient clinical complexity, pre-existing comorbidities, length of ICU stay, or unforeseen complications determined during treatment by the hospital.
             </p>
           </div>
 

@@ -114,14 +114,14 @@ export const cmsSeed: Record<string, CmsPage> = {
       networkTitle: { en: '15+ Internationally Accredited Hospitals', fr: '15+ Hôpitaux Accrédités au Niveau International', kr: '15+ Lopital Akredite Internasional' },
       networkDesc: { en: 'Partnered with premier institutions in India, Thailand, Singapore, Malaysia, and Dubai.', fr: 'Partenaire des meilleures institutions en Inde, Thaïlande, Singapour, Malaisie et Dubaï.', kr: 'Partner ar bann pli gran sant medikal dan L\'inde, Taylann, Singapour, ek Dubai.' },
       networkViewAllBtn: { en: 'Browse All Partner Hospitals', fr: 'Découvrir Tous les Hôpitaux', kr: 'Get Tou Bann Lopital' },
-      whyBadge: { en: 'Why Choose Medical 360', fr: 'Pourquoi Choisir Medical 360', kr: 'Kifer Swazir Medical 360' },
+      whyBadge: { en: 'Why Choose Med360', fr: 'Pourquoi Choisir Med360', kr: 'Kifer Swazir Med360' },
       whyTitle: { en: 'Your Health. Our Lifelong Mission.', fr: 'Votre Santé. Notre Mission de Vie.', kr: 'Ou Lasante. Nou Mision.' },
       whyDesc: {
-        en: 'We are your trusted health partner. From finding the right surgeon to coordinating every flight and hotel, we handle the stress so you can focus on healing.',
-        fr: 'Nous sommes votre partenaire santé de confiance. De la recherche du bon chirurgien à la réservation des vols et hôtels, nous gérons tout le stress pour vous.',
-        kr: 'Nou ou partner lasante de konfians. Depi trouv bon dokter ziska rezerv vol ek lotel, nou okip tou pou ou kapav zis konsantre lor ou gerizon.'
+        en: 'We are your trusted health partner. Owned by NGO Enn Rev Enn Sourir, we bring 10+ years of clinical logistics to private patients, returning 100% of profits to fund healthcare for the needy.',
+        fr: 'Nous sommes votre partenaire santé de confiance. Détenu par l\'ONG Enn Rev Enn Sourir, nous mettons plus de 10 ans d\'expertise au service des patients privés, 100% des bénéfices finançant les soins des démunis.',
+        kr: 'Nou ou partner lasante de konfians. Apartenir a l\'ONG Enn Rev Enn Sourir, nou met 10+ banlane dexperyans pou ou, e 100% profi retourn dan l\'ONG pou ed lezot pasian.'
       },
-      whyImageBadge: { en: '100% Free For Patients', fr: '100% Gratuit Pour le Patient', kr: '100% Gratis Pou Pasian' },
+      whyImageBadge: { en: '100% Profits to NGO', fr: '100% Bénéfices à l\'ONG', kr: '100% Profi pour l\'ONG' },
       whyAboutBtn: { en: 'Learn More About Us', fr: 'En Savoir Plus Sur Nous', kr: 'Konpran Plis Lor Nou' },
       whyFeature1Title: { en: 'JCI / NABH Accredited Only', fr: 'Uniquement des Hôpitaux Accrédités JCI / NABH', kr: 'Zis Lopital Akredite JCI / NABH' },
       whyFeature1Desc: { en: 'Strict quality control. We only work with facilities that exceed rigorous global healthcare safety criteria.', fr: 'Contrôle qualité strict. Nous ne travaillons qu\'avec des centres certifiés de très haute renommée.', kr: 'Sekirite strik. Nou travay zis ar bann sant medikal sertifie o nivo mondial.' },
@@ -160,14 +160,14 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Nou Zistwar & Nou Lobzektif'
       },
       heroTitle: {
-        en: 'About Medical 360',
-        fr: 'À Propos de Medical 360',
-        kr: 'A Propo Medical 360'
+        en: 'About Med360',
+        fr: 'À Propos de Med360',
+        kr: 'A Propo Med360'
       },
       heroDesc: {
-        en: 'Med360 Ltd was founded with a clear mission: to ensure every patient in Mauritius and the Indian Ocean region has access to the world\'s finest healthcare.',
-        fr: 'Med360 Ltd a été fondée avec une mission claire : garantir à chaque patient de l\'Île Maurice et de l\'océan Indien l\'accès aux meilleurs soins de santé mondiaux.',
-        kr: 'Med360 Ltd ti kree avek enn sel lobzektif: fer sir ki sak pasian dan Moris ek l\'osean Indien gagn akse ar bann meyer swen lasante klas mondial.'
+        en: 'Med360 is a company owned by the NGO Enn Rev Enn Sourir. After 10 years of helping needy patients access specialised care in private clinics and abroad, we have extended our services to private patients — with 100% of profits returning to the NGO.',
+        fr: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans d\'aide médicale pour les plus démunis, nous ouvrons nos services aux patients privés, avec 100% des bénéfices reversés à l\'ONG.',
+        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane led medikal pou bann dimounn mizer, nou finn desid pou ofer nou servis ar bann ki kapav peye, e 100% profi retourn dan l\'ONG.'
       },
       missionLabel: {
         en: 'Our Core Mission',
@@ -180,9 +180,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Konekt Moris ar Swen Klas Mondial'
       },
       missionP1: {
-        en: 'Medical 360 was founded with a clear mission: to ensure that every patient in Mauritius and the Indian Ocean region has access to the world\'s best healthcare — regardless of what is available locally.',
-        fr: 'Medical 360 a été fondée avec une mission claire : veiller à ce que chaque patient de l\'Île Maurice et de l\'océan Indien ait accès aux meilleurs soins mondiaux — indépendamment de ce qui est disponible localement.',
-        kr: 'Medical 360 ti fonde avek enn mision bien kler: fer sir ki sak pasian dan Moris ek l\'osean Indien gagn akse ar bann meyer swen mondial — mem si pa gagn sa lokalman.'
+        en: 'Med360 is owned by the NGO Enn Rev Enn Sourir. After 10 years helping needy patients access specialised treatment in private clinics or abroad, we have extended our services to those who can afford it. All profits go back to the NGO to continue helping others.',
+        fr: 'Med360 est détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans passés à aider les personnes défavorisées à accéder à des soins spécialisés en cliniques privées ou à l\'étranger, nous étendons nos services aux personnes solvables. Tous les bénéfices sont reversés à l\'ONG.',
+        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane led pou bann dimounn mizer gagn tretman spesialize dan klinik prive ouswa letranze, nou finn ouver nou servis pou bann ki kapav peye. Tou profi retourn dan l\'ONG.'
       },
       missionP2: {
         en: 'We understand the anxiety of travelling abroad for medical treatment. That is why we handle everything — from finding the right specialist, to your hotel room, your visa, and your return flight. Our job is to let you focus on one thing: your recovery.',
@@ -223,9 +223,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Temwagnaz & Zistwar Pasian'
       },
       storiesDesc: {
-        en: 'Real Mauritian patients who trusted Medical 360 for complex surgeries abroad.',
-        fr: 'De vrais patients mauriciens qui ont confié leur santé à Medical 360 pour des chirurgies complexes à l\'étranger.',
-        kr: 'Bann vre pasian Morisien ki finn fer Medical 360 konfians pou zot loperasion letranze.'
+        en: 'Real Mauritian patients who trusted Med360 for complex surgeries abroad.',
+        fr: 'De vrais patients mauriciens qui ont confié leur santé à Med360 pour des chirurgies complexes à l\'étranger.',
+        kr: 'Bann vre pasian Morisien ki finn fer Med360 konfians pou zot loperasion letranze.'
       },
       ctaTitle: {
         en: 'Ready to Start Your Journey?',
@@ -257,9 +257,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Nou Bann Servis Kouver Tou Ou Bizin'
       },
       heroDesc: {
-        en: 'From your first inquiry to post-treatment follow-up, Medical 360 handles every detail of your healthcare journey abroad.',
-        fr: 'De votre première demande au suivi post-traitement, Medical 360 s\'occupe de chaque détail de votre parcours de santé à l\'étranger.',
-        kr: 'Depi premie demann ziska swivi apre tretman, Medical 360 okip tou bann detay dan ou vwayaz medikal.'
+        en: 'From your first inquiry to post-treatment follow-up, Med360 handles every detail of your healthcare journey abroad.',
+        fr: 'De votre première demande au suivi post-traitement, Med360 s\'occupe de chaque détail de votre parcours de santé à l\'étranger.',
+        kr: 'Depi premie demann ziska swivi apre tretman, Med360 okip tou bann detay dan ou vwayaz medikal.'
       },
       service1Title: { en: '1. Free Expert Medical Opinion', fr: '1. Avis Médical d\'Expert Gratuit', kr: '1. Lavi Medikal Expert Gratis' },
       service1Desc: { en: 'Receive treatment plans and transparent cost estimates from top hospital department heads within 48 hours.', fr: 'Recevez des plans de traitement et des devis transparents des chefs de service hospitaliers sous 48h.', kr: 'Gagn plan tretman ek estimasion pri kler depi bann sef dokter dan 48h.' },
@@ -389,9 +389,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Temwagnaz'
       },
       heroDesc: {
-        en: 'Real stories from real patients. Read how Medical 360 facilitated life-changing treatments for patients from Mauritius and across the Indian Ocean region.',
-        fr: 'Des histoires vraies de vrais patients. Lisez comment Medical 360 a facilité des traitements vitaux pour des patients de l\'Île Maurice et de l\'océan Indien.',
-        kr: 'Vre zistwar depi vre pasian. Lir kouma Medical 360 finn ed bann pasian depi Moris ek l\'osean Indien gagn tretman ki finn sov zot lavi.'
+        en: 'Real stories from real patients. Read how Med360 facilitated life-changing treatments for patients from Mauritius and across the Indian Ocean region.',
+        fr: 'Des histoires vraies de vrais patients. Lisez comment Med360 a facilité des traitements vitaux pour des patients de l\'Île Maurice et de l\'océan Indien.',
+        kr: 'Vre zistwar depi vre pasian. Lir kouma Med360 finn ed bann pasian depi Moris ek l\'osean Indien gagn tretman ki finn sov zot lavi.'
       },
       ctaTitle: {
         en: 'Could You Be Our Next Success Story?',
@@ -399,9 +399,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Ou kapav vinn nou prosenn zistwar a-sikse?'
       },
       ctaDesc: {
-        en: 'Join thousands of patients who trusted Medical 360 to find them the best care at the right price.',
-        fr: 'Rejoignez des milliers de patients qui ont fait confiance à Medical 360 pour trouver les meilleurs soins au bon prix.',
-        kr: 'Rezwenn milye pasian ki finn fer Medical 360 konfians pou gagn pli bon swen ek pli bon pri.'
+        en: 'Join thousands of patients who trusted Med360 to find them the best care at the right price.',
+        fr: 'Rejoignez des milliers de patients qui ont fait confiance à Med360 pour trouver les meilleurs soins au bon prix.',
+        kr: 'Rezwenn milye pasian ki finn fer Med360 konfians pou gagn pli bon swen ek pli bon pri.'
       }
     }
   },
@@ -494,9 +494,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Demann Finn Soumet avek Sikse !'
       },
       successDesc: {
-        en: 'Your case has been received. A dedicated Medical 360 case coordinator will contact you within 24 hours.',
-        fr: 'Votre dossier a été reçu. Un coordinateur de cas dédié de Medical 360 vous contactera sous 24h.',
-        kr: 'Nou finn gagn ou dosie. Enn kordinater Medical 360 pou kontakte ou dan 24h.'
+        en: 'Your case has been received. A dedicated Med360 case coordinator will contact you within 24 hours.',
+        fr: 'Votre dossier a été reçu. Un coordinateur de cas dédié de Med360 vous contactera sous 24h.',
+        kr: 'Nou finn gagn ou dosie. Enn kordinater Med360 pou kontakte ou dan 24h.'
       }
     }
   },
@@ -615,9 +615,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Kondision Zeneral Servis & Fasilitasion'
       },
       heroDesc: {
-        en: 'Important legal terms and conditions governing medical facilitation services provided by Med360 Ltd in Mauritius.',
-        fr: 'Conditions juridiques importantes régissant les services de facilitation médicale fournis par Med360 Ltd à l\'Île Maurice.',
-        kr: 'Bann kondision legal inportan konsernan bann servis fasilitasion medikal par Med360 Ltd dan Moris.'
+        en: 'Important legal terms and conditions governing medical facilitation services provided by Med360 Ltd in Mauritius (owned by NGO Enn Rev Enn Sourir).',
+        fr: 'Conditions juridiques importantes régissant les services de facilitation médicale fournis par Med360 Ltd à l\'Île Maurice (détenue par l\'ONG Enn Rev Enn Sourir).',
+        kr: 'Bann kondision legal inportan konsernan bann servis fasilitasion medikal par Med360 Ltd dan Moris (apartenir a l\'ONG Enn Rev Enn Sourir).'
       },
       lastUpdated: {
         en: 'Last Updated: January 2026',
@@ -625,24 +625,24 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Dernie miz-a-zour : Zanvie 2026'
       },
       section1Title: {
-        en: '1. Role of Medical 360',
-        fr: '1. Rôle de Medical 360',
-        kr: '1. Rol Medical 360'
+        en: '1. Role of Med360',
+        fr: '1. Rôle de Med360',
+        kr: '1. Rol Med360'
       },
       section1Content: {
-        en: 'Medical 360 acts solely as an independent medical travel concierge and facilitator connecting patients to accredited international hospitals. Medical 360 does not provide direct medical treatment or diagnosis.',
-        fr: 'Medical 360 agit exclusivement en tant que conciergerie et facilitateur médical indépendant mettant en relation les patients avec des hôpitaux agréés. Medical 360 ne fournit pas directement de diagnostics.',
-        kr: 'Medical 360 azir zis kouma enn fasilitater medikal independan ki met an kontak bann pasian ar bann gran lopital letranze. Medical 360 pa donn swen medikal direkteman.'
+        en: 'Med360 is a company owned by NGO Enn Rev Enn Sourir. After 10 years aiding the needy, Med360 extends medical concierge services to private patients, with 100% of profits returning to the NGO. Med360 acts as a medical concierge and facilitator connecting patients to accredited international hospitals and private clinics.',
+        fr: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans d\'aide aux démunis, Med360 offre ses services aux patients privés, avec 100% des bénéfices reversés à l\'ONG. Med360 agit comme facilitateur et conciergerie médicale reliant les patients aux hôpitaux agréés.',
+        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane led pou bann demuni, Med360 ofer servis fasilitasion pou bann ki kapav peye, e 100% profi retourn dan l\'ONG. Med360 konekt bann pasian ar bann lopital akredite.'
       },
       section2Title: {
-        en: '2. Free Patient Concierge Policy',
-        fr: '2. Politique de Gratuité pour le Patient',
-        kr: '2. Servis 100% Gratis Pou Pasian'
+        en: '2. Free Patient Concierge & NGO Reinvestment Policy',
+        fr: '2. Politique de Conciergerie & Reverssement à l\'ONG',
+        kr: '2. Servis Konzierzri & Reinvestisman dan l\'ONG'
       },
       section2Content: {
-        en: 'Our guidance, initial opinion coordination, and concierge support are provided free of charge to Mauritian patients. Hospital treatment tariffs are paid directly to the admitting hospital.',
-        fr: 'Nos services d\'accompagnement et d\'obtention de devis sont entièrement gratuits pour les patients mauriciens. Les frais hospitaliers sont réglés directement à l\'hôpital d\'accueil.',
-        kr: 'Nou bann servis lavi medikal ek kordinasion zot 100% gratis pou bann pasian Morisien. Fre tretman peye direkteman a lopital.'
+        en: 'Our guidance, initial opinion coordination, and concierge support are provided free of charge to Mauritian patients. All corporate profits generated by Med360 are reinvested back into NGO Enn Rev Enn Sourir to fund specialised treatments for the needy.',
+        fr: 'Nos services d\'accompagnement et d\'obtention de devis sont entièrement gratuits pour les patients mauriciens. Tous les bénéfices de Med360 sont reversés à l\'ONG Enn Rev Enn Sourir pour soigner les plus démunis.',
+        kr: 'Nou bann servis lavi medikal ek kordinasion zot 100% gratis pou bann pasian Morisien. Tou profi retourn dan l\'ONG Enn Rev Enn Sourir pou ed dimounn mizer swagne.'
       }
     }
   },
@@ -652,19 +652,19 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Global',
     content: {
       tagline: {
-        en: 'Medical 360 connects Mauritian patients to accredited hospitals worldwide for cardiac surgery, cancer care, orthopedics, organ transplants, IVF, and more.',
-        fr: 'Medical 360 connecte les patients mauriciens aux hôpitaux accrédités du monde entier pour la chirurgie cardiaque, l\'oncologie, l\'orthopédie, les greffes, la FIV, etc.',
-        kr: 'Medical 360 konekte bann pasian Moris ar bann pli bon lopital dan lemond pou kardiolozi, onkolozi, lortopedi, transplantasion, FIV, ek lezot.'
+        en: 'Med360 is owned by NGO Enn Rev Enn Sourir. Connecting patients to accredited clinics and hospitals worldwide, with 100% of profits funding medical care for the needy.',
+        fr: 'Med360 est détenue par l\'ONG Enn Rev Enn Sourir. Nous connectons les patients aux hôpitaux accrédités, 100% des bénéfices finançant les soins pour les démunis.',
+        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Nou konekte bann pasian ar bann meyer lopital, e 100% profi retourn dan l\'ONG pou ed bann ki dan bezwin.'
       },
       copyrightText: {
-        en: 'Med360 Ltd. All rights reserved. Registered Medical Facilitator in Mauritius.',
-        fr: 'Med360 Ltd. Tous droits réservés. Facilitateur médical enregistré à l\'Île Maurice.',
-        kr: 'Med360 Ltd. Tou drwa rezerve. Fasilitater medikal anrezistre dan Moris.'
+        en: 'Med360 Ltd. All rights reserved. Owned by NGO Enn Rev Enn Sourir (10+ Years of Healthcare Service).',
+        fr: 'Med360 Ltd. Tous droits réservés. Détenu par l\'ONG Enn Rev Enn Sourir (10+ ans d\'aide médicale).',
+        kr: 'Med360 Ltd. Tou drwa rezerve. Apartenir a l\'ONG Enn Rev Enn Sourir (10+ banlane led medikal).'
       },
       disclaimer: {
-        en: 'Medical 360 is a healthcare concierge service and does not provide medical diagnoses directly.',
-        fr: 'Medical 360 est un service de conciergerie médicale et ne fournit pas directement de diagnostics médicaux.',
-        kr: 'Medical 360 se enn servis konsierzri medikal e li pa donn diagnostik medikal direkteman.'
+        en: 'Med360 is a company owned by NGO Enn Rev Enn Sourir. After 10 years helping the needy access specialised treatment in private clinics or abroad, services are extended to paying patients with 100% of profits returning to the NGO.',
+        fr: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans d\'aide médicale pour les démunis en clinique privée ou à l\'étranger, les services sont étendus aux patients privés avec 100% des bénéfices reversés à l\'ONG.',
+        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane led medikal spesialize pou bann demuni, nou servis finn elarzi ar bann ki kapav peye, e 100% profi retourn dan l\'ONG.'
       },
       servicesTitle: { en: 'Our Services', fr: 'Nos Services', kr: 'Nou Bann Servis' },
       quickLinksTitle: { en: 'Quick Links', fr: 'Liens Rapides', kr: 'Bann Lien Rapid' },
