@@ -103,24 +103,18 @@ export function AdminLoginPage() {
 
         {/* Logo & Header */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{
-            width: 58,
-            height: 58,
-            background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-            borderRadius: 16,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontFamily: 'var(--font-display)',
-            fontWeight: 900,
-            fontSize: '1.6rem',
-            color: '#ffffff',
-            margin: '0 auto 1.25rem',
-            boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)',
-            border: '2px solid rgba(255,255,255,0.2)',
-          }}>
-            M
-          </div>
+          <img 
+            src="/assets/logo.png" 
+            alt="Medical 360" 
+            style={{ 
+              height: 52, 
+              width: 'auto', 
+              maxWidth: 220, 
+              objectFit: 'contain', 
+              margin: '0 auto 1.25rem', 
+              display: 'block' 
+            }} 
+          />
           <h1 style={{ color: '#ffffff', fontSize: '1.75rem', fontWeight: 900, fontFamily: 'var(--font-display)', letterSpacing: '-0.02em', marginBottom: 6 }}>
             Admin Portal
           </h1>

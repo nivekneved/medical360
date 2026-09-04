@@ -157,11 +157,8 @@ export function renderEmailHtml(
       <div style="background-color: ${config.banner.bgColor}; color: ${config.banner.textColor}; padding: 22px 24px; border-radius: 8px 8px 0 0; text-align: left;">
         <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 14px;">
           <tr>
-            <td style="width: 34px; height: 34px; background: linear-gradient(135deg, #065f46, #059669); background-color: #065f46; border-radius: 8px; text-align: center; vertical-align: middle; color: #ffffff; font-weight: 900; font-size: 17px; font-family: 'Outfit', 'Inter', -apple-system, sans-serif;">
-              M
-            </td>
-            <td style="padding-left: 10px; vertical-align: middle;">
-              <span style="font-family: 'Outfit', 'Inter', -apple-system, sans-serif; font-size: 18px; font-weight: 700; color: #ffffff; letter-spacing: -0.3px;">Medical</span><span style="font-family: 'Outfit', 'Inter', -apple-system, sans-serif; font-size: 18px; font-weight: 700; color: #10b981;">360</span>
+            <td style="vertical-align: middle;">
+              <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Medical 360" height="34" style="height: 34px; max-width: 160px; display: block; border: 0;" />
             </td>
           </tr>
         </table>

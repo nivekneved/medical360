@@ -24,7 +24,7 @@ export function getMedicalOrganizationSchema() {
     name: 'Medical 360',
     legalName: 'Med360 Ltd',
     url: BASE_URL,
-    logo: `${BASE_URL}/assets/banners/home_banner.jpg`,
+    logo: `${BASE_URL}/assets/logo.png`,
     description: 'Premier medical concierge service in Mauritius connecting patients to top accredited international hospitals in India, Thailand, Singapore, and Europe.',
     telephone: '+230 59188275',
     email: 'contact@medical360.mu',

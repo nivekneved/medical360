@@ -165,14 +165,11 @@ export function Navbar() {
       <div className="navbar__inner container">
         {/* Logo */}
         <Link to="/" className="navbar__logo">
-          <div className="navbar__logo-icon">
-            <span>M</span>
-            <div className="navbar__logo-ring" />
-          </div>
-          <div className="navbar__logo-text">
-            <span className="navbar__logo-name">Medical</span>
-            <span className="navbar__logo-accent">360</span>
-          </div>
+          <img 
+            src="/assets/logo.png" 
+            alt="Medical 360" 
+            className="navbar__logo-img" 
+          />
         </Link>
 
         {/* Desktop Grouped Navigation Menu */}
