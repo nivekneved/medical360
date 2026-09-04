@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useDataConfig } from '../../../providers/DataProvider';
 import {
   Database,
@@ -44,6 +45,7 @@ import {
 export function AdminSettingsPage() {
   const { mockConfig, updateMockConfig, resetMock } = useDataConfig();
   const { theme, currentTheme, availableThemes, setTheme } = useTheme();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [testingConnection, setTestingConnection] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<{
     tested: boolean;
@@ -58,7 +60,29 @@ export function AdminSettingsPage() {
   const [actionProgress, setActionProgress] = useState<string | null>(null);
   const [alertMessage, setAlertMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [sqlModalContent, setSqlModalContent] = useState<string | null>(null);
-  const [settingsTab, setSettingsTab] = useState<'backup' | 'supabase' | 'simulation' | 'themes'>('backup');
+  
+  const tabParam = searchParams.get('tab');
+  const validTabs = ['themes', 'backup', 'supabase', 'simulation'] as const;
+  type SettingsTab = typeof validTabs[number];
+
+  const [settingsTab, setSettingsTab] = useState<SettingsTab>(() => {
+    if (tabParam && validTabs.includes(tabParam as SettingsTab)) {
+      return tabParam as SettingsTab;
+    }
+    return 'themes';
+  });
+
+  useEffect(() => {
+    const currentTabParam = searchParams.get('tab');
+    if (currentTabParam && validTabs.includes(currentTabParam as SettingsTab)) {
+      setSettingsTab(currentTabParam as SettingsTab);
+    }
+  }, [searchParams]);
+
+  const handleTabChange = (tab: SettingsTab) => {
+    setSettingsTab(tab);
+    setSearchParams({ tab });
+  };
   const [copiedSql, setCopiedSql] = useState(false);
   const [newSnapshotLabel, setNewSnapshotLabel] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -341,7 +365,7 @@ export function AdminSettingsPage() {
             <button
               key={tab.key}
               type="button"
-              onClick={() => setSettingsTab(tab.key as any)}
+              onClick={() => handleTabChange(tab.key as any)}
               style={{
                 flex: 1,
                 minWidth: 200,
