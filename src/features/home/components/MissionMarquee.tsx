@@ -1,24 +1,34 @@
 import { HeartPulse, Sparkles, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useCMS } from '../../../hooks/useCMS';
 import './MissionMarquee.css';
 
 export function MissionMarquee() {
   const { t, i18n } = useTranslation();
+  const { data: cmsData } = useCMS('marquee');
 
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
+  const lang = i18n.language as 'en' | 'fr' | 'kr';
+  const isFr = lang === 'fr';
+  const isKr = lang === 'kr';
 
-  const badgeText = isFr 
-    ? 'ONG Enn Rêv Enn Sourir' 
-    : isKr 
-    ? 'ONG Enn Rev Enn Sourir' 
-    : 'NGO Enn Rêv Enn Sourir';
+  // Check if marquee is disabled by admin
+  const isEnabled = cmsData?.content?.enabled !== 'false' && cmsData?.content?.enabled !== false;
+  if (!isEnabled) {
+    return null;
+  }
 
-  const learnMoreText = isFr ? 'En savoir plus' : isKr ? 'Dekouver Plis' : 'Learn More';
+  // Dynamic values with fallback to translations / seeds
+  const speedSeconds = cmsData?.content?.speedSeconds || '45';
+  
+  const customBadge = cmsData?.content?.badgeText?.[lang] || cmsData?.content?.badgeText?.en;
+  const badgeText = customBadge || (isFr ? 'ONG Enn Rêv Enn Sourir' : isKr ? 'ONG Enn Rev Enn Sourir' : 'NGO Enn Rêv Enn Sourir');
 
-  // The primary mission statement text requested
-  const message = t('home.missionMarquee');
+  const customLinkUrl = cmsData?.content?.linkUrl?.[lang] || cmsData?.content?.linkUrl?.en || '/about';
+  const customLinkLabel = cmsData?.content?.linkLabel?.[lang] || cmsData?.content?.linkLabel?.en;
+  const learnMoreText = customLinkLabel || (isFr ? 'En savoir plus' : isKr ? 'Dekouver Plis' : 'Learn More');
+
+  const customMessage = cmsData?.content?.messageText?.[lang] || cmsData?.content?.messageText?.en;
 
   // We render 4 repeated ticker items inside the track so that with 50% translateX animation it loops seamlessly and smoothly
   const items = [1, 2, 3, 4];
@@ -41,12 +51,17 @@ export function MissionMarquee() {
 
         {/* Continuous Smooth Scrolling Marquee Container */}
         <div className="mission-marquee__container">
-          <div className="mission-marquee__track">
+          <div 
+            className="mission-marquee__track"
+            style={{ animationDuration: `${speedSeconds}s` }}
+          >
             {items.map(idx => (
               <div key={idx} className="mission-marquee__item">
                 <span className="mission-marquee__text">
                   <strong className="mission-marquee__highlight">Med360</strong>{' '}
-                  {isFr ? (
+                  {customMessage ? (
+                    <span>{customMessage}</span>
+                  ) : isFr ? (
                     <>
                       est une entreprise détenue par l'<strong>ONG Enn Rêv Enn Sourir</strong>. Après{' '}
                       <strong>10 ans</strong> à aider les personnes dans le besoin à avoir accès à des soins spécialisés en clinique privée ou à l'étranger, nous avons désormais décidé d'étendre nos services à ceux qui peuvent se le permettre.{' '}
@@ -73,7 +88,7 @@ export function MissionMarquee() {
                   )}
                 </span>
 
-                <Link to="/about" className="mission-marquee__link" title="Discover Our 10-Year NGO Mission">
+                <Link to={customLinkUrl} className="mission-marquee__link" title="Discover Our 10-Year NGO Mission">
                   <span>{learnMoreText}</span>
                   <ArrowRight size={12} />
                 </Link>
@@ -89,3 +104,4 @@ export function MissionMarquee() {
     </div>
   );
 }
+
