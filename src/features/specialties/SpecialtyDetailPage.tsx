@@ -1,14 +1,13 @@
-import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, ArrowRight, MapPin, MessageCircle, Clock, Settings, Plus, Edit3 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, MessageCircle, Clock } from 'lucide-react';
 import { useSpecialty } from '../../hooks/useSpecialties';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useDoctors } from '../../hooks/useDoctors';
 import { formatCostRange } from '../../core/services/format.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
-import { ProcedureManagerModal } from './components/ProcedureManagerModal';
+import { ProcedureInlineManager } from './components/ProcedureInlineManager';
 import './Specialties.css';
 
 export function SpecialtyDetailPage() {
@@ -18,7 +17,6 @@ export function SpecialtyDetailPage() {
   const { specialty, loading, setSpecialty, refetch } = useSpecialty(id);
   const { hospitals } = useHospitals({});
   const { doctors } = useDoctors(id);
-  const [isProcManagerOpen, setIsProcManagerOpen] = useState(false);
 
   const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
   const l = (obj: any, field: string) => obj?.[`${field}_${i18n.language}`] || obj?.[field] || '';
@@ -95,94 +93,18 @@ export function SpecialtyDetailPage() {
           <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '3rem', alignItems: 'start' }}>
             {/* Left Column: Procedures, Hospitals, Doctors, Stories */}
             <div>
-              {/* Procedures & Cost Estimates */}
+              {/* Procedures & Cost Estimates (100% Inline Management - Zero Popups) */}
               <div style={{ background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-2xl)', padding: '2rem', marginBottom: '2.5rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
-                  <h2 className="text-h2" style={{ fontSize: '1.4rem', margin: 0 }}>
-                    {l10n('Procédures et Tarifs Estimés', 'Bann Tretman & Pri Estime', 'Procedures & Estimated Cost Breakdown')}
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={() => setIsProcManagerOpen(true)}
-                    className="btn btn-outline btn-sm"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.4rem',
-                      fontSize: '0.8rem',
-                      fontWeight: 700,
-                      borderColor: 'var(--color-primary)',
-                      color: 'var(--color-primary)',
-                    }}
-                  >
-                    <Edit3 size={13} /> {l10n('Gérer les Procédures', 'Zere bann Tretman', 'Manage Procedures')} ({(specialty.procedures || []).length})
-                  </button>
-                </div>
-                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>
-                  {l10n(
-                    'Les coûts comprennent généralement le séjour à l\'hôpital, les honoraires du chirurgien, les examens préopératoires et les soins post-opératoires.',
-                    'Pri la kouver lasam lopital, fré sirizien, test avan loperasion ek swen apre tretman.',
-                    'Costs typically include hospital room stay, surgeon fees, pre-operative tests, and standard recovery medications.'
-                  )}
-                </p>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {(specialty.procedures || []).length === 0 ? (
-                    <div style={{ textAlign: 'center', padding: '2rem 1rem', background: 'var(--color-surface-2)', borderRadius: 'var(--radius-xl)', border: '1px dashed var(--color-border)' }}>
-                      <p style={{ margin: '0 0 0.75rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
-                        {l10n('Aucune procédure enregistrée pour cette spécialité.', 'Pankor ena tretman anrezistre pou sa spesialite-la.', 'No procedures cataloged for this specialty yet.')}
-                      </p>
-                      <button type="button" onClick={() => setIsProcManagerOpen(true)} className="btn btn-primary btn-sm">
-                        <Plus size={14} /> {l10n('Ajouter une Procédure', 'Azout Tretman', 'Add Procedure')}
-                      </button>
-                    </div>
-                  ) : (
-                    (specialty.procedures || []).map((proc) => (
-                      <div
-                        key={proc.id}
-                        style={{
-                          background: 'rgba(0,0,0,0.015)',
-                          border: '1px solid var(--color-border)',
-                          borderRadius: 'var(--radius-xl)',
-                          padding: '1.25rem',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          gap: '1rem',
-                          flexWrap: 'wrap',
-                        }}
-                      >
-                        <div style={{ flex: 1, minWidth: 200 }}>
-                          <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '0.25rem' }}>
-                            {l(proc, 'name')}
-                          </h3>
-                          <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>
-                            {l(proc, 'description')}
-                          </p>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                            <Clock size={12} /> {l10n('Durée de séjour :', 'Dirasion sejour :', 'Stay duration:')} ~{proc.estimatedDurationDays} {l10n('jours', 'zour', 'days')}
-                          </div>
-                        </div>
-
-                        <div style={{ textAlign: 'right' }}>
-                          <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                            {formatCostRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
-                          </div>
-                          <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                            ~{(proc.estimatedCostUSD.min * 46).toLocaleString()} - {(proc.estimatedCostUSD.max * 46).toLocaleString()} MUR
-                          </div>
-                          <button
-                            className="btn btn-primary btn-sm"
-                            style={{ marginTop: '0.5rem' }}
-                            onClick={() => navigate(`/describe-need?specialty=${specialty.id}`)}
-                          >
-                            {l10n('Demander un Devis', 'Demann Devi', 'Get Quote')}
-                          </button>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
+                <ProcedureInlineManager
+                  specialty={specialty}
+                  onSaved={(updated) => {
+                    setSpecialty(updated);
+                    refetch();
+                  }}
+                  l10n={l10n}
+                  l={l}
+                  onQuoteClick={(sId) => navigate(`/describe-need?specialty=${sId}`)}
+                />
               </div>
 
               {/* Partner Hospitals for this Specialty */}
@@ -325,17 +247,6 @@ export function SpecialtyDetailPage() {
           </div>
         </div>
       </section>
-
-      {/* Procedure Cards Manager Modal */}
-      <ProcedureManagerModal
-        isOpen={isProcManagerOpen}
-        specialty={specialty}
-        onClose={() => setIsProcManagerOpen(false)}
-        onSaved={(updated) => {
-          setSpecialty(updated);
-          refetch();
-        }}
-      />
     </main>
   );
 }
