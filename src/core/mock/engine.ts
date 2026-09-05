@@ -1,12 +1,5 @@
 import type { MockConfig, Inquiry, InquiryStatus, Hospital, Specialty, Doctor, CaseStudy } from '../types';
 import { cmsSeed, CmsPage } from './seeds/cms.seed';
-import { supabase } from '../supabase/client';
-import {
-  mapHospitalRow,
-  mapSpecialtyRow,
-  mapDoctorRow,
-  mapCaseStudyRow,
-} from '../supabase/repositories';
 import {
   associateSpecialtyHospitals as helperAssociateSpecialtyHospitals,
   associateSpecialtyDoctors as helperAssociateSpecialtyDoctors,
@@ -14,55 +7,30 @@ import {
   saveAllDoctorAssociations as helperSaveAllDoctorAssociations,
 } from './matrix.helpers';
 import {
-  liveOrMockGetInquiries,
-  liveOrMockGetInquiryById,
-  liveOrMockCreateInquiry,
-  liveOrMockUpdateInquiry,
-  liveOrMockAddInquiryNote,
-  liveOrMockDeleteInquiries,
-} from './inquiry.helpers';
-import {
-  dbCreateHospital,
-  dbUpdateHospital,
-  dbCreateSpecialty,
-  dbUpdateSpecialty,
-  dbCreateDoctor,
-  dbUpdateDoctor,
-  dbCreateCaseStudy,
-  dbUpdateCaseStudy,
-} from './catalog.helpers';
-import {
-  loadStore,
-  saveStore,
   loadMockConfig,
   saveMockConfig,
   resetMockData,
   getLatencyMs,
   simulateDelay,
-  type MockStore,
 } from './store';
+import { crudService, type EntityCollection, type EntityTypeMap } from '../services/crud.service';
 import { cacheService } from '../services/cache.service';
+import { sanitizeInput } from '../services/security.service';
 
 export { loadMockConfig, saveMockConfig, resetMockData };
 
-// ─── Dual-Mode Data Engine with L1/L2 Caching & SingleFlight Request Collapsing ────
+// ─── Centralized Universal Data Engine (Supabase Live & Resilient Store) ───────
 class MockEngine {
-  private store: MockStore;
   private config: MockConfig;
 
   constructor() {
-    this.store   = loadStore();
-    this.config  = loadMockConfig();
+    this.config = loadMockConfig();
   }
 
   private async delay(): Promise<void> {
     if (this.config.enabled) {
       await simulateDelay(getLatencyMs(this.config.latency));
     }
-  }
-
-  private save(): void {
-    saveStore(this.store);
   }
 
   updateConfig(config: MockConfig): void {
@@ -78,73 +46,58 @@ class MockEngine {
     return !this.config.enabled;
   }
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ── UNIVERSAL CENTRALIZED CRUD OPERATIONS (Single Source of Truth) ─────────
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  async getAll<K extends EntityCollection>(collection: K): Promise<EntityTypeMap[K][]> {
+    await this.delay();
+    return crudService.getAll(collection);
+  }
+
+  async get<K extends EntityCollection>(collection: K, id: string): Promise<EntityTypeMap[K] | null> {
+    await this.delay();
+    return crudService.getById(collection, id);
+  }
+
+  async create<K extends EntityCollection>(
+    collection: K,
+    data: Omit<EntityTypeMap[K], 'id'> & { id?: string }
+  ): Promise<EntityTypeMap[K]> {
+    await this.delay();
+    return crudService.create(collection, data);
+  }
+
+  async update<K extends EntityCollection>(
+    collection: K,
+    id: string,
+    updates: Partial<EntityTypeMap[K]>
+  ): Promise<EntityTypeMap[K]> {
+    await this.delay();
+    return crudService.update(collection, id, updates);
+  }
+
+  async delete<K extends EntityCollection>(collection: K, idOrIds: string | string[]): Promise<boolean> {
+    await this.delay();
+    return crudService.delete(collection, idOrIds);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ── DOMAIN CONVENIENCE ACCESSORS (Delegated to Centralized CRUD) ────────────
+  // ═══════════════════════════════════════════════════════════════════════════
+
   // ── 1. HOSPITALS ───────────────────────────────────────────────────────────
   async getHospitals(): Promise<Hospital[]> {
-    return cacheService.cachedFetch(
-      'hospitals:all',
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('hospitals').select('*').order('created_at', { ascending: false });
-            if (!error && data && data.length > 0) return data.map(mapHospitalRow);
-          } catch (e) {
-            console.warn('Supabase getHospitals failed, using local store:', e);
-          }
-        }
-        await this.delay();
-        return [...this.store.hospitals];
-      },
-      { ttlMs: 10 * 60 * 1000, tags: ['hospitals'], persist: true }
-    );
+    return this.getAll('hospitals');
   }
 
   async getHospitalById(id: string): Promise<Hospital | null> {
-    const cachedAll = cacheService.peek<Hospital[]>('hospitals:all');
-    if (cachedAll) {
-      const match = cachedAll.find(h => h.id === id || h.slug === id);
-      if (match) return match;
-    }
-
-    return cacheService.cachedFetch(
-      `hospital:${id}`,
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('hospitals').select('*').eq('id', id).single();
-            if (!error && data) return mapHospitalRow(data);
-          } catch (e) {
-            console.warn('Supabase getHospitalById failed:', e);
-          }
-        }
-        await this.delay();
-        return this.store.hospitals.find(h => h.id === id || h.slug === id) ?? null;
-      },
-      { ttlMs: 10 * 60 * 1000, tags: ['hospitals'] }
-    );
+    return this.get('hospitals', id);
   }
 
   async getFeaturedHospitals(): Promise<Hospital[]> {
-    const cachedAll = cacheService.peek<Hospital[]>('hospitals:all');
-    if (cachedAll) {
-      return cachedAll.filter(h => h.featured && h.active);
-    }
-
-    return cacheService.cachedFetch(
-      'hospitals:featured',
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('hospitals').select('*').eq('featured', true).eq('active', true);
-            if (!error && data && data.length > 0) return data.map(mapHospitalRow);
-          } catch (e) {
-            console.warn('Supabase getFeaturedHospitals failed:', e);
-          }
-        }
-        await this.delay();
-        return this.store.hospitals.filter(h => h.featured && h.active);
-      },
-      { ttlMs: 10 * 60 * 1000, tags: ['hospitals'] }
-    );
+    const all = await this.getHospitals();
+    return all.filter(h => h.featured && h.active);
   }
 
   async getHospitalsBySpecialty(specialtyId: string): Promise<Hospital[]> {
@@ -157,6 +110,22 @@ class MockEngine {
     if (!hospital) return [];
     const allSpecialties = await this.getSpecialties();
     return allSpecialties.filter(s => hospital.specialties.includes(s.id));
+  }
+
+  async createHospital(hospital: Omit<Hospital, 'id'>): Promise<Hospital> {
+    return this.create('hospitals', hospital);
+  }
+
+  async updateHospital(id: string, updates: Partial<Hospital>): Promise<Hospital> {
+    return this.update('hospitals', id, updates);
+  }
+
+  async deleteHospital(id: string): Promise<boolean> {
+    return this.delete('hospitals', id);
+  }
+
+  async deleteHospitals(ids: string[]): Promise<boolean> {
+    return this.delete('hospitals', ids);
   }
 
   async associateHospitalSpecialties(hospitalId: string, specialtyIds: string[]): Promise<Hospital> {
@@ -178,216 +147,43 @@ class MockEngine {
     }
   }
 
-  async updateHospital(id: string, updates: Partial<Hospital>): Promise<Hospital> {
-    cacheService.invalidateTag('hospitals');
-    if (this.isLive()) {
-      const updated = await dbUpdateHospital(id, updates);
-      if (updated) return updated;
-    }
-    await this.delay();
-    const idx = this.store.hospitals.findIndex(h => h.id === id);
-    if (idx === -1) throw new Error('Hospital not found');
-    const updated = { ...this.store.hospitals[idx], ...updates };
-    this.store.hospitals[idx] = updated;
-    this.save();
-    return updated;
-  }
-
-  async createHospital(hospital: Omit<Hospital, 'id'>): Promise<Hospital> {
-    cacheService.invalidateTag('hospitals');
-    const id = `hosp-${Date.now()}`;
-    const newHospital: Hospital = { ...hospital, id };
-    if (this.isLive()) {
-      const saved = await dbCreateHospital(hospital, id);
-      if (saved) return saved;
-    }
-    await this.delay();
-    this.store.hospitals.unshift(newHospital);
-    this.save();
-    return newHospital;
-  }
-
-  async deleteHospital(id: string): Promise<boolean> {
-    return this.deleteHospitals([id]);
-  }
-
-  async deleteHospitals(ids: string[]): Promise<boolean> {
-    cacheService.invalidateTag('hospitals');
-    if (this.isLive()) {
-      try {
-        await supabase.from('hospitals').delete().in('id', ids);
-      } catch (e) {
-        console.warn('Supabase deleteHospitals failed:', e);
-      }
-    }
-    await this.delay();
-    const idSet = new Set(ids);
-    this.store.hospitals = this.store.hospitals.filter(h => !idSet.has(h.id));
-    this.save();
-    return true;
-  }
-
   // ── 2. SPECIALTIES ─────────────────────────────────────────────────────────
   async getSpecialties(): Promise<Specialty[]> {
-    return cacheService.cachedFetch(
-      'specialties:all',
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('specialties').select('*');
-            if (!error && data && data.length > 0) return data.map(mapSpecialtyRow);
-          } catch (e) {
-            console.warn('Supabase getSpecialties failed:', e);
-          }
-        }
-        await this.delay();
-        return [...this.store.specialties];
-      },
-      { ttlMs: 15 * 60 * 1000, tags: ['specialties'], persist: true }
-    );
+    return this.getAll('specialties');
   }
 
   async getSpecialtyById(id: string): Promise<Specialty | null> {
-    const cachedAll = cacheService.peek<Specialty[]>('specialties:all');
-    if (cachedAll) {
-      const match = cachedAll.find(s => s.id === id || s.slug === id);
-      if (match) return match;
-    }
-
-    return cacheService.cachedFetch(
-      `specialty:${id}`,
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('specialties').select('*').eq('id', id).single();
-            if (!error && data) return mapSpecialtyRow(data);
-          } catch (e) {
-            console.warn('Supabase getSpecialtyById failed:', e);
-          }
-        }
-        await this.delay();
-        return this.store.specialties.find(s => s.id === id || s.slug === id) ?? null;
-      },
-      { ttlMs: 15 * 60 * 1000, tags: ['specialties'] }
-    );
+    return this.get('specialties', id);
   }
 
   async getFeaturedSpecialties(): Promise<Specialty[]> {
-    const cachedAll = cacheService.peek<Specialty[]>('specialties:all');
-    if (cachedAll) {
-      return cachedAll.filter(s => s.featured);
-    }
-
-    return cacheService.cachedFetch(
-      'specialties:featured',
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('specialties').select('*').eq('featured', true);
-            if (!error && data && data.length > 0) return data.map(mapSpecialtyRow);
-          } catch (e) {
-            console.warn('Supabase getFeaturedSpecialties failed:', e);
-          }
-        }
-        await this.delay();
-        return this.store.specialties.filter(s => s.featured);
-      },
-      { ttlMs: 15 * 60 * 1000, tags: ['specialties'] }
-    );
+    const all = await this.getSpecialties();
+    return all.filter(s => s.featured);
   }
 
   async createSpecialty(specialty: Specialty): Promise<Specialty> {
-    cacheService.invalidateTag('specialties');
-    const id = specialty.id || `sp-${Date.now()}`;
-    const newSpecialty: Specialty = { ...specialty, id };
-    if (this.isLive()) {
-      const saved = await dbCreateSpecialty(newSpecialty);
-      if (saved) return saved;
-    }
-    await this.delay();
-    this.store.specialties.unshift(newSpecialty);
-    this.save();
-    return newSpecialty;
+    return this.create('specialties', specialty);
   }
 
   async updateSpecialty(id: string, updates: Partial<Specialty>): Promise<Specialty> {
-    cacheService.invalidateTag('specialties');
-    if (this.isLive()) {
-      const updated = await dbUpdateSpecialty(id, updates);
-      if (updated) return updated;
-    }
-    await this.delay();
-    const idx = this.store.specialties.findIndex(s => s.id === id);
-    if (idx === -1) throw new Error('Specialty not found');
-    const updated = { ...this.store.specialties[idx], ...updates };
-    this.store.specialties[idx] = updated;
-    this.save();
-    return updated;
+    return this.update('specialties', id, updates);
   }
 
   async deleteSpecialty(id: string): Promise<boolean> {
-    return this.deleteSpecialties([id]);
+    return this.delete('specialties', id);
   }
 
   async deleteSpecialties(ids: string[]): Promise<boolean> {
-    cacheService.invalidateTag('specialties');
-    if (this.isLive()) {
-      try {
-        await supabase.from('specialties').delete().in('id', ids);
-      } catch (e) {
-        console.warn('Supabase deleteSpecialties failed:', e);
-      }
-    }
-    await this.delay();
-    const idSet = new Set(ids);
-    this.store.specialties = this.store.specialties.filter(s => !idSet.has(s.id));
-    this.save();
-    return true;
+    return this.delete('specialties', ids);
   }
 
   // ── 3. DOCTORS ─────────────────────────────────────────────────────────────
   async getDoctors(): Promise<Doctor[]> {
-    return cacheService.cachedFetch(
-      'doctors:all',
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('doctors').select('*').order('created_at', { ascending: false });
-            if (!error && data && data.length > 0) return data.map(mapDoctorRow);
-          } catch (e) {
-            console.warn('Supabase getDoctors failed:', e);
-          }
-        }
-        await this.delay();
-        return [...this.store.doctors];
-      },
-      { ttlMs: 10 * 60 * 1000, tags: ['doctors'], persist: true }
-    );
+    return this.getAll('doctors');
   }
 
   async getDoctorById(id: string): Promise<Doctor | null> {
-    const cachedAll = cacheService.peek<Doctor[]>('doctors:all');
-    if (cachedAll) {
-      const match = cachedAll.find(d => d.id === id);
-      if (match) return match;
-    }
-
-    return cacheService.cachedFetch(
-      `doctor:${id}`,
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('doctors').select('*').eq('id', id).single();
-            if (!error && data) return mapDoctorRow(data);
-          } catch (e) {
-            console.warn('Supabase getDoctorById failed:', e);
-          }
-        }
-        await this.delay();
-        return this.store.doctors.find(d => d.id === id) ?? null;
-      },
-      { ttlMs: 10 * 60 * 1000, tags: ['doctors'] }
-    );
+    return this.get('doctors', id);
   }
 
   async getDoctorsBySpecialty(specialtyId: string): Promise<Doctor[]> {
@@ -398,6 +194,22 @@ class MockEngine {
   async getDoctorsByHospital(hospitalId: string): Promise<Doctor[]> {
     const list = await this.getDoctors();
     return list.filter(d => (d.hospitalIds || (d.hospitalId ? [d.hospitalId] : [])).includes(hospitalId));
+  }
+
+  async createDoctor(doctor: Doctor): Promise<Doctor> {
+    return this.create('doctors', doctor);
+  }
+
+  async updateDoctor(id: string, updates: Partial<Doctor>): Promise<Doctor> {
+    return this.update('doctors', id, updates);
+  }
+
+  async deleteDoctor(id: string): Promise<boolean> {
+    return this.delete('doctors', id);
+  }
+
+  async deleteDoctors(ids: string[]): Promise<boolean> {
+    return this.delete('doctors', ids);
   }
 
   async associateDoctorSpecialties(doctorId: string, specialtyIds: string[]): Promise<Doctor> {
@@ -441,122 +253,18 @@ class MockEngine {
     );
   }
 
-  async createDoctor(doctor: Doctor): Promise<Doctor> {
-    cacheService.invalidateTag('doctors');
-    const id = doctor.id || `doc-${Date.now()}`;
-    const newDoctor: Doctor = { ...doctor, id };
-    if (this.isLive()) {
-      const saved = await dbCreateDoctor(newDoctor);
-      if (saved) return saved;
-    }
-    await this.delay();
-    this.store.doctors.unshift(newDoctor);
-    this.save();
-    return newDoctor;
-  }
-
-  async updateDoctor(id: string, updates: Partial<Doctor>): Promise<Doctor> {
-    cacheService.invalidateTag('doctors');
-    if (this.isLive()) {
-      const updated = await dbUpdateDoctor(id, updates);
-      if (updated) return updated;
-    }
-    await this.delay();
-    const idx = this.store.doctors.findIndex(d => d.id === id);
-    if (idx === -1) throw new Error('Doctor not found');
-    const updated = { ...this.store.doctors[idx], ...updates };
-    this.store.doctors[idx] = updated;
-    this.save();
-    return updated;
-  }
-
-  async deleteDoctor(id: string): Promise<boolean> {
-    return this.deleteDoctors([id]);
-  }
-
-  async deleteDoctors(ids: string[]): Promise<boolean> {
-    cacheService.invalidateTag('doctors');
-    if (this.isLive()) {
-      try {
-        await supabase.from('doctors').delete().in('id', ids);
-      } catch (e) {
-        console.warn('Supabase deleteDoctors failed:', e);
-      }
-    }
-    await this.delay();
-    const idSet = new Set(ids);
-    this.store.doctors = this.store.doctors.filter(d => !idSet.has(d.id));
-    this.save();
-    return true;
-  }
-
   // ── 4. CASE STUDIES ────────────────────────────────────────────────────────
   async getCaseStudies(): Promise<CaseStudy[]> {
-    return cacheService.cachedFetch(
-      'caseStudies:all',
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('case_studies').select('*').order('created_at', { ascending: false });
-            if (!error && data && data.length > 0) return data.map(mapCaseStudyRow);
-          } catch (e) {
-            console.warn('Supabase getCaseStudies failed:', e);
-          }
-        }
-        await this.delay();
-        return [...this.store.caseStudies];
-      },
-      { ttlMs: 10 * 60 * 1000, tags: ['caseStudies'], persist: true }
-    );
+    return this.getAll('caseStudies');
   }
 
   async getCaseStudyById(id: string): Promise<CaseStudy | null> {
-    const cachedAll = cacheService.peek<CaseStudy[]>('caseStudies:all');
-    if (cachedAll) {
-      const match = cachedAll.find(c => c.id === id);
-      if (match) return match;
-    }
-
-    return cacheService.cachedFetch(
-      `caseStudy:${id}`,
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('case_studies').select('*').eq('id', id).single();
-            if (!error && data) return mapCaseStudyRow(data);
-          } catch (e) {
-            console.warn('Supabase getCaseStudyById failed:', e);
-          }
-        }
-        await this.delay();
-        return this.store.caseStudies.find(c => c.id === id) ?? null;
-      },
-      { ttlMs: 10 * 60 * 1000, tags: ['caseStudies'] }
-    );
+    return this.get('caseStudies', id);
   }
 
   async getFeaturedCaseStudies(): Promise<CaseStudy[]> {
-    const cachedAll = cacheService.peek<CaseStudy[]>('caseStudies:all');
-    if (cachedAll) {
-      return cachedAll.filter(c => c.featured);
-    }
-
-    return cacheService.cachedFetch(
-      'caseStudies:featured',
-      async () => {
-        if (this.isLive()) {
-          try {
-            const { data, error } = await supabase.from('case_studies').select('*').eq('featured', true);
-            if (!error && data && data.length > 0) return data.map(mapCaseStudyRow);
-          } catch (e) {
-            console.warn('Supabase getFeaturedCaseStudies failed:', e);
-          }
-        }
-        await this.delay();
-        return this.store.caseStudies.filter(c => c.featured);
-      },
-      { ttlMs: 10 * 60 * 1000, tags: ['caseStudies'] }
-    );
+    const all = await this.getCaseStudies();
+    return all.filter(c => c.featured);
   }
 
   async getCaseStudiesBySpecialty(specialtyId: string): Promise<CaseStudy[]> {
@@ -565,71 +273,38 @@ class MockEngine {
   }
 
   async createCaseStudy(caseStudy: CaseStudy): Promise<CaseStudy> {
-    cacheService.invalidateTag('caseStudies');
-    const id = caseStudy.id || `cs-${Date.now()}`;
-    const newCase: CaseStudy = { ...caseStudy, id };
-    if (this.isLive()) {
-      const saved = await dbCreateCaseStudy(newCase);
-      if (saved) return saved;
-    }
-    await this.delay();
-    this.store.caseStudies.unshift(newCase);
-    this.save();
-    return newCase;
+    return this.create('caseStudies', caseStudy);
   }
 
   async updateCaseStudy(id: string, updates: Partial<CaseStudy>): Promise<CaseStudy> {
-    cacheService.invalidateTag('caseStudies');
-    if (this.isLive()) {
-      const updated = await dbUpdateCaseStudy(id, updates);
-      if (updated) return updated;
-    }
-    await this.delay();
-    const idx = this.store.caseStudies.findIndex(c => c.id === id);
-    if (idx === -1) throw new Error('Case study not found');
-    const updated = { ...this.store.caseStudies[idx], ...updates };
-    this.store.caseStudies[idx] = updated;
-    this.save();
-    return updated;
+    return this.update('caseStudies', id, updates);
   }
 
   async deleteCaseStudy(id: string): Promise<boolean> {
-    return this.deleteCaseStudies([id]);
+    return this.delete('caseStudies', id);
   }
 
   async deleteCaseStudies(ids: string[]): Promise<boolean> {
-    cacheService.invalidateTag('caseStudies');
-    if (this.isLive()) {
-      try {
-        await supabase.from('case_studies').delete().in('id', ids);
-      } catch (e) {
-        console.warn('Supabase deleteCaseStudies failed:', e);
-      }
-    }
-    await this.delay();
-    const idSet = new Set(ids);
-    this.store.caseStudies = this.store.caseStudies.filter(c => !idSet.has(c.id));
-    this.save();
-    return true;
+    return this.delete('caseStudies', ids);
   }
 
   // ── 5. INQUIRIES ───────────────────────────────────────────────────────────
   async getInquiries(): Promise<Inquiry[]> {
-    return liveOrMockGetInquiries(this.isLive(), this.store, () => this.delay());
+    return this.getAll('inquiries');
   }
 
   async getInquiryById(id: string): Promise<Inquiry | null> {
-    return liveOrMockGetInquiryById(this.isLive(), this.store, () => this.delay(), id);
+    return this.get('inquiries', id);
   }
 
   async createInquiry(
     data: Omit<Inquiry, 'id' | 'createdAt' | 'updatedAt' | 'status' | 'notes' | 'documents'>
   ): Promise<Inquiry> {
-    return liveOrMockCreateInquiry(this.store, () => this.save(), () => this.delay(), data);
+    return this.create('inquiries', data as any);
   }
 
   async updateInquiry(id: string, updates: Partial<Inquiry>): Promise<Inquiry> {
-    return liveOrMockUpdateInquiry(this.isLive(), this.store, () => this.save(), () => this.delay(), id, updates);
+    return this.update('inquiries', id, updates);
   }
 
   async updateInquiryStatus(id: string, status: InquiryStatus): Promise<Inquiry> {
@@ -637,15 +312,25 @@ class MockEngine {
   }
 
   async addInquiryNote(id: string, content: string, authorId: string = 'admin'): Promise<Inquiry> {
-    return liveOrMockAddInquiryNote(this.isLive(), this.store, () => this.save(), () => this.delay(), id, content, authorId);
+    const inq = await this.getInquiryById(id);
+    const cleanContent = sanitizeInput(content);
+    const newNote = {
+      id: `note-${Date.now()}`,
+      inquiryId: id,
+      authorId: sanitizeInput(authorId),
+      content: cleanContent,
+      createdAt: new Date().toISOString(),
+    };
+    const updatedNotes = [...(inq?.notes || []), newNote];
+    return this.updateInquiry(id, { notes: updatedNotes });
   }
 
   async deleteInquiry(id: string): Promise<boolean> {
-    return this.deleteInquiries([id]);
+    return this.delete('inquiries', id);
   }
 
   async deleteInquiries(ids: string[]): Promise<boolean> {
-    return liveOrMockDeleteInquiries(this.isLive(), this.store, () => this.save(), () => this.delay(), ids);
+    return this.delete('inquiries', ids);
   }
 
   async getInquiryStats() {
@@ -675,7 +360,7 @@ class MockEngine {
       `cms:${id}`,
       async () => {
         await this.delay();
-        const page = this.store.cms[id] || cmsSeed[id];
+        const page = (crudService as any).store?.cms?.[id] || cmsSeed[id];
         if (!page) throw new Error(`CMS page ${id} not found`);
         return JSON.parse(JSON.stringify(page));
       },
@@ -688,7 +373,7 @@ class MockEngine {
       'cms:all',
       async () => {
         await this.delay();
-        return Object.values(this.store.cms);
+        return Object.values((crudService as any).store?.cms || cmsSeed);
       },
       { ttlMs: 15 * 60 * 1000, tags: ['cms'], persist: true }
     );
@@ -697,10 +382,13 @@ class MockEngine {
   async updateCmsPage(id: string, content: Record<string, any>): Promise<CmsPage> {
     cacheService.invalidateTag('cms');
     await this.delay();
-    const base = this.store.cms[id] || cmsSeed[id] || { id, title: id, content: {} };
-    this.store.cms[id] = { ...base, content: { ...base.content, ...content } };
-    this.save();
-    return this.store.cms[id];
+    const current = (crudService as any).store?.cms?.[id] || cmsSeed[id] || { id, title: id, content: {} };
+    const updated = { ...current, content: { ...current.content, ...content } };
+    if ((crudService as any).store?.cms) {
+      (crudService as any).store.cms[id] = updated;
+      (crudService as any).save();
+    }
+    return updated;
   }
 
   async resetCmsPage(id: string): Promise<CmsPage> {
@@ -708,9 +396,11 @@ class MockEngine {
     await this.delay();
     const defaultPage = cmsSeed[id];
     if (defaultPage) {
-      this.store.cms[id] = JSON.parse(JSON.stringify(defaultPage));
-      this.save();
-      return this.store.cms[id];
+      if ((crudService as any).store?.cms) {
+        (crudService as any).store.cms[id] = JSON.parse(JSON.stringify(defaultPage));
+        (crudService as any).save();
+      }
+      return defaultPage;
     }
     throw new Error(`Default seed for page ${id} not found`);
   }
