@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   Settings,
   Database,
@@ -15,10 +15,18 @@ import { AdminGeneralSettings } from './components/AdminGeneralSettings';
 export function AdminSettingsPage() {
   const [activeTab, setActiveTab] = useState<'general' | 'backups' | 'security'>('general');
   const [notification, setNotification] = useState<{ text: string; isError?: boolean } | null>(null);
+  const notifyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (notifyTimerRef.current) clearTimeout(notifyTimerRef.current);
+    };
+  }, []);
 
   const showNotification = (msg: { text: string; isError?: boolean }) => {
+    if (notifyTimerRef.current) clearTimeout(notifyTimerRef.current);
     setNotification(msg);
-    setTimeout(() => setNotification(null), 3500);
+    notifyTimerRef.current = setTimeout(() => setNotification(null), 3500);
   };
 
   return (

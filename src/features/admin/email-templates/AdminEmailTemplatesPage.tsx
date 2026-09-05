@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import {
   Save,
   RotateCcw,
@@ -104,18 +104,30 @@ export function AdminEmailTemplatesPage() {
     });
   }, [config.subject, sampleData]);
 
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const testTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      if (testTimerRef.current) clearTimeout(testTimerRef.current);
+    };
+  }, []);
+
   const handleSave = () => {
+    if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     saveEmailTemplateConfig(config);
     setSaveStatus('Template saved successfully!');
-    setTimeout(() => setSaveStatus(null), 3500);
+    saveTimerRef.current = setTimeout(() => setSaveStatus(null), 3500);
   };
 
   const handleReset = () => {
     if (confirm('Reset template to default settings? Any custom wording and colors will be replaced with defaults.')) {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
       const def = resetEmailTemplateConfig();
       setConfig(def);
       setSaveStatus('Reset to default template!');
-      setTimeout(() => setSaveStatus(null), 3500);
+      saveTimerRef.current = setTimeout(() => setSaveStatus(null), 3500);
     }
   };
 
@@ -134,7 +146,8 @@ export function AdminEmailTemplatesPage() {
     } else {
       setTestResult({ success: false, message: res.error || 'Failed to send test email.' });
     }
-    setTimeout(() => setTestResult(null), 6000);
+    if (testTimerRef.current) clearTimeout(testTimerRef.current);
+    testTimerRef.current = setTimeout(() => setTestResult(null), 6000);
   };
 
   const insertVariable = (varName: string) => {

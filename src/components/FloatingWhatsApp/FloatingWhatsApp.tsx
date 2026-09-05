@@ -7,12 +7,25 @@ export function FloatingWhatsApp() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+    let lastState = window.scrollY > 250;
+    setShowScrollTop(lastState);
+
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 250);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const current = window.scrollY > 250;
+          if (current !== lastState) {
+            lastState = current;
+            setShowScrollTop(current);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Megaphone,
@@ -29,6 +29,13 @@ export function AdminMarqueePage() {
   const [resetting, setResetting] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [confirmReset, setConfirmReset] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   // Form State
   const [enabled, setEnabled] = useState(true);
@@ -86,7 +93,8 @@ export function AdminMarqueePage() {
       });
       setSaveSuccess(true);
       reload();
-      setTimeout(() => setSaveSuccess(false), 4000);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setSaveSuccess(false), 4000);
     } catch (err) {
       console.error('Failed to save marquee text:', err);
     } finally {
@@ -102,7 +110,8 @@ export function AdminMarqueePage() {
       await mockEngine.resetCmsPage('marquee');
       reload();
       setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 4000);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setSaveSuccess(false), 4000);
     } catch (err) {
       console.error('Failed to reset marquee text:', err);
     } finally {

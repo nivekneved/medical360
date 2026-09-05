@@ -2,8 +2,6 @@
    Medical 360 — Design System (White, Medical Dark Green, Black, Grey Variations)
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap');
-
 /* ─── Base Palette Tokens (Strict: White, Green, Black, Greys) ──────────────── */
 :root {
   /* Medical Dark Green (All Clickables & Brand Accents) */
