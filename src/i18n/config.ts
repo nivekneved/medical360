@@ -17,6 +17,7 @@ const resources = {
         freeOpinion: 'Get Free Opinion',
       },
       home: {
+        missionMarquee: "Med360 is a company owned by the NGO Enn Rev Enn Sourir. After 10 years in helping the needy's have access to specialised treatment in private clinic or abroad, we have now decided to extend our service to those who can afford. The profit will go back to the NGO to continue helping others.",
         heroBadge: '✦ Owned by NGO Enn Rev Enn Sourir · 10+ Years of Care',
         heroTitleLine1: 'Specialised Medical Care,',
         heroTitleLine2: 'In Private Clinics & Abroad',
@@ -118,6 +119,7 @@ const resources = {
         freeOpinion: 'Avis Médical Gratuit',
       },
       home: {
+        missionMarquee: "Med360 est une entreprise détenue par l'ONG Enn Rev Enn Sourir. Après 10 ans à aider les personnes dans le besoin à avoir accès à des soins spécialisés en clinique privée ou à l'étranger, nous avons désormais décidé d'étendre nos services à ceux qui peuvent se le permettre. Les bénéfices sont reversés à l'ONG pour continuer d'aider les autres.",
         heroBadge: '✦ Détenu par l\'ONG Enn Rev Enn Sourir · 10+ Ans de Soins',
         heroTitleLine1: 'Des Soins Spécialisés,',
         heroTitleLine2: 'En Clinique Privée & à l\'Étranger',
@@ -219,6 +221,7 @@ const resources = {
         freeOpinion: 'Gagn Enn Lavi',
       },
       home: {
+        missionMarquee: "Med360 li enn lakonpanyi ki apartenir a l'ONG Enn Rev Enn Sourir. Apre 10 banlane pe ed bann dimounn dan bezwin gagn akse a bann tretman spesialize dan klinik prive ouswa a letranze, nou finn deside elarzi nou servis pou bann ki kapav peye. Tou profi retourn dan l'ONG pou kontinie ed lezot.",
         heroBadge: '✦ Apartenir a l\'ONG Enn Rev Enn Sourir · 10+ Banlane dan Swen',
         heroTitleLine1: 'Bann Swen Medikal Spesialize,',
         heroTitleLine2: 'Dan Klinik Prive & a Letranze',

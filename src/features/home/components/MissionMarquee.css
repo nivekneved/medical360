@@ -1,0 +1,230 @@
+/* ─── Mission Marquee Ticker ─────────────────────────────────────────── */
+.mission-marquee {
+  position: relative;
+  width: 100%;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  box-shadow: 0 4px 16px -4px rgba(6, 95, 70, 0.06);
+  user-select: none;
+}
+
+[data-theme="dark"] .mission-marquee,
+[data-theme="Med-dark"] .mission-marquee {
+  background: #0d1319;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.5);
+}
+
+.mission-marquee__inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+/* ── Fixed Static Badge on Left ── */
+.mission-marquee__badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+  z-index: 5;
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.12);
+}
+
+.mission-marquee__pulse {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mission-marquee__dot {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  animation: missionPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes missionPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+/* ── Marquee Scrolling Container ── */
+.mission-marquee__container {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 0;
+  /* Smooth edge fade gradients */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 3%,
+    black 97%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 3%,
+    black 97%,
+    transparent 100%
+  );
+}
+
+.mission-marquee__track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
+  animation: missionMarqueeScroll 45s linear infinite;
+}
+
+.mission-marquee:hover .mission-marquee__track {
+  animation-play-state: paused;
+}
+
+@keyframes missionMarqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mission-marquee__track {
+    animation-duration: 90s;
+  }
+}
+
+/* ── Individual Ticker Item ── */
+.mission-marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .mission-marquee__item,
+[data-theme="Med-dark"] .mission-marquee__item {
+  color: #e2e8f0;
+}
+
+.mission-marquee__highlight {
+  color: var(--color-primary);
+  font-weight: 800;
+  background: rgba(6, 95, 70, 0.08);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid rgba(6, 95, 70, 0.15);
+}
+
+[data-theme="dark"] .mission-marquee__highlight,
+[data-theme="Med-dark"] .mission-marquee__highlight {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.12);
+  border-color: rgba(52, 211, 153, 0.25);
+}
+
+.mission-marquee__profit-tag {
+  color: #059669;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(5, 150, 105, 0.4);
+}
+
+[data-theme="dark"] .mission-marquee__profit-tag,
+[data-theme="Med-dark"] .mission-marquee__profit-tag {
+  color: #6ee7b7;
+}
+
+.mission-marquee__separator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  opacity: 0.7;
+  padding: 0 0.5rem;
+}
+
+.mission-marquee__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  background: rgba(6, 95, 70, 0.06);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  margin-left: 0.5rem;
+  transition: all 0.15s ease;
+}
+
+.mission-marquee__link:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+[data-theme="dark"] .mission-marquee__link,
+[data-theme="Med-dark"] .mission-marquee__link {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+}
+
+[data-theme="dark"] .mission-marquee__link:hover,
+[data-theme="Med-dark"] .mission-marquee__link:hover {
+  background: #10b981;
+  color: #090d10;
+}
+
+@media (max-width: 768px) {
+  .mission-marquee__badge {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.72rem;
+  }
+  .mission-marquee__badge-text {
+    display: none;
+  }
+  .mission-marquee__item {
+    font-size: 0.85rem;
+    padding: 0 1rem;
+  }
+}
