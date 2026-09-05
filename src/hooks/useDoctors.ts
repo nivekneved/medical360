@@ -1,14 +1,29 @@
 import { useState, useEffect, useCallback } from 'react';
 import { mockEngine } from '../core/mock/engine';
 import type { Doctor } from '../core/types';
+import { cacheService } from '../core/services/cache.service';
 
 export function useDoctors(specialtyId?: string, hospitalId?: string) {
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [loading, setLoading] = useState(true);
+  const cachedAll = cacheService.peek<Doctor[]>('doctors:all');
+  let initialData: Doctor[] = [];
+  if (cachedAll) {
+    if (specialtyId) {
+      initialData = cachedAll.filter(d => (d.specialties || []).includes(specialtyId));
+    } else if (hospitalId) {
+      initialData = cachedAll.filter(d => (d.hospitalIds || (d.hospitalId ? [d.hospitalId] : [])).includes(hospitalId));
+    } else {
+      initialData = cachedAll;
+    }
+  }
+
+  const [doctors, setDoctors] = useState<Doctor[]>(initialData);
+  const [loading, setLoading] = useState(!cachedAll);
   const [error, setError]     = useState<string | null>(null);
 
   const fetchDoctors = useCallback(async () => {
-    setLoading(true);
+    if (!cacheService.peek<Doctor[]>('doctors:all')) {
+      setLoading(true);
+    }
     setError(null);
     try {
       let data: Doctor[];
@@ -35,8 +50,10 @@ export function useDoctors(specialtyId?: string, hospitalId?: string) {
 }
 
 export function useDoctor(id?: string) {
-  const [doctor, setDoctor]   = useState<Doctor | null>(null);
-  const [loading, setLoading] = useState(true);
+  const cachedAll = cacheService.peek<Doctor[]>('doctors:all');
+  const cachedSingle = cachedAll ? (cachedAll.find(d => d.id === id) || null) : null;
+  const [doctor, setDoctor]   = useState<Doctor | null>(cachedSingle);
+  const [loading, setLoading] = useState(!cachedSingle);
   const [error, setError]     = useState<string | null>(null);
 
   useEffect(() => {
@@ -45,7 +62,7 @@ export function useDoctor(id?: string) {
       setLoading(false);
       return;
     }
-    setLoading(true);
+    if (!cachedSingle) setLoading(true);
     mockEngine.getDoctorById(id)
       .then(setDoctor)
       .catch((err: any) => setError(err.message))
