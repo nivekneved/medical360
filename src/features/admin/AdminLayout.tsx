@@ -28,6 +28,7 @@ import {
   ExternalLink,
   HardDriveDownload,
   Palette,
+  Megaphone,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { useDataConfig } from '../../providers/DataProvider';
@@ -43,12 +44,14 @@ const DATA_NAV = [
 ];
 
 const CMS_GLOBAL_NAV = [
-  { to: '/admin/settings?tab=themes', label: 'Themes & Branding',      icon: Palette },
-  { to: '/admin/pages/header',        label: 'Header & Navigation',    icon: PanelTop },
-  { to: '/admin/pages/footer',        label: 'Footer & Legal',         icon: PanelBottom },
-  { to: '/admin/campaigns',          label: 'Email Campaigns (Nexus)', icon: Send },
-  { to: '/admin/email-templates',    label: 'Email Templates',        icon: Mail },
+  { to: '/admin/marquee',             label: 'Scrolling Mission Ticker', icon: Megaphone },
+  { to: '/admin/settings?tab=themes', label: 'Themes & Branding',        icon: Palette },
+  { to: '/admin/pages/header',        label: 'Header & Navigation',      icon: PanelTop },
+  { to: '/admin/pages/footer',        label: 'Footer & Legal',           icon: PanelBottom },
+  { to: '/admin/campaigns',          label: 'Email Campaigns (Nexus)',   icon: Send },
+  { to: '/admin/email-templates',    label: 'Email Templates',          icon: Mail },
 ];
+
 
 const CMS_PAGES_NAV = [
   { to: '/admin/pages/home',            label: 'Home Page' },

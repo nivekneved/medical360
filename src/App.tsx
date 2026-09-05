@@ -47,6 +47,7 @@ const AdminSettingsPage     = lazy(() => import('./features/admin/settings/Admin
 const AdminPageEditor       = lazy(() => import('./features/admin/pages/AdminPageEditor').then(m => ({ default: m.AdminPageEditor })));
 const AdminEmailTemplatesPage = lazy(() => import('./features/admin/email-templates/AdminEmailTemplatesPage').then(m => ({ default: m.AdminEmailTemplatesPage })));
 const AdminCampaignsPage      = lazy(() => import('./features/admin/campaigns/AdminCampaignsPage').then(m => ({ default: m.AdminCampaignsPage })));
+const AdminMarqueePage        = lazy(() => import('./features/admin/marquee/AdminMarqueePage').then(m => ({ default: m.AdminMarqueePage })));
 
 import './styles/globals.css';
 
@@ -148,6 +149,7 @@ export default function App() {
                     <Route path="settings"     element={<AdminSettingsPage />} />
                     <Route path="email-templates" element={<AdminEmailTemplatesPage />} />
                     <Route path="campaigns"       element={<AdminCampaignsPage />} />
+                    <Route path="marquee"         element={<AdminMarqueePage />} />
                     <Route path="pages/:pageId" element={<AdminPageEditor />} />
                   </Route>
 
