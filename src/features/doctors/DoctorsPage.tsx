@@ -230,7 +230,7 @@ export function DoctorsPage() {
 
           {/* Doctors Grid / List */}
           {loading ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '1.5rem' }}>
               {Array.from({ length: 7 }).map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 420, borderRadius: 16 }} />
               ))}
@@ -239,7 +239,7 @@ export function DoctorsPage() {
             <>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: viewMode === 'list' ? '1fr' : 'repeat(auto-fill, minmax(330px, 1fr))',
+                gridTemplateColumns: viewMode === 'list' ? '1fr' : 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))',
                 gap: '1.75rem',
               }}>
                 {paginatedDoctors.map(doc => {

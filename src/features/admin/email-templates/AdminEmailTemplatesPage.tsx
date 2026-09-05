@@ -204,7 +204,7 @@ export function AdminEmailTemplatesPage() {
       )}
 
       {/* Main Grid: Left Controls (Pick & Choose) | Right (Live Preview & Test) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(420px, 1fr) minmax(460px, 1fr)', gap: '1.75rem', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', gap: '1.75rem', alignItems: 'start' }}>
         
         {/* LEFT COLUMN: Modular Components Builder */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>

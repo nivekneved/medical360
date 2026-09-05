@@ -22,11 +22,11 @@ export const HospitalSelector: React.FC<HospitalSelectorProps> = ({
 
   const countryFilterSlot = (
     <select
-      className="form-input"
+      className="form-select form-select--sm"
       value={countryFilter}
       onChange={(e) => setCountryFilter(e.target.value)}
       disabled={disabled}
-      style={{ width: 140, fontSize: '0.82rem', height: 34 }}
+      style={{ width: 140 }}
     >
       {countries.map((c) => (
         <option key={c} value={c}>

@@ -167,10 +167,10 @@ export function CostCalculatorPage() {
                 {isFr ? 'Spécialité Médicale' : isKr ? 'Spesialite Medikal' : 'Medical Specialty'}
               </label>
               <select
-                className="form-input"
+                className="form-select"
                 value={selectedSpecialtyId}
                 onChange={(e) => handleSpecialtyChange(e.target.value)}
-                style={{ height: 46, fontSize: '0.95rem', fontWeight: 600, cursor: 'pointer', borderRadius: 'var(--radius-lg)' }}
+                style={{ fontWeight: 600, borderRadius: 'var(--radius-lg)' }}
               >
                 {specialties.map(spec => (
                   <option key={spec.id} value={spec.id}>
@@ -186,10 +186,10 @@ export function CostCalculatorPage() {
                 {isFr ? 'Procédure / Traitement Spécifique' : isKr ? 'Tretman / Operasion Spesifik' : 'Specific Procedure / Treatment'}
               </label>
               <select
-                className="form-input"
+                className="form-select"
                 value={selectedProcedureId}
                 onChange={(e) => setSelectedProcedureId(e.target.value)}
-                style={{ height: 46, fontSize: '0.95rem', fontWeight: 600, cursor: 'pointer', borderRadius: 'var(--radius-lg)' }}
+                style={{ fontWeight: 600, borderRadius: 'var(--radius-lg)' }}
               >
                 {(activeSpecialty?.procedures || []).map(proc => (
                   <option key={proc.id} value={proc.id}>

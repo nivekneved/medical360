@@ -76,7 +76,7 @@ export const CampaignComposerTab: React.FC<CampaignComposerTabProps> = ({
   };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(360px, 1.2fr) minmax(320px, 1fr)', gap: '1.5rem', alignItems: 'start' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '1.5rem', alignItems: 'start' }}>
       {/* Left Column: Composer Controls */}
       <div style={{
         background: 'var(--color-surface)',
