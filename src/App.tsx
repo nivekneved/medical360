@@ -17,37 +17,65 @@ import { HomePage } from './features/home/HomePage';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { CookieConsentBanner } from './components/common/CookieConsentBanner';
 
-// Lazy public pages (code-split)
-const AboutPage           = lazy(() => import('./features/about/AboutPage').then(m => ({ default: m.AboutPage })));
-const HospitalsPage       = lazy(() => import('./features/hospitals/HospitalsPage').then(m => ({ default: m.HospitalsPage })));
-const HospitalDetailPage  = lazy(() => import('./features/hospitals/HospitalDetailPage').then(m => ({ default: m.HospitalDetailPage })));
-const SpecialtiesPage     = lazy(() => import('./features/specialties/SpecialtiesPage').then(m => ({ default: m.SpecialtiesPage })));
-const SpecialtyDetailPage = lazy(() => import('./features/specialties/SpecialtyDetailPage').then(m => ({ default: m.SpecialtyDetailPage })));
-const DoctorsPage         = lazy(() => import('./features/doctors/DoctorsPage').then(m => ({ default: m.DoctorsPage })));
-const DescribeNeedPage    = lazy(() => import('./features/describe-need/DescribeNeedPage').then(m => ({ default: m.DescribeNeedPage })));
-const ServicesPage        = lazy(() => import('./features/services/ServicesPage').then(m => ({ default: m.ServicesPage })));
-const CaseStudiesPage     = lazy(() => import('./features/case-studies/CaseStudiesPage').then(m => ({ default: m.CaseStudiesPage })));
-const ContactPage         = lazy(() => import('./features/contact/ContactPage').then(m => ({ default: m.ContactPage })));
-const CostCalculatorPage  = lazy(() => import('./features/cost-calculator/CostCalculatorPage').then(m => ({ default: m.CostCalculatorPage })));
-const VisaGuidePage       = lazy(() => import('./features/visa-guide/VisaGuidePage').then(m => ({ default: m.VisaGuidePage })));
-const PrivacyPolicyPage   = lazy(() => import('./features/legal/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
-const TermsPage           = lazy(() => import('./features/legal/TermsPage').then(m => ({ default: m.TermsPage })));
-const NotFoundPage        = lazy(() => import('./features/not-found/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
+/**
+ * Resilient lazy import helper that automatically recovers from stale deployment chunk errors
+ * by reloading the window when a new production deployment replaces existing chunk hashes.
+ */
+function lazyWithRetry<T extends { [key: string]: any }>(
+  componentImport: () => Promise<T>,
+  getter?: (module: T) => any
+) {
+  return lazy(async () => {
+    const hasAlreadyRefreshed = JSON.parse(
+      window.sessionStorage.getItem('retry-lazy-refreshed') || 'false'
+    );
 
-// Lazy admin pages
-const AdminLoginPage        = lazy(() => import('./features/admin/AdminLoginPage').then(m => ({ default: m.AdminLoginPage })));
-const AdminLayout           = lazy(() => import('./features/admin/AdminLayout').then(m => ({ default: m.AdminLayout })));
-const AdminDashboardPage    = lazy(() => import('./features/admin/dashboard/AdminDashboardPage').then(m => ({ default: m.AdminDashboardPage })));
-const AdminInquiriesPage    = lazy(() => import('./features/admin/inquiries/AdminInquiriesPage').then(m => ({ default: m.AdminInquiriesPage })));
-const AdminHospitalsPage    = lazy(() => import('./features/admin/hospitals/AdminHospitalsPage').then(m => ({ default: m.AdminHospitalsPage })));
-const AdminSpecialtiesPage  = lazy(() => import('./features/admin/specialties/AdminSpecialtiesPage').then(m => ({ default: m.AdminSpecialtiesPage })));
-const AdminDoctorsPage      = lazy(() => import('./features/admin/doctors/AdminDoctorsPage').then(m => ({ default: m.AdminDoctorsPage })));
-const AdminCaseStudiesPage  = lazy(() => import('./features/admin/case-studies/AdminCaseStudiesPage').then(m => ({ default: m.AdminCaseStudiesPage })));
-const AdminSettingsPage     = lazy(() => import('./features/admin/settings/AdminSettingsPage').then(m => ({ default: m.AdminSettingsPage })));
-const AdminPageEditor       = lazy(() => import('./features/admin/pages/AdminPageEditor').then(m => ({ default: m.AdminPageEditor })));
-const AdminEmailTemplatesPage = lazy(() => import('./features/admin/email-templates/AdminEmailTemplatesPage').then(m => ({ default: m.AdminEmailTemplatesPage })));
-const AdminCampaignsPage      = lazy(() => import('./features/admin/campaigns/AdminCampaignsPage').then(m => ({ default: m.AdminCampaignsPage })));
-const AdminMarqueePage        = lazy(() => import('./features/admin/marquee/AdminMarqueePage').then(m => ({ default: m.AdminMarqueePage })));
+    try {
+      const module = await componentImport();
+      window.sessionStorage.setItem('retry-lazy-refreshed', 'false');
+      return getter ? { default: getter(module) } : module;
+    } catch (error: any) {
+      if (!hasAlreadyRefreshed) {
+        window.sessionStorage.setItem('retry-lazy-refreshed', 'true');
+        window.location.reload();
+        return { default: () => null } as any;
+      }
+      throw error;
+    }
+  });
+}
+
+// Lazy public pages (code-split with deployment auto-retry)
+const AboutPage           = lazyWithRetry(() => import('./features/about/AboutPage'), m => m.AboutPage);
+const HospitalsPage       = lazyWithRetry(() => import('./features/hospitals/HospitalsPage'), m => m.HospitalsPage);
+const HospitalDetailPage  = lazyWithRetry(() => import('./features/hospitals/HospitalDetailPage'), m => m.HospitalDetailPage);
+const SpecialtiesPage     = lazyWithRetry(() => import('./features/specialties/SpecialtiesPage'), m => m.SpecialtiesPage);
+const SpecialtyDetailPage = lazyWithRetry(() => import('./features/specialties/SpecialtyDetailPage'), m => m.SpecialtyDetailPage);
+const DoctorsPage         = lazyWithRetry(() => import('./features/doctors/DoctorsPage'), m => m.DoctorsPage);
+const DescribeNeedPage    = lazyWithRetry(() => import('./features/describe-need/DescribeNeedPage'), m => m.DescribeNeedPage);
+const ServicesPage        = lazyWithRetry(() => import('./features/services/ServicesPage'), m => m.ServicesPage);
+const CaseStudiesPage     = lazyWithRetry(() => import('./features/case-studies/CaseStudiesPage'), m => m.CaseStudiesPage);
+const ContactPage         = lazyWithRetry(() => import('./features/contact/ContactPage'), m => m.ContactPage);
+const CostCalculatorPage  = lazyWithRetry(() => import('./features/cost-calculator/CostCalculatorPage'), m => m.CostCalculatorPage);
+const VisaGuidePage       = lazyWithRetry(() => import('./features/visa-guide/VisaGuidePage'), m => m.VisaGuidePage);
+const PrivacyPolicyPage   = lazyWithRetry(() => import('./features/legal/PrivacyPolicyPage'), m => m.PrivacyPolicyPage);
+const TermsPage           = lazyWithRetry(() => import('./features/legal/TermsPage'), m => m.TermsPage);
+const NotFoundPage        = lazyWithRetry(() => import('./features/not-found/NotFoundPage'), m => m.NotFoundPage);
+
+// Lazy admin pages (code-split with deployment auto-retry)
+const AdminLoginPage        = lazyWithRetry(() => import('./features/admin/AdminLoginPage'), m => m.AdminLoginPage);
+const AdminLayout           = lazyWithRetry(() => import('./features/admin/AdminLayout'), m => m.AdminLayout);
+const AdminDashboardPage    = lazyWithRetry(() => import('./features/admin/dashboard/AdminDashboardPage'), m => m.AdminDashboardPage);
+const AdminInquiriesPage    = lazyWithRetry(() => import('./features/admin/inquiries/AdminInquiriesPage'), m => m.AdminInquiriesPage);
+const AdminHospitalsPage    = lazyWithRetry(() => import('./features/admin/hospitals/AdminHospitalsPage'), m => m.AdminHospitalsPage);
+const AdminSpecialtiesPage  = lazyWithRetry(() => import('./features/admin/specialties/AdminSpecialtiesPage'), m => m.AdminSpecialtiesPage);
+const AdminDoctorsPage      = lazyWithRetry(() => import('./features/admin/doctors/AdminDoctorsPage'), m => m.AdminDoctorsPage);
+const AdminCaseStudiesPage  = lazyWithRetry(() => import('./features/admin/case-studies/AdminCaseStudiesPage'), m => m.AdminCaseStudiesPage);
+const AdminSettingsPage     = lazyWithRetry(() => import('./features/admin/settings/AdminSettingsPage'), m => m.AdminSettingsPage);
+const AdminPageEditor       = lazyWithRetry(() => import('./features/admin/pages/AdminPageEditor'), m => m.AdminPageEditor);
+const AdminEmailTemplatesPage = lazyWithRetry(() => import('./features/admin/email-templates/AdminEmailTemplatesPage'), m => m.AdminEmailTemplatesPage);
+const AdminCampaignsPage      = lazyWithRetry(() => import('./features/admin/campaigns/AdminCampaignsPage'), m => m.AdminCampaignsPage);
+const AdminMarqueePage        = lazyWithRetry(() => import('./features/admin/marquee/AdminMarqueePage'), m => m.AdminMarqueePage);
 
 import './styles/globals.css';
 
