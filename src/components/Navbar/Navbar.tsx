@@ -132,7 +132,7 @@ export function Navbar() {
 
           {/* Discreet Admin Lock */}
           <Link
-            to="/admin"
+            to="/deven"
             className="navbar-admin-link"
             title="Staff Portal"
             aria-label="Staff Portal"

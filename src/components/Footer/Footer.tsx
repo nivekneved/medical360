@@ -110,7 +110,7 @@ export function Footer() {
           <div className="footer__bottom-links" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
             <Link to="/privacy" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Privacy Policy</Link>
             <Link to="/terms" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Terms of Service</Link>
-            <Link to="/admin" style={{ color: 'rgba(255,255,255,0.4)', textDecoration: 'none', fontSize: '0.8rem' }}>Staff Portal</Link>
+            <Link to="/deven" style={{ color: 'rgba(255,255,255,0.4)', textDecoration: 'none', fontSize: '0.8rem' }}>Staff Portal</Link>
           </div>
         </div>
       </div>

@@ -65,6 +65,7 @@ const NotFoundPage        = lazyWithRetry(() => import('./features/not-found/Not
 
 // Lazy admin pages (code-split with deployment auto-retry)
 const AdminLoginPage        = lazyWithRetry(() => import('./features/admin/AdminLoginPage'), m => m.AdminLoginPage);
+const AdminLockoutNoticePage = lazyWithRetry(() => import('./features/admin/AdminLockoutNoticePage'), m => m.AdminLockoutNoticePage);
 const AdminLayout           = lazyWithRetry(() => import('./features/admin/AdminLayout'), m => m.AdminLayout);
 const AdminDashboardPage    = lazyWithRetry(() => import('./features/admin/dashboard/AdminDashboardPage'), m => m.AdminDashboardPage);
 const AdminInquiriesPage    = lazyWithRetry(() => import('./features/admin/inquiries/AdminInquiriesPage'), m => m.AdminInquiriesPage);
@@ -162,10 +163,17 @@ export default function App() {
                     <Route path="/terms"            element={<TermsPage />} />
                   </Route>
 
-                  {/* Admin Routes */}
-                  <Route path="/admin/login" element={
+                  {/* Secret Admin Login Gateway */}
+                  <Route path="/deven" element={
                     <Suspense fallback={<PageLoader />}>
                       <AdminLoginPage />
+                    </Suspense>
+                  } />
+
+                  {/* Public Decoy / Restricted Notice for /admin/login */}
+                  <Route path="/admin/login" element={
+                    <Suspense fallback={<PageLoader />}>
+                      <AdminLockoutNoticePage />
                     </Suspense>
                   } />
                   <Route path="/admin" element={<AdminGuard />}>
