@@ -1,12 +1,11 @@
 import type { MockConfig, Inquiry, InquiryStatus, Hospital, Specialty, Doctor, CaseStudy } from '../types';
 import { cmsSeed, CmsPage } from './seeds/cms.seed';
-import { supabase, isSupabaseConfigured } from '../supabase/client';
+import { supabase } from '../supabase/client';
 import {
   mapHospitalRow,
   mapSpecialtyRow,
   mapDoctorRow,
   mapCaseStudyRow,
-  mapInquiryRow,
 } from '../supabase/repositories';
 import {
   associateSpecialtyHospitals as helperAssociateSpecialtyHospitals,
@@ -14,6 +13,14 @@ import {
   associateHospitalDoctors as helperAssociateHospitalDoctors,
   saveAllDoctorAssociations as helperSaveAllDoctorAssociations,
 } from './matrix.helpers';
+import {
+  liveOrMockGetInquiries,
+  liveOrMockGetInquiryById,
+  liveOrMockCreateInquiry,
+  liveOrMockUpdateInquiry,
+  liveOrMockAddInquiryNote,
+  liveOrMockDeleteInquiries,
+} from './inquiry.helpers';
 import {
   loadStore,
   saveStore,
@@ -24,7 +31,6 @@ import {
   simulateDelay,
   type MockStore,
 } from './store';
-import { deepSanitize, sanitizeInput } from '../services/security.service';
 
 export { loadMockConfig, saveMockConfig, resetMockData };
 
@@ -572,110 +578,21 @@ class MockEngine {
 
   // ── 5. INQUIRIES ───────────────────────────────────────────────────────────
   async getInquiries(): Promise<Inquiry[]> {
-    if (this.isLive()) {
-      try {
-        const { data, error } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false });
-        if (!error && data && data.length > 0) {
-          return data.map(mapInquiryRow);
-        }
-      } catch (e) {
-        console.warn('Supabase getInquiries failed:', e);
-      }
-    }
-    await this.delay();
-    return [...this.store.inquiries].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    );
+    return liveOrMockGetInquiries(this.isLive(), this.store, () => this.delay());
   }
 
   async getInquiryById(id: string): Promise<Inquiry | null> {
-    if (this.isLive()) {
-      try {
-        const { data, error } = await supabase.from('inquiries').select('*').eq('id', id).single();
-        if (!error && data) return mapInquiryRow(data);
-      } catch (e) {
-        console.warn('Supabase getInquiryById failed:', e);
-      }
-    }
-    await this.delay();
-    return this.store.inquiries.find(i => i.id === id) ?? null;
+    return liveOrMockGetInquiryById(this.isLive(), this.store, () => this.delay(), id);
   }
 
   async createInquiry(
     data: Omit<Inquiry, 'id' | 'createdAt' | 'updatedAt' | 'status' | 'notes' | 'documents'>
   ): Promise<Inquiry> {
-    const cleanData = deepSanitize(data);
-    const id = `inq-${Date.now()}`;
-    const now = new Date().toISOString();
-    const newInquiry: Inquiry = {
-      ...cleanData,
-      id,
-      createdAt: now,
-      updatedAt: now,
-      status: 'new',
-      documents: [],
-      notes: [],
-    };
-
-    // Persist to live Supabase cloud database if configured
-    if (isSupabaseConfigured) {
-      try {
-        const row = {
-          id,
-          first_name: cleanData.firstName,
-          last_name: cleanData.lastName,
-          email: cleanData.email,
-          phone: cleanData.phone,
-          country_of_residence: cleanData.countryOfResidence,
-          specialty_id: cleanData.specialtyId,
-          description: cleanData.description,
-          urgency: cleanData.urgency || 'routine',
-          preferred_country: cleanData.preferredCountry || null,
-          budget_min: cleanData.budgetRangeUSD?.min || null,
-          budget_max: cleanData.budgetRangeUSD?.max || null,
-          documents: [],
-          status: 'new',
-          assigned_case_manager_id: null,
-          notes: [],
-          created_at: now,
-          updated_at: now,
-        };
-        const { data: resData, error } = await supabase.from('inquiries').insert([row]).select().single();
-        if (!error && resData) {
-          const mapped = mapInquiryRow(resData);
-          this.store.inquiries.unshift(mapped);
-          this.save();
-          return mapped;
-        }
-      } catch (e) {
-        console.warn('Supabase createInquiry error (falling back to local store):', e);
-      }
-    }
-
-    await this.delay();
-    this.store.inquiries.unshift(newInquiry);
-    this.save();
-    return newInquiry;
+    return liveOrMockCreateInquiry(this.store, () => this.save(), () => this.delay(), data);
   }
 
   async updateInquiry(id: string, updates: Partial<Inquiry>): Promise<Inquiry> {
-    const now = new Date().toISOString();
-    if (this.isLive()) {
-      try {
-        const rowUpdates: any = { ...updates, updated_at: now };
-        const { data, error } = await supabase.from('inquiries').update(rowUpdates).eq('id', id).select().single();
-        if (!error && data) return mapInquiryRow(data);
-      } catch (e) {
-        console.warn('Supabase updateInquiry failed:', e);
-      }
-    }
-    await this.delay();
-    const idx = this.store.inquiries.findIndex(i => i.id === id);
-    if (idx === -1) throw new Error('Inquiry not found');
-    const updated = { ...this.store.inquiries[idx], ...updates, updatedAt: now };
-    this.store.inquiries[idx] = updated;
-    this.save();
-    return updated;
+    return liveOrMockUpdateInquiry(this.isLive(), this.store, () => this.save(), () => this.delay(), id, updates);
   }
 
   async updateInquiryStatus(id: string, status: InquiryStatus): Promise<Inquiry> {
@@ -683,62 +600,15 @@ class MockEngine {
   }
 
   async addInquiryNote(id: string, content: string, authorId: string = 'admin'): Promise<Inquiry> {
-    const inq = await this.getInquiryById(id);
-    const cleanContent = sanitizeInput(content);
-    const newNote = {
-      id: `note-${Date.now()}`,
-      inquiryId: id,
-      authorId: sanitizeInput(authorId),
-      content: cleanContent,
-      createdAt: new Date().toISOString(),
-    };
-    const updatedNotes = [...(inq?.notes || []), newNote];
-
-    if (this.isLive()) {
-      try {
-        const { data, error } = await supabase.from('inquiries').update({ notes: updatedNotes, updated_at: new Date().toISOString() }).eq('id', id).select().single();
-        if (!error && data) return mapInquiryRow(data);
-      } catch (e) {
-        console.warn('Supabase addInquiryNote failed:', e);
-      }
-    }
-
-    await this.delay();
-    const idx = this.store.inquiries.findIndex(i => i.id === id);
-    if (idx === -1) throw new Error('Not found');
-    const updated = { ...this.store.inquiries[idx], updatedAt: new Date().toISOString(), notes: updatedNotes };
-    this.store.inquiries[idx] = updated;
-    this.save();
-    return updated;
+    return liveOrMockAddInquiryNote(this.isLive(), this.store, () => this.save(), () => this.delay(), id, content, authorId);
   }
 
   async deleteInquiry(id: string): Promise<boolean> {
-    if (this.isLive()) {
-      try {
-        await supabase.from('inquiries').delete().eq('id', id);
-      } catch (e) {
-        console.warn('Supabase deleteInquiry failed:', e);
-      }
-    }
-    await this.delay();
-    this.store.inquiries = this.store.inquiries.filter(i => i.id !== id);
-    this.save();
-    return true;
+    return this.deleteInquiries([id]);
   }
 
   async deleteInquiries(ids: string[]): Promise<boolean> {
-    if (this.isLive()) {
-      try {
-        await supabase.from('inquiries').delete().in('id', ids);
-      } catch (e) {
-        console.warn('Supabase deleteInquiries failed:', e);
-      }
-    }
-    await this.delay();
-    const idSet = new Set(ids);
-    this.store.inquiries = this.store.inquiries.filter(i => !idSet.has(i.id));
-    this.save();
-    return true;
+    return liveOrMockDeleteInquiries(this.isLive(), this.store, () => this.save(), () => this.delay(), ids);
   }
 
   async getInquiryStats() {
