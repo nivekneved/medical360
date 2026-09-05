@@ -678,6 +678,7 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Global',
     content: {
       enabled: 'true',
+      position: 'above',
       speedSeconds: '45',
       badgeText: {
         en: 'NGO Enn Rêv Enn Sourir',

@@ -1,14 +1,23 @@
 /* ─── Hero ────────────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  min-height: calc(100vh - var(--navbar-height) - 48px);
   display: flex;
   align-items: center;
   background: var(--color-hero-bg);
   overflow: hidden;
+  transition: background 0.25s ease;
+}
+
+.hero--marquee-above {
+  min-height: calc(100vh - var(--navbar-height) - 48px);
   padding-top: 2rem;
   padding-bottom: 3.5rem;
-  transition: background 0.25s ease;
+}
+
+.hero--marquee-below {
+  min-height: 100vh;
+  padding-top: var(--navbar-height);
+  padding-bottom: 3rem;
 }
 
 .hero__bg {
