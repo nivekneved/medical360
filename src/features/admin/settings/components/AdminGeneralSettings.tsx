@@ -6,7 +6,7 @@ interface AdminGeneralSettingsProps {
 }
 
 export const AdminGeneralSettings: React.FC<AdminGeneralSettingsProps> = ({ onNotify }) => {
-  const [siteName, setSiteName] = useState('Medical 360');
+  const [siteName, setSiteName] = useState('Med360');
   const [tagline, setTagline] = useState('Specialised Medical Care in Private Clinics & Abroad');
   const [supportEmail, setSupportEmail] = useState('info@med360.mu');
   const [supportPhone, setSupportPhone] = useState('+230 59188275');

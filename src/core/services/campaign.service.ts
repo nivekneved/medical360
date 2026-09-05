@@ -104,7 +104,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     id: 'cmp-second-opinion-week',
     title: '🌟 Free Second Opinion Week - India & Thailand Specialists',
     subject: 'Get a Free Second Medical Opinion from Top International Hospitals',
-    preheader: 'Medical360 connects you with leading cardiac & orthopedic surgeons this month.',
+    preheader: 'Med360 connects you with leading cardiac & orthopedic surgeons this month.',
     status: 'sent',
     audienceId: 'aud-all-inquiries',
     audienceName: 'All Patient Inquiries (Regional)',
@@ -119,7 +119,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
       bannerBg: '#090d10',
       bannerTextColor: '#ffffff',
       headline: 'Special Focus: Complimentary Medical Second Opinions',
-      introText: 'Dear {{name}},\n\nIf you or your loved ones are considering specialized medical treatment abroad, Medical360 is offering complimentary dossier evaluations with senior department heads in Apollo Hospitals (India) and Bumrungrad International (Thailand).',
+      introText: 'Dear {{name}},\n\nIf you or your loved ones are considering specialized medical treatment abroad, Med360 is offering complimentary dossier evaluations with senior department heads in Apollo Hospitals (India) and Bumrungrad International (Thailand).',
       heroImageUrl: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80',
       bulletPoints: [
         'Direct case review by accredited specialist doctors',
@@ -133,7 +133,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
       showWhatsAppButton: true,
       whatsAppText: 'Chat on WhatsApp (+230 59188275)',
       showFooter: true,
-      footerNote: 'You received this email because you registered on Medical360 Mauritius. Strict medical privacy upheld.',
+      footerNote: 'You received this email because you registered on Med360 Mauritius. Strict medical privacy upheld.',
     },
   },
   {
@@ -151,7 +151,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     createdAt: '2026-08-18T14:00:00.000Z',
     sentAt: '2026-08-19T08:15:00.000Z',
     template: {
-      bannerTitle: 'Medical360 • Clinical Excellence Series',
+      bannerTitle: 'Med360 • Clinical Excellence Series',
       bannerBg: '#065f46',
       bannerTextColor: '#ffffff',
       headline: 'Robotic Precision & Faster Post-Operative Mobility',
@@ -168,7 +168,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
       showWhatsAppButton: true,
       whatsAppText: 'Ask Our Case Manager on WhatsApp',
       showFooter: true,
-      footerNote: 'Medical360 Healthcare Services • Port Louis, Mauritius',
+      footerNote: 'Med360 Healthcare Services • Port Louis, Mauritius',
     },
   },
   {
@@ -185,11 +185,11 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     clickedCount: 0,
     createdAt: '2026-08-24T11:00:00.000Z',
     template: {
-      bannerTitle: 'Medical360 • Travel & Concierge Advisory',
+      bannerTitle: 'Med360 • Travel & Concierge Advisory',
       bannerBg: '#1e1b4b',
       bannerTextColor: '#ffffff',
       headline: 'Fast-Track Medical Visas & Complete Travel Concierge',
-      introText: 'Dear {{name}},\n\nTraveling for healthcare should be stress-free. Medical360 provides end-to-end support including urgent embassy hospital invitation letters, attendant visa facilitation, and airport ambulances.',
+      introText: 'Dear {{name}},\n\nTraveling for healthcare should be stress-free. Med360 provides end-to-end support including urgent embassy hospital invitation letters, attendant visa facilitation, and airport ambulances.',
       heroImageUrl: 'https://images.unsplash.com/photo-1530521954074-e64f6810b32d?auto=format&fit=crop&w=800&q=80',
       bulletPoints: [
         'Priority Medical Visa invitation letters issued within 24 hours',
@@ -202,7 +202,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
       showWhatsAppButton: true,
       whatsAppText: 'Speak to our Travel Coordinator',
       showFooter: true,
-      footerNote: 'Medical360 Ltd • Port Louis, Mauritius',
+      footerNote: 'Med360 Ltd • Port Louis, Mauritius',
     },
   },
 ];
@@ -357,7 +357,7 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
           <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
             <tr>
               <td style="vertical-align: middle;">
-                <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Medical 360" height="44" style="height: 44px; max-width: 200px; display: block; border: 0;" />
+                <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Med360" height="44" style="height: 44px; max-width: 200px; display: block; border: 0;" />
               </td>
             </tr>
           </table>
@@ -399,7 +399,7 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
 
           ${t.showWhatsAppButton ? `
             <div style="text-align: center; margin-bottom: 16px;">
-              <a href="https://wa.me/23059188275?text=${encodeURIComponent(`Hello Medical360, I received your email regarding "${campaign.subject}" and would like to learn more.`)}" target="_blank" style="display: inline-block; background-color: #16a34a; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 9px 20px; border-radius: 6px;">
+              <a href="https://wa.me/23059188275?text=${encodeURIComponent(`Hello Med360, I received your email regarding "${campaign.subject}" and would like to learn more.`)}" target="_blank" style="display: inline-block; background-color: #16a34a; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 9px 20px; border-radius: 6px;">
                 💬 ${t.whatsAppText || 'Chat on WhatsApp (+230 59188275)'}
               </a>
             </div>
@@ -413,7 +413,7 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
               ${t.footerNote}
             </p>
             <p style="margin: 0; font-size: 11px; color: #94a3b8;">
-              © ${new Date().getFullYear()} Medical360 Ltd • Port Louis, Mauritius. All rights reserved.
+              © ${new Date().getFullYear()} Med360 Ltd • Port Louis, Mauritius. All rights reserved.
             </p>
           </div>
         ` : ''}

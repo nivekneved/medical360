@@ -1,4 +1,4 @@
-# 🩺 Medical 360 — International Healthcare Concierge Platform
+# 🩺 Med360 — International Healthcare Concierge Platform
 
 > **Connecting Mauritian and Indian Ocean patients to accredited world-class hospitals and specialists.**  
 > Includes the **Web Application** (`medical360`) and **Cross-Platform Mobile App** (`medical360-mobile`).
@@ -21,7 +21,7 @@
 
 ## 🌟 Overview & Mission
 
-**Medical 360** (Med360 Ltd) is a specialized medical concierge platform based in Port Louis, Mauritius. The platform assists patients seeking advanced treatments abroad (cardiac surgery, oncology, organ transplants, orthopedics, IVF, neurosurgery) by coordinating:
+**Med360** (Med360 Ltd) is a specialized medical concierge platform based in Port Louis, Mauritius. The platform assists patients seeking advanced treatments abroad (cardiac surgery, oncology, organ transplants, orthopedics, IVF, neurosurgery) by coordinating:
 - **Free expert medical opinions** from leading hospital department heads within 48 hours.
 - **Accredited partner hospitals** across India, Thailand, Singapore, Malaysia, and the UAE.
 - **7 World-Renowned Medical Specialists** handpicked across key medical disciplines.
