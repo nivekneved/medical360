@@ -1,0 +1,181 @@
+[
+  {
+    "id": "inq-1",
+    "first_name": "Sanjiv",
+    "last_name": "Ramkhelawon",
+    "email": "sanjiv.r@gmail.com",
+    "phone": "+23057123456",
+    "country_of_residence": "Mauritius",
+    "specialty_id": "sp-cardiology",
+    "description": "My father, 71 years old, has been diagnosed with severe aortic stenosis. His cardiologist recommends TAVI but the wait in Mauritius is too long. Looking for options abroad.",
+    "urgency": "urgent",
+    "preferred_country": "India",
+    "budget_min": 10000,
+    "budget_max": 25000,
+    "documents": [],
+    "status": "contacted",
+    "assigned_case_manager_id": "admin-2",
+    "notes": [
+      {
+        "id": "note-1",
+        "content": "Called patient. Sent hospital options for Apollo and Medanta. Awaiting decision.",
+        "authorId": "admin-2",
+        "createdAt": "2026-08-19T10:00:00Z",
+        "inquiryId": "inq-1"
+      }
+    ],
+    "created_at": "2026-08-18T08:30:00+00:00",
+    "updated_at": "2026-08-19T10:00:00+00:00"
+  },
+  {
+    "id": "inq-2",
+    "first_name": "Laetitia",
+    "last_name": "Bonnenfant",
+    "email": "laetitia.b@hotmail.com",
+    "phone": "+23058234567",
+    "country_of_residence": "Mauritius",
+    "specialty_id": "sp-ivf",
+    "description": "We have been trying to conceive for 4 years. Had 2 IVF cycles in Mauritius with no success. Interested in exploring IVF abroad with better success rates.",
+    "urgency": "routine",
+    "preferred_country": "India",
+    "budget_min": 4000,
+    "budget_max": 8000,
+    "documents": [],
+    "status": "new",
+    "assigned_case_manager_id": null,
+    "notes": [],
+    "created_at": "2026-08-19T14:15:00+00:00",
+    "updated_at": "2026-08-19T14:15:00+00:00"
+  },
+  {
+    "id": "inq-3",
+    "first_name": "Omar",
+    "last_name": "Abdallah",
+    "email": "omar.a@yahoo.com",
+    "phone": "+26961345678",
+    "country_of_residence": "Comoros",
+    "specialty_id": "sp-oncology",
+    "description": "My wife has been diagnosed with breast cancer Stage II. Oncologist recommends surgery followed by chemotherapy. Looking for an affordable and trusted hospital in India.",
+    "urgency": "urgent",
+    "preferred_country": "India",
+    "budget_min": 8000,
+    "budget_max": 20000,
+    "documents": [],
+    "status": "in_progress",
+    "assigned_case_manager_id": "admin-2",
+    "notes": [
+      {
+        "id": "note-2",
+        "content": "Arranged second opinion with Dr. Suresh at Fortis. Patient reports are being reviewed.",
+        "authorId": "admin-2",
+        "createdAt": "2026-08-18T11:00:00Z",
+        "inquiryId": "inq-3"
+      },
+      {
+        "id": "note-3",
+        "content": "Treatment plan received. Sent cost estimate to patient. Awaiting visa processing.",
+        "authorId": "admin-2",
+        "createdAt": "2026-08-20T09:00:00Z",
+        "inquiryId": "inq-3"
+      }
+    ],
+    "created_at": "2026-08-17T09:00:00+00:00",
+    "updated_at": "2026-08-20T09:00:00+00:00"
+  },
+  {
+    "id": "inq-4",
+    "first_name": "Deepa",
+    "last_name": "Luckhoo",
+    "email": "deepa.l@gmail.com",
+    "phone": "+23059345678",
+    "country_of_residence": "Mauritius",
+    "specialty_id": "sp-orthopedics",
+    "description": "Both knees need replacement. I am 64 years old and very active. Would like to explore robotic knee replacement in Thailand or India.",
+    "urgency": "routine",
+    "preferred_country": "Thailand",
+    "budget_min": 8000,
+    "budget_max": 15000,
+    "documents": [],
+    "status": "quoted",
+    "assigned_case_manager_id": "admin-2",
+    "notes": [
+      {
+        "id": "note-4",
+        "content": "Sent quote for Bumrungrad bilateral knee replacement. Cost: $11,500 all-inclusive.",
+        "authorId": "admin-2",
+        "createdAt": "2026-08-20T16:00:00Z",
+        "inquiryId": "inq-4"
+      }
+    ],
+    "created_at": "2026-08-15T11:30:00+00:00",
+    "updated_at": "2026-08-20T16:00:00+00:00"
+  },
+  {
+    "id": "inq-5",
+    "first_name": "Patrick",
+    "last_name": "Mounien",
+    "email": "p.mounien@orange.mu",
+    "phone": "+23057456789",
+    "country_of_residence": "Mauritius",
+    "specialty_id": "sp-neurology",
+    "description": "I have a 3cm meningioma on my frontal lobe. My neurologist says it needs to be removed but I want a second opinion and possibly surgery abroad.",
+    "urgency": "urgent",
+    "preferred_country": "Singapore",
+    "budget_min": 15000,
+    "budget_max": 30000,
+    "documents": [],
+    "status": "new",
+    "assigned_case_manager_id": null,
+    "notes": [],
+    "created_at": "2026-08-20T07:00:00+00:00",
+    "updated_at": "2026-08-20T07:00:00+00:00"
+  },
+  {
+    "id": "inq-6",
+    "first_name": "Yasmine",
+    "last_name": "Fakir",
+    "email": "yasmine.f@gmail.com",
+    "phone": "+23058567890",
+    "country_of_residence": "Mauritius",
+    "specialty_id": "sp-transplant",
+    "description": "My husband needs a liver transplant. He has been on the waiting list in Mauritius for 8 months. Looking for options in India.",
+    "urgency": "urgent",
+    "preferred_country": "India",
+    "budget_min": 25000,
+    "budget_max": 50000,
+    "documents": [],
+    "status": "confirmed",
+    "assigned_case_manager_id": "admin-2",
+    "notes": [
+      {
+        "id": "note-5",
+        "content": "Confirmed date at Medanta for 5 Sept. Visa and flights arranged. Hotel booked near hospital.",
+        "authorId": "admin-2",
+        "createdAt": "2026-08-18T13:00:00Z",
+        "inquiryId": "inq-6"
+      }
+    ],
+    "created_at": "2026-08-10T13:00:00+00:00",
+    "updated_at": "2026-08-18T13:00:00+00:00"
+  },
+  {
+    "id": "inq-1788446216863",
+    "first_name": "Caesar",
+    "last_name": "Sawyer",
+    "email": "wobe@example.com",
+    "phone": "+1 (295) 871-4669",
+    "country_of_residence": "France",
+    "specialty_id": "sp-orthopedics",
+    "description": "Molestiae sunt qui e",
+    "urgency": "routine",
+    "preferred_country": null,
+    "budget_min": null,
+    "budget_max": null,
+    "documents": [],
+    "status": "new",
+    "assigned_case_manager_id": null,
+    "notes": [],
+    "created_at": "2026-09-03T14:36:56.863+00:00",
+    "updated_at": "2026-09-03T14:36:56.863+00:00"
+  }
+]

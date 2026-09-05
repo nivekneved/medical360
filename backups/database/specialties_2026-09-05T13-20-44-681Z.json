@@ -1,0 +1,552 @@
+[
+  {
+    "id": "sp-orthopedics",
+    "name": "Orthopedics & Spine",
+    "name_fr": "Orthopédie et Colonne Vertébrale",
+    "name_kr": "Ortopedi & Kolonn Vertebral",
+    "slug": "orthopedics",
+    "icon": "Bone",
+    "description": "Our partner hospitals perform thousands of knee and hip replacements, robotic joint surgery, and complex spine procedures annually using the latest computer-assisted navigation systems.",
+    "description_fr": "Nos hôpitaux partenaires réalisent des milliers de remplacements de genou et de hanche, des chirurgies articulaires robotiques et des procédures vertébrales complexes chaque année en utilisant les derniers systèmes de navigation assistés par ordinateur.",
+    "description_kr": "Nou bann lopital partner fer plizier milye ranplasman zounou ek lans, operasion robotik, ek sirirzi ledo konplex sak lane an itilisan bann sistem navigasyon modern.",
+    "short_description": "From joint replacements to complex spine surgery.",
+    "short_description_fr": "Des remplacements articulaires aux chirurgies complexes de la colonne vertébrale.",
+    "short_description_kr": "Depi ranplase zouintir ziska sirirzi konplex ledo.",
+    "image_url": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80",
+    "procedures": [
+      {
+        "id": "proc-or1",
+        "name": "Total Knee Replacement",
+        "name_fr": "Remplacement Total du Genou",
+        "name_kr": "Sanzman Total Zounou",
+        "description": "Surgical replacement of damaged knee joint with prosthetic.",
+        "specialtyId": "sp-orthopedics",
+        "description_fr": "Remplacement chirurgical de l'articulation du genou endommagée par une prothèse.",
+        "description_kr": "Sanzman zouintir zounou ki finn abime ek mete enn protez.",
+        "estimatedCostUSD": {
+          "max": 8000,
+          "min": 4000
+        },
+        "estimatedDurationDays": 10
+      },
+      {
+        "id": "proc-or2",
+        "name": "Total Hip Replacement",
+        "name_fr": "Remplacement Total de la Hanche",
+        "name_kr": "Sanzman Total Lans",
+        "description": "Replacement of damaged hip joint to restore mobility.",
+        "specialtyId": "sp-orthopedics",
+        "description_fr": "Remplacement de l'articulation de la hanche endommagée pour restaurer la mobilité.",
+        "description_kr": "Sanzman zouintir lans pou regagn mobilite.",
+        "estimatedCostUSD": {
+          "max": 9000,
+          "min": 4500
+        },
+        "estimatedDurationDays": 10
+      },
+      {
+        "id": "proc-or3",
+        "name": "Spine Surgery (TLIF / ALIF)",
+        "name_fr": "Chirurgie de la Colonne Vertébrale (TLIF / ALIF)",
+        "name_kr": "Sirirzi Ledo (TLIF / ALIF)",
+        "description": "Spinal fusion for degenerative disc disease or instability.",
+        "specialtyId": "sp-orthopedics",
+        "description_fr": "Fusion rachidienne pour la maladie dégénérative du disque ou l'instabilité.",
+        "description_kr": "Fizion kolonn vertebral pou disk ki finn ize.",
+        "estimatedCostUSD": {
+          "max": 14000,
+          "min": 6000
+        },
+        "estimatedDurationDays": 14
+      },
+      {
+        "id": "proc-or4",
+        "name": "Robotic Knee/Hip Surgery",
+        "name_fr": "Chirurgie Robotique Genou/Hanche",
+        "name_kr": "Operasion Robotik Zounou/Lans",
+        "description": "Computer-guided precision joint replacement surgery.",
+        "specialtyId": "sp-orthopedics",
+        "description_fr": "Chirurgie de remplacement articulaire de précision guidée par ordinateur.",
+        "description_kr": "Sirirzi avek lasistans ordinateur pou plis presizion.",
+        "estimatedCostUSD": {
+          "max": 12000,
+          "min": 7000
+        },
+        "estimatedDurationDays": 8
+      }
+    ],
+    "featured": true,
+    "created_at": "2026-08-26T20:11:55.995671+00:00",
+    "updated_at": "2026-08-26T20:11:55.995671+00:00"
+  },
+  {
+    "id": "sp-cardiology",
+    "name": "Cardiology & Cardiac Surgery",
+    "name_fr": "Cardiologie et Chirurgie Cardiaque",
+    "name_kr": "Kardiolizi & Sirirzi Leker",
+    "slug": "cardiology",
+    "icon": "Heart",
+    "description": "Our network hospitals offer complete cardiac services — from non-invasive diagnostics and angioplasty to complex bypass grafts (CABG), valve replacements, TAVI, and heart transplants — performed by surgeons with 10,000+ procedure experience.",
+    "description_fr": "Nos hôpitaux partenaires offrent des services cardiaques complets — du diagnostic non invasif et de l'angioplastie aux pontages complexes (CABG), remplacements de valves, TAVI et greffes cardiaques — réalisés par des chirurgiens ayant plus de 10 000 interventions à leur actif.",
+    "description_kr": "Nou bann lopital rezo ofer servis leker konple — depi test ziska bypass konplex (CABG), sanzman valv, TAVI ek transplantasion leker — fer par bann sirirzien ki ena lexperyans dan plis ki 10 000 operasion.",
+    "short_description": "World-class heart care from diagnosis to complex bypass surgery.",
+    "short_description_fr": "Soins cardiaques de classe mondiale, du diagnostic au pontage complexe.",
+    "short_description_kr": "Swen leker klas mondial depi test ziska operasion konplex.",
+    "image_url": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80",
+    "procedures": [
+      {
+        "id": "proc-c1",
+        "name": "Coronary Artery Bypass Graft (CABG)",
+        "name_fr": "Pontage Coronarien (CABG)",
+        "name_kr": "Bypass Leker (CABG)",
+        "description": "Open-heart surgery to restore blood flow to the heart.",
+        "specialtyId": "sp-cardiology",
+        "description_fr": "Chirurgie à cœur ouvert pour restaurer le flux sanguin vers le cœur.",
+        "description_kr": "Operasion leker ouver pou re-donn disan leker.",
+        "estimatedCostUSD": {
+          "max": 9000,
+          "min": 5000
+        },
+        "estimatedDurationDays": 10
+      },
+      {
+        "id": "proc-c2",
+        "name": "Angioplasty & Stenting",
+        "name_fr": "Angioplastie et Pose de Stent",
+        "name_kr": "Anzioplasti & Stent",
+        "description": "Minimally invasive procedure to open blocked arteries.",
+        "specialtyId": "sp-cardiology",
+        "description_fr": "Procédure mini-invasive pour ouvrir les artères bloquées.",
+        "description_kr": "Ti-operasion pou debous larter.",
+        "estimatedCostUSD": {
+          "max": 6000,
+          "min": 3000
+        },
+        "estimatedDurationDays": 4
+      },
+      {
+        "id": "proc-c3",
+        "name": "Valve Replacement / Repair",
+        "name_fr": "Remplacement / Réparation de Valve",
+        "name_kr": "Sanzman / Reparasion Valv",
+        "description": "Surgical correction of damaged heart valves.",
+        "specialtyId": "sp-cardiology",
+        "description_fr": "Correction chirurgicale des valves cardiaques endommagées.",
+        "description_kr": "Operasion pou repar valv leker ki finn abime.",
+        "estimatedCostUSD": {
+          "max": 12000,
+          "min": 6000
+        },
+        "estimatedDurationDays": 12
+      },
+      {
+        "id": "proc-c4",
+        "name": "TAVI (Transcatheter Aortic Valve Implantation)",
+        "name_fr": "TAVI (Implantation de Valve Aortique Transcathéter)",
+        "name_kr": "TAVI (Inplantasion Valv)",
+        "description": "Minimally invasive heart valve replacement without open-heart surgery.",
+        "specialtyId": "sp-cardiology",
+        "description_fr": "Remplacement de la valve cardiaque de manière mini-invasive sans chirurgie à cœur ouvert.",
+        "description_kr": "Sanzman valv leker san bizin ouver leker.",
+        "estimatedCostUSD": {
+          "max": 30000,
+          "min": 18000
+        },
+        "estimatedDurationDays": 7
+      }
+    ],
+    "featured": true,
+    "created_at": "2026-08-26T20:11:55.995671+00:00",
+    "updated_at": "2026-08-26T20:11:55.995671+00:00"
+  },
+  {
+    "id": "sp-oncology",
+    "name": "Oncology & Cancer Care",
+    "name_fr": "Oncologie et Soins du Cancer",
+    "name_kr": "Onkolizi & Swen Kanser",
+    "slug": "oncology",
+    "icon": "Microscope",
+    "description": "Access cutting-edge cancer treatments including CyberKnife radiosurgery, proton therapy, immunotherapy, targeted therapy, bone marrow transplants, and precision surgery — guided by internationally trained oncologists.",
+    "description_fr": "Accédez aux traitements de pointe contre le cancer, notamment la radiochirurgie CyberKnife, la protonthérapie, l'immunothérapie, les thérapies ciblées, les greffes de moelle osseuse et la chirurgie de précision — guidés par des oncologues formés à l'international.",
+    "description_kr": "Gagn akse ar bann tretman kanser de pwent, kouma CyberKnife, proton terapi, immunoterapi, terapi sible, transplantasion mwal ose ek sirirzi presizion — gid par bann spesialis form a linternasional.",
+    "short_description": "Advanced cancer diagnosis, treatment, and targeted therapy.",
+    "short_description_fr": "Diagnostic du cancer avancé, traitement et thérapie ciblée.",
+    "short_description_kr": "Bann test kanser avanse, tretman ek terapi sible.",
+    "image_url": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80",
+    "procedures": [
+      {
+        "id": "proc-o1",
+        "name": "Bone Marrow / Stem Cell Transplant",
+        "name_fr": "Greffe de Moelle Osseuse / Cellules Souches",
+        "name_kr": "Transplantasion Mwal Ose",
+        "description": "Treatment for blood cancers including leukemia and lymphoma.",
+        "specialtyId": "sp-oncology",
+        "description_fr": "Traitement des cancers du sang, y compris la leucémie et le lymphome.",
+        "description_kr": "Tretman pou kanser disan (lesemi ek linfom).",
+        "estimatedCostUSD": {
+          "max": 40000,
+          "min": 20000
+        },
+        "estimatedDurationDays": 30
+      },
+      {
+        "id": "proc-o2",
+        "name": "CyberKnife Radiosurgery",
+        "name_fr": "Radiochirurgie CyberKnife",
+        "name_kr": "CyberKnife",
+        "description": "Non-invasive tumor removal with pinpoint radiation accuracy.",
+        "specialtyId": "sp-oncology",
+        "description_fr": "Ablation non invasive des tumeurs avec une précision de radiation millimétrique.",
+        "description_kr": "Bann tretman lasan dimounn san bizin koup dimounn (lasazer).",
+        "estimatedCostUSD": {
+          "max": 20000,
+          "min": 10000
+        },
+        "estimatedDurationDays": 7
+      },
+      {
+        "id": "proc-o3",
+        "name": "Chemotherapy Programs",
+        "name_fr": "Programmes de Chimiothérapie",
+        "name_kr": "Program Simioterapi",
+        "description": "Personalised chemotherapy cycles for various cancers.",
+        "specialtyId": "sp-oncology",
+        "description_fr": "Cycles de chimiothérapie personnalisés pour divers cancers.",
+        "description_kr": "Sik simioterapi personalize pou plizier kalite kanser.",
+        "estimatedCostUSD": {
+          "max": 8000,
+          "min": 2000
+        },
+        "estimatedDurationDays": 21
+      },
+      {
+        "id": "proc-o4",
+        "name": "Immunotherapy",
+        "name_fr": "Immunothérapie",
+        "name_kr": "Imminoterapi",
+        "description": "Harnessing the immune system to fight cancer cells.",
+        "specialtyId": "sp-oncology",
+        "description_fr": "Exploitation du système immunitaire pour combattre les cellules cancéreuses.",
+        "description_kr": "Fer lekor dimounn re-konbat bann selil kanser.",
+        "estimatedCostUSD": {
+          "max": 25000,
+          "min": 8000
+        },
+        "estimatedDurationDays": 14
+      }
+    ],
+    "featured": true,
+    "created_at": "2026-08-26T20:11:55.995671+00:00",
+    "updated_at": "2026-08-26T20:11:55.995671+00:00"
+  },
+  {
+    "id": "sp-neurology",
+    "name": "Neurology & Neurosurgery",
+    "name_fr": "Neurologie et Neurochirurgie",
+    "name_kr": "Neurolozi & Neuro-Sirirzi",
+    "slug": "neurology",
+    "icon": "Brain",
+    "description": "From epilepsy management and stroke rehabilitation to brain tumour surgery and deep brain stimulation, our neurology centres are equipped with 3T MRI, intraoperative neuromonitoring, and expert neurosurgeons.",
+    "description_fr": "De la gestion de l'épilepsie et de la réadaptation après un AVC à la chirurgie des tumeurs cérébrales et à la stimulation cérébrale profonde, nos centres de neurologie sont équipés d'IRM 3T, de neuromonitoring peropératoire et de neurochirurgiens experts.",
+    "description_kr": "Pou problem epilepsi, AVC (la stroke), ziska operasion timer dan servo, nou bann sant neurolozi bien ekipe avek masinn modern ek bann meyer spesialis.",
+    "short_description": "Expert care for brain, spine, and nervous system conditions.",
+    "short_description_fr": "Soins experts pour les affections du cerveau, de la colonne vertébrale et du système nerveux.",
+    "short_description_kr": "Soins lexper pou problem servo, ledo, ek ner.",
+    "image_url": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80",
+    "procedures": [
+      {
+        "id": "proc-n1",
+        "name": "Brain Tumour Surgery",
+        "name_fr": "Chirurgie des Tumeurs Cérébrales",
+        "name_kr": "Operasion Timer Servo",
+        "description": "Microsurgical removal of intracranial tumours.",
+        "specialtyId": "sp-neurology",
+        "description_fr": "Ablation microchirurgicale des tumeurs intracrâniennes.",
+        "description_kr": "Sirirzi pou tir timer dan servo.",
+        "estimatedCostUSD": {
+          "max": 18000,
+          "min": 8000
+        },
+        "estimatedDurationDays": 14
+      },
+      {
+        "id": "proc-n2",
+        "name": "Deep Brain Stimulation (DBS)",
+        "name_fr": "Stimulation Cérébrale Profonde (DBS)",
+        "name_kr": "Stimilasion Servo (DBS)",
+        "description": "Treatment for Parkinson's disease and movement disorders.",
+        "specialtyId": "sp-neurology",
+        "description_fr": "Traitement de la maladie de Parkinson et des troubles du mouvement.",
+        "description_kr": "Tretman pou maladi Parkinson ek lot problem kontrol.",
+        "estimatedCostUSD": {
+          "max": 35000,
+          "min": 20000
+        },
+        "estimatedDurationDays": 10
+      },
+      {
+        "id": "proc-n3",
+        "name": "Stroke Rehabilitation",
+        "name_fr": "Réadaptation Post-AVC",
+        "name_kr": "Tretman Apre Stroke",
+        "description": "Intensive neuro-rehabilitation programme post-stroke.",
+        "specialtyId": "sp-neurology",
+        "description_fr": "Programme intensif de neuro-réadaptation après un AVC.",
+        "description_kr": "Re-adaptasion intensif apre enn kout disan (Stroke).",
+        "estimatedCostUSD": {
+          "max": 15000,
+          "min": 5000
+        },
+        "estimatedDurationDays": 21
+      }
+    ],
+    "featured": true,
+    "created_at": "2026-08-26T20:11:55.995671+00:00",
+    "updated_at": "2026-08-26T20:11:55.995671+00:00"
+  },
+  {
+    "id": "sp-transplant",
+    "name": "Organ Transplants",
+    "name_fr": "Greffes d'Organes",
+    "name_kr": "Transplantasion Lorgann",
+    "slug": "organ-transplants",
+    "icon": "Activity",
+    "description": "Our partner hospitals have performed thousands of successful organ transplants with internationally comparable success rates. Full pre-transplant evaluation, surgery, and long-term follow-up coordination.",
+    "description_fr": "Nos hôpitaux partenaires ont réalisé des milliers de greffes d'organes réussies avec des taux de réussite comparables à l'international. Évaluation pré-greffe complète, chirurgie et coordination du suivi à long terme.",
+    "description_kr": "Nou bann lopital finn fer milye transplantasion avek sikse mondial. Zot asir test pre-operatwar, operasion, ek swivi lontan.",
+    "short_description": "Kidney, liver, heart and bone marrow transplant programmes.",
+    "short_description_fr": "Programmes de transplantation rénale, hépatique, cardiaque et de moelle osseuse.",
+    "short_description_kr": "Program pou transplantasion lerin, fwa, leker ek mwal ose.",
+    "image_url": "https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=80",
+    "procedures": [
+      {
+        "id": "proc-t1",
+        "name": "Kidney Transplant",
+        "name_fr": "Greffe de Rein",
+        "name_kr": "Transplantasion Lerin",
+        "description": "Living or deceased donor kidney transplantation.",
+        "specialtyId": "sp-transplant",
+        "description_fr": "Transplantation rénale de donneur vivant ou décédé.",
+        "description_kr": "Gref lerin (doner vivan ou ki finn desede).",
+        "estimatedCostUSD": {
+          "max": 22000,
+          "min": 13000
+        },
+        "estimatedDurationDays": 21
+      },
+      {
+        "id": "proc-t2",
+        "name": "Liver Transplant",
+        "name_fr": "Greffe de Foie",
+        "name_kr": "Transplantasion Fwa",
+        "description": "Living or deceased donor liver transplantation.",
+        "specialtyId": "sp-transplant",
+        "description_fr": "Transplantation hépatique de donneur vivant ou décédé.",
+        "description_kr": "Gref fwa (doner vivan ou ki finn desede).",
+        "estimatedCostUSD": {
+          "max": 45000,
+          "min": 28000
+        },
+        "estimatedDurationDays": 30
+      },
+      {
+        "id": "proc-t3",
+        "name": "Bone Marrow Transplant",
+        "name_fr": "Greffe de Moelle Osseuse",
+        "name_kr": "Transplantasion Mwal Ose",
+        "description": "Autologous or allogeneic haematopoietic stem cell transplant.",
+        "specialtyId": "sp-transplant",
+        "description_fr": "Transplantation de cellules souches hématopoïétiques autologues ou allogéniques.",
+        "description_kr": "Tretman selil sous pou ranplas lezo ki malad.",
+        "estimatedCostUSD": {
+          "max": 40000,
+          "min": 20000
+        },
+        "estimatedDurationDays": 35
+      }
+    ],
+    "featured": true,
+    "created_at": "2026-08-26T20:11:55.995671+00:00",
+    "updated_at": "2026-08-26T20:11:55.995671+00:00"
+  },
+  {
+    "id": "sp-ivf",
+    "name": "Fertility & IVF",
+    "name_fr": "Fertilité & FIV",
+    "name_kr": "FIV & Fertilite",
+    "slug": "fertility-ivf",
+    "icon": "Baby",
+    "description": "Our network's fertility centres offer IVF, ICSI, egg freezing, surrogacy evaluation, and male infertility treatments with internationally competitive success rates and compassionate care.",
+    "description_fr": "Les centres de fertilité de notre réseau proposent la FIV, l'ICSI, la congélation d'ovules, l'évaluation de la gestation pour autrui et les traitements de l'infertilité masculine avec des taux de réussite internationalement compétitifs et des soins compatissants.",
+    "description_kr": "Nou bann sant fertilite ofer FIV (in-vitro), ICSI, ek tretman infertilite pou bann misie ek madam avek boukou lafeksion.",
+    "short_description": "Advanced fertility treatments with high success rates.",
+    "short_description_fr": "Traitements de fertilité avancés avec des taux de réussite élevés.",
+    "short_description_kr": "Bann tretman fertilite bien avanse avek to sikse ankor pli o.",
+    "image_url": "https://images.unsplash.com/photo-1519689680058-324335c77eba?w=800&q=80",
+    "procedures": [
+      {
+        "id": "proc-i1",
+        "name": "IVF (In Vitro Fertilisation)",
+        "name_fr": "FIV (Fécondation In Vitro)",
+        "name_kr": "FIV (Fekondasion In-Vitro)",
+        "description": "Complete IVF cycle with embryo transfer.",
+        "specialtyId": "sp-ivf",
+        "description_fr": "Cycle complet de FIV avec transfert d'embryon.",
+        "description_kr": "Sik FIV konple avek transfer lanbrion.",
+        "estimatedCostUSD": {
+          "max": 6000,
+          "min": 3000
+        },
+        "estimatedDurationDays": 21
+      },
+      {
+        "id": "proc-i2",
+        "name": "ICSI (Intracytoplasmic Sperm Injection)",
+        "name_fr": "ICSI (Injection Intracytoplasmique de Spermatozoïde)",
+        "name_kr": "ICSI",
+        "description": "Advanced IVF technique for male infertility.",
+        "specialtyId": "sp-ivf",
+        "description_fr": "Technique avancée de FIV pour l'infertilité masculine.",
+        "description_kr": "Teknik avanse pou misie ki ena difikilte gagn zanfan.",
+        "estimatedCostUSD": {
+          "max": 7000,
+          "min": 3500
+        },
+        "estimatedDurationDays": 21
+      },
+      {
+        "id": "proc-i3",
+        "name": "Egg / Embryo Freezing",
+        "name_fr": "Congélation d'Ovules / Embryons",
+        "name_kr": "Friz Dizef / Lanbrion",
+        "description": "Fertility preservation for future use.",
+        "specialtyId": "sp-ivf",
+        "description_fr": "Préservation de la fertilité pour une utilisation future.",
+        "description_kr": "Prezerv fertilite pou itiliz plitar.",
+        "estimatedCostUSD": {
+          "max": 4000,
+          "min": 2000
+        },
+        "estimatedDurationDays": 14
+      }
+    ],
+    "featured": true,
+    "created_at": "2026-08-26T20:11:55.995671+00:00",
+    "updated_at": "2026-08-26T20:11:55.995671+00:00"
+  },
+  {
+    "id": "sp-cosmetic",
+    "name": "Cosmetic & Plastic Surgery",
+    "name_fr": "Chirurgie Esthétique & Plastique",
+    "name_kr": "Sirirzi Estetik",
+    "slug": "cosmetic-surgery",
+    "icon": "Sparkles",
+    "description": "From rhinoplasty and facelifts to bariatric surgery and body contouring, our cosmetic surgery partners combine artistic precision with clinical excellence at a fraction of European or Mauritian costs.",
+    "description_fr": "De la rhinoplastie et des liftings à la chirurgie bariatrique et au remodelage corporel, nos partenaires en chirurgie esthétique allient précision artistique et excellence clinique à une fraction des coûts européens ou mauriciens.",
+    "description_kr": "Nou bann partner sirirzi estetik (rinoplasti, bariatrik) marye presizion artistik ar lekzpertiz klinik, pou enn pri boukou pli bon marse.",
+    "short_description": "Premium aesthetic procedures by board-certified surgeons.",
+    "short_description_fr": "Procédures esthétiques haut de gamme par des chirurgiens certifiés.",
+    "short_description_kr": "Tretman estetik pli top par bann sirirzien sertifie.",
+    "image_url": "/assets/banners/cosmetic_surgery.jpg",
+    "procedures": [
+      {
+        "id": "proc-cs1",
+        "name": "Rhinoplasty (Nose Job)",
+        "name_fr": "Rhinoplastie (Chirurgie du Nez)",
+        "name_kr": "Rinoplasti (Operasion Nene)",
+        "description": "Surgical reshaping of the nose for aesthetic or functional improvement.",
+        "specialtyId": "sp-cosmetic",
+        "description_fr": "Remodelage chirurgical du nez pour une amélioration esthétique ou fonctionnelle.",
+        "description_kr": "Sanz form nene pou rezon estetik ouswa medikal.",
+        "estimatedCostUSD": {
+          "max": 5000,
+          "min": 2500
+        },
+        "estimatedDurationDays": 7
+      },
+      {
+        "id": "proc-cs2",
+        "name": "Bariatric Surgery (Gastric Sleeve)",
+        "name_fr": "Chirurgie Bariatrique (Sleeve Gastrectomie)",
+        "name_kr": "Sirirzi Bariatrik",
+        "description": "Weight loss surgery for obesity management.",
+        "specialtyId": "sp-cosmetic",
+        "description_fr": "Chirurgie de perte de poids pour la gestion de l'obésité.",
+        "description_kr": "Operasion pou redwir lestoma pou bais pwa.",
+        "estimatedCostUSD": {
+          "max": 9000,
+          "min": 5000
+        },
+        "estimatedDurationDays": 7
+      },
+      {
+        "id": "proc-cs3",
+        "name": "Facelift (Rhytidectomy)",
+        "name_fr": "Lifting Facial (Rhytidectomie)",
+        "name_kr": "Lifting Figir",
+        "description": "Surgical face rejuvenation procedure.",
+        "specialtyId": "sp-cosmetic",
+        "description_fr": "Procédure chirurgicale de rajeunissement du visage.",
+        "description_kr": "Operasion pou rann figir paret pli zenn.",
+        "estimatedCostUSD": {
+          "max": 7000,
+          "min": 3000
+        },
+        "estimatedDurationDays": 10
+      }
+    ],
+    "featured": false,
+    "created_at": "2026-08-26T20:11:55.995671+00:00",
+    "updated_at": "2026-08-26T20:11:55.995671+00:00"
+  },
+  {
+    "id": "sp-ophthalmology",
+    "name": "Ophthalmology",
+    "name_fr": "Ophtalmologie",
+    "name_kr": "Oftalmolozi (Lizie)",
+    "slug": "ophthalmology",
+    "icon": "Eye",
+    "description": "State-of-the-art eye care including LASIK/LASEK, cataract surgery with premium IOL implants, retinal detachment repair, glaucoma management, and corneal transplants.",
+    "description_fr": "Soins oculaires de pointe comprenant LASIK/LASEK, chirurgie de la cataracte avec implants IOL premium, réparation du décollement de la rétine, gestion du glaucome et greffes de cornée.",
+    "description_kr": "Swen lizie avanse (LASIK, katarak avek inplant, reparasion retin ek transplantasion korne).",
+    "short_description": "Vision correction, cataract surgery, and retinal treatments.",
+    "short_description_fr": "Correction de la vue, chirurgie de la cataracte et traitements de la rétine.",
+    "short_description_kr": "Tretman lizie, katarak ek laser.",
+    "image_url": "https://images.unsplash.com/photo-1579684453423-f84349ef60b0?w=800&q=80",
+    "procedures": [
+      {
+        "id": "proc-oph1",
+        "name": "LASIK Eye Surgery",
+        "name_fr": "Chirurgie Oculaire LASIK",
+        "name_kr": "Operasion Lizie LASIK",
+        "description": "Laser vision correction for myopia, hyperopia and astigmatism.",
+        "specialtyId": "sp-ophthalmology",
+        "description_fr": "Correction de la vue au laser pour la myopie, l'hypermétropie et l'astigmatisme.",
+        "description_kr": "Koreksion laser pou problem trouvel ek lizie.",
+        "estimatedCostUSD": {
+          "max": 2500,
+          "min": 800
+        },
+        "estimatedDurationDays": 3
+      },
+      {
+        "id": "proc-oph2",
+        "name": "Cataract Surgery with Premium IOL",
+        "name_fr": "Chirurgie de la Cataracte avec IOL Premium",
+        "name_kr": "Operasion Katarak",
+        "description": "Lens replacement with multifocal intraocular lens.",
+        "specialtyId": "sp-ophthalmology",
+        "description_fr": "Remplacement du cristallin par une lentille intraoculaire multifocale.",
+        "description_kr": "Ranplas lantiy lizie kan ena katarak.",
+        "estimatedCostUSD": {
+          "max": 4000,
+          "min": 1500
+        },
+        "estimatedDurationDays": 3
+      }
+    ],
+    "featured": false,
+    "created_at": "2026-08-26T20:11:55.995671+00:00",
+    "updated_at": "2026-08-26T20:11:55.995671+00:00"
+  }
+]
