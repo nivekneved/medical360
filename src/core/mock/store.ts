@@ -7,8 +7,8 @@ import { inquiriesSeed } from './seeds/inquiries.seed';
 import { cmsSeed, CmsPage } from './seeds/cms.seed';
 
 export const DEFAULT_CONFIG: MockConfig = {
-  enabled: true, // Default to mock, toggleable to live Supabase
-  latency: 'normal',
+  enabled: false, // 100% Live Supabase Database
+  latency: 'instant',
   errorRate: 0,
 };
 

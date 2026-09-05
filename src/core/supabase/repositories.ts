@@ -54,20 +54,24 @@ export function mapSpecialtyRow(row: any): Specialty {
 
 export function mapDoctorRow(row: any): Doctor {
   const hIds = row.hospital_ids || (row.hospital_id ? [row.hospital_id] : []);
+  const specs = Array.isArray(row.specialties) && row.specialties.length > 0
+    ? row.specialties
+    : (row.specialty_id ? [row.specialty_id] : []);
+
   return {
     id: row.id,
     hospitalId: hIds[0],
     hospitalIds: hIds,
     name: row.name,
     title: row.title,
-    specialties: row.specialties || [],
+    specialties: specs,
     qualifications: row.qualifications || [],
-    experience: row.experience || 10,
+    experience: row.years_experience || row.experience || 10,
     surgeries: row.surgeries || 1000,
     languages: row.languages || ['English'],
     imageUrl: row.image_url || '/assets/consultation-support.jpg',
-    bio: row.bio || '',
-    consultationFeeUSD: row.consultation_fee_usd || 50,
+    bio: row.biography || row.bio || '',
+    consultationFeeUSD: row.consultation_fee_usd || 60,
     featured: row.featured ?? false,
   };
 }
