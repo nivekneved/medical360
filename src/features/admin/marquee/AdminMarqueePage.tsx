@@ -13,7 +13,10 @@ import {
   Gauge,
   Link2,
   Globe,
+  PanelTop,
+  PanelBottom,
 } from 'lucide-react';
+
 import { useCMS } from '../../../hooks/useCMS';
 import { mockEngine } from '../../../core/mock/engine';
 import './AdminMarqueePage.css';
@@ -29,6 +32,7 @@ export function AdminMarqueePage() {
 
   // Form State
   const [enabled, setEnabled] = useState(true);
+  const [position, setPosition] = useState<'above' | 'below'>('above');
   const [speedSeconds, setSpeedSeconds] = useState('45');
   const [badgeText, setBadgeText] = useState({
     en: 'NGO Enn Rêv Enn Sourir',
@@ -56,6 +60,7 @@ export function AdminMarqueePage() {
     if (cmsData?.content) {
       const c = cmsData.content;
       if (typeof c.enabled !== 'undefined') setEnabled(String(c.enabled) !== 'false');
+      if (c.position === 'above' || c.position === 'below') setPosition(c.position);
       if (c.speedSeconds) setSpeedSeconds(String(c.speedSeconds));
       if (c.badgeText) setBadgeText(prev => ({ ...prev, ...c.badgeText }));
       if (c.messageText) setMessageText(prev => ({ ...prev, ...c.messageText }));
@@ -72,6 +77,7 @@ export function AdminMarqueePage() {
     try {
       await mockEngine.updateCmsPage('marquee', {
         enabled: enabled ? 'true' : 'false',
+        position,
         speedSeconds,
         badgeText,
         messageText,
@@ -87,6 +93,7 @@ export function AdminMarqueePage() {
       setSaving(false);
     }
   };
+
 
   const handleReset = async () => {
     setResetting(true);
@@ -205,10 +212,16 @@ export function AdminMarqueePage() {
             <Sparkles size={16} color="var(--color-primary)" />
             <span>Live Ticker Preview ({activeLang.toUpperCase()})</span>
           </div>
-          <span className="marquee-preview-badge">
-            {enabled ? 'Active • Scrolling' : 'Disabled / Hidden'}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <span className="marquee-preview-badge" style={{ background: 'rgba(6, 95, 70, 0.08)' }}>
+              Placement: {position === 'above' ? 'Above Banner' : 'Below Banner'}
+            </span>
+            <span className="marquee-preview-badge">
+              {enabled ? 'Active • Scrolling' : 'Disabled / Hidden'}
+            </span>
+          </div>
         </div>
+
 
         <div className="marquee-preview-box">
           {enabled ? (
@@ -382,6 +395,42 @@ export function AdminMarqueePage() {
 
             <div className="marquee-field-group">
               <label className="marquee-field-label">
+                <PanelTop size={14} style={{ display: 'inline', marginRight: 4 }} />
+                Banner Placement on Main Page
+              </label>
+              <div className="marquee-position-grid">
+                <button
+                  type="button"
+                  className={`marquee-position-option ${position === 'above' ? 'marquee-position-option--active' : ''}`}
+                  onClick={() => setPosition('above')}
+                >
+                  <div className="marquee-position-header">
+                    <PanelTop size={16} color={position === 'above' ? 'var(--color-primary)' : 'var(--color-text-secondary)'} />
+                    <span>Above Banner</span>
+                  </div>
+                  <span className="marquee-position-desc">
+                    Top of page directly below header navbar
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  className={`marquee-position-option ${position === 'below' ? 'marquee-position-option--active' : ''}`}
+                  onClick={() => setPosition('below')}
+                >
+                  <div className="marquee-position-header">
+                    <PanelBottom size={16} color={position === 'below' ? 'var(--color-primary)' : 'var(--color-text-secondary)'} />
+                    <span>Below Banner</span>
+                  </div>
+                  <span className="marquee-position-desc">
+                    Between Hero banner and Specialties section
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <div className="marquee-field-group">
+              <label className="marquee-field-label">
                 <Gauge size={14} style={{ display: 'inline', marginRight: 4 }} />
                 Scroll Loop Duration
               </label>
@@ -399,6 +448,7 @@ export function AdminMarqueePage() {
                 Controls the speed of the continuous horizontal scroll.
               </span>
             </div>
+
 
             <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid var(--color-border)' }}>
               <button

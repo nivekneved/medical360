@@ -19,6 +19,10 @@ export function HomePage() {
   const { hospitals, loading: hospLoading }   = useFeaturedHospitals();
   const { caseStudies, loading: csLoading }   = useFeaturedCaseStudies();
   const { data: cms } = useCMS('home');
+  const { data: marqueeCms } = useCMS('marquee');
+
+  const marqueeEnabled = marqueeCms?.content?.enabled !== 'false' && marqueeCms?.content?.enabled !== false;
+  const marqueePosition = marqueeCms?.content?.position || 'above';
 
   // Determine localized field
   const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
@@ -61,13 +65,18 @@ export function HomePage() {
         canonical="/"
         schema={schema}
       />
-      {/* ── Top Mission Marquee Ribbon (Above Hero) ─────────────────────────── */}
-      <div className="mission-marquee-top">
-        <MissionMarquee />
-      </div>
+      {/* ── Top Mission Marquee Ribbon (When position === 'above') ─────────── */}
+      {marqueeEnabled && marqueePosition === 'above' && (
+        <div className="mission-marquee-top">
+          <MissionMarquee />
+        </div>
+      )}
 
       {/* ── Hero ──────────────────────────────────────────────────────────────── */}
-      <section className="hero" aria-label="Hero section">
+      <section 
+        className={`hero ${marqueeEnabled && marqueePosition === 'above' ? 'hero--marquee-above' : 'hero--marquee-below'}`} 
+        aria-label="Hero section"
+      >
         <div className="hero__bg">
           <div className="hero__image-bg" />
         </div>
@@ -127,6 +136,11 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Mission Marquee Ribbon (When position === 'below') ─────────────────── */}
+      {marqueeEnabled && marqueePosition === 'below' && (
+        <MissionMarquee />
+      )}
 
       {/* ── Specialties ────────────────────────────────────────────────────────── */}
       <section className="section home-specialties">
