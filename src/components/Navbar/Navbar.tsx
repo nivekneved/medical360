@@ -70,9 +70,26 @@ export function Navbar() {
     setActiveDropdown(null);
   }, [location.pathname]);
 
-  // Scroll detection for sticky blur navbar
+  // Scroll detection for sticky blur navbar (rAF throttled for 60fps scrolling)
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 15);
+    let ticking = false;
+    let lastScrolled = window.scrollY > 15;
+    setIsScrolled(lastScrolled);
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const current = window.scrollY > 15;
+          if (current !== lastScrolled) {
+            lastScrolled = current;
+            setIsScrolled(current);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);

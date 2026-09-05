@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
   Mail,
   Users,
@@ -47,10 +47,18 @@ export function AdminCampaignsPage() {
   // Dispatch progress state
   const [dispatchStatus, setDispatchStatus] = useState<{ running: boolean; total: number; sent: number; errors: string[] } | null>(null);
   const [notification, setNotification] = useState<string | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const showNotification = (text: string) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
     setNotification(text);
-    setTimeout(() => setNotification(null), 3500);
+    timerRef.current = setTimeout(() => setNotification(null), 3500);
   };
 
   const refreshData = () => {

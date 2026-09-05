@@ -163,7 +163,15 @@ export function HomePage() {
                   tabIndex={0}
                   onKeyDown={e => e.key === 'Enter' && navigate(`/specialties/${sp.id}`)}
                 >
-                  <img src={sp.imageUrl} alt={sp.name} className="specialty-card-full__img" loading="lazy" />
+                  <img
+                    src={sp.imageUrl}
+                    alt={sp.name}
+                    className="specialty-card-full__img"
+                    loading="lazy"
+                    decoding="async"
+                    width="400"
+                    height="340"
+                  />
                   <div className="specialty-card-full__overlay" />
                   <div className="specialty-card-full__content">
                     <h3 className="specialty-card-full__title">{l(sp, 'name')}</h3>
@@ -234,7 +242,14 @@ export function HomePage() {
                   id={`hospital-card-${hospital.id}`}
                 >
                   <div className="hospital-card__image">
-                    <img src={hospital.imageUrl} alt={hospital.name} loading="lazy" />
+                    <img
+                      src={hospital.imageUrl}
+                      alt={hospital.name}
+                      loading="lazy"
+                      decoding="async"
+                      width="400"
+                      height="220"
+                    />
                     <div className="hospital-card__overlay" />
                     <div className="hospital-card__badges">
                       {hospital.accreditations.slice(0, 2).map(acc => (
@@ -278,7 +293,14 @@ export function HomePage() {
                 {tCms('whyDesc', t('home.whyDesc'))}
               </p>
               <div className="why-image-card">
-                <img src="/assets/consultation-support.jpg" alt="Compassionate healthcare consultation" loading="lazy" />
+                <img
+                  src="/assets/consultation-support.jpg"
+                  alt="Compassionate healthcare consultation"
+                  loading="lazy"
+                  decoding="async"
+                  width="500"
+                  height="320"
+                />
                 <div className="why-image-badge">
                   <span className="badge badge-accent">{tCms('whyImageBadge', t('home.whyImageBadge'))}</span>
                 </div>
@@ -318,7 +340,14 @@ export function HomePage() {
               : caseStudies.slice(0, 3).map(cs => (
                 <div key={cs.id} className="case-card" id={`case-card-${cs.id}`}>
                   <div className="case-card__image">
-                    <img src={cs.imageUrl} alt={`${cs.patientFirstName}'s story`} loading="lazy" />
+                    <img
+                      src={cs.imageUrl}
+                      alt={`${cs.patientFirstName}'s story`}
+                      loading="lazy"
+                      decoding="async"
+                      width="400"
+                      height="240"
+                    />
                     <div className="case-card__savings">
                       {t('home.cases.saved')} {cs.costSavedPercent}%
                     </div>
