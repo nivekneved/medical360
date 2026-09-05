@@ -215,9 +215,13 @@ export function HomePage() {
               </div>
             ))}
           </div>
-          <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="process-cta-btn">
               {tCms('processStartBtn', t('home.process.startBtn'))} <ArrowRight size={18} />
+            </button>
+            <button className="btn btn-ghost btn-lg" onClick={() => navigate('/how-it-works')} style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#fff' }}>
+              <span>{i18n.language === 'fr' ? 'Découvrir les 4 Étapes en Détail' : i18n.language === 'kr' ? 'Dekouver bann 4 Letap an Detay' : 'Explore All 4 Care Steps'}</span>
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>
