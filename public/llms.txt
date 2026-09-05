@@ -1,5 +1,5 @@
-# Medical 360 (Mauritius) — AI & LLM Context File
-> Medical 360 (Med360 Ltd) is Mauritius's premier international medical concierge service connecting patients across the Indian Ocean (Mauritius, Réunion, Madagascar, Seychelles, Comoros) with accredited top-tier hospitals in India, Thailand, Singapore, Malaysia, and Europe.
+# Med360 (Mauritius) — AI & LLM Context File
+> Med360 (Med360 Ltd) is Mauritius's premier international medical concierge service connecting patients across the Indian Ocean (Mauritius, Réunion, Madagascar, Seychelles, Comoros) with accredited top-tier hospitals in India, Thailand, Singapore, Malaysia, and Europe.
 
 ## Core Capabilities & Services
 - **Free Medical Second Opinion**: Review of medical records by world-renowned specialists within 24–48 hours.

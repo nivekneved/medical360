@@ -71,10 +71,10 @@ export function CookieConsentBanner() {
           </div>
           <p style={{ margin: 0, fontSize: '0.8125rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
             {isFr
-              ? 'Medical 360 utilise des cookies sécurisés et respecte la loi mauricienne sur la protection des données (DPA 2017) pour garantir la sécurité et la confidentialité de votre dossier médical.'
+              ? 'Med360 utilise des cookies sécurisés et respecte la loi mauricienne sur la protection des données (DPA 2017) pour garantir la sécurité et la confidentialité de votre dossier médical.'
               : isKr
-              ? 'Medical 360 servi bann cookies sekirize e respekte lalwa Moris lor proteksion doné (DPA 2017) pou protez ou bann linformasion lasante.'
-              : 'Medical 360 uses essential cookies and adheres to the Mauritius Data Protection Act (DPA 2017) and GDPR to safeguard your medical inquiries and coordination data.'}{' '}
+              ? 'Med360 servi bann cookies sekirize e respekte lalwa Moris lor proteksion doné (DPA 2017) pou protez ou bann linformasion lasante.'
+              : 'Med360 uses essential cookies and adheres to the Mauritius Data Protection Act (DPA 2017) and GDPR to safeguard your medical inquiries and coordination data.'}{' '}
             <Link to="/privacy" style={{ color: 'var(--color-primary)', fontWeight: 600, textDecoration: 'underline' }}>
               {isFr ? 'Politique de Confidentialité' : 'Privacy Policy'}
             </Link>

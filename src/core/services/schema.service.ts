@@ -201,7 +201,7 @@ export function getReviewSchema(story: {
     '@type': 'Review',
     itemReviewed: {
       '@type': 'MedicalOrganization',
-      name: 'Medical 360 Concierge',
+      name: 'Med360 Concierge',
     },
     author: {
       '@type': 'Person',

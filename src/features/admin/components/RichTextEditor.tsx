@@ -52,7 +52,7 @@ const QUICK_SNIPPETS = [
   },
   {
     label: 'Verified Badge Pill',
-    html: '<span style="background: #10b981; color: #ffffff; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; display: inline-block;">✓ Verified by Medical 360</span>',
+    html: '<span style="background: #10b981; color: #ffffff; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; display: inline-block;">✓ Verified by Med360</span>',
   },
   {
     label: '2-Column Feature Grid',
@@ -428,7 +428,7 @@ export function RichTextEditor({
           {showSnippets && (
             <div className="rich-editor__snippet-menu">
               <div style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--color-text-secondary)', marginBottom: 8, textTransform: 'uppercase' }}>
-                Medical 360 Templates
+                Med360 Templates
               </div>
               {QUICK_SNIPPETS.map(snip => (
                 <button

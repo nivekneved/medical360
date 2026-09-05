@@ -144,7 +144,7 @@ export function printOrExportPdf(
 
         <div class="header">
           <div class="logo">
-            <img src="/assets/logo.png" alt="Medical 360" />
+            <img src="/assets/logo.png" alt="Med360" />
           </div>
           <div class="meta">
             <div><strong>Generated:</strong> ${generatedDate}</div>
@@ -167,7 +167,7 @@ export function printOrExportPdf(
         </table>
 
         <div class="footer">
-          <div>Medical360 Healthcare Concierge • Mauritius • Confidential Clinical Document</div>
+          <div>Med360 Healthcare Concierge • Mauritius • Confidential Clinical Document</div>
           <div>Page 1 of 1</div>
         </div>
 
@@ -246,7 +246,7 @@ export function exportInquiriesToCsv(inquiries: any[], specialties: any[] = []) 
     { header: 'Email', key: 'email' },
     { header: 'Created', key: 'createdAt' },
   ];
-  exportToCsv('medical360_inquiries_report', columns, inquiries);
+  exportToCsv('med360_inquiries_report', columns, inquiries);
 }
 
 /**
@@ -264,7 +264,7 @@ export function printInquiriesPdf(inquiries: any[], specialties: any[] = []) {
     { header: 'Received', key: 'createdAt', format: (val) => new Date(val).toLocaleDateString() },
   ];
   printOrExportPdf(
-    'Medical 360 — Patient Inquiries Report',
+    'Med360 — Patient Inquiries Report',
     columns,
     inquiries,
     `Total Inquiries: ${inquiries.length} · Clinical Concierge Export`

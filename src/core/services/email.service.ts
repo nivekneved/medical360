@@ -85,8 +85,8 @@ export const DEFAULT_TEMPLATE_CONFIG: EmailTemplateConfig = {
   },
   footer: {
     enabled: true,
-    disclaimer: 'Sent automatically from Medical360 Patient Portal • Strict Medical Confidentiality',
-    brandingText: 'Medical360 Healthcare Concierge • Port Louis, Mauritius',
+    disclaimer: 'Sent automatically from Med360 Patient Portal • Strict Medical Confidentiality',
+    brandingText: 'Med360 Healthcare Concierge • Port Louis, Mauritius',
   },
 };
 
@@ -158,7 +158,7 @@ export function renderEmailHtml(
         <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 14px;">
           <tr>
             <td style="vertical-align: middle;">
-              <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Medical 360" height="44" style="height: 44px; max-width: 200px; display: block; border: 0;" />
+              <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Med360" height="44" style="height: 44px; max-width: 200px; display: block; border: 0;" />
             </td>
           </tr>
         </table>
@@ -309,7 +309,7 @@ export function renderEmailHtml(
   // 5. Call To Action Component
   if (config.callToAction?.enabled) {
     const cleanPhoneDigits = (data.phone || '').replace(/[^0-9]/g, '');
-    const waLink = `https://wa.me/${cleanPhoneDigits}?text=${encodeURIComponent(`Hello ${data.firstName}, thank you for contacting Medical360 regarding your inquiry for ${data.serviceName || data.specialtyName}.`)}`;
+    const waLink = `https://wa.me/${cleanPhoneDigits}?text=${encodeURIComponent(`Hello ${data.firstName}, thank you for contacting Med360 regarding your inquiry for ${data.serviceName || data.specialtyName}.`)}`;
 
     sections.push(`
       <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid #e2e8f0;">

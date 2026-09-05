@@ -468,7 +468,7 @@ export function AdminLayout() {
             </button>
 
             <div className="admin-topbar__breadcrumb">
-              <span className="admin-topbar__breadcrumb-root">Medical360 Admin</span>
+              <span className="admin-topbar__breadcrumb-root">Med360 Admin</span>
               <span className="admin-topbar__breadcrumb-separator">/</span>
               <span className="admin-topbar__breadcrumb-active">{getCurrentPageTitle()}</span>
             </div>

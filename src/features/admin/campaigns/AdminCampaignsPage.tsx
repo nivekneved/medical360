@@ -82,7 +82,7 @@ export function AdminCampaignsPage() {
       status: 'draft',
       createdAt: new Date().toISOString(),
       template: {
-        bannerTitle: 'Medical 360 • Healthcare Concierge',
+        bannerTitle: 'Med360 • Healthcare Concierge',
         bannerBg: '#065f46',
         bannerTextColor: '#ffffff',
         headline: 'Specialist Medical Second Opinion & Care Coordination',
@@ -98,7 +98,7 @@ export function AdminCampaignsPage() {
         showWhatsAppButton: true,
         whatsAppText: 'Chat Directly with Care Coordinator',
         showFooter: true,
-        footerNote: 'You received this confidential medical communication because of your previous inquiry with Medical360.'
+        footerNote: 'You received this confidential medical communication because of your previous inquiry with Med360.'
       }
     };
     setEditingCampaign(newCamp);
