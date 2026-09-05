@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Star, Building2, Stethoscope, UserCheck, BookOpen, Check, RefreshCw } from 'lucide-react';
-import { mockEngine } from '../../../core/mock/engine';
+import { crudService, type EntityCollection } from '../../../core/services/crud.service';
 import type { Specialty, Hospital, Doctor, CaseStudy } from '../../../core/types';
 
 interface FeaturedShowcaseManagerProps {
   initialType?: 'specialties' | 'hospitals' | 'doctors' | 'case-studies';
 }
 
+type ShowcaseTab = 'specialties' | 'hospitals' | 'doctors' | 'case-studies';
+
 export function FeaturedShowcaseManager({ initialType = 'specialties' }: FeaturedShowcaseManagerProps) {
-  const [activeTab, setActiveTab] = useState<'specialties' | 'hospitals' | 'doctors' | 'case-studies'>(initialType);
+  const [activeTab, setActiveTab] = useState<ShowcaseTab>(initialType);
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
   const [hospitals, setHospitals]     = useState<Hospital[]>([]);
   const [doctors, setDoctors]         = useState<Doctor[]>([]);
@@ -21,10 +23,10 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
     setLoading(true);
     try {
       const [sp, ho, doc, cs] = await Promise.all([
-        mockEngine.getSpecialties(),
-        mockEngine.getHospitals(),
-        mockEngine.getDoctors(),
-        mockEngine.getCaseStudies(),
+        crudService.getAll('specialties'),
+        crudService.getAll('hospitals'),
+        crudService.getAll('doctors'),
+        crudService.getAll('caseStudies'),
       ]);
       setSpecialties(sp);
       setHospitals(ho);
@@ -41,61 +43,96 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
     loadAll();
   }, []);
 
-  const toggleSpecialtyFeatured = async (sp: Specialty) => {
-    setUpdatingId(sp.id);
+  // Map active tab to collection & state setters
+  const tabConfig = useMemo(() => {
+    switch (activeTab) {
+      case 'specialties':
+        return {
+          collection: 'specialties' as EntityCollection,
+          items: specialties,
+          setter: setSpecialties,
+          accentColor: 'var(--color-primary)',
+          getPrimary: (item: Specialty) => item.name,
+          getSecondary: (item: Specialty) => `${(item.procedures || []).length} procedures`,
+          matches: (item: Specialty, q: string) =>
+            item.name.toLowerCase().includes(q) || (item.name_fr ? item.name_fr.toLowerCase().includes(q) : false),
+        };
+      case 'hospitals':
+        return {
+          collection: 'hospitals' as EntityCollection,
+          items: hospitals,
+          setter: setHospitals,
+          accentColor: '#0284c7',
+          getPrimary: (item: Hospital) => item.name,
+          getSecondary: (item: Hospital) => `${item.city}, ${item.country}`,
+          matches: (item: Hospital, q: string) =>
+            item.name.toLowerCase().includes(q) || item.country.toLowerCase().includes(q) || item.city.toLowerCase().includes(q),
+        };
+      case 'doctors':
+        return {
+          collection: 'doctors' as EntityCollection,
+          items: doctors,
+          setter: setDoctors,
+          accentColor: '#4f46e5',
+          getPrimary: (item: Doctor) => item.name,
+          getSecondary: (item: Doctor) => item.title,
+          matches: (item: Doctor, q: string) =>
+            item.name.toLowerCase().includes(q) || item.title.toLowerCase().includes(q),
+        };
+      case 'case-studies':
+        return {
+          collection: 'caseStudies' as EntityCollection,
+          items: caseStudies,
+          setter: setCaseStudies,
+          accentColor: '#10b981',
+          getPrimary: (item: CaseStudy) => `${item.patientFirstName} (${item.patientCountry})`,
+          getSecondary: (item: CaseStudy) => item.condition,
+          matches: (item: CaseStudy, q: string) =>
+            item.patientFirstName.toLowerCase().includes(q) || item.condition.toLowerCase().includes(q),
+        };
+    }
+  }, [activeTab, specialties, hospitals, doctors, caseStudies]);
+
+  // Unified single toggle function
+  const toggleItemFeatured = async (item: { id: string; featured?: boolean }) => {
+    const nextFeatured = !item.featured;
+    setUpdatingId(item.id);
     try {
-      const updated = { ...sp, featured: !sp.featured };
-      await mockEngine.updateSpecialty(sp.id, updated);
-      setSpecialties(prev => prev.map(item => item.id === sp.id ? updated : item));
+      await crudService.update(tabConfig.collection, item.id, { featured: nextFeatured });
+      tabConfig.setter((prev: any[]) =>
+        prev.map((i) => (i.id === item.id ? { ...i, featured: nextFeatured } : i))
+      );
+    } catch (err) {
+      console.error('Failed to update featured state:', err);
     } finally {
       setUpdatingId(null);
     }
   };
 
-  const toggleHospitalFeatured = async (h: Hospital) => {
-    setUpdatingId(h.id);
-    try {
-      const updated = { ...h, featured: !h.featured };
-      await mockEngine.updateHospital(h.id, updated);
-      setHospitals(prev => prev.map(item => item.id === h.id ? updated : item));
-    } finally {
-      setUpdatingId(null);
-    }
-  };
+  const q = filterQuery.trim().toLowerCase();
+  const filteredItems = useMemo(() => {
+    if (!q) return tabConfig.items;
+    return (tabConfig.items as any[]).filter((item: any) => tabConfig.matches(item, q));
+  }, [tabConfig, q]);
 
-  const toggleDoctorFeatured = async (d: Doctor) => {
-    setUpdatingId(d.id);
-    try {
-      const updated = { ...d, featured: !d.featured };
-      await mockEngine.updateDoctor(d.id, updated);
-      setDoctors(prev => prev.map(item => item.id === d.id ? updated : item));
-    } finally {
-      setUpdatingId(null);
-    }
-  };
-
-  const toggleCaseStudyFeatured = async (cs: CaseStudy) => {
-    setUpdatingId(cs.id);
-    try {
-      const updated = { ...cs, featured: !cs.featured };
-      await mockEngine.updateCaseStudy(cs.id, updated);
-      setCaseStudies(prev => prev.map(item => item.id === cs.id ? updated : item));
-    } finally {
-      setUpdatingId(null);
-    }
-  };
-
-  const q = filterQuery.toLowerCase();
+  const tabs = [
+    { key: 'specialties' as const, label: 'Medical Specialties', icon: Stethoscope, count: specialties.filter((s) => s.featured).length, total: specialties.length },
+    { key: 'hospitals' as const, label: 'Partner Hospitals', icon: Building2, count: hospitals.filter((h) => h.featured).length, total: hospitals.length },
+    { key: 'doctors' as const, label: 'Elite Specialists', icon: UserCheck, count: doctors.filter((d) => d.featured).length, total: doctors.length },
+    { key: 'case-studies' as const, label: 'Patient Stories', icon: BookOpen, count: caseStudies.filter((c) => c.featured).length, total: caseStudies.length },
+  ];
 
   return (
-    <div style={{
-      background: 'var(--color-surface)',
-      border: '1.5px solid var(--color-border)',
-      borderRadius: 'var(--radius-2xl)',
-      padding: '1.5rem',
-      marginBottom: '1.75rem',
-      boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
-    }}>
+    <div
+      style={{
+        background: 'var(--color-surface)',
+        border: '1.5px solid var(--color-border)',
+        borderRadius: 'var(--radius-2xl)',
+        padding: '1.5rem',
+        marginBottom: '1.75rem',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+      }}
+    >
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
         <div>
@@ -113,7 +150,7 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
           type="text"
           placeholder="Filter by name..."
           value={filterQuery}
-          onChange={e => setFilterQuery(e.target.value)}
+          onChange={(e) => setFilterQuery(e.target.value)}
           className="form-input"
           style={{ width: 220, fontSize: '0.8125rem', height: 36 }}
         />
@@ -121,19 +158,14 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', background: 'var(--color-surface-2)', padding: '4px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)', marginBottom: '1.25rem' }}>
-        {[
-          { key: 'specialties', label: 'Medical Specialties', icon: Stethoscope, count: specialties.filter(s => s.featured).length, total: specialties.length },
-          { key: 'hospitals', label: 'Partner Hospitals', icon: Building2, count: hospitals.filter(h => h.featured).length, total: hospitals.length },
-          { key: 'doctors', label: 'Elite Specialists', icon: UserCheck, count: doctors.filter(d => d.featured).length, total: doctors.length },
-          { key: 'case-studies', label: 'Patient Stories', icon: BookOpen, count: caseStudies.filter(c => c.featured).length, total: caseStudies.length },
-        ].map(tab => {
+        {tabs.map((tab) => {
           const isActive = activeTab === tab.key;
           const Icon = tab.icon;
           return (
             <button
               key={tab.key}
               type="button"
-              onClick={() => setActiveTab(tab.key as any)}
+              onClick={() => setActiveTab(tab.key)}
               style={{
                 flex: 1,
                 minWidth: 160,
@@ -154,13 +186,15 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
             >
               <Icon size={15} />
               <span>{tab.label}</span>
-              <span style={{
-                background: isActive ? 'rgba(255,255,255,0.25)' : 'var(--color-border)',
-                color: isActive ? '#ffffff' : 'var(--color-text-muted)',
-                fontSize: '0.7rem',
-                padding: '1px 6px',
-                borderRadius: 999,
-              }}>
+              <span
+                style={{
+                  background: isActive ? 'rgba(255,255,255,0.25)' : 'var(--color-border)',
+                  color: isActive ? '#ffffff' : 'var(--color-text-muted)',
+                  fontSize: '0.7rem',
+                  padding: '1px 6px',
+                  borderRadius: 999,
+                }}
+              >
                 {tab.count} / {tab.total} on Front
               </span>
             </button>
@@ -174,241 +208,69 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
           <RefreshCw size={20} className="spin" style={{ margin: '0 auto 0.5rem' }} />
           <div>Loading items...</div>
         </div>
-      ) : activeTab === 'specialties' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '0.75rem' }}>
-          {specialties
-            .filter(s => !q || s.name.toLowerCase().includes(q) || (s.name_fr && s.name_fr.toLowerCase().includes(q)))
-            .map(sp => {
-              const isUpdating = updatingId === sp.id;
-              return (
-                <div
-                  key={sp.id}
-                  onClick={() => toggleSpecialtyFeatured(sp)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '10px 14px',
-                    borderRadius: 'var(--radius-lg)',
-                    border: `1.5px solid ${sp.featured ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                    background: sp.featured ? 'color-mix(in srgb, var(--color-primary) 8%, transparent)' : 'var(--color-surface)',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                    <div style={{
-                      width: 22,
-                      height: 22,
-                      borderRadius: 6,
-                      border: `1.5px solid ${sp.featured ? 'var(--color-primary)' : 'var(--color-border)'}`,
-                      background: sp.featured ? 'var(--color-primary)' : 'transparent',
-                      color: '#ffffff',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                      {sp.featured && <Check size={14} />}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.875rem', color: sp.featured ? 'var(--color-primary)' : 'var(--color-text)' }}>
-                        {sp.name}
-                      </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>
-                        {sp.procedures.length} procedures
-                      </div>
-                    </div>
-                  </div>
-                  <span style={{
-                    fontSize: '0.7rem',
-                    fontWeight: 700,
-                    padding: '2px 8px',
-                    borderRadius: 999,
-                    background: sp.featured ? 'color-mix(in srgb, var(--color-primary) 15%, transparent)' : 'var(--color-surface-2)',
-                    color: sp.featured ? 'var(--color-primary)' : 'var(--color-text-muted)',
-                  }}>
-                    {isUpdating ? 'Saving...' : sp.featured ? '⭐ Featured' : 'Hidden'}
-                  </span>
-                </div>
-              );
-            })}
-        </div>
-      ) : activeTab === 'hospitals' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '0.75rem' }}>
-          {hospitals
-            .filter(h => !q || h.name.toLowerCase().includes(q) || h.country.toLowerCase().includes(q))
-            .map(h => {
-              const isUpdating = updatingId === h.id;
-              return (
-                <div
-                  key={h.id}
-                  onClick={() => toggleHospitalFeatured(h)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '10px 14px',
-                    borderRadius: 'var(--radius-lg)',
-                    border: `1.5px solid ${h.featured ? '#0284c7' : 'var(--color-border)'}`,
-                    background: h.featured ? 'rgba(2, 132, 199, 0.05)' : 'var(--color-surface)',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                    <div style={{
-                      width: 22,
-                      height: 22,
-                      borderRadius: 6,
-                      border: `1.5px solid ${h.featured ? '#0284c7' : 'var(--color-border)'}`,
-                      background: h.featured ? '#0284c7' : 'transparent',
-                      color: '#ffffff',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                      {h.featured && <Check size={14} />}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.875rem', color: h.featured ? '#0284c7' : 'var(--color-text)' }}>
-                        {h.name}
-                      </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>
-                        {h.city}, {h.country}
-                      </div>
-                    </div>
-                  </div>
-                  <span style={{
-                    fontSize: '0.7rem',
-                    fontWeight: 700,
-                    padding: '2px 8px',
-                    borderRadius: 999,
-                    background: h.featured ? 'rgba(2, 132, 199, 0.15)' : 'var(--color-surface-2)',
-                    color: h.featured ? '#0284c7' : 'var(--color-text-muted)',
-                  }}>
-                    {isUpdating ? 'Saving...' : h.featured ? '⭐ Featured' : 'Hidden'}
-                  </span>
-                </div>
-              );
-            })}
-        </div>
-      ) : activeTab === 'doctors' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '0.75rem' }}>
-          {doctors
-            .filter(d => !q || d.name.toLowerCase().includes(q) || d.title.toLowerCase().includes(q))
-            .map(d => {
-              const isUpdating = updatingId === d.id;
-              return (
-                <div
-                  key={d.id}
-                  onClick={() => toggleDoctorFeatured(d)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '10px 14px',
-                    borderRadius: 'var(--radius-lg)',
-                    border: `1.5px solid ${d.featured ? '#4f46e5' : 'var(--color-border)'}`,
-                    background: d.featured ? 'rgba(79, 70, 229, 0.05)' : 'var(--color-surface)',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                    <div style={{
-                      width: 22,
-                      height: 22,
-                      borderRadius: 6,
-                      border: `1.5px solid ${d.featured ? '#4f46e5' : 'var(--color-border)'}`,
-                      background: d.featured ? '#4f46e5' : 'transparent',
-                      color: '#ffffff',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                      {d.featured && <Check size={14} />}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.875rem', color: d.featured ? '#4f46e5' : 'var(--color-text)' }}>
-                        {d.name}
-                      </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>
-                        {d.title}
-                      </div>
-                    </div>
-                  </div>
-                  <span style={{
-                    fontSize: '0.7rem',
-                    fontWeight: 700,
-                    padding: '2px 8px',
-                    borderRadius: 999,
-                    background: d.featured ? 'rgba(79, 70, 229, 0.15)' : 'var(--color-surface-2)',
-                    color: d.featured ? '#4f46e5' : 'var(--color-text-muted)',
-                  }}>
-                    {isUpdating ? 'Saving...' : d.featured ? '⭐ Featured' : 'Hidden'}
-                  </span>
-                </div>
-              );
-            })}
-        </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '0.75rem' }}>
-          {caseStudies
-            .filter(c => !q || c.patientFirstName.toLowerCase().includes(q) || c.condition.toLowerCase().includes(q))
-            .map(c => {
-              const isUpdating = updatingId === c.id;
-              return (
-                <div
-                  key={c.id}
-                  onClick={() => toggleCaseStudyFeatured(c)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '10px 14px',
-                    borderRadius: 'var(--radius-lg)',
-                    border: `1.5px solid ${c.featured ? '#10b981' : 'var(--color-border)'}`,
-                    background: c.featured ? 'rgba(16, 185, 129, 0.05)' : 'var(--color-surface)',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s ease',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                    <div style={{
+          {filteredItems.map((item: any) => {
+            const isUpdating = updatingId === item.id;
+            const isFeatured = !!item.featured;
+            const accent = tabConfig.accentColor;
+
+            return (
+              <div
+                key={item.id}
+                onClick={() => toggleItemFeatured(item)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 14px',
+                  borderRadius: 'var(--radius-lg)',
+                  border: `1.5px solid ${isFeatured ? accent : 'var(--color-border)'}`,
+                  background: isFeatured ? `color-mix(in srgb, ${accent} 8%, transparent)` : 'var(--color-surface)',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                  <div
+                    style={{
                       width: 22,
                       height: 22,
                       borderRadius: 6,
-                      border: `1.5px solid ${c.featured ? '#10b981' : 'var(--color-border)'}`,
-                      background: c.featured ? '#10b981' : 'transparent',
+                      border: `1.5px solid ${isFeatured ? accent : 'var(--color-border)'}`,
+                      background: isFeatured ? accent : 'transparent',
                       color: '#ffffff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                    }}>
-                      {c.featured && <Check size={14} />}
+                    }}
+                  >
+                    {isFeatured && <Check size={14} />}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.875rem', color: isFeatured ? accent : 'var(--color-text)' }}>
+                      {tabConfig.getPrimary(item)}
                     </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.875rem', color: c.featured ? '#10b981' : 'var(--color-text)' }}>
-                        {c.patientFirstName} ({c.patientCountry})
-                      </div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>
-                        {c.condition}
-                      </div>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>
+                      {tabConfig.getSecondary(item)}
                     </div>
                   </div>
-                  <span style={{
+                </div>
+                <span
+                  style={{
                     fontSize: '0.7rem',
                     fontWeight: 700,
                     padding: '2px 8px',
                     borderRadius: 999,
-                    background: c.featured ? 'rgba(16, 185, 129, 0.15)' : 'var(--color-surface-2)',
-                    color: c.featured ? '#10b981' : 'var(--color-text-muted)',
-                  }}>
-                    {isUpdating ? 'Saving...' : c.featured ? '⭐ Featured' : 'Hidden'}
-                  </span>
-                </div>
-              );
-            })}
+                    background: isFeatured ? `color-mix(in srgb, ${accent} 15%, transparent)` : 'var(--color-surface-2)',
+                    color: isFeatured ? accent : 'var(--color-text-muted)',
+                  }}
+                >
+                  {isUpdating ? 'Saving...' : isFeatured ? '⭐ Featured' : 'Hidden'}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

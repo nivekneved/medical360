@@ -1,30 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import type { CaseStudy } from '../core/types';
-import { mockEngine } from '../core/mock/engine';
+import { useEntityCollection, useEntityItem } from './useEntity';
 
 export function useCaseStudies() {
-  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
-  const [loading, setLoading]         = useState(true);
-
-  const fetchCaseStudies = () => {
-    setLoading(true);
-    mockEngine.getCaseStudies().then(setCaseStudies).finally(() => setLoading(false));
-  };
-
-  useEffect(() => {
-    fetchCaseStudies();
-  }, []);
-
-  return { caseStudies, loading, refetch: fetchCaseStudies };
+  const { data: caseStudies, loading, error, refetch, setData: setCaseStudies } = useEntityCollection('caseStudies');
+  return { caseStudies, loading, error, refetch, setCaseStudies };
 }
 
 export function useFeaturedCaseStudies() {
-  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
-  const [loading, setLoading]         = useState(true);
+  const filterFn = useMemo(() => (c: CaseStudy) => !!c.featured, []);
+  const { data: caseStudies, loading, error, refetch } = useEntityCollection('caseStudies', { filterFn });
+  return { caseStudies, loading, error, refetch };
+}
 
-  useEffect(() => {
-    mockEngine.getFeaturedCaseStudies().then(setCaseStudies).finally(() => setLoading(false));
-  }, []);
-
-  return { caseStudies, loading };
+export function useCaseStudy(id: string | undefined) {
+  const { item: caseStudy, loading, error, refetch, setItem: setCaseStudy } = useEntityItem('caseStudies', id);
+  return { caseStudy, loading, error, refetch, setCaseStudy };
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Search, MapPin, X } from 'lucide-react';
 import type { Hospital } from '../../../core/types';
+import { EntityMultiSelector } from './EntityMultiSelector';
 
 interface HospitalSelectorProps {
   hospitals: Hospital[];
@@ -17,211 +17,48 @@ export const HospitalSelector: React.FC<HospitalSelectorProps> = ({
   label = 'Partner Hospitals Offering This Specialty',
   disabled = false,
 }) => {
-  const [search, setSearch] = useState('');
   const [countryFilter, setCountryFilter] = useState('all');
-
-  const toggleHospital = (id: string) => {
-    if (disabled) return;
-    if (selectedIds.includes(id)) {
-      onChange(selectedIds.filter((h) => h !== id));
-    } else {
-      onChange([...selectedIds, id]);
-    }
-  };
-
-  const selectAll = () => {
-    if (disabled) return;
-    onChange(hospitals.map((h) => h.id));
-  };
-
-  const clearAll = () => {
-    if (disabled) return;
-    onChange([]);
-  };
-
   const countries = ['all', ...Array.from(new Set(hospitals.map((h) => h.country))).sort()];
 
-  const filtered = hospitals.filter((h) => {
-    if (countryFilter !== 'all' && h.country !== countryFilter) return false;
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      return (
-        h.name.toLowerCase().includes(q) ||
-        h.city.toLowerCase().includes(q) ||
-        h.country.toLowerCase().includes(q)
-      );
-    }
-    return true;
-  });
+  const countryFilterSlot = (
+    <select
+      className="form-input"
+      value={countryFilter}
+      onChange={(e) => setCountryFilter(e.target.value)}
+      disabled={disabled}
+      style={{ width: 140, fontSize: '0.82rem', height: 34 }}
+    >
+      {countries.map((c) => (
+        <option key={c} value={c}>
+          {c === 'all' ? 'All Countries' : c}
+        </option>
+      ))}
+    </select>
+  );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
-        <label style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-secondary)', margin: 0 }}>
-          {label} ({selectedIds.length}/{hospitals.length} affiliated)
-        </label>
-        <div style={{ display: 'flex', gap: '0.4rem' }}>
-          <button
-            type="button"
-            onClick={selectAll}
-            disabled={disabled}
-            className="btn btn-outline btn-xs"
-            style={{ fontSize: '0.72rem', padding: '2px 8px' }}
-          >
-            Select All
-          </button>
-          <button
-            type="button"
-            onClick={clearAll}
-            disabled={disabled}
-            className="btn btn-outline btn-xs"
-            style={{ fontSize: '0.72rem', padding: '2px 8px' }}
-          >
-            Clear All
-          </button>
-        </div>
-      </div>
-
-      {/* Filter Row */}
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <div style={{ position: 'relative', flex: 1 }}>
-          <Search
-            size={14}
-            style={{
-              position: 'absolute',
-              left: 10,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              color: 'var(--color-text-muted)',
-            }}
-          />
-          <input
-            type="text"
-            className="form-input"
-            placeholder="Search hospitals by name, city..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            disabled={disabled}
-            style={{ width: '100%', paddingLeft: 30, fontSize: '0.82rem', height: 34 }}
-          />
-        </div>
-        <select
-          className="form-input"
-          value={countryFilter}
-          onChange={(e) => setCountryFilter(e.target.value)}
-          disabled={disabled}
-          style={{ width: 140, fontSize: '0.82rem', height: 34 }}
-        >
-          {countries.map((c) => (
-            <option key={c} value={c}>
-              {c === 'all' ? 'All Countries' : c}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Selected Badges Summary */}
-      {selectedIds.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: '0.2rem' }}>
-          {selectedIds.map((id) => {
-            const hosp = hospitals.find((h) => h.id === id);
-            return (
-              <span
-                key={id}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  padding: '3px 8px',
-                  borderRadius: 999,
-                  background: 'rgba(59, 130, 246, 0.12)',
-                  color: '#2563eb',
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  border: '1px solid rgba(59, 130, 246, 0.3)',
-                }}
-              >
-                {hosp ? hosp.name : id}
-                {!disabled && (
-                  <button
-                    type="button"
-                    onClick={() => toggleHospital(id)}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      color: 'inherit',
-                      padding: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <X size={12} />
-                  </button>
-                )}
-              </span>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Grid of Hospital Checkboxes */}
-      <div
-        style={{
-          maxHeight: 200,
-          overflowY: 'auto',
-          border: '1.5px solid var(--color-border)',
-          borderRadius: 8,
-          background: 'var(--color-surface-2)',
-          padding: '0.5rem',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-          gap: '0.4rem',
-        }}
-      >
-        {filtered.length === 0 ? (
-          <div style={{ gridColumn: '1 / -1', padding: '1rem', textAlign: 'center', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-            No matching hospitals
-          </div>
-        ) : (
-          filtered.map((h) => {
-            const isChecked = selectedIds.includes(h.id);
-            return (
-              <label
-                key={h.id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '6px 8px',
-                  borderRadius: 6,
-                  background: isChecked ? 'rgba(59, 130, 246, 0.08)' : 'var(--color-surface)',
-                  border: isChecked ? '1px solid #3b82f6' : '1px solid var(--color-border)',
-                  cursor: disabled ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.15s ease',
-                  userSelect: 'none',
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={() => toggleHospital(h.id)}
-                  disabled={disabled}
-                  style={{ width: 16, height: 16, accentColor: '#3b82f6', cursor: 'pointer' }}
-                />
-                <div style={{ minWidth: 0, flex: 1 }}>
-                  <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {h.name}
-                  </div>
-                  <div style={{ fontSize: '0.68rem', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <MapPin size={10} /> {h.city}, {h.country}
-                  </div>
-                </div>
-              </label>
-            );
-          })
-        )}
-      </div>
-    </div>
+    <EntityMultiSelector<Hospital>
+      items={hospitals}
+      selectedIds={selectedIds}
+      onChange={onChange}
+      label={label}
+      disabled={disabled}
+      searchPlaceholder="Search hospitals by name, city..."
+      getPrimaryText={(h) => h.name}
+      getSecondaryText={(h) => `📍 ${h.city}, ${h.country}`}
+      themeColor="#3b82f6"
+      themeBackground="rgba(59, 130, 246, 0.08)"
+      badgeBackground="rgba(59, 130, 246, 0.12)"
+      badgeTextColor="#2563eb"
+      extraFilterSlot={countryFilterSlot}
+      filterPredicate={(h, q) => {
+        if (countryFilter !== 'all' && h.country !== countryFilter) return false;
+        return (
+          h.name.toLowerCase().includes(q) ||
+          h.city.toLowerCase().includes(q) ||
+          h.country.toLowerCase().includes(q)
+        );
+      }}
+    />
   );
 };
