@@ -120,6 +120,33 @@ export function AdminSpecialtiesPage() {
     featured: true,
   });
 
+  if (isMatrixOpen) {
+    return (
+      <div style={{ padding: '2rem', maxWidth: 1400, margin: '0 auto', animation: 'fadeIn 0.2s ease-out' }}>
+        <HospitalSpecialtyMatrixModal
+          isOpen={isMatrixOpen}
+          onClose={() => setIsMatrixOpen(false)}
+          onSaved={loadData}
+        />
+      </div>
+    );
+  }
+
+  if (managingProceduresSpecialty !== null) {
+    return (
+      <div style={{ padding: '2rem', maxWidth: 1400, margin: '0 auto', animation: 'fadeIn 0.2s ease-out' }}>
+        <ProcedureManagerModal
+          isOpen={true}
+          specialty={managingProceduresSpecialty}
+          onClose={() => setManagingProceduresSpecialty(null)}
+          onSaved={() => {
+            loadData();
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
       <AdminEntityManager<SpecialtyFormItem>
@@ -433,23 +460,6 @@ export function AdminSpecialtiesPage() {
               </div>
             </div>
           );
-        }}
-      />
-
-      {/* Hospital-Specialty Associations Matrix Modal */}
-      <HospitalSpecialtyMatrixModal
-        isOpen={isMatrixOpen}
-        onClose={() => setIsMatrixOpen(false)}
-        onSaved={loadData}
-      />
-
-      {/* Procedure Cards Manager Modal */}
-      <ProcedureManagerModal
-        isOpen={managingProceduresSpecialty !== null}
-        specialty={managingProceduresSpecialty}
-        onClose={() => setManagingProceduresSpecialty(null)}
-        onSaved={() => {
-          loadData();
         }}
       />
     </>

@@ -139,6 +139,18 @@ export function AdminDoctorsPage() {
     featured: true,
   });
 
+  if (isMatrixOpen) {
+    return (
+      <div style={{ padding: '2rem', maxWidth: 1400, margin: '0 auto', animation: 'fadeIn 0.2s ease-out' }}>
+        <SpecialistAssociationMatrixModal
+          isOpen={isMatrixOpen}
+          onClose={() => setIsMatrixOpen(false)}
+          onSaved={loadData}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
       <AdminEntityManager<Doctor>
@@ -423,13 +435,6 @@ export function AdminDoctorsPage() {
             </div>
           );
         }}
-      />
-
-      {/* Specialist Association Matrix Modal */}
-      <SpecialistAssociationMatrixModal
-        isOpen={isMatrixOpen}
-        onClose={() => setIsMatrixOpen(false)}
-        onSaved={loadData}
       />
     </>
   );

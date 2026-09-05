@@ -144,95 +144,82 @@ export function ImageField({ label, value, onChange, required, helpText }: Image
         )}
       </div>
 
-      {/* Preset Gallery Modal */}
+      {/* Preset Gallery Inline Panel (NO POPUPS) */}
       {showGallery && (
         <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.6)',
-          backdropFilter: 'blur(4px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 10000,
-          padding: '1rem',
+          background: 'var(--color-surface)',
+          border: '1.5px solid var(--color-primary)',
+          borderRadius: 'var(--radius-xl)',
+          width: '100%',
+          padding: '1.25rem',
+          boxShadow: 'var(--shadow-sm)',
+          marginTop: '0.75rem',
+          animation: 'fadeIn 0.2s ease-out',
         }}>
-          <div style={{
-            background: 'var(--color-surface)',
-            border: '1.5px solid var(--color-border)',
-            borderRadius: 'var(--radius-2xl)',
-            maxWidth: 720,
-            width: '100%',
-            maxHeight: '85vh',
-            overflowY: 'auto',
-            padding: '1.75rem',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-              <div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>Choose a Curated Medical Preset Image</h3>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>
-                  Click any image to select it instantly.
-                </p>
-              </div>
-              <button
-                type="button"
-                className="btn btn-icon btn-outline btn-sm"
-                onClick={() => setShowGallery(false)}
-              >
-                <X size={16} />
-              </button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <div>
+              <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: 0 }}>Choose Curated Medical Preset Image</h4>
+              <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                Click any medical asset to select it directly
+              </span>
             </div>
+            <button
+              type="button"
+              className="btn btn-icon btn-outline btn-sm"
+              onClick={() => setShowGallery(false)}
+            >
+              <X size={15} />
+            </button>
+          </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '0.75rem' }}>
-              {PRESET_GALLERY.map((preset, idx) => {
-                const isSelected = value === preset.url;
-                return (
-                  <div
-                    key={idx}
-                    onClick={() => {
-                      onChange(preset.url);
-                      setShowGallery(false);
-                    }}
-                    style={{
-                      cursor: 'pointer',
-                      border: isSelected ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-lg)',
-                      overflow: 'hidden',
-                      position: 'relative',
-                      background: 'rgba(0,0,0,0.02)',
-                      transition: 'transform 0.15s, border-color 0.15s',
-                    }}
-                  >
-                    <img
-                      src={preset.url}
-                      alt={preset.label}
-                      style={{ width: '100%', height: 100, objectFit: 'cover' }}
-                    />
-                    <div style={{ padding: '0.4rem 0.5rem', fontSize: '0.75rem', fontWeight: 600 }}>
-                      {preset.label}
-                    </div>
-                    {isSelected && (
-                      <div style={{
-                        position: 'absolute',
-                        top: 4,
-                        right: 4,
-                        background: 'var(--color-primary)',
-                        color: 'white',
-                        borderRadius: '50%',
-                        width: 20,
-                        height: 20,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                        <Check size={12} />
-                      </div>
-                    )}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(130px, 1fr))', gap: '0.65rem' }}>
+            {PRESET_GALLERY.map((preset, idx) => {
+              const isSelected = value === preset.url;
+              return (
+                <div
+                  key={idx}
+                  onClick={() => {
+                    onChange(preset.url);
+                    setShowGallery(false);
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    border: isSelected ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-md)',
+                    overflow: 'hidden',
+                    position: 'relative',
+                    background: 'var(--color-surface-2)',
+                    transition: 'transform 0.15s, border-color 0.15s',
+                  }}
+                >
+                  <img
+                    src={preset.url}
+                    alt={preset.label}
+                    style={{ width: '100%', height: 80, objectFit: 'cover' }}
+                  />
+                  <div style={{ padding: '0.35rem 0.45rem', fontSize: '0.72rem', fontWeight: 600 }}>
+                    {preset.label}
                   </div>
-                );
-              })}
-            </div>
+                  {isSelected && (
+                    <div style={{
+                      position: 'absolute',
+                      top: 4,
+                      right: 4,
+                      background: 'var(--color-primary)',
+                      color: 'white',
+                      borderRadius: '50%',
+                      width: 18,
+                      height: 18,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                      <Check size={11} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

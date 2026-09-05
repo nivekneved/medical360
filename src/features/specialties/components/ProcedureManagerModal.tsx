@@ -258,15 +258,7 @@ export const ProcedureManagerModal: React.FC<ProcedureManagerModalProps> = ({
   return (
     <div
       style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 9999,
-        background: 'rgba(9, 13, 16, 0.85)',
-        backdropFilter: 'blur(8px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1rem',
+        width: '100%',
         animation: 'fadeIn 0.2s ease',
       }}
     >
@@ -276,12 +268,11 @@ export const ProcedureManagerModal: React.FC<ProcedureManagerModalProps> = ({
           border: '1.5px solid var(--color-border)',
           borderRadius: 'var(--radius-2xl)',
           width: '100%',
-          maxWidth: 960,
-          maxHeight: '92vh',
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: '0 25px 60px rgba(0,0,0,0.5)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
           overflow: 'hidden',
+          marginBottom: '2rem',
         }}
       >
         {/* Modal Header */}

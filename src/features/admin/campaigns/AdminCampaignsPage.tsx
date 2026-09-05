@@ -1652,331 +1652,362 @@ export function AdminCampaignsPage() {
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════════
-          MODAL 1: UPLOAD SENDERS (CSV / DRAG & DROP)
+          INLINE 1: UPLOAD SENDERS (CSV / DRAG & DROP)
       ══════════════════════════════════════════════════════════════════════════ */}
       {showUploadModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div style={{ background: 'var(--color-surface)', width: '100%', maxWidth: 640, borderRadius: 16, border: '1.5px solid var(--color-border)', padding: '2rem', maxHeight: '90vh', overflowY: 'auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Upload size={20} color="var(--color-primary)" />
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>Upload Senders & Contacts</h3>
-              </div>
-              <button onClick={() => setShowUploadModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                <X size={20} />
-              </button>
+        <div style={{
+          background: 'var(--color-surface)',
+          borderRadius: 16,
+          border: '2px solid var(--color-primary)',
+          padding: '2rem',
+          marginTop: '1.5rem',
+          boxShadow: 'var(--shadow-md)',
+          animation: 'fadeIn 0.2s ease-out',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Upload size={20} color="var(--color-primary)" />
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>Upload Senders & Contacts</h3>
             </div>
+            <button onClick={() => setShowUploadModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <X size={20} />
+            </button>
+          </div>
 
-            <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.35rem' }}>
-                Target Audience List
-              </label>
-              <select
-                className="form-select"
-                value={uploadTargetAudienceId}
-                onChange={e => setUploadTargetAudienceId(e.target.value)}
-                style={{ width: '100%' }}
-              >
-                {audiences.map(aud => (
-                  <option key={aud.id} value={aud.id}>{aud.name} ({aud.contacts.length} existing senders)</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Dropzone File Upload */}
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              style={{
-                border: '2px dashed var(--color-primary)',
-                borderRadius: 12,
-                padding: '2rem 1.5rem',
-                textAlign: 'center',
-                cursor: 'pointer',
-                background: 'color-mix(in srgb, var(--color-primary) 6%, transparent)',
-                marginBottom: '1.25rem',
-              }}
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 700, marginBottom: '0.35rem' }}>
+              Target Audience List
+            </label>
+            <select
+              className="form-select"
+              value={uploadTargetAudienceId}
+              onChange={e => setUploadTargetAudienceId(e.target.value)}
+              style={{ width: '100%' }}
             >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".csv,text/csv,text/plain"
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-              />
-              <FileText size={36} color="var(--color-primary)" style={{ margin: '0 auto 0.75rem' }} />
-              <p style={{ fontWeight: 700, margin: '0 0 0.25rem 0', fontSize: '0.95rem' }}>
-                Click to browse CSV file or drag and drop here
-              </p>
-              <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', margin: 0 }}>
-                Supports standard CSV with columns: <code>Name, Email, Phone, Country</code>
-              </p>
-            </div>
+              {audiences.map(aud => (
+                <option key={aud.id} value={aud.id}>{aud.name} ({aud.contacts.length} existing senders)</option>
+              ))}
+            </select>
+          </div>
 
-            {/* Or Paste Raw Text */}
-            <div style={{ marginBottom: '1.25rem' }}>
-              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: '0.35rem' }}>
-                Or paste CSV / emails directly:
-              </label>
-              <textarea
-                className="form-textarea"
-                rows={3}
-                placeholder="Jean Dupont, jean@example.com, +230 51234567, Mauritius&#10;Ananya Patel, ananya@example.mu"
-                value={csvRawText}
-                onChange={e => {
-                  setCsvRawText(e.target.value);
-                  setParsedPreviewContacts(parseCSVContacts(e.target.value));
-                }}
-                style={{ fontSize: '0.8125rem', fontFamily: 'monospace' }}
-              />
-            </div>
+          {/* Dropzone File Upload */}
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            style={{
+              border: '2px dashed var(--color-primary)',
+              borderRadius: 12,
+              padding: '2rem 1.5rem',
+              textAlign: 'center',
+              cursor: 'pointer',
+              background: 'color-mix(in srgb, var(--color-primary) 6%, transparent)',
+              marginBottom: '1.25rem',
+            }}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".csv,text/csv,text/plain"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
+            />
+            <FileText size={36} color="var(--color-primary)" style={{ margin: '0 auto 0.75rem' }} />
+            <p style={{ fontWeight: 700, margin: '0 0 0.25rem 0', fontSize: '0.95rem' }}>
+              Click to browse CSV file or drag and drop here
+            </p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', margin: 0 }}>
+              Supports standard CSV with columns: <code>Name, Email, Phone, Country</code>
+            </p>
+          </div>
 
-            {/* Parsed Preview Counter */}
-            {parsedPreviewContacts.length > 0 && (
-              <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', padding: '0.75rem 1rem', borderRadius: 8, marginBottom: '1.25rem', fontSize: '0.8125rem', color: '#065f46' }}>
-                <strong>✓ {parsedPreviewContacts.length} valid contacts ready to import</strong>
-                <div style={{ marginTop: 4, maxHeight: 90, overflowY: 'auto' }}>
-                  {parsedPreviewContacts.slice(0, 5).map((c, i) => (
-                    <div key={i}>{c.name} ({c.email}) - {c.country}</div>
-                  ))}
-                  {parsedPreviewContacts.length > 5 && <div>…and {parsedPreviewContacts.length - 5} more.</div>}
-                </div>
+          {/* Or Paste Raw Text */}
+          <div style={{ marginBottom: '1.25rem' }}>
+            <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--color-text-secondary)', marginBottom: '0.35rem' }}>
+              Or paste CSV / emails directly:
+            </label>
+            <textarea
+              className="form-textarea"
+              rows={3}
+              placeholder="Jean Dupont, jean@example.com, +230 51234567, Mauritius&#10;Ananya Patel, ananya@example.mu"
+              value={csvRawText}
+              onChange={e => {
+                setCsvRawText(e.target.value);
+                setParsedPreviewContacts(parseCSVContacts(e.target.value));
+              }}
+              style={{ fontSize: '0.8125rem', fontFamily: 'monospace' }}
+            />
+          </div>
+
+          {/* Parsed Preview Counter */}
+          {parsedPreviewContacts.length > 0 && (
+            <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', padding: '0.75rem 1rem', borderRadius: 8, marginBottom: '1.25rem', fontSize: '0.8125rem', color: '#065f46' }}>
+              <strong>✓ {parsedPreviewContacts.length} valid contacts ready to import</strong>
+              <div style={{ marginTop: 4, maxHeight: 90, overflowY: 'auto' }}>
+                {parsedPreviewContacts.slice(0, 5).map((c, i) => (
+                  <div key={i}>{c.name} ({c.email}) - {c.country}</div>
+                ))}
+                {parsedPreviewContacts.length > 5 && <div>…and {parsedPreviewContacts.length - 5} more.</div>}
               </div>
-            )}
-
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-              <button onClick={() => setShowUploadModal(false)} className="btn btn-outline">
-                Cancel
-              </button>
-              <button
-                onClick={handleConfirmImport}
-                disabled={parsedPreviewContacts.length === 0}
-                className="btn btn-primary"
-                style={{ fontWeight: 700 }}
-              >
-                Import {parsedPreviewContacts.length} Senders
-              </button>
             </div>
+          )}
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+            <button onClick={() => setShowUploadModal(false)} className="btn btn-outline">
+              Cancel
+            </button>
+            <button
+              onClick={handleConfirmImport}
+              disabled={parsedPreviewContacts.length === 0}
+              className="btn btn-primary"
+              style={{ fontWeight: 700 }}
+            >
+              Import {parsedPreviewContacts.length} Senders
+            </button>
           </div>
         </div>
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════════
-          MODAL 2: CREATE NEW AUDIENCE LIST
+          INLINE 2: CREATE NEW AUDIENCE LIST
       ══════════════════════════════════════════════════════════════════════════ */}
       {showNewAudienceModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div style={{ background: 'var(--color-surface)', width: '100%', maxWidth: 500, borderRadius: 16, border: '1.5px solid var(--color-border)', padding: '2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>Create Audience List</h3>
-              <button onClick={() => setShowNewAudienceModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                <X size={20} />
-              </button>
-            </div>
+        <div style={{
+          background: 'var(--color-surface)',
+          borderRadius: 16,
+          border: '2px solid var(--color-primary)',
+          padding: '2rem',
+          marginTop: '1.5rem',
+          boxShadow: 'var(--shadow-md)',
+          animation: 'fadeIn 0.2s ease-out',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>Create Audience List</h3>
+            <button onClick={() => setShowNewAudienceModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <X size={20} />
+            </button>
+          </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>List Name</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  placeholder="e.g. VIP Oncology Leads 2026"
-                  value={newAudienceName}
-                  onChange={e => setNewAudienceName(e.target.value)}
-                />
-              </div>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Description</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  placeholder="e.g. Patients seeking specialized chemotherapy or surgical oncology"
-                  value={newAudienceDesc}
-                  onChange={e => setNewAudienceDesc(e.target.value)}
-                />
-              </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>List Name</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="e.g. VIP Oncology Leads 2026"
+                value={newAudienceName}
+                onChange={e => setNewAudienceName(e.target.value)}
+              />
             </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Description</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="e.g. Patients seeking specialized chemotherapy or surgical oncology"
+                value={newAudienceDesc}
+                onChange={e => setNewAudienceDesc(e.target.value)}
+              />
+            </div>
+          </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-              <button onClick={() => setShowNewAudienceModal(false)} className="btn btn-outline">Cancel</button>
-              <button onClick={handleCreateAudience} disabled={!newAudienceName.trim()} className="btn btn-primary" style={{ fontWeight: 700 }}>
-                Create List
-              </button>
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+            <button onClick={() => setShowNewAudienceModal(false)} className="btn btn-outline">Cancel</button>
+            <button onClick={handleCreateAudience} disabled={!newAudienceName.trim()} className="btn btn-primary" style={{ fontWeight: 700 }}>
+              Create List
+            </button>
           </div>
         </div>
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════════
-          MODAL 3: ADD SINGLE CONTACT
+          INLINE 3: ADD SINGLE CONTACT
       ══════════════════════════════════════════════════════════════════════════ */}
       {showAddContactModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div style={{ background: 'var(--color-surface)', width: '100%', maxWidth: 480, borderRadius: 16, border: '1.5px solid var(--color-border)', padding: '2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>Add Contact to {activeAudience?.name}</h3>
-              <button onClick={() => setShowAddContactModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                <X size={20} />
-              </button>
-            </div>
+        <div style={{
+          background: 'var(--color-surface)',
+          borderRadius: 16,
+          border: '2px solid var(--color-primary)',
+          padding: '2rem',
+          marginTop: '1.5rem',
+          boxShadow: 'var(--shadow-md)',
+          animation: 'fadeIn 0.2s ease-out',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>Add Contact to {activeAudience?.name}</h3>
+            <button onClick={() => setShowAddContactModal(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <X size={20} />
+            </button>
+          </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '1.5rem' }}>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Full Name</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  placeholder="e.g. Jean Dupont"
-                  value={newContactName}
-                  onChange={e => setNewContactName(e.target.value)}
-                />
-              </div>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Email Address *</label>
-                <input
-                  type="email"
-                  className="form-input"
-                  placeholder="e.g. jean@example.com"
-                  value={newContactEmail}
-                  onChange={e => setNewContactEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Phone / WhatsApp</label>
-                <input
-                  type="tel"
-                  className="form-input"
-                  placeholder="e.g. +230 59188275"
-                  value={newContactPhone}
-                  onChange={e => setNewContactPhone(e.target.value)}
-                />
-              </div>
-              <div>
-                <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Country</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={newContactCountry}
-                  onChange={e => setNewContactCountry(e.target.value)}
-                />
-              </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '1.5rem' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Full Name</label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="e.g. Jean Dupont"
+                value={newContactName}
+                onChange={e => setNewContactName(e.target.value)}
+              />
             </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Email Address *</label>
+              <input
+                type="email"
+                className="form-input"
+                placeholder="e.g. jean@example.com"
+                value={newContactEmail}
+                onChange={e => setNewContactEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Phone / WhatsApp</label>
+              <input
+                type="tel"
+                className="form-input"
+                placeholder="e.g. +230 59188275"
+                value={newContactPhone}
+                onChange={e => setNewContactPhone(e.target.value)}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: 4 }}>Country</label>
+              <input
+                type="text"
+                className="form-input"
+                value={newContactCountry}
+                onChange={e => setNewContactCountry(e.target.value)}
+              />
+            </div>
+          </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-              <button onClick={() => setShowAddContactModal(false)} className="btn btn-outline">Cancel</button>
-              <button onClick={handleAddSingleContact} disabled={!newContactEmail} className="btn btn-primary" style={{ fontWeight: 700 }}>
-                Save Contact
-              </button>
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+            <button onClick={() => setShowAddContactModal(false)} className="btn btn-outline">Cancel</button>
+            <button onClick={handleAddSingleContact} disabled={!newContactEmail} className="btn btn-primary" style={{ fontWeight: 700 }}>
+              Save Contact
+            </button>
           </div>
         </div>
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════════
-          MODAL 4: STANDALONE CAMPAIGN PREVIEW
+          INLINE 4: STANDALONE CAMPAIGN PREVIEW
       ══════════════════════════════════════════════════════════════════════════ */}
       {previewCampaign && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.7)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1.5rem' }}>
-          <div style={{ background: 'var(--color-surface)', width: '100%', maxWidth: 650, borderRadius: 16, border: '1.5px solid var(--color-border)', padding: '1.5rem', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--color-border-light)', paddingBottom: '0.75rem' }}>
-              <div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, margin: '0 0 2px 0' }}>{previewCampaign.title}</h3>
-                <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>Subject: {previewCampaign.subject}</span>
-              </div>
-              <button onClick={() => setPreviewCampaign(null)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                <X size={20} />
-              </button>
+        <div style={{
+          background: 'var(--color-surface)',
+          borderRadius: 16,
+          border: '1.5px solid var(--color-border)',
+          padding: '1.75rem',
+          marginTop: '1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          boxShadow: 'var(--shadow-md)',
+          animation: 'fadeIn 0.2s ease-out',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.75rem' }}>
+            <div>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '0 0 2px 0' }}>{previewCampaign.title}</h3>
+              <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>Subject: {previewCampaign.subject}</span>
             </div>
+            <button onClick={() => setPreviewCampaign(null)} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <X size={20} />
+            </button>
+          </div>
 
-            <div style={{ flex: 1, overflowY: 'auto', background: '#cbd5e1', padding: '1rem', borderRadius: 8 }}>
-              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(renderCampaignHtml(previewCampaign, { name: 'Jean-Luc Marie', country: 'Mauritius' })) }} />
-            </div>
+          <div style={{ flex: 1, maxHeight: 500, overflowY: 'auto', background: '#cbd5e1', padding: '1.25rem', borderRadius: 8 }}>
+            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(renderCampaignHtml(previewCampaign, { name: 'Jean-Luc Marie', country: 'Mauritius' })) }} />
+          </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1rem' }}>
-              <button onClick={() => setPreviewCampaign(null)} className="btn btn-outline">Close</button>
-              <button
-                onClick={() => {
-                  const c = previewCampaign;
-                  setPreviewCampaign(null);
-                  handleLaunchCampaign(c);
-                }}
-                className="btn btn-primary"
-                style={{ fontWeight: 700 }}
-              >
-                <Send size={14} /> Dispatch Campaign
-              </button>
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1rem' }}>
+            <button onClick={() => setPreviewCampaign(null)} className="btn btn-outline">Close</button>
+            <button
+              onClick={() => {
+                const c = previewCampaign;
+                setPreviewCampaign(null);
+                handleLaunchCampaign(c);
+              }}
+              className="btn btn-primary"
+              style={{ fontWeight: 700 }}
+            >
+              <Send size={14} /> Dispatch Campaign
+            </button>
           </div>
         </div>
       )}
 
       {/* ══════════════════════════════════════════════════════════════════════════
-          MODAL 5: DISPATCH PROGRESS MODAL
+          INLINE 5: DISPATCH PROGRESS PANEL
       ══════════════════════════════════════════════════════════════════════════ */}
       {dispatchingModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.8)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1.5rem' }}>
-          <div style={{ background: 'var(--color-surface)', width: '100%', maxWidth: 520, borderRadius: 16, border: '1.5px solid var(--color-border)', padding: '2rem', textAlign: 'center' }}>
-            
-            {!dispatchingModal.isDone ? (
-              <>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
-                  <Send size={28} className="animate-pulse" />
-                </div>
-                <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>
-                  Dispatching Broadcast…
-                </h3>
-                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-                  Sending campaign to <strong>{dispatchingModal.total}</strong> recipients via Resend API.
-                </p>
+        <div style={{
+          background: 'var(--color-surface)',
+          borderRadius: 16,
+          border: '2px solid var(--color-primary)',
+          padding: '2rem',
+          textAlign: 'center',
+          marginTop: '1.5rem',
+          boxShadow: 'var(--shadow-md)',
+          animation: 'fadeIn 0.2s ease-out',
+        }}>
+          {!dispatchingModal.isDone ? (
+            <>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
+                <Send size={28} className="animate-pulse" />
+              </div>
+              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>
+                Dispatching Broadcast…
+              </h3>
+              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+                Sending campaign to <strong>{dispatchingModal.total}</strong> recipients via Resend API.
+              </p>
 
-                {/* Progress bar */}
-                <div style={{ background: 'var(--color-surface-2)', height: 12, borderRadius: 999, overflow: 'hidden', marginBottom: '0.75rem', border: '1px solid var(--color-border)' }}>
-                  <div
-                    style={{
-                      height: '100%',
-                      background: 'linear-gradient(90deg, #065f46, #10b981)',
-                      width: `${Math.round((dispatchingModal.sent / (dispatchingModal.total || 1)) * 100)}%`,
-                      transition: 'width 0.2s ease',
-                    }}
-                  />
-                </div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-primary)' }}>
-                  {dispatchingModal.sent} of {dispatchingModal.total} sent ({Math.round((dispatchingModal.sent / (dispatchingModal.total || 1)) * 100)}%)
-                </div>
-              </>
-            ) : (
-              <>
-                <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
-                  <CheckCircle2 size={32} />
-                </div>
-                <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>
-                  Campaign Broadcast Complete!
-                </h3>
-                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-                  Successfully delivered to <strong>{dispatchingModal.sent}</strong> recipients in the audience list.
-                </p>
-
-                {dispatchingModal.errors.length > 0 && (
-                  <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '0.75rem', borderRadius: 8, fontSize: '0.75rem', color: '#991b1b', textAlign: 'left', marginBottom: '1.25rem', maxHeight: 100, overflowY: 'auto' }}>
-                    <strong>Note:</strong> Some addresses had issues:
-                    {dispatchingModal.errors.map((err, i) => <div key={i}>{err}</div>)}
-                  </div>
-                )}
-
-                <button
-                  onClick={() => {
-                    setDispatchingModal(null);
-                    setActiveTab('campaigns');
+              {/* Progress bar */}
+              <div style={{ background: 'var(--color-surface-2)', height: 12, borderRadius: 999, overflow: 'hidden', marginBottom: '0.75rem', border: '1px solid var(--color-border)' }}>
+                <div
+                  style={{
+                    height: '100%',
+                    background: 'linear-gradient(90deg, #065f46, #10b981)',
+                    width: `${Math.round((dispatchingModal.sent / (dispatchingModal.total || 1)) * 100)}%`,
+                    transition: 'width 0.2s ease',
                   }}
-                  className="btn btn-primary btn-lg"
-                  style={{ width: '100%', fontWeight: 700 }}
-                >
-                  View Campaigns
-                </button>
-              </>
-            )}
+                />
+              </div>
+              <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-primary)' }}>
+                {dispatchingModal.sent} of {dispatchingModal.total} sent ({Math.round((dispatchingModal.sent / (dispatchingModal.total || 1)) * 100)}%)
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ width: 56, height: 56, borderRadius: '50%', background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem' }}>
+                <CheckCircle2 size={32} />
+              </div>
+              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 0.5rem 0' }}>
+                Campaign Broadcast Complete!
+              </h3>
+              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+                Successfully delivered to <strong>{dispatchingModal.sent}</strong> recipients in the audience list.
+              </p>
 
-          </div>
+              {dispatchingModal.errors.length > 0 && (
+                <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '0.75rem', borderRadius: 8, fontSize: '0.75rem', color: '#991b1b', textAlign: 'left', marginBottom: '1.25rem', maxHeight: 100, overflowY: 'auto' }}>
+                  <strong>Note:</strong> Some addresses had issues:
+                  {dispatchingModal.errors.map((err, i) => <div key={i}>{err}</div>)}
+                </div>
+              )}
+
+              <button
+                onClick={() => {
+                  setDispatchingModal(null);
+                  setActiveTab('campaigns');
+                }}
+                className="btn btn-primary btn-lg"
+                style={{ width: '100%', fontWeight: 700 }}
+              >
+                View Campaigns
+              </button>
+            </>
+          )}
         </div>
       )}
 
