@@ -3,11 +3,13 @@ import { Trash2, Printer, Download, X, CheckSquare, Square } from 'lucide-react'
 interface AdminBulkActionBarProps {
   selectedCount: number;
   totalCount: number;
-  onSelectAll: () => void;
+  onSelectAll?: () => void;
   onClearSelection: () => void;
   onDeleteSelected?: () => void;
   onPrintPdfSelected?: () => void;
   onExportCsvSelected?: () => void;
+  onStatusChangeSelected?: (status: string) => void;
+  statusOptions?: { label: string; value: string }[];
   unitName?: string;
 }
 
@@ -19,6 +21,8 @@ export function AdminBulkActionBar({
   onDeleteSelected,
   onPrintPdfSelected,
   onExportCsvSelected,
+  onStatusChangeSelected,
+  statusOptions,
   unitName = 'records',
 }: AdminBulkActionBarProps) {
   if (selectedCount === 0) return null;
@@ -45,26 +49,28 @@ export function AdminBulkActionBar({
     >
       {/* Left: Selection Counter & Toggle All */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-        <button
-          type="button"
-          onClick={isAllSelected ? onClearSelection : onSelectAll}
-          style={{
-            background: 'rgba(255, 255, 255, 0.1)',
-            border: 'none',
-            color: '#ffffff',
-            borderRadius: 6,
-            padding: '4px 8px',
-            fontSize: '0.78rem',
-            fontWeight: 700,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 4,
-          }}
-        >
-          {isAllSelected ? <CheckSquare size={14} color="#34d399" /> : <Square size={14} />}
-          {isAllSelected ? 'Deselect All' : `Select All (${totalCount})`}
-        </button>
+        {onSelectAll && (
+          <button
+            type="button"
+            onClick={isAllSelected ? onClearSelection : onSelectAll}
+            style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: 'none',
+              color: '#ffffff',
+              borderRadius: 6,
+              padding: '4px 8px',
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            {isAllSelected ? <CheckSquare size={14} color="#34d399" /> : <Square size={14} />}
+            {isAllSelected ? 'Deselect All' : `Select All (${totalCount})`}
+          </button>
+        )}
 
         <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'rgba(255, 255, 255, 0.9)' }}>
           <strong style={{ color: '#34d399', fontSize: '0.95rem' }}>{selectedCount}</strong> {unitName} selected
@@ -73,6 +79,35 @@ export function AdminBulkActionBar({
 
       {/* Right: Actions */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+        {onStatusChangeSelected && statusOptions && statusOptions.length > 0 && (
+          <select
+            onChange={(e) => {
+              if (e.target.value) {
+                onStatusChangeSelected(e.target.value);
+                e.target.value = '';
+              }
+            }}
+            defaultValue=""
+            style={{
+              background: 'rgba(255, 255, 255, 0.12)',
+              color: '#ffffff',
+              border: '1px solid rgba(255, 255, 255, 0.25)',
+              borderRadius: 6,
+              padding: '6px 10px',
+              fontSize: '0.8125rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            <option value="" disabled style={{ color: '#333' }}>Change Status...</option>
+            {statusOptions.map(opt => (
+              <option key={opt.value} value={opt.value} style={{ color: '#333' }}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        )}
+
         {onPrintPdfSelected && (
           <button
             type="button"

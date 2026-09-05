@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X } from 'lucide-react';
 import { useHospitals } from '../../hooks/useHospitals';
@@ -17,10 +17,18 @@ export function HospitalsPage() {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<HospitalFilters>({});
   const [searchInput, setSearchInput] = useState('');
+  const [showCompareModal, setShowCompareModal] = useState(false);
+  const compareSectionRef = useRef<HTMLDivElement>(null);
   const { i18n } = useTranslation();
   const { hospitals, loading } = useHospitals(filters);
   const { hospitals: allHospitals } = useHospitals({});
   const { data: cms } = useCMS('hospitals');
+
+  useEffect(() => {
+    if (showCompareModal && compareSectionRef.current) {
+      compareSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [showCompareModal]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -39,7 +47,6 @@ export function HospitalsPage() {
   };
 
   const [compareIds, setCompareIds] = useState<string[]>([]);
-  const [showCompareModal, setShowCompareModal] = useState(false);
   const [sortBy, setSortBy] = useState<string>('rating');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
