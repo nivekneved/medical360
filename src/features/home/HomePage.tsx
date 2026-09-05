@@ -9,6 +9,7 @@ import { SEO } from '../../components/SEO/SEO';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
 import { getMedicalOrganizationSchema } from '../../core/services/schema.service';
+import { MissionMarquee } from './components/MissionMarquee';
 import './Home.css';
 
 export function HomePage() {
@@ -121,6 +122,9 @@ export function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Mission Scrolling Marquee Ribbon ───────────────────────────────────── */}
+      <MissionMarquee />
 
       {/* ── Specialties ────────────────────────────────────────────────────────── */}
       <section className="section home-specialties">
