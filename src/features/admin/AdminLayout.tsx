@@ -252,20 +252,11 @@ export function AdminLayout() {
         {/* Data Source Badge */}
         <NavLink
           to="/admin/settings"
-          className={mockConfig.enabled ? 'admin-mock-badge' : 'admin-live-badge'}
-          title={mockConfig.enabled ? 'Running on Mock Data Center (Click to configure & backup)' : 'Running on Live Supabase Database (Click to configure & backup)'}
+          className="admin-live-badge"
+          title="Connected 100% to Live Supabase PostgreSQL Database (vtcywighvyndtoxfvmny.supabase.co)"
         >
-          {mockConfig.enabled ? (
-            <>
-              <Database size={12} />
-              {!collapsed && <span>MOCK DATA</span>}
-            </>
-          ) : (
-            <>
-              <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', display: 'inline-block', boxShadow: '0 0 6px #10b981' }} />
-              {!collapsed && <span>LIVE DB</span>}
-            </>
-          )}
+          <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', display: 'inline-block', boxShadow: '0 0 6px #10b981' }} />
+          {!collapsed && <span>LIVE SUPABASE</span>}
         </NavLink>
 
         {/* Nav Accordion */}
