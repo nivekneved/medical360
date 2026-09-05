@@ -61,6 +61,11 @@ export function HomePage() {
         canonical="/"
         schema={schema}
       />
+      {/* ── Top Mission Marquee Ribbon (Above Hero) ─────────────────────────── */}
+      <div className="mission-marquee-top">
+        <MissionMarquee />
+      </div>
+
       {/* ── Hero ──────────────────────────────────────────────────────────────── */}
       <section className="hero" aria-label="Hero section">
         <div className="hero__bg">
@@ -122,9 +127,6 @@ export function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ── Mission Scrolling Marquee Ribbon ───────────────────────────────────── */}
-      <MissionMarquee />
 
       {/* ── Specialties ────────────────────────────────────────────────────────── */}
       <section className="section home-specialties">
