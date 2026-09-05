@@ -1,7 +1,8 @@
-import type { Inquiry, InquiryStatus } from '../types';
+import type { Inquiry } from '../types';
 import { supabase, isSupabaseConfigured } from '../supabase/client';
 import { mapInquiryRow } from '../supabase/repositories';
 import { deepSanitize, sanitizeInput } from '../services/security.service';
+import { cacheService } from '../services/cache.service';
 import type { MockStore } from './store';
 
 export async function liveOrMockGetInquiries(
@@ -9,19 +10,25 @@ export async function liveOrMockGetInquiries(
   store: MockStore,
   delay: () => Promise<void>
 ): Promise<Inquiry[]> {
-  if (isLive) {
-    try {
-      const { data, error } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false });
-      if (!error && data && data.length > 0) {
-        return data.map(mapInquiryRow);
+  return cacheService.cachedFetch(
+    'inquiries:all',
+    async () => {
+      if (isLive) {
+        try {
+          const { data, error } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false });
+          if (!error && data && data.length > 0) {
+            return data.map(mapInquiryRow);
+          }
+        } catch (e) {
+          console.warn('Supabase getInquiries failed, falling back to local store:', e);
+        }
       }
-    } catch (e) {
-      console.warn('Supabase getInquiries failed, falling back to local store:', e);
-    }
-  }
-  await delay();
-  return [...store.inquiries].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      await delay();
+      return [...store.inquiries].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+    },
+    { ttlMs: 60 * 1000, tags: ['inquiries'] }
   );
 }
 
@@ -31,16 +38,28 @@ export async function liveOrMockGetInquiryById(
   delay: () => Promise<void>,
   id: string
 ): Promise<Inquiry | null> {
-  if (isLive) {
-    try {
-      const { data, error } = await supabase.from('inquiries').select('*').eq('id', id).single();
-      if (!error && data) return mapInquiryRow(data);
-    } catch (e) {
-      console.warn('Supabase getInquiryById failed:', e);
-    }
+  const cachedAll = cacheService.peek<Inquiry[]>('inquiries:all');
+  if (cachedAll) {
+    const found = cachedAll.find(i => i.id === id);
+    if (found) return found;
   }
-  await delay();
-  return store.inquiries.find(i => i.id === id) ?? null;
+
+  return cacheService.cachedFetch(
+    `inquiry:${id}`,
+    async () => {
+      if (isLive) {
+        try {
+          const { data, error } = await supabase.from('inquiries').select('*').eq('id', id).single();
+          if (!error && data) return mapInquiryRow(data);
+        } catch (e) {
+          console.warn('Supabase getInquiryById failed:', e);
+        }
+      }
+      await delay();
+      return store.inquiries.find(i => i.id === id) ?? null;
+    },
+    { ttlMs: 60 * 1000, tags: ['inquiries'] }
+  );
 }
 
 export async function liveOrMockCreateInquiry(
@@ -61,6 +80,8 @@ export async function liveOrMockCreateInquiry(
     documents: [],
     notes: [],
   };
+
+  cacheService.invalidateTag('inquiries');
 
   if (isSupabaseConfigured) {
     try {
@@ -110,6 +131,7 @@ export async function liveOrMockUpdateInquiry(
   id: string,
   updates: Partial<Inquiry>
 ): Promise<Inquiry> {
+  cacheService.invalidateTag('inquiries');
   const now = new Date().toISOString();
   if (isLive) {
     try {
@@ -138,6 +160,7 @@ export async function liveOrMockAddInquiryNote(
   content: string,
   authorId: string = 'admin'
 ): Promise<Inquiry> {
+  cacheService.invalidateTag('inquiries');
   const inq = store.inquiries.find(i => i.id === id);
   const cleanContent = sanitizeInput(content);
   const newNote = {
@@ -174,6 +197,7 @@ export async function liveOrMockDeleteInquiries(
   delay: () => Promise<void>,
   ids: string[]
 ): Promise<boolean> {
+  cacheService.invalidateTag('inquiries');
   if (isLive) {
     try {
       await supabase.from('inquiries').delete().in('id', ids);

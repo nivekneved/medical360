@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import type { Specialty } from '../core/types';
 import { mockEngine } from '../core/mock/engine';
+import { cacheService } from '../core/services/cache.service';
 
 export function useSpecialties() {
-  const [specialties, setSpecialties] = useState<Specialty[]>([]);
-  const [loading, setLoading]         = useState(true);
+  const cached = cacheService.peek<Specialty[]>('specialties:all');
+  const [specialties, setSpecialties] = useState<Specialty[]>(cached || []);
+  const [loading, setLoading]         = useState(!cached);
 
   useEffect(() => {
     mockEngine.getSpecialties().then(setSpecialties).finally(() => setLoading(false));
@@ -14,8 +16,10 @@ export function useSpecialties() {
 }
 
 export function useFeaturedSpecialties() {
-  const [specialties, setSpecialties] = useState<Specialty[]>([]);
-  const [loading, setLoading]         = useState(true);
+  const cachedAll = cacheService.peek<Specialty[]>('specialties:all');
+  const cachedFeatured = cachedAll ? cachedAll.filter(s => s.featured) : null;
+  const [specialties, setSpecialties] = useState<Specialty[]>(cachedFeatured || []);
+  const [loading, setLoading]         = useState(!cachedFeatured);
 
   useEffect(() => {
     mockEngine.getFeaturedSpecialties().then(setSpecialties).finally(() => setLoading(false));

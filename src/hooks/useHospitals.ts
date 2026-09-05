@@ -2,14 +2,19 @@ import { useState, useEffect, useCallback } from 'react';
 import type { Hospital } from '../core/types';
 import { mockEngine } from '../core/mock/engine';
 import { filterHospitals, type HospitalFilters } from '../core/services/hospital.service';
+import { cacheService } from '../core/services/cache.service';
 
 export function useHospitals(filters?: HospitalFilters) {
-  const [hospitals, setHospitals] = useState<Hospital[]>([]);
-  const [loading, setLoading]     = useState(true);
+  const cached = cacheService.peek<Hospital[]>('hospitals:all');
+  const initialData = cached ? (filters ? filterHospitals(cached, filters) : cached) : [];
+  const [hospitals, setHospitals] = useState<Hospital[]>(initialData);
+  const [loading, setLoading]     = useState(!cached);
   const [error, setError]         = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    setLoading(true);
+    if (!cacheService.peek<Hospital[]>('hospitals:all')) {
+      setLoading(true);
+    }
     setError(null);
     try {
       const data = await mockEngine.getHospitals();
@@ -26,8 +31,10 @@ export function useHospitals(filters?: HospitalFilters) {
 }
 
 export function useFeaturedHospitals() {
-  const [hospitals, setHospitals] = useState<Hospital[]>([]);
-  const [loading, setLoading]     = useState(true);
+  const cachedAll = cacheService.peek<Hospital[]>('hospitals:all');
+  const cachedFeatured = cachedAll ? cachedAll.filter(h => h.featured && h.active) : null;
+  const [hospitals, setHospitals] = useState<Hospital[]>(cachedFeatured || []);
+  const [loading, setLoading]     = useState(!cachedFeatured);
 
   useEffect(() => {
     mockEngine.getFeaturedHospitals().then(setHospitals).finally(() => setLoading(false));
@@ -37,13 +44,15 @@ export function useFeaturedHospitals() {
 }
 
 export function useHospital(id: string | undefined) {
-  const [hospital, setHospital] = useState<Hospital | null>(null);
-  const [loading, setLoading]   = useState(true);
+  const cachedAll = cacheService.peek<Hospital[]>('hospitals:all');
+  const cachedSingle = cachedAll ? (cachedAll.find(h => h.id === id || h.slug === id) || null) : null;
+  const [hospital, setHospital] = useState<Hospital | null>(cachedSingle);
+  const [loading, setLoading]   = useState(!cachedSingle);
   const [error, setError]       = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) { setLoading(false); return; }
-    setLoading(true);
+    if (!cachedSingle) setLoading(true);
     mockEngine.getHospitalById(id)
       .then(setHospital)
       .catch(() => setError('Hospital not found.'))
