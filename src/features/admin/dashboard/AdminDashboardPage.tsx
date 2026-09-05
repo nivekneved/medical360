@@ -148,7 +148,7 @@ export function AdminDashboardPage() {
       {/* ── 2. Top Split: Coordinator Tasks Workstation + 10 Latest Actions ─── */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 420px), 1fr))',
         gap: '1.25rem',
       }}>
         {/* Left Column: User Tasks & Action Items */}

@@ -463,7 +463,7 @@ export function AdminEntityManager<T extends { id: string }>({
               {/* Anti-Bot Honeypot */}
               <Honeypot value={honeypot} onChange={setHoneypot} id="admin_edit_page_hp" name="admin_edit_page_hp" />
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '1.5rem' }}>
                 {fields.map(f => {
                   const val = (editingItem as any)[f.key];
                   const hasError = !!modalFieldErrors[f.key];
@@ -658,7 +658,7 @@ export function AdminEntityManager<T extends { id: string }>({
           </button>
         </div>
       ) : viewMode === 'grid' ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
           {paginatedItems.map(item =>
             renderCard(
               item,
@@ -670,7 +670,7 @@ export function AdminEntityManager<T extends { id: string }>({
           )}
         </div>
       ) : (
-        <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', border: '1.5px solid var(--color-border)', overflow: 'hidden', marginTop: '1.5rem' }}>
+        <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', border: '1.5px solid var(--color-border)', overflowX: 'auto', WebkitOverflowScrolling: 'touch', marginTop: '1.5rem' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.875rem' }}>
             <thead>
               <tr style={{ background: 'var(--color-surface-2)', borderBottom: '1px solid var(--color-border)' }}>

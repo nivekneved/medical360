@@ -151,8 +151,8 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
           placeholder="Filter by name..."
           value={filterQuery}
           onChange={(e) => setFilterQuery(e.target.value)}
-          className="form-input"
-          style={{ width: 220, fontSize: '0.8125rem', height: 36 }}
+          className="form-input form-input--sm"
+          style={{ width: 220, maxWidth: '100%' }}
         />
       </div>
 

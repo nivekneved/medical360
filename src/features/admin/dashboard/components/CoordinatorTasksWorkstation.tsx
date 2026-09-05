@@ -189,11 +189,10 @@ export function CoordinatorTasksWorkstation() {
             value={newTitle}
             onChange={e => setNewTitle(e.target.value)}
             required
-            className="input"
-            style={{ fontSize: '0.82rem', padding: '0.45rem 0.65rem' }}
+            className="form-input form-input--sm"
           />
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.5rem' }}>
             <div>
               <label style={{ fontSize: '0.7rem', fontWeight: 600, display: 'block', marginBottom: '2px' }}>
                 Category
@@ -201,8 +200,7 @@ export function CoordinatorTasksWorkstation() {
               <select
                 value={newCategory}
                 onChange={e => setNewCategory(e.target.value as any)}
-                className="input"
-                style={{ fontSize: '0.78rem', padding: '0.35rem 0.5rem' }}
+                className="form-select form-select--sm"
               >
                 {Object.entries(CATEGORY_LABELS).map(([k, label]) => (
                   <option key={k} value={k}>{label}</option>
@@ -217,8 +215,7 @@ export function CoordinatorTasksWorkstation() {
               <select
                 value={newPriority}
                 onChange={e => setNewPriority(e.target.value as any)}
-                className="input"
-                style={{ fontSize: '0.78rem', padding: '0.35rem 0.5rem' }}
+                className="form-select form-select--sm"
               >
                 <option value="urgent">Urgent (Immediate)</option>
                 <option value="high">High (&lt; 12 Hours)</option>
@@ -234,8 +231,7 @@ export function CoordinatorTasksWorkstation() {
               <select
                 value={newDueDateHours}
                 onChange={e => setNewDueDateHours(e.target.value)}
-                className="input"
-                style={{ fontSize: '0.78rem', padding: '0.35rem 0.5rem' }}
+                className="form-select form-select--sm"
               >
                 <option value="4">4 Hours</option>
                 <option value="8">8 Hours</option>

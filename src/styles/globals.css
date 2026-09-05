@@ -819,20 +819,71 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-text);
+  margin-bottom: 0.25rem;
 }
 
 .form-input,
-.form-select,
+.form-select {
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  line-height: 40px;
+  color: var(--color-text);
+  background-color: var(--color-surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  outline: none;
+  box-sizing: border-box;
+  display: block;
+}
+
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+[data-theme="dark"] .form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+.form-input--sm,
+.form-select--sm {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 0.75rem;
+  font-size: 0.84rem;
+  line-height: 32px;
+  border-radius: var(--radius-sm);
+}
+
+.form-select--sm {
+  padding-right: 2rem;
+  background-position: right 0.6rem center;
+}
+
 .form-textarea {
   width: 100%;
+  min-height: 110px;
   padding: 0.75rem 1rem;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
   font-size: 0.9375rem;
+  line-height: 1.55;
   color: var(--color-text);
-  background: var(--color-surface);
-  transition: var(--transition-fast);
+  background-color: var(--color-surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
   outline: none;
+  box-sizing: border-box;
+  resize: vertical;
 }
 
 .form-input:focus,
@@ -842,10 +893,11 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent);
 }
 
-.form-textarea {
-  resize: vertical;
-  min-height: 120px;
-  line-height: 1.6;
+.form-input--error,
+.form-select--error,
+.form-textarea--error {
+  border-color: var(--color-danger) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-danger) 18%, transparent) !important;
 }
 
 /* ─── Status Badges ──────────────────────────────────────────────────────────── */
@@ -854,7 +906,7 @@ h1, h2, h3, h4, h5, h6 {
 .status-in_progress     { background: color-mix(in srgb, var(--color-warning) 14%, transparent); color: var(--color-warning); }
 .status-completed       { background: color-mix(in srgb, var(--color-success) 14%, transparent); color: var(--color-success); }
 
-/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+/* ─── Universal Responsive Rules ─────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -865,6 +917,38 @@ h1, h2, h3, h4, h5, h6 {
   .section   { padding: var(--space-12) 0; }
   .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; }
   .text-display { font-size: 2.2rem; }
+
+  /* Touch-friendly inputs & prevent iOS Safari auto-zoom */
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px !important;
+    height: 46px;
+    min-height: 46px;
+  }
+  .form-textarea {
+    min-height: 120px;
+    height: auto;
+  }
+  .form-input--sm,
+  .form-select--sm {
+    font-size: 16px !important;
+    height: 42px;
+    min-height: 42px;
+  }
+
+  /* Table and card overflow protection */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 var(--space-3); }
+  .btn { width: 100%; justify-content: center; }
+  .btn-group { flex-direction: column; width: 100%; }
 }
 
 /* ─── Print Stylesheet ───────────────────────────────────────────────────────── */

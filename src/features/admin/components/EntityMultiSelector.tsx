@@ -115,12 +115,12 @@ export function EntityMultiSelector<T extends { id: string }>({
           />
           <input
             type="text"
-            className="form-input"
+            className="form-input form-input--sm"
             placeholder={searchPlaceholder}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             disabled={disabled}
-            style={{ width: '100%', paddingLeft: 30, fontSize: '0.82rem', height: 34 }}
+            style={{ width: '100%', paddingLeft: 30 }}
           />
         </div>
         {extraFilterSlot}
