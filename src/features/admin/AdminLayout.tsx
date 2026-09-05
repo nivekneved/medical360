@@ -55,13 +55,12 @@ const CMS_GLOBAL_NAV = [
 
 const CMS_PAGES_NAV = [
   { to: '/admin/pages/home',            label: 'Home Page' },
+  { to: '/admin/pages/how-it-works',     label: 'How It Works Page' },
   { to: '/admin/pages/about',           label: 'About Page' },
-  { to: '/admin/pages/services',        label: 'Services Page' },
   { to: '/admin/pages/specialties',     label: 'Specialties Page' },
-  { to: '/admin/pages/hospitals',       label: 'Hospitals Page' },
   { to: '/admin/pages/doctors',         label: 'Doctors Page' },
+  { to: '/admin/pages/hospitals',       label: 'Hospitals Page' },
   { to: '/admin/pages/case-studies',     label: 'Case Studies Page' },
-  { to: '/admin/pages/visa-guide',      label: 'Visa & Travel Guide' },
   { to: '/admin/pages/cost-calculator', label: 'Cost Calculator' },
   { to: '/admin/pages/describe-need',   label: 'Describe Need Wizard' },
   { to: '/admin/pages/contact',         label: 'Contact Page' },

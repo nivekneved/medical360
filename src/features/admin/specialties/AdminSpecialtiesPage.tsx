@@ -153,6 +153,7 @@ export function AdminSpecialtiesPage() {
         title="Medical Specialties"
         subtitle="Manage medical disciplines, procedures catalog, and affiliated partner hospitals"
         entityName="Specialty"
+        publicListUrl="/specialties"
         items={specialties}
         loading={loading}
         fields={SPECIALTY_FIELDS}

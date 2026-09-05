@@ -137,6 +137,7 @@ export function AdminCaseStudiesPage() {
       title="Patient Stories"
       subtitle="Manage verified patient recovery journeys, clinical outcomes, and cost savings"
       entityName="Patient Story"
+      publicListUrl="/case-studies"
       items={caseStudies}
       loading={loading}
       fields={caseFields}

@@ -12,6 +12,7 @@ import {
   CheckCircle2,
   Save,
   RotateCcw,
+  ExternalLink,
 } from 'lucide-react';
 import { ImageField } from './ImageField';
 import { RichTextEditor } from './RichTextEditor';
@@ -63,6 +64,8 @@ export interface AdminEntityManagerProps<T extends { id: string }> {
   renderViewModalContent?: (item: T) => ReactNode;
   renderCustomField?: (key: string, value: any, onChange: (v: any) => void, item: T) => ReactNode | null;
   headerActions?: ReactNode;
+  publicListUrl?: string;
+  getPublicUrl?: (item: T) => string;
   onSave: (item: T, isNew: boolean) => Promise<void>;
   onDelete: (ids: string[]) => Promise<void>;
   getInitialItem: () => T;
@@ -85,6 +88,8 @@ export function AdminEntityManager<T extends { id: string }>({
   renderViewModalContent,
   renderCustomField,
   headerActions,
+  publicListUrl,
+  getPublicUrl: _getPublicUrl,
   onSave,
   onDelete,
   getInitialItem,
@@ -279,6 +284,18 @@ export function AdminEntityManager<T extends { id: string }>({
 
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
               {headerActions}
+              {publicListUrl && (
+                <a
+                  href={publicListUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-outline btn-sm"
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', textDecoration: 'none' }}
+                  title="View corresponding live page on frontend"
+                >
+                  <ExternalLink size={14} /> View Live Page
+                </a>
+              )}
               <button onClick={handlePrintPdf} className="btn btn-outline btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                 <Printer size={14} /> Print / PDF
               </button>
