@@ -412,13 +412,17 @@ export async function sendInquiryEmail(formData: InquiryFormData, specialtyName:
     budgetMax: formData.budgetMax,
   });
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (apiKey) {
+    headers['Authorization'] = `Bearer ${apiKey}`;
+  }
+
   try {
     const res = await fetch('/api/resend/emails', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         from: 'Med360 Inquiries <onboarding@resend.dev>',
         to: [recipient],
@@ -468,13 +472,17 @@ export async function sendTestEmail(recipientEmail: string, config: EmailTemplat
 
   const html = renderEmailHtml(config, mockData);
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (apiKey) {
+    headers['Authorization'] = `Bearer ${apiKey}`;
+  }
+
   try {
     const res = await fetch('/api/resend/emails', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         from: 'Med360 Inquiries <onboarding@resend.dev>',
         to: [recipientEmail],

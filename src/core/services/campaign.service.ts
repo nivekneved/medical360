@@ -428,13 +428,17 @@ export async function sendTestCampaignEmail(campaign: Campaign, testEmail: strin
   const apiKey = import.meta.env.VITE_RESEND_API_KEY || '';
   const html = renderCampaignHtml(campaign, { name: 'Dr. / Patient (Preview)', country: 'Mauritius', email: testEmail });
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (apiKey) {
+    headers['Authorization'] = `Bearer ${apiKey}`;
+  }
+
   try {
     const res = await fetch('/api/resend/emails', {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         from: 'Med360 Nexus <onboarding@resend.dev>',
         to: [testEmail],
@@ -462,6 +466,13 @@ export async function dispatchCampaign(
   const errors: string[] = [];
   let sentCount = 0;
 
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+  if (apiKey) {
+    headers['Authorization'] = `Bearer ${apiKey}`;
+  }
+
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
     const html = renderCampaignHtml(campaign, contact);
@@ -469,10 +480,7 @@ export async function dispatchCampaign(
     try {
       const res = await fetch('/api/resend/emails', {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
           from: 'Med360 Nexus <onboarding@resend.dev>',
           to: [contact.email],
