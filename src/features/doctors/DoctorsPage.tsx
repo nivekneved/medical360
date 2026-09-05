@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Award, Building2, Stethoscope, MessageCircle, Shield } from 'lucide-react';
@@ -20,10 +20,17 @@ export function DoctorsPage() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
   const [selectedHospital, setSelectedHospital] = useState<string>('all');
   const [secondOpinionDoctor, setSecondOpinionDoctor] = useState<Doctor | null>(null);
+  const opinionSectionRef = useRef<HTMLDivElement>(null);
   const { doctors, loading } = useDoctors(selectedSpecialty === 'all' ? undefined : selectedSpecialty);
   const { specialties } = useSpecialties();
   const { hospitals } = useHospitals({});
   const { data: cms } = useCMS('doctors');
+
+  useEffect(() => {
+    if (secondOpinionDoctor && opinionSectionRef.current) {
+      opinionSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [secondOpinionDoctor]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
@@ -367,13 +374,15 @@ export function DoctorsPage() {
         </div>
       </section>
 
-      {/* Direct Second Opinion Modal */}
+      {/* Direct Second Opinion Consultation Section (Inline Card - Zero Popups) */}
       {secondOpinionDoctor && (
-        <DoctorSecondOpinionModal
-          doctor={secondOpinionDoctor}
-          hospital={getHospital(getDocHospitalIds(secondOpinionDoctor)[0])}
-          onClose={() => setSecondOpinionDoctor(null)}
-        />
+        <div ref={opinionSectionRef} style={{ scrollMarginTop: '100px' }}>
+          <DoctorSecondOpinionModal
+            doctor={secondOpinionDoctor}
+            hospital={getHospital(getDocHospitalIds(secondOpinionDoctor)[0])}
+            onClose={() => setSecondOpinionDoctor(null)}
+          />
+        </div>
       )}
     </main>
   );

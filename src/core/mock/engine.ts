@@ -1,146 +1,32 @@
 import type { MockConfig, Inquiry, InquiryStatus, Hospital, Specialty, Doctor, CaseStudy } from '../types';
-import { hospitalsSeed } from './seeds/hospitals.seed';
-import { specialtiesSeed } from './seeds/specialties.seed';
-import { doctorsSeed } from './seeds/doctors.seed';
-import { caseStudiesSeed } from './seeds/case-studies.seed';
-import { inquiriesSeed } from './seeds/inquiries.seed';
 import { cmsSeed, CmsPage } from './seeds/cms.seed';
 import { supabase, isSupabaseConfigured } from '../supabase/client';
+import {
+  mapHospitalRow,
+  mapSpecialtyRow,
+  mapDoctorRow,
+  mapCaseStudyRow,
+  mapInquiryRow,
+} from '../supabase/repositories';
+import {
+  associateSpecialtyHospitals as helperAssociateSpecialtyHospitals,
+  associateSpecialtyDoctors as helperAssociateSpecialtyDoctors,
+  associateHospitalDoctors as helperAssociateHospitalDoctors,
+  saveAllDoctorAssociations as helperSaveAllDoctorAssociations,
+} from './matrix.helpers';
+import {
+  loadStore,
+  saveStore,
+  loadMockConfig,
+  saveMockConfig,
+  resetMockData,
+  getLatencyMs,
+  simulateDelay,
+  type MockStore,
+} from './store';
 import { deepSanitize, sanitizeInput } from '../services/security.service';
 
-// ─── Default Config ──────────────────────────────────────────────────────────
-const DEFAULT_CONFIG: MockConfig = {
-  enabled: true, // Default to mock, toggleable to live Supabase
-  latency: 'normal',
-  errorRate: 0,
-};
-
-const STORAGE_KEY = 'med360_mock_store_v4';
-const CONFIG_KEY  = 'med360_mock_config';
-
-// ─── Latency Simulator ───────────────────────────────────────────────────────
-function getLatencyMs(latency: MockConfig['latency']): number {
-  const map = { instant: 0, normal: 300, slow: 1000 };
-  return map[latency];
-}
-
-function simulateDelay(ms: number): Promise<void> {
-  if (ms === 0) return Promise.resolve();
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-// ─── Deep Merge Helper ───────────────────────────────────────────────────────
-function mergeCms(seed: Record<string, CmsPage>, existing: Record<string, CmsPage>): Record<string, CmsPage> {
-  const result: Record<string, CmsPage> = { ...seed };
-  if (!existing) return result;
-  
-  for (const [pageId, seedPage] of Object.entries(seed)) {
-    const exPage = existing[pageId];
-    if (exPage && exPage.content) {
-      result[pageId] = {
-        ...seedPage,
-        ...exPage,
-        content: {
-          ...seedPage.content,
-          ...exPage.content,
-        },
-      };
-    }
-  }
-  for (const [pageId, exPage] of Object.entries(existing)) {
-    if (!result[pageId]) {
-      result[pageId] = exPage;
-    }
-  }
-  return result;
-}
-
-// ─── Store Shape ─────────────────────────────────────────────────────────────
-interface MockStore {
-  hospitals: Hospital[];
-  specialties: Specialty[];
-  doctors: Doctor[];
-  caseStudies: CaseStudy[];
-  inquiries: Inquiry[];
-  cms: Record<string, CmsPage>;
-}
-
-function loadStore(): MockStore {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as MockStore;
-      const specMap = new Map(specialtiesSeed.map(s => [s.id, s.imageUrl]));
-      const docMap = new Map(doctorsSeed.map(d => [d.id, d.imageUrl]));
-      const hospMap = new Map(hospitalsSeed.map(h => [h.id, h.imageUrl]));
-      const csMap = new Map(caseStudiesSeed.map(c => [c.id, c.imageUrl]));
-
-      const hospitals = (parsed.hospitals?.length ? parsed.hospitals : hospitalsSeed).map(h => hospMap.has(h.id) ? { ...h, imageUrl: hospMap.get(h.id)! } : h);
-      const specialties = (parsed.specialties?.length ? parsed.specialties : specialtiesSeed).map(s => specMap.has(s.id) ? { ...s, imageUrl: specMap.get(s.id)! } : s);
-      const doctors = (parsed.doctors?.length ? parsed.doctors : doctorsSeed).map(d => docMap.has(d.id) ? { ...d, imageUrl: docMap.get(d.id)! } : d);
-      const caseStudies = (parsed.caseStudies?.length ? parsed.caseStudies : caseStudiesSeed).map(c => csMap.has(c.id) ? { ...c, imageUrl: csMap.get(c.id)! } : c);
-
-      return {
-        hospitals,
-        specialties,
-        doctors,
-        caseStudies,
-        inquiries: parsed.inquiries ?? inquiriesSeed,
-        cms: mergeCms(cmsSeed, parsed.cms ?? {}),
-      };
-    }
-  } catch {
-    // ignore parse errors
-  }
-  return {
-    hospitals: hospitalsSeed,
-    specialties: specialtiesSeed,
-    doctors: doctorsSeed,
-    caseStudies: caseStudiesSeed,
-    inquiries: inquiriesSeed,
-    cms: cmsSeed,
-  };
-}
-
-function saveStore(store: MockStore): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-  } catch {
-    // ignore storage errors
-  }
-}
-
-function resetStore(): MockStore {
-  const fresh: MockStore = {
-    hospitals: hospitalsSeed,
-    specialties: specialtiesSeed,
-    doctors: doctorsSeed,
-    caseStudies: caseStudiesSeed,
-    inquiries: inquiriesSeed,
-    cms: cmsSeed,
-  };
-  saveStore(fresh);
-  return fresh;
-}
-
-// ─── Config Helpers ──────────────────────────────────────────────────────────
-export function loadMockConfig(): MockConfig {
-  try {
-    const raw = localStorage.getItem(CONFIG_KEY);
-    if (raw) return { ...DEFAULT_CONFIG, ...JSON.parse(raw) };
-  } catch { /* ignore */ }
-  return { ...DEFAULT_CONFIG };
-}
-
-export function saveMockConfig(config: MockConfig): void {
-  try {
-    localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
-  } catch { /* ignore */ }
-}
-
-export function resetMockData(): void {
-  resetStore();
-}
+export { loadMockConfig, saveMockConfig, resetMockData };
 
 // ─── Dual-Mode Data Engine (Supabase Live & Mock Fallback) ────────────────────
 class MockEngine {
@@ -181,7 +67,7 @@ class MockEngine {
       try {
         const { data, error } = await supabase.from('hospitals').select('*').order('created_at', { ascending: false });
         if (!error && data && data.length > 0) {
-          return data.map(this.mapHospitalRow);
+          return data.map(mapHospitalRow);
         }
       } catch (e) {
         console.warn('Supabase getHospitals failed, falling back to local store:', e);
@@ -195,7 +81,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('hospitals').select('*').eq('id', id).single();
-        if (!error && data) return this.mapHospitalRow(data);
+        if (!error && data) return mapHospitalRow(data);
       } catch (e) {
         console.warn('Supabase getHospitalById failed:', e);
       }
@@ -209,7 +95,7 @@ class MockEngine {
       try {
         const { data, error } = await supabase.from('hospitals').select('*').eq('featured', true).eq('active', true);
         if (!error && data && data.length > 0) {
-          return data.map(this.mapHospitalRow);
+          return data.map(mapHospitalRow);
         }
       } catch (e) {
         console.warn('Supabase getFeaturedHospitals failed:', e);
@@ -236,17 +122,12 @@ class MockEngine {
   }
 
   async associateSpecialtyHospitals(specialtyId: string, hospitalIds: string[]): Promise<void> {
-    const targetHospSet = new Set(hospitalIds);
-    const allHospitals = await this.getHospitals();
-    for (const hosp of allHospitals) {
-      const hasSpec = hosp.specialties.includes(specialtyId);
-      const shouldHave = targetHospSet.has(hosp.id);
-      if (shouldHave && !hasSpec) {
-        await this.updateHospital(hosp.id, { specialties: [...hosp.specialties, specialtyId] });
-      } else if (!shouldHave && hasSpec) {
-        await this.updateHospital(hosp.id, { specialties: hosp.specialties.filter(s => s !== specialtyId) });
-      }
-    }
+    return helperAssociateSpecialtyHospitals(
+      specialtyId,
+      hospitalIds,
+      () => this.getHospitals(),
+      (id, updates) => this.updateHospital(id, updates)
+    );
   }
 
   async saveAllHospitalSpecialtyAssociations(mapping: Record<string, string[]>): Promise<void> {
@@ -269,7 +150,7 @@ class MockEngine {
         if (updates.contactPhone) rowUpdates.contact_phone = updates.contactPhone;
 
         const { data, error } = await supabase.from('hospitals').update(rowUpdates).eq('id', id).select().single();
-        if (!error && data) return this.mapHospitalRow(data);
+        if (!error && data) return mapHospitalRow(data);
       } catch (e) {
         console.warn('Supabase updateHospital failed:', e);
       }
@@ -315,7 +196,7 @@ class MockEngine {
           active: hospital.active !== false,
         };
         const { data, error } = await supabase.from('hospitals').insert([row]).select().single();
-        if (!error && data) return this.mapHospitalRow(data);
+        if (!error && data) return mapHospitalRow(data);
       } catch (e) {
         console.warn('Supabase createHospital failed:', e);
       }
@@ -351,7 +232,7 @@ class MockEngine {
       try {
         const { data, error } = await supabase.from('specialties').select('*');
         if (!error && data && data.length > 0) {
-          return data.map(this.mapSpecialtyRow);
+          return data.map(mapSpecialtyRow);
         }
       } catch (e) {
         console.warn('Supabase getSpecialties failed:', e);
@@ -365,7 +246,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('specialties').select('*').eq('id', id).single();
-        if (!error && data) return this.mapSpecialtyRow(data);
+        if (!error && data) return mapSpecialtyRow(data);
       } catch (e) {
         console.warn('Supabase getSpecialtyById failed:', e);
       }
@@ -378,7 +259,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('specialties').select('*').eq('featured', true);
-        if (!error && data && data.length > 0) return data.map(this.mapSpecialtyRow);
+        if (!error && data && data.length > 0) return data.map(mapSpecialtyRow);
       } catch (e) {
         console.warn('Supabase getFeaturedSpecialties failed:', e);
       }
@@ -393,7 +274,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('specialties').insert([newSpecialty]).select().single();
-        if (!error && data) return this.mapSpecialtyRow(data);
+        if (!error && data) return mapSpecialtyRow(data);
       } catch (e) {
         console.warn('Supabase createSpecialty failed:', e);
       }
@@ -411,7 +292,7 @@ class MockEngine {
         if (updates.imageUrl) rowUpdates.image_url = updates.imageUrl;
         if (updates.shortDescription) rowUpdates.short_description = updates.shortDescription;
         const { data, error } = await supabase.from('specialties').update(rowUpdates).eq('id', id).select().single();
-        if (!error && data) return this.mapSpecialtyRow(data);
+        if (!error && data) return mapSpecialtyRow(data);
       } catch (e) {
         console.warn('Supabase updateSpecialty failed:', e);
       }
@@ -450,7 +331,7 @@ class MockEngine {
       try {
         const { data, error } = await supabase.from('doctors').select('*').order('created_at', { ascending: false });
         if (!error && data && data.length > 0) {
-          return data.map(this.mapDoctorRow);
+          return data.map(mapDoctorRow);
         }
       } catch (e) {
         console.warn('Supabase getDoctors failed:', e);
@@ -464,7 +345,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('doctors').select('*').eq('id', id).single();
-        if (!error && data) return this.mapDoctorRow(data);
+        if (!error && data) return mapDoctorRow(data);
       } catch (e) {
         console.warn('Supabase getDoctorById failed:', e);
       }
@@ -500,53 +381,28 @@ class MockEngine {
   }
 
   async associateSpecialtyDoctors(specialtyId: string, doctorIds: string[]): Promise<void> {
-    const targetDocSet = new Set(doctorIds);
-    const allDoctors = await this.getDoctors();
-    for (const doc of allDoctors) {
-      const hasSpec = (doc.specialties || []).includes(specialtyId);
-      const shouldHave = targetDocSet.has(doc.id);
-      if (shouldHave && !hasSpec) {
-        await this.updateDoctor(doc.id, { specialties: [...(doc.specialties || []), specialtyId] });
-      } else if (!shouldHave && hasSpec) {
-        await this.updateDoctor(doc.id, { specialties: (doc.specialties || []).filter(s => s !== specialtyId) });
-      }
-    }
+    return helperAssociateSpecialtyDoctors(
+      specialtyId,
+      doctorIds,
+      () => this.getDoctors(),
+      (id, updates) => this.updateDoctor(id, updates)
+    );
   }
 
   async associateHospitalDoctors(hospitalId: string, doctorIds: string[]): Promise<void> {
-    const targetDocSet = new Set(doctorIds);
-    const allDoctors = await this.getDoctors();
-    for (const doc of allDoctors) {
-      const currentHospIds = doc.hospitalIds?.length ? [...doc.hospitalIds] : (doc.hospitalId ? [doc.hospitalId] : []);
-      const hasHosp = currentHospIds.includes(hospitalId);
-      const shouldHave = targetDocSet.has(doc.id);
-      if (shouldHave && !hasHosp) {
-        const updated = [...currentHospIds, hospitalId];
-        await this.updateDoctor(doc.id, { hospitalIds: updated, hospitalId: updated[0] });
-      } else if (!shouldHave && hasHosp) {
-        const updated = currentHospIds.filter(id => id !== hospitalId);
-        await this.updateDoctor(doc.id, { hospitalIds: updated, hospitalId: updated[0] || '' });
-      }
-    }
+    return helperAssociateHospitalDoctors(
+      hospitalId,
+      doctorIds,
+      () => this.getDoctors(),
+      (id, updates) => this.updateDoctor(id, updates)
+    );
   }
 
   async saveAllDoctorAssociations(mapping: { doctorId: string; hospitalId?: string; hospitalIds?: string[]; specialtyIds?: string[] }[]): Promise<void> {
-    for (const item of mapping) {
-      const updates: Partial<Doctor> = {};
-      if (item.hospitalIds !== undefined) {
-        updates.hospitalIds = Array.from(new Set(item.hospitalIds));
-        updates.hospitalId = updates.hospitalIds[0] || '';
-      } else if (item.hospitalId !== undefined) {
-        updates.hospitalId = item.hospitalId;
-        updates.hospitalIds = item.hospitalId ? [item.hospitalId] : [];
-      }
-      if (item.specialtyIds !== undefined) {
-        updates.specialties = Array.from(new Set(item.specialtyIds));
-      }
-      if (Object.keys(updates).length > 0) {
-        await this.updateDoctor(item.doctorId, updates);
-      }
-    }
+    return helperSaveAllDoctorAssociations(
+      mapping,
+      (id, updates) => this.updateDoctor(id, updates)
+    );
   }
 
   async createDoctor(doctor: Doctor): Promise<Doctor> {
@@ -555,7 +411,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('doctors').insert([newDoctor]).select().single();
-        if (!error && data) return this.mapDoctorRow(data);
+        if (!error && data) return mapDoctorRow(data);
       } catch (e) {
         console.warn('Supabase createDoctor failed:', e);
       }
@@ -575,7 +431,7 @@ class MockEngine {
         if (updates.hospitalId) rowUpdates.hospital_id = updates.hospitalId;
         if (updates.experience) { rowUpdates.experience = updates.experience; rowUpdates.years_experience = updates.experience; }
         const { data, error } = await supabase.from('doctors').update(rowUpdates).eq('id', id).select().single();
-        if (!error && data) return this.mapDoctorRow(data);
+        if (!error && data) return mapDoctorRow(data);
       } catch (e) {
         console.warn('Supabase updateDoctor failed:', e);
       }
@@ -614,7 +470,7 @@ class MockEngine {
       try {
         const { data, error } = await supabase.from('case_studies').select('*').order('created_at', { ascending: false });
         if (!error && data && data.length > 0) {
-          return data.map(this.mapCaseStudyRow);
+          return data.map(mapCaseStudyRow);
         }
       } catch (e) {
         console.warn('Supabase getCaseStudies failed:', e);
@@ -628,7 +484,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('case_studies').select('*').eq('id', id).single();
-        if (!error && data) return this.mapCaseStudyRow(data);
+        if (!error && data) return mapCaseStudyRow(data);
       } catch (e) {
         console.warn('Supabase getCaseStudyById failed:', e);
       }
@@ -641,7 +497,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('case_studies').select('*').eq('featured', true);
-        if (!error && data && data.length > 0) return data.map(this.mapCaseStudyRow);
+        if (!error && data && data.length > 0) return data.map(mapCaseStudyRow);
       } catch (e) {
         console.warn('Supabase getFeaturedCaseStudies failed:', e);
       }
@@ -661,7 +517,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('case_studies').insert([newCase]).select().single();
-        if (!error && data) return this.mapCaseStudyRow(data);
+        if (!error && data) return mapCaseStudyRow(data);
       } catch (e) {
         console.warn('Supabase createCaseStudy failed:', e);
       }
@@ -681,7 +537,7 @@ class MockEngine {
         if (updates.condition) { rowUpdates.condition = updates.condition; rowUpdates.title = updates.condition; }
         if (updates.treatment) { rowUpdates.treatment = updates.treatment; rowUpdates.summary = updates.treatment; }
         const { data, error } = await supabase.from('case_studies').update(rowUpdates).eq('id', id).select().single();
-        if (!error && data) return this.mapCaseStudyRow(data);
+        if (!error && data) return mapCaseStudyRow(data);
       } catch (e) {
         console.warn('Supabase updateCaseStudy failed:', e);
       }
@@ -720,7 +576,7 @@ class MockEngine {
       try {
         const { data, error } = await supabase.from('inquiries').select('*').order('created_at', { ascending: false });
         if (!error && data && data.length > 0) {
-          return data.map(this.mapInquiryRow);
+          return data.map(mapInquiryRow);
         }
       } catch (e) {
         console.warn('Supabase getInquiries failed:', e);
@@ -736,7 +592,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('inquiries').select('*').eq('id', id).single();
-        if (!error && data) return this.mapInquiryRow(data);
+        if (!error && data) return mapInquiryRow(data);
       } catch (e) {
         console.warn('Supabase getInquiryById failed:', e);
       }
@@ -786,7 +642,7 @@ class MockEngine {
         };
         const { data: resData, error } = await supabase.from('inquiries').insert([row]).select().single();
         if (!error && resData) {
-          const mapped = this.mapInquiryRow(resData);
+          const mapped = mapInquiryRow(resData);
           this.store.inquiries.unshift(mapped);
           this.save();
           return mapped;
@@ -802,23 +658,28 @@ class MockEngine {
     return newInquiry;
   }
 
-  async updateInquiryStatus(id: string, status: InquiryStatus): Promise<Inquiry> {
+  async updateInquiry(id: string, updates: Partial<Inquiry>): Promise<Inquiry> {
     const now = new Date().toISOString();
     if (this.isLive()) {
       try {
-        const { data, error } = await supabase.from('inquiries').update({ status, updated_at: now }).eq('id', id).select().single();
-        if (!error && data) return this.mapInquiryRow(data);
+        const rowUpdates: any = { ...updates, updated_at: now };
+        const { data, error } = await supabase.from('inquiries').update(rowUpdates).eq('id', id).select().single();
+        if (!error && data) return mapInquiryRow(data);
       } catch (e) {
-        console.warn('Supabase updateInquiryStatus failed:', e);
+        console.warn('Supabase updateInquiry failed:', e);
       }
     }
     await this.delay();
     const idx = this.store.inquiries.findIndex(i => i.id === id);
-    if (idx === -1) throw new Error('Not found');
-    const updated = { ...this.store.inquiries[idx], status, updatedAt: now };
+    if (idx === -1) throw new Error('Inquiry not found');
+    const updated = { ...this.store.inquiries[idx], ...updates, updatedAt: now };
     this.store.inquiries[idx] = updated;
     this.save();
     return updated;
+  }
+
+  async updateInquiryStatus(id: string, status: InquiryStatus): Promise<Inquiry> {
+    return this.updateInquiry(id, { status });
   }
 
   async addInquiryNote(id: string, content: string, authorId: string = 'admin'): Promise<Inquiry> {
@@ -836,7 +697,7 @@ class MockEngine {
     if (this.isLive()) {
       try {
         const { data, error } = await supabase.from('inquiries').update({ notes: updatedNotes, updated_at: new Date().toISOString() }).eq('id', id).select().single();
-        if (!error && data) return this.mapInquiryRow(data);
+        if (!error && data) return mapInquiryRow(data);
       } catch (e) {
         console.warn('Supabase addInquiryNote failed:', e);
       }
@@ -926,131 +787,8 @@ class MockEngine {
     }
     throw new Error(`Default seed for page ${id} not found`);
   }
-
-  // ── Database Row Mappers ───────────────────────────────────────────────────
-  private mapHospitalRow(r: any): Hospital {
-    return {
-      id: r.id,
-      name: r.name,
-      name_fr: r.name_fr,
-      name_kr: r.name_kr,
-      city: r.city,
-      country: r.country,
-      description: r.description,
-      description_fr: r.description_fr,
-      description_kr: r.description_kr,
-      imageUrl: r.image_url || r.imageUrl,
-      gallery: r.gallery || [],
-      accreditations: r.accreditations || [],
-      specialties: r.specialties || [],
-      bedsCount: r.beds_count ?? r.bedsCount ?? 0,
-      icuBeds: r.icu_beds ?? r.icuBeds ?? 0,
-      foundedYear: r.founded_year ?? r.foundedYear ?? 2000,
-      rating: Number(r.rating) || 4.8,
-      reviewCount: r.review_count ?? r.reviewCount ?? 0,
-      internationalPatientsPerYear: r.international_patients_per_year ?? r.internationalPatientsPerYear ?? 0,
-      languages: r.languages || ['English', 'French'],
-      website: r.website,
-      contactEmail: r.contact_email || r.contactEmail,
-      contactPhone: r.contact_phone || r.contactPhone,
-      featured: !!r.featured,
-      active: r.active !== false,
-    };
-  }
-
-  private mapSpecialtyRow(r: any): Specialty {
-    return {
-      id: r.id,
-      name: r.name,
-      name_fr: r.name_fr,
-      name_kr: r.name_kr,
-      slug: r.slug,
-      icon: r.icon,
-      description: r.description,
-      description_fr: r.description_fr,
-      description_kr: r.description_kr,
-      shortDescription: r.short_description || r.shortDescription || '',
-      shortDescription_fr: r.short_description_fr || r.shortDescription_fr,
-      shortDescription_kr: r.short_description_kr || r.shortDescription_kr,
-      imageUrl: r.image_url || r.imageUrl,
-      procedures: r.procedures || [],
-      featured: !!r.featured,
-    };
-  }
-
-  private mapDoctorRow(r: any): Doctor {
-    const hospitalIds: string[] = r.hospital_ids || r.hospitalIds || (r.hospital_id || r.hospitalId ? [r.hospital_id || r.hospitalId] : []);
-    return {
-      id: r.id,
-      hospitalId: hospitalIds[0] || r.hospital_id || r.hospitalId || '',
-      hospitalIds: hospitalIds,
-      name: r.name,
-      title: r.title,
-      specialties: r.specialties || (r.specialty_id ? [r.specialty_id] : []),
-      qualifications: r.qualifications || [],
-      experience: r.experience ?? r.years_experience ?? 10,
-      surgeries: r.surgeries ?? r.review_count ?? 100,
-      languages: r.languages || ['English', 'French'],
-      imageUrl: r.image_url || r.imageUrl,
-      bio: r.bio || r.biography || '',
-      consultationFeeUSD: Number(r.consultation_fee_usd) || 60,
-      featured: !!r.featured,
-    };
-  }
-
-  private mapCaseStudyRow(r: any): CaseStudy {
-    return {
-      id: r.id,
-      patientFirstName: r.patient_first_name || r.patient_name_anonymized || 'Anonymous',
-      patientCountry: r.patient_country || r.patientCountry || 'Mauritius',
-      patientAge: r.patient_age ?? r.patientAge ?? 45,
-      condition: r.condition || r.title || '',
-      condition_fr: r.condition_fr || r.title_fr,
-      condition_kr: r.condition_kr || r.title_kr,
-      specialtyId: r.specialty_id || r.specialtyId || '',
-      hospitalId: r.hospital_id || r.hospitalId || '',
-      doctorId: r.doctor_id || r.doctorId,
-      treatment: r.treatment || r.summary || '',
-      treatment_fr: r.treatment_fr || r.summary_fr,
-      treatment_kr: r.treatment_kr || r.summary_kr,
-      outcome: r.outcome || '',
-      outcome_fr: r.outcome_fr,
-      outcome_kr: r.outcome_kr,
-      testimonial: r.testimonial || '',
-      testimonial_fr: r.testimonial_fr,
-      testimonial_kr: r.testimonial_kr,
-      costSavedPercent: r.cost_saved_percent ?? r.costSavedPercent ?? 50,
-      durationDays: r.duration_days ?? r.durationDays ?? 7,
-      year: r.year ?? 2024,
-      imageUrl: r.image_url || r.imageUrl,
-      featured: !!r.featured,
-    };
-  }
-
-  private mapInquiryRow(r: any): Inquiry {
-    return {
-      id: r.id,
-      firstName: r.first_name || r.firstName,
-      lastName: r.last_name || r.lastName,
-      email: r.email,
-      phone: r.phone,
-      countryOfResidence: r.country_of_residence || r.countryOfResidence,
-      specialtyId: r.specialty_id || r.specialtyId,
-      description: r.description,
-      urgency: r.urgency || 'routine',
-      preferredCountry: r.preferred_country || r.preferredCountry,
-      budgetRangeUSD: (r.budget_min !== undefined && r.budget_max !== undefined)
-        ? { min: Number(r.budget_min), max: Number(r.budget_max) }
-        : r.budgetRangeUSD,
-      documents: r.documents || [],
-      status: r.status || 'new',
-      assignedCaseManagerId: r.assigned_case_manager_id || r.assignedCaseManagerId,
-      notes: r.notes || [],
-      createdAt: r.created_at || r.createdAt || new Date().toISOString(),
-      updatedAt: r.updated_at || r.updatedAt || new Date().toISOString(),
-    };
-  }
 }
 
 // ─── Singleton Export ─────────────────────────────────────────────────────────
 export const mockEngine = new MockEngine();
+

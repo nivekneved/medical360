@@ -229,3 +229,73 @@ export function exportToCsv(
   link.click();
   document.body.removeChild(link);
 }
+
+/**
+ * Convenience helper to export patient inquiries list to CSV spreadsheet.
+ */
+export function exportInquiriesToCsv(inquiries: any[], specialties: any[] = []) {
+  const getSpecialtyName = (id: string) => specialties.find((s: any) => s.id === id)?.name || id;
+  const columns: ExportColumn[] = [
+    { header: 'Patient Name', key: 'firstName', format: (_, r) => `${r.firstName} ${r.lastName}` },
+    { header: 'Specialty', key: 'specialtyId', format: (val) => getSpecialtyName(val) },
+    { header: 'Service', key: 'serviceName' },
+    { header: 'Urgency', key: 'urgency', format: (val) => String(val).toUpperCase() },
+    { header: 'Status', key: 'status', format: (val) => String(val).replace(/_/g, ' ') },
+    { header: 'Country', key: 'countryOfResidence' },
+    { header: 'Phone', key: 'phone' },
+    { header: 'Email', key: 'email' },
+    { header: 'Created', key: 'createdAt' },
+  ];
+  exportToCsv('medical360_inquiries_report', columns, inquiries);
+}
+
+/**
+ * Convenience helper to print or save a formatted PDF report of patient inquiries.
+ */
+export function printInquiriesPdf(inquiries: any[], specialties: any[] = []) {
+  const getSpecialtyName = (id: string) => specialties.find((s: any) => s.id === id)?.name || id;
+  const columns: ExportColumn[] = [
+    { header: 'Patient', key: 'firstName', format: (_, r) => `${r.firstName} ${r.lastName}` },
+    { header: 'Specialty', key: 'specialtyId', format: (val) => getSpecialtyName(val) },
+    { header: 'Urgency', key: 'urgency', format: (val) => String(val).toUpperCase() },
+    { header: 'Status', key: 'status', format: (val) => String(val).replace(/_/g, ' ') },
+    { header: 'Country', key: 'countryOfResidence' },
+    { header: 'Phone', key: 'phone' },
+    { header: 'Received', key: 'createdAt', format: (val) => new Date(val).toLocaleDateString() },
+  ];
+  printOrExportPdf(
+    'Medical 360 — Patient Inquiries Report',
+    columns,
+    inquiries,
+    `Total Inquiries: ${inquiries.length} · Clinical Concierge Export`
+  );
+}
+
+/**
+ * Convenience helper to print or save a single inquiry dossier PDF.
+ */
+export function printInquiryPdf(inquiry: any, specialtyName?: string) {
+  const columns: ExportColumn[] = [
+    { header: 'Field', key: 'label' },
+    { header: 'Details', key: 'value' },
+  ];
+  const data = [
+    { label: 'Patient Name', value: `${inquiry.firstName} ${inquiry.lastName}` },
+    { label: 'Email', value: inquiry.email },
+    { label: 'Phone', value: inquiry.phone },
+    { label: 'Country of Residence', value: inquiry.countryOfResidence },
+    { label: 'Specialty Requested', value: specialtyName || inquiry.specialtyId },
+    { label: 'Service / Procedure', value: inquiry.serviceName || 'General Consultation' },
+    { label: 'Urgency Level', value: String(inquiry.urgency).toUpperCase() },
+    { label: 'Current Status', value: String(inquiry.status).replace(/_/g, ' ').toUpperCase() },
+    { label: 'Preferred Destination', value: inquiry.preferredCountry || 'Any' },
+    { label: 'Clinical Description', value: inquiry.description || '—' },
+    { label: 'Submission Timestamp', value: new Date(inquiry.createdAt).toLocaleString() },
+  ];
+  printOrExportPdf(
+    `Patient Dossier — ${inquiry.firstName} ${inquiry.lastName}`,
+    columns,
+    data,
+    `Inquiry ID: ${inquiry.id}`
+  );
+}
