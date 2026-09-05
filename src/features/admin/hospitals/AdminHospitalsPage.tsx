@@ -140,6 +140,18 @@ export function AdminHospitalsPage() {
     active: true,
   });
 
+  if (isMatrixOpen) {
+    return (
+      <div style={{ padding: '2rem', maxWidth: 1400, margin: '0 auto', animation: 'fadeIn 0.2s ease-out' }}>
+        <HospitalSpecialtyMatrixModal
+          isOpen={isMatrixOpen}
+          onClose={() => setIsMatrixOpen(false)}
+          onSaved={loadData}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
       <AdminEntityManager<Hospital>
@@ -408,13 +420,6 @@ export function AdminHospitalsPage() {
             </div>
           </div>
         )}
-      />
-
-      {/* Hospital-Specialty Associations Matrix Modal */}
-      <HospitalSpecialtyMatrixModal
-        isOpen={isMatrixOpen}
-        onClose={() => setIsMatrixOpen(false)}
-        onSaved={loadData}
       />
     </>
   );

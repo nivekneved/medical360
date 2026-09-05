@@ -724,102 +724,88 @@ export function AdminDashboardPage() {
         )}
       </div>
 
-      {/* ─── VIEW INQUIRY DETAILS MODAL ────────────────────────────────────── */}
+      {/* ─── VIEW INQUIRY DETAILS INLINE PANEL (NO POPUPS) ────────────────── */}
       {viewingInquiry && (
         <div
           style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(15, 23, 42, 0.65)',
-            backdropFilter: 'blur(4px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-            padding: '1rem',
+            background: 'var(--color-surface)',
+            width: '100%',
+            borderRadius: 16,
+            border: '2px solid var(--color-primary)',
+            padding: '1.75rem',
+            marginTop: '1.5rem',
+            boxShadow: 'var(--shadow-md)',
+            animation: 'fadeIn 0.2s ease-out',
           }}
         >
-          <div
-            style={{
-              background: 'var(--color-surface)',
-              width: '100%',
-              maxWidth: 580,
-              borderRadius: 16,
-              border: '1.5px solid var(--color-border)',
-              padding: '1.75rem',
-              maxHeight: '90vh',
-              overflowY: 'auto',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-              <div>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '0 0 2px 0' }}>
-                  {viewingInquiry.firstName} {viewingInquiry.lastName}
-                </h3>
-                <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>
-                  Inquiry #{viewingInquiry.id} • {formatDate(viewingInquiry.createdAt)}
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setViewingInquiry(null)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
-              >
-                <X size={20} />
-              </button>
-            </div>
-
-            {/* Quick Details */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', background: 'var(--color-surface-2)', padding: '1rem', borderRadius: 8, marginBottom: '1.25rem', fontSize: '0.85rem' }}>
-              <div>
-                <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem' }}>Specialty</span>
-                <strong>{getSpecialtyName(viewingInquiry.specialtyId)}</strong>
-              </div>
-              <div>
-                <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem' }}>Urgency</span>
-                <strong style={{ color: urgencyColor(viewingInquiry.urgency), textTransform: 'capitalize' }}>
-                  {viewingInquiry.urgency}
-                </strong>
-              </div>
-              <div>
-                <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem' }}>Email</span>
-                <a href={`mailto:${viewingInquiry.email}`} style={{ color: 'var(--color-primary)' }}>{viewingInquiry.email}</a>
-              </div>
-              <div>
-                <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem' }}>Phone</span>
-                <a href={`tel:${viewingInquiry.phone}`} style={{ color: 'var(--color-primary)' }}>{viewingInquiry.phone}</a>
-              </div>
-            </div>
-
-            {/* Patient Clinical Need */}
-            <div style={{ marginBottom: '1.25rem' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: 4 }}>
-                Clinical Condition / Description
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: '0 0 2px 0' }}>
+                {viewingInquiry.firstName} {viewingInquiry.lastName}
+              </h3>
+              <span style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)' }}>
+                Inquiry #{viewingInquiry.id} • {formatDate(viewingInquiry.createdAt)}
               </span>
-              <div style={{ background: 'var(--color-surface-2)', padding: '0.85rem', borderRadius: 8, fontSize: '0.875rem', lineHeight: 1.5 }}>
-                {viewingInquiry.description}
-              </div>
             </div>
+            <button
+              type="button"
+              onClick={() => setViewingInquiry(null)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
+            >
+              <X size={20} />
+            </button>
+          </div>
 
-            {/* Footer Buttons */}
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1.5rem' }}>
-              <a
-                href={getWhatsAppUrl(viewingInquiry)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline"
-                style={{ color: '#25D366', borderColor: '#25D366', display: 'flex', alignItems: 'center', gap: 6 }}
-              >
-                <MessageCircle size={16} /> Open WhatsApp
-              </a>
-              <button
-                type="button"
-                onClick={() => setViewingInquiry(null)}
-                className="btn btn-primary"
-              >
-                Close
-              </button>
+          {/* Quick Details */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', background: 'var(--color-surface-2)', padding: '1rem', borderRadius: 8, marginBottom: '1.25rem', fontSize: '0.85rem' }}>
+            <div>
+              <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem' }}>Specialty</span>
+              <strong>{getSpecialtyName(viewingInquiry.specialtyId)}</strong>
             </div>
+            <div>
+              <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem' }}>Urgency</span>
+              <strong style={{ color: urgencyColor(viewingInquiry.urgency), textTransform: 'capitalize' }}>
+                {viewingInquiry.urgency}
+              </strong>
+            </div>
+            <div>
+              <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem' }}>Email</span>
+              <a href={`mailto:${viewingInquiry.email}`} style={{ color: 'var(--color-primary)' }}>{viewingInquiry.email}</a>
+            </div>
+            <div>
+              <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem' }}>Phone</span>
+              <a href={`tel:${viewingInquiry.phone}`} style={{ color: 'var(--color-primary)' }}>{viewingInquiry.phone}</a>
+            </div>
+          </div>
+
+          {/* Patient Clinical Need */}
+          <div style={{ marginBottom: '1.25rem' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: 4 }}>
+              Clinical Condition / Description
+            </span>
+            <div style={{ background: 'var(--color-surface-2)', padding: '0.85rem', borderRadius: 8, fontSize: '0.875rem', lineHeight: 1.5 }}>
+              {viewingInquiry.description}
+            </div>
+          </div>
+
+          {/* Footer Buttons */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1.5rem' }}>
+            <a
+              href={getWhatsAppUrl(viewingInquiry)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline"
+              style={{ color: '#25D366', borderColor: '#25D366', display: 'flex', alignItems: 'center', gap: 6 }}
+            >
+              <MessageCircle size={16} /> Open WhatsApp
+            </a>
+            <button
+              type="button"
+              onClick={() => setViewingInquiry(null)}
+              className="btn btn-primary"
+            >
+              Close
+            </button>
           </div>
         </div>
       )}

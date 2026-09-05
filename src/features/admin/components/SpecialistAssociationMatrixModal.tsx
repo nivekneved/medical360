@@ -229,29 +229,21 @@ export const SpecialistAssociationMatrixModal: React.FC<SpecialistAssociationMat
   return (
     <div
       style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(0,0,0,0.7)',
-        backdropFilter: 'blur(6px)',
-        zIndex: 2000,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1rem',
+        width: '100%',
+        animation: 'fadeIn 0.2s ease',
       }}
     >
       <div
         style={{
           background: 'var(--color-surface)',
           borderRadius: 'var(--radius-xl)',
-          width: '98vw',
-          maxWidth: 1300,
-          height: '92vh',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: '0 30px 60px rgba(0,0,0,0.3)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
           border: '1.5px solid var(--color-border)',
           overflow: 'hidden',
+          marginBottom: '2rem',
         }}
       >
         {/* Header */}

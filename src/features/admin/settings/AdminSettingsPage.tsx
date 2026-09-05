@@ -1063,158 +1063,133 @@ export function AdminSettingsPage() {
 
       </div>
 
-      {/* ─── NEW SNAPSHOT MODAL ────────────────────────────────────────────── */}
+      {/* ─── NEW SNAPSHOT INLINE CARD (NO POPUPS) ─────────────────────────── */}
       {showCreateModal && (
         <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.6)',
-          backdropFilter: 'blur(4px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          padding: '1rem',
+          background: 'var(--color-surface)',
+          border: '2px solid var(--color-primary)',
+          borderRadius: 'var(--radius-xl)',
+          padding: '1.75rem',
+          marginTop: '1.5rem',
+          boxShadow: 'var(--shadow-md)',
+          animation: 'fadeIn 0.2s ease-out',
         }}>
-          <div style={{
-            background: 'var(--color-surface)',
-            border: '1.5px solid var(--color-border)',
-            borderRadius: 'var(--radius-xl)',
-            width: '100%',
-            maxWidth: 480,
-            padding: '2rem',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>Create Database Snapshot</h2>
-              <button
-                type="button"
-                onClick={() => setShowCreateModal(false)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
-              >
-                <X size={20} />
-              </button>
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>Create Point-In-Time Snapshot</h2>
+            <button
+              type="button"
+              onClick={() => setShowCreateModal(false)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
+            >
+              <X size={20} />
+            </button>
+          </div>
 
-            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginBottom: '1.25rem' }}>
-              Save a point-in-time snapshot of your database to local storage history. You can restore it anytime with 1 click.
-            </p>
+          <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginBottom: '1.25rem' }}>
+            Save an immediate point-in-time snapshot of all local data state into version history. You can roll back anytime with 1 click.
+          </p>
 
-            <div style={{ marginBottom: '1.5rem' }}>
-              <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
-                Snapshot Label / Description
-              </label>
-              <input
-                type="text"
-                className="form-input"
-                placeholder="e.g. Pre-campaign state, Q3 medical catalog update..."
-                value={newSnapshotLabel}
-                onChange={(e) => setNewSnapshotLabel(e.target.value)}
-                style={{ width: '100%' }}
-                autoFocus
-              />
-            </div>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', fontWeight: 700, fontSize: '0.85rem', marginBottom: '0.4rem' }}>
+              Snapshot Label / Description
+            </label>
+            <input
+              type="text"
+              className="form-input"
+              placeholder="e.g. Pre-campaign state, Q3 medical catalog update..."
+              value={newSnapshotLabel}
+              onChange={(e) => setNewSnapshotLabel(e.target.value)}
+              style={{ width: '100%' }}
+              autoFocus
+            />
+          </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
-              <button
-                type="button"
-                className="btn btn-outline"
-                onClick={() => setShowCreateModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleCreateSnapshot}
-                style={{ fontWeight: 700 }}
-              >
-                Save Snapshot
-              </button>
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+            <button
+              type="button"
+              className="btn btn-outline"
+              onClick={() => setShowCreateModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleCreateSnapshot}
+              style={{ fontWeight: 700 }}
+            >
+              Save Snapshot
+            </button>
           </div>
         </div>
       )}
 
-      {/* ─── SQL DUMP PREVIEW MODAL ────────────────────────────────────────── */}
+      {/* ─── SQL DUMP PREVIEW INLINE CARD (NO POPUPS) ──────────────────────── */}
       {sqlModalContent && (
         <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.65)',
-          backdropFilter: 'blur(5px)',
+          background: 'var(--color-surface)',
+          border: '1.5px solid var(--color-border)',
+          borderRadius: 'var(--radius-xl)',
+          marginTop: '1.5rem',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          padding: '1.5rem',
+          flexDirection: 'column',
+          boxShadow: 'var(--shadow-md)',
+          overflow: 'hidden',
+          animation: 'fadeIn 0.2s ease-out',
         }}>
-          <div style={{
-            background: 'var(--color-surface)',
-            border: '1.5px solid var(--color-border)',
-            borderRadius: 'var(--radius-2xl)',
-            width: '100%',
-            maxWidth: 820,
-            maxHeight: '85vh',
-            display: 'flex',
-            flexDirection: 'column',
-            boxShadow: '0 25px 60px rgba(0,0,0,0.35)',
-            overflow: 'hidden',
-          }}>
-            {/* Modal Header */}
-            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <FileCode size={20} color="var(--color-primary)" />
-                <h3 style={{ margin: 0, fontWeight: 800, fontSize: '1.15rem' }}>PostgreSQL SQL Dump Preview</h3>
-              </div>
+          {/* Header */}
+          <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--color-surface-2)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FileCode size={20} color="var(--color-primary)" />
+              <h3 style={{ margin: 0, fontWeight: 800, fontSize: '1.15rem' }}>PostgreSQL SQL Dump Preview</h3>
+            </div>
+            <button
+              type="button"
+              onClick={() => setSqlModalContent(null)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Content */}
+          <div style={{ padding: '1.25rem 1.5rem', maxHeight: 400, overflowY: 'auto', background: '#090d10', color: '#e2e8f0', fontFamily: 'monospace', fontSize: '0.8125rem', lineHeight: 1.55 }}>
+            <pre style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+              {sqlModalContent}
+            </pre>
+          </div>
+
+          {/* Footer */}
+          <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--color-surface)' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+              {sqlModalContent.split('\n').length} lines • Ready for pgAdmin / Supabase SQL Editor
+            </span>
+            <div style={{ display: 'flex', gap: '0.75rem' }}>
               <button
                 type="button"
-                onClick={() => setSqlModalContent(null)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
+                className="btn btn-outline btn-sm"
+                onClick={copySqlToClipboard}
+                style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}
               >
-                <X size={20} />
+                {copiedSql ? <Check size={14} color="#16a34a" /> : <Copy size={14} />}
+                {copiedSql ? 'Copied to Clipboard!' : 'Copy SQL'}
               </button>
-            </div>
-
-            {/* Modal Content */}
-            <div style={{ padding: '1.25rem 1.5rem', flex: 1, overflowY: 'auto', background: '#090d10', color: '#e2e8f0', fontFamily: 'monospace', fontSize: '0.8125rem', lineHeight: 1.55 }}>
-              <pre style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
-                {sqlModalContent}
-              </pre>
-            </div>
-
-            {/* Modal Footer */}
-            <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--color-surface)' }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-                {sqlModalContent.split('\n').length} lines • Ready for pgAdmin / Supabase SQL Editor
-              </span>
-              <div style={{ display: 'flex', gap: '0.75rem' }}>
-                <button
-                  type="button"
-                  className="btn btn-outline btn-sm"
-                  onClick={copySqlToClipboard}
-                  style={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}
-                >
-                  {copiedSql ? <Check size={14} color="#16a34a" /> : <Copy size={14} />}
-                  {copiedSql ? 'Copied to Clipboard!' : 'Copy SQL'}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-sm"
-                  onClick={() => {
-                    const blob = new Blob([sqlModalContent], { type: 'application/sql' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `medical360_export_${Date.now()}.sql`;
-                    a.click();
-                    URL.revokeObjectURL(url);
-                  }}
-                  style={{ fontWeight: 700 }}
-                >
-                  <Download size={14} /> Download .sql
-                </button>
-              </div>
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                onClick={() => {
+                  const blob = new Blob([sqlModalContent], { type: 'application/sql' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `medical360_export_${Date.now()}.sql`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                style={{ fontWeight: 700 }}
+              >
+                <Download size={14} /> Download .sql
+              </button>
             </div>
           </div>
         </div>

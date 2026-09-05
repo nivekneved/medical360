@@ -116,25 +116,18 @@ export function DoctorSecondOpinionModal({ doctor, hospital, onClose }: DoctorSe
 
   return (
     <div style={{
-      position: 'fixed',
-      inset: 0,
-      background: 'rgba(0, 0, 0, 0.75)',
-      backdropFilter: 'blur(6px)',
-      zIndex: 9999,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '1.5rem',
+      width: '100%',
+      maxWidth: 780,
+      margin: '0 auto 2.5rem',
+      animation: 'fadeIn 0.25s ease-out',
     }}>
       <div style={{
         background: 'var(--color-surface)',
         border: '1.5px solid var(--color-border)',
         borderRadius: 'var(--radius-xl)',
         width: '100%',
-        maxWidth: 580,
-        maxHeight: '90vh',
-        overflowY: 'auto',
-        boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+        boxShadow: 'var(--shadow-md)',
+        overflow: 'hidden',
       }}>
         {/* Header */}
         <div style={{

@@ -679,149 +679,138 @@ export function AdminPageEditor() {
         </div>
       </div>
 
-      {/* Add New Field Modal */}
+      {/* ─── ADD NEW FIELD INLINE CARD (NO POPUPS) ────────────────────────── */}
       {showAddModal && (
         <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.6)',
-          backdropFilter: 'blur(4px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          padding: '1rem',
+          background: 'var(--color-surface)',
+          border: '2px solid var(--color-primary)',
+          borderRadius: 'var(--radius-xl)',
+          padding: '2rem',
+          marginTop: '1.5rem',
+          boxShadow: 'var(--shadow-md)',
+          animation: 'fadeIn 0.2s ease-out',
         }}>
-          <div style={{
-            background: 'var(--color-surface)',
-            border: '1.5px solid var(--color-border)',
-            borderRadius: 'var(--radius-xl)',
-            width: '100%',
-            maxWidth: 520,
-            padding: '2rem',
-            boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Plus size={20} color="var(--color-primary)" /> Add Content Field
-              </h2>
-              <button
-                type="button"
-                onClick={() => setShowAddModal(false)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
-              >
-                <X size={20} />
-              </button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
+              <Plus size={20} color="var(--color-primary)" /> Add New Content Field
+            </h2>
+            <button
+              type="button"
+              onClick={() => setShowAddModal(false)}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}
+            >
+              <X size={20} />
+            </button>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div>
+              <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
+                Field Key (camelCase) *
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="e.g. heroBannerTitle, awardsSubtext, ctaNotice"
+                value={newFieldKey}
+                onChange={(e) => setNewFieldKey(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))}
+                style={{ width: '100%' }}
+              />
+              <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                Use unique camelCase (alphanumeric only).
+              </span>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div>
-                <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
-                  Field Key (camelCase) *
-                </label>
-                <input
-                  type="text"
-                  className="form-input"
-                  placeholder="e.g. heroBannerTitle, awardsSubtext, ctaNotice"
-                  value={newFieldKey}
-                  onChange={(e) => setNewFieldKey(e.target.value.replace(/[^a-zA-Z0-9_]/g, ''))}
-                  style={{ width: '100%' }}
-                />
-                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                  Use unique camelCase (alphanumeric only).
-                </span>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
-                  Field Type
-                </label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
-                  <button
-                    type="button"
-                    className={`btn ${newFieldType === 'text' ? 'btn-primary' : 'btn-outline'} btn-sm`}
-                    onClick={() => setNewFieldType('text')}
-                  >
-                    <Type size={14} /> Short Text
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn ${newFieldType === 'multiline' ? 'btn-primary' : 'btn-outline'} btn-sm`}
-                    onClick={() => setNewFieldType('multiline')}
-                  >
-                    <FileTextIcon size={14} /> Long Text
-                  </button>
-                  <button
-                    type="button"
-                    className={`btn ${newFieldType === 'image' ? 'btn-primary' : 'btn-outline'} btn-sm`}
-                    onClick={() => setNewFieldType('image')}
-                  >
-                    <ImageIcon size={14} /> Image URL
-                  </button>
-                </div>
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
-                  Initial French Value (FR)
-                </label>
-                {newFieldType === 'multiline' ? (
-                  <textarea
-                    className="form-textarea"
-                    rows={3}
-                    placeholder="Texte en français..."
-                    value={newFieldValFr}
-                    onChange={(e) => setNewFieldValFr(e.target.value)}
-                    style={{ width: '100%' }}
-                  />
-                ) : (
-                  <input
-                    type="text"
-                    className="form-input"
-                    placeholder="Texte en français..."
-                    value={newFieldValFr}
-                    onChange={(e) => setNewFieldValFr(e.target.value)}
-                    style={{ width: '100%' }}
-                  />
-                )}
-              </div>
-
-              <div>
-                <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
-                  Initial English Value (EN)
-                </label>
-                <input
-                  type="text"
-                  className="form-input"
-                  placeholder="Text in English (optional)..."
-                  value={newFieldValEn}
-                  onChange={(e) => setNewFieldValEn(e.target.value)}
-                  style={{ width: '100%' }}
-                />
-              </div>
-
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.75rem' }}>
+            <div>
+              <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
+                Field Type
+              </label>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
                 <button
                   type="button"
-                  className="btn btn-outline"
-                  onClick={() => setShowAddModal(false)}
+                  className={`btn ${newFieldType === 'text' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+                  onClick={() => setNewFieldType('text')}
                 >
-                  Cancel
+                  <Type size={14} /> Short Text
                 </button>
                 <button
                   type="button"
-                  className="btn btn-primary"
-                  onClick={handleAddField}
-                  disabled={!newFieldKey.trim()}
-                  style={{ fontWeight: 700 }}
+                  className={`btn ${newFieldType === 'multiline' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+                  onClick={() => setNewFieldType('multiline')}
                 >
-                  Add Field
+                  <FileTextIcon size={14} /> Long Text
+                </button>
+                <button
+                  type="button"
+                  className={`btn ${newFieldType === 'image' ? 'btn-primary' : 'btn-outline'} btn-sm`}
+                  onClick={() => setNewFieldType('image')}
+                >
+                  <ImageIcon size={14} /> Image URL
                 </button>
               </div>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
+                Initial French Value (FR)
+              </label>
+              {newFieldType === 'multiline' ? (
+                <textarea
+                  className="form-textarea"
+                  rows={3}
+                  placeholder="Texte en français..."
+                  value={newFieldValFr}
+                  onChange={(e) => setNewFieldValFr(e.target.value)}
+                  style={{ width: '100%' }}
+                />
+              ) : (
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Texte en français..."
+                  value={newFieldValFr}
+                  onChange={(e) => setNewFieldValFr(e.target.value)}
+                  style={{ width: '100%' }}
+                />
+              )}
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontWeight: 700, fontSize: '0.875rem', marginBottom: '0.4rem' }}>
+                Initial English Value (EN)
+              </label>
+              <input
+                type="text"
+                className="form-input"
+                placeholder="Text in English (optional)..."
+                value={newFieldValEn}
+                onChange={(e) => setNewFieldValEn(e.target.value)}
+                style={{ width: '100%' }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.75rem' }}>
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={() => setShowAddModal(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleAddField}
+                disabled={!newFieldKey.trim()}
+                style={{ fontWeight: 700 }}
+              >
+                Add Field
+              </button>
             </div>
           </div>
         </div>
       )}
+
     </div>
   );
 }

@@ -263,128 +263,386 @@ export function AdminEntityManager<T extends { id: string }>({
 
   return (
     <div style={{ padding: '2rem', maxWidth: 1400, margin: '0 auto' }}>
-      
-      {/* ── Header ── */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
-        <div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.25rem' }}>
-            {title}
-          </h1>
-          <p style={{ margin: 0, color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
-            {subtitle} · <strong style={{ color: 'var(--color-primary)' }}>{filteredItems.length}</strong> {entityName}(s)
-          </p>
-        </div>
+        {/* ── List Mode Controls (Only visible when not editing/viewing) ── */}
+      {!editingItem && !viewingItem && (
+        <>
+          {/* ── Header ── */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
+            <div>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontSize: '1.75rem', fontWeight: 800, margin: '0 0 0.25rem' }}>
+                {title}
+              </h1>
+              <p style={{ margin: 0, color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
+                {subtitle} · <strong style={{ color: 'var(--color-primary)' }}>{filteredItems.length}</strong> {entityName}(s)
+              </p>
+            </div>
 
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
-          {headerActions}
-          <button onClick={handlePrintPdf} className="btn btn-outline btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            <Printer size={14} /> Print / PDF
-          </button>
-          <button onClick={handleExportCsv} className="btn btn-outline btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            <Download size={14} /> Export CSV
-          </button>
-          <button onClick={openNewItemModal} className="btn btn-primary btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-            <Plus size={15} /> Add {entityName}
-          </button>
-        </div>
-      </div>
-
-      {/* ── Toolbar ── */}
-      <div className="admin-toolbar">
-        {/* Search */}
-        <div className="admin-toolbar__search">
-          <Search size={16} className="admin-toolbar__search-icon" />
-          <input
-            type="text"
-            className="admin-toolbar__search-input"
-            placeholder={`Search ${entityName}s by name, details, tags…`}
-            value={searchQuery}
-            onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-          />
-        </div>
-
-        {/* Custom Filters */}
-        {filterDefinitions.map(filter => (
-          <div key={filter.key} className="admin-toolbar__filter-pill">
-            <select
-              className="admin-toolbar__filter-select"
-              value={activeFilters[filter.key] || 'all'}
-              onChange={e => {
-                setActiveFilters(prev => ({ ...prev, [filter.key]: e.target.value }));
-                setCurrentPage(1);
-              }}
-            >
-              {filter.options.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              {headerActions}
+              <button onClick={handlePrintPdf} className="btn btn-outline btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <Printer size={14} /> Print / PDF
+              </button>
+              <button onClick={handleExportCsv} className="btn btn-outline btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <Download size={14} /> Export CSV
+              </button>
+              <button onClick={openNewItemModal} className="btn btn-primary btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <Plus size={15} /> Add {entityName}
+              </button>
+            </div>
           </div>
-        ))}
 
-        {/* Clear Filters */}
-        {(searchQuery || Object.values(activeFilters).some(v => v !== 'all')) && (
-          <button
-            type="button"
-            className="admin-toolbar__clear-btn"
-            onClick={() => {
-              setSearchQuery('');
-              const resetFilters: Record<string, string> = {};
-              filterDefinitions.forEach(f => { resetFilters[f.key] = 'all'; });
-              setActiveFilters(resetFilters);
-              setCurrentPage(1);
-            }}
-          >
-            <RotateCcw size={13} /> Clear
-          </button>
-        )}
+          {/* ── Toolbar ── */}
+          <div className="admin-toolbar">
+            {/* Search */}
+            <div className="admin-toolbar__search">
+              <Search size={16} className="admin-toolbar__search-icon" />
+              <input
+                type="text"
+                className="admin-toolbar__search-input"
+                placeholder={`Search ${entityName}s by name, details, tags…`}
+                value={searchQuery}
+                onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }}
+              />
+            </div>
 
-        {/* Sort */}
-        <div className="admin-toolbar__sort">
-          <ArrowUpDown size={15} className="admin-toolbar__sort-icon" />
-          <select
-            className="admin-toolbar__sort-select"
-            value={activeSort}
-            onChange={e => setActiveSort(e.target.value)}
-          >
-            {sortOptions.map(opt => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            {/* Custom Filters */}
+            {filterDefinitions.map(filter => (
+              <div key={filter.key} className="admin-toolbar__filter-pill">
+                <select
+                  className="admin-toolbar__filter-select"
+                  value={activeFilters[filter.key] || 'all'}
+                  onChange={e => {
+                    setActiveFilters(prev => ({ ...prev, [filter.key]: e.target.value }));
+                    setCurrentPage(1);
+                  }}
+                >
+                  {filter.options.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+              </div>
             ))}
-          </select>
-        </div>
 
-        {/* View Mode Switcher */}
-        <div className="admin-toolbar__view-switcher">
-          <button
-            type="button"
-            className={`admin-toolbar__view-btn ${viewMode === 'grid' ? 'admin-toolbar__view-btn--active' : ''}`}
-            onClick={() => setViewMode('grid')}
-            title="Grid View"
-          >
-            <LayoutGrid size={16} />
-          </button>
-          <button
-            type="button"
-            className={`admin-toolbar__view-btn ${viewMode === 'list' ? 'admin-toolbar__view-btn--active' : ''}`}
-            onClick={() => setViewMode('list')}
-            title="List View"
-          >
-            <List size={16} />
-          </button>
-        </div>
-      </div>
+            {/* Clear Filters */}
+            {(searchQuery || Object.values(activeFilters).some(v => v !== 'all')) && (
+              <button
+                type="button"
+                className="admin-toolbar__clear-btn"
+                onClick={() => {
+                  setSearchQuery('');
+                  const resetFilters: Record<string, string> = {};
+                  filterDefinitions.forEach(f => { resetFilters[f.key] = 'all'; });
+                  setActiveFilters(resetFilters);
+                  setCurrentPage(1);
+                }}
+              >
+                <RotateCcw size={13} /> Clear
+              </button>
+            )}
 
-      {/* ── Bulk Actions Floating Bar ── */}
-      <AdminBulkActionBar
-        selectedCount={selectedIds.size}
-        totalCount={filteredItems.length}
-        unitName={entityName.toLowerCase()}
-        onSelectAll={handleSelectAll}
-        onClearSelection={handleClearSelection}
-        onDeleteSelected={handleDeleteSelected}
-      />
+            {/* Sort */}
+            <div className="admin-toolbar__sort">
+              <ArrowUpDown size={15} className="admin-toolbar__sort-icon" />
+              <select
+                className="admin-toolbar__sort-select"
+                value={activeSort}
+                onChange={e => setActiveSort(e.target.value)}
+              >
+                {sortOptions.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* View Mode Switcher */}
+            <div className="admin-toolbar__view-switcher">
+              <button
+                type="button"
+                className={`admin-toolbar__view-btn ${viewMode === 'grid' ? 'admin-toolbar__view-btn--active' : ''}`}
+                onClick={() => setViewMode('grid')}
+                title="Grid View"
+              >
+                <LayoutGrid size={16} />
+              </button>
+              <button
+                type="button"
+                className={`admin-toolbar__view-btn ${viewMode === 'list' ? 'admin-toolbar__view-btn--active' : ''}`}
+                onClick={() => setViewMode('list')}
+                title="List View"
+              >
+                <List size={16} />
+              </button>
+            </div>
+          </div>
+
+          {/* ── Bulk Actions Floating Bar ── */}
+          <AdminBulkActionBar
+            selectedCount={selectedIds.size}
+            totalCount={filteredItems.length}
+            unitName={entityName.toLowerCase()}
+            onSelectAll={handleSelectAll}
+            onClearSelection={handleClearSelection}
+            onDeleteSelected={handleDeleteSelected}
+          />
+        </>
+      )}
 
       {/* ── Content View ── */}
-      {loading ? (
+      {editingItem ? (
+        /* ── FULL PAGE EDITOR VIEW (NO POPUPS) ── */
+        <div style={{ animation: 'fadeIn 0.2s ease-out' }}>
+          {/* Top Sticky Action Bar */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: 'var(--color-surface)',
+            padding: '1rem 1.5rem',
+            borderRadius: 'var(--radius-xl)',
+            border: '1.5px solid var(--color-border)',
+            marginBottom: '1.5rem',
+            gap: '1rem',
+            flexWrap: 'wrap',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <button
+                type="button"
+                onClick={() => setEditingItem(null)}
+                className="btn btn-outline btn-sm"
+                style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}
+              >
+                <RotateCcw size={15} /> Back to {entityName}s
+              </button>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: 'var(--color-text)' }}>
+                  {isNewItem ? `Create New ${entityName}` : `Edit ${entityName}`}
+                </h2>
+                <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                  {isNewItem ? `Fill out the details below to add a new ${entityName.toLowerCase()}` : `Updating ID: ${editingItem.id}`}
+                </span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <button
+                type="button"
+                onClick={() => setEditingItem(null)}
+                className="btn btn-outline btn-sm"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={(e) => handleFormSave(e as any)}
+                disabled={saving}
+                className="btn btn-primary btn-sm"
+                style={{ minWidth: 140, display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+              >
+                {saving ? 'Saving…' : savedSuccess ? (
+                  <>
+                    <CheckCircle2 size={16} /> Saved!
+                  </>
+                ) : (
+                  <>
+                    <Save size={16} /> Save {entityName}
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Full Page Form Card */}
+          <div style={{
+            background: 'var(--color-surface)',
+            borderRadius: 'var(--radius-xl)',
+            border: '1.5px solid var(--color-border)',
+            padding: '2rem',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+          }}>
+            <form onSubmit={handleFormSave} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {/* Anti-Bot Honeypot */}
+              <Honeypot value={honeypot} onChange={setHoneypot} id="admin_edit_page_hp" name="admin_edit_page_hp" />
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+                {fields.map(f => {
+                  const val = (editingItem as any)[f.key];
+                  const hasError = !!modalFieldErrors[f.key];
+
+                  if (renderCustomField) {
+                    const custom = renderCustomField(f.key, val, (newVal) => updateItemField(f.key, newVal), editingItem);
+                    if (custom) {
+                      return (
+                        <div key={f.key} style={{ gridColumn: f.type === 'textarea' || f.type === 'image' ? '1 / -1' : undefined }}>
+                          {custom}
+                          {hasError && <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{modalFieldErrors[f.key]}</span>}
+                        </div>
+                      );
+                    }
+                  }
+
+                  const isWide = f.type === 'textarea' || f.type === 'image' || f.type === 'array';
+
+                  return (
+                    <div key={f.key} style={{ gridColumn: isWide ? '1 / -1' : undefined }}>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-text)', marginBottom: '0.4rem' }}>
+                        {f.label} {f.required && <span style={{ color: 'var(--color-danger)' }}>*</span>}
+                      </label>
+
+                      {f.type === 'image' ? (
+                        <ImageField
+                          value={val || ''}
+                          onChange={(newUrl) => updateItemField(f.key, newUrl)}
+                          label={f.label}
+                        />
+                      ) : f.type === 'textarea' ? (
+                        <RichTextEditor
+                          value={val || ''}
+                          onChange={(newVal) => updateItemField(f.key, newVal)}
+                          placeholder={f.placeholder || `Enter ${f.label.toLowerCase()}...`}
+                          minHeight={150}
+                        />
+                      ) : f.type === 'number' ? (
+                        <input
+                          type="number"
+                          className="form-input"
+                          value={val !== undefined ? val : ''}
+                          onChange={e => updateItemField(f.key, Number(e.target.value))}
+                          placeholder={f.placeholder}
+                          style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}
+                        />
+                      ) : f.type === 'boolean' ? (
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.9rem', padding: '0.75rem 1rem', background: 'var(--color-surface-2)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
+                          <input
+                            type="checkbox"
+                            checked={!!val}
+                            onChange={e => updateItemField(f.key, e.target.checked)}
+                            style={{ width: 18, height: 18, accentColor: 'var(--color-primary)' }}
+                          />
+                          <span style={{ fontWeight: 600 }}>Enable / Activate {f.label}</span>
+                        </label>
+                      ) : f.type === 'select' && f.options ? (
+                        <select
+                          className="form-input"
+                          value={val || ''}
+                          onChange={e => updateItemField(f.key, e.target.value)}
+                          style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}
+                        >
+                          {f.options.map(o => (
+                            <option key={o.value} value={o.value}>{o.label}</option>
+                          ))}
+                        </select>
+                      ) : f.type === 'array' ? (
+                        <div>
+                          <input
+                            type="text"
+                            className="form-input"
+                            placeholder="Comma-separated items (e.g. Item 1, Item 2)"
+                            value={Array.isArray(val) ? val.join(', ') : ''}
+                            onChange={e => updateItemField(f.key, e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
+                            style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}
+                          />
+                          <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: 4, display: 'block' }}>Separate multiple items with commas</span>
+                        </div>
+                      ) : (
+                        <input
+                          type="text"
+                          className="form-input"
+                          value={val || ''}
+                          onChange={e => updateItemField(f.key, e.target.value)}
+                          placeholder={f.placeholder}
+                          style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}
+                        />
+                      )}
+                      {hasError && <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{modalFieldErrors[f.key]}</span>}
+                      {f.help && <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: 4 }}>{f.help}</div>}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Bottom Submit Action Bar */}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1.5rem', borderTop: '1px solid var(--color-border)', paddingTop: '1.5rem' }}>
+                <button type="button" onClick={() => setEditingItem(null)} className="btn btn-outline">
+                  Cancel
+                </button>
+                <button type="submit" disabled={saving} className="btn btn-primary" style={{ minWidth: 150 }}>
+                  {saving ? 'Saving…' : savedSuccess ? (
+                    <>
+                      <CheckCircle2 size={16} /> Saved!
+                    </>
+                  ) : (
+                    <>
+                      <Save size={16} /> Save {entityName}
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      ) : viewingItem ? (
+        /* ── FULL PAGE DETAIL VIEW (NO POPUPS) ── */
+        <div style={{ animation: 'fadeIn 0.2s ease-out' }}>
+          {/* Top Action Bar */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            background: 'var(--color-surface)',
+            padding: '1rem 1.5rem',
+            borderRadius: 'var(--radius-xl)',
+            border: '1.5px solid var(--color-border)',
+            marginBottom: '1.5rem',
+            gap: '1rem',
+            flexWrap: 'wrap',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <button
+                type="button"
+                onClick={() => setViewingItem(null)}
+                className="btn btn-outline btn-sm"
+                style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}
+              >
+                <RotateCcw size={15} /> Back to {entityName}s List
+              </button>
+              <div>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, color: 'var(--color-text)' }}>
+                  {entityName} Full Details
+                </h2>
+                <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>ID: {viewingItem.id}</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <button
+                onClick={() => { const item = viewingItem; setViewingItem(null); openEditModal(item); }}
+                className="btn btn-primary btn-sm"
+                style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+              >
+                <Edit3 size={15} /> Edit {entityName}
+              </button>
+              <button onClick={() => setViewingItem(null)} className="btn btn-outline btn-sm">
+                Close
+              </button>
+            </div>
+          </div>
+
+          {/* Full Page Content Body */}
+          <div style={{
+            background: 'var(--color-surface)',
+            borderRadius: 'var(--radius-xl)',
+            border: '1.5px solid var(--color-border)',
+            padding: '2rem',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.03)',
+          }}>
+            {renderViewModalContent ? renderViewModalContent(viewingItem) : (
+              <pre style={{ fontSize: '0.85rem', background: 'var(--color-surface-2)', padding: '1.25rem', borderRadius: 8, overflow: 'auto' }}>
+                {JSON.stringify(viewingItem, null, 2)}
+              </pre>
+            )}
+          </div>
+        </div>
+      ) : loading ? (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="skeleton" style={{ height: 260, borderRadius: 'var(--radius-xl)' }} />
@@ -446,8 +704,8 @@ export function AdminEntityManager<T extends { id: string }>({
         </div>
       )}
 
-      {/* ── Pagination ── */}
-      {filteredItems.length > 0 && (
+      {/* ── Pagination (Only in table/grid list mode) ── */}
+      {!editingItem && !viewingItem && filteredItems.length > 0 && (
         <AdminPagination
           currentPage={currentPage}
           totalItems={filteredItems.length}
@@ -457,169 +715,6 @@ export function AdminEntityManager<T extends { id: string }>({
           pageSizeOptions={[6, 12, 24, 48]}
           unitName={`${entityName.toLowerCase()}s`}
         />
-      )}
-
-      {/* ── Edit / Add Modal ── */}
-      {editingItem && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', maxWidth: 640, width: '100%', maxHeight: '90vh', overflowY: 'auto', border: '1.5px solid var(--color-border)', boxShadow: '0 24px 48px rgba(0,0,0,0.25)' }}>
-            <div style={{ padding: '1.25rem 1.5rem', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 800 }}>
-                {isNewItem ? `Add New ${entityName}` : `Edit ${entityName}`}
-              </h3>
-              <button onClick={() => setEditingItem(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}>
-                <X size={20} />
-              </button>
-            </div>
-
-            <form onSubmit={handleFormSave} noValidate style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              {/* Anti-Bot Honeypot */}
-              <Honeypot value={honeypot} onChange={setHoneypot} id="admin_edit_modal_hp" name="admin_edit_modal_hp" />
-
-              {fields.map(f => {
-                const val = (editingItem as any)[f.key];
-                const hasError = !!modalFieldErrors[f.key];
-
-                if (renderCustomField) {
-                  const custom = renderCustomField(f.key, val, (newVal) => updateItemField(f.key, newVal), editingItem);
-                  if (custom) {
-                    return (
-                      <div key={f.key}>
-                        {custom}
-                        {hasError && <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{modalFieldErrors[f.key]}</span>}
-                      </div>
-                    );
-                  }
-                }
-
-                return (
-                  <div key={f.key}>
-                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text-secondary)', marginBottom: '0.35rem' }}>
-                      {f.label} {f.required && <span style={{ color: 'var(--color-danger)' }}>*</span>}
-                    </label>
-
-                    {f.type === 'image' ? (
-                      <ImageField
-                        value={val || ''}
-                        onChange={(newUrl) => updateItemField(f.key, newUrl)}
-                        label={f.label}
-                      />
-                    ) : f.type === 'textarea' ? (
-                      <RichTextEditor
-                        value={val || ''}
-                        onChange={(newVal) => updateItemField(f.key, newVal)}
-                        placeholder={f.placeholder || `Enter ${f.label.toLowerCase()}...`}
-                        minHeight={130}
-                      />
-                    ) : f.type === 'number' ? (
-                      <input
-                        type="number"
-                        className="form-input"
-                        value={val !== undefined ? val : ''}
-                        onChange={e => updateItemField(f.key, Number(e.target.value))}
-                        placeholder={f.placeholder}
-                        style={{ width: '100%', fontSize: '0.875rem', borderColor: hasError ? '#ef4444' : undefined }}
-                      />
-                    ) : f.type === 'boolean' ? (
-                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.875rem' }}>
-                        <input
-                          type="checkbox"
-                          checked={!!val}
-                          onChange={e => updateItemField(f.key, e.target.checked)}
-                          style={{ width: 18, height: 18, accentColor: 'var(--color-primary)' }}
-                        />
-                        <span>Enable {f.label}</span>
-                      </label>
-                    ) : f.type === 'select' && f.options ? (
-                      <select
-                        className="form-input"
-                        value={val || ''}
-                        onChange={e => updateItemField(f.key, e.target.value)}
-                        style={{ width: '100%', fontSize: '0.875rem', borderColor: hasError ? '#ef4444' : undefined }}
-                      >
-                        {f.options.map(o => (
-                          <option key={o.value} value={o.value}>{o.label}</option>
-                        ))}
-                      </select>
-                    ) : f.type === 'array' ? (
-                      <div>
-                        <input
-                          type="text"
-                          className="form-input"
-                          placeholder="Comma-separated items (e.g. Item 1, Item 2)"
-                          value={Array.isArray(val) ? val.join(', ') : ''}
-                          onChange={e => updateItemField(f.key, e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
-                          style={{ width: '100%', fontSize: '0.875rem', borderColor: hasError ? '#ef4444' : undefined }}
-                        />
-                        <span style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>Separate items with commas</span>
-                      </div>
-                    ) : (
-                      <input
-                        type="text"
-                        className="form-input"
-                        value={val || ''}
-                        onChange={e => updateItemField(f.key, e.target.value)}
-                        placeholder={f.placeholder}
-                        style={{ width: '100%', fontSize: '0.875rem', borderColor: hasError ? '#ef4444' : undefined }}
-                      />
-                    )}
-                    {hasError && <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 3, display: 'block', fontWeight: 600 }}>{modalFieldErrors[f.key]}</span>}
-                    {f.help && <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', marginTop: 2 }}>{f.help}</div>}
-                  </div>
-                );
-              })}
-
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '1rem', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
-                <button type="button" onClick={() => setEditingItem(null)} className="btn btn-outline btn-sm">
-                  Cancel
-                </button>
-                <button type="submit" disabled={saving} className="btn btn-primary btn-sm" style={{ minWidth: 120 }}>
-                  {saving ? 'Saving…' : savedSuccess ? (
-                    <>
-                      <CheckCircle2 size={15} /> Saved!
-                    </>
-                  ) : (
-                    <>
-                      <Save size={15} /> Save {entityName}
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ── View Modal / Drawer ── */}
-      {viewingItem && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '1rem' }}>
-          <div style={{ background: 'var(--color-surface)', borderRadius: 'var(--radius-xl)', maxWidth: 640, width: '100%', maxHeight: '90vh', overflowY: 'auto', border: '1.5px solid var(--color-border)', boxShadow: '0 24px 48px rgba(0,0,0,0.25)', padding: '1.75rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', borderBottom: '1px solid var(--color-border)', paddingBottom: '0.75rem' }}>
-              <div>
-                <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 800 }}>{entityName} Details</h3>
-                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>ID: {viewingItem.id}</span>
-              </div>
-              <button onClick={() => setViewingItem(null)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}>
-                <X size={20} />
-              </button>
-            </div>
-
-            {renderViewModalContent ? renderViewModalContent(viewingItem) : (
-              <pre style={{ fontSize: '0.8rem', background: 'var(--color-surface-2)', padding: '1rem', borderRadius: 8, overflow: 'auto' }}>
-                {JSON.stringify(viewingItem, null, 2)}
-              </pre>
-            )}
-
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginTop: '1.5rem', borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
-              <button onClick={() => { const item = viewingItem; setViewingItem(null); openEditModal(item); }} className="btn btn-primary btn-sm">
-                <Edit3 size={14} /> Edit {entityName}
-              </button>
-              <button onClick={() => setViewingItem(null)} className="btn btn-outline btn-sm">
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
       )}
 
     </div>
