@@ -19,6 +19,8 @@ import { AdminBulkActionBar } from '../components/AdminBulkActionBar';
 import { AdminPagination } from '../components/AdminPagination';
 import { InquiryDetailConsole } from './components/InquiryDetailConsole';
 import { InquiryFilterToolbar } from './components/InquiryFilterToolbar';
+import { WhatsAppSyncLogPanel } from './components/WhatsAppSyncLogPanel';
+import { MessageCircle } from 'lucide-react';
 import '../AdminToolbar.css';
 
 const STATUS_OPTIONS: InquiryStatus[] = [
@@ -33,6 +35,7 @@ const STATUS_OPTIONS: InquiryStatus[] = [
 ];
 
 export function AdminInquiriesPage() {
+  const [activeTab, setActiveTab]               = useState<'inquiries' | 'whatsapp'>('inquiries');
   const [inquiries, setInquiries]               = useState<Inquiry[]>([]);
   const [loading, setLoading]                   = useState(true);
   const [searchQuery, setSearchQuery]           = useState('');
@@ -273,14 +276,58 @@ export function AdminInquiriesPage() {
             </div>
           </div>
 
-          {/* Search, Filters & Sorting Toolbar */}
-          <InquiryFilterToolbar
-            searchQuery={searchQuery}
-            onSearchChange={(val) => { setSearchQuery(val); setCurrentPage(1); }}
-            selectedStatus={selectedStatus}
-            onStatusChange={(val) => { setSelectedStatus(val); setCurrentPage(1); }}
-            selectedUrgency={selectedUrgency}
-            onUrgencyChange={(val) => { setSelectedUrgency(val); setCurrentPage(1); }}
+          {/* Navigation View Tabs */}
+          <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', background: 'var(--color-surface-2)', padding: '0.35rem', borderRadius: 'var(--radius-lg)', width: 'fit-content' }}>
+            <button
+              type="button"
+              onClick={() => setActiveTab('inquiries')}
+              className="btn btn-sm"
+              style={{
+                background: activeTab === 'inquiries' ? 'var(--color-surface)' : 'transparent',
+                color: activeTab === 'inquiries' ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+                fontWeight: 700,
+                border: activeTab === 'inquiries' ? '1px solid var(--color-border)' : '1px solid transparent',
+                boxShadow: activeTab === 'inquiries' ? 'var(--shadow-sm)' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+              }}
+            >
+              <Inbox size={15} /> Clinical Inquiries ({inquiries.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('whatsapp')}
+              className="btn btn-sm"
+              style={{
+                background: activeTab === 'whatsapp' ? 'var(--color-surface)' : 'transparent',
+                color: activeTab === 'whatsapp' ? '#25D366' : 'var(--color-text-secondary)',
+                fontWeight: 700,
+                border: activeTab === 'whatsapp' ? '1px solid var(--color-border)' : '1px solid transparent',
+                boxShadow: activeTab === 'whatsapp' ? 'var(--shadow-sm)' : 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+              }}
+            >
+              <MessageCircle size={15} /> WhatsApp 24/7 Webhooks & Sync
+            </button>
+          </div>
+
+          {activeTab === 'whatsapp' ? (
+            <WhatsAppSyncLogPanel />
+          ) : (
+            <>
+
+              {/* Search, Filters & Sorting Toolbar */}
+              <InquiryFilterToolbar
+                searchQuery={searchQuery}
+                onSearchChange={(val) => { setSearchQuery(val); setCurrentPage(1); }}
+                selectedStatus={selectedStatus}
+                onStatusChange={(val) => { setSelectedStatus(val); setCurrentPage(1); }}
+                selectedUrgency={selectedUrgency}
+                onUrgencyChange={(val) => { setSelectedUrgency(val); setCurrentPage(1); }}
+
             selectedSpecialty={selectedSpecialty}
             onSpecialtyChange={(val) => { setSelectedSpecialty(val); setCurrentPage(1); }}
             sortBy={sortBy}
@@ -497,8 +544,11 @@ export function AdminInquiriesPage() {
               unitName="patient inquiries"
             />
           )}
+            </>
+          )}
         </>
       )}
     </div>
   );
 }
+

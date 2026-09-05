@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   RotateCcw,
   Printer,
@@ -11,10 +11,14 @@ import {
   Clock,
   ShieldCheck,
   Send,
+  Eye,
+  Activity,
+  FileText,
 } from 'lucide-react';
 import type { Inquiry, InquiryStatus, Specialty } from '../../../../core/types';
 import { buildInquiryWhatsAppUrl } from '../../../../core/services/whatsapp.service';
 import { formatCostRange } from '../../../../core/services/format.service';
+import { MedicalImagingViewer } from '../../../../components/common/MedicalImagingViewer';
 
 interface InquiryDetailConsoleProps {
   inquiry: Inquiry;
@@ -43,6 +47,8 @@ export const InquiryDetailConsole: React.FC<InquiryDetailConsoleProps> = ({
   onAddNote,
   savingNote,
 }) => {
+  const [showScanViewer, setShowScanViewer] = useState(false);
+
   const getSpecialtyName = (sId: string) => {
     const s = specialties.find(item => item.id === sId);
     return s ? s.name : sId;
@@ -98,22 +104,31 @@ export const InquiryDetailConsole: React.FC<InquiryDetailConsoleProps> = ({
               <h1 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0, color: 'var(--color-text)' }}>
                 {inquiry.firstName} {inquiry.lastName}
               </h1>
-              <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', display: 'flex', gap: '0.5rem', alignItems: 'center', marginTop: 2 }}>
-                <span>Inquiry #{inquiry.id}</span>
-                <span>•</span>
-                <span>Received {formatDate(inquiry.createdAt)}</span>
-              </div>
+              <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                Inquiry Ref: <code>{inquiry.id}</code> • Submitted: {formatDate(inquiry.createdAt)}
+              </span>
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+        {/* Action Buttons */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
           <button
+            type="button"
+            onClick={() => setShowScanViewer(!showScanViewer)}
+            className={`btn btn-sm ${showScanViewer ? 'btn-primary' : 'btn-outline'}`}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 700 }}
+          >
+            <Activity size={15} /> {showScanViewer ? 'Hide Clinical Viewer' : 'DICOM / Scans Viewer'}
+          </button>
+
+          <button
+            type="button"
             onClick={() => onPrint(inquiry)}
             className="btn btn-outline btn-sm"
             style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}
           >
-            <Printer size={15} /> Print / Export PDF
+            <Printer size={15} /> Print Dossier
           </button>
 
           <a
@@ -145,6 +160,18 @@ export const InquiryDetailConsole: React.FC<InquiryDetailConsoleProps> = ({
           </button>
         </div>
       </div>
+
+      {/* ── Inline Medical Imaging / DICOM Viewer Section ── */}
+      {showScanViewer && (
+        <div style={{ marginBottom: '1.5rem' }}>
+          <MedicalImagingViewer
+            patientName={`${inquiry.firstName} ${inquiry.lastName}`}
+            inquiryId={inquiry.id}
+            specialtyName={getSpecialtyName(inquiry.specialtyId)}
+            onClose={() => setShowScanViewer(false)}
+          />
+        </div>
+      )}
 
       {/* Content Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) minmax(360px, 1.4fr)', gap: '1.5rem', alignItems: 'start' }}>

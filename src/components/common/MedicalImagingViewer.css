@@ -1,0 +1,268 @@
+/* ─── Medical Imaging Clinical DICOM / Scan Viewer ───────────────────────── */
+.medical-viewer {
+  background: #080c10;
+  border: 1.5px solid #1e293b;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  color: #f1f5f9;
+  font-family: var(--font-sans);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+  margin-top: 1rem;
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* ── Viewer Header ── */
+.medical-viewer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  background: #0d1520;
+  border-bottom: 1px solid #1e293b;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.medical-viewer__patient-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.medical-viewer__modality-tag {
+  background: #065f46;
+  color: #34d399;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(52, 211, 153, 0.3);
+}
+
+.medical-viewer__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.medical-viewer__sub {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.medical-viewer__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── Toolbar ── */
+.medical-viewer__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #111a26;
+  border-bottom: 1px solid #1e293b;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.medical-viewer__tool-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.medical-viewer__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.65rem;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.medical-viewer__btn:hover {
+  background: #334155;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.medical-viewer__btn--active {
+  background: #065f46;
+  color: #34d399;
+  border-color: #10b981;
+}
+
+.medical-viewer__filter-select {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+
+/* ── Viewport Stage ── */
+.medical-viewer__stage {
+  position: relative;
+  height: 480px;
+  background: radial-gradient(circle at center, #0e1724 0%, #05080c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+}
+
+.medical-viewer__image-wrapper {
+  position: relative;
+  transition: transform 0.1s ease-out;
+  cursor: grab;
+}
+
+.medical-viewer__image-wrapper:active {
+  cursor: grabbing;
+}
+
+.medical-viewer__img {
+  max-height: 440px;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  border-radius: 4px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+/* Clinical Filters */
+.filter-bone {
+  filter: contrast(160%) brightness(110%) grayscale(100%);
+}
+
+.filter-soft-tissue {
+  filter: contrast(110%) brightness(100%) grayscale(100%);
+}
+
+.filter-lung {
+  filter: contrast(135%) brightness(130%) grayscale(100%);
+}
+
+.filter-invert {
+  filter: invert(100%) contrast(120%);
+}
+
+.filter-thermal {
+  filter: hue-rotate(180deg) saturate(200%) contrast(130%);
+}
+
+/* ── HUD Overlays ── */
+.medical-viewer__hud-tl,
+.medical-viewer__hud-tr,
+.medical-viewer__hud-bl,
+.medical-viewer__hud-br {
+  position: absolute;
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #34d399;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  pointer-events: none;
+  line-height: 1.4;
+  backdrop-filter: blur(4px);
+}
+
+.medical-viewer__hud-tl { top: 12px; left: 12px; }
+.medical-viewer__hud-tr { top: 12px; right: 12px; text-align: right; }
+.medical-viewer__hud-bl { bottom: 12px; left: 12px; }
+.medical-viewer__hud-br { bottom: 12px; right: 12px; text-align: right; }
+
+/* ── Measurement Caliper Overlay ── */
+.medical-viewer__caliper-line {
+  position: absolute;
+  background: #f59e0b;
+  height: 2px;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.medical-viewer__caliper-label {
+  position: absolute;
+  background: #f59e0b;
+  color: #000000;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 2px;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* ── Thumbnails Series Carousel ── */
+.medical-viewer__carousel {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  background: #0a0f16;
+  border-top: 1px solid #1e293b;
+  overflow-x: auto;
+}
+
+.medical-viewer__thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 6px;
+  border: 1.5px solid #1e293b;
+  background: #111822;
+  cursor: pointer;
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.medical-viewer__thumb:hover {
+  border-color: #34d399;
+}
+
+.medical-viewer__thumb--active {
+  border-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+}
+
+.medical-viewer__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.medical-viewer__thumb-label {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.8);
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #34d399;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
