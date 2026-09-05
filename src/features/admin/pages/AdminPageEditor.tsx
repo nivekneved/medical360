@@ -21,14 +21,13 @@ import { PageEditorNavSidebar } from './components/PageEditorNavSidebar';
 
 const CMS_PAGES = [
   { id: 'home', label: 'Home', icon: '🏠' },
+  { id: 'how-it-works', label: 'How It Works', icon: '🤝' },
   { id: 'about', label: 'About Us', icon: 'ℹ️' },
-  { id: 'services', label: 'Services', icon: '🩺' },
-  { id: 'hospitals', label: 'Hospitals', icon: '🏢' },
   { id: 'specialties', label: 'Specialties', icon: '⭐' },
   { id: 'doctors', label: 'Doctors', icon: '👨‍⚕️' },
+  { id: 'hospitals', label: 'Hospitals', icon: '🏢' },
   { id: 'case-studies', label: 'Stories', icon: '📖' },
   { id: 'cost-calculator', label: 'Calculator', icon: '🧮' },
-  { id: 'visa-guide', label: 'Visa Guide', icon: '✈️' },
   { id: 'contact', label: 'Contact', icon: '✉️' },
   { id: 'privacy', label: 'Privacy', icon: '🔒' },
   { id: 'terms', label: 'Terms', icon: '📜' },

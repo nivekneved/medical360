@@ -253,8 +253,18 @@ export function AdminInquiriesPage() {
               </p>
             </div>
 
-            {/* Global Print / Export Buttons */}
+            {/* Global Print / Export / Live Form Buttons */}
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <a
+                href="/describe-need"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline btn-sm"
+                style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 600, textDecoration: 'none' }}
+                title="Open public intake wizard"
+              >
+                <span>Live Intake Form</span>
+              </a>
               <button
                 type="button"
                 onClick={handlePrintPdfSelected}

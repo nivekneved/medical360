@@ -158,6 +158,7 @@ export function AdminHospitalsPage() {
         title="Partner Hospitals"
         subtitle="Manage accredited healthcare facilities, bed counts, and clinical specialty associations"
         entityName="Hospital"
+        publicListUrl="/hospitals"
         items={hospitals}
         loading={loading}
         fields={HOSPITAL_FIELDS}

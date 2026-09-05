@@ -157,6 +157,7 @@ export function AdminDoctorsPage() {
         title="7 Elite Specialists"
         subtitle="Manage internationally recognized chief surgeons, clinical specialty associations, and multi-hospital affiliations"
         entityName="Specialist"
+        publicListUrl="/doctors"
         items={doctors}
         loading={loading}
         fields={doctorFields}
