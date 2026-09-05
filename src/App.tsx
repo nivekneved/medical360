@@ -53,6 +53,7 @@ const SpecialtiesPage     = lazyWithRetry(() => import('./features/specialties/S
 const SpecialtyDetailPage = lazyWithRetry(() => import('./features/specialties/SpecialtyDetailPage'), m => m.SpecialtyDetailPage);
 const DoctorsPage         = lazyWithRetry(() => import('./features/doctors/DoctorsPage'), m => m.DoctorsPage);
 const DescribeNeedPage    = lazyWithRetry(() => import('./features/describe-need/DescribeNeedPage'), m => m.DescribeNeedPage);
+const HowItWorksPage     = lazyWithRetry(() => import('./features/how-it-works/HowItWorksPage'), m => m.HowItWorksPage);
 const ServicesPage        = lazyWithRetry(() => import('./features/services/ServicesPage'), m => m.ServicesPage);
 const CaseStudiesPage     = lazyWithRetry(() => import('./features/case-studies/CaseStudiesPage'), m => m.CaseStudiesPage);
 const ContactPage         = lazyWithRetry(() => import('./features/contact/ContactPage'), m => m.ContactPage);
@@ -151,9 +152,10 @@ export default function App() {
                     <Route path="/specialties/:id"  element={<SpecialtyDetailPage />} />
                     <Route path="/doctors"          element={<DoctorsPage />} />
                     <Route path="/describe-need"    element={<DescribeNeedPage />} />
-                    <Route path="/services"         element={<ServicesPage />} />
+                    <Route path="/how-it-works"     element={<HowItWorksPage />} />
+                    <Route path="/services"         element={<Navigate to="/how-it-works" replace />} />
                     <Route path="/cost-calculator"  element={<CostCalculatorPage />} />
-                    <Route path="/visa-guide"       element={<VisaGuidePage />} />
+                    <Route path="/visa-guide"       element={<Navigate to="/how-it-works" replace />} />
                     <Route path="/case-studies"     element={<CaseStudiesPage />} />
                     <Route path="/contact"          element={<ContactPage />} />
                     <Route path="/privacy"          element={<PrivacyPolicyPage />} />

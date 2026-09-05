@@ -43,12 +43,12 @@ export function Footer() {
           <div className="footer__col">
             <h4 className="footer__heading">{t('footer.quickLinks')}</h4>
             <ul className="footer__links">
-              <li><Link to="/about">{t('nav.about')}</Link></li>
-              <li><Link to="/hospitals">{t('nav.hospitals')}</Link></li>
               <li><Link to="/specialties">{t('nav.specialties')}</Link></li>
               <li><Link to="/doctors">{t('nav.doctors')}</Link></li>
-              <li><Link to="/services">{t('nav.services')}</Link></li>
-              <li><Link to="/case-studies">{t('nav.caseStudies')}</Link></li>
+              <li><Link to="/hospitals">{t('nav.hospitals')}</Link></li>
+              <li><Link to="/how-it-works">How It Works</Link></li>
+              <li><Link to="/cost-calculator">Cost Calculator</Link></li>
+              <li><Link to="/about">{t('nav.about')}</Link></li>
               <li><Link to="/contact">{t('nav.contact')}</Link></li>
             </ul>
           </div>
@@ -101,7 +101,12 @@ export function Footer() {
         </div>
 
         <div className="footer__bottom">
-          <p>© {new Date().getFullYear()} Med360. All rights reserved. | Port Louis, Mauritius</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            <p>© {new Date().getFullYear()} Med360. All rights reserved. | Port Louis, Mauritius</p>
+            <p style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+              Designed & Developed with <span style={{ color: '#ef4444' }}>♥</span> by <strong style={{ color: '#10b981' }}>Deven</strong>
+            </p>
+          </div>
           <div className="footer__bottom-links" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center' }}>
             <Link to="/privacy" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Privacy Policy</Link>
             <Link to="/terms" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Terms of Service</Link>
