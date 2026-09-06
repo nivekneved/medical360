@@ -14,6 +14,7 @@ import {
   validatePhone,
   validateDescription,
 } from '../../core/services/validation.service';
+import { SPECIALTY_SYMPTOMS_MAP } from '../specialties/specialtySymptoms';
 import './DescribeNeed.css';
 
 const COUNTRIES = ['Mauritius', 'Réunion Island', 'Comoros', 'Madagascar', 'Seychelles', 'Maldives', 'South Africa', 'Kenya', 'France', 'United Kingdom', 'Other'];
@@ -301,7 +302,7 @@ export function DescribeNeedPage() {
               )}
 
               <div className="form-group">
-                <label className="form-label" htmlFor="wiz-specialty">{l10n('Spécialité Médicale *', 'Spesialite Medikal *', 'Medical Specialty *')}</label>
+                <label className="form-label" htmlFor="wiz-specialty">{l10n('Spécialité Médicale ou Motif de Consultation *', 'Spesialite Medikal ouswa Rezon Konsiltasion *', 'Medical Specialty or Main Care Need *')}</label>
                 <select
                   id="wiz-specialty"
                   className={`form-select ${fieldErrors.specialtyId ? 'form-input--error' : ''}`}
@@ -312,9 +313,25 @@ export function DescribeNeedPage() {
                   }}
                   style={{ borderColor: fieldErrors.specialtyId ? '#ef4444' : undefined }}
                 >
-                  <option value="">{l10n('-- Sélectionnez la Spécialité --', '-- Swazir Spesialite --', '-- Select Specialty --')}</option>
-                  {specialties.map(s => <option key={s.id} value={s.id}>{l(s, 'name')}</option>)}
+                  <option value="">{l10n('-- Sélectionnez selon vos besoins ou symptômes --', '-- Swazir dapre ou douler ouswa bezwen --', '-- Select based on your condition / symptoms --')}</option>
+                  {specialties.map(s => {
+                    const langKey = (i18n.language === 'fr' || i18n.language === 'kr') ? i18n.language : 'en';
+                    const sEntry = SPECIALTY_SYMPTOMS_MAP[s.id]?.[langKey];
+                    const plain = sEntry ? sEntry.badge : l(s, 'name');
+                    return (
+                      <option key={s.id} value={s.id}>
+                        {plain} ({l(s, 'name')})
+                      </option>
+                    );
+                  })}
                 </select>
+                <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: 4, display: 'block' }}>
+                  💡 {l10n(
+                    'Pas certain(e) ? Choisissez l\'option la plus proche et décrivez simplement vos douleurs ci-dessous.',
+                    'Pa tro sir ? Swazir seki paret pli pre ek zis dir nou ki douler ou gagne anba.',
+                    'Not sure? Choose the closest option and simply describe your symptoms below.'
+                  )}
+                </span>
                 {fieldErrors.specialtyId && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.specialtyId}</span>}
               </div>
               <div className="form-group">

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Award, Building2, Stethoscope, MessageCircle, Shield } from 'lucide-react';
+import { Award, Building2, Stethoscope, MessageCircle, Shield, HelpCircle, Sparkles } from 'lucide-react';
 import { useDoctors } from '../../hooks/useDoctors';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useHospitals } from '../../hooks/useHospitals';
@@ -12,6 +12,7 @@ import { SEO } from '../../components/SEO/SEO';
 import { DoctorSecondOpinionModal } from './DoctorSecondOpinionModal';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { SPECIALTY_SYMPTOMS_MAP, QUICK_SYMPTOM_FILTERS } from '../specialties/specialtySymptoms';
 import type { Doctor, Hospital } from '../../core/types';
 
 export function DoctorsPage() {
@@ -39,7 +40,8 @@ export function DoctorsPage() {
 
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
-  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
+  const langKey = (isFr || isKr) ? (i18n.language as 'fr' | 'kr') : 'en';
+  const l10n = (fr: string, kr: string, en: string) => isFr ? fr : isKr ? kr : en;
   const l = (obj: any, field: string) => obj?.[`${field}_${i18n.language}`] || obj?.[field] || '';
 
   const tCms = (key: string, fallback: string) => {
@@ -65,12 +67,33 @@ export function DoctorsPage() {
   const filteredDoctors = doctors.filter((doc) => {
     const hospIds = getDocHospitalIds(doc);
     const matchHospital = selectedHospital === 'all' || hospIds.includes(selectedHospital);
-    if (!searchQuery.trim()) return matchHospital;
-    const q = searchQuery.toLowerCase();
+    if (!matchHospital) return false;
+    if (!searchQuery.trim()) return true;
+
+    const q = searchQuery.toLowerCase().trim();
     const nameMatch = doc.name.toLowerCase().includes(q);
     const titleMatch = l(doc, 'title').toLowerCase().includes(q) || doc.title.toLowerCase().includes(q);
     const bioMatch = l(doc, 'bio').toLowerCase().includes(q) || doc.bio.toLowerCase().includes(q);
-    return matchHospital && (nameMatch || titleMatch || bioMatch);
+
+    // Multilingual symptom & keyword match based on doctor's specialties
+    let symptomMatch = false;
+    const docSpecs = doc.specialties || [];
+    for (const specId of docSpecs) {
+      const sEntry = SPECIALTY_SYMPTOMS_MAP[specId];
+      if (sEntry) {
+        const allKws = [
+          ...sEntry.en.keywords, ...sEntry.en.symptoms, sEntry.en.plainName, sEntry.en.badge,
+          ...sEntry.fr.keywords, ...sEntry.fr.symptoms, sEntry.fr.plainName, sEntry.fr.badge,
+          ...sEntry.kr.keywords, ...sEntry.kr.symptoms, sEntry.kr.plainName, sEntry.kr.badge,
+        ].map(k => k.toLowerCase());
+        if (allKws.some(k => k.includes(q) || q.includes(k))) {
+          symptomMatch = true;
+          break;
+        }
+      }
+    }
+
+    return nameMatch || titleMatch || bioMatch || symptomMatch;
   });
 
   const sortedDoctors = [...filteredDoctors].sort((a, b) => {
@@ -125,13 +148,85 @@ export function DoctorsPage() {
       {/* Content */}
       <section className="section" style={{ paddingBottom: '5rem' }}>
         <div className="container">
+          {/* Patient Reassurance Helper Card */}
+          <div className="spec-helper-card" style={{ marginBottom: '1.75rem' }}>
+            <div className="spec-helper-card__left">
+              <div className="spec-helper-card__icon" aria-hidden="true">
+                <HelpCircle size={28} />
+              </div>
+              <div>
+                <h3 className="spec-helper-card__title">
+                  {l10n(
+                    'Pas certain(e) du médecin à consulter ?',
+                    'Pa sir ki dokter ki bizin get ou ?',
+                    'Not sure which specialist is right for your condition?'
+                  )}
+                </h3>
+                <p className="spec-helper-card__desc">
+                  {l10n(
+                    'Ne vous inquiétez pas — décrivez-nous simplement votre état de santé ou partagez votre bilan. Notre équipe médicale vous mettra en relation avec le chirurgien ou spécialiste le plus qualifié sans frais.',
+                    'Pa traka ditou — zis partaz ou bann rapor ouswa dir nou ki problem ou gagne. Nou lekip medikal pou swazir meyer dokter pou ou san okenn fre.',
+                    'Don\'t worry — simply share your reports or describe what you\'re experiencing. Our medical team will match you with the highest-rated doctor for your exact need for free.'
+                  )}
+                </p>
+              </div>
+            </div>
+            <div className="spec-helper-card__actions">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => navigate('/describe-need')}
+              >
+                ✍️ {l10n('Décrire mon cas', 'Dekrir mo ka', 'Describe My Case')}
+              </button>
+              <a
+                href={buildMed360WhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline"
+              >
+                💬 WhatsApp
+              </a>
+            </div>
+          </div>
+
+          {/* Quick Symptom / Condition Filters */}
+          <div className="spec-symptom-chips-container" style={{ marginBottom: '1.75rem' }}>
+            <div className="spec-symptom-chips-label">
+              <Sparkles size={14} />
+              <span>{l10n('Filtrer par besoin ou problème médical :', 'Filtre par parti lekor ouswa douler :', 'Quick filter by condition or specialty:')}</span>
+            </div>
+            <div className="spec-symptom-chips" role="tablist" aria-label="Specialty filter chips">
+              {QUICK_SYMPTOM_FILTERS.map((chip) => {
+                const label = chip[`label_${langKey}`] || chip.label_en;
+                const isActive = selectedSpecialty === chip.id;
+                return (
+                  <button
+                    key={chip.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`spec-symptom-chip ${isActive ? 'spec-symptom-chip--active' : ''}`}
+                    onClick={() => {
+                      setSelectedSpecialty(chip.id);
+                      setCurrentPage(1);
+                    }}
+                  >
+                    <span>{chip.icon}</span>
+                    <span>{label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Trust Banner */}
           <div style={{
             background: 'var(--color-surface)',
             border: '1.5px solid var(--color-border)',
             borderRadius: 'var(--radius-xl)',
             padding: '1.25rem 1.75rem',
-            marginBottom: '2.5rem',
+            marginBottom: '2rem',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -177,8 +272,11 @@ export function DoctorsPage() {
           {!loading && (
             <ListToolbar
               searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              searchPlaceholder={l10n('Rechercher un médecin...', 'Rod enn dokter...', 'Search specialists...')}
+              onSearchChange={(q) => {
+                setSearchQuery(q);
+                setCurrentPage(1);
+              }}
+              searchPlaceholder={l10n('Rechercher un médecin ou symptôme (ex: genou, coeur, cataracte)...', 'Rod enn dokter ouswa sintom (ex: leker, zounou)...', 'Search doctors or symptoms (e.g. knee, heart, bypass)...')}
               sortBy={sortBy}
               onSortChange={setSortBy}
               sortOptions={sortOptions}
@@ -194,7 +292,7 @@ export function DoctorsPage() {
                     <select
                       className="list-toolbar__filter-select"
                       value={selectedSpecialty}
-                      onChange={e => setSelectedSpecialty(e.target.value)}
+                      onChange={e => { setSelectedSpecialty(e.target.value); setCurrentPage(1); }}
                     >
                       <option value="all">{l10n('🩺 Toutes les Spécialités', '🩺 Tou Spesialite', '🩺 All Specialties')}</option>
                       {specialties.map(s => (
@@ -208,7 +306,7 @@ export function DoctorsPage() {
                     <select
                       className="list-toolbar__filter-select"
                       value={selectedHospital}
-                      onChange={e => setSelectedHospital(e.target.value)}
+                      onChange={e => { setSelectedHospital(e.target.value); setCurrentPage(1); }}
                     >
                       <option value="all">{l10n('🏥 Tous les Hôpitaux', '🏥 Tou Lopital', '🏥 All Hospitals')}</option>
                       {hospitals.map(h => (
@@ -222,7 +320,7 @@ export function DoctorsPage() {
                     <button
                       type="button"
                       className="list-toolbar__clear-btn"
-                      onClick={() => { setSearchQuery(''); setSelectedSpecialty('all'); setSelectedHospital('all'); }}
+                      onClick={() => { setSearchQuery(''); setSelectedSpecialty('all'); setSelectedHospital('all'); setCurrentPage(1); }}
                     >
                       ↺ {l10n('Effacer', 'Efase', 'Clear')}
                     </button>
@@ -317,11 +415,14 @@ export function DoctorsPage() {
 
                         {/* Specialties tags */}
                         <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
-                          {doc.specialties.map(sId => (
-                            <span key={sId} className="badge badge-primary" style={{ fontSize: '0.7rem' }}>
-                              {getSpecialtyName(sId)}
-                            </span>
-                          ))}
+                          {doc.specialties.map(sId => {
+                            const symptomEntry = SPECIALTY_SYMPTOMS_MAP[sId]?.[langKey];
+                            return (
+                              <span key={sId} className="badge badge-primary" style={{ fontSize: '0.72rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}>
+                                <span>{symptomEntry ? symptomEntry.badge : getSpecialtyName(sId)}</span>
+                              </span>
+                            );
+                          })}
                         </div>
 
                         {/* Bio */}

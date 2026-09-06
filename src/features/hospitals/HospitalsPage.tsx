@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X } from 'lucide-react';
+import { Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X, HelpCircle, Sparkles } from 'lucide-react';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useTranslation } from 'react-i18next';
 import { getUniqueCountries, getUniqueAccreditations } from '../../core/services/hospital.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
+import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import type { HospitalFilters } from '../../core/services/hospital.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
@@ -117,6 +118,96 @@ export function HospitalsPage() {
       </section>
 
       <div className="container" style={{ padding: '2rem var(--space-6) 6rem' }}>
+        {/* Patient Reassurance Helper Card */}
+        <div className="spec-helper-card" style={{ marginBottom: '1.75rem' }}>
+          <div className="spec-helper-card__left">
+            <div className="spec-helper-card__icon" aria-hidden="true">
+              <HelpCircle size={28} />
+            </div>
+            <div>
+              <h3 className="spec-helper-card__title">
+                {l10n(
+                  'Besoin d\'aide pour choisir l\'hôpital le plus adapté ?',
+                  'Bizin led pou swazir meyer lopital pou ou ka ?',
+                  'Need guidance choosing the right accredited hospital?'
+                )}
+              </h3>
+              <p className="spec-helper-card__desc">
+                {l10n(
+                  'Ne vous souciez pas des démarches à distance — notre équipe médicale sélectionne pour vous l\'établissement le plus spécialisé, organise votre admission et s\'occupe des démarches de visa médical sans frais.',
+                  'Pa traka ditou pou bann papie ouswa vwayaz — nou lekip organiz tou pou ou : swazir lopital, pran randevou dokter ek ed ou ar visa medikal gratis.',
+                  'Don\'t worry about complex arrangements — our medical team will help select the best hospital for your condition, schedule priority doctor appointments, and assist with medical visas for free.'
+                )}
+              </p>
+            </div>
+          </div>
+          <div className="spec-helper-card__actions">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => navigate('/describe-need')}
+            >
+              ✍️ {l10n('Demander une recommandation', 'Demann rekomandasion', 'Get Hospital Advice')}
+            </button>
+            <a
+              href={buildMed360WhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline"
+            >
+              💬 WhatsApp
+            </a>
+          </div>
+        </div>
+
+        {/* Quick Country Filters */}
+        <div className="spec-symptom-chips-container" style={{ marginBottom: '1.75rem' }}>
+          <div className="spec-symptom-chips-label">
+            <Sparkles size={14} />
+            <span>{l10n('Destinations médicales principales :', 'Bann pei prinsipal :', 'Top medical destinations:')}</span>
+          </div>
+          <div className="spec-symptom-chips" role="tablist" aria-label="Country quick filter chips">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={!filters.country}
+              className={`spec-symptom-chip ${!filters.country ? 'spec-symptom-chip--active' : ''}`}
+              onClick={() => {
+                setFilters(f => ({ ...f, country: undefined }));
+                setCurrentPage(1);
+              }}
+            >
+              <span>🌐</span>
+              <span>{l10n('Tous les pays', 'Tou pei', 'All Countries')}</span>
+            </button>
+            {countries.map((c) => {
+              const isActive = filters.country === c;
+              const flag = c.includes('India') || c.includes('Inde') ? '🇮🇳'
+                : c.includes('Thailand') || c.includes('Thaïlande') ? '🇹🇭'
+                : c.includes('Mauritius') || c.includes('Maurice') ? '🇲🇺'
+                : c.includes('Singapore') || c.includes('Singapour') ? '🇸🇬'
+                : c.includes('Malaysia') || c.includes('Malaisie') ? '🇲🇾'
+                : c.includes('France') ? '🇫🇷' : '🏥';
+              return (
+                <button
+                  key={c}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`spec-symptom-chip ${isActive ? 'spec-symptom-chip--active' : ''}`}
+                  onClick={() => {
+                    setFilters(f => ({ ...f, country: c }));
+                    setCurrentPage(1);
+                  }}
+                >
+                  <span>{flag}</span>
+                  <span>{c}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Results Count, Search, Filters, Sort & View Mode Toolbar */}
         {!loading && (
           <ListToolbar
@@ -124,8 +215,9 @@ export function HospitalsPage() {
             onSearchChange={(val) => {
               setSearchInput(val);
               setFilters(f => ({ ...f, searchQuery: val || undefined }));
+              setCurrentPage(1);
             }}
-            searchPlaceholder={tCms('searchPlaceholder', l10n('Rechercher un hôpital...', 'Rod enn lopital...', 'Search hospitals...'))}
+            searchPlaceholder={tCms('searchPlaceholder', l10n('Rechercher un hôpital, ville ou spécialité...', 'Rod enn lopital, lavil ouswa swen...', 'Search hospitals, cities, or treatments...'))}
             sortBy={sortBy}
             onSortChange={setSortBy}
             sortOptions={sortOptions}
@@ -141,7 +233,7 @@ export function HospitalsPage() {
                   <select
                     className="list-toolbar__filter-select"
                     value={filters.country || ''}
-                    onChange={e => setFilters(f => ({ ...f, country: e.target.value || undefined }))}
+                    onChange={e => { setFilters(f => ({ ...f, country: e.target.value || undefined })); setCurrentPage(1); }}
                     id="hospital-country-filter"
                   >
                     <option value="">{l10n('🌐 Tous les pays', '🌐 Tou pei', '🌐 All Countries')}</option>
@@ -154,7 +246,7 @@ export function HospitalsPage() {
                   <select
                     className="list-toolbar__filter-select"
                     value={filters.accreditation || ''}
-                    onChange={e => setFilters(f => ({ ...f, accreditation: e.target.value || undefined }))}
+                    onChange={e => { setFilters(f => ({ ...f, accreditation: e.target.value || undefined })); setCurrentPage(1); }}
                     id="hospital-accreditation-filter"
                   >
                     <option value="">{l10n('🏅 Accréditations', '🏅 Akreditasion', '🏅 All Accreditations')}</option>
@@ -167,7 +259,7 @@ export function HospitalsPage() {
                   <button
                     type="button"
                     className="list-toolbar__clear-btn"
-                    onClick={() => { setFilters({}); setSearchInput(''); }}
+                    onClick={() => { setFilters({}); setSearchInput(''); setCurrentPage(1); }}
                     id="hospital-clear-filters-btn"
                   >
                     ↺ {l10n('Effacer', 'Efase', 'Clear')}
