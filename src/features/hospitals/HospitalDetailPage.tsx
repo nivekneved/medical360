@@ -4,7 +4,7 @@ import { ArrowLeft, Star, MapPin, Shield, Calendar, BedDouble, CheckCircle2, Arr
 import { useHospital } from '../../hooks/useHospitals';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useDoctors } from '../../hooks/useDoctors';
-import { formatNumber, formatCostRange } from '../../core/services/format.service';
+import { formatNumber, formatCostRange, formatCostMurRange } from '../../core/services/format.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import './Hospitals.css';
@@ -161,13 +161,18 @@ export function HospitalDetailPage() {
                       <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--color-text-primary)' }}>
                         {l(sp, 'name')}
                       </h3>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '1rem', flex: 1 }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem', flex: 1 }}>
                         {sp.procedures.slice(0, 2).map((proc) => (
-                          <div key={proc.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8125rem' }}>
+                          <div key={proc.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.8125rem' }}>
                             <span style={{ color: 'var(--color-text-secondary)' }}>{l(proc, 'name')}</span>
-                            <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>
-                              {formatCostRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
-                            </span>
+                            <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                              <span style={{ fontWeight: 700, color: 'var(--color-primary)', lineHeight: 1.2 }}>
+                                {formatCostRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
+                              </span>
+                              <span style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold', color: 'var(--color-text-secondary)', marginTop: '2px', letterSpacing: '0.01em' }}>
+                                {formatCostMurRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
+                              </span>
+                            </div>
                           </div>
                         ))}
                       </div>
