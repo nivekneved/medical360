@@ -6,7 +6,6 @@ import {
   MessageCircle,
   Globe,
   ArrowRight,
-  Lock,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
@@ -129,16 +128,6 @@ export function Navbar() {
             <span>{isFr ? 'Avis Gratuit' : isKr ? 'Lavi Gratis' : 'Free Doctor Review'}</span>
             <ArrowRight size={14} />
           </button>
-
-          {/* Discreet Admin Lock */}
-          <Link
-            to="/deven"
-            className="navbar-admin-link"
-            title="Staff Portal"
-            aria-label="Staff Portal"
-          >
-            <Lock size={14} />
-          </Link>
         </div>
 
         {/* Mobile Hamburger Toggle */}
