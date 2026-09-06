@@ -9,11 +9,14 @@ import {
   Copy,
   ChevronUp,
   ChevronDown,
+  Shield,
 } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
-import { formatCostRange, formatCostMur } from '../../../core/services/format.service';
+import { formatCostRange } from '../../../core/services/format.service';
 import { isHoneypotClean, detectSqlInjection, sanitizeInput } from '../../../core/services/validation.service';
 import { ProcedureFormCard, type ProcedureFormData } from './ProcedureFormCard';
+import { useAuth } from '../../../providers/AuthProvider';
+import { usePlatformSettings } from '../../../core/services/settings.service';
 import type { Specialty, Procedure } from '../../../core/types';
 
 interface ProcedureInlineManagerProps {
@@ -43,6 +46,8 @@ export const ProcedureInlineManager: React.FC<ProcedureInlineManagerProps> = ({
   l,
   onQuoteClick,
 }) => {
+  const { isAuthenticated } = useAuth();
+  const { settings } = usePlatformSettings();
   const [procedures, setProcedures] = useState<Procedure[]>(specialty.procedures || []);
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -227,25 +232,28 @@ export const ProcedureInlineManager: React.FC<ProcedureInlineManagerProps> = ({
           </span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          {statusMessage && (
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, color: statusMessage.isError ? 'var(--color-danger)' : 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: 4 }}>
-              {statusMessage.isError ? <AlertCircle size={14} /> : <CheckCircle2 size={14} />}
-              {statusMessage.text}
-            </span>
-          )}
+        {/* Admin-Only Header Action */}
+        {isAuthenticated && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {statusMessage && (
+              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: statusMessage.isError ? 'var(--color-danger)' : 'var(--color-primary)', display: 'flex', alignItems: 'center', gap: 4 }}>
+                {statusMessage.isError ? <AlertCircle size={14} /> : <CheckCircle2 size={14} />}
+                {statusMessage.text}
+              </span>
+            )}
 
-          {!isEditing && (
-            <button
-              type="button"
-              onClick={handleOpenAdd}
-              className="btn btn-primary btn-sm"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontWeight: 700 }}
-            >
-              <Plus size={14} /> {l10n('Ajouter une Procédure', 'Azout Tretman', 'Add Procedure')}
-            </button>
-          )}
-        </div>
+            {!isEditing && (
+              <button
+                type="button"
+                onClick={handleOpenAdd}
+                className="btn btn-primary btn-sm"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontWeight: 700 }}
+              >
+                <Plus size={14} /> {l10n('Ajouter une Procédure', 'Azout Tretman', 'Add Procedure')}
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', margin: 0 }}>
@@ -256,8 +264,8 @@ export const ProcedureInlineManager: React.FC<ProcedureInlineManagerProps> = ({
         )}
       </p>
 
-      {/* Inline Form (Zero Popups) */}
-      {isEditing && (
+      {/* Admin Inline Form (Zero Popups) */}
+      {isAuthenticated && isEditing && (
         <ProcedureFormCard
           formData={formData}
           setFormData={setFormData}
@@ -284,176 +292,186 @@ export const ProcedureInlineManager: React.FC<ProcedureInlineManagerProps> = ({
           <p style={{ margin: '0 0 0.75rem', fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
             {l10n('Aucune procédure enregistrée pour cette spécialité.', 'Pankor ena tretman anrezistre pou sa spesialite-la.', 'No procedures cataloged for this specialty yet.')}
           </p>
-          <button type="button" onClick={handleOpenAdd} className="btn btn-primary btn-sm">
-            <Plus size={14} /> {l10n('Ajouter une Procédure', 'Azout Tretman', 'Add Procedure')}
-          </button>
+          {isAuthenticated && (
+            <button type="button" onClick={handleOpenAdd} className="btn btn-primary btn-sm">
+              <Plus size={14} /> {l10n('Ajouter une Procédure', 'Azout Tretman', 'Add Procedure')}
+            </button>
+          )}
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {procedures.map((proc, index) => (
-            <div
-              key={proc.id || index}
-              style={{
-                background: 'var(--color-surface)',
-                border: '1.5px solid var(--color-border)',
-                borderRadius: 'var(--radius-xl)',
-                padding: '1.25rem 1.5rem',
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: '1rem',
-                flexWrap: 'wrap',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
-                position: 'relative',
-              }}
-            >
-              {/* Left Details */}
-              <div style={{ flex: 1, minWidth: 220 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: 0, color: 'var(--color-text)' }}>
-                    {l(proc, 'name')}
-                  </h3>
+          {procedures.map((proc, index) => {
+            const murRate = settings.murExchangeRate || 46.5;
+            const murMin = Math.round((proc.estimatedCostUSD?.min || 0) * murRate);
+            const murMax = Math.round((proc.estimatedCostUSD?.max || 0) * murRate);
+
+            return (
+              <div
+                key={proc.id || index}
+                style={{
+                  background: 'var(--color-surface)',
+                  border: '1.5px solid var(--color-border)',
+                  borderRadius: 'var(--radius-xl)',
+                  padding: '1.25rem 1.5rem',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  flexWrap: 'wrap',
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
+                  position: 'relative',
+                }}
+              >
+                {/* Left Details */}
+                <div style={{ flex: 1, minWidth: 220 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: 0, color: 'var(--color-text)' }}>
+                      {l(proc, 'name')}
+                    </h3>
+                  </div>
+
+                  <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', margin: '0 0 0.4rem', lineHeight: 1.4 }}>
+                    {l(proc, 'description')}
+                  </p>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                    <Clock size={12} color="var(--color-primary)" />
+                    <span>{l10n('Durée de séjour :', 'Dirasion sejour :', 'Stay duration:')} ~{proc.estimatedDurationDays || 7} {l10n('jours', 'zour', 'days')}</span>
+                  </div>
                 </div>
 
-                <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', margin: '0 0 0.4rem', lineHeight: 1.4 }}>
-                  {l(proc, 'description')}
-                </p>
+                {/* Right: Pricing & Action */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', textAlign: 'right' }}>
+                  <div>
+                    <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--color-primary)' }}>
+                      {formatCostRange(proc.estimatedCostUSD?.min || 0, proc.estimatedCostUSD?.max || 0)}
+                    </div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
+                      ~MUR {murMin.toLocaleString()} – {murMax.toLocaleString()}
+                    </div>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      style={{ marginTop: '0.4rem' }}
+                      onClick={() => onQuoteClick && onQuoteClick(specialty.id)}
+                    >
+                      {l10n('Demander un Devis', 'Demann Devi', 'Get Quote')}
+                    </button>
+                  </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                  <Clock size={12} color="var(--color-primary)" />
-                  <span>{l10n('Durée de séjour :', 'Dirasion sejour :', 'Stay duration:')} ~{proc.estimatedDurationDays || 7} {l10n('jours', 'zour', 'days')}</span>
+                  {/* Admin-Only Action Bar */}
+                  {isAuthenticated && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, paddingLeft: '0.75rem', borderLeft: '1px solid var(--color-border)' }}>
+                      <div style={{ display: 'flex', gap: 4 }}>
+                        <button
+                          type="button"
+                          disabled={index === 0}
+                          onClick={() => handleMove(index, 'up')}
+                          style={{
+                            background: 'var(--color-surface-2)',
+                            border: '1px solid var(--color-border)',
+                            borderRadius: 4,
+                            padding: '2px 4px',
+                            cursor: index === 0 ? 'not-allowed' : 'pointer',
+                            opacity: index === 0 ? 0.3 : 1,
+                          }}
+                          title="Move Up"
+                        >
+                          <ChevronUp size={12} />
+                        </button>
+                        <button
+                          type="button"
+                          disabled={index === procedures.length - 1}
+                          onClick={() => handleMove(index, 'down')}
+                          style={{
+                            background: 'var(--color-surface-2)',
+                            border: '1px solid var(--color-border)',
+                            borderRadius: 4,
+                            padding: '2px 4px',
+                            cursor: index === procedures.length - 1 ? 'not-allowed' : 'pointer',
+                            opacity: index === procedures.length - 1 ? 0.3 : 1,
+                          }}
+                          title="Move Down"
+                        >
+                          <ChevronDown size={12} />
+                        </button>
+                      </div>
+
+                      <div style={{ display: 'flex', gap: 4 }}>
+                        <button
+                          type="button"
+                          onClick={() => handleOpenEdit(index)}
+                          className="btn btn-outline btn-sm"
+                          style={{ padding: '3px 6px', fontSize: '0.7rem' }}
+                          title="Edit inline"
+                        >
+                          <Edit3 size={12} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDuplicate(index)}
+                          className="btn btn-outline btn-sm"
+                          style={{ padding: '3px 6px' }}
+                          title="Duplicate"
+                        >
+                          <Copy size={12} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDeleteConfirmIndex(deleteConfirmIndex === index ? null : index)}
+                          className="btn btn-outline btn-sm"
+                          style={{ padding: '3px 6px', color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)' }}
+                          title="Delete"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              {/* Right: Pricing & Controls */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', textAlign: 'right' }}>
-                <div>
-                  <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                    {formatCostRange(proc.estimatedCostUSD?.min || 0, proc.estimatedCostUSD?.max || 0)}
-                  </div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                    ~{formatCostMur(proc.estimatedCostUSD?.min || 0, proc.estimatedCostUSD?.max || 0)}
-                  </div>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                    style={{ marginTop: '0.4rem' }}
-                    onClick={() => onQuoteClick && onQuoteClick(specialty.id)}
+                {/* Admin-Only Delete Banner */}
+                {isAuthenticated && deleteConfirmIndex === index && (
+                  <div
+                    style={{
+                      width: '100%',
+                      background: 'rgba(239, 68, 68, 0.08)',
+                      border: '1px solid rgba(239, 68, 68, 0.3)',
+                      borderRadius: 8,
+                      padding: '0.6rem 0.85rem',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      marginTop: '0.5rem',
+                      animation: 'fadeIn 0.15s ease',
+                    }}
                   >
-                    {l10n('Demander un Devis', 'Demann Devi', 'Get Quote')}
-                  </button>
-                </div>
-
-                {/* Action Bar */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 4, paddingLeft: '0.75rem', borderLeft: '1px solid var(--color-border)' }}>
-                  <div style={{ display: 'flex', gap: 4 }}>
-                    <button
-                      type="button"
-                      disabled={index === 0}
-                      onClick={() => handleMove(index, 'up')}
-                      style={{
-                        background: 'var(--color-surface-2)',
-                        border: '1px solid var(--color-border)',
-                        borderRadius: 4,
-                        padding: '2px 4px',
-                        cursor: index === 0 ? 'not-allowed' : 'pointer',
-                        opacity: index === 0 ? 0.3 : 1,
-                      }}
-                      title="Move Up"
-                    >
-                      <ChevronUp size={12} />
-                    </button>
-                    <button
-                      type="button"
-                      disabled={index === procedures.length - 1}
-                      onClick={() => handleMove(index, 'down')}
-                      style={{
-                        background: 'var(--color-surface-2)',
-                        border: '1px solid var(--color-border)',
-                        borderRadius: 4,
-                        padding: '2px 4px',
-                        cursor: index === procedures.length - 1 ? 'not-allowed' : 'pointer',
-                        opacity: index === procedures.length - 1 ? 0.3 : 1,
-                      }}
-                      title="Move Down"
-                    >
-                      <ChevronDown size={12} />
-                    </button>
+                    <span style={{ fontSize: '0.8rem', color: 'var(--color-danger)', fontWeight: 700 }}>
+                      Delete "{proc.name}" permanently?
+                    </span>
+                    <div style={{ display: 'flex', gap: '0.35rem' }}>
+                      <button
+                        type="button"
+                        onClick={() => setDeleteConfirmIndex(null)}
+                        className="btn btn-outline btn-sm"
+                        style={{ padding: '2px 8px', fontSize: '0.75rem' }}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(index)}
+                        className="btn btn-sm"
+                        style={{ padding: '2px 8px', fontSize: '0.75rem', background: 'var(--color-danger)', color: '#fff' }}
+                      >
+                        Yes, Delete
+                      </button>
+                    </div>
                   </div>
-
-                  <div style={{ display: 'flex', gap: 4 }}>
-                    <button
-                      type="button"
-                      onClick={() => handleOpenEdit(index)}
-                      className="btn btn-outline btn-sm"
-                      style={{ padding: '3px 6px', fontSize: '0.7rem' }}
-                      title="Edit inline"
-                    >
-                      <Edit3 size={12} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDuplicate(index)}
-                      className="btn btn-outline btn-sm"
-                      style={{ padding: '3px 6px' }}
-                      title="Duplicate"
-                    >
-                      <Copy size={12} />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDeleteConfirmIndex(deleteConfirmIndex === index ? null : index)}
-                      className="btn btn-outline btn-sm"
-                      style={{ padding: '3px 6px', color: 'var(--color-danger)', borderColor: 'rgba(239, 68, 68, 0.3)' }}
-                      title="Delete"
-                    >
-                      <Trash2 size={12} />
-                    </button>
-                  </div>
-                </div>
+                )}
               </div>
-
-              {/* Delete Banner */}
-              {deleteConfirmIndex === index && (
-                <div
-                  style={{
-                    width: '100%',
-                    background: 'rgba(239, 68, 68, 0.08)',
-                    border: '1px solid rgba(239, 68, 68, 0.3)',
-                    borderRadius: 8,
-                    padding: '0.6rem 0.85rem',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginTop: '0.5rem',
-                    animation: 'fadeIn 0.15s ease',
-                  }}
-                >
-                  <span style={{ fontSize: '0.8rem', color: 'var(--color-danger)', fontWeight: 700 }}>
-                    Delete "{proc.name}" permanently?
-                  </span>
-                  <div style={{ display: 'flex', gap: '0.35rem' }}>
-                    <button
-                      type="button"
-                      onClick={() => setDeleteConfirmIndex(null)}
-                      className="btn btn-outline btn-sm"
-                      style={{ padding: '2px 8px', fontSize: '0.75rem' }}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleDelete(index)}
-                      className="btn btn-sm"
-                      style={{ padding: '2px 8px', fontSize: '0.75rem', background: 'var(--color-danger)', color: '#fff' }}
-                    >
-                      Yes, Delete
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
