@@ -1,10 +1,12 @@
 import { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Calculator, ArrowRight, CheckCircle2, ShieldCheck, Clock, Sparkles, HeartPulse } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Calculator, ArrowRight, CheckCircle2, ShieldCheck, Clock, Sparkles, HeartPulse, EyeOff, Lock, Settings } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useTranslation } from 'react-i18next';
 import { useCMS } from '../../hooks/useCMS';
+import { usePlatformSettings } from '../../core/services/settings.service';
+import { useAuth } from '../../providers/AuthProvider';
 
 interface CountryCostProfile {
   country: string;
@@ -24,15 +26,17 @@ const COUNTRY_PROFILES: CountryCostProfile[] = [
   { country: 'France / UK', flag: '🇫🇷', hospitalExample: 'European Private Care', costMultiplier: 3.5, durationDays: 10 },
 ];
 
-const MUR_RATE = 46.5; // 1 USD = 46.5 Mauritian Rupees
-
 export function CostCalculatorPage() {
   const { specialties } = useSpecialties();
   const { i18n } = useTranslation();
   const { data: cms } = useCMS('cost-calculator');
+  const { settings } = usePlatformSettings();
+  const { isAuthenticated } = useAuth();
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
   const navigate = useNavigate();
+
+  const MUR_RATE = settings.murExchangeRate || 46.5;
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
@@ -78,12 +82,88 @@ export function CostCalculatorPage() {
   const savingsUSD = Math.max(0, localPrivateAvgUSD - baseAvgUSD);
   const savingsPercent = Math.round((savingsUSD / localPrivateAvgUSD) * 100);
 
+  // If disabled and not admin, show graceful direct assistance state
+  if (!settings.enableCostComparison && !isAuthenticated) {
+    return (
+      <div style={{ minHeight: '80vh', background: 'var(--color-bg)', paddingTop: 'calc(var(--navbar-height) + 3rem)', paddingBottom: '5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Helmet>
+          <title>Medical Treatment Assessment | Med360</title>
+        </Helmet>
+        <div className="container" style={{ maxWidth: 640, textAlign: 'center' }}>
+          <div style={{
+            background: 'var(--color-surface)',
+            border: '1.5px solid var(--color-border)',
+            borderRadius: 'var(--radius-xl)',
+            padding: '3rem 2rem',
+            boxShadow: 'var(--shadow-lg)',
+          }}>
+            <div style={{
+              width: 56,
+              height: 56,
+              borderRadius: '50%',
+              background: 'color-mix(in srgb, var(--color-primary) 12%, transparent)',
+              color: 'var(--color-primary)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1.5rem',
+            }}>
+              <HeartPulse size={28} />
+            </div>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0 0 0.75rem 0', color: 'var(--color-text)' }}>
+              {isFr ? 'Estimation Personnalisée de Traitement' : isKr ? 'Estimasion Pri Personalize' : 'Personalized Treatment Cost Assessment'}
+            </h1>
+            <p style={{ fontSize: '0.925rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, marginBottom: '2rem' }}>
+              {isFr
+                ? 'Pour vous fournir un devis médical précis et adapté à votre diagnostic clinique, notre équipe médicale examine votre dossier directement avec nos chirurgiens chefs partenaires.'
+                : 'To ensure 100% accuracy tailored to your specific clinical diagnostic, our medical coordinators prepare personalized, itemized hospital quotes directly with senior surgical specialists.'}
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+              <Link to="/describe-need" className="btn btn-primary btn-lg" style={{ fontWeight: 700, gap: '0.5rem', textDecoration: 'none' }}>
+                <span>{isFr ? 'Demander Mon Évaluation Gratuite' : 'Request Free Medical Assessment'}</span>
+                <ArrowRight size={16} />
+              </Link>
+              <Link to="/hospitals" className="btn btn-outline btn-lg" style={{ fontWeight: 700, textDecoration: 'none' }}>
+                <span>{isFr ? 'Explorer les Hôpitaux' : 'View Partner Hospitals'}</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', paddingBottom: '5rem' }}>
       <Helmet>
         <title>Medical Treatment Cost Calculator & Comparison | Med360</title>
         <meta name="description" content="Calculate and compare international medical treatment costs for Mauritian patients across India, Thailand, Singapore, and Europe. Save up to 70% with transparent pricing." />
       </Helmet>
+
+      {/* Admin Preview Mode Banner (When Cost Calculator is hidden from public) */}
+      {!settings.enableCostComparison && isAuthenticated && (
+        <div style={{
+          background: '#fef3c7',
+          borderBottom: '1.5px solid #f59e0b',
+          color: '#92400e',
+          padding: '0.75rem 1rem',
+          fontSize: '0.875rem',
+          fontWeight: 600,
+          position: 'sticky',
+          top: 'var(--navbar-height, 64px)',
+          zIndex: 40,
+        }}>
+          <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <EyeOff size={16} />
+              <span><strong>Private Admin Preview:</strong> Cost Comparison is currently <strong>HIDDEN</strong> from public website visitors.</span>
+            </div>
+            <Link to="/admin/settings" style={{ color: '#b45309', fontWeight: 800, textDecoration: 'underline', display: 'flex', alignItems: 'center', gap: 4 }}>
+              <Settings size={14} /> Open Admin Settings to Activate
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Hero Header */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/calculator_banner.jpg)' }}>
