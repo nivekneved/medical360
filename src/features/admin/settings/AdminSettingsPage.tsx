@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Settings,
   Database,
   Shield,
+  Palette,
   CheckCircle2,
   AlertCircle,
   HardDriveDownload,
@@ -11,17 +13,38 @@ import {
 import { AdminBackupManager } from './components/AdminBackupManager';
 import { AdminSecuritySettings } from './components/AdminSecuritySettings';
 import { AdminGeneralSettings } from './components/AdminGeneralSettings';
+import { AdminThemeSettings } from './components/AdminThemeSettings';
+
+type SettingsTab = 'general' | 'themes' | 'backups' | 'security';
 
 export function AdminSettingsPage() {
-  const [activeTab, setActiveTab] = useState<'general' | 'backups' | 'security'>('general');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlTab = searchParams.get('tab') as SettingsTab | null;
+
+  const validTabs: SettingsTab[] = ['general', 'themes', 'backups', 'security'];
+  const initialTab: SettingsTab = (urlTab && validTabs.includes(urlTab)) ? urlTab : 'general';
+
+  const [activeTab, setActiveTab] = useState<SettingsTab>(initialTab);
   const [notification, setNotification] = useState<{ text: string; isError?: boolean } | null>(null);
   const notifyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Sync tab state when URL search params change
+  useEffect(() => {
+    if (urlTab && validTabs.includes(urlTab) && urlTab !== activeTab) {
+      setActiveTab(urlTab);
+    }
+  }, [urlTab]);
 
   useEffect(() => {
     return () => {
       if (notifyTimerRef.current) clearTimeout(notifyTimerRef.current);
     };
   }, []);
+
+  const handleTabChange = (tab: SettingsTab) => {
+    setActiveTab(tab);
+    setSearchParams({ tab });
+  };
 
   const showNotification = (msg: { text: string; isError?: boolean }) => {
     if (notifyTimerRef.current) clearTimeout(notifyTimerRef.current);
@@ -45,7 +68,7 @@ export function AdminSettingsPage() {
             System Settings & Administration
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', margin: 0 }}>
-            Manage platform branding, point-in-time database backups, and security defenses.
+            Manage platform branding, visual themes, point-in-time database backups, and security defenses.
           </p>
         </div>
 
@@ -78,7 +101,7 @@ export function AdminSettingsPage() {
       }}>
         <button
           type="button"
-          onClick={() => setActiveTab('general')}
+          onClick={() => handleTabChange('general')}
           style={{
             padding: '0.75rem 1.25rem',
             fontSize: '0.9rem',
@@ -98,7 +121,27 @@ export function AdminSettingsPage() {
 
         <button
           type="button"
-          onClick={() => setActiveTab('backups')}
+          onClick={() => handleTabChange('themes')}
+          style={{
+            padding: '0.75rem 1.25rem',
+            fontSize: '0.9rem',
+            fontWeight: 700,
+            background: 'transparent',
+            border: 'none',
+            borderBottom: activeTab === 'themes' ? '2.5px solid var(--color-primary)' : '2.5px solid transparent',
+            color: activeTab === 'themes' ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+          }}
+        >
+          <Palette size={16} /> Themes & Branding
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleTabChange('backups')}
           style={{
             padding: '0.75rem 1.25rem',
             fontSize: '0.9rem',
@@ -118,7 +161,7 @@ export function AdminSettingsPage() {
 
         <button
           type="button"
-          onClick={() => setActiveTab('security')}
+          onClick={() => handleTabChange('security')}
           style={{
             padding: '0.75rem 1.25rem',
             fontSize: '0.9rem',
@@ -142,6 +185,10 @@ export function AdminSettingsPage() {
         <AdminGeneralSettings onNotify={showNotification} />
       )}
 
+      {activeTab === 'themes' && (
+        <AdminThemeSettings onNotify={showNotification} />
+      )}
+
       {activeTab === 'backups' && (
         <AdminBackupManager onNotify={showNotification} />
       )}
@@ -152,3 +199,4 @@ export function AdminSettingsPage() {
     </div>
   );
 }
+
