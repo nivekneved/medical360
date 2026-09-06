@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, ArrowRight } from 'lucide-react';
+import { Star, ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCaseStudies } from '../../hooks/useCaseStudies';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { truncateText } from '../../core/services/format.service';
+import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { SPECIALTY_SYMPTOMS_MAP, QUICK_SYMPTOM_FILTERS } from '../specialties/specialtySymptoms';
 import './CaseStudies.css';
 
 export function CaseStudiesPage() {
@@ -28,7 +30,8 @@ export function CaseStudiesPage() {
 
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
-  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
+  const langKey = (isFr || isKr) ? (i18n.language as 'fr' | 'kr') : 'en';
+  const l10n = (fr: string, kr: string, en: string) => isFr ? fr : isKr ? kr : en;
   const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
 
   const tCms = (key: string, fallback: string) => {
@@ -52,13 +55,30 @@ export function CaseStudiesPage() {
   const filteredCaseStudies = caseStudies.filter((cs) => {
     const matchSpecialty = selectedSpecialty === 'all' || cs.specialtyId === selectedSpecialty;
     const matchCountry = selectedCountry === 'all' || (l(cs, 'patientCountry') || cs.patientCountry) === selectedCountry;
-    if (!searchQuery.trim()) return matchSpecialty && matchCountry;
-    const q = searchQuery.toLowerCase();
-    const condMatch = l(cs, 'condition').toLowerCase().includes(q) || cs.condition.toLowerCase().includes(q);
-    const treatMatch = l(cs, 'treatment').toLowerCase().includes(q) || cs.treatment.toLowerCase().includes(q);
-    const nameMatch = cs.patientFirstName.toLowerCase().includes(q);
-    const testMatch = (l(cs, 'testimonial') || '').toLowerCase().includes(q);
-    return matchSpecialty && matchCountry && (condMatch || treatMatch || nameMatch || testMatch);
+    if (!matchSpecialty || !matchCountry) return false;
+
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase().trim();
+    const condMatch = l(cs, 'condition')?.toLowerCase().includes(q) || cs.condition?.toLowerCase().includes(q);
+    const treatMatch = l(cs, 'treatment')?.toLowerCase().includes(q) || cs.treatment?.toLowerCase().includes(q);
+    const nameMatch = cs.patientFirstName?.toLowerCase().includes(q);
+    const testMatch = (l(cs, 'testimonial') || '')?.toLowerCase().includes(q);
+
+    // Multilingual symptom & keyword match
+    let symptomMatch = false;
+    if (cs.specialtyId) {
+      const sEntry = SPECIALTY_SYMPTOMS_MAP[cs.specialtyId];
+      if (sEntry) {
+        const allKws = [
+          ...sEntry.en.keywords, ...sEntry.en.symptoms, sEntry.en.plainName, sEntry.en.badge,
+          ...sEntry.fr.keywords, ...sEntry.fr.symptoms, sEntry.fr.plainName, sEntry.fr.badge,
+          ...sEntry.kr.keywords, ...sEntry.kr.symptoms, sEntry.kr.plainName, sEntry.kr.badge,
+        ].map(k => k.toLowerCase());
+        symptomMatch = allKws.some(k => k.includes(q) || q.includes(k));
+      }
+    }
+
+    return condMatch || treatMatch || nameMatch || testMatch || symptomMatch;
   });
 
   const sortedCaseStudies = [...filteredCaseStudies].sort((a, b) => {
@@ -104,12 +124,87 @@ export function CaseStudiesPage() {
       </section>
 
       <div className="container" style={{ padding: '2rem var(--space-6) 4rem' }}>
+        {/* Patient Reassurance Helper Card */}
+        <div className="spec-helper-card" style={{ marginBottom: '1.75rem' }}>
+          <div className="spec-helper-card__left">
+            <div className="spec-helper-card__icon" aria-hidden="true">
+              <HelpCircle size={28} />
+            </div>
+            <div>
+              <h3 className="spec-helper-card__title">
+                {l10n(
+                  'Vous ou un proche vivez une situation similaire ?',
+                  'Ou ouswa enn pros pe fer fas ar mem kalite problem lasante ?',
+                  'Going through a similar medical challenge?'
+                )}
+              </h3>
+              <p className="spec-helper-card__desc">
+                {l10n(
+                  'Chaque parcours de guérison est unique. Notre équipe médicale et nos coordinateurs dévoués sont à vos côtés pour vous rassurer, vous orienter et vous apporter les meilleurs soins au juste coût.',
+                  'Sak parskour li inik. Nou lekip medikal ek nou bann koordinater la pou ekout ou, gid ou ek donn ou meyer swen posib avek leker.',
+                  'Every journey is unique. Our caring medical board and patient coordinators are here to guide, reassure, and find the safest treatment options for you.'
+                )}
+              </p>
+            </div>
+          </div>
+          <div className="spec-helper-card__actions">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => navigate('/describe-need')}
+            >
+              ✍ {l10n('Partager mon cas', 'Partaz mo ka', 'Share My Case')}
+            </button>
+            <a
+              href={buildMed360WhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline"
+            >
+              💬 WhatsApp
+            </a>
+          </div>
+        </div>
+
+        {/* Quick Condition / Symptom Filters */}
+        <div className="spec-symptom-chips-container" style={{ marginBottom: '1.75rem' }}>
+          <div className="spec-symptom-chips-label">
+            <Sparkles size={14} />
+            <span>{l10n('Filtrer par type de traitement ou besoin :', 'Filtre par tretman ouswa douler :', 'Quick filter by treatment or condition:')}</span>
+          </div>
+          <div className="spec-symptom-chips" role="tablist" aria-label="Specialty filter chips">
+            {QUICK_SYMPTOM_FILTERS.map((chip) => {
+              const label = chip[`label_${langKey}`] || chip.label_en;
+              const isActive = selectedSpecialty === chip.id;
+              return (
+                <button
+                  key={chip.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`spec-symptom-chip ${isActive ? 'spec-symptom-chip--active' : ''}`}
+                  onClick={() => {
+                    setSelectedSpecialty(chip.id);
+                    setCurrentPage(1);
+                  }}
+                >
+                  <span>{chip.icon}</span>
+                  <span>{label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Results Toolbar */}
         {!loading && (
           <ListToolbar
             searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder={l10n('Rechercher un témoignage, maladie...', 'Rod temwagnaz, maladi...', 'Search patient stories, condition...')}
+            onSearchChange={(q) => {
+              setSearchQuery(q);
+              setCurrentPage(1);
+            }}
+            searchPlaceholder={l10n('Rechercher par maladie ou traitement (ex: genou, pontage, cancer)...', 'Rod par maladi ouswa tretman (ex: zounou, leker, kanser)...', 'Search patient stories or condition (e.g. knee, bypass, cancer)...')}
             sortBy={sortBy}
             onSortChange={setSortBy}
             sortOptions={sortOptions}
@@ -125,7 +220,7 @@ export function CaseStudiesPage() {
                   <select
                     className="list-toolbar__filter-select"
                     value={selectedSpecialty}
-                    onChange={e => setSelectedSpecialty(e.target.value)}
+                    onChange={e => { setSelectedSpecialty(e.target.value); setCurrentPage(1); }}
                   >
                     <option value="all">{l10n('🩺 Toutes les Spécialités', '🩺 Tou Spesialite', '🩺 All Specialties')}</option>
                     {specialties.map(s => (
@@ -139,7 +234,7 @@ export function CaseStudiesPage() {
                   <select
                     className="list-toolbar__filter-select"
                     value={selectedCountry}
-                    onChange={e => setSelectedCountry(e.target.value)}
+                    onChange={e => { setSelectedCountry(e.target.value); setCurrentPage(1); }}
                   >
                     <option value="all">{l10n('🌐 Tous les pays', '🌐 Tou pei', '🌐 All Countries')}</option>
                     {countries.map(c => (
@@ -153,7 +248,7 @@ export function CaseStudiesPage() {
                   <button
                     type="button"
                     className="list-toolbar__clear-btn"
-                    onClick={() => { setSearchQuery(''); setSelectedSpecialty('all'); setSelectedCountry('all'); }}
+                    onClick={() => { setSearchQuery(''); setSelectedSpecialty('all'); setSelectedCountry('all'); setCurrentPage(1); }}
                   >
                     ↺ {l10n('Effacer', 'Efase', 'Clear')}
                   </button>
@@ -165,44 +260,48 @@ export function CaseStudiesPage() {
 
         <div className={`cs-grid ${viewMode === 'list' ? 'cs-grid--list-view' : ''}`}>
           {loading
-            ? Array.from({ length: 8 }).map((_, i) => (
+            ? Array.from({ length: 6 }).map((_, i) => (
                 <div key={i} className="skeleton" style={{ height: 400, borderRadius: 16 }} />
               ))
-            : paginatedCaseStudies.map(cs => (
-                <div key={cs.id} className="cs-card" id={`cs-card-${cs.id}`}>
-                  <div className="cs-card__image">
-                    <img
-                      src={cs.imageUrl}
-                      alt={l(cs, 'condition')}
-                      loading="lazy"
-                      onError={(e) => { e.currentTarget.src = '/assets/banners/casestudies_banner.jpg'; }}
-                    />
-                    <div className="cs-card__overlay" />
-                    <div className="cs-card__savings">{l10n('Économisé', 'Sov', 'Saved')} {cs.costSavedPercent}%</div>
-                    <div className="cs-card__specialty">{getSpecialtyName(cs.specialtyId)}</div>
-                  </div>
-                  <div className="cs-card__body">
-                    <h3 className="cs-card__condition">{l(cs, 'condition')}</h3>
-                    <p className="cs-card__treatment"><strong>{l10n('Traitement :', 'Tretman :', 'Treatment:')}</strong> {l(cs, 'treatment')}</p>
-                    <div className="cs-card__testimonial">
-                      <div className="cs-card__stars">
-                        {[1,2,3,4,5].map(i => <Star key={i} size={14} fill="#ffb400" color="#ffb400" />)}
+            : paginatedCaseStudies.map(cs => {
+                const symptomEntry = cs.specialtyId ? SPECIALTY_SYMPTOMS_MAP[cs.specialtyId]?.[langKey] : null;
+                return (
+                  <div key={cs.id} className="cs-card" id={`cs-card-${cs.id}`}>
+                    <div className="cs-card__image">
+                      <img
+                        src={cs.imageUrl}
+                        alt={l(cs, 'condition')}
+                        loading="lazy"
+                        onError={(e) => { e.currentTarget.src = '/assets/banners/casestudies_banner.jpg'; }}
+                      />
+                      <div className="cs-card__overlay" />
+                      <div className="cs-card__savings">{l10n('Économisé', 'Sov', 'Saved')} {cs.costSavedPercent}%</div>
+                      <div className="cs-card__specialty">
+                        {symptomEntry ? symptomEntry.badge : getSpecialtyName(cs.specialtyId)}
                       </div>
-                      <p>&ldquo;{truncateText(l(cs, 'testimonial'), 180)}&rdquo;</p>
                     </div>
-                    <div className="cs-card__outcome">
-                      <strong>{l10n('Résultat :', 'Rezilta :', 'Outcome:')}</strong> {truncateText(l(cs, 'outcome'), 120)}
-                    </div>
-                    <div className="cs-card__footer">
-                      <div>
-                        <strong>{cs.patientFirstName}</strong>, {cs.patientAge} — {l(cs, 'patientCountry')}
+                    <div className="cs-card__body">
+                      <h3 className="cs-card__condition">{l(cs, 'condition')}</h3>
+                      <p className="cs-card__treatment"><strong>{l10n('Traitement :', 'Tretman :', 'Treatment:')}</strong> {l(cs, 'treatment')}</p>
+                      <div className="cs-card__testimonial">
+                        <div className="cs-card__stars">
+                          {[1,2,3,4,5].map(i => <Star key={i} size={14} fill="#ffb400" color="#ffb400" />)}
+                        </div>
+                        <p>&ldquo;{truncateText(l(cs, 'testimonial'), 180)}&rdquo;</p>
                       </div>
-                      <div className="cs-card__duration">{cs.durationDays} {l10n('jours', 'zour', 'days')} · {cs.year}</div>
+                      <div className="cs-card__outcome">
+                        <strong>{l10n('Résultat :', 'Rezilta :', 'Outcome:')}</strong> {truncateText(l(cs, 'outcome'), 120)}
+                      </div>
+                      <div className="cs-card__footer">
+                        <div>
+                          <strong>{cs.patientFirstName}</strong>, {cs.patientAge} — {l(cs, 'patientCountry')}
+                        </div>
+                        <div className="cs-card__duration">{cs.durationDays} {l10n('jours', 'zour', 'days')} · {cs.year}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-          }
+                );
+              })}
         </div>
 
         {/* Pagination */}

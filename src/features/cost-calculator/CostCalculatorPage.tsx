@@ -1,12 +1,14 @@
 import { useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Calculator, ArrowRight, CheckCircle2, ShieldCheck, Clock, Sparkles, HeartPulse, EyeOff, Lock, Settings } from 'lucide-react';
+import { Calculator, ArrowRight, CheckCircle2, ShieldCheck, Clock, Sparkles, HeartPulse, EyeOff, Lock, Settings, HelpCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useTranslation } from 'react-i18next';
 import { useCMS } from '../../hooks/useCMS';
 import { usePlatformSettings } from '../../core/services/settings.service';
 import { useAuth } from '../../providers/AuthProvider';
+import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+import { SPECIALTY_SYMPTOMS_MAP } from '../specialties/specialtySymptoms';
 
 interface CountryCostProfile {
   country: string;
@@ -34,6 +36,8 @@ export function CostCalculatorPage() {
   const { isAuthenticated } = useAuth();
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
+  const langKey = (isFr || isKr) ? (i18n.language as 'fr' | 'kr') : 'en';
+  const l10n = (fr: string, kr: string, en: string) => isFr ? fr : isKr ? kr : en;
   const navigate = useNavigate();
 
   const MUR_RATE = settings.murExchangeRate || 46.5;
@@ -226,6 +230,48 @@ export function CostCalculatorPage() {
       {/* Main Interactive Tool Container */}
       <div className="container" style={{ maxWidth: 1140, margin: '-2rem auto 0', padding: '0 1.5rem', position: 'relative', zIndex: 10 }}>
         
+        {/* Patient Helper Card */}
+        <div className="spec-helper-card" style={{ marginBottom: '1.5rem' }}>
+          <div className="spec-helper-card__left">
+            <div className="spec-helper-card__icon" aria-hidden="true">
+              <HelpCircle size={28} />
+            </div>
+            <div>
+              <h3 className="spec-helper-card__title">
+                {l10n(
+                  'Besoin d\'un devis personnalisé sans frais cachés ?',
+                  'Bizin enn estimasion pri kler san fre kasiet ?',
+                  'Need an exact personalized quote with zero hidden fees?'
+                )}
+              </h3>
+              <p className="spec-helper-card__desc">
+                {l10n(
+                  'Ces estimations incluent les forfaits hospitaliers complets. Envoyez votre bilan médical pour obtenir un plan de traitement chiffré et officiel sous 24 à 48 heures.',
+                  'Bann pri montre isi inklir perkour lopital konple. Avoy ou bann rapor pou gagn enn devis ofisiel detaye dan 24 a 48 er-tan.',
+                  'These estimates cover full comprehensive hospital packages. Submit your medical reports to receive an official, all-inclusive treatment plan within 24–48 hours.'
+                )}
+              </p>
+            </div>
+          </div>
+          <div className="spec-helper-card__actions">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => navigate('/describe-need')}
+            >
+              ✍️ {l10n('Demander mon devis officiel', 'Demann mo devis ofisiel', 'Request Official Quote')}
+            </button>
+            <a
+              href={buildMed360WhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline"
+            >
+              💬 WhatsApp
+            </a>
+          </div>
+        </div>
+
         {/* Step 1: Specialty & Procedure Picker Card */}
         <div style={{
           background: 'var(--color-surface)',
@@ -252,11 +298,15 @@ export function CostCalculatorPage() {
                 onChange={(e) => handleSpecialtyChange(e.target.value)}
                 style={{ fontWeight: 600, borderRadius: 'var(--radius-lg)' }}
               >
-                {specialties.map(spec => (
-                  <option key={spec.id} value={spec.id}>
-                    {isFr && spec.name_fr ? spec.name_fr : isKr && spec.name_kr ? spec.name_kr : spec.name}
-                  </option>
-                ))}
+                {specialties.map(spec => {
+                  const sEntry = SPECIALTY_SYMPTOMS_MAP[spec.id]?.[langKey];
+                  const plainLabel = sEntry ? sEntry.badge : (isFr && spec.name_fr ? spec.name_fr : isKr && spec.name_kr ? spec.name_kr : spec.name);
+                  return (
+                    <option key={spec.id} value={spec.id}>
+                      {plainLabel} ({isFr && spec.name_fr ? spec.name_fr : isKr && spec.name_kr ? spec.name_kr : spec.name})
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
