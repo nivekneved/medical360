@@ -89,24 +89,28 @@ export function HospitalsPage() {
   return (
     <main className="hospitals-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('Hôpitaux Associés', 'Lopital Partner', 'Associated Hospitals')}
-        description={l10n('Découvrez nos hôpitaux partenaires.', 'Dekouver nou bann lopital partner.', 'Discover our partner hospitals.')}
+        title={l10n('Hôpitaux & Cliniques Partenaires', 'Lopital & Klinik Partener', 'Partner Hospitals & Caring Clinics')}
+        description={l10n(
+          'Découvrez des hôpitaux et cliniques partenaires réputés pour leur sécurité, leur hygiène et la bienveillance de leurs équipes.',
+          'Dekouver nou bann lopital ek klinik partener rekonet pou zot sekirite ek bon laker.',
+          'Discover welcoming, accredited partner hospitals dedicated to patient safety and compassionate nursing care.'
+        )}
         canonical="/hospitals"
       />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/hospitals_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Notre Réseau', 'Nou Rezo', 'Our Network'))}
+            {tCms('heroLabel', l10n('Des Lieux de Soins Sûrs & Accueillants', 'Lopital Sikire & Akéyan', 'Safe & Welcoming Hospitals'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Hôpitaux Associés', 'Lopital Partner', 'Associated Hospitals'))}
+            {tCms('heroTitle', l10n('Hôpitaux et Cliniques Partenaires', 'Nou Bann Lopital & Klinik Partener', 'Partner Hospitals & Caring Clinics'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Chaque hôpital de notre réseau est accrédité au niveau international. Parcourez nos hôpitaux partenaires et explorez leurs spécialités, leurs installations et leurs services aux patients.',
-              'Sak lopital dan nou rezo ena akreditasion internasional. Get nou bann lopital partner ek explor zot spesialite, fasilite, ek servis pou bann pasian.',
-              'Every hospital in our network is internationally accredited. Browse our partner hospitals and explore their specialties, facilities, and patient services.'
+              'Nous vous orientons vers des hôpitaux et cliniques de premier plan, où sécurité médicale, confort moderne et chaleur humaine vous accompagnent du premier jour jusqu\'à votre rétablissement.',
+              'Nou gid ou ver bann gran lopital ek klinik kot sekirite, konfor ek bon laker garanti depi premie zour ziska ou rekiperasion konple.',
+              'We connect you with accredited hospitals and private clinics where medical safety, modern facilities, and compassionate nursing care surround you throughout your stay.'
             ))}
           </p>
         </div>

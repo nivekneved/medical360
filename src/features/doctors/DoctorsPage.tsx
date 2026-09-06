@@ -94,11 +94,11 @@ export function DoctorsPage() {
   return (
     <main className="doctors-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO
-        title={l10n('Nos 7 Spécialistes Médicaux d\'Élite', 'Nou 7 Sef Dokter Spesialist', 'Our 7 Elite Medical Specialists')}
+        title={l10n('Médecins & Chirurgiens de Confiance', 'Bann Dokter & Sirizien de Konfians', 'Trusted Specialists & Surgeons')}
         description={l10n(
-          'Découvrez nos 7 chirurgiens et spécialistes de réputation mondiale au service des patients mauriciens.',
-          'Dekouver nou 7 sef sirizien ek dokter klas mondial pou bann pasian Morisien.',
-          'Discover our 7 world-leading medical surgeons and specialists assisting Mauritian patients.'
+          'Découvrez nos médecins et chirurgiens de confiance, dévoués et à votre écoute.',
+          'Dekouver nou bann dokter ek sirizien de konfians ki pre pou ekout ou.',
+          'Meet caring, experienced doctors dedicated to your health and peace of mind.'
         )}
         canonical="/doctors"
       />
@@ -107,16 +107,16 @@ export function DoctorsPage() {
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/doctors_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Spécialistes de Renom Mondial', 'Dokter Klas Mondial', 'World-Renowned Specialists'))}
+            {tCms('heroLabel', l10n('Des Médecins à Votre Écoute', 'Dokter Pre pou Ekout Ou', 'Dedicated Specialists'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Nos 7 Chirurgiens et Médecins d\'Élite', 'Nou 7 Dokter ek Sirizien Spesialist', 'Our 7 Elite Medical Specialists'))}
+            {tCms('heroTitle', l10n('Des Médecins et Chirurgiens de Confiance', 'Bann Dokter ek Sirizien de Konfians', 'Our Trusted Medical Specialists & Surgeons'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Découvrez notre réseau exclusif de 7 chirurgiens et consultants de premier plan ayant réalisé plus de 100 000 interventions réussies.',
-              'Dekouver nou rezo seleksione de 7 dokter ek sirizien klas mondial ki finn fer plis ki 100 000 loperasion a-sikse.',
-              'Meet our handpicked network of 7 world-leading medical surgeons and consultants who have performed over 100,000 successful surgeries combined.'
+              'Faites connaissance avec des médecins et chirurgiens attentionnés, prêts à examiner votre dossier médical et à vous apporter des réponses claires, humaines et rassurantes.',
+              'Dekouver bann dokter ek sirizien ranpli ar bon leker, ki pre pou get ou dosie ek donn ou bann repons kler pou rassir ou.',
+              'Meet caring, experienced doctors and surgeons ready to review your medical history and give you clear, reassuring guidance every step of the way.'
             ))}
           </p>
         </div>

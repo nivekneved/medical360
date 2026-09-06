@@ -141,23 +141,27 @@ export function DescribeNeedPage() {
   return (
     <main className="describe-need-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('Décrivez Votre Besoin', 'Dekrir Ou Bizin', 'Describe Your Need')}
-        description={l10n('Obtenez un avis médical gratuit.', 'Gagn ou lavi medikal gratis.', 'Get a free medical opinion.')}
+        title={l10n('Nous Sommes à Votre Écoute', 'Nou La Pou Ekout Ou', 'We Are Here to Help You')}
+        description={l10n(
+          'Partagez votre situation médicale en toute confidentialité pour recevoir un avis médical gratuit et des conseils bienveillants.',
+          'Partaz ou sitiasion medikal dan konfidansialite net pou gagn enn lavi dokter gratis.',
+          'Share your health situation in complete confidentiality to receive a free, gentle medical review from caring doctors.'
+        )}
         canonical="/describe-need"
       />
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/home_banner.jpg)', minHeight: 280, padding: '4rem 0 3rem' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Consultation Gratuite', 'Konsiltasion Gratis', 'Free Medical Assessment'))}
+            {tCms('heroLabel', l10n('Avis Médical Gratuit & Confidentiel', 'Lavi Dokter Gratis & Konfidansyel', 'Free & Confidential Medical Review'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Décrivez Votre Besoin', 'Dekrir Ou Bizin', 'Describe Your Need'))}
+            {tCms('heroTitle', l10n('Nous Sommes Là Pour Vous Aider', 'Nou La Pou Ed Ou', 'We Are Here to Listen & Help'))}
           </h1>
           <p className="text-lead" style={{ maxWidth: 640 }}>
             {tCms('heroDesc', l10n(
-              'Remplissez le formulaire ci-dessous et notre équipe médicale vous répondra avec des recommandations personnalisées — gratuitement.',
-              'Ranpli form ki anba la e nou lekip medikal pou reponn ou avek bann rekomandasion lopital personalize — pou nanye ditou.',
-              'Fill in the form below and our medical team will get back to you with personalised hospital recommendations — free of charge.'
+              'Prenez le temps de nous expliquer ce que vous ou votre proche traversez. Nos médecins étudieront attentivement votre dossier en toute confidentialité pour vous guider sans aucun frais.',
+              'Pran ou letan pou dir nou ki pe arive. Nou bann dokter pou get ou dosie avek swin dan konfidansialite net pou gid ou san okenn fre.',
+              'Take your time to share what you or your loved one are experiencing. Our caring doctors will review your situation with complete confidentiality and give you free, honest guidance.'
             ))}
           </p>
         </div>

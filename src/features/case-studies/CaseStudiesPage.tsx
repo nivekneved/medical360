@@ -76,24 +76,28 @@ export function CaseStudiesPage() {
   return (
     <main className="case-studies-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('Histoires de Patients', 'Zistwar Pasian', 'Patient Stories')}
-        description={l10n('Découvrez nos histoires de patients réussies.', 'Dekouver nou bann zistwar pasian ki finn reisi.', 'Discover our successful patient stories.')}
+        title={l10n('Histoires de Guérison & Espoir', 'Zistwar Gerizon & Lespwar', 'Stories of Healing & Hope')}
+        description={l10n(
+          'Découvrez les témoignages émouvants de patients et de familles que nous avons eu le privilège d\'accompagner vers la guérison.',
+          'Dekouver bann vre temwagnaz bann fami ki finn gagn gerizon ar nou led.',
+          'Discover moving stories of patients and families guided with care and compassion to complete recovery.'
+        )}
         canonical="/case-studies"
       />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/casestudies_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Témoignages de Patients', 'Zistwar Bann Pasian', 'Patient Stories'))}
+            {tCms('heroLabel', l10n('Témoignages & Récits de Vie', 'Zistwar Bann Pasian', 'Real Patient Stories'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Études de Cas', 'Temwagnaz', 'Case Studies'))}
+            {tCms('heroTitle', l10n('Parcours de Guérison & d\'Espoir', 'Vre Zistwar Gerizon & Lespwar', 'Stories of Healing & Hope'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Des histoires vraies de vrais patients. Découvrez comment 10 ans d\'expérience avec l\'ONG Enn Rev Enn Sourir et Med360 ont permis à plus de 1 200 patients d\'accéder à des traitements vitaux en clinique et à l\'étranger.',
-              'Vre zistwar depi vre pasian. Dekouver kouma 10 banlane lexperyans avek l\'ONG Enn Rev Enn Sourir ek Med360 finn ed plis ki 1 200 pasian gagn tretman ki finn sov zot lavi.',
-              'Real stories from real patients. Discover how 10+ years of healthcare coordination with NGO Enn Rev Enn Sourir and Med360 have helped over 1,200 patients access life-saving treatment in private clinics and abroad.'
+              'Découvrez des récits sincères et touchants. Depuis 10 ans, l\'ONG Enn Rev Enn Sourir et Med360 ont accompagné plus de 1 200 patients vers des soins de qualité, redonnant espoir et sérénité à tant de familles.',
+              'Dekouver bann vre zistwar gerizon. Depi 10 banlane, l\'ONG Enn Rev Enn Sourir ek Med360 finn akonpagn plis ki 1 200 pasian ver bon swen pou redonn sourir ek lafwa dan lasante.',
+              'Read genuine stories of hope, strength, and recovery. Over 10 years, our team has walked beside more than 1,200 patients and their families, guiding them to safe medical care and renewed well-being.'
             ))}
           </p>
         </div>

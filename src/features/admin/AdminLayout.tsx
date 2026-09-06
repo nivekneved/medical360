@@ -46,7 +46,7 @@ const DATA_NAV = [
   { to: '/admin/inquiries',    label: 'All Patient Requests & Inquiries', icon: Inbox },
   { to: '/admin/hospitals',    label: 'Partner Hospitals',             icon: Building2 },
   { to: '/admin/specialties',  label: 'Medical Specialties',           icon: Stethoscope },
-  { to: '/admin/doctors',      label: '7 Elite Specialists',           icon: UserCheck },
+  { to: '/admin/doctors',      label: 'Specialists & Doctors',         icon: UserCheck },
   { to: '/admin/case-studies',  label: 'Patient Stories',               icon: Award },
 ];
 

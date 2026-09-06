@@ -300,13 +300,13 @@ export function AboutPage() {
                 <Trophy size={15} /> {l10n('Reconnaissances & Distinctions', 'Rekonpans & Onerr', 'Awards & Recognition')}
               </div>
               <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.35rem)', fontWeight: 800, marginBottom: '0.75rem', letterSpacing: '-0.02em' }}>
-                {l10n('Récompensé pour l\'Excellence Médicale', 'Rekonpanse pou Nou Servis Medikal', 'Honored for Facilitation Excellence')}
+                {l10n('Reconnu pour la Bienveillance & la Sécurité des Soins', 'Rekonpanse pou Nou Bon Laker & Sekirite', 'Recognized for Compassionate Care & Safety')}
               </h2>
               <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.975rem', lineHeight: 1.6 }}>
                 {l10n(
-                  'Nos standards rigoureux de qualité, de gratuité pour le patient et de sécurité hospitalière sont régulièrement primés à l\'international.',
-                  'Nou gran langazman pou donn servis de kalite, gratis ek an sekirite finn gagn bann gran pri internasional.',
-                  'Our patient-first standards, zero-cost policy, and rigorous hospital vetting are internationally recognized across the healthcare travel industry.'
+                  'Notre engagement pour des soins bienveillants, une écoute sincère et une sécurité hospitalière sans faille est salué par nos pairs.',
+                  'Nou gran langazman pou donn swen avek leker, sekirite ek proteksion pasian rekonpanse a letranze.',
+                  'Our commitment to gentle care, attentive listening, and patient safety is recognized across the healthcare community.'
                 )}
               </p>
             </div>
@@ -434,16 +434,16 @@ export function AboutPage() {
           <div id="stories" style={{ marginBottom: '5rem', scrollMarginTop: '100px' }}>
             <div style={{ textAlign: 'center', maxWidth: 650, margin: '0 auto 3rem' }}>
               <span className="section-label">
-                {l10n('Témoignages Vérifiés', 'Temwagnaz Verifie', 'Verified Patient Stories')}
+                {l10n('Témoignages & Récits de Vie', 'Temwagnaz & Bann Vre Zistwar', 'Stories of Healing & Hope')}
               </span>
               <h2 className="text-h2" style={{ marginBottom: '0.75rem' }}>
-                {l10n('Histoires de Rétablissement & Économies', 'Zistwar Gerizon & Lekonomi', 'Real Recoveries & Documented Savings')}
+                {l10n('Des Familles Accompagnées Avec Cœur', 'Bann Fami Akonpagne avek Leker', 'Families Guided with Warmth & Care')}
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
                 {l10n(
-                  'Découvrez les témoignages réels de patients mauriciens et régionaux ayant bénéficié de notre accompagnement médical.',
-                  'Dekouver bann vre temwagnaz bann pasian Morisien ki finn swazir nou pou zot tretman.',
-                  'Read real testimonials from Mauritian and regional patients who trusted Med360 for their medical journeys.'
+                  'Découvrez les témoignages émouvants de patients et de leurs proches ayant retrouvé la santé et la sérénité.',
+                  'Dekouver bann zistwar ranpli ar lespwar kot bann pasian ek zot fami finn retrouv lasante.',
+                  'Discover heartening stories from patients and families who found healing, comfort, and peace of mind.'
                 )}
               </p>
             </div>

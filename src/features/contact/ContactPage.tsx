@@ -103,24 +103,28 @@ export function ContactPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('Nous Contacter', 'Kontakte Nou', 'Contact Us')}
-        description={l10n('Contactez Med360 pour votre avis médical.', 'Kontakte Med360 pou ou lavi medikal.', 'Contact Med360 for your medical opinion.')}
+        title={l10n('Nous Contacter & Poser Vos Questions', 'Kontakte Nou & Poz Ou Kestion', 'Contact Us & Speak with a Caring Advisor')}
+        description={l10n(
+          'Notre équipe attentionnée est à votre écoute 7 jours sur 7 pour vous apporter conseils et réconfort.',
+          'Nou lekip la pou ekout ou 7 zour lor 7 pou donn ou bann bon konsey avek leker.',
+          'Our caring team is available 7 days a week to answer your medical questions and offer warm support.'
+        )}
         canonical="/contact"
       />
       {/* Header Banner */}
-      <section className="page-hero--banner page-hero--banner-contact" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Contactez-Nous', 'Kontak Nou', 'Get in Touch'))}
+            {tCms('heroLabel', l10n('Une Équipe Bienveillante à Vos Côtés', 'Enn Lekip avek Leker Pre ar Ou', 'Always Here to Listen'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Contact', 'Kontak', 'Contact Us'))}
+            {tCms('heroTitle', l10n('Nous Sommes Là Pour Vous', 'Nou La Pou Ou', 'We Are Here for You'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Des questions ? Notre équipe est disponible 7 jours sur 7. Joignez-nous par WhatsApp, téléphone ou email.',
-              'Ena kestion? Nou lekip la 7 zour lor 7. Kontak nou lor WhatsApp, telefonn ouswa email.',
-              'Have questions? Our team is available 7 days a week. Reach us by WhatsApp, phone, or email.'
+              'Que vous ayez une interrogation sur un traitement, besoin d\'un avis rapide ou simplement envie de parler à un coordinateur dévoué — notre équipe vous répond avec écoute et bienveillance 7 jours sur 7.',
+              'Ki ou ena enn kestion lor enn loperasion, bezin enn lavi rapid ouswa zis anvi koz ar enn kordonater — nou la pou reponn ou avek bon leker 7 zour lor 7.',
+              'Whether you have questions about a surgery, need a fast opinion, or simply wish to speak with someone who cares — our dedicated team is here for you every single day.'
             ))}
           </p>
         </div>
