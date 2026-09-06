@@ -12,7 +12,7 @@ import {
   Shield,
 } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
-import { formatCostRange } from '../../../core/services/format.service';
+import { formatCostRange, formatCostMurRange } from '../../../core/services/format.service';
 import { isHoneypotClean, detectSqlInjection, sanitizeInput } from '../../../core/services/validation.service';
 import { ProcedureFormCard, type ProcedureFormData } from './ProcedureFormCard';
 import { useAuth } from '../../../providers/AuthProvider';
@@ -342,10 +342,15 @@ export const ProcedureInlineManager: React.FC<ProcedureInlineManagerProps> = ({
 
                 {/* Right: Pricing & Action */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', textAlign: 'right' }}>
-                  <div>
-                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                      {formatCostRange(proc.estimatedCostUSD?.min || 0, proc.estimatedCostUSD?.max || 0, murRate)}
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--color-primary)', lineHeight: 1.2 }}>
+                      {formatCostRange(proc.estimatedCostUSD?.min || 0, proc.estimatedCostUSD?.max || 0)}
                     </div>
+                    {proc.estimatedCostUSD && (proc.estimatedCostUSD.min > 0 || proc.estimatedCostUSD.max > 0) && (
+                      <div style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold', color: 'var(--color-text-secondary)', marginTop: '2px', letterSpacing: '0.01em' }}>
+                        {formatCostMurRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max, murRate)}
+                      </div>
+                    )}
                     <button
                       type="button"
                       className="btn btn-primary btn-sm"

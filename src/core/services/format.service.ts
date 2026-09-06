@@ -45,16 +45,23 @@ export function formatNumber(num: number): string {
 }
 
 /**
- * Formats a USD cost range with its Mauritian Rupee (Rs / MUR) equivalent right next to it.
- * Uses the dynamic USD to MUR exchange rate configured in Admin Settings.
- * e.g. "$5,000 – $8,000 (~Rs 232,500 – 372,000)"
+ * Formats a USD cost range (e.g. "$5,000 – $8,000").
  */
-export function formatCostRange(min: number, max: number, murExchangeRate?: number): string {
+export function formatCostRange(min: number, max: number): string {
   if (!min && !max) return 'Custom Quote';
+  return `$${formatNumber(min)} – $${formatNumber(max)}`;
+}
+
+/**
+ * Formats a Mauritian Rupee (Rs / MUR) equivalent cost range (e.g. "~Rs 232,500 – Rs 372,000").
+ * Uses the dynamic USD to MUR exchange rate configured in Admin Settings.
+ */
+export function formatCostMurRange(min: number, max: number, murExchangeRate?: number): string {
+  if (!min && !max) return '';
   const rate = murExchangeRate ?? getPlatformSettings().murExchangeRate ?? 46.5;
   const minMur = Math.round(min * rate);
   const maxMur = Math.round(max * rate);
-  return `$${formatNumber(min)} – $${formatNumber(max)} (~Rs ${formatNumber(minMur)} – ${formatNumber(maxMur)})`;
+  return `~Rs ${formatNumber(minMur)} – Rs ${formatNumber(maxMur)}`;
 }
 
 /**
@@ -63,7 +70,7 @@ export function formatCostRange(min: number, max: number, murExchangeRate?: numb
 export function formatSingleCost(usd: number, murExchangeRate?: number): string {
   const rate = murExchangeRate ?? getPlatformSettings().murExchangeRate ?? 46.5;
   const mur = Math.round(usd * rate);
-  return `$${formatNumber(usd)} (~Rs ${formatNumber(mur)})`;
+  return `$${formatNumber(usd)}`;
 }
 
 /**

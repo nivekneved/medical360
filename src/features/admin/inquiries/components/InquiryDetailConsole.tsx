@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import type { Inquiry, InquiryStatus, Specialty } from '../../../../core/types';
 import { buildInquiryWhatsAppUrl } from '../../../../core/services/whatsapp.service';
-import { formatCostRange } from '../../../../core/services/format.service';
+import { formatCostRange, formatCostMurRange } from '../../../../core/services/format.service';
 import { MedicalImagingViewer } from '../../../../components/common/MedicalImagingViewer';
 
 interface InquiryDetailConsoleProps {
@@ -282,7 +282,12 @@ export const InquiryDetailConsole: React.FC<InquiryDetailConsoleProps> = ({
               {inquiry.budgetRangeUSD && (
                 <div>
                   <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', display: 'block' }}>Budget Target:</span>
-                  <strong>{formatCostRange(inquiry.budgetRangeUSD.min, inquiry.budgetRangeUSD.max)}</strong>
+                  <strong style={{ color: 'var(--color-text)', display: 'block' }}>
+                    {formatCostRange(inquiry.budgetRangeUSD.min, inquiry.budgetRangeUSD.max)}
+                  </strong>
+                  <span style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold', color: 'var(--color-text-secondary)', display: 'block', marginTop: '2px' }}>
+                    {formatCostMurRange(inquiry.budgetRangeUSD.min, inquiry.budgetRangeUSD.max)}
+                  </span>
                 </div>
               )}
             </div>
