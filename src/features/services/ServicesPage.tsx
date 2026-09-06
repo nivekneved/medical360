@@ -149,16 +149,16 @@ export function ServicesPage() {
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/services_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('✦ Conciergerie Médicale Med360 · 10+ Ans d\'Expérience', '✦ Konzierz Medikal Med360 · 10+ Banlane Lexperyans', '✦ Med360 Medical Concierge · 10+ Years Experience'))}
+            {tCms('heroLabel', l10n('✦ Accompagnement Médical Bienveillant · 10+ Ans d\'Écoute', '✦ Akonpanyeman Medikal avek Leker · 10+ Banlane', '✦ Caring Medical Guidance · 10+ Years Experience'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Des Services Complets en Clinique & à l\'Étranger', 'Nou Bann Servis dan Klinik & a Letranze', 'Comprehensive Care in Clinics & Abroad'))}
+            {tCms('heroTitle', l10n('Un Accompagnement Attentionné à Chaque Étape', 'Enn Bon Soutien pou Sak Letap Ou Tretman', 'Caring Support for Every Step of Your Care'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'De votre premier avis médical au suivi post-opératoire, Med360 organise l\'intégralité de vos soins dans des cliniques privées et hôpitaux de pointe. Tous nos bénéfices sont reversés à l\'ONG Enn Rev Enn Sourir.',
-              'Depi premie lavi medikal ziska swivi apre loperasion, Med360 okip tou dan klinik prive ek lopital a letranze. Tou nou bann profi retourn dan l\'ONG Enn Rev Enn Sourir.',
-              'From your first medical opinion to post-operative recovery, Med360 coordinates every step of your specialized care in private clinics and premier hospitals abroad — with 100% of profits returned to NGO Enn Rev Enn Sourir.'
+              'De vos premières interrogations médicales jusqu\'à votre rétablissement complet, notre équipe veille sur vous avec douceur et dévouement dans nos cliniques et hôpitaux partenaires.',
+              'Depi ou premie kestion medikal ziska ou geri net, nou lekip vey lor ou avek leker dan nou bann klinik ek lopital partener.',
+              'From your initial questions to surgery and peaceful recovery back home, our caring coordinators guide you with warmth and attention every step of the way.'
             ))}
           </p>
         </div>

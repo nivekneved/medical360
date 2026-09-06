@@ -126,18 +126,18 @@ export function VisaGuidePage() {
             marginBottom: '1rem',
           }}>
             <Plane size={15} />
-            <span>{isFr ? 'Guide Visa Médical & Voyage pour Patients Mauriciens' : isKr ? 'Gid Viza Medikal & Vwayaz' : 'Mauritian Patient Visa & Travel Readiness Guide'}</span>
+            <span>{isFr ? 'Assistance Visa & Voyage Médical' : isKr ? 'Ed Viza & Vwayaz Medikal' : 'Medical Visa & Travel Support'}</span>
           </div>
 
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 900, fontFamily: 'var(--font-display)', lineHeight: 1.15, marginBottom: '1rem', color: '#ffffff' }}>
-            {isFr ? 'Voyagez en Toute Sérénité pour Vos Soins' : isKr ? 'Vwayaze San Traka Pou Ou Tretman' : 'Hassle-Free Medical Travel & Fast-Track Visas'}
+            {isFr ? 'Voyagez en Toute Sérénité Vers Votre Guérison' : isKr ? 'Vwayaz an Tout Trankilite pou Ou Swen' : 'Travel with Complete Peace of Mind'}
           </h1>
           <p style={{ fontSize: '1.05rem', color: 'rgba(255,255,255,0.7)', maxWidth: 720, margin: '0 auto 1.5rem', lineHeight: 1.6 }}>
             {isFr
-              ? 'Med360 s\'occupe gratuitement de vos démarches de visa médical : obtention des lettres d\'invitation officielles des hôpitaux sous 24h, visas pour accompagnants et transferts aéroport VIP.'
+              ? 'Quand la santé est en jeu, les démarches administratives ne devraient jamais être un souci. Med360 organise gratuitement vos lettres d\'hôpitaux, visas pour vous et vos accompagnants, et transferts aéroport en douceur.'
               : isKr
-              ? 'Med360 okip tou ou bann demars viza medikal gratis : let linvitasion lopital dan 24h, viza akonpagnan, ek transpor VIP.'
-              : 'Med360 manages your medical visa assistance free of charge: 24h hospital invitation letters, family companion visas, priority flights, and VIP airport reception.'}
+              ? 'Kan lasante afekte, ou pa bizin gagn traka avek papie ek vwayaz. Med360 okip tou ou let lopital, viza akonpagnan ek transpor san okenn fré.'
+              : 'When you are unwell, paperwork and travel logistics should be the last thing on your mind. We take care of your medical visa, hospital letters, companion visas, and airport reception so you can travel without stress.'}
           </p>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>

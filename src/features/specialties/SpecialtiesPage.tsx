@@ -61,24 +61,28 @@ export function SpecialtiesPage() {
   return (
     <main className="specialties-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('Centres d\'Excellence', 'Sant Ekselans', 'Centers of Excellence')}
-        description={l10n('Découvrez nos spécialités médicales.', 'Dekouver nou bann spesialite medikal.', 'Discover our medical specialties.')}
+        title={l10n('Spécialités & Soins Médicaux', 'Spesialite & Swen Medikal', 'Medical Specialties & Treatments')}
+        description={l10n(
+          'Découvrez nos spécialités médicales et nos traitements adaptés pour vous et vos proches.',
+          'Dekouver nou bann spesialite medikal ek tretman adapte pou ou ek ou fami.',
+          'Explore our medical specialties and trusted treatments with clear guidance from caring doctors.'
+        )}
         canonical="/specialties"
       />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/specialties_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Expertise Médicale', 'Exspertiz Medikal', 'Medical Expertise'))}
+            {tCms('heroLabel', l10n('Des Soins Adaptés à Votre Santé', 'Bann Swen pou Ou Lasante', 'Caring Medical Specialties'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Sélectionnez Votre Spécialité', 'Swazir Ou Spesialite', 'Select Your Specialty'))}
+            {tCms('heroTitle', l10n('Spécialités Médicales & Traitements', 'Spesialite Medikal & Tretman', 'Medical Specialties & Treatments'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Parcourez notre gamme complète de spécialités médicales. Cliquez sur une spécialité pour voir les procédures, les coûts estimés et obtenir un avis sur mesure.',
-              'Get tou bann spesialite medikal ki nou ofer. Klik lor enn spesialite pou trouv bann tretman, pri estime, ek gagn enn lavi medikal personnaliser.',
-              'Browse our full range of medical specialties. Click any specialty to view procedures, estimated costs, and get a tailored opinion.'
+              'Que vous ayez besoin d\'une chirurgie du cœur, d\'un traitement orthopédique, d\'un suivi oncologique ou d\'un avis spécialisé — nos médecins sont là pour vous écouter et vous guider avec bienveillance.',
+              'Ki ou bizin enn loperasion leker, tretman lezo, swen kanser ouswa zis enn bon lavi dokter — nou la pou ekout ou ek gid ou avek leker.',
+              'Whether you need cardiac care, orthopedic surgery, cancer treatment, or a second opinion — our dedicated doctors are here to listen and guide you with compassion.'
             ))}
           </p>
         </div>

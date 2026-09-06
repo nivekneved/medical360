@@ -170,19 +170,19 @@ export function CostCalculatorPage() {
         <div className="container page-hero__inner">
           <span className="section-label">
             <Calculator size={14} />
-            <span>{tCms('heroLabel', isFr ? 'Simulateur & Comparateur de Coûts Médicaux' : isKr ? 'Kalkilatris Pri & Konparater Lasante' : 'Interactive Medical Treatment Cost Calculator')}</span>
+            <span>{tCms('heroLabel', isFr ? 'Transparence & Estimation des Coûts' : isKr ? 'Pri Kler & San Sipriz' : 'Clear & Transparent Treatment Costs')}</span>
           </span>
 
           <h1 className="text-h1">
-            {tCms('heroTitle', isFr ? 'Comparez les Prix des Soins dans le Monde' : isKr ? 'Konpar Pri Tretman dan Lemond' : 'Compare Treatment Costs Across Global Hospitals')}
+            {tCms('heroTitle', isFr ? 'Estimer le Coût de Vos Soins en Toute Clarté' : isKr ? 'Konn Pri Ou Tretman an Tout Trankilite' : 'Understand & Estimate Your Treatment Costs')}
           </h1>
           
           <p className="text-lead" style={{ marginBottom: '1.5rem' }}>
             {tCms('heroDesc', isFr
-              ? 'Sélectionnez votre intervention chirurgicale et visualisez instantanément les économies réalisables en Inde, Thaïlande et Singapour par rapport aux tarifs locaux et européens.'
+              ? 'Nous croyons en une totale transparence, sans mauvaise surprise. Obtenez une estimation claire et réaliste des coûts dans nos hôpitaux partenaires pour préparer vos soins l\'esprit tranquille.'
               : isKr
-              ? 'Swazir ou loperasion e trouv toutswit komie ou kapav sove dan l\'Inde, Tayland ek Singapour konpare ar tarif lokal.'
-              : 'Select your surgical procedure to see instant, transparent cost estimates and real savings in India, Thailand, Singapore, and Europe compared to local private care.')}
+              ? 'Nou krwar dan enn transparans total san okenn fre kasiet. Get bann pri estimatif pou planifie ou tretman ek rekiperasion an tout trankilite.'
+              : 'We believe in honest, clear pricing with no hidden costs. Explore realistic treatment estimates across accredited partner hospitals so you and your family can plan with complete peace of mind.')}
           </p>
 
           {/* Currency Switcher */}
