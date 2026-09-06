@@ -63,7 +63,7 @@ export function HospitalDetailPage() {
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to top, rgba(9,13,16,0.95) 0%, rgba(9,13,16,0.5) 60%, rgba(9,13,16,0.3) 100%)',
+          background: 'linear-gradient(to top, rgba(9,13,16,0.85) 0%, rgba(9,13,16,0.40) 60%, rgba(9,13,16,0.20) 100%)',
         }} />
 
         <div className="container" style={{ position: 'relative', zIndex: 2, padding: '3rem var(--space-6)', width: '100%' }}>
