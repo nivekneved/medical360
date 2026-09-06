@@ -108,7 +108,7 @@ export function ContactPage() {
         canonical="/contact"
       />
       {/* Header Banner */}
-      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
+      <section className="page-hero--banner page-hero--banner-contact" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
             {tCms('heroLabel', l10n('Contactez-Nous', 'Kontak Nou', 'Get in Touch'))}
