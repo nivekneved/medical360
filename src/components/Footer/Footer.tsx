@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import { MessageCircle, Phone, Mail, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+import { usePlatformSettings } from '../../core/services/settings.service';
 import './Footer.css';
 
 export function Footer() {
   const { t } = useTranslation();
+  const { settings } = usePlatformSettings();
 
   return (
     <footer className="footer">
@@ -47,7 +49,9 @@ export function Footer() {
               <li><Link to="/doctors">{t('nav.doctors')}</Link></li>
               <li><Link to="/hospitals">{t('nav.hospitals')}</Link></li>
               <li><Link to="/how-it-works">How It Works</Link></li>
-              <li><Link to="/cost-calculator">Cost Calculator</Link></li>
+              {settings.enableCostComparison && (
+                <li><Link to="/cost-calculator">Cost Calculator</Link></li>
+              )}
               <li><Link to="/about">{t('nav.about')}</Link></li>
               <li><Link to="/contact">{t('nav.contact')}</Link></li>
             </ul>

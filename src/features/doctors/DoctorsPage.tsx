@@ -6,6 +6,7 @@ import { useDoctors } from '../../hooks/useDoctors';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useCMS } from '../../hooks/useCMS';
+import { usePlatformSettings } from '../../core/services/settings.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { DoctorSecondOpinionModal } from './DoctorSecondOpinionModal';
@@ -16,6 +17,7 @@ import type { Doctor, Hospital } from '../../core/types';
 export function DoctorsPage() {
   const navigate = useNavigate();
   const { i18n } = useTranslation();
+  const { settings } = usePlatformSettings();
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
   const [selectedHospital, setSelectedHospital] = useState<string>('all');
@@ -161,11 +163,13 @@ export function DoctorsPage() {
               </div>
             </div>
             <button
-              onClick={() => navigate('/cost-calculator')}
-              className="btn btn-outline btn-sm"
+              onClick={() => navigate(settings.enableCostComparison ? '/cost-calculator' : '/describe-need')}
+              className={settings.enableCostComparison ? "btn btn-outline btn-sm" : "btn btn-primary btn-sm"}
               style={{ fontWeight: 700 }}
             >
-              {l10n('Calculer les Coûts', 'Kalkil Pri', 'Compare Treatment Costs')} →
+              {settings.enableCostComparison 
+                ? `${l10n('Calculer les Coûts', 'Kalkil Pri', 'Compare Treatment Costs')} →`
+                : `${l10n('Demander un Avis', 'Demann Enn Lavi', 'Request Free Assessment')} →`}
             </button>
           </div>
 
