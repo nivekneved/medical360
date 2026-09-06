@@ -343,11 +343,8 @@ export const ProcedureInlineManager: React.FC<ProcedureInlineManagerProps> = ({
                 {/* Right: Pricing & Action */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', textAlign: 'right' }}>
                   <div>
-                    <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                      {formatCostRange(proc.estimatedCostUSD?.min || 0, proc.estimatedCostUSD?.max || 0)}
-                    </div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
-                      ~MUR {murMin.toLocaleString()} – {murMax.toLocaleString()}
+                    <div style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--color-primary)' }}>
+                      {formatCostRange(proc.estimatedCostUSD?.min || 0, proc.estimatedCostUSD?.max || 0, murRate)}
                     </div>
                     <button
                       type="button"

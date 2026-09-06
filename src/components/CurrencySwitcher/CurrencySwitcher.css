@@ -1,0 +1,202 @@
+/* ─── Currency Switcher Dropdown (Desktop) ─────────────────────────────────── */
+.currency-switcher {
+  position: relative;
+  display: inline-block;
+}
+
+.currency-switcher__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 38px;
+  padding: 0 0.75rem;
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.currency-switcher__btn:hover,
+.currency-switcher__btn--open {
+  border-color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 6%, var(--color-surface));
+  color: var(--color-primary);
+}
+
+.currency-switcher__flag {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.currency-switcher__code {
+  font-size: 0.825rem;
+  letter-spacing: 0.02em;
+}
+
+.currency-switcher__chevron {
+  color: var(--color-text-muted);
+  transition: transform 0.2s ease;
+}
+
+.currency-switcher__chevron--up {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+
+/* Dropdown Menu */
+.currency-switcher__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 230px;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  padding: 0.5rem;
+  z-index: 1000;
+  animation: fadeIn 0.18s ease;
+}
+
+.currency-switcher__dropdown-header {
+  padding: 0.45rem 0.65rem 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 0.35rem;
+}
+
+.currency-switcher__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.currency-switcher__option {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: all 0.15s ease;
+}
+
+.currency-switcher__option:hover {
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+  color: var(--color-primary);
+}
+
+.currency-switcher__option--active {
+  background: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.currency-switcher__opt-flag {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.currency-switcher__opt-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.currency-switcher__opt-code {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.825rem;
+}
+
+.currency-switcher__opt-symbol {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.currency-switcher__opt-name {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+}
+
+.currency-switcher__opt-check {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ─── Currency Switcher (Mobile Drawer) ─────────────────────────────────────── */
+.currency-switcher-mobile {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.currency-switcher-mobile__header {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.currency-switcher-mobile__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+}
+
+.currency-switcher-mobile__btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justifyContent: center;
+  gap: 2px;
+  padding: 0.45rem 0.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.currency-switcher-mobile__btn--active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.currency-switcher-mobile__btn--active .currency-switcher-mobile__symbol {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.currency-switcher-mobile__symbol {
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+}

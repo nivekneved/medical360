@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { ThemeProvider } from './providers/ThemeProvider';
+import { CurrencyProvider } from './providers/CurrencyProvider';
 import { DataProvider } from './providers/DataProvider';
 import { AuthProvider, useAuth } from './providers/AuthProvider';
 import { HelmetProvider } from 'react-helmet-async';
@@ -138,10 +139,11 @@ export default function App() {
     <ErrorBoundary>
       <HelmetProvider>
         <ThemeProvider>
-          <DataProvider>
-            <AuthProvider>
-              <BrowserRouter>
-                <ScrollToTop />
+          <CurrencyProvider>
+            <DataProvider>
+              <AuthProvider>
+                <BrowserRouter>
+                  <ScrollToTop />
                 <Routes>
                   {/* Public Routes */}
                   <Route element={<PublicLayout />}>
@@ -201,8 +203,9 @@ export default function App() {
               </BrowserRouter>
             </AuthProvider>
           </DataProvider>
-        </ThemeProvider>
-      </HelmetProvider>
-    </ErrorBoundary>
-  );
+        </CurrencyProvider>
+      </ThemeProvider>
+    </HelmetProvider>
+  </ErrorBoundary>
+);
 }
