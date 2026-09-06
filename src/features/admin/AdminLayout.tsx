@@ -29,6 +29,13 @@ import {
   HardDriveDownload,
   Palette,
   Megaphone,
+  Home,
+  HelpCircle,
+  Info,
+  Calculator,
+  ClipboardList,
+  PhoneCall,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { useDataConfig } from '../../providers/DataProvider';
@@ -52,20 +59,19 @@ const CMS_GLOBAL_NAV = [
   { to: '/admin/email-templates',    label: 'Email Templates',          icon: Mail },
 ];
 
-
 const CMS_PAGES_NAV = [
-  { to: '/admin/pages/home',            label: 'Home Page' },
-  { to: '/admin/pages/how-it-works',     label: 'How It Works Page' },
-  { to: '/admin/pages/about',           label: 'About Page' },
-  { to: '/admin/pages/specialties',     label: 'Specialties Page' },
-  { to: '/admin/pages/doctors',         label: 'Doctors Page' },
-  { to: '/admin/pages/hospitals',       label: 'Hospitals Page' },
-  { to: '/admin/pages/case-studies',     label: 'Case Studies Page' },
-  { to: '/admin/pages/cost-calculator', label: 'Cost Calculator' },
-  { to: '/admin/pages/describe-need',   label: 'Describe Need Wizard' },
-  { to: '/admin/pages/contact',         label: 'Contact Page' },
-  { to: '/admin/pages/privacy',         label: 'Privacy Policy' },
-  { to: '/admin/pages/terms',           label: 'Terms of Service' },
+  { to: '/admin/pages/home',            label: 'Home Page',           icon: Home },
+  { to: '/admin/pages/how-it-works',     label: 'How It Works Page',    icon: HelpCircle },
+  { to: '/admin/pages/about',           label: 'About Page',          icon: Info },
+  { to: '/admin/pages/specialties',     label: 'Specialties Page',    icon: Stethoscope },
+  { to: '/admin/pages/doctors',         label: 'Doctors Page',        icon: UserCheck },
+  { to: '/admin/pages/hospitals',       label: 'Hospitals Page',      icon: Building2 },
+  { to: '/admin/pages/case-studies',     label: 'Case Studies Page',   icon: Award },
+  { to: '/admin/pages/cost-calculator', label: 'Cost Calculator',     icon: Calculator },
+  { to: '/admin/pages/describe-need',   label: 'Describe Need Wizard', icon: ClipboardList },
+  { to: '/admin/pages/contact',         label: 'Contact Page',        icon: PhoneCall },
+  { to: '/admin/pages/privacy',         label: 'Privacy Policy',      icon: ShieldCheck },
+  { to: '/admin/pages/terms',           label: 'Terms of Service',    icon: FileText },
 ];
 
 type MenuSection = 'data' | 'global' | 'cms';
@@ -268,9 +274,10 @@ export function AdminLayout() {
               className={`admin-sidebar__section-header ${openSection === 'data' ? 'admin-sidebar__section-header--open' : ''}`}
               onClick={() => toggleSection('data')}
               title="Data Management"
+              aria-label="Data Management"
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1, minWidth: 0 }}>
-                <FolderKanban size={15} className="admin-sidebar__section-icon" />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: '0.5rem', width: '100%', minWidth: 0 }}>
+                <FolderKanban size={18} className="admin-sidebar__section-icon" />
                 {!collapsed && (
                   <span className="admin-sidebar__section-title">Data Management</span>
                 )}
@@ -296,9 +303,10 @@ export function AdminLayout() {
                     className={({ isActive }) =>
                       `admin-sidebar__nav-link ${isActive ? 'admin-sidebar__nav-link--active' : ''}`
                     }
-                    title={collapsed ? label : undefined}
+                    title={label}
+                    aria-label={label}
                   >
-                    <Icon size={16} />
+                    <Icon size={18} />
                     {!collapsed && <span>{label}</span>}
                   </NavLink>
                 ))}
@@ -312,10 +320,11 @@ export function AdminLayout() {
               type="button"
               className={`admin-sidebar__section-header ${openSection === 'global' ? 'admin-sidebar__section-header--open' : ''}`}
               onClick={() => toggleSection('global')}
-              title="Global & System Layouts"
+              title="Global Layouts"
+              aria-label="Global Layouts"
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1, minWidth: 0 }}>
-                <Layers size={15} className="admin-sidebar__section-icon" />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: '0.5rem', width: '100%', minWidth: 0 }}>
+                <Layers size={18} className="admin-sidebar__section-icon" />
                 {!collapsed && (
                   <span className="admin-sidebar__section-title">Global Layouts</span>
                 )}
@@ -342,9 +351,10 @@ export function AdminLayout() {
                       key={to}
                       to={to}
                       className={`admin-sidebar__nav-link ${isActive ? 'admin-sidebar__nav-link--active' : ''}`}
-                      title={collapsed ? label : undefined}
+                      title={label}
+                      aria-label={label}
                     >
-                      <Icon size={16} />
+                      <Icon size={18} />
                       {!collapsed && <span>{label}</span>}
                     </NavLink>
                   );
@@ -360,9 +370,10 @@ export function AdminLayout() {
               className={`admin-sidebar__section-header ${openSection === 'cms' ? 'admin-sidebar__section-header--open' : ''}`}
               onClick={() => toggleSection('cms')}
               title="Pages Content CMS"
+              aria-label="Pages Content CMS"
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1, minWidth: 0 }}>
-                <FileCode2 size={15} className="admin-sidebar__section-icon" />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'flex-start', gap: '0.5rem', width: '100%', minWidth: 0 }}>
+                <FileCode2 size={18} className="admin-sidebar__section-icon" />
                 {!collapsed && (
                   <span className="admin-sidebar__section-title">Pages Content CMS</span>
                 )}
@@ -380,16 +391,17 @@ export function AdminLayout() {
 
             {(openSection === 'cms' || collapsed) && (
               <div className="admin-sidebar__submenu">
-                {CMS_PAGES_NAV.map(({ to, label }) => (
+                {CMS_PAGES_NAV.map(({ to, label, icon: PageIcon }) => (
                   <NavLink
                     key={to}
                     to={to}
                     className={({ isActive }) =>
                       `admin-sidebar__nav-link admin-sidebar__nav-link--sub ${isActive ? 'admin-sidebar__nav-link--active' : ''}`
                     }
-                    title={collapsed ? label : undefined}
+                    title={label}
+                    aria-label={label}
                   >
-                    <FileText size={14} />
+                    <PageIcon size={18} />
                     {!collapsed && <span>{label}</span>}
                   </NavLink>
                 ))}
@@ -402,7 +414,8 @@ export function AdminLayout() {
             <NavLink
               to="/admin/settings"
               className={`admin-sidebar__nav-link ${location.pathname === '/admin/settings' && !location.search.includes('tab=themes') ? 'admin-sidebar__nav-link--active' : ''}`}
-              title={collapsed ? 'System Settings & Backup' : undefined}
+              title="System & Backup"
+              aria-label="System & Backup"
             >
               <Settings size={18} />
               {!collapsed && <span>System & Backup</span>}
