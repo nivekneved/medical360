@@ -478,6 +478,22 @@ h1, h2, h3, h4, h5, h6 {
   pointer-events: none;
 }
 
+/* Contact page banner: 10% brighter image & lighter overlay */
+.page-hero--banner.page-hero--banner-contact::before {
+  background: linear-gradient(
+    90deg,
+    rgba(9, 13, 16, 0.75) 0%,
+    rgba(9, 13, 16, 0.50) 45%,
+    rgba(9, 13, 16, 0.18) 80%,
+    rgba(9, 13, 16, 0.02) 100%
+  ),
+  linear-gradient(
+    0deg,
+    rgba(9, 13, 16, 0.40) 0%,
+    transparent 50%
+  );
+}
+
 .page-hero--banner .container,
 .page-hero--banner > .container,
 .page-hero--banner .page-hero__inner {
