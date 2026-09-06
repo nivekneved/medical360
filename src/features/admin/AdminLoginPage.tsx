@@ -9,27 +9,13 @@ import { validateEmail, validatePassword, isHoneypotClean } from '../../core/ser
 export function AdminLoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState('admin@med360.mu');
-  const [password, setPassword] = useState('med360admin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [honeypot, setHoneypot] = useState('');
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
   const [loading, setLoading] = useState(false);
-
-  const fillAdmin = () => {
-    setEmail('admin@med360.mu');
-    setPassword('med360admin');
-    setError('');
-    setFieldErrors({});
-  };
-
-  const fillCaseManager = () => {
-    setEmail('case@med360.mu');
-    setPassword('med360admin');
-    setError('');
-    setFieldErrors({});
-  };
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -163,6 +149,7 @@ export function AdminLoginPage() {
                   id="admin-email"
                   type="email"
                   value={email}
+                  placeholder="admin@med360.mu"
                   onChange={e => {
                     setEmail(e.target.value);
                     if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: undefined }));
@@ -203,6 +190,7 @@ export function AdminLoginPage() {
                   id="admin-password"
                   type={showPw ? 'text' : 'password'}
                   value={password}
+                  placeholder="••••••••••••"
                   onChange={e => {
                     setPassword(e.target.value);
                     if (fieldErrors.password) setFieldErrors(prev => ({ ...prev, password: undefined }));
@@ -301,85 +289,6 @@ export function AdminLoginPage() {
                 </>
               )}
             </button>
-
-            {/* Quick Demo Credentials Container */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '0.75rem' }}>
-              
-              {/* Admin Credentials */}
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: 10,
-                padding: '0.65rem 0.85rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: 8,
-              }}>
-                <div>
-                  <div style={{ fontSize: '0.7rem', color: '#10b981', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em' }}>
-                    Admin Access (Demo)
-                  </div>
-                  <div style={{ fontSize: '0.78rem', color: '#e2e8f0', fontFamily: 'monospace', marginTop: 1 }}>
-                    admin@med360.mu • med360admin
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={fillAdmin}
-                  style={{
-                    background: 'rgba(16, 185, 129, 0.15)',
-                    border: '1px solid rgba(16, 185, 129, 0.35)',
-                    color: '#34d399',
-                    borderRadius: 6,
-                    padding: '0.25rem 0.55rem',
-                    fontSize: '0.72rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Auto-Fill
-                </button>
-              </div>
-
-              {/* Case Manager Credentials */}
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: 10,
-                padding: '0.65rem 0.85rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: 8,
-              }}>
-                <div>
-                  <div style={{ fontSize: '0.7rem', color: '#38bdf8', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em' }}>
-                    Case Manager Access (Demo)
-                  </div>
-                  <div style={{ fontSize: '0.78rem', color: '#e2e8f0', fontFamily: 'monospace', marginTop: 1 }}>
-                    case@med360.mu • med360admin
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={fillCaseManager}
-                  style={{
-                    background: 'rgba(56, 189, 248, 0.15)',
-                    border: '1px solid rgba(56, 189, 248, 0.35)',
-                    color: '#38bdf8',
-                    borderRadius: 6,
-                    padding: '0.25rem 0.55rem',
-                    fontSize: '0.72rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                  }}
-                >
-                  Auto-Fill
-                </button>
-              </div>
-
-            </div>
           </form>
         </div>
 
