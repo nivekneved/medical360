@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+import { CurrencySwitcher } from '../CurrencySwitcher/CurrencySwitcher';
 import './Navbar.css';
 
 export function Navbar() {
@@ -95,6 +96,9 @@ export function Navbar() {
 
         {/* Action Controls */}
         <div className="navbar__actions">
+          {/* Currency Switcher */}
+          <CurrencySwitcher variant="navbar" />
+
           {/* Language Switcher */}
           <button
             className="navbar-icon-btn navbar-lang-btn"
@@ -158,6 +162,8 @@ export function Navbar() {
           </nav>
 
           <div className="navbar__mobile-actions">
+            <CurrencySwitcher variant="mobile" />
+
             <button className="mobile-utility-btn" onClick={toggleLanguage} style={{ width: '100%' }}>
               <Globe size={18} color="var(--color-primary)" />
               <span>Language: <strong>{i18n.language.toUpperCase()}</strong></span>

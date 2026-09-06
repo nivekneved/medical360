@@ -1,6 +1,8 @@
 // ─── Format Service ───────────────────────────────────────────────────────────
 // Single responsibility: data formatting utilities
 
+import { getPlatformSettings } from './settings.service';
+
 /**
  * Formats an ISO date string to a readable date.
  */
@@ -43,18 +45,34 @@ export function formatNumber(num: number): string {
 }
 
 /**
- * Formats a USD cost range into a readable string.
+ * Formats a USD cost range with its Mauritian Rupee (Rs / MUR) equivalent right next to it.
+ * Uses the dynamic USD to MUR exchange rate configured in Admin Settings.
+ * e.g. "$5,000 – $8,000 (~Rs 232,500 – 372,000)"
  */
-export function formatCostRange(min: number, max: number): string {
-  return `USD ${formatNumber(min)} – ${formatNumber(max)}`;
+export function formatCostRange(min: number, max: number, murExchangeRate?: number): string {
+  if (!min && !max) return 'Custom Quote';
+  const rate = murExchangeRate ?? getPlatformSettings().murExchangeRate ?? 46.5;
+  const minMur = Math.round(min * rate);
+  const maxMur = Math.round(max * rate);
+  return `$${formatNumber(min)} – $${formatNumber(max)} (~Rs ${formatNumber(minMur)} – ${formatNumber(maxMur)})`;
+}
+
+/**
+ * Formats a single USD amount with Mauritian Rupee equivalent.
+ */
+export function formatSingleCost(usd: number, murExchangeRate?: number): string {
+  const rate = murExchangeRate ?? getPlatformSettings().murExchangeRate ?? 46.5;
+  const mur = Math.round(usd * rate);
+  return `$${formatNumber(usd)} (~Rs ${formatNumber(mur)})`;
 }
 
 /**
  * Formats a USD amount to estimated Mauritian Rupees (MUR).
  */
-export function formatCostMur(usd: number, exchangeRate: number = 46): string {
-  const mur = Math.round(usd * exchangeRate);
-  return `MUR ${formatNumber(mur)}`;
+export function formatCostMur(usd: number, exchangeRate?: number): string {
+  const rate = exchangeRate ?? getPlatformSettings().murExchangeRate ?? 46.5;
+  const mur = Math.round(usd * rate);
+  return `Rs ${formatNumber(mur)}`;
 }
 
 /**
