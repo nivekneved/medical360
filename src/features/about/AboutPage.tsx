@@ -687,7 +687,7 @@ export function AboutPage() {
               {tCms('ctaDesc', l10n('Prenez rendez-vous dès aujourd\'hui. Laissez-nous vous aider à comprendre vos options et vous mettre en relation avec les soins médicaux appropriés.', 'Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal.', 'Book your appointment today. Let us help you understand your options and connect you with the right medical care.'))}
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need')} id="about-cta-btn">
+              <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need?from=About+Us+Page+CTA&serviceName=Medical+Consultation')} id="about-cta-btn">
                 <span>{l10n('RÉSERVER VOTRE CONSULTATION MÉDICALE', 'REZERV OU KONSILTASION MEDIKAL', 'BOOK YOUR MEDICAL CONSULTATION')}</span>
                 <ArrowRight size={18} />
               </button>

@@ -75,7 +75,7 @@ export function Footer() {
             <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.55)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
               {t('footer.freeOpinionDesc')}
             </p>
-            <Link to="/describe-need" className="btn btn-accent btn-sm" id="footer-cta-btn">
+            <Link to="/describe-need?from=Footer+CTA&serviceName=Free+Doctor+Review" className="btn btn-accent btn-sm" id="footer-cta-btn">
               {t('nav.freeOpinion')}
             </Link>
             <a

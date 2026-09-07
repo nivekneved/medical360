@@ -21,11 +21,14 @@
 
 ## 🌟 Overview & Mission
 
-**Med360** (Med360 Ltd) is a specialized medical concierge platform based in Port Louis, Mauritius. The platform assists patients seeking advanced treatments abroad (cardiac surgery, oncology, organ transplants, orthopedics, IVF, neurosurgery) by coordinating:
-- **Free expert medical opinions** from leading hospital department heads within 48 hours.
-- **Accredited partner hospitals** across India, Thailand, Singapore, Malaysia, and the UAE.
-- **7 World-Renowned Medical Specialists** handpicked across key medical disciplines.
-- **Full travel & visa logistics**: flight booking, medical visas, airport transfers, accommodation, and on-ground translators.
+**Med360** (Med360 Ltd) is a specialized medical concierge social enterprise based in Port Louis, Mauritius, wholly owned by the registered NGO **Enn Rêv Enn Sourir**. 
+
+For over a decade, Enn Rêv Enn Sourir has funded and coordinated life-saving medical care abroad for underprivileged patients. Med360 extends world-class healthcare navigation services to private and corporate clients:
+- **100% of net company profits** are reinvested into the NGO's medical assistance fund to sponsor surgeries for patients in need.
+- **15 Accredited Premier Hospitals** across India (Apollo Hospitals Chennai & Navi Mumbai, Manipal Hospital Bengaluru, Fortis Memorial & Mulund, MGM Healthcare Chennai, MIOT International Chennai, Artemis Gurugram, BLK-Max Super Speciality New Delhi, Gleneagles HealthCity Chennai, Dr. Rela Institute Chennai, Amrita Hospital Kochi & Faridabad, SIMS Hospital Chennai, Yashoda Hospitals Hyderabad, Marengo Asia Gurugram, Kauvery Hospital Chennai, Max Super Speciality Saket New Delhi).
+- **15 Medical Specialties & Detailed Procedures Catalog** (Oncology, Cardiology, Orthopedics, Organ Transplant, Neurosurgery & Spine, Robotic Surgery, IVF & Fertility, Urology & Andrology, Gastroenterology & Hepatology, Pediatric Cardiac & Surgery, Bariatrics, Ophthalmology, ENT, Pulmonology, Plastic Surgery).
+- **Free expert medical second opinions** and all-inclusive treatment quotes within 24–48 hours.
+- **Full end-to-end travel & visa logistics**: flight coordination, medical visa assistance, VIP airport transfers, local accommodation, and dedicated Mauritian patient navigators.
 
 ---
 
@@ -33,21 +36,24 @@
 
 ### 🌐 Patient-Facing Portal
 - **Multilingual Support (EN / FR / KR)**: Seamless toggle between English, Français, and Kreol Morisien with automatic `<html>` attribute synchronization.
-- **Interactive Inquiry Wizard (`/describe-need`)**: Multi-step medical intake form with specialty selection, urgency ratings, and WhatsApp instant handoff.
-- **Hospital Directory & Detail Pages (`/hospitals` & `/hospitals/:id`)**: Search & filter by country/accreditation (JCI, NABH, ISO), bed counts, international patient volumes, and practicing specialists.
-- **Specialties & Procedures Catalog (`/specialties` & `/specialties/:id`)**: Comprehensive guides with price estimation in USD & MUR, recovery timelines, and affiliated doctors.
+- **Interactive Intake Wizard (`/describe-need`)**: Multi-step medical intake form with specialty selection, urgency ratings, hospital preselection, traffic origin attribution, and automated email notification dispatch.
+- **Hospital Directory & Detail Pages (`/hospitals` & `/hospitals/:id`)**: Search & filter by city, bed count, international patient volume, and accreditations (JCI, NABH, NABL).
+- **Specialties & Procedures Catalog (`/specialties` & `/specialties/:id`)**: Comprehensive guides with price estimation in USD & MUR, recovery timelines, and affiliated hospitals.
+- **Interactive Treatment Cost Calculator (`/cost-calculator`)**: Multi-currency benchmark comparing Western medical rates against accredited Indian hospitals with up to 90% savings.
+- **Comprehensive 6-Stage Patient Guide (`/how-it-works`)**: Step-by-step breakdown from initial enquiry to post-treatment recovery care.
 - **Verified Patient Success Stories (`/case-studies`)**: Real patient testimonials, outcomes, and cost-savings statistics.
-- **Full Concierge Services (`/services`)**: Coverage of all 6 stages from initial diagnosis to post-treatment recovery care.
+- **Full Legal & Compliance Suite**: Privacy Policy (`/privacy`), Terms of Service (`/terms`), Cookie Policy (`/cookies`), and Medical Disclaimer (`/medical-disclaimer`).
 
 ### 🛡️ Admin & CMS Portal (`/admin`)
-- **Real-Time CMS Page Editor (`/admin/pages/:pageId`)**: Live text editing for all 11 pages/sections with language tabs (FR, KR, EN) and instant site synchronization.
-- **Integrated Image Manager**: "Select Image" file upload, preset medical gallery, and custom image URL support.
-- **Core Data Management**: Dedicated CRUD interfaces with prefilled edit modals for:
+- **Real-Time CMS Page Editor (`/admin/pages/:pageId`)**: Live text editing for all pages with language tabs (FR, KR, EN) and instant site synchronization.
+- **Email Template Customizer & Dispatch Engine (`/admin/email-templates`)**: Customizable notification templates, live HTML preview, and test dispatch to `kevinadlib@gmail.com`.
+- **Core Data Management**: Dedicated CRUD interfaces with inline workstations for:
   - *Partner Hospitals* (`/admin/hospitals`)
   - *Medical Specialties & Procedures* (`/admin/specialties`)
-  - *7 Elite Medical Specialists* (`/admin/doctors`)
   - *Patient Success Stories* (`/admin/case-studies`)
-  - *Inquiry Management & Status Tracking* (`/admin/inquiries`)
+  - *Inquiry Management & Status Pipeline* (`/admin/inquiries`)
+  - *Broadcast Campaign Center* (`/admin/campaigns`)
+  - *Mission Marquee Ribbon Manager* (`/admin/marquee`)
 
 ---
 
@@ -57,11 +63,12 @@
 | :--- | :--- |
 | **Core Framework** | React 19 + TypeScript + Vite |
 | **Routing** | React Router v7 (`react-router-dom`) |
-| **Styling** | Vanilla CSS with CSS Custom Properties (Three-color palette) |
-| **Internationalization** | `i18next` + `react-i18next` |
-| **SEO & Meta** | `react-helmet-async` + Schema.org JSON-LD |
+| **Styling** | Vanilla CSS with CSS Custom Properties (Clean responsive design system) |
+| **Internationalization** | `i18next` + `react-i18next` (EN, FR, KR) |
+| **SEO & Meta** | `react-helmet-async` + Schema.org JSON-LD + Sitemap XML |
 | **Icons** | Lucide React (`lucide-react`) |
-| **Data Engine** | LocalStorage-backed reactive Mock Engine with simulated latency |
+| **Data Engine** | Dual-Mode: Supabase Live PostgreSQL + LocalStorage Reactive Fallback |
+| **Email Notification** | Resend API Integration (`/api/resend/emails`) with automated lead alerts |
 
 ### 🎨 Design Rules
 - **Three-Color Palette**: 

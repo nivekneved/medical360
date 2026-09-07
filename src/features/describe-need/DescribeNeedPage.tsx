@@ -60,7 +60,7 @@ export function DescribeNeedPage() {
     ? ['Detay Personel', 'Bizin Medikal', 'Preferans', 'Revize & Soumet']
     : ['Personal Details', 'Medical Need', 'Preferences', 'Review & Submit'];
 
-  // Pre-select specialty & service from URL param
+  // Pre-select specialty, service, hospital & origin source from URL params
   const preSpecialty = params.get('specialty');
   if (preSpecialty && !formData.specialtyId) updateField('specialtyId', preSpecialty);
 
@@ -68,7 +68,23 @@ export function DescribeNeedPage() {
   const preServiceName = params.get('serviceName');
   if (preService && !formData.serviceId) {
     updateField('serviceId', preService);
-    if (preServiceName) updateField('serviceName', decodeURIComponent(preServiceName));
+  }
+  if (preServiceName && !formData.serviceName) {
+    updateField('serviceName', decodeURIComponent(preServiceName));
+  }
+
+  const preHospital = params.get('hospital') || params.get('hospitalId');
+  const preHospitalName = params.get('hospitalName');
+  if (preHospital && !formData.hospitalId) {
+    updateField('hospitalId', preHospital);
+  }
+  if (preHospitalName && !formData.hospitalName) {
+    updateField('hospitalName', decodeURIComponent(preHospitalName));
+  }
+
+  const preSource = params.get('from') || params.get('source');
+  if (preSource && !formData.sourcePage) {
+    updateField('sourcePage', decodeURIComponent(preSource));
   }
 
   const selectedSpecialty = specialties.find(s => s.id === formData.specialtyId);

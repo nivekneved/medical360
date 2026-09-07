@@ -4,6 +4,7 @@ import { ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { SEO } from '../../components/SEO/SEO';
+import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { useCMS } from '../../hooks/useCMS';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import { Pagination } from '../../components/Pagination/Pagination';
@@ -137,12 +138,12 @@ export function SpecialtiesPage() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => navigate('/describe-need')}
+              onClick={() => navigate('/describe-need?from=Specialties+Directory+Banner&serviceName=Specialty+Assessment')}
             >
               ✍️ {l10n('Décrire mes symptômes', 'Dekrir mo bann sintom', 'Describe My Condition')}
             </button>
             <a
-              href="https://wa.me/23058000000?text=Bonjour%2C%20j%27aimerais%20de%20l%27aide%20pour%20savoir%20quel%20sp%C3%A9cialiste%20consulter."
+              href={buildMed360WhatsAppUrl("Bonjour, j'aimerais de l'aide pour savoir quel spécialiste consulter.")}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-outline"
@@ -284,7 +285,7 @@ export function SpecialtiesPage() {
                         </button>
                         <button
                           className="btn btn-primary btn-sm"
-                          onClick={() => navigate(`/describe-need?specialty=${sp.id}`)}
+                          onClick={() => navigate(`/describe-need?specialty=${sp.id}&specialtyName=${encodeURIComponent(sp.name)}&from=Specialties+Directory+Card+(${encodeURIComponent(sp.name)})`)}
                           id={`spec-inquire-${sp.id}-btn`}
                           style={{ flex: 1 }}
                         >

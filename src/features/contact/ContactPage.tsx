@@ -14,6 +14,7 @@ import {
 } from '../../core/services/validation.service';
 import { sanitizeInput, checkRateLimit } from '../../core/services/security.service';
 import { mockEngine } from '../../core/mock/engine';
+import { sendContactEmail } from '../../core/services/email.service';
 
 export function ContactPage() {
   const navigate = useNavigate();
@@ -91,6 +92,14 @@ export function ContactPage() {
         description: `[Quick Contact Inquiry]: ${cleanMessage} (Contact: ${cleanContact})`,
         urgency: 'routine',
       });
+
+      // Dispatch notification email to test recipient
+      sendContactEmail({
+        name: cleanName,
+        contact: cleanContact,
+        message: cleanMessage,
+        sourcePage: 'Contact Us Page (/contact)',
+      }).catch(err => console.warn('Contact email dispatch failed:', err));
 
       setSubmitted(true);
     } catch (err: any) {

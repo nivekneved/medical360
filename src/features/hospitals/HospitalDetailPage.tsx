@@ -215,7 +215,7 @@ export function HospitalDetailPage() {
                         </div>
                         <button
                           className="btn btn-primary btn-sm"
-                          onClick={() => navigate(`/describe-need?specialty=${doc.specialties[0]}`)}
+                          onClick={() => navigate(`/describe-need?hospitalId=${hospital.id}&hospitalName=${encodeURIComponent(hospital.name)}&specialty=${doc.specialties[0]}&from=Doctor+Profile+(${encodeURIComponent(doc.name)})`)}
                         >
                           {l10n('Consulter', 'Konsilte', 'Consult')}
                         </button>
@@ -264,7 +264,7 @@ export function HospitalDetailPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   <button
                     className="btn btn-primary btn-lg"
-                    onClick={() => navigate(`/describe-need`)}
+                    onClick={() => navigate(`/describe-need?hospitalId=${hospital.id}&hospitalName=${encodeURIComponent(hospital.name)}&from=Hospital+Detail+Page+(${encodeURIComponent(hospital.name)})&serviceName=Consultation+at+${encodeURIComponent(hospital.name)}`)}
                     style={{ width: '100%' }}
                   >
                     {t('nav.freeOpinion')} <ArrowRight size={16} />

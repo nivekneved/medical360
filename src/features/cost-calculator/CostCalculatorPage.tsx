@@ -257,7 +257,7 @@ export function CostCalculatorPage() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => navigate('/describe-need')}
+              onClick={() => navigate(`/describe-need?specialty=${selectedSpecialtyId}&from=Cost+Calculator+Top+Banner&serviceName=Cost+Estimation+Quote`)}
             >
               ✍️ {l10n('Demander mon devis officiel', 'Demann mo devis ofisiel', 'Request Official Quote')}
             </button>
@@ -393,7 +393,7 @@ export function CostCalculatorPage() {
           </div>
 
           <button
-            onClick={() => navigate(`/describe-need?specialty=${selectedSpecialtyId}`)}
+            onClick={() => navigate(`/describe-need?specialty=${selectedSpecialtyId}&from=Cost+Calculator+Quote+Button&serviceName=Treatment+Cost+Quote`)}
             className="btn btn-primary"
             style={{ padding: '0.85rem 1.5rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem', whiteSpace: 'nowrap' }}
           >
@@ -490,7 +490,7 @@ export function CostCalculatorPage() {
                 </div>
 
                 <button
-                  onClick={() => navigate(`/describe-need?specialty=${selectedSpecialtyId}&preferredCountry=${encodeURIComponent(profile.country)}`)}
+                  onClick={() => navigate(`/describe-need?specialty=${selectedSpecialtyId}&preferredCountry=${encodeURIComponent(profile.country)}&from=Cost+Calculator+${encodeURIComponent(profile.country)}+Card&serviceName=Treatment+in+${encodeURIComponent(profile.country)}`)}
                   className={`btn ${isBestValue ? 'btn-primary' : 'btn-outline'} btn-sm`}
                   style={{ width: '100%', fontWeight: 700 }}
                 >
