@@ -12,10 +12,9 @@ export const hospitalsSeed: Hospital[] = [
     description: "Apollo's healthcare journey began with its flagship hospital in Chennai in 1983. It subsequently developed into one of India's best-known integrated healthcare groups. Apollo's Chennai and Navi Mumbai hospitals provide tertiary and quaternary care across major specialties. Clinical Excellence & Reputation: Apollo is particularly established in oncology, cardiac sciences, organ transplantation, neurosciences, orthopaedics, gastroenterology and paediatrics. Both Apollo Chennai and Apollo Navi Mumbai appear on Apollo's JCI-accreditation listing, with Chennai's latest listed accreditation in 2024 and Navi Mumbai's in 2023. More than four decades of healthcare experience combined with advanced multidisciplinary treatment and extensive international-patient services.",
     description_fr: "Le parcours d'Apollo a débuté avec son hôpital amiral à Chennai en 1983. Ses hôpitaux de Chennai et Navi Mumbai offrent des soins tertiaires et quaternaires de pointe en oncologie, cardiologie, greffes, neurosciences et pédiatrie, tous deux accrédités JCI.",
     description_kr: "Lopital Apollo inn koumanse an 1983 dan Chennai. Zot lopital dan Chennai ek Navi Mumbai ofer bann swen de pwent dan kanser, leker, transplantasion ek neurosians avek sertifikasion JCI.",
-    imageUrl: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=800&q=80',
+    imageUrl: '/assets/hospitals/hosp-apollo__1.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&q=80',
-      'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=800&q=80',
+      '/assets/hospitals/hosp-apollo__1.jpg',
     ],
     accreditations: ['JCI', 'NABH', 'NABL'],
     specialties: ['sp-oncology', 'sp-cardiology', 'sp-transplant', 'sp-neurology', 'sp-orthopedics', 'sp-paediatrics', 'sp-gastroenterology'],
