@@ -164,8 +164,17 @@ export interface AdminUser {
   active: boolean;
 }
 
+export interface CmsPage {
+  id: string;
+  title: string;
+  content: Record<string, any>;
+  updatedAt?: string;
+}
+
 export interface MockConfig {
   enabled: boolean;
   latency: 'instant' | 'normal' | 'slow';
   errorRate: number;
 }
+
+
