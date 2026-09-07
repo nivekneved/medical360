@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { SITE_URL, SITE_NAME } from '../../core/config/site';
 
 export interface SEOProps {
   title: string;
@@ -12,25 +13,23 @@ export interface SEOProps {
   noIndex?: boolean;
 }
 
-const PRODUCTION_DOMAIN = 'https://medical360-zeta.vercel.app';
-
 export function SEO({
   title,
   description,
   canonical = '',
   type = 'website',
-  image = `${PRODUCTION_DOMAIN}/assets/banners/home_banner.jpg`,
+  image = `${SITE_URL}/assets/hero-banner.jpg`,
   schema,
   noIndex = false,
 }: SEOProps) {
   const { i18n } = useTranslation();
   const currentLang = i18n.language || 'en';
 
-  const siteName = 'Med360';
+  const siteName = SITE_NAME;
   const cleanTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
   const cleanPath = canonical ? (canonical.startsWith('/') ? canonical : `/${canonical}`) : '';
-  const canonicalUrl = `${PRODUCTION_DOMAIN}${cleanPath}`;
-  const fullImageUrl = image.startsWith('http') ? image : `${PRODUCTION_DOMAIN}${image.startsWith('/') ? image : `/${image}`}`;
+  const canonicalUrl = `${SITE_URL}${cleanPath || '/'}`;
+  const fullImageUrl = image.startsWith('http') ? image : `${SITE_URL}${image.startsWith('/') ? image : `/${image}`}`;
 
   useEffect(() => {
     // Dynamic lang attribute on <html> element

@@ -93,7 +93,7 @@ const waUrl = buildWhatsAppUrl('23059188275', 'Hello Med360, I need a consultati
 assert(waUrl.startsWith('https://wa.me/23059188275'), 'Uses valid Mauritius WhatsApp hotline (+230 5918 8275)');
 assert(waUrl.includes('text=Hello%20Med360'), 'Correctly URI-encodes patient message body');
 
-// ─── Test Suite 5: Zero-Modal Architecture Rule Compliance (AGENTS.md) ───────
+// ─── Test Suite 5: Zero-Modal Architecture Rule Compliance ───────────────────
 console.log('\n5. Testing Strict Zero-Modal / Zero-Popup Rule Compliance...');
 function getAllFiles(dir, exts = ['.tsx']) {
   let files = [];

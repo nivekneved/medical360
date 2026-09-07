@@ -113,7 +113,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         if (THEME_PRESETS.some(t => t.id === stored)) return stored;
       }
     } catch {}
-    return 'Med-default'; // Default to Med-default as requested
+    return 'Med-default';
   });
 
   const currentTheme = THEME_PRESETS.find(t => t.id === theme) || THEME_PRESETS[0];

@@ -11,7 +11,9 @@
  * 7. Review & AggregateRating (Verified Patient Outcomes)
  */
 
-export const BASE_URL = 'https://medical360-zeta.vercel.app';
+import { SITE_URL, CONTACT_EMAIL } from '../config/site';
+
+export const BASE_URL = SITE_URL;
 
 /**
  * 1. Global MedicalOrganization Schema
@@ -27,7 +29,7 @@ export function getMedicalOrganizationSchema() {
     logo: `${BASE_URL}/assets/logo.png`,
     description: 'Med360 is a company owned by the NGO Enn Rev Enn Sourir. 10+ years coordinating specialised treatment in private clinics and abroad, with 100% of profits returned to the NGO to fund medical care for the needy.',
     telephone: '+230 59188275',
-    email: 'contact@medical360.mu',
+    email: CONTACT_EMAIL,
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Port Louis',
@@ -115,7 +117,7 @@ export function getPhysicianSchema(doctor: {
   return {
     '@context': 'https://schema.org',
     '@type': 'Physician',
-    '@id': `${BASE_URL}/doctors#${doctor.id}`,
+    '@id': `${BASE_URL}/hospitals#${doctor.id}`,
     name: doctor.name,
     jobTitle: doctor.title,
     image: doctor.imageUrl.startsWith('http') ? doctor.imageUrl : `${BASE_URL}${doctor.imageUrl}`,

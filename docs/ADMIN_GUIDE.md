@@ -1,4 +1,4 @@
-# 📖 Medical 360 — Admin Portal & CMS User Guide
+# 📖 Med360 — Admin Portal & CMS User Guide
 
 This manual covers the administrative operations, patient case workflow, core database management, and the dynamic CMS editor.
 
