@@ -20,17 +20,22 @@ import { CustomFieldCard } from './components/CustomFieldCard';
 import { PageEditorNavSidebar } from './components/PageEditorNavSidebar';
 
 const CMS_PAGES = [
-  { id: 'home', label: 'Home', icon: '🏠' },
-  { id: 'how-it-works', label: 'How It Works', icon: '🤝' },
+  { id: 'header', label: 'Header & Nav', icon: '🧭' },
+  { id: 'home', label: 'Home Page', icon: '🏠' },
   { id: 'about', label: 'About Us', icon: 'ℹ️' },
-  { id: 'specialties', label: 'Specialties', icon: '⭐' },
-  { id: 'doctors', label: 'Doctors', icon: '👨‍⚕️' },
-  { id: 'hospitals', label: 'Hospitals', icon: '🏢' },
-  { id: 'case-studies', label: 'Stories', icon: '📖' },
-  { id: 'cost-calculator', label: 'Calculator', icon: '🧮' },
-  { id: 'contact', label: 'Contact', icon: '✉️' },
-  { id: 'privacy', label: 'Privacy', icon: '🔒' },
-  { id: 'terms', label: 'Terms', icon: '📜' },
+  { id: 'how-it-works', label: 'How It Works', icon: '🤝' },
+  { id: 'hospitals', label: 'Hospitals Directory', icon: '🏢' },
+  { id: 'specialties', label: 'Specialties Directory', icon: '⭐' },
+  { id: 'cost-calculator', label: 'Cost Calculator', icon: '🧮' },
+  { id: 'case-studies', label: 'Patient Stories', icon: '📖' },
+  { id: 'contact', label: 'Contact Us', icon: '✉️' },
+  { id: 'describe-need', label: 'Intake Wizard', icon: '📝' },
+  { id: 'privacy', label: 'Privacy Policy', icon: '🔒' },
+  { id: 'terms', label: 'Terms of Service', icon: '📜' },
+  { id: 'cookies', label: 'Cookie Policy', icon: '🍪' },
+  { id: 'medical-disclaimer', label: 'Medical Disclaimer', icon: '⚕️' },
+  { id: 'footer', label: 'Footer & Legal', icon: '📄' },
+  { id: 'marquee', label: 'Mission Marquee', icon: '📢' },
 ];
 
 export function AdminPageEditor() {
