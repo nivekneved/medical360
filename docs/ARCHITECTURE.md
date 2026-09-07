@@ -80,7 +80,6 @@ This guarantees that if a translation key is edited in the Admin CMS, it immedia
 | `/hospitals/:id` | `HospitalDetailPage` | Inside view: specs, beds, ratings, procedures & affiliated doctors |
 | `/specialties` | `SpecialtiesPage` | Specialty grid with key procedures & cost ranges |
 | `/specialties/:id` | `SpecialtyDetailPage` | Inside view: comprehensive breakdown, procedures table, duration & hospitals |
-| `/doctors` | `DoctorsPage` | Directory of the 7 world-renowned specialists with filtering |
 | `/services` | `ServicesPage` | Detailed breakdown of the 6 core medical concierge services |
 | `/case-studies` | `CaseStudiesPage` | Verified patient testimonials and recovery stories |
 | `/describe-need` | `DescribeNeedPage` | Multi-step medical intake wizard with WhatsApp handoff |

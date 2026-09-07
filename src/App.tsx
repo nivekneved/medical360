@@ -52,7 +52,6 @@ const HospitalsPage       = lazyWithRetry(() => import('./features/hospitals/Hos
 const HospitalDetailPage  = lazyWithRetry(() => import('./features/hospitals/HospitalDetailPage'), m => m.HospitalDetailPage);
 const SpecialtiesPage     = lazyWithRetry(() => import('./features/specialties/SpecialtiesPage'), m => m.SpecialtiesPage);
 const SpecialtyDetailPage = lazyWithRetry(() => import('./features/specialties/SpecialtyDetailPage'), m => m.SpecialtyDetailPage);
-const DoctorsPage         = lazyWithRetry(() => import('./features/doctors/DoctorsPage'), m => m.DoctorsPage);
 const DescribeNeedPage    = lazyWithRetry(() => import('./features/describe-need/DescribeNeedPage'), m => m.DescribeNeedPage);
 const HowItWorksPage     = lazyWithRetry(() => import('./features/how-it-works/HowItWorksPage'), m => m.HowItWorksPage);
 const ServicesPage        = lazyWithRetry(() => import('./features/services/ServicesPage'), m => m.ServicesPage);
@@ -153,7 +152,6 @@ export default function App() {
                     <Route path="/hospitals/:id"    element={<HospitalDetailPage />} />
                     <Route path="/specialties"      element={<SpecialtiesPage />} />
                     <Route path="/specialties/:id"  element={<SpecialtyDetailPage />} />
-                    <Route path="/doctors"          element={<DoctorsPage />} />
                     <Route path="/describe-need"    element={<DescribeNeedPage />} />
                     <Route path="/how-it-works"     element={<HowItWorksPage />} />
                     <Route path="/services"         element={<Navigate to="/how-it-works" replace />} />

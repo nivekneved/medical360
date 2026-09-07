@@ -36,7 +36,6 @@
 - **Interactive Inquiry Wizard (`/describe-need`)**: Multi-step medical intake form with specialty selection, urgency ratings, and WhatsApp instant handoff.
 - **Hospital Directory & Detail Pages (`/hospitals` & `/hospitals/:id`)**: Search & filter by country/accreditation (JCI, NABH, ISO), bed counts, international patient volumes, and practicing specialists.
 - **Specialties & Procedures Catalog (`/specialties` & `/specialties/:id`)**: Comprehensive guides with price estimation in USD & MUR, recovery timelines, and affiliated doctors.
-- **The 7 Elite Specialists Page (`/doctors`)**: Direct access to verified surgical track records (100,000+ surgeries combined), bios, languages, and consultation booking.
 - **Verified Patient Success Stories (`/case-studies`)**: Real patient testimonials, outcomes, and cost-savings statistics.
 - **Full Concierge Services (`/services`)**: Coverage of all 6 stages from initial diagnosis to post-treatment recovery care.
 

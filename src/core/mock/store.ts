@@ -100,7 +100,7 @@ export function loadStore(): MockStore {
 
       // Verify that parsed stores contain the updated seed count (15 hospitals & 15 specialties)
       const hasAllHospitals = parsed.hospitals?.length >= 15 && parsed.hospitals.some(h => h.id === 'hosp-kims');
-      const hasAllSpecialties = parsed.specialties?.length >= 15 && parsed.specialties.some(s => s.id === 'sp-spine');
+      const hasAllSpecialties = parsed.specialties?.length >= 15 && parsed.specialties.some(s => s.id === 'sp-gastroenterology');
 
       const hospitals = hasAllHospitals
         ? parsed.hospitals.map(h => hospMap.has(h.id) ? { ...hospMap.get(h.id)!, ...h, imageUrl: hospMap.get(h.id)!.imageUrl } : h)
