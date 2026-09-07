@@ -4,7 +4,6 @@ import { ArrowLeft, ArrowRight, MapPin, MessageCircle, Clock } from 'lucide-reac
 import { useSpecialty } from '../../hooks/useSpecialties';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useDoctors } from '../../hooks/useDoctors';
-import { formatCostRange } from '../../core/services/format.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { ProcedureInlineManager } from './components/ProcedureInlineManager';

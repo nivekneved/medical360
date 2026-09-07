@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useSpecialties } from '../../hooks/useSpecialties';
-import { formatCostRange, formatCostMurRange } from '../../core/services/format.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
@@ -269,16 +268,9 @@ export function SpecialtiesPage() {
 
                       <div className="spec-card__procedures" onClick={() => navigate(`/specialties/${sp.id}`)}>
                         {sp.procedures.slice(0, 3).map((proc) => (
-                          <div key={proc.id} className="spec-procedure" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.35rem 0' }}>
-                            <span>{l(proc, 'name')}</span>
-                            <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                              <span className="spec-procedure__cost" style={{ fontWeight: 700, color: 'var(--color-primary)', lineHeight: 1.2 }}>
-                                {formatCostRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
-                              </span>
-                              <span style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold', color: 'var(--color-text-secondary)', marginTop: '2px', letterSpacing: '0.01em' }}>
-                                {formatCostMurRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
-                              </span>
-                            </div>
+                          <div key={proc.id} className="spec-procedure" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.4rem 0.65rem' }}>
+                            <span style={{ color: 'var(--color-primary)', fontSize: '0.85rem' }}>✦</span>
+                            <span style={{ fontWeight: 600, color: 'var(--color-text)', fontSize: '0.8125rem' }}>{l(proc, 'name')}</span>
                           </div>
                         ))}
                       </div>
