@@ -2,7 +2,7 @@ import { Heart, Users, Globe2, Shield, Trophy, Award, Sparkles } from 'lucide-re
 
 /**
  * About Page static content (multilingual EN / FR / KR).
- * Extracted from AboutPage.tsx to keep the page component under the 750-LOC repo cap.
+ * Kept separate from the page component for readability and maintenance.
  */
 
 export const HIGHLIGHTS = [

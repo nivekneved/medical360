@@ -357,7 +357,7 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
           <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
             <tr>
               <td style="vertical-align: middle;">
-                <img src="https://medical360-zeta.vercel.app/assets/logo.png" alt="Med360" height="44" style="height: 44px; max-width: 200px; display: block; border: 0;" />
+                <img src="https://www.med360.mu/assets/logo.png" alt="Med360" height="44" style="height: 44px; max-width: 200px; display: block; border: 0;" />
               </td>
             </tr>
           </table>

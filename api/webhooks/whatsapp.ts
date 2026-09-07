@@ -50,8 +50,19 @@ export default async function handler(req: Request) {
     const token = url.searchParams.get('hub.verify_token');
     const challenge = url.searchParams.get('hub.challenge');
 
-    if (mode === 'subscribe' && token === (process.env.WHATSAPP_VERIFY_TOKEN || 'med360_webhook_token')) {
+    // SECURITY: the verification token MUST be configured as the
+    // WHATSAPP_VERIFY_TOKEN environment variable in Vercel. No insecure
+    // default is accepted.
+    const expectedToken = process.env.WHATSAPP_VERIFY_TOKEN;
+    if (mode === 'subscribe' && expectedToken && token === expectedToken) {
       return new Response(challenge || 'VERIFIED', { status: 200 });
+    }
+
+    if (mode === 'subscribe') {
+      return new Response(JSON.stringify({ error: 'Verification token mismatch' }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     return new Response(JSON.stringify({ 

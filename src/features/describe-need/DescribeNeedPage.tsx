@@ -150,7 +150,7 @@ export function DescribeNeedPage() {
         )}
         canonical="/describe-need"
       />
-      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/home_banner.jpg)', minHeight: 280, padding: '4rem 0 3rem' }}>
+      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/consultation-support.jpg)', minHeight: 280, padding: '4rem 0 3rem' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
             {tCms('heroLabel', l10n('Avis Médical Gratuit & Confidentiel', 'Lavi Dokter Gratis & Konfidansyel', 'Free & Confidential Medical Review'))}

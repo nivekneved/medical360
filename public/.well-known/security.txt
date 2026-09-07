@@ -1,0 +1,5 @@
+Contact: mailto:info@med360.mu
+Expires: 2027-09-07T00:00:00.000Z
+Preferred-Languages: en, fr
+Canonical: https://www.med360.mu/.well-known/security.txt
+Policy: https://www.med360.mu/privacy

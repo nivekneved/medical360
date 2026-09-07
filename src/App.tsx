@@ -61,6 +61,8 @@ const CostCalculatorPage  = lazyWithRetry(() => import('./features/cost-calculat
 const VisaGuidePage       = lazyWithRetry(() => import('./features/visa-guide/VisaGuidePage'), m => m.VisaGuidePage);
 const PrivacyPolicyPage   = lazyWithRetry(() => import('./features/legal/PrivacyPolicyPage'), m => m.PrivacyPolicyPage);
 const TermsPage           = lazyWithRetry(() => import('./features/legal/TermsPage'), m => m.TermsPage);
+const CookiePolicyPage    = lazyWithRetry(() => import('./features/legal/CookiePolicyPage'), m => m.CookiePolicyPage);
+const MedicalDisclaimerPage = lazyWithRetry(() => import('./features/legal/MedicalDisclaimerPage'), m => m.MedicalDisclaimerPage);
 const NotFoundPage        = lazyWithRetry(() => import('./features/not-found/NotFoundPage'), m => m.NotFoundPage);
 
 // Lazy admin pages (code-split with deployment auto-retry)
@@ -161,6 +163,8 @@ export default function App() {
                     <Route path="/contact"          element={<ContactPage />} />
                     <Route path="/privacy"          element={<PrivacyPolicyPage />} />
                     <Route path="/terms"            element={<TermsPage />} />
+                    <Route path="/cookies"          element={<CookiePolicyPage />} />
+                    <Route path="/medical-disclaimer" element={<MedicalDisclaimerPage />} />
                   </Route>
 
                   {/* Secret Admin Login Gateway */}
