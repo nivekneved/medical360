@@ -1,8 +1,8 @@
-# 🏛️ Medical 360 — Architecture & Technical Specifications
+# 🏛️ Med360 — Architecture & Technical Specifications
 
 ## 1. System Architecture Overview
 
-Medical 360 is built as a single-page application (SPA) following domain-driven design (DDD) principles on the frontend. The codebase is organized into layers:
+Med360 is built as a single-page application (SPA) following domain-driven design (DDD) principles on the frontend. The codebase is organized into layers:
 
 ```
 ┌────────────────────────────────────────────────────────┐
@@ -35,12 +35,9 @@ The application currently operates on a local-first mock engine that simulates a
 
 ---
 
-## 3. The 7 Doctors Ecosystem Policy
+## 3. The 7 Specialists Ecosystem
 
-In accordance with platform directives:
-> **"There can be only 7 doctors in the whole of the ecosystem."**
-
-The platform maintains exactly 7 world-leading specialists across key hospital affiliations and medical disciplines:
+The platform maintains a curated panel of 7 premier specialists across key partner hospital affiliations and medical disciplines:
 1. **Dr. Devi Prasad Shetty** (Cardiothoracic Surgery, Narayana Health)
 2. **Dr. Naresh Trehan** (Cardiovascular & Robotic Surgery, Medanta)
 3. **Dr. Suthep Udomsawaengsup** (Minimally Invasive & Bariatric Surgery, Bumrungrad International)

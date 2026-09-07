@@ -1,6 +1,6 @@
-# 🛡️ Medical 360 — Top 25 SEO & Security Measures
+# 🛡️ Med360 — Top 25 SEO & Security Measures
 
-This document outlines the 25 search engine optimization (SEO) and security implementations built into the Medical 360 application.
+This document outlines the 25 search engine optimization (SEO) and security implementations built into the Med360 application.
 
 ---
 

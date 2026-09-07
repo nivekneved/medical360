@@ -127,7 +127,7 @@ The platform supports 3 primary languages with automated fallback:
 
 ## 4. UI/UX Architecture Guidelines (Strict Rules)
 
-### 4.1 Strict Zero-Modal / Zero-Popup Rule (`AGENTS.md`)
+### 4.1 Strict Zero-Modal / Zero-Popup Rule (UX Guidelines)
 - **No Dialog Modals for CRUD**: Creating, editing, or deleting items (hospitals, doctors, specialties, inquiries, case studies, procedures) must **never** open a blocking modal dialog overlay (`<dialog>` or popup).
 - **Inline Workstations Only**: All creation and modification workflows use **inline expandable forms**, **in-place editor cards**, or **accordion panels** embedded directly in the page flow.
 - **Deletion Confirmations**: Must use inline confirmation banners/bars directly within the active card rather than native `alert()` or modal overlays.
@@ -257,7 +257,7 @@ If stale data occurs or cache schema changes:
 
 - [ ] `npm test` passes 100% (25/25 automated test suites pass).
 - [ ] `node scripts/verify-build.js` passes with 0 TypeScript compiler errors.
-- [ ] Zero blocking modal popups exist in CRUD workflows (`AGENTS.md` compliance).
+- [ ] Zero blocking modal popups exist in CRUD workflows (UX guidelines compliance).
 - [ ] All `.ts` and `.tsx` source files in `src/` are strictly $\le 750$ lines of code.
 - [ ] Security headers and CSP active in `index.html` / `vercel.json`.
 - [ ] Multilingual strings complete across `en`, `fr`, `kr`.

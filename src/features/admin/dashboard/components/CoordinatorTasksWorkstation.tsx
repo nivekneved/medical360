@@ -131,7 +131,7 @@ export function CoordinatorTasksWorkstation() {
           )}
         </div>
 
-        {/* Inline Add Task Toggle Button (No popup/modal - strictly complies with AGENTS.md) */}
+        {/* Inline Add Task Toggle Button */}
         <button
           onClick={() => setShowAddForm(!showAddForm)}
           className="btn btn-sm btn-primary"
