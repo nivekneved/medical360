@@ -9,6 +9,7 @@ import { SEO } from '../../components/SEO/SEO';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
 import { getMedicalOrganizationSchema } from '../../core/services/schema.service';
+import { SITE_METRICS } from '../../core/config/site';
 import { MissionMarquee } from './components/MissionMarquee';
 import './Home.css';
 
@@ -37,10 +38,10 @@ export function HomePage() {
   };
 
   const STATS = [
-    { icon: Users,      value: '+3,000',    label: isFr ? '+3 000 Patients Accompagnés' : isKr ? '+3,000 Pasian Asiste' : '+3,000 Patients Assisted' },
-    { icon: Building2,  value: '15',        label: isFr ? 'Pôles Hospitaliers en Inde' : isKr ? 'Lopital Partener dan L\'inde' : 'Premier Indian Hospital Hubs' },
-    { icon: Award,      value: '10+ Years', label: isFr ? 'Années de Dévouement' : isKr ? 'Banlane D\'experyans Imin' : 'Years of Compassion' },
-    { icon: HeartPulse, value: '100%',      label: isFr ? 'Zéro Dividende · Modèle Solidaire' : isKr ? 'Zero Dividann · 100% Sosyal' : 'No Dividends · 100% Impact' },
+    { icon: Users,      value: SITE_METRICS.patientsAssistedEn,    label: isFr ? `${SITE_METRICS.patientsAssistedFr} Patients Accompagnés` : isKr ? `${SITE_METRICS.patientsAssistedEn} Pasian Asiste` : `${SITE_METRICS.patientsAssistedEn} Patients Assisted` },
+    { icon: Building2,  value: SITE_METRICS.partnerHospitals,        label: isFr ? 'Pôles Hospitaliers en Inde' : isKr ? 'Lopital Partener dan L\'inde' : 'Premier Indian Hospital Hubs' },
+    { icon: Award,      value: `${SITE_METRICS.yearsExperience} Years`, label: isFr ? 'Années de Dévouement' : isKr ? 'Banlane D\'experyans Imin' : 'Years of Compassion' },
+    { icon: HeartPulse, value: SITE_METRICS.impactPercent,      label: isFr ? 'Zéro Dividende · Modèle Solidaire' : isKr ? 'Zero Dividann · 100% Sosyal' : 'No Dividends · 100% Impact' },
   ];
 
   const PROCESS_STEPS = [

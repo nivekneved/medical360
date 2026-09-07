@@ -1,6 +1,7 @@
 import { Shield, Lock, Eye, FileText, CheckCircle2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
+import { LEGAL_CONSTANTS, PRIVACY_EMAIL, SITE_NAME, PARENT_NGO_NAME } from '../../core/config/site';
 
 export function PrivacyPolicyPage() {
   const { i18n } = useTranslation();
@@ -10,8 +11,8 @@ export function PrivacyPolicyPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
-        title={isFr ? "Politique de Confidentialité & Protection des Données | Med360" : isKr ? "Politik Konfidansialite & Donn Medikal | Med360" : "Privacy Policy & Medical Data Protection | Med360"}
-        description={isFr ? "Découvrez comment Med360 protège vos données personnelles et médicales conformément à la loi mauricienne Data Protection Act 2017 et au RGPD." : "Learn how Med360 protects your personal and medical information under the Mauritius Data Protection Act 2017 and GDPR standards."}
+        title={isFr ? `Politique de Confidentialité & Protection des Données | ${SITE_NAME}` : isKr ? `Politik Konfidansialite & Donn Medikal | ${SITE_NAME}` : `Privacy Policy & Medical Data Protection | ${SITE_NAME}`}
+        description={isFr ? `Découvrez comment ${SITE_NAME} protège vos données personnelles et médicales conformément à la loi mauricienne Data Protection Act 2017 et au RGPD.` : `Learn how ${SITE_NAME} protects your personal and medical information under the Mauritius Data Protection Act 2017 and GDPR standards.`}
         canonical="/privacy"
       />
       
@@ -43,7 +44,7 @@ export function PrivacyPolicyPage() {
             {isFr ? "Politique de Confidentialité" : isKr ? "Politik Konfidansialite" : "Privacy Policy"}
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            {isFr ? "Dernière mise à jour : Septembre 2026 • Conforme au Data Protection Act 2017 (Maurice) & RGPD" : "Last Updated: September 2026 • Compliant with Mauritius Data Protection Act 2017 & GDPR"}
+            {isFr ? `Dernière mise à jour : ${LEGAL_CONSTANTS.lastUpdatedFr} • Conforme au ${LEGAL_CONSTANTS.complianceFr}` : `Last Updated: ${LEGAL_CONSTANTS.lastUpdatedEn} • Compliant with ${LEGAL_CONSTANTS.complianceEn}`}
           </p>
         </div>
       </section>
@@ -165,7 +166,7 @@ export function PrivacyPolicyPage() {
               <li>Data portability — receive your data in a structured, commonly used format.</li>
             </ul>
             <p style={{ marginTop: '0.75rem' }}>
-              To exercise any right, email our Data Protection Officer at <a href="mailto:privacy@med360.mu" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>privacy@med360.mu</a>. You may also lodge a complaint with the <strong>Data Protection Commissioner of Mauritius</strong> (Office of the Data Protection Commissioner, Port-Louis) if you believe your rights have been infringed.
+              To exercise any right, email our Data Protection Officer at <a href={`mailto:${PRIVACY_EMAIL}`} style={{ color: 'var(--color-primary)', fontWeight: 600 }}>{PRIVACY_EMAIL}</a>. You may also lodge a complaint with the <strong>Data Protection Commissioner of Mauritius</strong> (Office of the Data Protection Commissioner, Port-Louis) if you believe your rights have been infringed.
             </p>
           </div>
 
@@ -182,7 +183,7 @@ export function PrivacyPolicyPage() {
               ⚠️ Medical Facilitator Disclaimer
             </h3>
             <p style={{ fontSize: '0.9rem', color: 'var(--text-muted, #64748b)', margin: 0 }}>
-              Med360 is a medical travel facilitator and concierge owned by NGO Enn Rev Enn Sourir, not a licensed healthcare clinic or diagnostic hospital. Any preliminary information provided does not substitute professional in-person medical evaluation by licensed healthcare practitioners.
+              {SITE_NAME} is a medical travel facilitator and concierge owned by NGO {PARENT_NGO_NAME}, not a licensed healthcare clinic or diagnostic hospital. Any preliminary information provided does not substitute professional in-person medical evaluation by licensed healthcare practitioners.
             </p>
           </div>
 

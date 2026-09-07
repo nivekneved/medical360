@@ -9,6 +9,7 @@ import { usePlatformSettings } from '../../core/services/settings.service';
 import { useAuth } from '../../providers/AuthProvider';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SPECIALTY_SYMPTOMS_MAP } from '../specialties/specialtySymptoms';
+import { DEFAULT_MUR_RATE } from '../../core/config/site';
 
 interface CountryCostProfile {
   country: string;
@@ -40,7 +41,7 @@ export function CostCalculatorPage() {
   const l10n = (fr: string, kr: string, en: string) => isFr ? fr : isKr ? kr : en;
   const navigate = useNavigate();
 
-  const MUR_RATE = settings.murExchangeRate || 46.5;
+  const MUR_RATE = settings.murExchangeRate || DEFAULT_MUR_RATE;
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;

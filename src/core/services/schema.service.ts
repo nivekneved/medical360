@@ -11,7 +11,7 @@
  * 7. Review & AggregateRating (Verified Patient Outcomes)
  */
 
-import { SITE_URL, CONTACT_EMAIL } from '../config/site';
+import { SITE_URL, CONTACT_EMAIL, SITE_NAME, LEGAL_NAME, PHONE_DISPLAY, SITE_ADDRESS, SITE_METRICS, PARENT_NGO_NAME } from '../config/site';
 
 export const BASE_URL = SITE_URL;
 
@@ -23,28 +23,30 @@ export function getMedicalOrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'MedicalOrganization',
     '@id': `${BASE_URL}/#organization`,
-    name: 'Med360',
-    legalName: 'Med360 Ltd',
+    name: SITE_NAME,
+    legalName: LEGAL_NAME,
     url: BASE_URL,
     logo: `${BASE_URL}/assets/logo.png`,
-    description: 'Med360 is a company owned by the NGO Enn Rev Enn Sourir. 10+ years coordinating specialised treatment in private clinics and abroad, with 100% of profits returned to the NGO to fund medical care for the needy.',
-    telephone: '+230 59188275',
+    description: `${SITE_NAME} is a social enterprise owned by the NGO ${PARENT_NGO_NAME}. ${SITE_METRICS.yearsExperience} coordinating specialised treatment in premier hospitals, with ${SITE_METRICS.impactPercent} of company profits supporting the NGO's healthcare mission.`,
+    telephone: PHONE_DISPLAY,
     email: CONTACT_EMAIL,
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Port Louis',
-      addressCountry: 'MU',
-      addressRegion: 'Mauritius',
+      streetAddress: `${SITE_ADDRESS.building}, ${SITE_ADDRESS.street}`,
+      addressLocality: SITE_ADDRESS.locality,
+      postalCode: SITE_ADDRESS.postalCode,
+      addressCountry: SITE_ADDRESS.countryCode,
+      addressRegion: SITE_ADDRESS.country,
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: -20.1609,
-      longitude: 57.5012,
+      latitude: SITE_ADDRESS.geo.latitude,
+      longitude: SITE_ADDRESS.geo.longitude,
     },
     contactPoint: [
       {
         '@type': 'ContactPoint',
-        telephone: '+230 59188275',
+        telephone: PHONE_DISPLAY,
         contactType: 'emergency patient coordination',
         availableLanguage: ['English', 'French', 'Mauritian Creole'],
         areaServed: ['MU', 'RE', 'KM', 'MG', 'SC', 'MV'],

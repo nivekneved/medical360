@@ -1,6 +1,7 @@
 import { Scale, AlertCircle, FileCheck, ShieldAlert } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
+import { SITE_NAME, PARENT_NGO_NAME, SITE_ADDRESS } from '../../core/config/site';
 
 export function TermsPage() {
   const { i18n } = useTranslation();
@@ -10,8 +11,8 @@ export function TermsPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
-        title={isFr ? "Conditions Générales & Droits du Patient | Med360" : isKr ? "Kondision Zeneral & Drwa Pasian | Med360" : "Terms of Service & Healthcare Disclaimer | Med360"}
-        description={isFr ? "Consultez les conditions générales, engagements et obligations d'intermédiation de Med360 (détenu par l'ONG Enn Rev Enn Sourir)." : "Review the terms, conditions, and facilitator obligations of Med360 (owned by NGO Enn Rev Enn Sourir)."}
+        title={isFr ? `Conditions Générales & Droits du Patient | ${SITE_NAME}` : isKr ? `Kondision Zeneral & Drwa Pasian | ${SITE_NAME}` : `Terms of Service & Healthcare Disclaimer | ${SITE_NAME}`}
+        description={isFr ? `Consultez les conditions générales, engagements et obligations d'intermédiation de ${SITE_NAME} (détenu par l'ONG ${PARENT_NGO_NAME}).` : `Review the terms, conditions, and facilitator obligations of ${SITE_NAME} (owned by NGO ${PARENT_NGO_NAME}).`}
         canonical="/terms"
       />
       
@@ -43,7 +44,7 @@ export function TermsPage() {
             {isFr ? "Conditions Générales d'Utilisation" : isKr ? "Kondision Zeneral" : "Terms of Service"}
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            {isFr ? "Med360 • Entreprise sociale détenue par l'ONG Enn Rev Enn Sourir • Port-Louis, Maurice" : "Med360 • A company owned by NGO Enn Rev Enn Sourir • Port Louis, Mauritius"}
+            {isFr ? `${SITE_NAME} • Entreprise sociale détenue par l'ONG ${PARENT_NGO_NAME} • ${SITE_ADDRESS.locality}, Maurice` : `${SITE_NAME} • A company owned by NGO ${PARENT_NGO_NAME} • ${SITE_ADDRESS.locality}, ${SITE_ADDRESS.country}`}
           </p>
         </div>
       </section>

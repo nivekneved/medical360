@@ -1,6 +1,7 @@
 import { Cookie, ShieldCheck, Database, Settings, Eye } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
+import { LEGAL_CONSTANTS, SITE_NAME } from '../../core/config/site';
 
 export function CookiePolicyPage() {
   const { i18n } = useTranslation();
@@ -10,8 +11,8 @@ export function CookiePolicyPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
-        title={isFr ? "Politique de Cookies & Confidentialité | Med360" : isKr ? "Politik Cookies | Med360" : "Cookie Policy | Med360"}
-        description={isFr ? "Découvrez comment Med360 utilise les cookies et le stockage local pour sécuriser votre session sans traceurs publicitaires." : "How Med360 uses cookies and local browser storage to remember your preferences, secure your session and keep the site fast — no advertising trackers."}
+        title={isFr ? `Politique de Cookies & Confidentialité | ${SITE_NAME}` : isKr ? `Politik Cookies | ${SITE_NAME}` : `Cookie Policy | ${SITE_NAME}`}
+        description={isFr ? `Découvrez comment ${SITE_NAME} utilise les cookies et le stockage local pour sécuriser votre session sans traceurs publicitaires.` : `How ${SITE_NAME} uses cookies and local browser storage to remember your preferences, secure your session and keep the site fast — no advertising trackers.`}
         canonical="/cookies"
       />
 
@@ -35,7 +36,7 @@ export function CookiePolicyPage() {
             {isFr ? "Politique Relative aux Cookies" : isKr ? "Politik Cookies" : "Cookie Policy"}
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            {isFr ? "Dernière mise à jour : Septembre 2026 • Zéro cookie publicitaire ou traceur commercial" : "Last Updated: September 2026 • No advertising or third-party tracking cookies"}
+            {isFr ? `Dernière mise à jour : ${LEGAL_CONSTANTS.lastUpdatedFr} • Zéro cookie publicitaire ou traceur commercial` : `Last Updated: ${LEGAL_CONSTANTS.lastUpdatedEn} • No advertising or third-party tracking cookies`}
           </p>
         </div>
       </section>
