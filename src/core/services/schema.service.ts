@@ -133,23 +133,37 @@ export function getPhysicianSchema(doctor: {
 }
 
 /**
- * 4. Medical Specialty / Procedure Schema
+ * 4. Medical Specialty / Procedure Schema with Clinical E-E-A-T Attribution
  */
 export function getSpecialtySchema(specialty: {
   id: string;
   name: string;
-  slug: string;
+  slug?: string;
   shortDescription: string;
   imageUrl: string;
+  procedures?: Array<{ id: string; name: string; estimatedCostUSD?: { min: number; max: number } }>;
 }) {
+  const slug = specialty.slug || specialty.id;
   return {
     '@context': 'https://schema.org',
     '@type': 'MedicalSpecialty',
-    '@id': `${BASE_URL}/specialties/${specialty.slug}`,
+    '@id': `${BASE_URL}/specialties/${slug}`,
     name: specialty.name,
     description: specialty.shortDescription,
     image: specialty.imageUrl.startsWith('http') ? specialty.imageUrl : `${BASE_URL}${specialty.imageUrl}`,
-    url: `${BASE_URL}/specialties/${specialty.slug}`,
+    url: `${BASE_URL}/specialties/${slug}`,
+    reviewedBy: {
+      '@type': 'MedicalOrganization',
+      name: 'Med360 Clinical Coordination & Partner Medical Advisory Board',
+      parentOrganization: {
+        '@type': 'NGO',
+        name: 'Enn Rev Enn Sourir (UICC Member)',
+      },
+    },
+    relevantSpecialty: {
+      '@type': 'MedicalSpecialty',
+      name: specialty.name,
+    },
   };
 }
 
@@ -218,3 +232,45 @@ export function getReviewSchema(story: {
     name: `${story.treatment} for ${story.condition} — ${story.outcome}`,
   };
 }
+
+/**
+ * 8. Medical WebPage with E-E-A-T Authorship & Audience Disambiguation
+ */
+export function getMedicalWebPageSchema(page: {
+  title: string;
+  description: string;
+  path: string;
+  specialty?: string;
+  lastReviewed?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalWebPage',
+    '@id': `${BASE_URL}${page.path}#webpage`,
+    url: `${BASE_URL}${page.path}`,
+    name: page.title,
+    description: page.description,
+    inLanguage: ['en', 'fr', 'mfe'],
+    medicalAudience: {
+      '@type': 'MedicalAudience',
+      audienceType: 'Patients and Accompanying Families Seeking Overseas Specialist Medical Care',
+      geographicArea: {
+        '@type': 'AdministrativeArea',
+        name: 'Mauritius, Reunion Island, Indian Ocean',
+      },
+    },
+    reviewedBy: {
+      '@type': 'Organization',
+      name: 'Med360 Clinical Coordination Advisory Board',
+      affiliation: {
+        '@type': 'NGO',
+        name: 'Enn Rev Enn Sourir',
+      },
+    },
+    lastReviewed: page.lastReviewed || '2026-09-01',
+    publisher: {
+      '@id': `${BASE_URL}/#organization`,
+    },
+  };
+}
+
