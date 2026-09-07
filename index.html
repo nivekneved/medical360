@@ -22,25 +22,37 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" />
 
     <!-- Security Headers (Meta Level Fallback) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https: wss:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.resend.com; upgrade-insecure-requests" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
     <!-- Primary Search Engine Metadata -->
-    <title>Med360 — Specialised Medical Care | Owned by NGO Enn Rev Enn Sourir</title>
-    <meta name="description" content="Med360 connects patients with premier accredited hospitals in India, Thailand, and private clinics. Owned by NGO Enn Rev Enn Sourir with 100% of profits returned to fund medical care for the needy." />
-    <meta name="keywords" content="Med360, medical tourism Mauritius, hospital India, Apollo Hospital, Fortis Healthcare, medical concierge Mauritius, second opinion, cancer treatment India, cardiac surgery, robotic urology, IVF abroad, organ transplant, medical travel insurance, Enn Rev Enn Sourir" />
-    <meta name="author" content="Med360 Mauritius" />
+    <title>Med360 — Specialised Medical Care in India | Social Enterprise of Enn Rev Enn Sourir</title>
+    <meta name="description" content="Med360 connects Mauritius and Indian Ocean patients with 15 premier accredited hospitals across India — second opinions, treatment plans, visas, travel and follow-up. Social enterprise of NGO Enn Rev Enn Sourir: no dividends, patient first." />
+    <meta name="keywords" content="Med360, medical tourism Mauritius, treatment in India, Apollo Hospitals, Medanta, Manipal, KIMS, Fortis Escorts, cancer treatment India, cardiac surgery India, IVF India, organ transplant, second medical opinion, medical visa Mauritius, Enn Rev Enn Sourir" />
+    <meta name="author" content="Med360 Ltd" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- Canonical (default — overridden per page by the SEO component) -->
+    <link rel="canonical" href="https://www.med360.mu/" />
+
+    <!-- ═══ Search Engine Ownership Verification ═══════════════════════
+         1. Google Search Console: create a "Domain" property for med360.mu
+            and verify via DNS TXT (recommended), OR choose "URL prefix"
+            (https://www.med360.mu) and paste its HTML-tag content below:
+         <meta name="google-site-verification" content="PASTE_GSC_TOKEN_HERE" />
+         2. Bing Webmaster Tools: paste its token the same way:
+         <meta name="msvalidate.01" content="PASTE_BING_TOKEN_HERE" />
+    ═══════════════════════════════════════════════════════════════════ -->
 
     <!-- Global Open Graph (Facebook / LinkedIn / WhatsApp) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Med360" />
-    <meta property="og:title" content="Med360 — Specialised Medical Care | Owned by NGO Enn Rev Enn Sourir" />
-    <meta property="og:description" content="Connect with world-class accredited hospitals in India, Thailand & private clinics. Owned by NGO Enn Rev Enn Sourir with 100% profits funding medical care for the needy." />
-    <meta property="og:url" content="https://medical360-zeta.vercel.app/" />
-    <meta property="og:image" content="https://medical360-zeta.vercel.app/assets/banners/home_banner.jpg" />
+    <meta property="og:title" content="Med360 — Specialised Medical Care in India | Social Enterprise of Enn Rev Enn Sourir" />
+    <meta property="og:description" content="Connect with 15 premier accredited hospitals across India. Free medical opinion, transparent treatment plans and full concierge support. No dividends — patient first." />
+    <meta property="og:url" content="https://www.med360.mu/" />
+    <meta property="og:image" content="https://www.med360.mu/assets/hero-banner.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Med360 International Healthcare Concierge" />
@@ -51,9 +63,52 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Med360Mu" />
     <meta name="twitter:creator" content="@Med360Mu" />
-    <meta name="twitter:title" content="Med360 — Specialised Medical Care | Owned by NGO Enn Rev Enn Sourir" />
-    <meta name="twitter:description" content="Connect with world-class accredited hospitals in India, Thailand & private clinics. Free medical opinion and full concierge support." />
-    <meta name="twitter:image" content="https://medical360-zeta.vercel.app/assets/banners/home_banner.jpg" />
+    <meta name="twitter:title" content="Med360 — Specialised Medical Care in India" />
+    <meta name="twitter:description" content="Free medical opinion, 15 premier accredited Indian hospitals, full concierge support. A social enterprise — no dividends, patient first." />
+    <meta name="twitter:image" content="https://www.med360.mu/assets/hero-banner.jpg" />
+
+    <!-- Static Structured Data (Organization + WebSite) — reliable for crawlers that do not execute JS -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "MedicalOrganization",
+          "@id": "https://www.med360.mu/#organization",
+          "name": "Med360",
+          "legalName": "Med360 Ltd",
+          "url": "https://www.med360.mu/",
+          "logo": "https://www.med360.mu/assets/logo.png",
+          "description": "Med360 Ltd is a social enterprise owned by the NGO Enn Rev Enn Sourir, connecting patients in Mauritius and the Indian Ocean with 15 premier accredited hospitals across India. No dividends — 100% of profits support the NGO's healthcare mission.",
+          "telephone": "+230 59188275",
+          "email": "info@med360.mu",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets",
+            "addressLocality": "Port-Louis",
+            "postalCode": "11613",
+            "addressCountry": "MU"
+          },
+          "contactPoint": [{
+            "@type": "ContactPoint",
+            "telephone": "+230 59188275",
+            "contactType": "patient coordination",
+            "availableLanguage": ["en", "fr", "mfe"],
+            "areaServed": ["MU", "RE", "KM", "MG", "SC", "MV"]
+          }],
+          "medicalSpecialty": ["Oncology", "Cardiovascular", "Neurologic", "Orthopedic", "Transplantation", "Fertility", "Ophthalmologic"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.med360.mu/#website",
+          "url": "https://www.med360.mu/",
+          "name": "Med360",
+          "publisher": { "@id": "https://www.med360.mu/#organization" },
+          "inLanguage": ["en", "fr", "mfe"]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

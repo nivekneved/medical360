@@ -1,110 +1,261 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  
-  <!-- Home Page -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://medical360-zeta.vercel.app/</loc>
-    <lastmod>2026-09-03</lastmod>
+    <loc>https://www.med360.mu/</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://medical360-zeta.vercel.app/" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://medical360-zeta.vercel.app/" />
-    <xhtml:link rel="alternate" hreflang="kr" href="https://medical360-zeta.vercel.app/" />
-    <image:image>
-      <image:loc>https://medical360-zeta.vercel.app/assets/banners/home_banner.jpg</image:loc>
-      <image:title>Medical 360 Mauritius - International Healthcare Concierge</image:title>
-    </image:image>
   </url>
-
-  <!-- About Us -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/about</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://medical360-zeta.vercel.app/about" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://medical360-zeta.vercel.app/about" />
-  </url>
-
-  <!-- Services -->
-  <url>
-    <loc>https://medical360-zeta.vercel.app/services</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.med360.mu/how-it-works</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Hospitals Directory -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/hospitals</loc>
-    <lastmod>2026-09-03</lastmod>
+    <loc>https://www.med360.mu/hospitals</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
-
-  <!-- Medical Specialties -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/specialties</loc>
-    <lastmod>2026-09-03</lastmod>
+    <loc>https://www.med360.mu/specialties</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
-
-  <!-- Patient Stories / Case Studies -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/case-studies</loc>
-    <lastmod>2026-09-03</lastmod>
+    <loc>https://www.med360.mu/case-studies</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.8</priority>
   </url>
-
-  <!-- Cost Calculator -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/cost-calculator</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://www.med360.mu/cost-calculator</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-
-  <!-- Visa & Travel Guide -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/visa-guide</loc>
-    <lastmod>2026-09-03</lastmod>
+    <loc>https://www.med360.mu/describe-need</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/contact</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/about</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Describe Need (Inquiry Wizard) -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/describe-need</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://www.med360.mu/privacy</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
-
-  <!-- Contact Us -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/contact</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://www.med360.mu/terms</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/cookies</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/medical-disclaimer</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-apollo</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- Privacy Policy -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/privacy</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://www.med360.mu/hospitals/hosp-manipal</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
-
-  <!-- Terms of Service -->
   <url>
-    <loc>https://medical360-zeta.vercel.app/terms</loc>
-    <lastmod>2026-09-03</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://www.med360.mu/hospitals/hosp-kims</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-yashoda</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-lilavati</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-medanta</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-fortis-escorts</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-paras</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-max-saket</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-reliance</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-kokilaben</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-park</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-sankara</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-miot</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/hospitals/hosp-aster-prime</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-oncology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-cardiology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-neurology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-orthopedics</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-transplant</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-paediatrics</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-haematology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-cosmetic</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-fertility</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-ophthalmology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-urology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-dental</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-pulmonology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-gynecology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.med360.mu/specialties/sp-gastroenterology</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

@@ -102,7 +102,70 @@ export function PrivacyPolicyPage() {
             </p>
           </div>
 
+          {/* Section 5: International Data Transfers */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Eye size={20} color="var(--color-primary)" /> 5. Data Sharing & International Transfers
+            </h2>
+            <p style={{ marginBottom: '0.75rem' }}>
+              Your information is shared <strong>only with what is necessary</strong> for your coordination, and never with advertisers or data brokers:
+            </p>
+            <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '0.75rem' }}>
+              <li><strong>Partner Hospitals & Specialists</strong> — only the hospitals and departments you have approved receive the medical records needed for your opinion or admission (primarily in India).</li>
+              <li><strong>Secure Infrastructure Providers</strong> — encrypted database and email-delivery providers acting under data-processing agreements.</li>
+              <li><strong>Logistics Partners</strong> — strictly the details required for visa letters, airport transfers and accommodation, when you request them.</li>
+            </ul>
+            <p>
+              Because your chosen hospitals are located abroad, your data may be <strong>transferred internationally</strong>. Such transfers are made under the safeguards of the Mauritius Data Protection Act 2017 and, where applicable, GDPR Chapter V (e.g., standard contractual clauses), and are always limited to the minimum necessary for your treatment coordination.
+            </p>
+          </div>
+
+          {/* Section 6: Cookies */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FileText size={20} color="var(--color-primary)" /> 6. Cookies & Local Storage
+            </h2>
+            <p>
+              We use only essential and performance storage — no advertising or cross-site trackers. A complete, itemised list is available in our <a href="/cookies" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>Cookie Policy</a>. Your consent choice is always recorded first.
+            </p>
+          </div>
+
+          {/* Section 7: Security */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Lock size={20} color="var(--color-primary)" /> 7. How We Protect Your Data
+            </h2>
+            <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <li>All traffic is encrypted in transit (HTTPS/TLS) with strict transport security.</li>
+              <li>Every submission is sanitised and validated before storage; medical files are accessible only to authorised coordinators handling your case.</li>
+              <li>Staff access is password-protected, logged in an internal audit trail, and reviewed.</li>
+              <li>Hardened HTTP security headers (CSP, HSTS, frame protection) are enforced across the site.</li>
+            </ul>
+          </div>
+
+          {/* Section 8: Retention & Rights */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <CheckCircle2 size={20} color="var(--color-primary)" /> 8. Retention & Your Full Rights
+            </h2>
+            <p style={{ marginBottom: '0.75rem' }}>
+              Inquiry records are retained for up to <strong>24 months</strong> after your last contact unless your treatment is ongoing or a longer period is required by law. You may request earlier deletion at any time.
+            </p>
+            <p style={{ marginBottom: '0.75rem' }}>Under the Mauritius Data Protection Act 2017 and (where applicable) the GDPR you have the right to:</p>
+            <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <li>Access the personal data we hold about you and receive a copy;</li>
+              <li>Rectify inaccurate or incomplete data;</li>
+              <li>Erase your data ("right to be forgotten");</li>
+              <li>Restrict or object to processing, and withdraw consent at any time;</li>
+              <li>Data portability — receive your data in a structured, commonly used format.</li>
+            </ul>
+            <p style={{ marginTop: '0.75rem' }}>
+              To exercise any right, email our Data Protection Officer at <a href="mailto:privacy@med360.mu" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>privacy@med360.mu</a>. You may also lodge a complaint with the <strong>Data Protection Commissioner of Mauritius</strong> (Office of the Data Protection Commissioner, Port-Louis) if you believe your rights have been infringed.
+            </p>
+          </div>
+
           {/* Section 5: Medical Facilitator Disclaimer */}
+
           <div style={{
             background: 'rgba(239, 68, 68, 0.05)',
             border: '1px solid rgba(239, 68, 68, 0.2)',

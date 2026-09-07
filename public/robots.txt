@@ -21,4 +21,4 @@ Disallow: /admin/*
 Disallow: /api/
 
 # XML Sitemap Directive
-Sitemap: https://medical360-zeta.vercel.app/sitemap.xml
+Sitemap: https://www.med360.mu/sitemap.xml

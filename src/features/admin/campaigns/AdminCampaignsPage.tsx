@@ -93,7 +93,7 @@ export function AdminCampaignsPage() {
           'Transparent, itemized pricing packages with zero hidden costs'
         ],
         ctaText: 'Request Free Medical Assessment',
-        ctaUrl: 'https://medical360-zeta.vercel.app/describe-need',
+        ctaUrl: 'https://www.med360.mu/describe-need',
         ctaBgColor: '#059669',
         showWhatsAppButton: true,
         whatsAppText: 'Chat Directly with Care Coordinator',

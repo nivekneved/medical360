@@ -202,7 +202,7 @@ export const CampaignComposerTab: React.FC<CampaignComposerTabProps> = ({
               <input
                 type="text"
                 className="form-input"
-                placeholder="Button URL (e.g. https://medical360-zeta.vercel.app/describe-need)"
+                placeholder="Button URL (e.g. https://www.med360.mu/describe-need)"
                 value={campaign.template?.ctaUrl || ''}
                 onChange={e => updateTemplate({ ctaUrl: e.target.value })}
               />

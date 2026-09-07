@@ -88,7 +88,67 @@ export function TermsPage() {
           {/* Section 4 */}
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Scale size={20} color="#3b82f6" /> 4. Governing Law & Jurisdiction
+              <ShieldAlert size={20} color="#3b82f6" /> 4. Patient Responsibilities
+            </h2>
+            <p>
+              You agree to provide accurate, complete and truthful medical information and records, as treatment plans and quotes depend entirely on them. You are responsible for holding valid travel documents and complying with medical visa requirements, and for respecting each hospital's admission policies. Inquiries concerning a minor must be made by a parent or legal guardian. All treatment decisions remain yours, and we encourage you to seek second opinions before proceeding.
+            </p>
+          </div>
+
+          {/* Section 5 */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FileCheck size={20} color="#3b82f6" /> 5. Bookings, Payments & Hospital Billing
+            </h2>
+            <p>
+              Medical fees are payable <strong>directly to the treating hospital</strong> according to its own billing policy. Med360's coordination, opinions and planning assistance are provided free of charge unless a specific service is covered by a written agreement signed by both parties. Any advance collected through Med360 on behalf of a hospital is itemised, documented and attributable to your hospital account.
+            </p>
+          </div>
+
+          {/* Section 6 */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <AlertCircle size={20} color="#3b82f6" /> 6. Cancellations, Changes & Refunds
+            </h2>
+            <p>
+              Hospitals may amend or reschedule procedures for clinical reasons beyond anyone's control. Cancellations and refunds follow the policy of the hospital (and of airlines, hotels or visa authorities where those services were booked). Med360 will assist you in obtaining refunds and re-booking wherever possible, but amounts already committed to third parties remain governed by those third parties' policies.
+            </p>
+          </div>
+
+          {/* Section 7 */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <ShieldAlert size={20} color="#3b82f6" /> 7. Limitation of Liability
+            </h2>
+            <p>
+              Med360's role is limited to facilitation and coordination. To the maximum extent permitted by Mauritian law, Med360 Ltd shall not be liable for clinical outcomes, acts or omissions of hospitals, doctors, laboratories, airlines, hotels or public authorities, nor for any indirect or consequential loss. Nothing in these Terms excludes liability that cannot lawfully be excluded under the laws of the Republic of Mauritius.
+            </p>
+          </div>
+
+          {/* Section 8 */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FileCheck size={20} color="#3b82f6" /> 8. Third-Party Services & Links
+            </h2>
+            <p>
+              Hospitals, laboratories, airlines and hotels operate under their own terms and conditions. External links are provided for convenience only and do not constitute endorsement. Your dealings with any third party found through this website are solely between you and that third party.
+            </p>
+          </div>
+
+          {/* Section 9 */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Scale size={20} color="#3b82f6" /> 9. Website Content & Acceptable Use
+            </h2>
+            <p>
+              All website content, branding and imagery are the property of Med360 Ltd and may not be copied, scraped or reused without written permission. Patient stories are published with consent and identifying details minimised. You agree not to misuse the website, attempt to breach its security, or submit unlawful, false or abusive content through any form.
+            </p>
+          </div>
+
+          {/* Section 10 */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Scale size={20} color="#3b82f6" /> 10. Governing Law & Jurisdiction
             </h2>
             <p>
               These Terms shall be governed by and construed in accordance with the laws of the Republic of Mauritius. Any disputes relating to facilitation services shall be subject to the exclusive jurisdiction of the Courts of Mauritius.
