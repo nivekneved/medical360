@@ -47,7 +47,7 @@ class RequestOptimizationEngine {
   };
 
   private readonly DEFAULT_TTL_MS = 5 * 60 * 1000; // 5 minutes default
-  private readonly STORAGE_PREFIX = 'med360_cache_v7_';
+  private readonly STORAGE_PREFIX = 'med360_cache_v8_';
 
   /**
    * Execute or collapse an asynchronous data fetcher through the multi-tier cache.
