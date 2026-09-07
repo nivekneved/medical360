@@ -123,17 +123,17 @@ export function HospitalsPage() {
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/hospitals_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {isFr ? 'Réseau Hospitalier d\'Excellence en Inde' : isKr ? 'Rezo Lopital L\'inde' : 'India Hospital Network of Excellence'}
+            {isFr ? 'Réseau Hospitalier en Inde' : isKr ? 'Rezo Lopital dan L\'inde' : 'India Hospital Network'}
           </span>
           <h1 className="text-h1">
-            {isFr ? '15 Hôpitaux Partenaires & Équipes Spécialistes' : isKr ? '15 Gran Lopital Partener dan L\'inde' : '15 Premier Partner Hospitals Across India'}
+            {isFr ? 'Notre Réseau Hospitalier en un Coup d\'Œil' : isKr ? 'Nou Rezo Lopital dan L\'inde' : 'Our Hospital Network at a Glance'}
           </h1>
           <p className="text-lead" style={{ maxWidth: '850px' }}>
             {isFr 
-              ? 'Medical 360 facilite l\'accès aux centres hospitaliers et équipes chirurgicales établis à travers l\'Inde. Obtenez des avis médicaux de pointe, des plans de traitement et un accompagnement complet du premier contact jusqu\'à votre retour.'
+              ? 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. Grâce à notre réseau, les patients peuvent obtenir des avis médicaux, des plans de traitement et l\'accès à des soins médicaux et chirurgicaux de pointe selon leur diagnostic individuel et leurs besoins.'
               : isKr
-              ? 'Medical 360 fasilit akse ar bann pli gran lopital ek sirizien dan L\'inde. Gagn deziem lavi medikal, devis kler ek kordinasion voyaz konple.'
-              : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Through our network, patients obtain specialist medical opinions, transparent treatment plans, and continuous patient navigation.'}
+              ? 'Medical 360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Gagn lavi spesialis, plan tretman ek akse ar bann swen medikal ek sirirzikal de pwent.'
+              : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Through our network, patients can obtain medical opinions, treatment plans and access to advanced medical and surgical care according to their individual diagnosis and needs.'}
           </p>
         </div>
       </section>
@@ -153,15 +153,22 @@ export function HospitalsPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
             <Building2 size={24} color="var(--color-primary)" />
             <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>
-              {isFr ? 'À Propos de Notre Réseau Hospitalier' : isKr ? 'Lor Nou Rezo Lopital' : 'About Our Partner Hospital Network'}
+              {isFr ? 'Accompagnement & Sélection Hospitalière' : isKr ? 'Akonpanyeman & Swazir Lopital' : 'Patient Support & Hospital Selection'}
             </h3>
           </div>
+          <p style={{ margin: '0 0 0.75rem', fontSize: '0.925rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
+            {isFr
+              ? 'Notre accompagnement va bien au-delà de la simple référence hospitalière. De l\'analyse des dossiers médicaux, de la prise de rendez-vous avec les spécialistes et de la planification du traitement jusqu\'à l\'assistance visa, le voyage, l\'hébergement, l\'admission et le suivi post-traitement, notre équipe de navigation accompagne les patients et leurs familles tout au long de leur parcours de soins.'
+              : isKr
+              ? 'Nou sipor al bien pli lwin ki zis enn referal. Depi revir dosie medikal, randevou spesialis ek plan tretman ziska lasistans viza, voyaz, lozman, ladmision ek swivi apre tretman, nou lekip res ar ou sak letap.'
+              : 'Our support goes beyond the hospital referral. From medical-record review, specialist appointments and treatment planning to visa assistance, travel, accommodation, admission and post-treatment follow-up, our patient-navigation team accompanies patients and their families throughout their healthcare journey.'}
+          </p>
           <p style={{ margin: 0, fontSize: '0.925rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
             {isFr
-              ? 'Notre accompagnement va bien au-delà de la simple mise en relation. De l\'analyse de vos rapports médicaux et la prise de rendez-vous avec les chefs de service jusqu\'à l\'assistance visa, les réservations de vols, l\'admission et le suivi post-traitement, notre équipe de navigation vous accompagne avec bienveillance. Le choix de l\'établissement repose sur les exigences médicales spécifiques de chaque patient (accréditations JCI/NABH, plateau technique, renommée clinique et services internationaux).'
+              ? 'Le choix de l\'hôpital est fondé sur les besoins médicaux individuels du patient. L\'accréditation, l\'expertise clinique, la technologie, les capacités multidisciplinaires, les services dédiés aux patients internationaux et les options de traitement figurent parmi les critères pris en compte.'
               : isKr
-              ? 'Nou sipor al bien pli lwin ki zis enn referal. Depi analiz ou dosie medikal ek randevou sef dokter ziska viza, biye avion, lotel, ladmision lopital ek swivi apre tretman, nou lekip res ar ou tou long ou vwayaz.'
-              : 'Our support goes far beyond hospital referral. From medical-record review, specialist appointments, and treatment planning to visa assistance, flights, accommodation, hospital admission, and post-treatment follow-up, our patient-navigation team accompanies patients and families throughout their healthcare journey. Hospital selection is strictly tailored to individual clinical requirements, international accreditations (JCI/NABH), and advanced surgical capabilities.'}
+              ? 'Swazir lopital baze lor bezwin medikal sak pasian. Akreditasion, leksperyans klinik, teknolosi, fasilite pou pasian internasional ek opsion tretman form parti bann kriter.'
+              : 'Hospital selection is based on the patient\'s individual medical requirements. Accreditation, clinical expertise, technology, multidisciplinary capabilities, international-patient services and treatment options are among the factors considered.'}
           </p>
         </div>
 

@@ -94,16 +94,16 @@ export function SpecialtiesPage() {
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/specialties_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Des Soins Adaptés à Votre Santé', 'Bann Swen pou Ou Lasante', 'Caring Medical Specialties'))}
+            {tCms('heroLabel', l10n('Spécialités Médicales', 'Spesialite Medikal', 'Medical Specialties'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Spécialités Médicales & Traitements', 'Spesialite Medikal & Tretman', 'Medical Specialties & Treatments'))}
+            {tCms('heroTitle', l10n('Spécialités Médicales & Soins de Pointe', 'Spesialite Medikal & Swen Avanse', 'Specialised Care Across Medical Disciplines'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Que vous ayez besoin d\'une chirurgie du cœur, d\'un traitement orthopédique, d\'un suivi oncologique ou d\'un avis spécialisé — nos médecins sont là pour vous écouter et vous guider avec bienveillance.',
-              'Ki ou bizin enn loperasion leker, tretman lezo, swen kanser ouswa zis enn bon lavi dokter — nou la pou ekout ou ek gid ou avek leker.',
-              'Whether you need cardiac care, orthopedic surgery, cancer treatment, or a second opinion — our dedicated doctors are here to listen and guide you with compassion.'
+              'Accédez à des soins de santé complets, des diagnostics avancés et deuxièmes avis à la chimiothérapie, la radiothérapie, la chirurgie complexe et la réadaptation.',
+              'Gagn akse ar bann swen konple, depi test avanse ziska deziem lavi, simioterapi, sirirzi konplex ek re-abilitasion.',
+              'Access comprehensive medical care, from advanced diagnostics and second opinions to chemotherapy, radiotherapy, complex surgery, and multidisciplinary rehabilitation.'
             ))}
           </p>
         </div>
