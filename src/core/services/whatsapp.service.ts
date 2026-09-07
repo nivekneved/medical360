@@ -1,7 +1,9 @@
 // ─── WhatsApp Service & Webhook Synchronization Engine ─────────────────────────
 // Handles deep link building, conversion tracking, and real-time CRM webhook sync
 
-const MED360_PHONE = '23059188275'; // Mauritius country code prefix (+230 5918 8275)
+import { WHATSAPP_NUMBER } from '../config/site';
+
+const MED360_PHONE = WHATSAPP_NUMBER;
 const LOCAL_STORAGE_WHATSAPP_LOGS = 'med360_whatsapp_consultation_logs';
 
 export interface WhatsAppConsultationLog {

@@ -1,4 +1,5 @@
 import { Heart, Users, Globe2, Shield, Trophy, Award, Sparkles } from 'lucide-react';
+import { SITE_METRICS, PARENT_NGO_NAME } from '../../core/config/site';
 
 /**
  * About Page static content (multilingual EN / FR / KR).
@@ -8,9 +9,9 @@ import { Heart, Users, Globe2, Shield, Trophy, Award, Sparkles } from 'lucide-re
 export const HIGHLIGHTS = [
   {
     icon: Heart,
-    label: 'Social Enterprise of Enn Rev Enn Sourir',
-    label_fr: 'Entreprise Sociale d\'Enn Rev Enn Sourir',
-    label_kr: 'Lakonpanyi Sosyal l\'ONG Enn Rev Enn Sourir',
+    label: `Social Enterprise of ${PARENT_NGO_NAME}`,
+    label_fr: `Entreprise Sociale d'${PARENT_NGO_NAME}`,
+    label_kr: `Lakonpanyi Sosyal l'ONG ${PARENT_NGO_NAME}`,
     sub: 'Sustainable revenue supporting vulnerable patients',
     sub_fr: 'Revenus durables contribuant aux soins des démunis',
     sub_kr: 'Reveni dirab pou finans bann pasian vilnerab'
@@ -20,15 +21,15 @@ export const HIGHLIGHTS = [
     label: 'Born From a Decade of Compassion',
     label_fr: 'Né d\'une Décennie de Compassion',
     label_kr: 'Ne depi 10 Banlane Konpasion',
-    sub: '+3,000 patients assisted in Mauritius and abroad',
-    sub_fr: '+3 000 patients accompagnés à Maurice et à l\'étranger',
-    sub_kr: '+3 000 pasian finn gagn swen'
+    sub: `${SITE_METRICS.patientsAssistedEn} patients assisted in Mauritius and abroad`,
+    sub_fr: `${SITE_METRICS.patientsAssistedFr} patients accompagnés à Maurice et à l'étranger`,
+    sub_kr: `${SITE_METRICS.patientsAssistedFr} pasian finn gagn swen`
   },
   {
     icon: Globe2,
-    label: '15 Premier Indian Hospital Hubs',
-    label_fr: '15 Grands Pôles Hospitaliers en Inde',
-    label_kr: '15 Gran Lopital dan L\'inde',
+    label: `${SITE_METRICS.partnerHospitals} Premier Indian Hospital Hubs`,
+    label_fr: `${SITE_METRICS.partnerHospitals} Grands Pôles Hospitaliers en Inde`,
+    label_kr: `${SITE_METRICS.partnerHospitals} Gran Lopital dan L'inde`,
     sub: 'Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR',
     sub_fr: 'Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR',
     sub_kr: 'Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR'
@@ -46,25 +47,25 @@ export const HIGHLIGHTS = [
 
 export const TIMELINE = [
   {
-    year: '2016',
-    title: 'Establishment of NGO Enn Rev Enn Sourir',
-    title_fr: 'Création de l\'ONG Enn Rev Enn Sourir',
-    title_kr: 'Kréasion l\'ONG Enn Rev Enn Sourir',
-    desc: 'Since 2016, Enn Rev Enn Sourir has worked to ensure that access to specialised healthcare is not determined by a family\'s financial circumstances, supporting children and adults in Mauritius and abroad.',
-    desc_fr: 'Depuis 2016, Enn Rev Enn Sourir œuvre pour que l\'accès aux soins spécialisés ne dépende pas des ressources financières, soutenant enfants et adultes à Maurice et à l\'étranger.',
-    desc_kr: 'Depi 2016, Enn Rev Enn Sourir lite pou ki sak dimounn gagn akse a bann swen spesialize san get so mwayen finansie.',
+    year: SITE_METRICS.foundationYear,
+    title: `Establishment of NGO ${PARENT_NGO_NAME}`,
+    title_fr: `Création de l'ONG ${PARENT_NGO_NAME}`,
+    title_kr: `Kréasion l'ONG ${PARENT_NGO_NAME}`,
+    desc: `Since ${SITE_METRICS.foundationYear}, ${PARENT_NGO_NAME} has worked to ensure that access to specialised healthcare is not determined by a family's financial circumstances, supporting children and adults in Mauritius and abroad.`,
+    desc_fr: `Depuis ${SITE_METRICS.foundationYear}, ${PARENT_NGO_NAME} œuvre pour que l'accès aux soins spécialisés ne dépende pas des ressources financières, soutenant enfants et adultes à Maurice et à l'étranger.`,
+    desc_kr: `Depi ${SITE_METRICS.foundationYear}, ${PARENT_NGO_NAME} lite pou ki sak dimounn gagn akse a bann swen spesialize san get so mwayen finansie.`,
     badge: 'Humanitarian Roots',
     badge_fr: 'Racines Humanitaires',
     badge_kr: 'Rasinn Imaniter',
   },
   {
-    year: '2016 – 2024',
-    title: 'UICC Full Member & +3,000 Patients Assisted',
-    title_fr: 'Membre Titulaire UICC & +3 000 Patients Accompagnés',
-    title_kr: 'Manb Titiler UICC & +3 000 Pasian Asiste',
-    desc: 'Listed as a Full Member of the Union for International Cancer Control (UICC), collaborating with SIOP and CCI, with over 3,000 patients supported across premier hospital networks.',
-    desc_fr: 'Membre Titulaire de l\'UICC, en collaboration avec SIOP et CCI, avec plus de 3 000 patients assistés auprès de réseaux hospitaliers internationaux de premier plan.',
-    desc_kr: 'Manb ofisiel UICC, kolaborater SIOP ek CCI, avek plis ki 3 000 pasian asiste dan bann gran sant medikal.',
+    year: `${SITE_METRICS.foundationYear} – Present`,
+    title: `UICC Full Member & ${SITE_METRICS.patientsAssistedEn} Patients Assisted`,
+    title_fr: `Membre Titulaire UICC & ${SITE_METRICS.patientsAssistedFr} Patients Accompagnés`,
+    title_kr: `Manb Titiler UICC & ${SITE_METRICS.patientsAssistedFr} Pasian Asiste`,
+    desc: `Listed as a Full Member of the Union for International Cancer Control (UICC), collaborating with SIOP and CCI, with over ${SITE_METRICS.patientsAssistedEn} patients supported across premier hospital networks.`,
+    desc_fr: `Membre Titulaire de l'UICC, en collaboration avec SIOP et CCI, avec plus de ${SITE_METRICS.patientsAssistedFr} patients assistés auprès de réseaux hospitaliers internationaux de premier plan.`,
+    desc_kr: `Manb ofisiel UICC, kolaborater SIOP ek CCI, avek plis ki ${SITE_METRICS.patientsAssistedFr} pasian asiste dan bann gran sant medikal.`,
     badge: 'Global Recognition',
     badge_fr: 'Reconnaissance Mondiale',
     badge_kr: 'Rekonet Internasional',

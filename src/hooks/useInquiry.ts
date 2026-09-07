@@ -3,6 +3,7 @@ import type { Inquiry, InquiryUrgency } from '../core/types';
 import { mockEngine } from '../core/mock/engine';
 import { buildInquiryWhatsAppUrl } from '../core/services/whatsapp.service';
 import { sendInquiryEmail } from '../core/services/email.service';
+import { PHONE_PREFIX_DEFAULT } from '../core/config/site';
 import {
   validateHoneypot,
   validateSubmissionTiming,
@@ -46,7 +47,7 @@ const getInitialForm = (): InquiryFormData => {
     firstName: saved?.firstName || '',
     lastName: saved?.lastName || '',
     email: saved?.email || '',
-    phone: saved?.phone || '+230 ',
+    phone: saved?.phone || PHONE_PREFIX_DEFAULT,
     countryOfResidence: saved?.countryOfResidence || 'Mauritius',
     specialtyId: 'sp-cardiology',
     serviceId: '',

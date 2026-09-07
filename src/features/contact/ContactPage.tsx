@@ -3,6 +3,15 @@ import { MapPin, Phone, Mail, MessageCircle, Clock, ArrowRight, CheckCircle2, Al
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+import { 
+  WHATSAPP_DISPLAY, 
+  CONTACT_EMAIL, 
+  SITE_ADDRESS, 
+  OPERATING_HOURS, 
+  PHONE_PREFIX_DEFAULT,
+  SITE_NAME,
+  LEGAL_NAME
+} from '../../core/config/site';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { Honeypot } from '../../components/Honeypot/Honeypot';
@@ -44,10 +53,10 @@ export function ContactPage() {
           setContact(saved.phone || saved.email);
         }
       } else {
-        setContact('+230 ');
+        setContact(PHONE_PREFIX_DEFAULT);
       }
     } catch {
-      setContact('+230 ');
+      setContact(PHONE_PREFIX_DEFAULT);
     }
   }, []);
 
@@ -107,7 +116,7 @@ export function ContactPage() {
         localStorage.setItem('med360_user_profile', JSON.stringify({
           firstName: cleanName.split(' ')[0] || cleanName,
           lastName: cleanName.split(' ').slice(1).join(' ') || '',
-          phone: !isEmail ? cleanContact : '+230 59188275',
+          phone: !isEmail ? cleanContact : WHATSAPP_DISPLAY,
           email: isEmail ? cleanContact : '',
           countryOfResidence: 'Mauritius',
         }));
@@ -117,7 +126,7 @@ export function ContactPage() {
         firstName: cleanName.split(' ')[0] || cleanName,
         lastName: cleanName.split(' ').slice(1).join(' ') || '-',
         email: isEmail ? cleanContact : `${cleanName.toLowerCase().replace(/\s+/g, '')}@patient.mu`,
-        phone: !isEmail ? cleanContact : '+230 59188275',
+        phone: !isEmail ? cleanContact : WHATSAPP_DISPLAY,
         countryOfResidence: 'Mauritius',
         specialtyId: 'sp-general',
         description: `[Quick Contact Inquiry]: ${cleanMessage} (Contact: ${cleanContact})`,
@@ -145,9 +154,9 @@ export function ContactPage() {
       <SEO 
         title={l10n("Quand Votre Santé Ne Peut Pas Attendre · Contact Med360", "Kan Ou Lasante Pa Kapav Atann · Kontak Med360", "When Your Health Can’t Wait, Neither Should You · Contact Med360")}
         description={l10n(
-          "Parlez à un Patient Navigator dès aujourd'hui. Sedeco Ltée, Port-Louis, Maurice. WhatsApp: +230 5918 8275.",
-          "Koz ar enn Patient Navigator zordi. Sedeco Ltée, Porlwi, Moris. WhatsApp: +230 5918 8275.",
-          "Speak to a Patient Navigator today. Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Mauritius. WhatsApp: +230 5918 8275."
+          `Parlez à un Patient Navigator dès aujourd'hui. ${SITE_ADDRESS.locality}, Maurice. WhatsApp: ${WHATSAPP_DISPLAY}.`,
+          `Koz ar enn Patient Navigator zordi. ${SITE_ADDRESS.locality}, Moris. WhatsApp: ${WHATSAPP_DISPLAY}.`,
+          `Speak to a Patient Navigator today. ${SITE_ADDRESS.full}. WhatsApp: ${WHATSAPP_DISPLAY}.`
         )}
         canonical="/contact"
       />
@@ -246,7 +255,7 @@ export function ContactPage() {
                       {l10n('Échangez directement avec un coordinateur patient', 'Koz direk ar enn kordonater', 'Speak directly with a Patient Navigator')}
                     </p>
                     <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-sm" id="contact-whatsapp-btn">
-                      <MessageCircle size={16} /> +230 5918 8275
+                      <MessageCircle size={16} /> {WHATSAPP_DISPLAY}
                     </a>
                   </div>
                 </div>
@@ -259,7 +268,7 @@ export function ContactPage() {
                     <h3 style={{ fontSize: '1rem', fontWeight: 700, margin: '0 0 4px', color: 'var(--color-text)' }}>
                       {l10n('Email', 'Email', 'Email')}
                     </h3>
-                    <a href="mailto:info@med360.mu" style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: '1.05rem', textDecoration: 'none' }}>info@med360.mu</a>
+                    <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: 'var(--color-primary)', fontWeight: 700, fontSize: '1.05rem', textDecoration: 'none' }}>{CONTACT_EMAIL}</a>
                   </div>
                 </div>
 
@@ -272,10 +281,10 @@ export function ContactPage() {
                       {l10n('Nos Bureaux (Visit Our Office)', 'Nou Biro', 'Visit Our Office')}
                     </h3>
                     <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                      <strong>Med360</strong><br />
-                      Sedeco Ltée, 4ème étage, IKS Building<br />
-                      Cnr R. Seeneevassen & Farquhar Streets<br />
-                      Port-Louis 11613, Mauritius
+                      <strong>{SITE_NAME}</strong><br />
+                      {SITE_ADDRESS.building}<br />
+                      {SITE_ADDRESS.street}<br />
+                      {SITE_ADDRESS.locality} {SITE_ADDRESS.postalCode}, {SITE_ADDRESS.country}
                     </p>
                   </div>
                 </div>
@@ -290,9 +299,9 @@ export function ContactPage() {
                     </h3>
                     <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: 0 }}>
                       {l10n(
-                        'Lundi – Samedi : 08h00 – 19h00 (MUT)\nService d\'astreinte WhatsApp actif 7j/7',
-                        'Lindi - Samdi: 08:00 - 19:00 (MUT)\nWhatsApp ouver 7 zour lor 7',
-                        'Monday – Saturday: 8:00 AM – 7:00 PM (MUT)\nWhatsApp helpline active 7 days a week'
+                        OPERATING_HOURS.fr,
+                        OPERATING_HOURS.kr,
+                        OPERATING_HOURS.en
                       ).split('\n').map((line, i) => <span key={i}>{line}<br /></span>)}
                     </p>
                   </div>
@@ -508,8 +517,8 @@ export function ContactPage() {
           }}>
             {/* Interactive Google Maps Embed with Pinpoint */}
             <iframe
-              title="Med360 Location Map - IKS Building Port Louis"
-              src="https://maps.google.com/maps?q=IKS+Building,+Cnr+R.+Seeneevassen+%26+Farquhar+Streets,+Port+Louis,+Mauritius&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              title={`${SITE_NAME} Location Map - ${SITE_ADDRESS.locality}`}
+              src={SITE_ADDRESS.mapEmbedUrl}
               width="100%"
               height="460"
               style={{ border: 0, display: 'block' }}
@@ -534,16 +543,16 @@ export function ContactPage() {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                 <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
-                <strong style={{ fontSize: '0.95rem', color: 'var(--color-primary)' }}>Med360 Ltd (Siège Social)</strong>
+                <strong style={{ fontSize: '0.95rem', color: 'var(--color-primary)' }}>{LEGAL_NAME} (Siège Social)</strong>
               </div>
               <p style={{ margin: '0 0 0.75rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
-                Sedeco Ltée, 4ème étage, IKS Building<br />
-                Cnr R. Seeneevassen & Farquhar Streets<br />
-                Port-Louis 11613, Mauritius
+                {SITE_ADDRESS.building}<br />
+                {SITE_ADDRESS.street}<br />
+                {SITE_ADDRESS.locality} {SITE_ADDRESS.postalCode}, {SITE_ADDRESS.country}
               </p>
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=IKS+Building+Farquhar+Street+Port+Louis+Mauritius"
+                  href={SITE_ADDRESS.mapDirectionsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-primary btn-sm"

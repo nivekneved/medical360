@@ -1,6 +1,7 @@
 import { AlertTriangle, Stethoscope, Siren, TrendingDown, Building2, Link2, MessageCircleQuestion, LifeBuoy } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
+import { LEGAL_NAME, CONTACT_EMAIL, WHATSAPP_DISPLAY, SITE_ADDRESS } from '../../core/config/site';
 
 export function MedicalDisclaimerPage() {
   const { i18n } = useTranslation();
@@ -130,7 +131,7 @@ export function MedicalDisclaimerPage() {
           }}>
             <LifeBuoy size={20} color="var(--color-primary)" style={{ flexShrink: 0, marginTop: 2 }} />
             <p style={{ margin: 0, fontSize: '0.95rem' }}>
-              Questions about this disclaimer? Contact <strong>Med360 Ltd</strong> — <a href="mailto:info@med360.mu" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>info@med360.mu</a> • WhatsApp +230 5918 8275 • Sedeco Ltée, 4ème étage, IKS Building, Port-Louis 11613, Mauritius. See also our <a href="/terms" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>Terms of Service</a> and <a href="/privacy" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>Privacy Policy</a>.
+              Questions about this disclaimer? Contact <strong>{LEGAL_NAME}</strong> — <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: 'var(--color-primary)', fontWeight: 600 }}>{CONTACT_EMAIL}</a> • WhatsApp {WHATSAPP_DISPLAY} • {SITE_ADDRESS.short}. See also our <a href="/terms" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>Terms of Service</a> and <a href="/privacy" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>Privacy Policy</a>.
             </p>
           </div>
 

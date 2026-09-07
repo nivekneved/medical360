@@ -3,6 +3,16 @@ import { MessageCircle, Phone, Mail, MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { usePlatformSettings } from '../../core/services/settings.service';
+import { 
+  WHATSAPP_DISPLAY, 
+  PHONE_DISPLAY, 
+  PHONE_RAW, 
+  CONTACT_EMAIL, 
+  SITE_ADDRESS, 
+  SITE_NAME, 
+  PARENT_NGO_NAME, 
+  SITE_METRICS 
+} from '../../core/config/site';
 import './Footer.css';
 
 export function Footer() {
@@ -18,7 +28,7 @@ export function Footer() {
             <Link to="/" className="footer__logo">
               <img 
                 src="/assets/logo.png" 
-                alt="Med360" 
+                alt={SITE_NAME} 
                 className="footer__logo-img" 
               />
             </Link>
@@ -27,16 +37,16 @@ export function Footer() {
             </p>
             <div className="footer__contact">
               <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="footer__contact-item">
-                <MessageCircle size={16} /> +230 5918 8275
+                <MessageCircle size={16} /> {WHATSAPP_DISPLAY}
               </a>
-              <a href="tel:+23059188275" className="footer__contact-item">
-                <Phone size={16} /> +230 5918 8275
+              <a href={`tel:+${PHONE_RAW}`} className="footer__contact-item">
+                <Phone size={16} /> {PHONE_DISPLAY}
               </a>
-              <a href="mailto:info@med360.mu" className="footer__contact-item">
-                <Mail size={16} /> info@med360.mu
+              <a href={`mailto:${CONTACT_EMAIL}`} className="footer__contact-item">
+                <Mail size={16} /> {CONTACT_EMAIL}
               </a>
               <div className="footer__contact-item" style={{ fontSize: '0.8rem', lineHeight: 1.4 }}>
-                <MapPin size={16} style={{ flexShrink: 0 }} /> Sedeco Ltée, 4ème étage, IKS Building, Port-Louis 11613, Mauritius
+                <MapPin size={16} style={{ flexShrink: 0 }} /> {SITE_ADDRESS.short}
               </div>
             </div>
           </div>
@@ -100,12 +110,12 @@ export function Footer() {
           lineHeight: 1.6,
           textAlign: 'center',
         }}>
-          Med360 is a social enterprise owned by the NGO Enn Rev Enn Sourir. Backed by 10+ years of humanitarian care, 100% of company profits are returned to the NGO to fund medical treatments and surgeries for patients in need. Medical diagnoses and surgical procedures are performed by accredited partner hospitals and licensed doctors.
+          {SITE_NAME} is a social enterprise owned by the NGO {PARENT_NGO_NAME}. Backed by {SITE_METRICS.yearsExperience} of humanitarian care, {SITE_METRICS.impactPercent} of company profits are returned to the NGO to fund medical treatments and surgeries for patients in need. Medical diagnoses and surgical procedures are performed by accredited partner hospitals and licensed doctors.
         </div>
 
         <div className="footer__bottom">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-            <p>© {new Date().getFullYear()} Med360. All rights reserved. | Port Louis, Mauritius</p>
+            <p>© {new Date().getFullYear()} {SITE_NAME}. All rights reserved. | {SITE_ADDRESS.locality}, {SITE_ADDRESS.country}</p>
             <p style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>
               Designed & Developed with <span style={{ color: '#ef4444' }}>♥</span> by <strong style={{ color: '#10b981' }}>Deven</strong>
             </p>
