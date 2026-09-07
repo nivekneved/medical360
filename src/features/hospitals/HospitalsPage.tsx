@@ -115,8 +115,8 @@ export function HospitalsPage() {
   return (
     <main className="hospitals-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title="Premier Partner Hospitals in India | Medical 360"
-        description="Explore 15 premier JCI & NABH accredited hospitals across India (Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR) partnered with Medical 360."
+        title="Premier Partner Hospitals in India | Med360"
+        description="Explore 15 premier JCI & NABH accredited hospitals across India (Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR) partnered with Med360."
         canonical="/hospitals"
       />
       {/* Header Banner */}
@@ -130,10 +130,10 @@ export function HospitalsPage() {
           </h1>
           <p className="text-lead" style={{ maxWidth: '850px' }}>
             {isFr 
-              ? 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. Grâce à notre réseau, les patients peuvent obtenir des avis médicaux, des plans de traitement et l\'accès à des soins médicaux et chirurgicaux de pointe selon leur diagnostic individuel et leurs besoins.'
+              ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. Grâce à notre réseau, les patients peuvent obtenir des avis médicaux, des plans de traitement et l\'accès à des soins médicaux et chirurgicaux de pointe selon leur diagnostic individuel et leurs besoins.'
               : isKr
-              ? 'Medical 360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Gagn lavi spesialis, plan tretman ek akse ar bann swen medikal ek sirirzikal de pwent.'
-              : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Through our network, patients can obtain medical opinions, treatment plans and access to advanced medical and surgical care according to their individual diagnosis and needs.'}
+              ? 'Med360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Gagn lavi spesialis, plan tretman ek akse ar bann swen medikal ek sirirzikal de pwent.'
+              : 'Med360 facilitates access to established hospitals and specialist medical teams across India. Through our network, patients can obtain medical opinions, treatment plans and access to advanced medical and surgical care according to their individual diagnosis and needs.'}
           </p>
         </div>
       </section>

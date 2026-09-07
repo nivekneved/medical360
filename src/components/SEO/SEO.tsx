@@ -71,8 +71,8 @@ export function SEO({
 
       {/* ── 5. Twitter Card Protocol ── */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@Medical360Mu" />
-      <meta name="twitter:creator" content="@Medical360Mu" />
+      <meta name="twitter:site" content="@Med360Mu" />
+      <meta name="twitter:creator" content="@Med360Mu" />
       <meta name="twitter:title" content={cleanTitle} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullImageUrl} />

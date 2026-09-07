@@ -103,7 +103,7 @@ export function ContactPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title="When Your Health Can’t Wait, Neither Should You · Contact Medical 360 Ltd"
+        title="When Your Health Can’t Wait, Neither Should You · Contact Med360"
         description="Speak to a Patient Navigator today. Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Mauritius. WhatsApp: +230 5918 8275."
         canonical="/contact"
       />
@@ -119,9 +119,9 @@ export function ContactPage() {
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Faire face à un diagnostic ou envisager un traitement à l\'étranger soulève de nombreuses questions. Vous n\'avez pas à parcourir ce chemin seul. Que vous recherchiez un deuxième avis médical, une consultation de spécialiste, des soins à l\'étranger ou une assistance complète, l\'équipe de Medical 360 est prête à vous écouter et vous guider vers la prochaine étape.',
-              'Gagn enn diagnostik ouswa pans al swanye a letranze amenn boukou kestion. Ou pa tousel dan sa vwayaz la. Ki ou pe rod enn deziem lavi dokter, telekonsiltasion spesialis ouswa lasistans konple, lekip Medical 360 pre pou ekout ou ek gid ou.',
-              'Facing a diagnosis or considering treatment abroad can bring many questions. You don\'t have to navigate the journey alone. Whether you are looking for a second medical opinion, specialist consultation, treatment abroad, hospital recommendation or complete medical travel assistance, the Medical 360 team is ready to listen, understand your needs and guide you towards the next step.'
+              'Faire face à un diagnostic ou envisager un traitement à l\'étranger soulève de nombreuses questions. Vous n\'avez pas à parcourir ce chemin seul. Que vous recherchiez un deuxième avis médical, une consultation de spécialiste, des soins à l\'étranger ou une assistance complète, l\'équipe de Med360 est prête à vous écouter et vous guider vers la prochaine étape.',
+              'Gagn enn diagnostik ouswa pans al swanye a letranze amenn boukou kestion. Ou pa tousel dan sa vwayaz la. Ki ou pe rod enn deziem lavi dokter, telekonsiltasion spesialis ouswa lasistans konple, lekip Med360 pre pou ekout ou ek gid ou.',
+              'Facing a diagnosis or considering treatment abroad can bring many questions. You don\'t have to navigate the journey alone. Whether you are looking for a second medical opinion, specialist consultation, treatment abroad, hospital recommendation or complete medical travel assistance, the Med360 team is ready to listen, understand your needs and guide you towards the next step.'
             ))}
           </p>
         </div>
@@ -228,7 +228,7 @@ export function ContactPage() {
                       {l10n('Nos Bureaux (Visit Our Office)', 'Nou Biro', 'Visit Our Office')}
                     </h3>
                     <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                      <strong>Medical 360 Ltd</strong><br />
+                      <strong>Med360</strong><br />
                       Sedeco Ltée, 4ème étage, IKS Building<br />
                       Cnr R. Seeneevassen & Farquhar Streets<br />
                       Port-Louis 11613, Mauritius

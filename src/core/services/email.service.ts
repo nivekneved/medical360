@@ -151,7 +151,7 @@ export function renderEmailHtml(
 
   const sections: string[] = [];
 
-  // 1. Banner Component with Official Medical360 Logo
+  // 1. Banner Component with Official Med360 Logo
   if (config.banner?.enabled) {
     sections.push(`
       <div style="background-color: ${config.banner.bgColor}; color: ${config.banner.textColor}; padding: 22px 24px; border-radius: 8px 8px 0 0; text-align: left;">

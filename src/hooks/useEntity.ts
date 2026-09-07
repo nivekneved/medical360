@@ -1,5 +1,5 @@
 /**
- * Medical360 Universal Entity Hooks
+ * Med360 Universal Entity Hooks
  * Consolidates data fetching, L1 RAM cache peeking, loading, and error states
  * for all entities into 2 polymorphic hooks instead of separate per-entity implementations.
  */

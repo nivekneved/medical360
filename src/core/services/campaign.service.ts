@@ -352,7 +352,7 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
     <div style="background-color: #f1f5f9; padding: 24px 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
       <div style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
         
-        <!-- Header Banner with Official Medical360 Logo -->
+        <!-- Header Banner with Official Med360 Logo -->
         <div style="background-color: ${t.bannerBg}; color: ${t.bannerTextColor}; padding: 20px 24px; text-align: left;">
           <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
             <tr>

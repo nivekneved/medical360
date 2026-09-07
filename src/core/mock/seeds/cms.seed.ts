@@ -49,9 +49,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Avek Dignite ki Ou Merite.'
       },
       heroSubtitle: {
-        en: 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.',
-        fr: 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale jusqu\'à vos soins à l\'étranger et votre retour à domicile.',
-        kr: 'Medical 360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
+        en: 'Med360 facilitates access to established hospitals and specialist medical teams across India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.',
+        fr: 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale jusqu\'à vos soins à l\'étranger et votre retour à domicile.',
+        kr: 'Med360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
       },
       heroPrimaryCta: {
         en: 'BOOK YOUR MEDICAL CONSULTATION',
@@ -84,18 +84,18 @@ export const cmsSeed: Record<string, CmsPage> = {
       exploreBtnText: { en: 'Explore Care & Procedures', fr: 'Découvrir les Actes & Soins', kr: 'Get Bann Tretman' },
       processLabel: { en: 'How It Works · 6-Step Journey', fr: 'Parcours Patient en 6 Étapes', kr: 'Parcours Pasian an 6 Letap' },
       processTitle: { en: 'Your Healthcare Journey, Made Simple', fr: 'Votre Parcours de Soins, Simple & Coordonné', kr: 'Ou Vwayaz Lasante, Sinp & Kordone' },
-      processDesc: { en: 'Seeking medical treatment abroad can feel complicated. Medical 360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.', fr: 'Se faire soigner à l\'étranger peut sembler complexe. Medical 360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à vos soins à l\'étranger et votre retour à domicile.', kr: 'Al fer swen a letranze kapav paret konplike. Medical 360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.' },
+      processDesc: { en: 'Seeking medical treatment abroad can feel complicated. Med360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.', fr: 'Se faire soigner à l\'étranger peut sembler complexe. Med360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à vos soins à l\'étranger et votre retour à domicile.', kr: 'Al fer swen a letranze kapav paret konplike. Med360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.' },
       processStartBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER VOTRE CONSULTATION MÉDICALE', kr: 'REZERV OU KONSILTASION MEDIKAL' },
       networkLabel: { en: 'India Hospital Network', fr: 'Réseau Hospitalier en Inde', kr: 'Rezo Lopital dan L\'inde' },
       networkTitle: { en: 'Our Hospital Network at a Glance', fr: 'Notre Réseau Hospitalier en un Coup d\'Œil', kr: 'Nou Rezo Lopital dan L\'inde' },
-      networkDesc: { en: 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.', fr: 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation et l\'expertise clinique.', kr: 'Medical 360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.' },
+      networkDesc: { en: 'Med360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.', fr: 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation et l\'expertise clinique.', kr: 'Med360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.' },
       networkViewAllBtn: { en: 'Browse All 15 Partner Hospitals', fr: 'Découvrir les 15 Hôpitaux Partenaires', kr: 'Get Tou Bann 15 Lopital' },
       whyBadge: { en: '✦ Social Impact Model', fr: '✦ Modèle Social & Philosophie', kr: '✦ Antrepriz Sosyal' },
       whyTitle: { en: 'Born From a Decade of Compassion. Built Around the Patient.', fr: 'Né d\'une Décennie de Compassion. Centré sur le Patient.', kr: 'Ne depi 10 Banlane Konpasion. Santre lor Pasian.' },
       whyDesc: {
-        en: 'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.',
-        fr: 'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins bénéficient d\'une coordination professionnelle → Medical 360 génère des revenus durables → ces revenus soutiennent les patients vulnérables d\'Enn Rev Enn Sourir.',
-        kr: 'Medical 360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn kordonasion medikal profesyonel → Medical 360 kre reveni dirab pou ed bann pasian vilnerab.'
+        en: 'Med360 is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional medical coordination → Med360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.',
+        fr: 'Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins bénéficient d\'une coordination professionnelle → Med360 génère des revenus durables → ces revenus soutiennent les patients vulnérables d\'Enn Rev Enn Sourir.',
+        kr: 'Med360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn kordonasion medikal profesyonel → Med360 kre reveni dirab pou ed bann pasian vilnerab.'
       },
       whyImageBadge: { en: 'No Dividends · 100% Impact', fr: 'Zéro Dividende · 100% Solidaire', kr: 'Zero Dividann · 100% Sosyal' },
       whyAboutBtn: { en: 'Read Our Story & Affiliations (UICC)', fr: 'Lire Notre Histoire & Nos Affiliations (UICC)', kr: 'Lir Nou Zistwar & Afiliasion (UICC)' },
@@ -129,9 +129,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Nou Zistwar'
       },
       heroDesc: {
-        en: 'Born From a Decade of Compassion. Built Around the Patient. Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.',
-        fr: 'Né d\'une décennie de compassion. Centré sur le patient. Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients.',
-        kr: 'Ne depi enn deseni konpasion. Santre lor pasian. Medical 360 Ltd li enn linisiativ antrepriz sosial l\'ONG Enn Rev Enn Sourir pou kordonn swen pasian avek dignite.'
+        en: 'Born From a Decade of Compassion. Built Around the Patient. Med360 is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.',
+        fr: 'Né d\'une décennie de compassion. Centré sur le patient. Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients.',
+        kr: 'Ne depi enn deseni konpasion. Santre lor pasian. Med360 li enn linisiativ antrepriz sosial l\'ONG Enn Rev Enn Sourir pou kordonn swen pasian avek dignite.'
       },
       missionLabel: {
         en: '✦ Genèse & Vocation',
@@ -144,9 +144,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Ne depi 10 Banlane Konpasion. Santre lor Pasian.'
       },
       missionP1: {
-        en: 'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.',
-        fr: 'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients et de leurs familles.',
-        kr: 'Medical 360 Ltd li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir, ne depi plizir lane leksperyans pou sipor bann pasian ek fami.'
+        en: 'Med360 is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.',
+        fr: 'Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients et de leurs familles.',
+        kr: 'Med360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir, ne depi plizir lane leksperyans pou sipor bann pasian ek fami.'
       },
       missionP2: {
         en: 'Since its establishment in 2016, Enn Rev Enn Sourir has worked to ensure that access to specialised healthcare is not determined by a family\'s financial circumstances. The organisation has supported children and adults requiring specialised medical care in Mauritius and abroad, including medical coordination, treatment access, financial assistance, travel arrangements and psychosocial support. This patient-centred mission is also reflected in the NGO\'s public and international profiles. (UICC)',
@@ -183,9 +183,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Ou Vwayaz Lasante, Sinp & Kordone'
       },
       heroDesc: {
-        en: 'Seeking medical treatment abroad can feel complicated. Medical 360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.',
-        fr: 'Se faire soigner à l\'étranger peut sembler complexe. Medical 360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à votre traitement à l\'étranger et votre retour à domicile.',
-        kr: 'Al fer swen a letranze kapav paret konplike. Medical 360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.'
+        en: 'Seeking medical treatment abroad can feel complicated. Med360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.',
+        fr: 'Se faire soigner à l\'étranger peut sembler complexe. Med360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à votre traitement à l\'étranger et votre retour à domicile.',
+        kr: 'Al fer swen a letranze kapav paret konplike. Med360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.'
       },
     }
   },
@@ -205,9 +205,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Nou Rezo Lopital dan L\'inde'
       },
       heroDesc: {
-        en: 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.',
-        fr: 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels et l\'accréditation internationale.',
-        kr: 'Medical 360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
+        en: 'Med360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.',
+        fr: 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels et l\'accréditation internationale.',
+        kr: 'Med360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
       },
       searchPlaceholder: {
         en: 'Search hospitals by name, city, or specialty...',
@@ -261,9 +261,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Kan Ou Lasante Pa Kapav Atann, Ou Osi Pa Bizin Atann.'
       },
       heroDesc: {
-        en: 'Facing a diagnosis or considering treatment abroad can bring many questions. You don\'t have to navigate the journey alone. Whether you are looking for a second medical opinion, specialist consultation, treatment abroad, hospital recommendation or complete medical travel assistance, the Medical 360 team is ready to listen, understand your needs and guide you towards the next step.',
-        fr: 'Faire face à un diagnostic ou envisager un traitement à l\'étranger soulève de nombreuses questions. Vous n\'avez pas à parcourir ce chemin seul. L\'équipe de Medical 360 est prête à vous écouter et vous guider vers la prochaine étape.',
-        kr: 'Gagn enn diagnostik ouswa pans al swanye a letranze amenn boukou kestion. Ou pa tousel dan sa vwayaz la. Lekip Medical 360 pre pou ekout ou ek gid ou.'
+        en: 'Facing a diagnosis or considering treatment abroad can bring many questions. You don\'t have to navigate the journey alone. Whether you are looking for a second medical opinion, specialist consultation, treatment abroad, hospital recommendation or complete medical travel assistance, the Med360 team is ready to listen, understand your needs and guide you towards the next step.',
+        fr: 'Faire face à un diagnostic ou envisager un traitement à l\'étranger soulève de nombreuses questions. Vous n\'avez pas à parcourir ce chemin seul. L\'équipe de Med360 est prête à vous écouter et vous guider vers la prochaine étape.',
+        kr: 'Gagn enn diagnostik ouswa pans al swanye a letranze amenn boukou kestion. Ou pa tousel dan sa vwayaz la. Lekip Med360 pre pou ekout ou ek gid ou.'
       },
       reachUsTitle: {
         en: 'Get in Touch',
@@ -271,9 +271,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Pran Kontak'
       },
       officeAddress: {
-        en: 'Medical 360 Ltd, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Mauritius',
-        fr: 'Medical 360 Ltd, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Maurice',
-        kr: 'Medical 360 Ltd, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Moris'
+        en: 'Med360, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Mauritius',
+        fr: 'Med360, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Maurice',
+        kr: 'Med360, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Moris'
       },
       hoursText: {
         en: 'Monday – Saturday: 8:00 AM – 7:00 PM (MUT)\nWhatsApp helpline active 7 days a week',
@@ -325,9 +325,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Kondision Zeneral Servis & Fasilitasion'
       },
       heroDesc: {
-        en: 'Important terms and conditions governing medical facilitation services provided by Medical 360 Ltd in Mauritius (social enterprise of NGO Enn Rev Enn Sourir).',
-        fr: 'Conditions régissant les services de facilitation médicale fournis par Medical 360 Ltd à l\'Île Maurice (entreprise sociale de l\'ONG Enn Rev Enn Sourir).',
-        kr: 'Bann kondision konsernan bann servis fasilitasion medikal par Medical 360 Ltd dan Moris (antrepriz sosial l\'ONG Enn Rev Enn Sourir).'
+        en: 'Important terms and conditions governing medical facilitation services provided by Med360 in Mauritius (social enterprise of NGO Enn Rev Enn Sourir).',
+        fr: 'Conditions régissant les services de facilitation médicale fournis par Med360 à l\'Île Maurice (entreprise sociale de l\'ONG Enn Rev Enn Sourir).',
+        kr: 'Bann kondision konsernan bann servis fasilitasion medikal par Med360 dan Moris (antrepriz sosial l\'ONG Enn Rev Enn Sourir).'
       },
       lastUpdated: {
         en: 'Last Updated: 2026',
@@ -342,19 +342,19 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Global',
     content: {
       tagline: {
-        en: 'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir. From Mauritius to your treatment — we\'re with you every step of the way.',
-        fr: 'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. De Maurice à votre traitement — à vos côtés à chaque étape.',
-        kr: 'Medical 360 Ltd li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Depi Moris ziska ou tretman — nou ar ou sak letap.'
+        en: 'Med360 is a social enterprise initiative of Enn Rev Enn Sourir. From Mauritius to your treatment — we\'re with you every step of the way.',
+        fr: 'Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. De Maurice à votre traitement — à vos côtés à chaque étape.',
+        kr: 'Med360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Depi Moris ziska ou tretman — nou ar ou sak letap.'
       },
       copyrightText: {
-        en: 'Medical 360 Ltd. All rights reserved. Social Enterprise Initiative of Enn Rev Enn Sourir.',
-        fr: 'Medical 360 Ltd. Tous droits réservés. Initiative d\'Entreprise Sociale d\'Enn Rev Enn Sourir.',
-        kr: 'Medical 360 Ltd. Tou drwa rezerve. Linisiativ Antrepriz Sosyal l\'ONG Enn Rev Enn Sourir.'
+        en: 'Med360. All rights reserved. Social Enterprise Initiative of Enn Rev Enn Sourir.',
+        fr: 'Med360. Tous droits réservés. Initiative d\'Entreprise Sociale d\'Enn Rev Enn Sourir.',
+        kr: 'Med360. Tou drwa rezerve. Linisiativ Antrepriz Sosyal l\'ONG Enn Rev Enn Sourir.'
       },
       disclaimer: {
-        en: 'Medical 360 follows a No Dividends philosophy. Patients who can afford their healthcare receive professional medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.',
-        fr: 'Medical 360 applique une politique stricte sans dividende. Les revenus générés par la conciergerie soutiennent directement la mission d\'Enn Rev Enn Sourir pour soigner les patients vulnérables.',
-        kr: 'Medical 360 swiv model Zero Dividann. Reveni ki gagne al direkteman dan l\'ONG Enn Rev Enn Sourir pou pey swen bann pasian vilnerab.'
+        en: 'Med360 follows a No Dividends philosophy. Patients who can afford their healthcare receive professional medical coordination → Med360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.',
+        fr: 'Med360 applique une politique stricte sans dividende. Les revenus générés par la conciergerie soutiennent directement la mission d\'Enn Rev Enn Sourir pour soigner les patients vulnérables.',
+        kr: 'Med360 swiv model Zero Dividann. Reveni ki gagne al direkteman dan l\'ONG Enn Rev Enn Sourir pou pey swen bann pasian vilnerab.'
       },
       servicesTitle: { en: 'Our Services', fr: 'Nos Services', kr: 'Nou Bann Servis' },
       quickLinksTitle: { en: 'Quick Links', fr: 'Liens Rapides', kr: 'Bann Lien Rapid' },
@@ -371,14 +371,14 @@ export const cmsSeed: Record<string, CmsPage> = {
       position: 'above',
       speedSeconds: '45',
       badgeText: {
-        en: 'Medical 360 Ltd',
-        fr: 'Medical 360 Ltd',
-        kr: 'Medical 360 Ltd',
+        en: 'Med360',
+        fr: 'Med360',
+        kr: 'Med360',
       },
       messageText: {
-        en: "Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional, personalised medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients. No dividends. No compromise on dignity. Patient first. Always.",
-        fr: "Medical 360 Ltd est une initiative d'entreprise sociale d'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins bénéficient d'une coordination médicale professionnelle et personnalisée → Medical 360 génère des revenus durables → ces revenus contribuent à la mission sociale d'Enn Rev Enn Sourir et soutiennent les patients vulnérables. Zéro dividende. Aucun compromis sur la dignité. Le patient d'abord. Toujours.",
-        kr: "Medical 360 Ltd li enn linisiativ sosial l'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn kordonasion medikal profesyonel → Medical 360 kre reveni dirab pou ed bann pasian vilnerab. Zero dividann. Oken konpromi lor dignite. Pasian avan tou. Touzour.",
+        en: "Med360 is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional, personalised medical coordination → Med360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients. No dividends. No compromise on dignity. Patient first. Always.",
+        fr: "Med360 est une initiative d'entreprise sociale d'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins bénéficient d'une coordination médicale professionnelle et personnalisée → Med360 génère des revenus durables → ces revenus contribuent à la mission sociale d'Enn Rev Enn Sourir et soutiennent les patients vulnérables. Zéro dividende. Aucun compromis sur la dignité. Le patient d'abord. Toujours.",
+        kr: "Med360 li enn linisiativ sosial l'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn kordonasion medikal profesyonel → Med360 kre reveni dirab pou ed bann pasian vilnerab. Zero dividann. Oken konpromi lor dignite. Pasian avan tou. Touzour.",
       },
       linkUrl: {
         en: '/about',

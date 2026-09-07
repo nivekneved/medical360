@@ -1,5 +1,5 @@
 /**
- * Medical360 Database Backup & Restore Service
+ * Med360 Database Backup & Restore Service
  * Provides full database exports in JSON and SQL, historical snapshot storage,
  * and point-in-time database restoration with automated rollback safeguards.
  */
@@ -165,7 +165,7 @@ export async function downloadJsonBackup(existingSnapshot?: DatabaseBackup, cust
   saveBackupToHistory(snapshot);
 
   const exportPayload = {
-    format: 'Medical360 Database Dump',
+    format: 'Med360 Database Dump',
     version: snapshot.schemaVersion,
     exportedAt: snapshot.createdAt,
     metadata: {
@@ -208,7 +208,7 @@ export function generateSqlDump(snapshot: DatabaseBackup): string {
   };
 
   lines.push(`-- ============================================================`);
-  lines.push(`-- Medical360 PostgreSQL Database Backup Dump`);
+  lines.push(`-- Med360 PostgreSQL Database Backup Dump`);
   lines.push(`-- ID: ${snapshot.id}`);
   lines.push(`-- Label: ${snapshot.label}`);
   lines.push(`-- Exported At: ${snapshot.createdAt}`);

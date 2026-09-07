@@ -83,7 +83,7 @@ export function HomePage() {
   ];
 
   const WHY_CHOOSE = [
-    { icon: Award,       title: isFr ? 'Né d\'une Décennie de Compassion' : isKr ? 'Ne depi 10 Banlane Konpasion' : 'Born From a Decade of Compassion',         desc: isFr ? 'Medical 360 Ltd est une initiative d\'entreprise sociale née de l\'ONG Enn Rev Enn Sourir (créée en 2016).' : isKr ? 'Medical 360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir (kree an 2016).' : 'Medical 360 Ltd is a social enterprise initiative of NGO Enn Rev Enn Sourir (established 2016).' },
+    { icon: Award,       title: isFr ? 'Né d\'une Décennie de Compassion' : isKr ? 'Ne depi 10 Banlane Konpasion' : 'Born From a Decade of Compassion',         desc: isFr ? 'Med360 est une initiative d\'entreprise sociale née de l\'ONG Enn Rev Enn Sourir (créée en 2016).' : isKr ? 'Med360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir (kree an 2016).' : 'Med360 is a social enterprise initiative of NGO Enn Rev Enn Sourir (established 2016).' },
     { icon: Globe2,      title: isFr ? '15 Grands Hôpitaux en Inde' : isKr ? '15 Gran Lopital dan L\'inde' : '15 Premier Indian Hospital Hubs',   desc: isFr ? 'Accès direct aux centres d\'excellence à Chennai, Bengaluru, Hyderabad, Mumbai et Delhi NCR.' : isKr ? 'Akse direk ar bann gran sant medikal dan Chennai, Bengaluru, Hyderabad, Mumbai ek Delhi.' : 'Direct access to established clinical departments and accredited hospital hubs across India.' },
     { icon: ShieldCheck, title: isFr ? 'Éthique & Dignité du Patient' : isKr ? 'Etik & Dignite Pasian' : 'Ethics, Transparency & Dignity',  desc: isFr ? 'Un modèle où l\'éthique, le choix éclairé, les droits du patient et la dignité passent avant les intérêts commerciaux.' : isKr ? 'Tou kler, respe drwa pasian ek dignite avan tou lintere komersial.' : 'Informed choices and patient rights come before commercial interests. No hidden markups.' },
     { icon: HeartPulse,  title: isFr ? 'Zéro Dividende. Votre Santé Compte.' : isKr ? 'Zero Dividann. Ou Lasante Kont.' : 'No Dividends. Your Healthcare Matters.', desc: isFr ? 'Votre parcours de soins crée une opportunité de soutenir le parcours de soins d\'un autre patient vulnérable.' : isKr ? 'Ou vwayaz lasante kre enn loportinite pou soutenir vwayaz lasante enn lot pasian.' : 'Your healthcare journey creates an opportunity to support another healthcare journey.' },
@@ -96,7 +96,7 @@ export function HomePage() {
     <main className="home">
       <SEO 
         title="World-Class Healthcare. Without the Wait. With the Dignity You Deserve." 
-        description="Medical 360 coordinates world-class healthcare, specialist opinions, and patient travel from Mauritius to 15 accredited hospitals across India." 
+        description="Med360 coordinates world-class healthcare, specialist opinions, and patient travel from Mauritius to 15 accredited hospitals across India." 
         canonical="/"
         schema={schema}
       />
@@ -128,10 +128,10 @@ export function HomePage() {
             </h1>
             <p className="hero__subtitle">
               {isFr 
-                ? 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale et téléconsultation jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
+                ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale et téléconsultation jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
                 : isKr
-                ? 'Medical 360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
-                : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.'
+                ? 'Med360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
+                : 'Med360 facilitates access to established hospitals and specialist medical teams across India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.'
               }
             </p>
             
@@ -264,10 +264,10 @@ export function HomePage() {
             </h2>
             <p className="text-lead" style={{ color: 'rgba(255,255,255,0.8)' }}>
               {isFr 
-                ? 'Se faire soigner à l\'étranger peut sembler complexe. Medical 360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
+                ? 'Se faire soigner à l\'étranger peut sembler complexe. Med360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
                 : isKr
-                ? 'Al fer swen a letranze kapav paret konplike. Medical 360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.'
-                : 'Seeking medical treatment abroad can feel complicated. Medical 360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.'}
+                ? 'Al fer swen a letranze kapav paret konplike. Med360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.'
+                : 'Seeking medical treatment abroad can feel complicated. Med360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.'}
             </p>
           </div>
           <div className="process-steps-grid">
@@ -308,10 +308,10 @@ export function HomePage() {
             </h2>
             <p className="text-lead">
               {isFr
-                ? 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation, l\'expertise clinique et les technologies de pointe.'
+                ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation, l\'expertise clinique et les technologies de pointe.'
                 : isKr
-                ? 'Medical 360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
-                : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.'}
+                ? 'Med360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
+                : 'Med360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.'}
             </p>
           </div>
           <div className="hospitals-grid">
@@ -380,10 +380,10 @@ export function HomePage() {
               </h2>
               <p className="text-lead">
                 {isFr
-                  ? 'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins reçoivent une coordination médicale professionnelle et personnalisée → Medical 360 génère des revenus durables → ces revenus contribuent à la mission sociale d\'Enn Rev Enn Sourir et soutiennent les patients vulnérables.'
+                  ? 'Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins reçoivent une coordination médicale professionnelle et personnalisée → Med360 génère des revenus durables → ces revenus contribuent à la mission sociale d\'Enn Rev Enn Sourir et soutiennent les patients vulnérables.'
                   : isKr
-                  ? 'Medical 360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn enn kordonasion medikal profesyonel → Medical 360 kre reveni dirab → sa reveni la ed l\'ONG pou sov bann pasian vilnerab.'
-                  : 'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.'}
+                  ? 'Med360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn enn kordonasion medikal profesyonel → Med360 kre reveni dirab → sa reveni la ed l\'ONG pou sov bann pasian vilnerab.'
+                  : 'Med360 is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional medical coordination → Med360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.'}
               </p>
               <div className="why-callout-box">
                 <div className="why-callout-tagline">
