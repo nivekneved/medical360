@@ -14,7 +14,7 @@ import './Home.css';
 
 export function HomePage() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const { specialties, loading: specLoading } = useFeaturedSpecialties();
   const { hospitals, loading: hospLoading }   = useFeaturedHospitals();
   const { caseStudies, loading: csLoading }   = useFeaturedCaseStudies();
@@ -38,55 +38,55 @@ export function HomePage() {
 
   const STATS = [
     { icon: Users,      value: '+3,000',    label: isFr ? '+3 000 Patients Accompagnés' : isKr ? '+3,000 Pasian Asiste' : '+3,000 Patients Assisted' },
-    { icon: Building2,  value: '15',        label: isFr ? 'Hôpitaux Partenaires en Inde' : isKr ? 'Lopital Partener dan L\'inde' : 'Premier Indian Hospitals' },
-    { icon: Award,      value: '10+ Years', label: isFr ? 'Années d\'Expérience Humaine' : isKr ? 'Banlane D\'experyans Imin' : 'Years Caring for Patients' },
-    { icon: HeartPulse, value: '100%',      label: isFr ? 'Bénéfices Reversés à l\'ONG' : isKr ? '100% Profi pour l\'ONG' : 'No Dividends · 100% Impact' },
+    { icon: Building2,  value: '15',        label: isFr ? 'Pôles Hospitaliers en Inde' : isKr ? 'Lopital Partener dan L\'inde' : 'Premier Indian Hospital Hubs' },
+    { icon: Award,      value: '10+ Years', label: isFr ? 'Années de Dévouement' : isKr ? 'Banlane D\'experyans Imin' : 'Years of Compassion' },
+    { icon: HeartPulse, value: '100%',      label: isFr ? 'Zéro Dividende · Modèle Solidaire' : isKr ? 'Zero Dividann · 100% Sosyal' : 'No Dividends · 100% Impact' },
   ];
 
   const PROCESS_STEPS = [
     {
       num: '01',
       icon: FileText,
-      title: isFr ? '01 — Vos Besoins Médicaux' : isKr ? '01 — Dekrir Ou Bezwin' : '01 — Tell Us About Your Medical Needs',
-      desc: isFr ? 'Partagez vos rapports et résultats. Un Patient Navigator dédié organise un échange approfondi avec vous et votre famille.' : isKr ? 'Partaz ou bann rapor medikal. Enn kordinater pou koz ar ou ek ou fami pou konpran tou.' : 'Share your medical reports and test results. A dedicated Patient Navigator discusses your case and arranges video family consultations.'
+      title: isFr ? '01 — Vos Besoins Médicaux' : isKr ? '01 — Partaz Ou Bezwin Medikal' : '01 — Tell Us About Your Medical Needs',
+      desc: isFr ? 'Partagez vos rapports, diagnostics et résultats. Un Patient Navigator dédié étudie votre situation et organise une visioconférence avec votre famille si nécessaire.' : isKr ? 'Partaz ou bann rapor medikal. Enn Patient Navigator pou ekout ou ek aranz videokonferans ar ou fami.' : 'Contact our team and share your medical reports. A dedicated Patient Navigator discusses your needs and arranges video family conferences when required.'
     },
     {
       num: '02',
       icon: Stethoscope,
-      title: isFr ? '02 — Sélection de l\'Hôpital' : isKr ? '02 — Swazir Lopital' : '02 — Medical Review & Hospital Selection',
-      desc: isFr ? 'Identification des hôpitaux et spécialistes adaptés parmi notre réseau d\'excellence en Inde et soumission sécurisée de votre dossier.' : isKr ? 'Nou rod bann meyer lopital ek dokter dan L\'inde ki adapte a ou maladi ek avoy ou dosie an sekirite.' : 'We identify appropriate hospitals and leading specialists within our Indian healthcare network and securely submit your records.'
+      title: isFr ? '02 — Examen & Sélection' : isKr ? '02 — Revir & Swazir Lopital' : '02 — Medical Review & Hospital Selection',
+      desc: isFr ? 'Identification des hôpitaux et spécialistes adaptés parmi notre réseau international et soumission sécurisée de votre dossier médical.' : isKr ? 'Nou rod bann meyer lopital ek dokter dan nou rezo internasional ek avoy ou dosie an sekirite.' : 'We identify appropriate hospitals and specialists within our international healthcare network and securely submit your medical records.'
     },
     {
       num: '03',
       icon: HeartPulse,
-      title: isFr ? '03 — Plan, Devis & Téléconsultation' : isKr ? '03 — Plan, Pri & Telekonsiltasion' : '03 — Treatment Plan, Estimate & Teleconsultation',
-      desc: isFr ? 'Réception de l\'avis médical spécialiste, devis estimatif et téléconsultation vidéo directe avec le chirurgien traitant en Inde avant votre départ.' : isKr ? 'Gagn lavi dokter, estimasion pri kler ek enn video-konsiltasion direk ar sef sirizien avan voyaze.' : 'Receive specialist opinions, clear cost estimates, and video teleconsultations directly with your overseas treating specialist.'
+      title: isFr ? '03 — Plan, Devis & Téléconsultation' : isKr ? '03 — Plan, Devis & Telekonsiltasion' : '03 — Treatment Plan, Estimate & Teleconsultation',
+      desc: isFr ? 'Réception de l\'avis spécialiste, devis estimatif et coordination d\'une téléconsultation vidéo directe avec le médecin traitant à l\'étranger avant votre départ.' : isKr ? 'Gagn lavi dokter, estimasion pri kler ek enn telekonsiltasion video direk ar sef sirizien avan ou voyaze.' : 'Receive specialist opinions, estimated hospital costs, and direct video teleconsultations with overseas treating specialists before travelling.'
     },
     {
       num: '04',
       icon: Plane,
-      title: isFr ? '04 — Coordination du Voyage' : isKr ? '04 — Kordinasion Voyaz' : '04 — We Coordinate Your Journey',
-      desc: isFr ? 'Prise en charge complète : visa médical, vols, transferts aéroport, hébergement, ambulance ou évacuation médicale aérienne si requise.' : isKr ? 'Nou okip viza medikal, biye avion, lotel, transpor ek lasistans medikal/ambilans si bizin.' : 'Hospital admissions, medical visas, flights, accommodation, airport transfers, and private air-ambulance arrangements when needed.'
+      title: isFr ? '04 — Coordination du Voyage' : isKr ? '04 — Kordonasion Vwayaz' : '04 — We Coordinate Your Journey',
+      desc: isFr ? 'Prise en charge complète : admissions, visa médical, vols, transferts aéroport, hébergement, ambulance terrestre ou avion médicalisé si nécessaire.' : isKr ? 'Nou okip ladmision, viza medikal, biye avion, lotel, transpor ek avion saniter si bizin.' : 'Hospital admissions, medical visas, flights, accommodation, airport transfers, ground ambulance, and private air-ambulance when required.'
     },
     {
       num: '05',
       icon: Building2,
-      title: isFr ? '05 — Prise en Charge en Inde' : isKr ? '05 — Tretman dan Lopital' : '05 — Treatment Abroad',
-      desc: isFr ? 'Accueil à l\'aéroport, accompagnement au chevet du patient, facilitation des échanges avec l\'équipe soignante jusqu\'à la sortie.' : isKr ? 'Lariwe aeriopor, ladmision lopital, akonpanyeman o sive ek kominikasion fasil ar bann dokter.' : 'On-ground welcome, hospital admission, continuous bedside advocacy for you and your accompanying family member.'
+      title: isFr ? '05 — Soins à l\'Étranger' : isKr ? '05 — Tretman a Letranze' : '05 — Treatment Abroad',
+      desc: isFr ? 'Accueil à l\'arrivée, accompagnement durant l\'hospitalisation, au chevet du patient et soutien continu à vos proches accompagnateurs.' : isKr ? 'Akey dan lareopor, ladmision lopital, akonpanyeman o sive ek sipor pou ou fami.' : 'On-ground welcome, hospital admission, continuous bedside advocacy for you and your accompanying family member.'
     },
     {
       num: '06',
       icon: UserCheck,
       title: isFr ? '06 — Retour & Continuité des Soins' : isKr ? '06 — Retour Lakaz & Swivi' : '06 — Return Home & Follow-Up',
-      desc: isFr ? 'Coordination des comptes rendus, téléconsultations de suivi post-opératoire et continuité des soins avec vos spécialistes à l\'étranger.' : isKr ? 'Rakor rapor medikal, telekonsiltasion swivi ek kontinwite bann swen kan ou retourn Moris.' : 'Post-discharge medical reports, follow-up teleconsultations, and seamless continuity of care once you return home.'
+      desc: isFr ? 'Coordination des comptes rendus médicaux, téléconsultations de suivi post-opératoire et continuité des soins avec vos spécialistes à l\'étranger.' : isKr ? 'Rakor rapor medikal, telekonsiltasion swivi ek kontinwite bann swen kan ou retourn Moris.' : 'Post-treatment medical reports, follow-up teleconsultations, and seamless continuity of care once you return home.'
     },
   ];
 
   const WHY_CHOOSE = [
-    { icon: Award,       title: isFr ? 'Heritage Humanitaire de 10+ Ans' : isKr ? '10+ Banlane Lexperyans' : 'Decade of Compassionate Heritage',         desc: isFr ? 'Né de l\'expérience de terrain de l\'ONG Enn Rev Enn Sourir aux côtés des patients confrontés à la maladie.' : isKr ? 'Fonnde depi lexperyans ONG Enn Rev Enn Sourir pou ed bann pasian.' : 'Born from years of humanitarian patient navigation by NGO Enn Rev Enn Sourir.' },
-    { icon: Globe2,      title: isFr ? '15 Hôpitaux Accrédités JCI & NABH' : isKr ? '15 Gran Lopital Akredite' : '15 JCI & NABH Accredited Centres',   desc: isFr ? 'Accès direct aux centres d\'excellence hospitaliers à Chennai, Mumbai, Bengaluru, Hyderabad et Delhi.' : isKr ? 'Akse direk ar bann gran sant medikal dan Chennai, Mumbai, Bengaluru ek Delhi.' : 'Direct access to premier quaternary hospital hubs across Chennai, Mumbai, Bengaluru, Hyderabad, and Delhi NCR.' },
-    { icon: ShieldCheck, title: isFr ? 'Éthique & Zéro Commission Cachée' : isKr ? 'Etik & Pri Transparan' : 'Ethical, Transparent & Patient-First',  desc: isFr ? 'Un modèle social où le respect du patient, le consentement éclairé et la transparence priment sur tout intérêt commercial.' : isKr ? 'Tou pri kler, respe drwa pasian avan tou lobzektif komersial.' : 'Informed choices and dignity come first. No hidden markups or commercial referral pressures.' },
-    { icon: HeartPulse,  title: isFr ? 'Modèle Social « Zéro Dividende »' : isKr ? 'Zistwar Social San Dividand' : 'Healthcare With Greater Purpose', desc: isFr ? 'Vos soins contribuent à financer les interventions médicales de patients et enfants mauriciens dans le besoin.' : isKr ? '100% profi retourn dan l\'ONG pou pey loperasion bann pasian mizer.' : 'No dividends to shareholders. Revenue generated helps Enn Rev Enn Sourir fund treatments for vulnerable families.' },
+    { icon: Award,       title: isFr ? 'Né d\'une Décennie de Compassion' : isKr ? 'Ne depi 10 Banlane Konpasion' : 'Born From a Decade of Compassion',         desc: isFr ? 'Medical 360 Ltd est une initiative d\'entreprise sociale née de l\'ONG Enn Rev Enn Sourir (créée en 2016).' : isKr ? 'Medical 360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir (kree an 2016).' : 'Medical 360 Ltd is a social enterprise initiative of NGO Enn Rev Enn Sourir (established 2016).' },
+    { icon: Globe2,      title: isFr ? '15 Grands Hôpitaux en Inde' : isKr ? '15 Gran Lopital dan L\'inde' : '15 Premier Indian Hospital Hubs',   desc: isFr ? 'Accès direct aux centres d\'excellence à Chennai, Bengaluru, Hyderabad, Mumbai et Delhi NCR.' : isKr ? 'Akse direk ar bann gran sant medikal dan Chennai, Bengaluru, Hyderabad, Mumbai ek Delhi.' : 'Direct access to established clinical departments and accredited hospital hubs across India.' },
+    { icon: ShieldCheck, title: isFr ? 'Éthique & Dignité du Patient' : isKr ? 'Etik & Dignite Pasian' : 'Ethics, Transparency & Dignity',  desc: isFr ? 'Un modèle où l\'éthique, le choix éclairé, les droits du patient et la dignité passent avant les intérêts commerciaux.' : isKr ? 'Tou kler, respe drwa pasian ek dignite avan tou lintere komersial.' : 'Informed choices and patient rights come before commercial interests. No hidden markups.' },
+    { icon: HeartPulse,  title: isFr ? 'Zéro Dividende. Votre Santé Compte.' : isKr ? 'Zero Dividann. Ou Lasante Kont.' : 'No Dividends. Your Healthcare Matters.', desc: isFr ? 'Votre parcours de soins crée une opportunité de soutenir le parcours de soins d\'un autre patient vulnérable.' : isKr ? 'Ou vwayaz lasante kre enn loportinite pou soutenir vwayaz lasante enn lot pasian.' : 'Your healthcare journey creates an opportunity to support another healthcare journey.' },
   ];
 
   // Rich Schema.org JSON-LD for Homepage
@@ -96,7 +96,7 @@ export function HomePage() {
     <main className="home">
       <SEO 
         title="World-Class Healthcare. Without the Wait. With the Dignity You Deserve." 
-        description="Medical 360 coordinates world-class healthcare, second opinions, and patient travel from Mauritius to 15 accredited hospitals across India." 
+        description="Medical 360 coordinates world-class healthcare, specialist opinions, and patient travel from Mauritius to 15 accredited hospitals across India." 
         canonical="/"
         schema={schema}
       />
@@ -128,10 +128,10 @@ export function HomePage() {
             </h1>
             <p className="hero__subtitle">
               {isFr 
-                ? 'Medical 360 accompagne les patients mauriciens vers 15 hôpitaux de renommée internationale en Inde. Obtenez un avis médical spécialiste, des devis transparents et une coordination complète de votre parcours de soins.'
+                ? 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale et téléconsultation jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
                 : isKr
-                ? 'Medical 360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn deziem lavi dokter, estimasion pri kler ek lasistans konple depi A a Z.'
-                : 'Medical 360 Ltd connects patients in Mauritius with premier accredited hospitals across India. We coordinate expert second opinions, video teleconsultations, and complete medical travel navigation.'
+                ? 'Medical 360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
+                : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.'
               }
             </p>
             
@@ -156,7 +156,7 @@ export function HomePage() {
                 id="hero-whatsapp-btn"
               >
                 <MessageCircle size={18} />
-                <span>{isFr ? 'DISCUTER SUR WHATSAPP' : isKr ? 'KOZE LOR WHATSAPP' : 'CHAT WITH US ON WHATSAPP'}</span>
+                <span>{isFr ? 'DISCUTER SUR WHATSAPP' : isKr ? 'KOZ AR NOU LOR WHATSAPP' : 'CHAT WITH US ON WHATSAPP'}</span>
               </a>
             </div>
             
@@ -165,7 +165,7 @@ export function HomePage() {
                 {[1,2,3,4,5].map(i => <Star key={i} size={16} fill="#ffb400" color="#ffb400" />)}
               </div>
               <span className="hero__trust-text">
-                {isFr ? 'Plus de 3 000 patients accompagnés · Membre UICC · 100% Sans Dividende' : isKr ? 'Plis ki 3,000 pasian asiste · Manb UICC · Zero Dividand' : 'Over 3,000 Patients Assisted · UICC Member Network · No Dividends Model'}
+                {isFr ? '+3 000 Patients Accompagnés · Membre Titulaire UICC · Modèle Sans Dividende' : isKr ? '+3,000 Pasian Asiste · Manb UICC · Zero Dividann' : '+3,000 Patients Assisted · UICC Member Network · No Dividends Model'}
               </span>
             </div>
           </div>
@@ -192,20 +192,20 @@ export function HomePage() {
         <MissionMarquee />
       )}
 
-      {/* ── Specialties (15 Medical Specialties) ─────────────────────────────── */}
+      {/* ── Specialties (14 Specialties) ─────────────────────────────────────── */}
       <section className="section home-specialties">
         <div className="container">
           <div className="section-header">
-            <span className="section-label">{isFr ? 'Excellence Médicale' : isKr ? 'Spesialite Medikal' : 'Medical Specialties'}</span>
+            <span className="section-label">{isFr ? 'Spécialités Médicales' : isKr ? 'Spesialite Medikal' : 'Medical Specialties'}</span>
             <h2 className="text-h2">
-              {isFr ? 'Soins de Pointe à Travers 15 Spécialités Médicales' : isKr ? 'Swen Avanse dan 15 Spesialite Medikal' : 'Specialised Care Across 15 Medical Disciplines'}
+              {isFr ? 'Soins de Pointe à Travers Nos Spécialités Médicales' : isKr ? 'Swen Avanse dan Bann Gran Spesialite Medikal' : 'Specialised Care Across Medical Disciplines'}
             </h2>
             <p className="text-lead">
               {isFr 
                 ? 'Accédez à des spécialistes renommés et aux technologies diagnostiques et chirurgicales de pointe adaptées à votre situation.'
                 : isKr
                 ? 'Akse ar bann meyer spesialis ek teknolosi modern pou tou kalite tretman.'
-                : 'Direct access to established clinical departments, multidisciplinary tumor boards, and advanced surgical innovations across India.'}
+                : 'Access experienced specialists, advanced diagnostics, and complex surgical procedures tailored to your medical condition.'}
             </p>
           </div>
           <div className="specialties-grid">
@@ -247,7 +247,7 @@ export function HomePage() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/specialties')}>
-              {isFr ? 'Voir Toutes les 15 Spécialités' : isKr ? 'Get Tou Bann 15 Spesialite' : 'View All 15 Specialties'} <ArrowRight size={16} />
+              {isFr ? 'Voir Toutes les Spécialités' : isKr ? 'Get Tou Bann Spesialite' : 'View All Specialties'} <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -264,10 +264,10 @@ export function HomePage() {
             </h2>
             <p className="text-lead" style={{ color: 'rgba(255,255,255,0.8)' }}>
               {isFr 
-                ? 'De votre première demande médicale et téléconsultation avec le spécialiste jusqu\'à vos soins à l\'étranger et votre retour à Maurice.'
+                ? 'Se faire soigner à l\'étranger peut sembler complexe. Medical 360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
                 : isKr
-                ? 'Depi premie demann ziska tretman dan L\'inde ek swivi kan ou retourn Moris.'
-                : 'Medical 360 coordinates every step — from your first medical enquiry and specialist consultation to your treatment abroad and return home.'}
+                ? 'Al fer swen a letranze kapav paret konplike. Medical 360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.'
+                : 'Seeking medical treatment abroad can feel complicated. Medical 360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.'}
             </p>
           </div>
           <div className="process-steps-grid">
@@ -287,7 +287,7 @@ export function HomePage() {
           </div>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="process-cta-btn">
-              <span>{isFr ? 'RÉSERVER VOTRE CONSULTATION MÉDICALE' : isKr ? 'REZERV OU KONSILTASION' : 'BOOK YOUR MEDICAL CONSULTATION'}</span>
+              <span>{isFr ? 'RÉSERVER VOTRE CONSULTATION MÉDICALE' : isKr ? 'REZERV OU KONSILTASION MEDIKAL' : 'BOOK YOUR MEDICAL CONSULTATION'}</span>
               <ArrowRight size={18} />
             </button>
             <button className="btn btn-ghost btn-lg" onClick={() => navigate('/how-it-works')} style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#fff' }}>
@@ -304,14 +304,14 @@ export function HomePage() {
           <div className="section-header">
             <span className="section-label">{isFr ? 'Réseau Hospitalier en Inde' : isKr ? 'Rezo Lopital dan L\'inde' : 'India Hospital Network'}</span>
             <h2 className="text-h2">
-              {isFr ? '15 Hôpitaux Partenaires de Premier Plan' : isKr ? '15 Gran Lopital Partener dan L\'inde' : 'Our Hospital Network at a Glance'}
+              {isFr ? 'Notre Réseau Hospitalier en un Coup d\'Œil' : isKr ? 'Nou Rezo Lopital dan L\'inde' : 'Our Hospital Network at a Glance'}
             </h2>
             <p className="text-lead">
               {isFr
-                ? 'Medical 360 facilite l\'accès aux équipes médicales hautement qualifiées à Chennai, Mumbai, Bengaluru, Hyderabad et Delhi NCR.'
+                ? 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation, l\'expertise clinique et les technologies de pointe.'
                 : isKr
-                ? 'Akse fasil ar bann meyer dokter dan Chennai, Mumbai, Bengaluru, Hyderabad ek Delhi.'
-                : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements and international accreditation.'}
+                ? 'Medical 360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
+                : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.'}
             </p>
           </div>
           <div className="hospitals-grid">
@@ -373,27 +373,27 @@ export function HomePage() {
           <div className="why-grid">
             <div className="why-content">
               <span className="section-label">
-                {isFr ? '✦ Entreprise Sociale' : isKr ? '✦ Antrepriz Sosyal' : '✦ Social Impact Model'}
+                {isFr ? '✦ Modèle Social & Philosophie' : isKr ? '✦ Antrepriz Sosyal' : '✦ Social Impact Model'}
               </span>
               <h2 className="text-h2">
                 {isFr ? 'Né d\'une Décennie de Compassion. Centré sur le Patient.' : isKr ? 'Ne depi 10 Banlane Konpasion. Santre lor Pasian.' : 'Born From a Decade of Compassion. Built Around the Patient.'}
               </h2>
               <p className="text-lead">
                 {isFr
-                  ? 'Medical 360 Ltd est une entreprise sociale créée par l\'ONG Enn Rev Enn Sourir (fondée en 2016). Notre mission : offrir une conciergerie médicale éthique et professionnelle aux patients solvables, dont les revenus contribuent directement à soigner ceux qui ne peuvent pas financer leurs soins.'
+                  ? 'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins reçoivent une coordination médicale professionnelle et personnalisée → Medical 360 génère des revenus durables → ces revenus contribuent à la mission sociale d\'Enn Rev Enn Sourir et soutiennent les patients vulnérables.'
                   : isKr
-                  ? 'Medical 360 apartenir a l\'ONG Enn Rev Enn Sourir. Nou ofer enn servis konsierzri medikal de kalite, e bann profi retourn dan l\'ONG pou ed bann pasian mizer gagn zot loperasion.'
-                  : 'Medical 360 Ltd is a social enterprise initiative of NGO Enn Rev Enn Sourir (est. 2016). Patients receiving professional medical coordination generate sustainable revenue that directly supports vulnerable patients requiring life-saving treatment.'}
+                  ? 'Medical 360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn enn kordonasion medikal profesyonel → Medical 360 kre reveni dirab → sa reveni la ed l\'ONG pou sov bann pasian vilnerab.'
+                  : 'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.'}
               </p>
               <div className="why-callout-box">
                 <div className="why-callout-tagline">
-                  <strong>{isFr ? 'Zéro Dividende. Priorité Absolue au Patient.' : isKr ? 'Zero Dividand. Pasian avan tou.' : 'No Dividends. Your Healthcare Matters.'}</strong>
+                  <strong>{isFr ? 'Zéro Dividende. Votre Santé Compte.' : isKr ? 'Zero Dividann. Ou Lasante Kont.' : 'No Dividends. Your Healthcare Matters.'}</strong>
                 </div>
                 <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
                   {isFr 
-                    ? 'Votre parcours de soins crée une opportunité de soutenir le parcours de soins d\'un autre patient mauricien.'
+                    ? 'Votre parcours de soins crée une opportunité de soutenir le parcours de soins d\'un autre patient.'
                     : isKr
-                    ? 'Ou vwayaz lasante kre enn loportinite pou sov lavi enn lot pasian.'
+                    ? 'Ou vwayaz lasante kre enn loportinite pou soutenir vwayaz lasante enn lot pasian.'
                     : 'Your healthcare journey creates an opportunity to support another healthcare journey.'}
                 </p>
               </div>
@@ -427,7 +427,7 @@ export function HomePage() {
             <h2 className="text-h2">{isFr ? 'Histoires de Guérison & d\'Espoir' : isKr ? 'Zistwar Gerizon & Lespwar' : 'Stories of Healing, Hope & Recovery'}</h2>
             <p className="text-lead">
               {isFr
-                ? 'Découvrez comment plus d\'une décennie d\'accompagnement médical a redonné le sourire et la santé à des centaines de familles.'
+                ? 'Découvrez comment plus d\'une décennie d\'accompagnement médical a redonné le sourire et la santé à des familles.'
                 : isKr
                 ? 'Dekouver kouma nou lasistans inn amenn soulasman ek sourir ar bann fami.'
                 : 'Read how a decade of dedicated medical guidance has brought relief, healing, and peace of mind to families.'}
@@ -448,19 +448,26 @@ export function HomePage() {
                       height="240"
                     />
                     <div className="case-card__savings">
-                      {isFr ? 'Accompagné avec succès' : isKr ? 'Swene avek sikse' : 'Carefully Coordinated'}
+                      {cs.costSavedPercent}% {isFr ? 'Économisé' : isKr ? 'Gagne' : 'Saved'}
                     </div>
                   </div>
                   <div className="case-card__body">
-                    <div className="case-card__meta">
-                      <span className="badge badge-primary">{l(cs, 'condition')}</span>
+                    <div className="case-card__stars">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={14} fill="#ffb400" color="#ffb400" />
+                      ))}
                     </div>
-                    <p className="case-card__testimonial">&ldquo;{truncateText(l(cs, 'testimonial'), 140)}&rdquo;</p>
+                    <h3 className="case-card__treatment">{l(cs, 'treatment')}</h3>
+                    <p className="case-card__condition">
+                      <strong>{isFr ? 'Pathologie' : isKr ? 'Kondision' : 'Condition'}:</strong> {l(cs, 'condition')}
+                    </p>
+                    <blockquote className="case-card__quote">"{l(cs, 'testimonial')}"</blockquote>
                     <div className="case-card__footer">
-                      <div className="case-card__patient">
-                        <strong>{cs.patientFirstName}</strong>, {cs.patientAge} — {cs.patientCountry}
+                      <div>
+                        <span className="case-card__patient">{cs.patientFirstName}</span>
+                        <span className="case-card__country">📍 {l(cs, 'patientCountry')}</span>
                       </div>
-                      <div className="case-card__duration">{cs.durationDays} days</div>
+                      <span className="case-card__year">{cs.year}</span>
                     </div>
                   </div>
                 </div>
@@ -469,33 +476,32 @@ export function HomePage() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/case-studies')}>
-              {isFr ? 'Lire Tous les Témoignages' : isKr ? 'Lir Tou Zistwar' : 'Read All Patient Stories'} <ArrowRight size={16} />
+              {isFr ? 'Voir Tous les Témoignages & Études de Cas' : isKr ? 'Get Tou Bann Zistwar' : 'View All Patient Stories & Case Studies'} <ArrowRight size={16} />
             </button>
           </div>
         </div>
       </section>
 
-      {/* ── Final CTA (Slide 18) ─────────────────────────────────────────────── */}
-      <section className="home-cta">
-        <div className="home-cta__bg" />
-        <div className="container home-cta__inner">
-          <div className="home-cta__content">
-            <span className="badge badge-accent" style={{ marginBottom: '1rem' }}>
-              {isFr ? 'Votre Santé Mérite de l\'Action' : isKr ? 'Ou Lasante Bizin Laksion' : 'Your Health Deserves Action, Not Uncertainty'}
-            </span>
-            <h2 className="home-cta__title">
-              {isFr ? 'Quand Votre Santé Ne Peut Pas Attendre, Vous Non Plus.' : isKr ? 'Kan Ou Lasante Pa Kapav Atann, Ou Osi Ou Pa Bizin Atann.' : 'When Your Health Can’t Wait, Neither Should You.'}
-            </h2>
-            <p className="home-cta__subtitle">
-              {isFr
-                ? 'Une conversation peut changer la direction de vos soins de santé. Réservez votre consultation ou échangez directement avec un Patient Navigator sur WhatsApp.'
-                : isKr
-                ? 'Enn konversasion kapav sanz ou lasante net. Rezerv ou konsiltasion ouswa koze direk ar nou lekip lor WhatsApp.'
-                : 'One conversation could change the direction of your healthcare journey. Start yours today with a dedicated Patient Navigator.'}
+      {/* ── Closing Call to Action ────────────────────────────────────────────── */}
+      <section className="section home-cta">
+        <div className="container">
+          <div className="cta-box">
+            <p style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffb400', marginBottom: '0.75rem' }}>
+              <em>{isFr ? '« Une conversation peut changer la trajectoire de vos soins. Commencez la vôtre dès aujourd\'hui. »' : isKr ? '« Enn konversasion kapav sanz ou vwayaz lasante. Koumans ou par zordi. »' : '“One conversation could change the direction of your healthcare journey. Start yours today.”'}</em>
             </p>
-            <div className="home-cta__actions">
-              <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="home-final-cta-btn">
-                <span>{isFr ? 'RÉSERVER VOTRE CONSULTATION MÉDICALE' : isKr ? 'REZERV OU KONSILTASION' : 'BOOK YOUR MEDICAL CONSULTATION'}</span>
+            <h2 className="text-h2" style={{ color: '#fff', marginBottom: '1rem' }}>
+              {isFr ? 'Votre Santé Mérite l\'Action, Pas l\'Incertitude.' : isKr ? 'Ou Lasante Merite Laksion, Pa Linzistis.' : 'Your Health Deserves Action, Not Uncertainty.'}
+            </h2>
+            <p className="text-lead" style={{ color: 'rgba(255,255,255,0.85)', maxWidth: 580, margin: '0 auto 2.5rem' }}>
+              {isFr
+                ? 'Prenez rendez-vous dès aujourd\'hui. Laissez-nous vous aider à comprendre vos options et vous mettre en relation avec les soins médicaux appropriés.'
+                : isKr
+                ? 'Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal.'
+                : 'Book your appointment today. Let us help you understand your options and connect you with the right medical care.'}
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="footer-cta-btn">
+                <span>{isFr ? 'RÉSERVER VOTRE CONSULTATION MÉDICALE' : isKr ? 'REZERV OU KONSILTASION MEDIKAL' : 'BOOK YOUR MEDICAL CONSULTATION'}</span>
                 <ArrowRight size={18} />
               </button>
               <a
@@ -505,11 +511,8 @@ export function HomePage() {
                 className="btn btn-whatsapp btn-lg"
               >
                 <MessageCircle size={18} />
-                <span>{isFr ? 'DISCUTER SUR WHATSAPP' : isKr ? 'KOZE LOR WHATSAPP' : 'CHAT WITH US ON WHATSAPP'}</span>
+                <span>{isFr ? 'DISCUTER SUR WHATSAPP' : isKr ? 'KOZ AR NOU LOR WHATSAPP' : 'CHAT WITH US ON WHATSAPP'}</span>
               </a>
-            </div>
-            <div style={{ marginTop: '1.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>
-              📱 WhatsApp / Tél : +230 5918 8275 &nbsp;|&nbsp; ✉️ Email : info@med360.mu
             </div>
           </div>
         </div>

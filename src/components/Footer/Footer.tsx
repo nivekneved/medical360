@@ -27,16 +27,16 @@ export function Footer() {
             </p>
             <div className="footer__contact">
               <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="footer__contact-item">
-                <MessageCircle size={16} /> +230 59188275
+                <MessageCircle size={16} /> +230 5918 8275
               </a>
               <a href="tel:+23059188275" className="footer__contact-item">
-                <Phone size={16} /> +230 59188275
+                <Phone size={16} /> +230 5918 8275
               </a>
               <a href="mailto:info@med360.mu" className="footer__contact-item">
                 <Mail size={16} /> info@med360.mu
               </a>
-              <div className="footer__contact-item">
-                <MapPin size={16} /> Port Louis, Mauritius
+              <div className="footer__contact-item" style={{ fontSize: '0.8rem', lineHeight: 1.4 }}>
+                <MapPin size={16} style={{ flexShrink: 0 }} /> Sedeco Ltée, 4ème étage, IKS Building, Port-Louis 11613, Mauritius
               </div>
             </div>
           </div>

@@ -6,18 +6,15 @@ import {
   Plane, 
   UserCheck, 
   ShieldCheck, 
-  Clock, 
   CheckCircle2, 
   ArrowRight, 
   MessageCircle, 
   Building2, 
   Sparkles,
   Calculator,
-  HelpCircle,
   ChevronDown,
   Ambulance,
-  PhoneCall,
-  Video
+  Stethoscope
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
@@ -45,127 +42,127 @@ interface Step {
 const CARE_PHASES: Step[] = [
   {
     num: '01',
-    badge: 'Initial Consultation & Medical Review',
-    badge_fr: 'Consultation Initiale & Examen Médical',
-    badge_kr: 'Premie Konsiltasion & Rapor Medikal',
-    title: 'Free Specialist Review & Treatment Assessment',
-    title_fr: 'Avis Spécialiste Gratuit & Évaluation Clinique',
-    title_kr: 'Lavi Dokter Gratis & Evalwasion Medikal',
-    tagline: '100% Free · No Obligation · Response in 24-48 Hours',
-    tagline_fr: '100% Gratuit · Sans Engagement · Réponse sous 24-48h',
-    tagline_kr: '100% Gratis · Oken Langazman · Repons dan 24-48h',
-    desc: 'You share your medical history, scan reports (MRI, CT, PET-CT, Biopsy), or symptoms. Senior specialists from our 15 partner hospital hubs review your dossier and recommend the best clinical pathway.',
-    desc_fr: 'Vous nous transmettez vos bilans, imageries (IRM, Scanner, PET-Scan) ou comptes-rendus. Les chirurgiens chefs de nos 15 centres hospitaliers partenaires examinent votre dossier et préconisent le protocole optimal.',
-    desc_kr: 'Ou partaz ou bann rapor medikal, skann (IRM, Scanner, PET-Scan) ouswa sintom. Bann sef sirizien dan nou 15 lopital partner get ou dosie pou gid ou lor meyer swen.',
+    badge: 'Step 01',
+    badge_fr: 'Étape 01',
+    badge_kr: 'Letap 01',
+    title: '01 — Tell Us About Your Medical Needs',
+    title_fr: '01 — Faites-nous Part de Vos Besoins Médicaux',
+    title_kr: '01 — Partaz Ou Bann Bezwin Medikal',
+    tagline: 'Dedicated Patient Navigator · Medical Record Review',
+    tagline_fr: 'Patient Navigator Dédié · Examen des Dossiers Médicaux',
+    tagline_kr: 'Kordonater Pasian Dedie · Lekzamin Rapor Medikal',
+    desc: 'Contact our team and share your medical reports, diagnosis, test results and current treatment information. A dedicated Patient Navigator will discuss your needs and, when required, arrange a video conference with you and your family to better understand your situation, answer your questions and guide you through the next steps.',
+    desc_fr: 'Contactez notre équipe et partagez vos rapports médicaux, diagnostics, résultats d\'examens et traitements actuels. Un Patient Navigator dédié étudiera vos besoins et organisera si nécessaire une visioconférence avec vous et votre famille pour répondre à vos questions et vous guider.',
+    desc_kr: 'Kontak nou lekip ek partaz ou bann rapor medikal,診iagnostik ek rezilta tes. Enn Patient Navigator dedie pou diskit ou bezwin ek aranz enn videokonferans ar ou ek ou fami pou reponn ou kestion.',
     highlights: [
-      { en: 'Direct second opinion from senior department heads', fr: 'Second avis direct par des chefs de service réputés', kr: 'Deziem lavi direk par bann gran sef sirizien' },
-      { en: 'Thorough evaluation of surgical & non-surgical alternatives', fr: 'Évaluation des alternatives chirurgicales et protocoles innovants', kr: 'Evalwasion tou bann opsion tretman posib' },
-      { en: 'Zero cost and no commitment required', fr: '100% gratuit et sans aucune obligation de votre part', kr: 'Zéro fre ek oken lobligasion' },
+      { en: 'Dedicated Patient Navigator listening to your medical situation', fr: 'Un Patient Navigator dédié à l\'écoute de votre situation médicale', kr: 'Enn Patient Navigator dedie pou ekout ou sitiasion' },
+      { en: 'Thorough review of reports, diagnostics & current treatment', fr: 'Examen approfondi des bilans, diagnostics et traitements en cours', kr: 'Revir konple ou bann dosie ek lanaliz' },
+      { en: 'Video family conferences arranged whenever required', fr: 'Organisation de visioconférences avec vous et votre famille', kr: 'Aranz videokonferans avek ou fami kan bizin' },
     ],
     icon: FileText,
   },
   {
     num: '02',
-    badge: 'Treatment Plan & Transparent Pricing',
-    badge_fr: 'Plan de Soins & Tarifs Transparents',
-    badge_kr: 'Plan Tretman & Pri Kler',
-    title: 'Itemized Hospital Quotes & Multiple Options',
-    title_fr: 'Devis Hospitaliers Détaillés & Choix Multi-Centres',
-    title_kr: 'Devi Detaye Lopital & Plizier Swa',
-    tagline: 'Official Hospital Rates · Zero Hidden Surcharges',
-    tagline_fr: 'Tarifs Officiels des Hôpitaux · Zéro Frais Cachés',
-    tagline_kr: 'Pri Ofisiel Lopital · Zéro Fre Kasiet',
-    desc: 'We present clear, itemized treatment plans from top hospital hubs (Apollo, Manipal, Medanta, KIMS, Fortis, etc.) detailing procedure costs, bed stay length, and surgeon qualifications so you can choose with full confidence.',
-    desc_fr: 'Nous vous présentons des devis transparents et détaillés émanant des meilleurs centres (Apollo, Manipal, Medanta, KIMS, Fortis...), avec durée estimée de séjour et qualifications des praticiens.',
-    desc_kr: 'Nou propoz ou bann devi kler depi bann meyer lopital (Apollo, Manipal, Medanta, KIMS, Fortis...), avek dire sezour ek leksperyans sirizien pou ou kapav swazir trankil.',
+    badge: 'Step 02',
+    badge_fr: 'Étape 02',
+    badge_kr: 'Letap 02',
+    title: '02 — Medical Review & Hospital Selection',
+    title_fr: '02 — Examen Médical & Sélection de l\'Hôpital',
+    title_kr: '02 — Revir Medikal & Swazir Lopital',
+    tagline: 'Specialist Identification · Secure Medical Review',
+    tagline_fr: 'Identification des Spécialistes · Transmission Sécurisée',
+    tagline_kr: 'Swazir Spesialis · Transmisyon Dosie an Sekirite',
+    desc: 'Based on your medical condition, treatment requirements and preferences, we help identify appropriate hospitals and specialists within our international healthcare network and securely submit your medical records for specialist review.',
+    desc_fr: 'En fonction de votre état de santé, de vos besoins thérapeutiques et de vos préférences, nous vous aidons à identifier les hôpitaux et spécialistes appropriés au sein de notre réseau international et transmettons votre dossier médical en toute sécurité.',
+    desc_kr: 'Dapre ou eta lasante ek ou preferans, nou idantifie bann meyer lopital ek spesialis dan nou rezo internasional ek nou avoy ou dosie an sekirite pou lavi lekip medikal.',
     highlights: [
-      { en: 'Comparison between leading specialized hospitals in India', fr: 'Comparatif objectif entre les meilleurs hôpitaux d\'Inde', kr: 'Konparezon ant bann pli gran lopital spesialize' },
-      { en: 'Transparent, all-inclusive packages (surgery, ICU, ward, meds)', fr: 'Forfaits tout compris (chirurgie, réanimation, chambre, médicaments)', kr: 'Pri konple (operasion, swen intensif, lasam, medikaman)' },
-      { en: 'Guidance on financial options & insurance pre-authorizations', fr: 'Conseils pour prises en charge d\'assurance et aides médicales', kr: 'Gid pou lasirans ek led finansier' },
+      { en: 'Custom selection tailored to clinical condition & preferences', fr: 'Sélection personnalisée selon la pathologie et vos préférences', kr: 'Swazir lopital adapte a ou kondision ek preferans' },
+      { en: 'Direct access to 15 premier accredited hospital networks', fr: 'Accès direct aux 15 plus grands réseaux hospitaliers accrédités', kr: 'Akse direk ar 15 gran lopital akredite' },
+      { en: 'Confidential and secure transmission of all medical records', fr: 'Transmission strictement confidentielle et sécurisée des données', kr: 'Partaz dosie dan konfidansialite ek sekirite total' },
+    ],
+    icon: Stethoscope,
+  },
+  {
+    num: '03',
+    badge: 'Step 03',
+    badge_fr: 'Étape 03',
+    badge_kr: 'Letap 03',
+    title: '03 — Treatment Plan, Estimate & Medical Teleconsultation',
+    title_fr: '03 — Plan de Traitement, Devis & Téléconsultation Médicale',
+    title_kr: '03 — Plan Tretman, Estimasion & Telekonsiltasion Medikal',
+    tagline: 'Specialist Medical Opinion · Video Teleconsultation',
+    tagline_fr: 'Avis Spécialiste · Téléconsultation Vidéo Directe',
+    tagline_kr: 'Lavi Dokter Spesialis · Telekonsiltasion Video Direk',
+    desc: 'Once your case has been reviewed, you receive the available specialist medical opinion, proposed treatment plan and estimated hospital costs, helping you and your family make an informed decision. When appropriate, Medical 360 can also coordinate a video teleconsultation directly with the treating specialist abroad, giving you the opportunity to discuss your diagnosis, proposed treatment, expected duration of care and other medical questions before travelling.',
+    desc_fr: 'Une fois votre dossier examiné, vous recevez l\'avis médical spécialiste, le plan de soins proposé et l\'estimation des coûts hospitaliers. Si nécessaire, Medical 360 organise une téléconsultation vidéo directe avec le spécialiste à l\'étranger pour poser vos questions avant de voyager.',
+    desc_kr: 'Apre revir ou dosie, ou gagn lavi medikal spesialis, plan tretman ek estimasion pri pou fer enn bon swa. Medical 360 kapav osi aranz enn telekonsiltasion video direk ar dokter avan ou voyaze.',
+    highlights: [
+      { en: 'Specialist medical opinion and clear proposed treatment protocol', fr: 'Avis médical spécialisé et protocole thérapeutique clair', kr: 'Lavi dokter spesialis ek plan tretman bien detaye' },
+      { en: 'Transparent, estimated hospital cost breakdowns', fr: 'Estimations transparentes des coûts hospitaliers', kr: 'Estimasion pri lopital kler san fre kasiet' },
+      { en: 'Direct video teleconsultation with overseas treating specialists', fr: 'Téléconsultation vidéo directe avec le chirurgien à l\'étranger', kr: 'Telekonsiltasion video direk ar sef sirizien a letranze' },
     ],
     icon: Calculator,
   },
   {
-    num: '03',
-    badge: 'Travel, Visa & Logistics',
-    badge_fr: 'Voyage, Visa & Logistique',
-    badge_kr: 'Vwayaz, Viza & Loxistik',
-    title: 'Fast-Track Medical Visa & Travel Assistance',
-    title_fr: 'Visa Médical Accéléré & Organisation Logistique',
-    title_kr: 'Viza Medikal Rapid & Akonpanyeman Vwayaz',
-    tagline: '24-Hour Invitation Letters · Patient & Companion Support',
-    tagline_fr: 'Lettres d\'Invitation sous 24h · Patient & Accompagnateur',
-    tagline_kr: 'Let Invitasion dan 24h · Pasian & Akonpanyater',
-    desc: 'We arrange official hospital medical visa invitation letters within 24 hours. Our team assists you with flight bookings, visa paperwork, and comfortable accommodations near the hospital.',
-    desc_fr: 'Nous émettons les lettres officielles d\'invitation de visa médical sous 24 heures. Notre équipe vous accompagne pour les formalités consulaires, les billets d\'avion et les hébergements partenaires.',
-    desc_kr: 'Nou fer gagn let invitasion viza medikal dan 24 erdtan. Nou ed ou avek viza, biye avion ek rezervasion lotel pre ar lopital.',
+    num: '04',
+    badge: 'Step 04',
+    badge_fr: 'Étape 04',
+    badge_kr: 'Letap 04',
+    title: '04 — We Coordinate Your Journey',
+    title_fr: '04 — Nous Coordonnons Votre Voyage',
+    title_kr: '04 — Nou Kordonn Ou Vwayaz',
+    tagline: 'Travel & Visas · Ground & Air Ambulance Options',
+    tagline_fr: 'Voyage & Visas · Ambulances Terrestres & Avions Médicalisés',
+    tagline_kr: 'Vwayaz & Viza · Lanbilans & Avion Medikalize',
+    desc: 'Once you decide to proceed, Medical 360 helps coordinate the practical arrangements surrounding your treatment, including hospital appointments and admission, medical visa assistance, flights, accommodation, airport transfers and local transportation. For patients requiring specialised medical transportation, we can also facilitate ground ambulance services, airport medical transfers and private air-ambulance/medical-jet arrangements, according to the patient\'s medical condition and subject to medical clearance and availability.',
+    desc_fr: 'Dès que vous décidez de procéder, Medical 360 coordonne tous les détails pratiques : rendez-vous et admission, visa médical, vols, hébergement, transferts aéroport et transports locaux. Pour les cas exigeant un transport médicalisé, nous facilitons ambulances terrestres et évacuations par avion sanitaire.',
+    desc_kr: 'Kan ou deside avanse, Medical 360 okip tou bann laranzman : randevou lopital, viza medikal, biye avion, lotel, transpor aeriopor. Pou bann pasian malad grav, nou kapav aranz lanbilans ek avion medikalize.',
     highlights: [
-      { en: 'Express medical visa invitation letter generated within 24 hours', fr: 'Lettre d\'invitation officielle pour visa médical émise sous 24h', kr: 'Let ofisiel lopital pou viza medikal emet dan 24h' },
-      { en: 'Visa support for accompanying family members & attendants', fr: 'Prise en charge complète pour vos proches accompagnateurs', kr: 'Sipor viza pou bann manb fami ki vwayaz avek ou' },
-      { en: 'Curated partner accommodations within 5-10 mins of hospital', fr: 'Hébergements partenaires vérifiés à 5-10 min de l\'hôpital', kr: 'Lotel ek lapartman verifie a 5-10 minit ar lopital' },
+      { en: 'Hospital admission, appointment scheduling & medical visa support', fr: 'Prise de rendez-vous, admission et assistance visa médical', kr: 'Randevou lopital, ladmision ek lasistans viza medikal' },
+      { en: 'Flight bookings, partner accommodations & local transportation', fr: 'Réservation des vols, hébergements vérifiés et transports locaux', kr: 'Biye avion, rezervasion lotel ek transpor lokal' },
+      { en: 'Ground ambulance & private air-ambulance/medical jet facilities', fr: 'Ambulances terrestres et évacuations par avion médicalisé', kr: 'Servis lanbilans ek lavion saniter ICU pou ka irzan' },
     ],
     icon: Plane,
   },
   {
-    num: '04',
-    badge: 'Ground & Air Ambulance Transport',
-    badge_fr: 'Ambulance & Rapatriement Sanitaire',
-    badge_kr: 'Transpor Saniter & Lamerzans',
-    title: 'Emergency Medical Evacuation & Ground Transfers',
-    title_fr: 'Évacuation Sanitaire & Transferts Médicalisés',
-    title_kr: 'Evakuasion Saniter & Lanbilans',
-    tagline: 'Dedicated Air Ambulance · Airport Tarmac Clearance',
-    tagline_fr: 'Avions Médicalisés Dédiés · Accès Tarmac Prioritaire',
-    tagline_kr: 'Avion Medikalize · Lakse Tarmac Direkteman',
-    desc: 'For critical, intensive care, or immobility cases, we coordinate certified air ambulance jets with full ICU capabilities and on-board medical teams, as well as tarmac-side ground ambulances.',
-    desc_fr: 'Pour les cas critiques, soins intensifs ou patients à mobilité réduite, nous coordonnons des vols sanitaires par avion médicalisé (ICU à bord) et des ambulances terrestres prioritaires sur le tarmac.',
-    desc_kr: 'Pou bann ka irzan ouswa swen intensif, nou aranz avion saniter avek dokter a-bor ek lanbilans direkteman kot avion poze.',
-    highlights: [
-      { en: 'Fully equipped airborne ICU with intensivist physician on board', fr: 'Unité de soins intensifs volante avec médecin réanimateur à bord', kr: 'Swen intensif konple dan lavion avek dokter spesialis' },
-      { en: 'Direct airport tarmac clearance and private ambulance transfer', fr: 'Accès tarmac direct et transfert immédiat en ambulance vers l\'hôpital', kr: 'Transpor direk depi pist ziska lasam lopital' },
-      { en: '24/7 emergency dispatch response team', fr: 'Cellule de veille d\'urgence disponible 24h/24 et 7j/7', kr: 'Lekip dispatc lamerzans zonn 24/7' },
-    ],
-    icon: Ambulance,
-  },
-  {
     num: '05',
-    badge: 'Bedside Care & On-Ground Coordination',
-    badge_fr: 'Accompagnement Dédié au Chevet',
-    badge_kr: 'Swen lor Plas & Kordonater',
-    title: 'Dedicated Personal Care Coordinator On-Ground',
-    title_fr: 'Coordinateur Dédié à Vos Côtés à l\'Hôpital',
-    title_kr: 'Kordonater Personnel lor Plas ar Ou',
-    tagline: 'Airport Meet & Greet · Bedside Visits · French/Creole Interpreters',
-    tagline_fr: 'Accueil Aéroport · Visites au Chevet · Interprètes Français/Créole',
-    tagline_kr: 'Akoy Lareopor · Vizit Lopital · Interpret Franse/Kreol',
-    desc: 'From the minute your flight lands, you are met by our on-ground team. Your dedicated patient coordinator stays by your side throughout admissions, consultations, tests, and your hospital stay.',
-    desc_fr: 'Dès votre atterrissage, notre équipe vous accueille et assure vos transferts privés. Votre coordinateur dédié vous accompagne lors de chaque rendez-vous, consultation et tout au long de votre hospitalisation.',
-    desc_kr: 'Depi ou aterir, nou lekip akey ou avek transpor prive. Ou kordonater personel res ar ou dan tou randevou ek pandan ou sezour lopital.',
+    badge: 'Step 05',
+    badge_fr: 'Étape 05',
+    badge_kr: 'Letap 05',
+    title: '05 — Treatment Abroad',
+    title_fr: '05 — Prise en Charge & Soins à l\'Étranger',
+    title_kr: '05 — Tretman a Letranze',
+    tagline: 'Airport Arrival · Hospital Admission · Bedside Support',
+    tagline_fr: 'Accueil Aéroport · Admission · Accompagnement au Chevet',
+    tagline_kr: 'Lariwe Lareopor · Ladmision · Kordonater o Sive',
+    desc: 'Upon arrival, our team and local partners help facilitate your journey from airport arrival and hospital admission through treatment and discharge. We remain available throughout your stay to support you and your accompanying family member and to facilitate communication with the hospital when required.',
+    desc_fr: 'Dès votre arrivée, notre équipe et nos partenaires locaux facilitent votre parcours, de l\'aéroport à l\'admission hospitalière, pendant les soins et jusqu\'à votre sortie. Nous restons disponibles pour vous et votre proche accompagnateur, facilitant chaque échange avec l\'hôpital.',
+    desc_kr: 'Depi ou aterir, nou lekip ek partner lokal akey ou, okip ladmision ziska lafin tretman ek sorti. Nou res pre ar ou ek ou fami pou fasilit kominikasion ar lopital.',
     highlights: [
-      { en: 'Personal coordinator assisting with all hospital formalities', fr: 'Coordinateur personnel facilitant toutes les démarches hospitalières', kr: 'Kordonater personel pou ed avek tou bann papye lopital' },
-      { en: 'Multilingual assistance (English, French, Creole, Hindi)', fr: 'Assistance linguistique complète en français, créole, anglais et hindi', kr: 'Lidans dan langaz ki ou konpran fasilman' },
-      { en: 'Daily bedside visits and continuous family updates', fr: 'Visites quotidiennes au chevet et nouvelles régulières à vos proches', kr: 'Vizit sak zour ek nouvel regilie pou rasir ou fami Moris' },
+      { en: 'Personal airport meet & greet and dedicated hospital transfers', fr: 'Accueil personnalisé à l\'aéroport et transferts dédiés', kr: 'Akoy personalize dan lareopor ek transpor ver lopital' },
+      { en: 'Continuous bedside assistance for you and your companion', fr: 'Accompagnement continu au chevet pour vous et votre proche', kr: 'Lasistans o sive pou ou ek ou manb fami ki akonpagn ou' },
+      { en: 'Seamless multilingual communication with the clinical team', fr: 'Facilitation constante des échanges avec l\'équipe médicale', kr: 'Kominikasion fasil ar bann dokter ek infirmier' },
     ],
-    icon: HeartHandshake,
+    icon: Building2,
   },
   {
     num: '06',
-    badge: 'Post-Treatment Care & Teleconsultation',
-    badge_fr: 'Suivi Post-Opératoire & Téléconsultation',
-    badge_kr: 'Swivi Post-Operatwar & Telekonsiltasion',
-    title: 'Safe Return Home & Continuous Clinical Follow-Up',
-    title_fr: 'Retour en Douceur & Suivi Médical à Distance',
-    title_kr: 'Retour an Sekirite & Swivi Medikal Kontini',
-    tagline: 'Fit-to-Fly Certification · Doctor Teleconsultations · Lifelong Care',
-    tagline_fr: 'Certificat d\'Aptitude au Vol · Téléconsultations · Relation Durable',
-    tagline_kr: 'Sertifika pou Vwayaze · Telekonsiltasion · Swivi Kontini',
-    desc: 'Before departure, your surgeon conducts a comprehensive discharge review and issues a Fit-to-Fly certificate. Once home in Mauritius, Med360 coordinates scheduled video teleconsultations with your treating doctor.',
-    desc_fr: 'Avant votre retour, votre chirurgien effectue un bilan complet de sortie et délivre votre certificat d\'aptitude au vol. De retour chez vous, Med360 organise vos téléconsultations vidéo régulières.',
-    desc_kr: 'Avan ou retourne, ou sirizien fer enn dernie kontrol konple ek donn ou sertifika vol. Kan ou lakaz Moris, nou kontinie aranz bann swivi video ar ou dokter.',
+    badge: 'Step 06',
+    badge_fr: 'Étape 06',
+    badge_kr: 'Letap 06',
+    title: '06 — Return Home & Follow-Up',
+    title_fr: '06 — Retour à Domicile & Suivi Médical',
+    title_kr: '06 — Retour Lakaz & Swivi Medikal',
+    tagline: 'Medical Reports · Teleconsultation Follow-Ups · Continuity of Care',
+    tagline_fr: 'Comptes Rendus · Téléconsultations · Continuité des Soins',
+    tagline_kr: 'Rapor Medikal · Telekonsiltasion · Kontinwite Swen',
+    desc: 'Our support doesn\'t end when treatment is completed. We help coordinate medical reports, follow-up consultations, video teleconsultations and communication with your treating specialists abroad, supporting continuity of care after you return home.',
+    desc_fr: 'Notre soutien se poursuit après la fin du traitement. Nous vous aidons à coordonner vos comptes rendus médicaux, consultations de contrôle, téléconsultations vidéo et échanges avec vos spécialistes à l\'étranger pour assurer la continuité des soins à votre retour.',
+    desc_kr: 'Nou sipor pa arete apre tretman. Nou ed ou avek rapor medikal, vizit kontrol, telekonsiltasion video ek kominikasion ar ou dokter a letranze pou garanti bon swivi lakaz.',
     highlights: [
-      { en: 'Full medical dossier & discharge summary in English/French', fr: 'Dossier médical complet et compte-rendu de sortie détaillé', kr: 'Dosie medikal konple ek rapor sorti kler' },
-      { en: 'Virtual video follow-ups with your treating overseas surgeon', fr: 'Téléconsultations vidéo programmées avec votre chirurgien traitant', kr: 'Konsiltasion video ar ou sirizien kan ou fini retourn lakaz' },
-      { en: '100% of Med360 profits reinvested in NGO Enn Rev Enn Sourir', fr: '100% des bénéfices Med360 reversés à l\'ONG Enn Rev Enn Sourir', kr: '100% bann profi retourn dan l\'ONG pou ed bann ki dan bezwin' },
+      { en: 'Compilation of full discharge summaries and medical records', fr: 'Centralisation de tous les comptes rendus de sortie et bilans', kr: 'Rasanble tou bann rapor medikal ek bilan de sorti' },
+      { en: 'Post-discharge video teleconsultations with overseas specialists', fr: 'Téléconsultations vidéo de contrôle avec les spécialistes traitants', kr: 'Telekonsiltasion swivi avek ou bann spesialis a letranze' },
+      { en: 'Long-term patient advocacy and continuity of healthcare', fr: 'Accompagnement dans la durée et continuité du parcours de soins', kr: 'Swivi lasante dan la diré pou ou trankilite d\'espri' },
     ],
     icon: ShieldCheck,
   },
@@ -173,36 +170,36 @@ const CARE_PHASES: Step[] = [
 
 const FAQS = [
   {
-    q: 'How much does your concierge service cost me?',
-    q_fr: 'Combien coûte votre service de conciergerie ?',
-    q_kr: 'Kombien sa servis kordonasion-la koute ?',
-    a: 'Our medical coordination is completely free to you as a patient. We are directly partnered with the hospitals, which means you pay the standard hospital rate with zero markups or hidden coordination fees.',
-    a_fr: 'Notre service de coordination médicale est 100% gratuit pour le patient. Grâce à nos conventions directes avec les hôpitaux partenaires, vous réglez les tarifs officiels sans aucune majoration ni frais cachés.',
-    a_kr: 'Nou servis kordonasion li konpletman gratis pou pasian. Ou pey direkteman pri ofisiel lopital san oken fre anplis.',
+    q: 'How does Medical 360 support patients seeking care abroad?',
+    q_fr: 'Comment Medical 360 accompagne-t-il les patients vers l\'étranger ?',
+    q_kr: 'Kouma Medical 360 akonpagn bann pasian pou al swanye a letranze ?',
+    a: 'Medical 360 coordinates every step — from initial medical enquiry and specialist consultation to treatment abroad and post-treatment follow-up. Selection is tailored to each patient\'s diagnosis, clinical needs, and international hospital accreditations.',
+    a_fr: 'Medical 360 coordonne chaque étape : de la première demande médicale et consultation spécialisée jusqu\'aux soins à l\'étranger et au suivi post-traitement, selon le diagnostic et les accréditations hospitalières.',
+    a_kr: 'Medical 360 kordonn sak letap : depi premie demann ek lavi spesialis ziska tretman a letranze ek swivi kan ou retourn Moris.',
   },
   {
-    q: 'How fast can I get a medical opinion and travel?',
-    q_fr: 'En combien de temps puis-je obtenir un avis et partir ?',
-    q_kr: 'Dan ki delay mo kapav gagn enn lavi ek vwayaze ?',
-    a: 'We provide specialist opinions and quotations within 24 to 48 hours of receiving your medical scans. For urgent cases, medical visas and travel can be arranged within 3 to 5 days.',
-    a_fr: 'Nous vous fournissons l\'avis médical et le devis sous 24 à 48 heures. Pour les cas urgents, les démarches de visa et de départ peuvent être organisées en 3 à 5 jours.',
-    a_kr: 'Nou donn ou lavi dokter ek devi dan 24 a 48 erdtan. Pou bann ka irzan, viza ek vwayaz kapav aranze dan 3 a 5 zour.',
+    q: 'Can Medical 360 arrange video teleconsultations before travel?',
+    q_fr: 'Medical 360 peut-il organiser une téléconsultation vidéo avant le départ ?',
+    q_kr: 'Eski Medical 360 kapav aranz enn telekonsiltasion video avan vwayaze ?',
+    a: 'Yes. When appropriate, Medical 360 coordinates a video teleconsultation directly with the treating specialist abroad, giving you the opportunity to discuss your diagnosis, proposed treatment, expected duration of care, and medical questions before travelling.',
+    a_fr: 'Oui. Medical 360 organise des téléconsultations vidéo directement avec les spécialistes traitants à l\'étranger afin d\'échanger sur le diagnostic, le traitement et la durée de séjour avant votre voyage.',
+    a_kr: 'Wi. Medical 360 kapav aranz enn telekonsiltasion video direk ar sef sirizien a letranze pou koz lor ou diagnostik ek tretman avan ou vwayaze.',
   },
   {
     q: 'Can a family member accompany me during treatment?',
     q_fr: 'Un membre de ma famille peut-il m\'accompagner ?',
     q_kr: 'Eski enn manb mo fami kapav vwayaze ar mwa ?',
-    a: 'Yes, absolutely. We strongly encourage having a loved one with you. We arrange medical attendant visas, flight seats together, and twin-occupancy accommodations near the hospital.',
+    a: 'Yes, absolutely. We assist with medical attendant visas, flight reservations, twin-room accommodations, and on-ground bedside support for accompanying family members throughout the stay.',
     a_fr: 'Oui, absolument. Nous facilitons le séjour de votre accompagnant avec un visa accompagnateur médical, des vols groupés et un hébergement adapté proche de l\'hôpital.',
-    a_kr: 'Wi, sirman. Nou ankouraz ou vwayaz avek enn pros. Nou aranz viza akonpanyater, vol ansam ek lasam lotel pre ar lopital.',
+    a_kr: 'Wi, sirman. Nou aranz viza akonpanyater, biye avion, lozman pre ar lopital ek nou akonpagn ou pros pandan tou sezour.',
   },
   {
-    q: 'How does Med360 help the NGO Enn Rev Enn Sourir?',
-    q_fr: 'Comment Med360 soutient-il l\'ONG Enn Rev Enn Sourir ?',
-    q_kr: 'Kouma Med360 ed l\'ONG Enn Rev Enn Sourir ?',
-    a: 'Medical 360 Ltd was founded by the NGO Enn Rev Enn Sourir with a strict "No Dividends" policy. 100% of company profits are directly transferred back to the NGO to finance surgeries for underprivileged Mauritian patients.',
-    a_fr: 'Medical 360 Ltd a été créée par l\'ONG Enn Rev Enn Sourir avec une politique de « Zéro Dividende ». 100% des bénéfices générés sont reversés à l\'ONG pour financer les interventions chirurgicales de familles démunies.',
-    a_kr: 'Medical 360 Ltd finn kre par l\'ONG Enn Rev Enn Sourir avek model Zéro Dividenn. 100% bann profi al direk dan l\'ONG pou pey loperasion pou bann fami morisien ki pa kapav peye.',
+    q: 'What is the "No Dividends" social philosophy of Medical 360?',
+    q_fr: 'Quelle est la philosophie sociale « Zéro Dividende » de Medical 360 ?',
+    q_kr: 'Ki ete sa filozofi « Zero Dividann » Medical 360 la ?',
+    a: 'Medical 360 is a social enterprise initiative of NGO Enn Rev Enn Sourir (est. 2016). Our purpose is not to create dividends for individual shareholders, but to create sustainable impact. Revenue generated contributes to Enn Rev Enn Sourir\'s mission to fund healthcare for vulnerable patients who cannot afford treatment.',
+    a_fr: 'Medical 360 est une entreprise sociale créée par l\'ONG Enn Rev Enn Sourir. Notre vocation n\'est pas de distribuer des dividendes à des actionnaires, mais de créer un impact durable : les revenus générés soutiennent directement les soins de patients vulnérables.',
+    a_kr: 'Medical 360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Oken dividann pa distribie : bann reveni reinvesti pou ed bann pasian vilnerab gagn tretman vitale.',
   },
 ];
 
@@ -223,8 +220,8 @@ export function HowItWorksPage() {
   return (
     <div className="how-it-works-page">
       <SEO
-        title={isFr ? "Comment Ça Marche — Votre Parcours Médical en 6 Étapes" : isKr ? "Kouma Li Mase — Ou Vwayaz Medikal dan 6 Letap" : "How It Works — Your 6-Step Compassionate Care Journey"}
-        description={isFr ? "Découvrez comment Med360 organise vos soins médicaux de A à Z : avis sous 24-48h, visas rapides, coordinateurs au chevet, évacuation sanitaire et suivi post-opératoire." : "Discover how Med360 coordinates your medical care end-to-end: 24-48h specialist opinion, fast visas, bedside coordination, emergency air ambulance, and teleconsultations."}
+        title={isFr ? "Comment Ça Marche — Votre Parcours de Soins en 6 Étapes" : isKr ? "Kouma Li Mase — Ou Vwayaz Medikal an 6 Letap" : "How It Works — Your Healthcare Journey, Made Simple"}
+        description={isFr ? "Medical 360 coordonne chaque étape de votre parcours de soins, de la première demande médicale et téléconsultation avec le spécialiste jusqu'aux soins à l'étranger et au retour à domicile." : "Medical 360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home."}
         canonical="/how-it-works"
       />
 
@@ -233,19 +230,19 @@ export function HowItWorksPage() {
         <div className="container hiw-hero__inner">
           <div className="hiw-hero__badge">
             <Sparkles size={15} />
-            <span>{isFr ? "Une Prise en Charge Bienveillante & Complète à 360°" : isKr ? "Akonpanyeman 360° avek Leker" : "Gentle, Reassuring 360° Care from Day One"}</span>
+            <span>{isFr ? "Une Coordination Médicale Bienveillante & Structurée" : isKr ? "Kordonasion Medikal avek Leker" : "One Point of Contact · One Coordinated Journey"}</span>
           </div>
 
           <h1 className="hiw-hero__title">
-            {isFr ? "Votre Parcours Médical en 6 Étapes Claires" : isKr ? "Ou Vwayaz Medikal an 6 Letap Sinp" : "Your Health Journey in 6 Simple Steps"}
+            {isFr ? "Votre Parcours de Soins, Simple & Coordonné" : isKr ? "Ou Vwayaz Lasante, Sinp & Kordone" : "Your Healthcare Journey, Made Simple"}
           </h1>
 
           <p className="hiw-hero__subtitle">
             {isFr
-              ? "De votre premier avis médical sans engagement jusqu'à vos téléconsultations de contrôle chez vous, nous veillons sur chaque détail clinique, logistique et humain."
+              ? "Se faire soigner à l'étranger peut sembler complexe. Medical 360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale et consultation spécialisée jusqu'à vos soins à l'étranger et votre retour à domicile."
               : isKr
-              ? "Depi premie lavi dokter gratis ziska ou retourn lakaz an bonn sante, nou okip tou bann detay avek pasion ek profesyonalizm."
-              : "From your initial free surgeon review to post-treatment teleconsultations back home, our team coordinates every clinical, visa, ambulance, and bedside detail."}
+              ? "Al fer swen a letranze kapav paret konplike. Medical 360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman a letranze ek retour lakaz."
+              : "Seeking medical treatment abroad can feel complicated. Medical 360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home."}
           </p>
 
           <div className="hiw-hero__actions">
@@ -254,7 +251,7 @@ export function HowItWorksPage() {
               onClick={() => navigate('/describe-need')}
               id="hiw-hero-cta"
             >
-              <span>{isFr ? "Demander Mon Avis Médical Gratuit" : isKr ? "Gagn Mo Lavi Dokter Gratis" : "BOOK YOUR MEDICAL CONSULTATION"}</span>
+              <span>{isFr ? "RÉSERVER VOTRE CONSULTATION MÉDICALE" : isKr ? "REZERV OU KONSILTASION MEDIKAL" : "BOOK YOUR MEDICAL CONSULTATION"}</span>
               <ArrowRight size={18} />
             </button>
             <a
@@ -265,7 +262,7 @@ export function HowItWorksPage() {
               id="hiw-hero-whatsapp"
             >
               <MessageCircle size={18} />
-              <span>{isFr ? "Échanger sur WhatsApp" : isKr ? "Koz ar Nou lor WhatsApp" : "CHAT WITH US ON WHATSAPP"}</span>
+              <span>{isFr ? "DISCUTER SUR WHATSAPP" : isKr ? "KOZ AR NOU LOR WHATSAPP" : "CHAT WITH US ON WHATSAPP"}</span>
             </a>
           </div>
 
@@ -273,19 +270,19 @@ export function HowItWorksPage() {
           <div className="hiw-trust-bar">
             <div className="hiw-trust-item">
               <CheckCircle2 size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "100% Gratuit pour le patient" : isKr ? "100% Gratis pou pasian" : "100% Free coordination"}</span>
+              <span>{isFr ? "Patient Navigator dédié" : isKr ? "Patient Navigator dedie" : "Dedicated Patient Navigator"}</span>
             </div>
             <div className="hiw-trust-item">
               <Building2 size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "15 Hôpitaux accrédités JCI / NABH" : isKr ? "15 Lopital akredite JCI / NABH" : "15 JCI/NABH accredited hospitals"}</span>
+              <span>{isFr ? "15 Hôpitaux accrédités en Inde" : isKr ? "15 Lopital akredite dan L'inde" : "15 Premier Indian Hospitals"}</span>
             </div>
             <div className="hiw-trust-item">
               <UserCheck size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "Coordinateur dédié au chevet" : isKr ? "Kordonater personel lor plas" : "Dedicated bedside coordinator"}</span>
+              <span>{isFr ? "Téléconsultation vidéo directe" : isKr ? "Telekonsiltasion video direk" : "Direct Video Teleconsultation"}</span>
             </div>
             <div className="hiw-trust-item">
               <HeartHandshake size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "+3 000 Patients accompagnés" : isKr ? "+3 000 Pasian asiste" : "+3,000 Patients assisted"}</span>
+              <span>{isFr ? "+3 000 Patients accompagnés" : isKr ? "+3 000 Pasian asiste" : "+3,000 Patients Assisted"}</span>
             </div>
           </div>
         </div>
@@ -295,20 +292,19 @@ export function HowItWorksPage() {
       <section className="hiw-phases-section">
         <div className="container">
           <div className="hiw-section-header">
-            <span className="section-label">{isFr ? "Le Parcours Complet en 6 Étapes" : isKr ? "Bann 6 Letap Konple" : "The Complete 6-Step Journey"}</span>
+            <span className="section-label">{isFr ? "Le Parcours Complet en 6 Étapes" : isKr ? "Bann 6 Letap Konple" : "6-Step Coordinated Journey"}</span>
             <h2 className="text-h2">
-              {isFr ? "Comment Nous Vous Accompagnons de Bout en Bout" : isKr ? "Kouma Nou Okip Ou Depi Koumansman Ziska Lafin" : "How We Guide You Every Step of the Way"}
+              {isFr ? "De Maurice à Votre Traitement — À Vos Côtés à Chaque Étape" : isKr ? "Depi Moris Ziska Ou Tretman — Nou ar Ou Sak Letap" : "From Mauritius to Your Treatment — We're With You Every Step of the Way"}
             </h2>
             <p className="text-lead">
               {isFr 
-                ? "Un accompagnement humain, médical et logistique rigoureux conçu pour dissiper toute anxiété." 
-                : "A gentle, transparent, and structured experience designed to remove every bit of anxiety."}
+                ? "Un point de contact unique. Un parcours coordonné. L'accès à des soins de santé de classe mondiale." 
+                : "One point of contact. One coordinated journey. Access to world-class healthcare."}
             </p>
           </div>
 
           <div className="hiw-phases-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
             {CARE_PHASES.map((phase) => {
-              const IconComp = phase.icon;
               return (
                 <div key={phase.num} className="hiw-phase-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div>
@@ -346,24 +342,24 @@ export function HowItWorksPage() {
         <div className="container">
           <div className="hiw-ngo-card">
             <div className="hiw-ngo-content">
-              <span className="badge badge-accent">✦ {isFr ? "Notre Promesse Sociale" : isKr ? "Nou Langazman Sosyal" : "Our Humanitarian Promise"}</span>
+              <span className="badge badge-accent">✦ {isFr ? "Notre Modèle Social" : isKr ? "Nou Model Sosyal" : "Social Enterprise Mission"}</span>
               <h2 className="hiw-ngo-title">
                 {isFr 
-                  ? "Une entreprise sociale au service de la vie" 
+                  ? "Zéro Dividende. Votre Santé Compte." 
                   : isKr 
-                  ? "Enn lakonpanyi kre pou sov lavi" 
-                  : "A Social Enterprise Rooted in Compassion"}
+                  ? "Zero Dividann. Ou Lasante Kont." 
+                  : "No Dividends. Your Healthcare Matters."}
               </h2>
               <p className="hiw-ngo-text">
                 {isFr
-                  ? "Créée par l'ONG Enn Rev Enn Sourir après plus de 10 ans de dévouement humanitaire, Medical 360 Ltd réinjecte 100% de ses bénéfices dans le financement d'interventions chirurgicales pour les familles mauriciennes les plus défavorisées. En choisissant Medical 360 Ltd, votre santé contribue à sauver une autre vie."
+                  ? "Medical 360 Ltd est une initiative d'entreprise sociale d'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins bénéficient d'une coordination médicale professionnelle et personnalisée → Medical 360 génère des revenus durables → ces revenus contribuent à la mission sociale d'Enn Rev Enn Sourir pour soigner les patients vulnérables."
                   : isKr
-                  ? "Medical 360 Ltd finn kre par l'ONG Enn Rev Enn Sourir apre 10 banlane led imaniter. 100% nou bann profi retourn dan l'ONG pou finansie loperasion pou bann fami ki pa kapav peye. Kan ou swazir Medical 360 Ltd, ou pe ed enn lot dimounn gagn lavi."
-                  : "Founded by the NGO Enn Rev Enn Sourir with over 10 years of humanitarian medical coordination, 100% of Medical 360 Ltd profits are directly returned to the NGO to sponsor life-saving surgeries for underprivileged patients. Choosing Medical 360 Ltd means your healing helps someone else heal."}
+                  ? "Medical 360 li enn linisiativ lakonpanyi sosyal l'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn enn kordonasion medikal profesyonel → Medical 360 kre reveni dirab → sa reveni la al dan l'ONG pou ed bann pasian vilnerab."
+                  : "Medical 360 follows a different philosophy: our purpose is not to create dividends for individual shareholders, but to create impact. Patients who can afford their healthcare receive professional medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients."}
               </p>
               <div className="hiw-ngo-actions">
                 <button className="btn btn-primary" onClick={() => navigate('/about')}>
-                  <span>{isFr ? "Découvrir Notre Histoire" : isKr ? "Dekouver Nou Zistwar" : "Read Our Full Story"}</span>
+                  <span>{isFr ? "Découvrir Notre Histoire & Affiliations" : isKr ? "Dekouver Nou Zistwar & Bann Afiliasion" : "Read Our Story & Philosophy"}</span>
                   <ArrowRight size={16} />
                 </button>
               </div>
@@ -386,7 +382,7 @@ export function HowItWorksPage() {
           <div className="hiw-section-header">
             <span className="section-label">{isFr ? "Questions Fréquentes" : isKr ? "Kestyon Souvan Poze" : "Frequently Asked Questions"}</span>
             <h2 className="text-h2">
-              {isFr ? "Nous Répondons à Vos Interrogations" : isKr ? "Repons Kler pou Ou" : "Clear Answers to Put Your Mind at Ease"}
+              {isFr ? "Réponses Claires à Vos Questions" : isKr ? "Repons Kler pou Ou" : "Clear Answers to Put Your Mind at Ease"}
             </h2>
           </div>
 
@@ -421,19 +417,22 @@ export function HowItWorksPage() {
       {/* ── Direct Warm Call To Action ───────────────────────────────────────── */}
       <section className="hiw-cta-section">
         <div className="container hiw-cta-box">
+          <p className="hiw-cta-quote" style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '0.75rem', color: '#ffb400' }}>
+            <em>{isFr ? '« Une conversation peut changer la trajectoire de vos soins. Commencez la vôtre dès aujourd\'hui. »' : isKr ? '« Enn konversasion kapav sanz ou vwayaz lasante. Koumans ou par zordi. »' : '“One conversation could change the direction of your healthcare journey. Start yours today.”'}</em>
+          </p>
           <h2 className="hiw-cta-title">
             {isFr 
-              ? "Prêt à parler avec l'un de nos coordinateurs ?" 
+              ? "Votre Santé Mérite l'Action, Pas l'Incertitude." 
               : isKr 
-              ? "Pare pou koz avek enn nou kordonater ?" 
-              : "Ready to Speak with a Compassionate Coordinator?"}
+              ? "Ou Lasante Merite Laksion, Pa Linzistis." 
+              : "Your Health Deserves Action, Not Uncertainty."}
           </h2>
           <p className="hiw-cta-subtitle">
             {isFr
-              ? "Sans aucun engagement et en toute confidentialité. Nous examinons vos rapports et répondons à toutes vos questions."
+              ? "Prenez rendez-vous dès aujourd'hui. Laissez-nous vous aider à comprendre vos options et vous mettre en relation avec les soins médicaux appropriés."
               : isKr
-              ? "Konpletman gratis ek konfidansyel. Nou get ou bann dosie ek repon tou ou bann kestyon avek plezir."
-              : "Zero pressure, completely free, and strictly confidential. Let our clinical team review your documents and provide immediate clarity."}
+              ? "Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal."
+              : "Book your appointment today. Let us help you understand your options and connect you with the right medical care."}
           </p>
           <div className="hiw-cta-buttons">
             <button 
@@ -441,7 +440,7 @@ export function HowItWorksPage() {
               onClick={() => navigate('/describe-need')}
               id="hiw-bottom-cta"
             >
-              <span>{isFr ? "Obtenir Mon Plan de Traitement Gratuit" : isKr ? "Gagn Mo Plan Tretman Gratis" : "BOOK YOUR MEDICAL CONSULTATION"}</span>
+              <span>{isFr ? "RÉSERVER VOTRE CONSULTATION MÉDICALE" : isKr ? "REZERV OU KONSILTASION MEDIKAL" : "BOOK YOUR MEDICAL CONSULTATION"}</span>
               <ArrowRight size={18} />
             </button>
             <a
@@ -451,7 +450,7 @@ export function HowItWorksPage() {
               className="btn btn-whatsapp btn-lg"
             >
               <MessageCircle size={18} />
-              <span>{isFr ? "Message WhatsApp Immédiat" : isKr ? "Mesaz WhatsApp Direk" : "CHAT WITH US ON WHATSAPP"}</span>
+              <span>{isFr ? "DISCUTER SUR WHATSAPP" : isKr ? "KOZ AR NOU LOR WHATSAPP" : "CHAT WITH US ON WHATSAPP"}</span>
             </a>
           </div>
         </div>

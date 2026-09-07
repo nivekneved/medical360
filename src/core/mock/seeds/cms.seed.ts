@@ -13,19 +13,19 @@ export const cmsSeed: Record<string, CmsPage> = {
     content: {
       brandName: { en: 'Medical', fr: 'Medical', kr: 'Medical' },
       brandSuffix: { en: '360', fr: '360', kr: '360' },
-      emergencyText: { en: '24/7 Patient Assistance', fr: 'Assistance Patient 24/7', kr: 'Asistans Pasian 24/7' },
-      phoneNumber: { en: '+230 59188275', fr: '+230 59188275', kr: '+230 59188275' },
+      emergencyText: { en: 'Dedicated Patient Navigation', fr: 'Navigation Patient Dédiée', kr: 'Kordonasion Pasian Dedie' },
+      phoneNumber: { en: '+230 5918 8275', fr: '+230 5918 8275', kr: '+230 5918 8275' },
       whatsAppText: { en: 'WhatsApp Us', fr: 'WhatsApp', kr: 'WhatsApp Nou' },
-      navAbout: { en: 'About Us', fr: 'À Propos', kr: 'Lor Nou' },
+      navAbout: { en: 'Our Story', fr: 'Notre Histoire', kr: 'Nou Zistwar' },
       navHospitals: { en: 'Hospitals', fr: 'Hôpitaux', kr: 'Lopital' },
       navSpecialties: { en: 'Specialties', fr: 'Spécialités', kr: 'Spesialite' },
       navDoctors: { en: 'Specialists', fr: 'Médecins', kr: 'Bann Dokter' },
-      navServices: { en: 'Services', fr: 'Services', kr: 'Servis' },
+      navServices: { en: 'How It Works', fr: 'Comment Ça Marche', kr: 'Kouma Li Mase' },
       navCaseStudies: { en: 'Patient Stories', fr: 'Témoignages', kr: 'Zistwar Pasian' },
       navCalculator: { en: 'Cost Calculator', fr: 'Calculateur', kr: 'Kalkilatris' },
       navVisa: { en: 'Visa Guide', fr: 'Guide Visa', kr: 'Gid Viza' },
-      navContact: { en: 'Contact', fr: 'Contact', kr: 'Kontak' },
-      navFreeOpinionBtn: { en: 'Get Free Opinion', fr: 'Avis Gratuit', kr: 'Lavi Medikal Gratis' }
+      navContact: { en: 'Contact Us', fr: 'Contact', kr: 'Kontak' },
+      navFreeOpinionBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER UNE CONSULTATION', kr: 'REZERV OU KONSILTASION' }
     }
   },
   home: {
@@ -34,9 +34,9 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Main Pages',
     content: {
       heroBadge: {
-        en: '✦ Mauritius\'s Trusted Medical Concierge',
-        fr: '✦ Votre Conciergerie Médicale de Confiance à l\'Île Maurice',
-        kr: '✦ Ou Konzierz Medikal de Konfians dan Moris'
+        en: '✦ Social Enterprise Initiative of Enn Rev Enn Sourir',
+        fr: '✦ Initiative d\'Entreprise Sociale · Enn Rev Enn Sourir',
+        kr: '✦ Antrepriz Sosyal · Enn Rev Enn Sourir'
       },
       heroTitleLine1: {
         en: 'World-Class Healthcare. Without the Wait.',
@@ -49,13 +49,13 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Avek Dignite ki Ou Merite.'
       },
       heroSubtitle: {
-        en: 'Connecting patients from Mauritius to 15 premier accredited hospital networks across India. Get expert medical second opinions within 24-48 hours, transparent pricing, and bedside coordination—all 100% free for patients.',
-        fr: 'Relier les patients de l\'île Maurice aux 15 plus grands réseaux hospitaliers accrédités en Inde. Obtenez des avis médicaux d\'experts sous 24-48h, des prix transparents et un accompagnement au chevet — 100% gratuit.',
-        kr: 'Konekte bann pasian Moris ar 15 gran lopital akredite dan L\'inde. Gagn lavi medikal expert dan 24-48h, pri kler, ek kordinater lor plas — tou sa 100% gratis pou pasian.'
+        en: 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.',
+        fr: 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale jusqu\'à vos soins à l\'étranger et votre retour à domicile.',
+        kr: 'Medical 360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
       },
       heroPrimaryCta: {
         en: 'BOOK YOUR MEDICAL CONSULTATION',
-        fr: 'RÉSERVER UNE CONSULTATION MÉDICALE',
+        fr: 'RÉSERVER VOTRE CONSULTATION MÉDICALE',
         kr: 'REZERV OU KONSILTASION MEDIKAL'
       },
       heroSecondaryCta: {
@@ -69,84 +69,48 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80'
       },
       trustText: {
-        en: 'Trusted by +3,000 Assisted Patients',
-        fr: 'Approuvé par +3 000 patients accompagnés',
-        kr: 'Plis ki 3,000 pasian fer nou konfians'
+        en: '+3,000 Patients Assisted · UICC Member Network · No Dividends Model',
+        fr: '+3 000 Patients Accompagnés · Membre Titulaire UICC · Modèle Sans Dividende',
+        kr: '+3,000 Pasian Asiste · Manb UICC · Zero Dividann'
       },
       statPatients: { en: '+3,000 Patients Assisted', fr: '+3 000 Patients Accompagnés', kr: '+3,000 Pasian Asiste' },
-      statHospitals: { en: '15 Accredited Hospitals', fr: '15 Hôpitaux Accrédités', kr: '15 Lopital Akredite' },
-      statCountries: { en: 'Premier Indian & Global Hubs', fr: 'Pôles d\'Excellence en Inde & Monde', kr: 'Gran Lopital L\'inde' },
-      statSatisfaction: { en: '100% Satisfaction Rate', fr: '100% Taux de Satisfaction', kr: '100% Pousantaz Satisfe' },
-      specialtiesLabel: { en: 'Top Specialties', fr: 'Spécialités Clés', kr: 'Bann Spesialite' },
-      specialtiesTitle: { en: 'Expert Care Across 15 Medical Specialties', fr: 'Soins d\'Experts à Travers 15 Spécialités Médicales', kr: 'Swen Expert dan 15 Spesialite Medikal' },
-      specialtiesDesc: { en: 'Access world-leading surgeons and state-of-the-art procedures tailored to your medical condition.', fr: 'Accédez aux chirurgiens renommés et aux interventions de pointe adaptées à votre santé.', kr: 'Gagn akse ar bann pli gran dokter ek sirizi adapte a ou bezwen.' },
-      specialtiesViewAllBtn: { en: 'View All 15 Specialties', fr: 'Voir Toutes les 15 Spécialités', kr: 'Get Tou Bann 15 Spesialite' },
-      exploreBtnText: { en: 'Explore Procedures & Costs', fr: 'Découvrir Actes & Tarifs', kr: 'Dekouver Pri & Tretman' },
-      processLabel: { en: '6-Step Care Journey', fr: 'Parcours en 6 Étapes', kr: 'Prosesis an 6 Letap' },
-      processTitle: { en: 'Your Healthcare Journey in 6 Simple Steps', fr: 'Votre Parcours de Soins en 6 Étapes Simples', kr: 'Ou Vwayaz Lasante an 6 Letap' },
-      processDesc: { en: 'We coordinate appointments, invitations, travel logistics, and hospital care so you can focus 100% on healing.', fr: 'Nous coordonnons rendez-vous, visas, logistique de voyage et séjour hospitalier pour votre guérison.', kr: 'Nou okip randevou, viza, voyaz ek lopital pou ou kapav zis konsantre lor ou lasante.' },
-      processStartBtn: { en: 'Start Your Free Medical Inquiry', fr: 'Commencer Votre Demande Gratuite', kr: 'Koumans Ou Demann Gratis' },
-      processStep1Title: { en: '1. Describe Your Need', fr: '1. Décrivez Votre Besoin', kr: '1. Dekrir Ou Bizin' },
-      processStep1Desc: { 
-        en: 'Fill our simple medical inquiry form with your condition, specialty, and preferences.',
-        fr: 'Remplissez notre formulaire de demande médicale simple avec votre condition, votre spécialité et vos préférences.',
-        kr: 'Ranpli nou form sinp ek dekrir ou maladi, spesialite, ek ou preferans.'
-      },
-      processStep2Title: { en: '2. Get a Free Opinion', fr: '2. Obtenez un Avis Gratuit', kr: '2. Gagn Lavi Gratis' },
-      processStep2Desc: {
-        en: 'Our medical team reviews your case and recommends the best hospitals and specialists within 48 hours.',
-        fr: 'Notre équipe médicale examine votre cas et vous recommande les meilleurs hôpitaux et spécialistes sous 48h.',
-        kr: 'Nou lekip medikal get ou dosie e rekomann bann pli bon lopital ek dokter dan 48h.'
-      },
-      processStep3Title: { en: '3. We Plan Everything', fr: '3. Nous Planifions Tout', kr: '3. Nou Planifie Tou' },
-      processStep3Desc: {
-        en: 'Appointment, visa support, flights, hotel, and airport transfers — all coordinated by Med360.',
-        fr: 'Rendez-vous, demande de visa, vols, hôtels et transferts aéroport — tout est coordonné par Med360.',
-        kr: 'Randevou, viza, biye avion, lotel, ek transpor — Med360 okip tou.'
-      },
-      processStep4Title: { en: '4. Travel & Recover', fr: '4. Voyagez et Récupérez', kr: '4. Voyaz ek Repoze' },
-      processStep4Desc: {
-        en: 'Arrive with confidence. Our dedicated coordinator stays with you throughout your treatment.',
-        fr: 'Arrivez en toute confiance. Notre coordinateur dédié reste avec vous tout au long de votre traitement.',
-        kr: 'Voyaz san traka. Nou kordinater dedie res avek ou pandan tou ou tretman.'
-      },
-      networkLabel: { en: 'Accredited Network', fr: 'Réseau Agréé', kr: 'Rezo Akredite' },
-      networkTitle: { en: '15+ Internationally Accredited Hospitals', fr: '15+ Hôpitaux Accrédités au Niveau International', kr: '15+ Lopital Akredite Internasional' },
-      networkDesc: { en: 'Partnered with premier institutions in India, Thailand, Singapore, Malaysia, and Dubai.', fr: 'Partenaire des meilleures institutions en Inde, Thaïlande, Singapour, Malaisie et Dubaï.', kr: 'Partner ar bann pli gran sant medikal dan L\'inde, Taylann, Singapour, ek Dubai.' },
-      networkViewAllBtn: { en: 'Browse All Partner Hospitals', fr: 'Découvrir Tous les Hôpitaux', kr: 'Get Tou Bann Lopital' },
-      whyBadge: { en: 'Why Choose Med360', fr: 'Pourquoi Choisir Med360', kr: 'Kifer Swazir Med360' },
-      whyTitle: { en: 'Your Health. Our Lifelong Mission.', fr: 'Votre Santé. Notre Mission de Vie.', kr: 'Ou Lasante. Nou Mision.' },
+      statHospitals: { en: '15 Premier Indian Hospitals', fr: '15 Hôpitaux Partenaires en Inde', kr: '15 Lopital Partener dan L\'inde' },
+      statCountries: { en: '10+ Years of Compassion', fr: '10+ Années de Dévouement', kr: '10+ Banlane D\'experyans Imin' },
+      statSatisfaction: { en: 'No Dividends · 100% Impact', fr: 'Zéro Dividende · Modèle Solidaire', kr: 'Zero Dividann · 100% Sosyal' },
+      specialtiesLabel: { en: 'Medical Specialties', fr: 'Spécialités Médicales', kr: 'Spesialite Medikal' },
+      specialtiesTitle: { en: 'Specialised Care Across Medical Disciplines', fr: 'Soins de Pointe à Travers Nos Spécialités', kr: 'Swen Avanse dan Bann Gran Spesialite Medikal' },
+      specialtiesDesc: { en: 'Access experienced specialists, advanced diagnostics, and complex surgical procedures tailored to your medical condition.', fr: 'Accédez à des spécialistes renommés et aux technologies diagnostiques et chirurgicales de pointe adaptées à votre situation.', kr: 'Akse ar bann meyer spesialis ek teknolosi modern pou tou kalite tretman.' },
+      specialtiesViewAllBtn: { en: 'View All Specialties', fr: 'Voir Toutes les Spécialités', kr: 'Get Tou Bann Spesialite' },
+      exploreBtnText: { en: 'Explore Care & Procedures', fr: 'Découvrir les Actes & Soins', kr: 'Get Bann Tretman' },
+      processLabel: { en: 'How It Works · 6-Step Journey', fr: 'Parcours Patient en 6 Étapes', kr: 'Parcours Pasian an 6 Letap' },
+      processTitle: { en: 'Your Healthcare Journey, Made Simple', fr: 'Votre Parcours de Soins, Simple & Coordonné', kr: 'Ou Vwayaz Lasante, Sinp & Kordone' },
+      processDesc: { en: 'Seeking medical treatment abroad can feel complicated. Medical 360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.', fr: 'Se faire soigner à l\'étranger peut sembler complexe. Medical 360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à vos soins à l\'étranger et votre retour à domicile.', kr: 'Al fer swen a letranze kapav paret konplike. Medical 360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.' },
+      processStartBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER VOTRE CONSULTATION MÉDICALE', kr: 'REZERV OU KONSILTASION MEDIKAL' },
+      networkLabel: { en: 'India Hospital Network', fr: 'Réseau Hospitalier en Inde', kr: 'Rezo Lopital dan L\'inde' },
+      networkTitle: { en: 'Our Hospital Network at a Glance', fr: 'Notre Réseau Hospitalier en un Coup d\'Œil', kr: 'Nou Rezo Lopital dan L\'inde' },
+      networkDesc: { en: 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.', fr: 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation et l\'expertise clinique.', kr: 'Medical 360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.' },
+      networkViewAllBtn: { en: 'Browse All 15 Partner Hospitals', fr: 'Découvrir les 15 Hôpitaux Partenaires', kr: 'Get Tou Bann 15 Lopital' },
+      whyBadge: { en: '✦ Social Impact Model', fr: '✦ Modèle Social & Philosophie', kr: '✦ Antrepriz Sosyal' },
+      whyTitle: { en: 'Born From a Decade of Compassion. Built Around the Patient.', fr: 'Né d\'une Décennie de Compassion. Centré sur le Patient.', kr: 'Ne depi 10 Banlane Konpasion. Santre lor Pasian.' },
       whyDesc: {
-        en: 'We are your trusted health partner. Owned by NGO Enn Rev Enn Sourir, we bring 10+ years of clinical logistics to private patients, returning 100% of profits to fund healthcare for the needy.',
-        fr: 'Nous sommes votre partenaire santé de confiance. Détenu par l\'ONG Enn Rev Enn Sourir, nous mettons plus de 10 ans d\'expertise au service des patients privés, 100% des bénéfices finançant les soins des démunis.',
-        kr: 'Nou ou partner lasante de konfians. Apartenir a l\'ONG Enn Rev Enn Sourir, nou met 10+ banlane dexperyans pou ou, e 100% profi retourn dan l\'ONG pou ed lezot pasian.'
+        en: 'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.',
+        fr: 'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins bénéficient d\'une coordination professionnelle → Medical 360 génère des revenus durables → ces revenus soutiennent les patients vulnérables d\'Enn Rev Enn Sourir.',
+        kr: 'Medical 360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn kordonasion medikal profesyonel → Medical 360 kre reveni dirab pou ed bann pasian vilnerab.'
       },
-      whyImageBadge: { en: '100% Profits to NGO', fr: '100% Bénéfices à l\'ONG', kr: '100% Profi pour l\'ONG' },
-      whyAboutBtn: { en: 'Learn More About Us', fr: 'En Savoir Plus Sur Nous', kr: 'Konpran Plis Lor Nou' },
-      whyFeature1Title: { en: 'JCI / NABH Accredited Only', fr: 'Uniquement des Hôpitaux Accrédités JCI / NABH', kr: 'Zis Lopital Akredite JCI / NABH' },
-      whyFeature1Desc: { en: 'Strict quality control. We only work with facilities that exceed rigorous global healthcare safety criteria.', fr: 'Contrôle qualité strict. Nous ne travaillons qu\'avec des centres certifiés de très haute renommée.', kr: 'Sekirite strik. Nou travay zis ar bann sant medikal sertifie o nivo mondial.' },
-      whyFeature2Title: { en: 'Complete End-to-End Concierge', fr: 'Conciergerie Complète de Bout en Bout', kr: 'Konsierzri Konple depi A a Z' },
-      whyFeature2Desc: { en: 'Medical visa invitation letters, priority flights, hotel stay, airport pickup, and bedside translation.', fr: 'Lettres d\'invitation visa, vols prioritaires, hôtel, chauffeur privé et traduction sur place.', kr: 'Viza medikal, biye avion, lotel, transpor prive ek tradiksion pandan tretman.' },
-      whyFeature3Title: { en: '48-Hour Second Opinion', fr: 'Deuxième Avis Médical sous 48h', kr: 'Deziem Lavi Medikal dan 48h' },
-      whyFeature3Desc: { en: 'Direct reviews by departmental chief surgeons before you travel, with detailed transparent quotes.', fr: 'Examen direct par les chefs de service avant votre départ avec devis transparents.', kr: 'Sef sirizien get ou dosie avan ou voyaze ek donn pri kler.' },
-      whyFeature4Title: { en: 'Personal Case Coordinator', fr: 'Coordinateur de Cas Dédié', kr: 'Kordinater Dedie Pou Ou' },
-      whyFeature4Desc: { en: 'A dedicated Mauritian coordinator is with you before, during, and after your treatment abroad.', fr: 'Un coordinateur mauricien dédié vous accompagne avant, pendant et après vos soins.', kr: 'Enn kordinater Morisien res ar ou avan, pandan ek apre ou loperasion.' },
-      casesLabel: { en: 'Real Results', fr: 'Résultats Réels', kr: 'Rezilta Vre' },
-      casesTitle: { en: 'Verified Patient Recoveries & Stories', fr: 'Témoignages & Récits de Rétablissement', kr: 'Temwagnaz & Zistwar Pasian' },
-      casesDesc: { en: 'Discover how Mauritian patients saved 50-80% on complex surgeries with extraordinary outcomes.', fr: 'Découvrez comment des patients mauriciens ont économisé 50 à 80% sur des chirurgies de pointe.', kr: 'Dekouver kouma bann pasian Moris finn fer 50-80% lekonomi lor bann gran loperasion.' },
-      casesViewAllBtn: { en: 'Read All Patient Stories', fr: 'Lire Tous les Témoignages', kr: 'Lir Tou Bann Temwagnaz' },
+      whyImageBadge: { en: 'No Dividends · 100% Impact', fr: 'Zéro Dividende · 100% Solidaire', kr: 'Zero Dividann · 100% Sosyal' },
+      whyAboutBtn: { en: 'Read Our Story & Affiliations (UICC)', fr: 'Lire Notre Histoire & Nos Affiliations (UICC)', kr: 'Lir Nou Zistwar & Afiliasion (UICC)' },
       ctaTitle: {
-        en: 'Ready to Experience World-Class Medical Care?',
-        fr: 'Prêt à Bénéficier de Soins Médicaux d\'Excellence ?',
-        kr: 'Pare Pou Gagn Swen Lasante Klas Mondial ?'
+        en: 'Your Health Deserves Action, Not Uncertainty.',
+        fr: 'Votre Santé Mérite l\'Action, Pas l\'Incertitude.',
+        kr: 'Ou Lasante Merite Laksion, Pa Linzistis.'
       },
       ctaDesc: {
-        en: 'Submit your medical inquiry today. Our team will review your case and provide transparent hospital recommendations within 48 hours — 100% free of charge.',
-        fr: 'Soumettez votre demande dès aujourd\'hui. Notre équipe examinera votre dossier et vous proposera des recommandations sous 48h — 100% gratuit.',
-        kr: 'Avoy ou dosie zordi mem. Nou lekip pou get ou ka ek donn rekomandasion lopital dan 48h — 100% gratis.'
+        en: 'Book your appointment today. Let us help you understand your options and connect you with the right medical care.',
+        fr: 'Prenez rendez-vous dès aujourd\'hui. Laissez-nous vous aider à comprendre vos options et vous mettre en relation avec les soins médicaux appropriés.',
+        kr: 'Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal.'
       },
-      ctaPrimaryBtn: { en: 'Get Free Medical Opinion', fr: 'Obtenir un Avis Médical Gratuit', kr: 'Gagn Lavi Medikal Gratis' },
-      ctaWhatsAppBtn: { en: 'WhatsApp: 59188275', fr: 'WhatsApp : 59188275', kr: 'WhatsApp : 59188275' }
+      ctaPrimaryBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER VOTRE CONSULTATION MÉDICALE', kr: 'REZERV OU KONSILTASION MEDIKAL' },
+      ctaWhatsAppBtn: { en: 'CHAT WITH US ON WHATSAPP', fr: 'DISCUTER SUR WHATSAPP', kr: 'KOZ AR NOU LOR WHATSAPP' }
     }
   },
   about: {
@@ -155,127 +119,74 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Main Pages',
     content: {
       heroLabel: {
-        en: 'Our Story & Purpose',
-        fr: 'Notre Histoire & Notre Mission',
-        kr: 'Nou Zistwar & Nou Lobzektif'
+        en: '✦ Social Enterprise Initiative of Enn Rev Enn Sourir · +3,000 Patients',
+        fr: '✦ Entreprise Sociale d\'Enn Rev Enn Sourir · +3 000 Patients',
+        kr: '✦ Lakonpanyi Sosyal l\'ONG Enn Rev Enn Sourir · +3 000 Pasian'
       },
       heroTitle: {
-        en: 'About Med360',
-        fr: 'À Propos de Med360',
-        kr: 'A Propo Med360'
+        en: 'Our Story',
+        fr: 'Notre Histoire',
+        kr: 'Nou Zistwar'
       },
       heroDesc: {
-        en: 'Med360 is a company owned by the NGO Enn Rev Enn Sourir. After 10 years of helping needy patients access specialised care in private clinics and abroad, we have extended our services to private patients — with 100% of profits returning to the NGO.',
-        fr: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans d\'aide médicale pour les plus démunis, nous ouvrons nos services aux patients privés, avec 100% des bénéfices reversés à l\'ONG.',
-        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane led medikal pou bann dimounn mizer, nou finn desid pou ofer nou servis ar bann ki kapav peye, e 100% profi retourn dan l\'ONG.'
+        en: 'Born From a Decade of Compassion. Built Around the Patient. Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.',
+        fr: 'Né d\'une décennie de compassion. Centré sur le patient. Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients.',
+        kr: 'Ne depi enn deseni konpasion. Santre lor pasian. Medical 360 Ltd li enn linisiativ antrepriz sosial l\'ONG Enn Rev Enn Sourir pou kordonn swen pasian avek dignite.'
       },
       missionLabel: {
-        en: 'Our Core Mission',
-        fr: 'Notre Mission Principale',
-        kr: 'Nou Mision Prinsipal'
+        en: '✦ Genèse & Vocation',
+        fr: '✦ Genèse & Vocation',
+        kr: '✦ Nou Rasinn'
       },
       missionTitle: {
-        en: 'Bridging Mauritius to World-Class Healthcare',
-        fr: 'Relier l\'Île Maurice aux Soins Mondiaux',
-        kr: 'Konekt Moris ar Swen Klas Mondial'
+        en: 'Born From a Decade of Compassion. Built Around the Patient.',
+        fr: 'Né d\'une Décennie de Compassion. Centré sur le Patient.',
+        kr: 'Ne depi 10 Banlane Konpasion. Santre lor Pasian.'
       },
       missionP1: {
-        en: 'Med360 is owned by the NGO Enn Rev Enn Sourir. After 10 years helping needy patients access specialised treatment in private clinics or abroad, we have extended our services to those who can afford it. All profits go back to the NGO to continue helping others.',
-        fr: 'Med360 est détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans passés à aider les personnes défavorisées à accéder à des soins spécialisés en cliniques privées ou à l\'étranger, nous étendons nos services aux personnes solvables. Tous les bénéfices sont reversés à l\'ONG.',
-        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane led pou bann dimounn mizer gagn tretman spesialize dan klinik prive ouswa letranze, nou finn ouver nou servis pou bann ki kapav peye. Tou profi retourn dan l\'ONG.'
+        en: 'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.',
+        fr: 'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients et de leurs familles.',
+        kr: 'Medical 360 Ltd li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir, ne depi plizir lane leksperyans pou sipor bann pasian ek fami.'
       },
       missionP2: {
-        en: 'We understand the anxiety of travelling abroad for medical treatment. That is why we handle everything — from finding the right specialist, to your hotel room, your visa, and your return flight. Our job is to let you focus on one thing: your recovery.',
-        fr: 'Nous comprenons l\'anxiété liée à un voyage à l\'étranger pour des soins médicaux. C\'est pourquoi nous nous occupons de tout — de la recherche du bon spécialiste à votre chambre d\'hôtel, en passant par votre visa et votre vol retour. Notre travail est de vous permettre de vous concentrer sur une seule chose : votre guérison.',
-        kr: 'Nou konpran ki li bien stresan pou vwayaze pou al swagn maladi letranze. Se pou sa ki nou okip tou — depi trouv bon dokter la ziska rezerv lotel, viza, ek biye retour. Nou travay se permet ou konsantre zis lor ou gerizon.'
-      },
-      missionP3: {
-        en: 'Our service is always 100% free for patients. We are compensated directly by our hospital partners, never by the patients we serve.',
-        fr: 'Notre service est toujours 100% gratuit pour les patients. Nous sommes rémunérés directement par nos hôpitaux partenaires, jamais par les patients que nous aidons.',
-        kr: 'Nou servis li touzour 100% gratis pou bann pasian. Se bann lopital partner ki pey nou direk, zame bann pasian ki nou ed.'
-      },
-      pillar1Title: { en: 'JCI / NABH Accredited Hospitals Only', fr: 'Uniquement des Hôpitaux Accrédités JCI / NABH', kr: 'Zis Lopital Akredite JCI / NABH' },
-      pillar1Desc: { en: 'We only partner with hospitals that meet the most rigorous global quality and safety standards.', fr: 'Nous ne travaillons qu\'avec des hôpitaux respectant les normes de sécurité les plus strictes.', kr: 'Nou travay zis ar bann lopital ki ena bann pli o standard sekirite.' },
-      pillar2Title: { en: 'Direct Department Head Opinions', fr: 'Avis Directs des Chefs de Service', kr: 'Lavi Direk Sef Dokter' },
-      pillar2Desc: { en: 'Your medical reports are reviewed directly by chief surgeons, not automated software.', fr: 'Vos rapports médicaux sont examinés directement par les chirurgiens en chef.', kr: 'Ou dosie medikal li examine direk par bann sef sirizien.' },
-      pillar3Title: { en: 'Complete Travel Coordination', fr: 'Coordination Complète du Voyage', kr: 'Kordinasion Vwayaz Konple' },
-      pillar3Desc: { en: 'Medical visas, flights, companion travel, airport pickup, and dedicated hotel booking.', fr: 'Visas médicaux, vols, billets accompagnants, accueil aéroport et réservation hôtel.', kr: 'Viza medikal, vol, biye akonpagnan, transpor ek rezervasion lotel.' },
-      pillar4Title: { en: 'Zero Patient Fees', fr: 'Zéro Frais pour le Patient', kr: 'Zero Fré Pou Pasian' },
-      pillar4Desc: { en: 'Our guidance and concierge coordination are 100% free of charge for Mauritian patients.', fr: 'Notre accompagnement et notre conciergerie sont 100% gratuits pour les patients mauriciens.', kr: 'Nou asistans ek kordinasion zot 100% gratis pou bann pasian Morisien.' },
-      awardsLabel: {
-        en: 'Awards & Recognition',
-        fr: 'Reconnaissances & Distinctions',
-        kr: 'Rekonpans & Onerr'
-      },
-      awardsTitle: {
-        en: 'Honored for Facilitation Excellence',
-        fr: 'Récompensé pour l\'Excellence Médicale',
-        kr: 'Rekonpanse pou Nou Servis Medikal'
-      },
-      awardsDesc: {
-        en: 'Our patient-first standards, zero-cost policy, and rigorous hospital vetting are internationally recognized across the healthcare travel industry.',
-        fr: 'Nos standards rigoureux de qualité, de gratuité pour le patient et de sécurité hospitalière sont régulièrement primés à l\'international.',
-        kr: 'Nou gran langazman pou donn servis de kalite, gratis ek an sekirite finn gagn bann gran pri internasional.'
-      },
-      storiesTitle: {
-        en: 'Verified Patient Stories & Recoveries',
-        fr: 'Témoignages & Récits de Rétablissement',
-        kr: 'Temwagnaz & Zistwar Pasian'
-      },
-      storiesDesc: {
-        en: 'Real Mauritian patients who trusted Med360 for complex surgeries abroad.',
-        fr: 'De vrais patients mauriciens qui ont confié leur santé à Med360 pour des chirurgies complexes à l\'étranger.',
-        kr: 'Bann vre pasian Morisien ki finn fer Med360 konfians pou zot loperasion letranze.'
+        en: 'Since its establishment in 2016, Enn Rev Enn Sourir has worked to ensure that access to specialised healthcare is not determined by a family\'s financial circumstances. The organisation has supported children and adults requiring specialised medical care in Mauritius and abroad, including medical coordination, treatment access, financial assistance, travel arrangements and psychosocial support. This patient-centred mission is also reflected in the NGO\'s public and international profiles. (UICC)',
+        fr: 'Depuis sa création en 2016, Enn Rev Enn Sourir s\'est employée à garantir que l\'accès aux soins de santé spécialisés ne dépende pas de la situation financière des familles.',
+        kr: 'Depi so kreasion an 2016, Enn Rev Enn Sourir lite pou ki akse a swen spesialize pa depann lor mwayen finansie enn fami.'
       },
       ctaTitle: {
-        en: 'Ready to Start Your Journey?',
-        fr: 'Prêt à Commencer Votre Parcours ?',
-        kr: 'Pare Pou Koumans Ou Vwayaz ?'
+        en: 'Your Health Deserves Action, Not Uncertainty.',
+        fr: 'Votre Santé Mérite l\'Action, Pas l\'Incertitude.',
+        kr: 'Ou Lasante Merite Laksion, Pa Linzistis.'
       },
       ctaDesc: {
-        en: 'Get a free medical opinion from our partner specialists within 48 hours.',
-        fr: 'Obtenez un avis médical gratuit de nos spécialistes partenaires dans les 48 heures.',
-        kr: 'Gagn enn lavi medikal gratis avek nou bann dokter partner dan 48h.'
+        en: 'Book your appointment today. Let us help you understand your options and connect you with the right medical care.',
+        fr: 'Prenez rendez-vous dès aujourd\'hui. Laissez-nous vous aider à comprendre vos options et vous mettre en relation avec les soins médicaux appropriés.',
+        kr: 'Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal.'
       },
-      ctaPrimaryBtn: { en: 'Get Free Opinion', fr: 'Obtenir un Avis Gratuit', kr: 'Gagn Lavi Medikal Gratis' },
-      ctaWhatsAppBtn: { en: 'WhatsApp Support', fr: 'Assistance WhatsApp', kr: 'Asistans WhatsApp' }
+      ctaPrimaryBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER VOTRE CONSULTATION MÉDICALE', kr: 'REZERV OU KONSILTASION MEDIKAL' },
+      ctaWhatsAppBtn: { en: 'CHAT WITH US ON WHATSAPP', fr: 'DISCUTER SUR WHATSAPP', kr: 'KOZ AR NOU LOR WHATSAPP' }
     }
   },
   services: {
     id: 'services',
-    title: 'Services Page',
+    title: 'How It Works Page',
     category: 'Main Pages',
     content: {
       heroLabel: {
-        en: 'Full Concierge Care',
-        fr: 'Conciergerie Médicale Complète',
-        kr: 'Full Concierge Medikal'
+        en: 'One Point of Contact · One Coordinated Journey',
+        fr: 'Un Seul Point de Contact · Un Parcours Coordonné',
+        kr: 'Enn Sel Kordonater · Enn Vwayaz Kordone'
       },
       heroTitle: {
-        en: 'Our Services Cover Every Need',
-        fr: 'Nos Services Couvrent Tous Vos Besoins',
-        kr: 'Nou Bann Servis Kouver Tou Ou Bizin'
+        en: 'Your Healthcare Journey, Made Simple',
+        fr: 'Votre Parcours de Soins, Simple & Coordonné',
+        kr: 'Ou Vwayaz Lasante, Sinp & Kordone'
       },
       heroDesc: {
-        en: 'From your first inquiry to post-treatment follow-up, Med360 handles every detail of your healthcare journey abroad.',
-        fr: 'De votre première demande au suivi post-traitement, Med360 s\'occupe de chaque détail de votre parcours de santé à l\'étranger.',
-        kr: 'Depi premie demann ziska swivi apre tretman, Med360 okip tou bann detay dan ou vwayaz medikal.'
+        en: 'Seeking medical treatment abroad can feel complicated. Medical 360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.',
+        fr: 'Se faire soigner à l\'étranger peut sembler complexe. Medical 360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à votre traitement à l\'étranger et votre retour à domicile.',
+        kr: 'Al fer swen a letranze kapav paret konplike. Medical 360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.'
       },
-      service1Title: { en: '1. Free Expert Medical Opinion', fr: '1. Avis Médical d\'Expert Gratuit', kr: '1. Lavi Medikal Expert Gratis' },
-      service1Desc: { en: 'Receive treatment plans and transparent cost estimates from top hospital department heads within 48 hours.', fr: 'Recevez des plans de traitement et des devis transparents des chefs de service hospitaliers sous 48h.', kr: 'Gagn plan tretman ek estimasion pri kler depi bann sef dokter dan 48h.' },
-      service2Title: { en: '2. Medical Visa & Travel Planning', fr: '2. Visa Médical & Organisation du Voyage', kr: '2. Viza Medikal & Plan Voyaz' },
-      service2Desc: { en: 'Fast-track visa invitation letters, priority flight bookings with medical luggage allowances, and airline wheelchair assistance.', fr: 'Lettres d\'invitation visa accélérées, réservations vols prioritaires avec bagages médicaux et assistance.', kr: 'Let linvitasion viza vit-vit, rezervasion vol prioritair ek lasistans fotey roulan.' },
-      service3Title: { en: '3. Priority Hospital Admission', fr: '3. Admission Hospitalière Prioritaire', kr: '3. Ladmision Lopital Prioriter' },
-      service3Desc: { en: 'Skip waiting lists. Direct appointments booked with leading chief surgeons, private rooms, and zero queueing.', fr: 'Évitez les listes d\'attente. Rendez-vous directs avec les chirurgiens en chef et chambres privées.', kr: 'Pa bizin atann. Randevou direk ar bann sef sirizien ek lasam prive.' },
-      service4Title: { en: '4. Multilingual & Translator Support', fr: '4. Assistance Traducteur & Multilingue', kr: '4. Lasistans Tradiksion & Langaz' },
-      service4Desc: { en: 'Dedicated on-ground language coordinators fluent in English, French, and local languages to assist you in every doctor consultation.', fr: 'Coordinateurs locaux bilingues pour vous assister lors de chaque consultation avec les médecins.', kr: 'Kordinater lokal pou ed ou dan sak randevou dokter pou tradir tou kler.' },
-      service5Title: { en: '5. Airport VIP Meet & Greet', fr: '5. Accueil VIP & Transferts Aéroport', kr: '5. Lariwe VIP & Transpor Lotel' },
-      service5Desc: { en: 'Private ambulance or comfortable chauffeur vehicle waiting upon landing to escort you directly to your hospital or hotel.', fr: 'Ambulance privée ou véhicule tout confort à l\'atterrissage pour vous conduire directement à l\'hôpital ou à l\'hôtel.', kr: 'Ambilans prive ouswa transpor konfor ki pe atann ou pou amenn ou lopital ouswa lotel.' },
-      service6Title: { en: '6. Post-Treatment Remote Follow-Up', fr: '6. Suivi Médical à Distance Post-Traitement', kr: '6. Swivi Medikal A Distans Apre Tretman' },
-      service6Desc: { en: 'Post-op telemedicine consultations with your operating surgeon once you return home to Mauritius.', fr: 'Téléconsultations post-opératoires avec votre chirurgien une fois de retour à l\'Île Maurice.', kr: 'Konsiltasion video ar ou sirizien kan ou retourn Moris pou fer sir tou pe bien pase.' },
-      ctaTitle: { en: 'Need Special Arrangements?', fr: 'Besoin d\'un Accompagnement Spécifique ?', kr: 'Bizin Enn Akonpagnman Spesifik ?' },
-      ctaDesc: { en: 'We cater for wheelchair assistance, companion hotel stays, dietary requirements, and stretcher flights.', fr: 'Nous organisons assistance fauteuil roulant, hébergement pour accompagnants et vols sanitaires.', kr: 'Nou organiz fotey roulan, lasam pou akonpagnan, manze espesial ek vol saniter.' },
-      ctaBtn: { en: 'Contact Our Medical Team', fr: 'Contacter Notre Équipe', kr: 'Kontak Nou Lekip' }
     }
   },
   hospitals: {
@@ -284,29 +195,27 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Inside Pages',
     content: {
       heroLabel: {
-        en: 'Our Network',
-        fr: 'Notre Réseau',
-        kr: 'Nou Rezo'
+        en: 'India Hospital Network',
+        fr: 'Réseau Hospitalier en Inde',
+        kr: 'Rezo Lopital dan L\'inde'
       },
       heroTitle: {
-        en: 'Associated Hospitals',
-        fr: 'Hôpitaux Associés',
-        kr: 'Lopital Partner'
+        en: 'Our Hospital Network at a Glance',
+        fr: 'Notre Réseau Hospitalier en un Coup d\'Œil',
+        kr: 'Nou Rezo Lopital dan L\'inde'
       },
       heroDesc: {
-        en: 'Every hospital in our network is internationally accredited. Browse our partner hospitals and explore their specialties, facilities, and patient services.',
-        fr: 'Chaque hôpital de notre réseau est accrédité au niveau international. Parcourez nos hôpitaux partenaires et explorez leurs spécialités, leurs installations et leurs services aux patients.',
-        kr: 'Sak lopital dan nou rezo ena akreditasion internasional. Get nou bann lopital partner ek explor zot spesialite, fasilite, ek servis pou bann pasian.'
+        en: 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.',
+        fr: 'Medical 360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels et l\'accréditation internationale.',
+        kr: 'Medical 360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
       },
       searchPlaceholder: {
-        en: 'Search hospitals by name, city, or country...',
-        fr: 'Rechercher des hôpitaux par nom, ville ou pays...',
-        kr: 'Rod lopital par nom, lavil ouswa pei...'
+        en: 'Search hospitals by name, city, or specialty...',
+        fr: 'Rechercher des hôpitaux par nom, ville ou spécialité...',
+        kr: 'Rod lopital par nom, lavil ouswa spesialite...'
       },
       filterAll: { en: 'All Hospitals', fr: 'Tous les Hôpitaux', kr: 'Tou Lopital' },
       filterAccredited: { en: 'JCI / NABH Accredited', fr: 'Accrédités JCI / NABH', kr: 'Akredite JCI / NABH' },
-      statsBannerTitle: { en: 'Over 15,000 Hospital Beds in Our Global Network', fr: 'Plus de 15 000 Lits d\'Hôpitaux dans Notre Réseau Mondial', kr: 'Plis ki 15 000 Leli Lopital dan Nou Rezo' },
-      statsBannerDesc: { en: 'State-of-the-art robotic surgical suites, hybrid catheterization laboratories, and dedicated international patient lounges.', fr: 'Salles de chirurgie robotique de pointe, laboratoires de cathétérisme hybrides et salons VIP internationaux.', kr: 'Lasal loperasion robotik, laboratwar avanse ek salon VIP pou bann pasian internasional.' }
     }
   },
   specialties: {
@@ -315,188 +224,24 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Inside Pages',
     content: {
       heroLabel: {
-        en: 'Medical Expertise',
-        fr: 'Expertise Médicale',
-        kr: 'Exspertiz Medikal'
+        en: 'Medical Specialties',
+        fr: 'Spécialités Médicales',
+        kr: 'Spesialite Medikal'
       },
       heroTitle: {
-        en: 'Select Your Specialty',
-        fr: 'Sélectionnez Votre Spécialité',
-        kr: 'Swazir Ou Spesialite'
+        en: 'Specialised Care Across Medical Disciplines',
+        fr: 'Soins de Pointe à Travers Nos Spécialités Médicales',
+        kr: 'Swen Avanse dan Bann Gran Spesialite Medikal'
       },
       heroDesc: {
-        en: 'Browse our full range of medical specialties. Click any specialty to view procedures, estimated costs, and get a tailored opinion.',
-        fr: 'Parcourez notre gamme complète de spécialités médicales. Cliquez sur une spécialité pour voir les procédures, les coûts estimés et obtenir un avis sur mesure.',
-        kr: 'Get tou bann spesialite medikal ki nou ofer. Klik lor enn spesialite pou trouv bann tretman, pri estime, ek gagn enn lavi medikal personnaliser.'
-      },
-      guidanceText: {
-        en: 'All procedures include comprehensive pre-operative assessment and international standard surgical care.',
-        fr: 'Toutes les interventions incluent un bilan préopératoire complet et des soins chirurgicaux aux standards internationaux.',
-        kr: 'Tou bann loperasion inklir bilan konple avan loperasion ek swen o standard internasional.'
+        en: 'Access comprehensive care from advanced diagnostics and second opinions to chemotherapy, complex surgery, and rehabilitation.',
+        fr: 'Accédez à des soins complets, des diagnostics avancés aux deuxièmes avis, chirurgies complexes et rééducation.',
+        kr: 'Gagn akse ar bann swen konple, depi test avanse ziska deziem lavi, sirirzi konplex ek re-abilitasion.'
       },
       searchPlaceholder: {
-        en: 'Search by condition, surgery, or specialty name...',
-        fr: 'Rechercher par maladie, chirurgie ou nom de spécialité...',
-        kr: 'Rod par maladi, loperasion ouswa nom spesialite...'
-      }
-    }
-  },
-  doctors: {
-    id: 'doctors',
-    title: 'Doctors & Specialists Page',
-    category: 'Inside Pages',
-    content: {
-      heroLabel: {
-        en: 'World-Renowned Specialists',
-        fr: 'Spécialistes de Renom Mondial',
-        kr: 'Dokter Klas Mondial'
-      },
-      heroTitle: {
-        en: 'Our 7 Elite Medical Specialists',
-        fr: 'Nos 7 Chirurgiens et Médecins d\'Élite',
-        kr: 'Nou 7 Dokter ek Sirizien Spesialist'
-      },
-      heroDesc: {
-        en: 'Meet our handpicked network of 7 world-leading medical surgeons and consultants who have performed over 100,000 successful surgeries combined.',
-        fr: 'Découvrez notre réseau exclusif de 7 chirurgiens et consultants de premier plan ayant réalisé plus de 100 000 interventions réussies.',
-        kr: 'Dekouver nou rezo seleksione de 7 dokter ek sirizien klas mondial ki finn fer plis ki 100 000 loperasion a-sikse.'
-      },
-      trustBadgeText: {
-        en: 'Direct Consultation & Second Opinion Available',
-        fr: 'Consultation Directe & Deuxième Avis Disponible',
-        kr: 'Konsiltasion Direk ek Deziem Lavi Disponib'
-      },
-      searchPlaceholder: {
-        en: 'Search specialists by name, specialty, or hospital...',
-        fr: 'Rechercher un médecin par nom, spécialité ou hôpital...',
-        kr: 'Rod dokter par nom, spesialite ouswa lopital...'
-      }
-    }
-  },
-  'case-studies': {
-    id: 'case-studies',
-    title: 'Case Studies Page',
-    category: 'Inside Pages',
-    content: {
-      heroLabel: {
-        en: 'Patient Stories',
-        fr: 'Témoignages de Patients',
-        kr: 'Zistwar Bann Pasian'
-      },
-      heroTitle: {
-        en: 'Case Studies',
-        fr: 'Études de Cas',
-        kr: 'Temwagnaz'
-      },
-      heroDesc: {
-        en: 'Real stories from real patients. Read how Med360 facilitated life-changing treatments for patients from Mauritius and across the Indian Ocean region.',
-        fr: 'Des histoires vraies de vrais patients. Lisez comment Med360 a facilité des traitements vitaux pour des patients de l\'Île Maurice et de l\'océan Indien.',
-        kr: 'Vre zistwar depi vre pasian. Lir kouma Med360 finn ed bann pasian depi Moris ek l\'osean Indien gagn tretman ki finn sov zot lavi.'
-      },
-      ctaTitle: {
-        en: 'Could You Be Our Next Success Story?',
-        fr: 'Pourriez-vous être notre prochaine success story ?',
-        kr: 'Ou kapav vinn nou prosenn zistwar a-sikse?'
-      },
-      ctaDesc: {
-        en: 'Join thousands of patients who trusted Med360 to find them the best care at the right price.',
-        fr: 'Rejoignez des milliers de patients qui ont fait confiance à Med360 pour trouver les meilleurs soins au bon prix.',
-        kr: 'Rezwenn milye pasian ki finn fer Med360 konfians pou gagn pli bon swen ek pli bon pri.'
-      }
-    }
-  },
-  'cost-calculator': {
-    id: 'cost-calculator',
-    title: 'Cost Calculator',
-    category: 'Inside Pages',
-    content: {
-      heroLabel: {
-        en: 'Instant Pricing Estimation',
-        fr: 'Estimation Tarifaire Immédiate',
-        kr: 'Estimasion Pri Deswit'
-      },
-      heroTitle: {
-        en: 'Medical Treatment Cost Calculator',
-        fr: 'Calculateur de Coût de Traitement Médical',
-        kr: 'Kalkilatris Pri Tretman Medikal'
-      },
-      heroDesc: {
-        en: 'Select your specialty, procedure, and destination to get a transparent estimate including hospital package, companion stay, and flights with estimated savings of 50–80%.',
-        fr: 'Sélectionnez votre spécialité, procédure et destination pour obtenir une estimation transparente incluant l\'hôpital, l\'hébergement et les vols avec 50 à 80% d\'économies.',
-        kr: 'Swazir ou spesialite, tretman ek destinasion pou gagn estimasion kler ar lopital, lotel ek vol avek 50–80% lekonomi.'
-      },
-      disclaimerText: {
-        en: 'All costs are indicative estimates based on accredited hospital tariffs and standard hospital stays.',
-        fr: 'Tous les tarifs sont des estimations indicatives basées sur les forfaits des hôpitaux partenaires agréés.',
-        kr: 'Tou bann pri se bann estimasion baze lor forfay bann lopital akredite.'
-      }
-    }
-  },
-  'visa-guide': {
-    id: 'visa-guide',
-    title: 'Visa & Travel Guide',
-    category: 'Inside Pages',
-    content: {
-      heroLabel: {
-        en: 'Medical Travel Guide',
-        fr: 'Guide Voyage Médical',
-        kr: 'Gid Voyaz Medikal'
-      },
-      heroTitle: {
-        en: 'Mauritius Medical Visa & Travel Guide',
-        fr: 'Guide Visa Médical & Voyage pour Mauriciens',
-        kr: 'Gid Viza Medikal & Voyaz pou Morisien'
-      },
-      heroDesc: {
-        en: 'Everything you need to know about medical visas, passport requirements, companion travel, and flights from SSR International Airport to world-leading hospital destinations.',
-        fr: 'Tout ce que vous devez savoir sur les visas médicaux, le passeport, les accompagnateurs et les vols depuis l\'Aéroport SSR vers les meilleurs hôpitaux internationaux.',
-        kr: 'Tou seki ou bizin kone lor viza medikal, paspor, akonpagnan, ek vol depi Plaisance (SSR) ziska bann pli gran lopital internasional.'
-      },
-      ctaTitle: {
-        en: 'Need Assistance With Your Medical Visa?',
-        fr: 'Besoin d\'aide pour votre visa médical ?',
-        kr: 'Bizin led pou ou viza medikal ?'
-      },
-      ctaDesc: {
-        en: 'Our dedicated travel concierge issues hospital invitation letters and coordinates your visa application free of charge.',
-        fr: 'Notre équipe émet vos lettres d\'invitation hospitalières et coordonne vos démarches de visa gratuitement.',
-        kr: 'Nou lekip prepar ou let linvitasion lopital ek ed ou dan tou demars viza gratis.'
-      }
-    }
-  },
-  'describe-need': {
-    id: 'describe-need',
-    title: 'Describe Need (Wizard)',
-    category: 'Inside Pages',
-    content: {
-      heroTitle: {
-        en: 'Describe Your Need',
-        fr: 'Décrivez Votre Besoin',
-        kr: 'Dekrir Ou Bizin'
-      },
-      heroDesc: {
-        en: 'Fill in the form below and our medical team will get back to you with personalised hospital recommendations — free of charge.',
-        fr: 'Remplissez le formulaire ci-dessous et notre équipe médicale vous répondra avec des recommandations personnalisées — gratuitement.',
-        kr: 'Ranpli form ki anba la e nou lekip medikal pou reponn ou avek bann rekomandasion lopital personalize — pou nanye ditou.'
-      },
-      step1Heading: { en: 'Personal Information', fr: 'Informations Personnelles', kr: 'Linformasion Personel' },
-      step2Heading: { en: 'Medical Condition & Specialty', fr: 'Condition Médicale & Spécialité', kr: 'Kondision Medikal & Spesialite' },
-      step3Heading: { en: 'Travel & Budget Preferences', fr: 'Préférences de Voyage & Budget', kr: 'Preferans Voyaz & Bidze' },
-      step4Heading: { en: 'Review & Submit', fr: 'Vérifier & Soumettre', kr: 'Revize & Soumet' },
-      privacyNotice: {
-        en: 'Your medical data is encrypted and strictly protected under the Mauritius Data Protection Act 2017.',
-        fr: 'Vos données médicales sont cryptées et protégées conformément au Data Protection Act 2017 de Maurice.',
-        kr: 'Ou bann done medikal prive zot sekirize dapre Data Protection Act 2017 Moris.'
-      },
-      successTitle: {
-        en: 'Inquiry Submitted Successfully!',
-        fr: 'Demande Soumise avec Succès !',
-        kr: 'Demann Finn Soumet avek Sikse !'
-      },
-      successDesc: {
-        en: 'Your case has been received. A dedicated Med360 case coordinator will contact you within 24 hours.',
-        fr: 'Votre dossier a été reçu. Un coordinateur de cas dédié de Med360 vous contactera sous 24h.',
-        kr: 'Nou finn gagn ou dosie. Enn kordinater Med360 pou kontakte ou dan 24h.'
+        en: 'Search by specialty name or medical condition...',
+        fr: 'Rechercher par nom de spécialité ou pathologie...',
+        kr: 'Rod par nom spesialite ouswa maladi...'
       }
     }
   },
@@ -506,50 +251,45 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Main Pages',
     content: {
       heroLabel: {
-        en: 'Get in Touch',
-        fr: 'Contactez-Nous',
-        kr: 'Kontak Nou'
+        en: '✦ Contact Us · Dedicated Patient Navigation',
+        fr: '✦ Contactez Notre Équipe de Navigation Patient',
+        kr: '✦ Pran Kontak ar Nou Lekip Patient Navigator'
       },
       heroTitle: {
-        en: 'Contact Us',
-        fr: 'Contact',
-        kr: 'Kontak'
+        en: 'When Your Health Can’t Wait, Neither Should You.',
+        fr: 'Quand Votre Santé Ne Peut Pas Attendre, Vous Non Plus.',
+        kr: 'Kan Ou Lasante Pa Kapav Atann, Ou Osi Pa Bizin Atann.'
       },
       heroDesc: {
-        en: 'Have questions? Our team is available 7 days a week. Reach us by WhatsApp, phone, or email.',
-        fr: 'Des questions ? Notre équipe est disponible 7 jours sur 7. Joignez-nous par WhatsApp, téléphone ou email.',
-        kr: 'Ena kestion? Nou lekip la 7 zour lor 7. Kontak nou lor WhatsApp, telefonn ouswa email.'
+        en: 'Facing a diagnosis or considering treatment abroad can bring many questions. You don\'t have to navigate the journey alone. Whether you are looking for a second medical opinion, specialist consultation, treatment abroad, hospital recommendation or complete medical travel assistance, the Medical 360 team is ready to listen, understand your needs and guide you towards the next step.',
+        fr: 'Faire face à un diagnostic ou envisager un traitement à l\'étranger soulève de nombreuses questions. Vous n\'avez pas à parcourir ce chemin seul. L\'équipe de Medical 360 est prête à vous écouter et vous guider vers la prochaine étape.',
+        kr: 'Gagn enn diagnostik ouswa pans al swanye a letranze amenn boukou kestion. Ou pa tousel dan sa vwayaz la. Lekip Medical 360 pre pou ekout ou ek gid ou.'
       },
       reachUsTitle: {
-        en: 'Reach Us Directly',
-        fr: 'Joignez-nous Directement',
-        kr: 'Koz Ar Nou Direk'
+        en: 'Get in Touch',
+        fr: 'Prendre Contact',
+        kr: 'Pran Kontak'
       },
       officeAddress: {
-        en: 'Med360 Ltd, Level 4, Medical Hub, Port Louis, Mauritius',
-        fr: 'Med360 Ltd, Niveau 4, Pôle Médical, Port-Louis, Île Maurice',
-        kr: 'Med360 Ltd, Nivo 4, Pôle Médical, Port-Louis, Moris'
+        en: 'Medical 360 Ltd, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Mauritius',
+        fr: 'Medical 360 Ltd, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Maurice',
+        kr: 'Medical 360 Ltd, Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Moris'
       },
       hoursText: {
-        en: 'Mon – Sat: 8:00 AM – 7:00 PM (MUT)\nWhatsApp available 24/7',
-        fr: 'Lun – Sam : 8h00 – 19h00 (MUT)\nWhatsApp disponible 24h/24 et 7j/7',
-        kr: 'Lindi - Samdi: 08:00 - 19:00 (MUT)\nWhatsApp disponib 24/7'
+        en: 'Monday – Saturday: 8:00 AM – 7:00 PM (MUT)\nWhatsApp helpline active 7 days a week',
+        fr: 'Lundi – Samedi : 08h00 – 19h00 (MUT)\nService d\'astreinte WhatsApp actif 7j/7',
+        kr: 'Lindi - Samdi: 08:00 - 19:00 (MUT)\nWhatsApp ouver 7 zour lor 7'
       },
       emailAddress: {
-        en: 'contact@med360.mu',
-        fr: 'contact@med360.mu',
-        kr: 'contact@med360.mu'
+        en: 'info@med360.mu',
+        fr: 'info@med360.mu',
+        kr: 'info@med360.mu'
       },
       phoneNumber: {
-        en: '+230 59188275',
-        fr: '+230 59188275',
-        kr: '+230 59188275'
+        en: '+230 5918 8275',
+        fr: '+230 5918 8275',
+        kr: '+230 5918 8275'
       },
-      responseTimeNotice: {
-        en: 'Typical response time: Under 2 hours during working hours.',
-        fr: 'Délai de réponse moyen : Moins de 2 heures durant les heures ouvrables.',
-        kr: 'Délai repons : Mwens ki 2 er de tan pandan ler travay.'
-      }
     }
   },
   privacy: {
@@ -568,40 +308,10 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Nou langazman pou protez ou bann done medikal prive dapre Data Protection Act 2017 Moris ek bann lalwa internasional.'
       },
       lastUpdated: {
-        en: 'Last Updated: January 2026',
-        fr: 'Dernière mise à jour : Janvier 2026',
-        kr: 'Dernie miz-a-zour : Zanvie 2026'
+        en: 'Last Updated: 2026',
+        fr: 'Dernière mise à jour : 2026',
+        kr: 'Dernie miz-a-zour : 2026'
       },
-      section1Title: {
-        en: '1. Information We Collect',
-        fr: '1. Informations que Nous Collectons',
-        kr: '1. Linformasion ki Nou Ramase'
-      },
-      section1Content: {
-        en: 'We collect personal identification data, contact details, medical history reports, diagnostic images, and travel preferences strictly for medical concierge and hospital coordination purposes.',
-        fr: 'Nous collectons les données d\'identification, coordonnées, rapports médicaux, imageries diagnostiques et préférences de voyage uniquement pour la conciergerie médicale et la coordination hospitalière.',
-        kr: 'Nou ramass done lidantite, kontak, dosie medikal, radio, skan ek preferans voyaz zis pou ed ou organiz ou swen lopital.'
-      },
-      section2Title: {
-        en: '2. How We Use Your Data',
-        fr: '2. Utilisation de Vos Données',
-        kr: '2. Kouma Nou Servi Ou Done'
-      },
-      section2Content: {
-        en: 'Your medical files are shared exclusively with accredited partner hospital chief specialists to obtain preliminary opinions, treatment plans, and quotes with your explicit consent.',
-        fr: 'Vos dossiers médicaux sont transmis exclusivement aux médecins chefs des hôpitaux partenaires accrédités pour l\'obtention d\'avis et devis avec votre accord explicite.',
-        kr: 'Ou bann dosie medikal partaze zis ar bann sef sirizien dan bann lopital partner pou gagn zot lavi ek devis ar ou lakor.'
-      },
-      section3Title: {
-        en: '3. Data Security & Storage',
-        fr: '3. Sécurité & Stockage des Données',
-        kr: '3. Sekirite & Stokaz Done'
-      },
-      section3Content: {
-        en: 'All data is stored using AES-256 encrypted protocols and handled strictly according to the Mauritius Data Protection Act (DPA 2017) and GDPR-aligned principles.',
-        fr: 'Toutes les données sont chiffrées selon les normes AES-256 et traitées conformément au Data Protection Act 2017 de Maurice et aux principes du RGPD.',
-        kr: 'Tou done kripte ar standard AES-256 e nou swiv strikteman Data Protection Act 2017 Moris ek bann norm RGPD.'
-      }
     }
   },
   terms: {
@@ -615,35 +325,15 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Kondision Zeneral Servis & Fasilitasion'
       },
       heroDesc: {
-        en: 'Important legal terms and conditions governing medical facilitation services provided by Med360 Ltd in Mauritius (owned by NGO Enn Rev Enn Sourir).',
-        fr: 'Conditions juridiques importantes régissant les services de facilitation médicale fournis par Med360 Ltd à l\'Île Maurice (détenue par l\'ONG Enn Rev Enn Sourir).',
-        kr: 'Bann kondision legal inportan konsernan bann servis fasilitasion medikal par Med360 Ltd dan Moris (apartenir a l\'ONG Enn Rev Enn Sourir).'
+        en: 'Important terms and conditions governing medical facilitation services provided by Medical 360 Ltd in Mauritius (social enterprise of NGO Enn Rev Enn Sourir).',
+        fr: 'Conditions régissant les services de facilitation médicale fournis par Medical 360 Ltd à l\'Île Maurice (entreprise sociale de l\'ONG Enn Rev Enn Sourir).',
+        kr: 'Bann kondision konsernan bann servis fasilitasion medikal par Medical 360 Ltd dan Moris (antrepriz sosial l\'ONG Enn Rev Enn Sourir).'
       },
       lastUpdated: {
-        en: 'Last Updated: January 2026',
-        fr: 'Dernière mise à jour : Janvier 2026',
-        kr: 'Dernie miz-a-zour : Zanvie 2026'
+        en: 'Last Updated: 2026',
+        fr: 'Dernière mise à jour : 2026',
+        kr: 'Dernie miz-a-zour : 2026'
       },
-      section1Title: {
-        en: '1. Role of Med360',
-        fr: '1. Rôle de Med360',
-        kr: '1. Rol Med360'
-      },
-      section1Content: {
-        en: 'Med360 is a company owned by NGO Enn Rev Enn Sourir. After 10 years aiding the needy, Med360 extends medical concierge services to private patients, with 100% of profits returning to the NGO. Med360 acts as a medical concierge and facilitator connecting patients to accredited international hospitals and private clinics.',
-        fr: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans d\'aide aux démunis, Med360 offre ses services aux patients privés, avec 100% des bénéfices reversés à l\'ONG. Med360 agit comme facilitateur et conciergerie médicale reliant les patients aux hôpitaux agréés.',
-        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane led pou bann demuni, Med360 ofer servis fasilitasion pou bann ki kapav peye, e 100% profi retourn dan l\'ONG. Med360 konekt bann pasian ar bann lopital akredite.'
-      },
-      section2Title: {
-        en: '2. Free Patient Concierge & NGO Reinvestment Policy',
-        fr: '2. Politique de Conciergerie & Reverssement à l\'ONG',
-        kr: '2. Servis Konzierzri & Reinvestisman dan l\'ONG'
-      },
-      section2Content: {
-        en: 'Our guidance, initial opinion coordination, and concierge support are provided free of charge to Mauritian patients. All corporate profits generated by Med360 are reinvested back into NGO Enn Rev Enn Sourir to fund specialised treatments for the needy.',
-        fr: 'Nos services d\'accompagnement et d\'obtention de devis sont entièrement gratuits pour les patients mauriciens. Tous les bénéfices de Med360 sont reversés à l\'ONG Enn Rev Enn Sourir pour soigner les plus démunis.',
-        kr: 'Nou bann servis lavi medikal ek kordinasion zot 100% gratis pou bann pasian Morisien. Tou profi retourn dan l\'ONG Enn Rev Enn Sourir pou ed dimounn mizer swagne.'
-      }
     }
   },
   footer: {
@@ -652,19 +342,19 @@ export const cmsSeed: Record<string, CmsPage> = {
     category: 'Global',
     content: {
       tagline: {
-        en: 'Med360 is owned by NGO Enn Rev Enn Sourir. Connecting patients to accredited clinics and hospitals worldwide, with 100% of profits funding medical care for the needy.',
-        fr: 'Med360 est détenue par l\'ONG Enn Rev Enn Sourir. Nous connectons les patients aux hôpitaux accrédités, 100% des bénéfices finançant les soins pour les démunis.',
-        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Nou konekte bann pasian ar bann meyer lopital, e 100% profi retourn dan l\'ONG pou ed bann ki dan bezwin.'
+        en: 'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir. From Mauritius to your treatment — we\'re with you every step of the way.',
+        fr: 'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. De Maurice à votre traitement — à vos côtés à chaque étape.',
+        kr: 'Medical 360 Ltd li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Depi Moris ziska ou tretman — nou ar ou sak letap.'
       },
       copyrightText: {
-        en: 'Med360 Ltd. All rights reserved. Owned by NGO Enn Rev Enn Sourir (10+ Years of Healthcare Service).',
-        fr: 'Med360 Ltd. Tous droits réservés. Détenu par l\'ONG Enn Rev Enn Sourir (10+ ans d\'aide médicale).',
-        kr: 'Med360 Ltd. Tou drwa rezerve. Apartenir a l\'ONG Enn Rev Enn Sourir (10+ banlane led medikal).'
+        en: 'Medical 360 Ltd. All rights reserved. Social Enterprise Initiative of Enn Rev Enn Sourir.',
+        fr: 'Medical 360 Ltd. Tous droits réservés. Initiative d\'Entreprise Sociale d\'Enn Rev Enn Sourir.',
+        kr: 'Medical 360 Ltd. Tou drwa rezerve. Linisiativ Antrepriz Sosyal l\'ONG Enn Rev Enn Sourir.'
       },
       disclaimer: {
-        en: 'Med360 is a company owned by NGO Enn Rev Enn Sourir. After 10 years helping the needy access specialised treatment in private clinics or abroad, services are extended to paying patients with 100% of profits returning to the NGO.',
-        fr: 'Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. Après 10 ans d\'aide médicale pour les démunis en clinique privée ou à l\'étranger, les services sont étendus aux patients privés avec 100% des bénéfices reversés à l\'ONG.',
-        kr: 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. Apre 10 banlane led medikal spesialize pou bann demuni, nou servis finn elarzi ar bann ki kapav peye, e 100% profi retourn dan l\'ONG.'
+        en: 'Medical 360 follows a No Dividends philosophy. Patients who can afford their healthcare receive professional medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.',
+        fr: 'Medical 360 applique une politique stricte sans dividende. Les revenus générés par la conciergerie soutiennent directement la mission d\'Enn Rev Enn Sourir pour soigner les patients vulnérables.',
+        kr: 'Medical 360 swiv model Zero Dividann. Reveni ki gagne al direkteman dan l\'ONG Enn Rev Enn Sourir pou pey swen bann pasian vilnerab.'
       },
       servicesTitle: { en: 'Our Services', fr: 'Nos Services', kr: 'Nou Bann Servis' },
       quickLinksTitle: { en: 'Quick Links', fr: 'Liens Rapides', kr: 'Bann Lien Rapid' },
@@ -681,14 +371,14 @@ export const cmsSeed: Record<string, CmsPage> = {
       position: 'above',
       speedSeconds: '45',
       badgeText: {
-        en: 'NGO Enn Rêv Enn Sourir',
-        fr: 'ONG Enn Rêv Enn Sourir',
-        kr: 'ONG Enn Rev Enn Sourir',
+        en: 'Medical 360 Ltd',
+        fr: 'Medical 360 Ltd',
+        kr: 'Medical 360 Ltd',
       },
       messageText: {
-        en: "Med360 is a company owned by the NGO Enn Rev Enn Sourir. After 10 years in helping the needy's have access to specialised treatment in private clinic or abroad, we have now decided to extend our service to those who can afford. The profit will go back to the NGO to continue helping others.",
-        fr: "Med360 est une entreprise détenue par l'ONG Enn Rêv Enn Sourir. Après 10 ans à aider les personnes dans le besoin à avoir accès à des soins spécialisés en clinique privée ou à l'étranger, nous avons désormais décidé d'étendre nos services à ceux qui peuvent se le permettre. Les bénéfices sont reversés à l'ONG pour continuer d'aider les autres.",
-        kr: "Med360 li enn lakonpanyi ki apartenir a l'ONG Enn Rev Enn Sourir. Apre 10 banlane pe ed bann dimounn dan bezwin gagn akse a bann tretman spesialize dan klinik prive ouswa a letranze, nou finn deside elarzi nou servis pou bann ki kapav peye. Tou profi retourn dan l'ONG pou kontinie ed lezot.",
+        en: "Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional, personalised medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients. No dividends. No compromise on dignity. Patient first. Always.",
+        fr: "Medical 360 Ltd est une initiative d'entreprise sociale d'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins bénéficient d'une coordination médicale professionnelle et personnalisée → Medical 360 génère des revenus durables → ces revenus contribuent à la mission sociale d'Enn Rev Enn Sourir et soutiennent les patients vulnérables. Zéro dividende. Aucun compromis sur la dignité. Le patient d'abord. Toujours.",
+        kr: "Medical 360 Ltd li enn linisiativ sosial l'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn kordonasion medikal profesyonel → Medical 360 kre reveni dirab pou ed bann pasian vilnerab. Zero dividann. Oken konpromi lor dignite. Pasian avan tou. Touzour.",
       },
       linkUrl: {
         en: '/about',
@@ -703,4 +393,3 @@ export const cmsSeed: Record<string, CmsPage> = {
     }
   }
 };
-
