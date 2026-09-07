@@ -162,7 +162,9 @@ class CentralizedCrudEngine {
         if (isSupabaseConfigured) {
           try {
             const { data, error } = await supabase.from(cfg.tableName).select('*').order('created_at', { ascending: false });
-            if (!error && data && data.length > 0) {
+            // Only use Supabase if it contains the full updated catalog (>= 15 items for hospitals/specialties)
+            const minCount = (collection === 'hospitals' || collection === 'specialties') ? 15 : 1;
+            if (!error && data && data.length >= minCount) {
               return data.map(cfg.mapRow) as EntityTypeMap[K][];
             }
           } catch (e) {
