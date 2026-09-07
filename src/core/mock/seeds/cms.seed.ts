@@ -39,29 +39,29 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: '✦ Ou Konzierz Medikal de Konfians dan Moris'
       },
       heroTitleLine1: {
-        en: 'World-Class Healthcare,',
-        fr: 'Des Soins de Classe Mondiale,',
-        kr: 'Swen Lasante Kalite,'
+        en: 'World-Class Healthcare. Without the Wait.',
+        fr: 'Des Soins de Classe Mondiale. Sans Attente.',
+        kr: 'Swen Lasante Kalite. San Bizin Atann.'
       },
       heroTitleLine2: {
-        en: 'Without the Wait',
-        fr: 'Sans Attente',
-        kr: 'San Bizin Atann'
+        en: 'With the Dignity You Deserve.',
+        fr: 'Avec la Dignité que Vous Méritez.',
+        kr: 'Avek Dignite ki Ou Merite.'
       },
       heroSubtitle: {
-        en: 'Connecting patients from Mauritius to leading accredited hospitals globally. Get expert medical opinions, transparent pricing, and comprehensive travel coordination—all for free.',
-        fr: 'Connecter les patients de l\'île Maurice aux principaux hôpitaux accrédités dans le monde entier. Obtenez des avis médicaux d\'experts, des prix transparents et une coordination de voyage complète, tout cela gratuitement.',
-        kr: 'Konekte bann pasian Moris ar bann pli bon lopital dan lemond. Gagn bann lavi expert medikal, pri kler, ek kordinasion voyaz — tou sa pou nanye.'
+        en: 'Connecting patients from Mauritius to 15 premier accredited hospital networks across India. Get expert medical second opinions within 24-48 hours, transparent pricing, and bedside coordination—all 100% free for patients.',
+        fr: 'Relier les patients de l\'île Maurice aux 15 plus grands réseaux hospitaliers accrédités en Inde. Obtenez des avis médicaux d\'experts sous 24-48h, des prix transparents et un accompagnement au chevet — 100% gratuit.',
+        kr: 'Konekte bann pasian Moris ar 15 gran lopital akredite dan L\'inde. Gagn lavi medikal expert dan 24-48h, pri kler, ek kordinater lor plas — tou sa 100% gratis pou pasian.'
       },
       heroPrimaryCta: {
-        en: 'Get a Free Medical Opinion',
-        fr: 'Obtenir un Avis Médical Gratuit',
-        kr: 'Gagn Enn Lavi Medikal Gratis'
+        en: 'BOOK YOUR MEDICAL CONSULTATION',
+        fr: 'RÉSERVER UNE CONSULTATION MÉDICALE',
+        kr: 'REZERV OU KONSILTASION MEDIKAL'
       },
       heroSecondaryCta: {
-        en: 'WhatsApp Support',
-        fr: 'WhatsApp Assistance',
-        kr: 'WhatsApp Asistans'
+        en: 'CHAT WITH US ON WHATSAPP',
+        fr: 'DISCUTER SUR WHATSAPP',
+        kr: 'KOZ AR NOU LOR WHATSAPP'
       },
       heroBannerImage: {
         en: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80',
@@ -69,21 +69,21 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80'
       },
       trustText: {
-        en: 'Trusted by 1,200+ Mauritian Patients',
-        fr: 'Approuvé par plus de 1 200 patients mauriciens',
-        kr: 'Plis ki 1,200 pasian Morisien fer nou konfians'
+        en: 'Trusted by +3,000 Assisted Patients',
+        fr: 'Approuvé par +3 000 patients accompagnés',
+        kr: 'Plis ki 3,000 pasian fer nou konfians'
       },
-      statPatients: { en: '1,200+ Patients Assisted', fr: '1 200+ Patients Accompagnés', kr: '1,200+ Pasian Asiste' },
-      statHospitals: { en: '15+ Accredited Hospitals', fr: '15+ Hôpitaux Accrédités', kr: '15+ Lopital Akredite' },
-      statCountries: { en: '7+ Global Destinations', fr: '7+ Destinations Mondiales', kr: '7+ Destinasion Mondial' },
+      statPatients: { en: '+3,000 Patients Assisted', fr: '+3 000 Patients Accompagnés', kr: '+3,000 Pasian Asiste' },
+      statHospitals: { en: '15 Accredited Hospitals', fr: '15 Hôpitaux Accrédités', kr: '15 Lopital Akredite' },
+      statCountries: { en: 'Premier Indian & Global Hubs', fr: 'Pôles d\'Excellence en Inde & Monde', kr: 'Gran Lopital L\'inde' },
       statSatisfaction: { en: '100% Satisfaction Rate', fr: '100% Taux de Satisfaction', kr: '100% Pousantaz Satisfe' },
       specialtiesLabel: { en: 'Top Specialties', fr: 'Spécialités Clés', kr: 'Bann Spesialite' },
-      specialtiesTitle: { en: 'Expert Care Across 10 Medical Specialties', fr: 'Soins d\'Experts à Travers 10 Spécialités Médicales', kr: 'Swen Expert dan 10 Spesialite Medikal' },
+      specialtiesTitle: { en: 'Expert Care Across 15 Medical Specialties', fr: 'Soins d\'Experts à Travers 15 Spécialités Médicales', kr: 'Swen Expert dan 15 Spesialite Medikal' },
       specialtiesDesc: { en: 'Access world-leading surgeons and state-of-the-art procedures tailored to your medical condition.', fr: 'Accédez aux chirurgiens renommés et aux interventions de pointe adaptées à votre santé.', kr: 'Gagn akse ar bann pli gran dokter ek sirizi adapte a ou bezwen.' },
-      specialtiesViewAllBtn: { en: 'View All 10 Specialties', fr: 'Voir Toutes les 10 Spécialités', kr: 'Get Tou Bann 10 Spesialite' },
+      specialtiesViewAllBtn: { en: 'View All 15 Specialties', fr: 'Voir Toutes les 15 Spécialités', kr: 'Get Tou Bann 15 Spesialite' },
       exploreBtnText: { en: 'Explore Procedures & Costs', fr: 'Découvrir Actes & Tarifs', kr: 'Dekouver Pri & Tretman' },
-      processLabel: { en: 'Simple 4-Step Process', fr: 'Processus en 4 Étapes', kr: 'Prosesis an 4 Letap' },
-      processTitle: { en: 'Your Healthcare Journey in 4 Simple Steps', fr: 'Votre Parcours de Soins en 4 Étapes Simples', kr: 'Ou Vwayaz Lasante an 4 Letap' },
+      processLabel: { en: '6-Step Care Journey', fr: 'Parcours en 6 Étapes', kr: 'Prosesis an 6 Letap' },
+      processTitle: { en: 'Your Healthcare Journey in 6 Simple Steps', fr: 'Votre Parcours de Soins en 6 Étapes Simples', kr: 'Ou Vwayaz Lasante an 6 Letap' },
       processDesc: { en: 'We coordinate appointments, invitations, travel logistics, and hospital care so you can focus 100% on healing.', fr: 'Nous coordonnons rendez-vous, visas, logistique de voyage et séjour hospitalier pour votre guérison.', kr: 'Nou okip randevou, viza, voyaz ek lopital pou ou kapav zis konsantre lor ou lasante.' },
       processStartBtn: { en: 'Start Your Free Medical Inquiry', fr: 'Commencer Votre Demande Gratuite', kr: 'Koumans Ou Demann Gratis' },
       processStep1Title: { en: '1. Describe Your Need', fr: '1. Décrivez Votre Besoin', kr: '1. Dekrir Ou Bizin' },

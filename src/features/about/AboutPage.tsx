@@ -1,4 +1,4 @@
-import { ArrowRight, MessageCircle, Shield, Users, Globe2, Heart, Star, Sparkles, Trophy, Award, Medal } from 'lucide-react';
+import { ArrowRight, MessageCircle, Shield, Users, Globe2, Heart, Star, Sparkles, Trophy, Award, Medal, BookmarkCheck, ExternalLink, Building2, CheckCircle2 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,17 +16,83 @@ const HIGHLIGHTS = [
   { 
     icon: Users,  
     label: '10+ Years Helping the Needy', label_fr: '10+ Ans aux Côtés des Plus Démunis', label_kr: '10+ Banlane pe Ed Dimounn dan Bezwin',
-    sub: 'Specialised care in private clinics & abroad', sub_fr: 'Soins spécialisés en clinique privée et à l\'étranger', sub_kr: 'Swen spesialize dan klinik prive ek a letranze'
+    sub: '+3,000 patients assisted in private clinics & overseas', sub_fr: '+3 000 patients accompagnés en clinique et à l\'étranger', sub_kr: '+3 000 pasian finn gagne swen'
   },
   { 
     icon: Globe2, 
-    label: 'Accredited Hospitals & Clinics', label_fr: 'Hôpitaux & Cliniques Accrédités', label_kr: 'Lopital & Klinik Akredite',
-    sub: 'Mauritius, India, Thailand & premier global centres', sub_fr: 'Maurice, Inde, Thaïlande et grands centres mondiaux', sub_kr: 'Moris, L\'inde, Taylann ek lezot gran pei'
+    label: 'Premier Indian & Global Hospital Hubs', label_fr: 'Grands Hôpitaux Indiens & Mondiaux', label_kr: 'Gran Lopital L\'inde & Mondifik',
+    sub: 'Chennai, Bengaluru, Mumbai, Delhi NCR, Hyderabad', sub_fr: 'Chennai, Bangalore, Mumbai, Delhi NCR, Hyderabad', sub_kr: 'Chennai, Bengaluru, Mumbai, Delhi NCR, Hyderabad'
   },
   { 
     icon: Shield,  
     label: 'Free Guidance & Medical Opinion', label_fr: 'Avis Médical & Orientation Gratuits', label_kr: 'Lavi Medikal & Gid Gratis',
-    sub: 'Complete personalized concierge for every patient', sub_fr: 'Accompagnement personnalisé pour chaque patient', sub_kr: 'Sipor konzierz konple pou sak pasian'
+    sub: 'Complete personalized bedside concierge for every patient', sub_fr: 'Accompagnement personnalisé pour chaque patient', sub_kr: 'Sipor konzierz konple pou sak pasian'
+  },
+];
+
+const TIMELINE = [
+  {
+    year: '2016',
+    title: 'Foundation of NGO Enn Rev Enn Sourir',
+    title_fr: 'Création de l\'ONG Enn Rev Enn Sourir',
+    title_kr: 'Kréasion l\'ONG Enn Rev Enn Sourir',
+    desc: 'Founded in Mauritius to support vulnerable families, children fighting pediatric cancers, and patients requiring life-saving complex surgeries abroad.',
+    desc_fr: 'Fondée à l\'Île Maurice pour soutenir les familles vulnérables, les enfants atteints de cancer pédiatrique et les patients nécessitant des chirurgies vitales à l\'étranger.',
+    desc_kr: 'Kree dan Moris pou ed bann fami vilnerab, bann ti zanfan malad kanser ek pasian ki bizin operasion vitale a letranze.',
+    badge: 'Humanitarian Roots',
+    badge_fr: 'Racines Humanitaires',
+    badge_kr: 'Rasinn Imaniter',
+  },
+  {
+    year: '2016 – 2024',
+    title: 'International Accreditations & +3,000 Patients',
+    title_fr: 'Accréditations Internationales & +3 000 Patients',
+    title_kr: 'Akreditasion Internasional & +3 000 Pasian',
+    desc: 'Admitted as Full Member of UICC [1], SIOP [2], and CCI [3]. Established strong partnerships with 15+ top JCI/NABH hospitals in India and worldwide.',
+    desc_fr: 'Admis en tant que Membre Titulaire de l\'UICC [1], SIOP [2] et CCI [3]. Partenariats directs établis avec 15+ hôpitaux accrédités JCI/NABH en Inde et dans le monde.',
+    desc_kr: 'Manb ofisiel UICC [1], SIOP [2], ek CCI [3]. Konstruir rezo solid avek plis ki 15 gran lopital JCI/NABH dan L\'inde ek lezot pei.',
+    badge: 'Global Recognition',
+    badge_fr: 'Reconnaissance Mondiale',
+    badge_kr: 'Rekonet Internasional',
+  },
+  {
+    year: '2025',
+    title: 'Establishment of Medical 360 Ltd',
+    title_fr: 'Création de Medical 360 Ltd',
+    title_kr: 'Lansman Medical 360 Ltd',
+    desc: 'Incorporated as a dedicated social enterprise to offer high-end, end-to-end medical concierge services to all patients, with a strict "No Dividends" policy.',
+    desc_fr: 'Créée comme entreprise sociale dédiée offrant une conciergerie médicale complète et haut de gamme, avec une politique stricte de « Zéro Dividende ».',
+    desc_kr: 'Lakonpanyi sosyal pou ofer servis konsierzri medikal konple pou tou pasian avek enn model 100% profi reinvesti.',
+    badge: 'Social Enterprise',
+    badge_fr: 'Entreprise Sociale',
+    badge_kr: 'Lakonpanyi Sosyal',
+  },
+];
+
+const FOOTNOTES = [
+  {
+    ref: '[1]',
+    org: 'UICC (Union for International Cancer Control)',
+    status: 'Full Member Organization',
+    location: 'Geneva, Switzerland',
+    desc: 'The largest and oldest global organization dedicated to reducing the global cancer burden, promoting greater equity, and integrating cancer control into the world health and development agenda.',
+    link: 'https://www.uicc.org',
+  },
+  {
+    ref: '[2]',
+    org: 'SIOP (International Society of Paediatric Oncology)',
+    status: 'Official Network Partner',
+    location: 'Geneva, Switzerland',
+    desc: 'The only global multidisciplinary society entirely devoted to pediatric and adolescent oncology, improving treatments and clinical care standards worldwide.',
+    link: 'https://siop-online.org',
+  },
+  {
+    ref: '[3]',
+    org: 'CCI (Childhood Cancer International)',
+    status: 'Full Member Organization',
+    location: 'Amsterdam, Netherlands',
+    desc: 'The largest patient-support organisation for childhood cancer in the world, representing 180+ grassroots parent and survivor groups across 90+ countries.',
+    link: 'https://www.childhoodcancerinternational.org',
   },
 ];
 
@@ -130,8 +196,8 @@ export function AboutPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('À Propos de Med360 · ONG Enn Rev Enn Sourir', 'Lor Med360 · ONG Enn Rev Enn Sourir', 'About Med360 · Owned by NGO Enn Rev Enn Sourir')}
-        description={l10n('Med360 est une entreprise détenue par l\'ONG Enn Rev Enn Sourir. 10 ans d\'aide médicale spécialisée pour les démunis. 100 % des bénéfices reversés à l\'ONG.', 'Med360 apartenir a l\'ONG Enn Rev Enn Sourir. 10 banlane led medikal spesialize. 100% profi retourn dan l\'ONG.', 'Med360 is a company owned by NGO Enn Rev Enn Sourir. 10+ years helping needy patients access specialised care in private clinics and abroad. 100% profits return to the NGO.')}
+        title={l10n('À Propos de Medical 360 Ltd · ONG Enn Rev Enn Sourir', 'Lor Medical 360 Ltd · ONG Enn Rev Enn Sourir', 'About Medical 360 Ltd · Owned by NGO Enn Rev Enn Sourir')}
+        description={l10n('Medical 360 Ltd est une entreprise sociale détenue à 100 % par l\'ONG Enn Rev Enn Sourir. +3 000 patients accompagnés. Modèle sans dividende où 100 % des bénéfices financent les soins des démunis.', 'Medical 360 Ltd apartenir a 100% ar l\'ONG Enn Rev Enn Sourir. +3 000 pasian finn gagn led. 100% profi retourn dan swen pou dimounn dan bezwin.', 'Medical 360 Ltd is a social enterprise owned 100% by the NGO Enn Rev Enn Sourir. Over 3,000 patients assisted. Operating on a strict No-Dividends reinvestment model.')}
         canonical="/about"
       />
 
@@ -139,16 +205,16 @@ export function AboutPage() {
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('✦ Détenu par l\'ONG Enn Rev Enn Sourir · 10+ Ans d\'Aide Médicale', '✦ Apartenir a l\'ONG Enn Rev Enn Sourir · 10+ Banlane dan Swen', '✦ Owned by NGO Enn Rev Enn Sourir · 10+ Years of Care'))}
+            {tCms('heroLabel', l10n('✦ Entreprise Sociale Détenue par l\'ONG Enn Rev Enn Sourir · +3 000 Patients', '✦ Lakonpanyi Sosyal l\'ONG Enn Rev Enn Sourir · +3 000 Pasian', '✦ Social Enterprise Owned by NGO Enn Rev Enn Sourir · +3,000 Patients'))}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('À Propos de Med360', 'A Propo Med360', 'About Med360'))}
+            {tCms('heroTitle', l10n('À Propos de Medical 360 Ltd', 'A Propo Medical 360 Ltd', 'About Medical 360 Ltd'))}
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Entreprise sociale détenue par l\'ONG Enn Rev Enn Sourir, Med360 met 10 ans d\'expertise médicale au service de tous — 100 % de nos bénéfices sont reversés à l\'ONG pour continuer de soigner les plus démunis.',
-              'Lakonpanyi sosyal apartenir a l\'ONG Enn Rev Enn Sourir, Med360 met 10 banlane lexperyans medikal o-servis tou dimounn — 100% nou bann profi retourn dan l\'ONG pou swany bann ki dan bezwin.',
-              'A social enterprise owned by the NGO Enn Rev Enn Sourir, Med360 brings 10 years of medical coordination expertise to everyone — with 100% of profits returned to the NGO to continue funding care for the needy.'
+              'Depuis 2016 avec l\'ONG Enn Rev Enn Sourir et depuis 2025 avec Medical 360 Ltd, nous mettons notre expertise médicale et nos réseaux d\'hôpitaux accrédités au service de tous — selon un modèle strict de réinvestissement solidaire sans dividende.',
+              'Depi 2016 avek l\'ONG Enn Rev Enn Sourir ek depi 2025 avek Medical 360 Ltd, nou met nou rezo lopital akredite o-servis tou pasian — avek enn model 100% profi reinvesti pou bann ki dan bezwin.',
+              'Born from the NGO Enn Rev Enn Sourir in 2016 and expanded with Medical 360 Ltd in 2025, we bring a decade of compassionate hospital coordination to all patients — operating on a strict "No Dividends" reinvestment model.'
             ))}
           </p>
         </div>
@@ -160,32 +226,43 @@ export function AboutPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center', marginBottom: '5rem' }}>
             <div>
               <span className="section-label">
-                {tCms('missionLabel', l10n('Notre Histoire & Mission', 'Nou Zistwar & Mision', 'Our Story & Purpose'))}
+                {tCms('missionLabel', l10n('Notre Histoire & Modèle Solidaire', 'Nou Zistwar & Model Solider', 'Our Story & Social Model'))}
               </span>
               <h2 className="text-h2" style={{ marginBottom: '1.25rem' }}>
-                {tCms('missionTitle', l10n('10 Ans d\'Engagement Humanitaire, Désormais Étendu à Tous', '10 Banlane Led Imaniter, Aster Ouver pou Tou Dimounn', '10 Years of Compassionate Care, Now Extended to All'))}
+                {tCms('missionTitle', l10n('De l\'Engagement Humanitaire à la Conciergerie Médicale d\'Excellence', 'Depi Aksion Imaniter Ziska Konsierzri Medikal Lekselans', 'From Humanitarian Roots to World-Class Medical Concierge'))}
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: '1rem' }}>
                 {tCms('missionP1', l10n(
-                  'Med360 est une entreprise détenue à 100 % par l\'ONG Enn Rev Enn Sourir. Depuis plus de 10 ans, notre ONG s\'est consacrée sans relâche à aider les personnes dans le besoin et les familles vulnérables à accéder à des traitements spécialisés vitaux dans des cliniques privées de référence ou dans de grands hôpitaux à l\'étranger.',
-                  'Med360 li enn lakonpanyi ki apartenir a 100% ar l\'ONG Enn Rev Enn Sourir. Pandan plis ki 10 banlane, nou ONG finn lite pou ed bann dimounn dan bezwin ek bann fami vilnerab gagn akse a bann tretman spesialize dan bann klinik prive ouswa gran lopital a letranze.',
-                  'Med360 is a company owned by the NGO Enn Rev Enn Sourir. For over 10 years, our NGO has been devoted to helping needy and vulnerable patients access critical, specialised medical treatments in private clinics or renowned hospitals abroad.'
+                  'Medical 360 Ltd est une entreprise sociale détenue à 100 % par l\'ONG Enn Rev Enn Sourir. Fondée en 2016, notre ONG s\'est consacrée sans relâche à aider les enfants et les familles vulnérables à accéder à des soins vitaux contre le cancer pédiatrique et à des chirurgies spécialisées.',
+                  'Medical 360 Ltd li enn lakonpanyi ki apartenir a 100% ar l\'ONG Enn Rev Enn Sourir. Kree depi 2016, nou ONG finn lite san repo pou ed bann ti zanfan ek fami vilnerab gagn tretman vitale kont kanser ek loperasion spesialize.',
+                  'Medical 360 Ltd is a social enterprise wholly owned by the NGO Enn Rev Enn Sourir. Since 2016, our NGO has been devoted to helping vulnerable families and children access life-saving oncology treatments and specialized surgeries.'
                 ))}
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: '1rem' }}>
                 {tCms('missionP2', l10n(
-                  'Après une décennie passée à tisser des liens étroits avec les meilleurs spécialistes et des hôpitaux accrédités JCI en Inde, en Thaïlande et à l\'international, nous avons décidé d\'ouvrir nos compétences et notre conciergerie médicale à toutes les personnes qui ont les moyens de financer leurs soins.',
-                  'Apre enn deseni kot nou finn aranze bann rezo solid avek bann meyer sef sirizien ek lopital akredite JCI dan L\'inde, Taylann ek lezot pei, nou finn deside ouver nou konsierzri medikal pou bann ki kapav pey zot prop swen.',
-                  'After a decade of building relationships with top surgeons and JCI-accredited hospitals in India, Thailand, and globally, we decided to extend our medical concierge service to individuals and families who can afford private specialised care.'
+                  'Grâce à notre affiliation auprès d\'organisations mondiales de référence (UICC [1], SIOP [2], CCI [3]) et à des partenariats étroits avec les 15 plus grands réseaux hospitaliers d\'Inde et du monde (Apollo, Manipal, Medanta, KIMS, Fortis, Lilavati, Yashoda...), nous avons assisté plus de 3 000 patients.',
+                  'Gras a nou bann akreditasion mondial (UICC [1], SIOP [2], CCI [3]) ek nou bann lalians direk ar 15 pli gran lopital JCI/NABH dan L\'inde ek partou, nou finn asiste plis ki 3 000 pasian.',
+                  'Through prestigious international affiliations (UICC [1], SIOP [2], CCI [3]) and direct ties with 15 premier hospital networks across India and globally (Apollo, Manipal, Medanta, KIMS, Fortis, Lilavati, Yashoda...), we have assisted over 3,000 patients.'
                 ))}
               </p>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
-                {tCms('missionP3', l10n(
-                  'Le cœur de notre modèle est vertueux : 100 % des bénéfices réalisés par Med360 sont réinjectés directement dans l\'ONG Enn Rev Enn Sourir. Ainsi, chaque patient qui fait appel à nos services pour ses soins privés contribue directement à sauver des vies et à soigner les plus démunis.',
-                  'Nou model li kler ek transparan: 100% bann profi ki Med360 fer retourn direk dan l\'ONG Enn Rev Enn Sourir. Sak pasian ki swazir Med360 pou so bann swen prive pe ed finansie tretman ek loperasion pou enn lot dimounn ki pena mwayen.',
-                  'Our model is driven by pure social impact: 100% of profits generated by Med360 go straight back into the NGO Enn Rev Enn Sourir. Every patient who chooses Med360 for private medical care directly finances life-saving surgeries and treatments for those who cannot afford them.'
-                ))}
-              </p>
+              <div style={{
+                background: 'rgba(16, 185, 129, 0.08)',
+                borderLeft: '4px solid var(--color-primary)',
+                padding: '1.25rem',
+                borderRadius: '0 var(--radius-lg) var(--radius-lg) 0',
+                marginTop: '1.5rem',
+              }}>
+                <h4 style={{ margin: '0 0 0.5rem', color: 'var(--color-text)', fontSize: '1.05rem', fontWeight: 800 }}>
+                  {l10n('Le Modèle « Zéro Dividende » (No Dividends)', 'Model « Zero Dividenn » (No Dividends)', 'The "No Dividends" Reinvestment Model')}
+                </h4>
+                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: 0, fontSize: '0.925rem' }}>
+                  {l10n(
+                    '100 % des bénéfices générés par Medical 360 Ltd sont intégralement reversés à l\'ONG Enn Rev Enn Sourir. Chaque patient qui choisit notre conciergerie privée participe directement au financement de chirurgies salvatrices pour des personnes qui ne peuvent pas se les offrir.',
+                    '100% bann profi ki Medical 360 Ltd gagne retourn direk dan l\'ONG Enn Rev Enn Sourir pou finans bann loperasion pou bann ki pena mwayen.',
+                    '100% of profits generated by Medical 360 Ltd are channeled directly into the NGO Enn Rev Enn Sourir. Every patient choosing our concierge directly funds life-saving surgeries for vulnerable patients who cannot afford them.'
+                  )}
+                </p>
+              </div>
             </div>
 
             <div style={{
@@ -207,11 +284,182 @@ export function AboutPage() {
                     </div>
                     <div>
                       <div style={{ color: 'white', fontWeight: 700, fontSize: '0.9375rem' }}>{l(item, 'label')}</div>
-                      <div style={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.8125rem' }}>{l(item, 'sub')}</div>
+                      <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.8125rem' }}>{l(item, 'sub')}</div>
                     </div>
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+          {/* Timeline Section */}
+          <div style={{ marginBottom: '5rem' }}>
+            <div style={{ textAlign: 'center', maxWidth: 650, margin: '0 auto 3rem' }}>
+              <span className="section-label">
+                {l10n('Étapes Clés & Parcours', 'Bann Gran Letap', 'Milestones & History')}
+              </span>
+              <h2 className="text-h2" style={{ marginBottom: '0.75rem' }}>
+                {l10n('Notre Évolution : 2016 à 2025+', 'Nou Levolision : 2016 ziska 2025+', 'Our Evolution: 2016 to 2025+')}
+              </h2>
+              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+                {l10n(
+                  'Une trajectoire d\'excellence bâtie sur la confiance, le dévouement humain et les plus hautes certifications mondiales.',
+                  'Enn zoli parkour bati lor konfians, lanmour ek bann gran rekonpans internasional.',
+                  'A trajectory of excellence built on compassion, clinical trust, and respected global accreditations.'
+                )}
+              </p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.75rem' }}>
+              {TIMELINE.map((item) => (
+                <div
+                  key={item.year}
+                  style={{
+                    background: 'var(--color-surface)',
+                    border: '1.5px solid var(--color-border)',
+                    borderRadius: 'var(--radius-xl)',
+                    padding: '2rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    boxShadow: 'var(--shadow-sm)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <div style={{
+                    position: 'absolute',
+                    top: '-15px',
+                    right: '-15px',
+                    width: '90px',
+                    height: '90px',
+                    borderRadius: '50%',
+                    background: 'rgba(16, 185, 129, 0.05)',
+                    pointerEvents: 'none',
+                  }} />
+
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                      <span style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--color-primary)', letterSpacing: '-0.02em' }}>
+                        {item.year}
+                      </span>
+                      <span style={{
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        padding: '0.25rem 0.65rem',
+                        borderRadius: '9999px',
+                        background: 'rgba(16, 185, 129, 0.12)',
+                        color: 'var(--color-primary)',
+                      }}>
+                        {l(item, 'badge')}
+                      </span>
+                    </div>
+
+                    <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--color-text)', marginBottom: '0.75rem', lineHeight: 1.35 }}>
+                      {l(item, 'title')}
+                    </h3>
+                    <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', lineHeight: 1.65, margin: 0 }}>
+                      {l(item, 'desc')}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Footnotes & Global Affiliations Section (UICC, SIOP, CCI) */}
+          <div style={{
+            marginBottom: '5rem',
+            background: 'var(--color-surface)',
+            border: '1.5px solid var(--color-border)',
+            borderRadius: 'var(--radius-2xl)',
+            padding: 'clamp(2rem, 4vw, 3rem)',
+            boxShadow: 'var(--shadow-sm)',
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{
+                width: 44,
+                height: 44,
+                borderRadius: 'var(--radius-md)',
+                background: 'rgba(16, 185, 129, 0.12)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'var(--color-primary)',
+              }}>
+                <BookmarkCheck size={24} />
+              </div>
+              <div>
+                <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: 0, color: 'var(--color-text)' }}>
+                  {l10n('Affiliations Officielles & Notes de Référence', 'Bann Sertifikasion & Not Referans', 'Official Affiliations & Footnote References')}
+                </h3>
+                <p style={{ margin: '0.2rem 0 0', color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
+                  {l10n('Organisations de santé internationales partenaires de l\'ONG Enn Rev Enn Sourir', 'Bann gran lorganizasion lasante mondial ki partner nou ONG', 'Global health organizations affiliated with our parent NGO')}
+                </p>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+              {FOOTNOTES.map((fn) => (
+                <div
+                  key={fn.ref}
+                  style={{
+                    background: 'var(--color-bg)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-lg)',
+                    padding: '1.5rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                      <span style={{ fontWeight: 900, color: 'var(--color-primary)', fontSize: '1rem' }}>
+                        {fn.ref}
+                      </span>
+                      <span style={{
+                        fontSize: '0.72rem',
+                        fontWeight: 700,
+                        padding: '0.2rem 0.55rem',
+                        borderRadius: '9999px',
+                        background: 'rgba(59, 130, 246, 0.1)',
+                        color: '#3b82f6',
+                      }}>
+                        {fn.status}
+                      </span>
+                    </div>
+                    <h4 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-text)', margin: '0 0 0.35rem' }}>
+                      {fn.org}
+                    </h4>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginBottom: '0.75rem' }}>
+                      📍 {fn.location}
+                    </div>
+                    <p style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                      {fn.desc}
+                    </p>
+                  </div>
+
+                  <a
+                    href={fn.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.35rem',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
+                      color: 'var(--color-primary)',
+                      marginTop: '1.25rem',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    <span>{l10n('En savoir plus sur le site officiel', 'Plis linformasion lor sit ofisiel', 'Learn more on official website')}</span>
+                    <ExternalLink size={13} />
+                  </a>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -266,9 +514,9 @@ export function AboutPage() {
 
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, fontSize: '1rem', margin: 0 }}>
               {l10n(
-                'Depuis 10 ans, l\'ONG Enn Rev Enn Sourir œuvre activement à l\'Île Maurice pour offrir aux enfants et aux familles les plus vulnérables l\'accès à des chirurgies spécialisées, à des soins contre le cancer infantile et à des traitements en clinique privée ou à l\'étranger. Med360 a été créée comme son entreprise sociale dédiée afin d\'étendre cette expertise médicale à ceux qui peuvent financer leurs soins — 100 % des bénéfices étant intégralement reversés à l\'ONG pour continuer à sauver des vies.',
-                'Pandan 10 banlane, l\'ONG Enn Rev Enn Sourir pe lite dan Moris pou donn bann zanfan ek fami vilnerab akse a bann loperasion spesialize, tretman kont kanser ek swen a letranze. Med360 inn ne kouma so lakonpanyi sosyal pou elarzi sa lexperyans-la pou bann ki kapav peye — 100% profi retourn net dan l\'ONG pou kontinie sov lavi.',
-                'For 10 years, the NGO Enn Rev Enn Sourir has been dedicated to giving vulnerable children and needy families in Mauritius access to specialized surgeries, pediatric oncology care, and life-saving overseas medical treatments. Med360 was created as its social enterprise to extend this decade of medical coordination to paying patients — with 100% of profits channeled directly back into the NGO to continue funding critical care for those in need.'
+                'Depuis 10 ans, l\'ONG Enn Rev Enn Sourir œuvre activement à l\'Île Maurice pour offrir aux enfants et aux familles les plus vulnérables l\'accès à des chirurgies spécialisées, à des soins contre le cancer infantile et à des traitements en clinique privée ou à l\'étranger. Medical 360 Ltd a été créée comme son entreprise sociale dédiée afin d\'étendre cette expertise médicale à ceux qui peuvent financer leurs soins — 100 % des bénéfices étant intégralement reversés à l\'ONG pour continuer à sauver des vies.',
+                'Pandan 10 banlane, l\'ONG Enn Rev Enn Sourir pe lite dan Moris pou donn bann zanfan ek fami vilnerab akse a bann loperasion spesialize, tretman kont kanser ek swen a letranze. Medical 360 Ltd inn ne kouma so lakonpanyi sosyal pou elarzi sa lexperyans-la pou bann ki kapav peye — 100% profi retourn net dan l\'ONG pou kontinie sov lavi.',
+                'For 10 years, the NGO Enn Rev Enn Sourir has been dedicated to giving vulnerable children and needy families in Mauritius access to specialized surgeries, pediatric oncology care, and life-saving overseas medical treatments. Medical 360 Ltd was created as its social enterprise to extend this decade of medical coordination to paying patients — with 100% of profits channeled directly back into the NGO to continue funding critical care for those in need.'
               )}
             </p>
           </div>
