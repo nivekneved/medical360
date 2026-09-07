@@ -12,8 +12,8 @@ export const DEFAULT_CONFIG: MockConfig = {
   errorRate: 0,
 };
 
-export const STORAGE_KEY = 'med360_mock_store_v7';
-export const CONFIG_KEY = 'med360_mock_config_v7';
+export const STORAGE_KEY = 'med360_mock_store_v8';
+export const CONFIG_KEY = 'med360_mock_config_v8';
 
 // Clean legacy localStorage keys to ensure new PPTX seed data is immediately visible
 if (typeof window !== 'undefined' && window.localStorage) {
@@ -25,6 +25,8 @@ if (typeof window !== 'undefined' && window.localStorage) {
       'med360_mock_store_v4',
       'med360_mock_store_v5',
       'med360_mock_store_v6',
+      'med360_mock_store_v7',
+      'med360_mock_config_v7',
       'med360_cache_hospitals:all',
       'med360_cache_specialties:all',
       'med360_cache_doctors:all',
@@ -33,7 +35,7 @@ if (typeof window !== 'undefined' && window.localStorage) {
     // Also remove any med360_cache_ prefixed items
     for (let i = localStorage.length - 1; i >= 0; i--) {
       const key = localStorage.key(i);
-      if (key && (key.startsWith('med360_cache_') && !key.startsWith('med360_cache_v7_'))) {
+      if (key && (key.startsWith('med360_cache_') && !key.startsWith('med360_cache_v8_'))) {
         localStorage.removeItem(key);
       }
     }
