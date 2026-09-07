@@ -12,7 +12,6 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
-import { formatCostRange, formatCostMurRange } from '../../../core/services/format.service';
 import { isHoneypotClean, detectSqlInjection, sanitizeInput } from '../../../core/services/validation.service';
 import { ProcedureFormCard, type ProcedureFormData } from './ProcedureFormCard';
 import type { Specialty, Procedure } from '../../../core/types';
@@ -334,18 +333,7 @@ export const ProcedureManagerModal: React.FC<ProcedureManagerModalProps> = ({
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', textAlign: 'right' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                  <div style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--color-primary)', lineHeight: 1.2 }}>
-                    {formatCostRange(proc.estimatedCostUSD?.min || 0, proc.estimatedCostUSD?.max || 0)}
-                  </div>
-                  {proc.estimatedCostUSD && (proc.estimatedCostUSD.min > 0 || proc.estimatedCostUSD.max > 0) && (
-                    <div style={{ fontFamily: 'Arial, sans-serif', fontSize: '11px', fontWeight: 'bold', color: 'var(--color-text-secondary)', marginTop: '2px', letterSpacing: '0.01em' }}>
-                      {formatCostMurRange(proc.estimatedCostUSD.min, proc.estimatedCostUSD.max)}
-                    </div>
-                  )}
-                </div>
-
-                <div style={{ display: 'flex', gap: 4, paddingLeft: '0.75rem', borderLeft: '1px solid var(--color-border)' }}>
+                <div style={{ display: 'flex', gap: 4, paddingLeft: '0.75rem' }}>
                   <button
                     type="button"
                     disabled={index === 0}

@@ -237,7 +237,7 @@ export function HomePage() {
                     <p className="specialty-card-full__desc">{l(sp, 'shortDescription')}</p>
                     <div className="specialty-card-full__action">
                       <span className="specialty-card-full__btn">
-                        {isFr ? 'Découvrir les Actes & Soins' : isKr ? 'Get Tretman & Pri' : 'Explore Care & Procedures'} <ArrowRight size={14} />
+                        {isFr ? 'Découvrir les Actes & Soins' : isKr ? 'Get Bann Tretman' : 'Explore Care & Procedures'} <ArrowRight size={14} />
                       </span>
                     </div>
                   </div>
