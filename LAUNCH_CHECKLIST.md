@@ -1,9 +1,7 @@
 # 🚀 Med360 Production Launch Checklist (www.med360.mu)
 
-Code-side launch work (SEO, security headers, legal pages, sitemap, robots,
-API hardening) is **complete in this repository**. The steps below are the
-manual actions that require your accounts (DNS registrar, Google, Bing, Vercel,
-Resend).
+Code-side launch work (SEO, security headers, legal pages, sitemap, robots, API hardening) is **complete in this repository**. The steps below are the
+manual actions that require your accounts (DNS registrar, Google, Bing, Vercel, Resend).
 
 ---
 

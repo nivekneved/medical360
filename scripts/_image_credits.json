@@ -1,0 +1,121 @@
+[
+  {
+    "hospital": "hosp-apollo",
+    "file": "hosp-apollo__1.jpg",
+    "title": "File:Apollo Proton Cancer Centre, Chennai.jpg",
+    "license": "CC BY-SA 4.0",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Apollo_Proton_Cancer_Centre%2C_Chennai.jpg"
+  },
+  {
+    "hospital": "hosp-manipal",
+    "file": "hosp-manipal__1.jpg",
+    "title": "File:Manipal Hospital front View 4-20-2008 5-24-37 PM.JPG",
+    "license": "CC BY-SA 3.0",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Manipal_Hospital_front_View_4-20-2008_5-24-37_PM.JPG"
+  },
+  {
+    "hospital": "hosp-manipal",
+    "file": "hosp-manipal__2.jpg",
+    "title": "File:Manippal Hostpiral view 1.JPG",
+    "license": "CC BY-SA 3.0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Manippal_Hostpiral_view_1.JPG/1280px-Manippal_Hostpiral_view_1.JPG"
+  },
+  {
+    "hospital": "hosp-manipal",
+    "file": "hosp-manipal__3.jpg",
+    "title": "File:Manippal Hostpiral view 2.JPG",
+    "license": "CC BY-SA 3.0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/Manippal_Hostpiral_view_2.JPG/1280px-Manippal_Hostpiral_view_2.JPG"
+  },
+  {
+    "hospital": "hosp-kims",
+    "file": "hosp-kims__1.jpg",
+    "title": "File:Krishna Institute of Medical Sciences KIMS Secunderabad.jpg",
+    "license": "CC BY-SA 4.0",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Krishna_Institute_of_Medical_Sciences_KIMS_Secunderabad.jpg"
+  },
+  {
+    "hospital": "hosp-kims",
+    "file": "hosp-kims__2.jpg",
+    "title": "File:Krishna Institute of Medical Sciences KIMS Secunderabad 2.jpg",
+    "license": "CC BY-SA 4.0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Krishna_Institute_of_Medical_Sciences_KIMS_Secunderabad_2.jpg/1280px-Krishna_Institute_of_Medical_Sciences_KIMS_Secunderabad_2.jpg"
+  },
+  {
+    "hospital": "hosp-yashoda",
+    "file": "hosp-yashoda__1.jpg",
+    "title": "File:Yashoda Hospitals Somajiguda.jpg",
+    "license": "CC BY-SA 4.0",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/9/93/Yashoda_Hospitals_Somajiguda.jpg"
+  },
+  {
+    "hospital": "hosp-yashoda",
+    "file": "hosp-yashoda__2.jpg",
+    "title": "File:Yashoda Hospital,Secundrabad.jpg",
+    "license": "CC BY-SA 3.0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Yashoda_Hospital%2CSecundrabad.jpg/1280px-Yashoda_Hospital%2CSecundrabad.jpg"
+  },
+  {
+    "hospital": "hosp-lilavati",
+    "file": "hosp-lilavati__1.jpg",
+    "title": "File:Lilavati Hospital, Bandra.jpg",
+    "license": "CC BY-SA 3.0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Lilavati_Hospital%2C_Bandra.jpg/1280px-Lilavati_Hospital%2C_Bandra.jpg"
+  },
+  {
+    "hospital": "hosp-lilavati",
+    "file": "hosp-lilavati__2.jpg",
+    "title": "File:Lilavati Hospital.jpg",
+    "license": "CC BY 2.0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Lilavati_Hospital.jpg/1280px-Lilavati_Hospital.jpg"
+  },
+  {
+    "hospital": "hosp-max-saket",
+    "file": "hosp-max-saket__1.jpg",
+    "title": "File:Max Building.jpg",
+    "license": "CC BY-SA 3.0",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Max_Building.jpg"
+  },
+  {
+    "hospital": "hosp-reliance",
+    "file": "hosp-reliance__1.jpg",
+    "title": "File:HN Hospital.jpg",
+    "license": "CC BY-SA 4.0",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/f/fa/HN_Hospital.jpg"
+  },
+  {
+    "hospital": "hosp-reliance",
+    "file": "hosp-reliance__2.jpg",
+    "title": "File:Hurkissandos Hospital.jpg",
+    "license": "CC BY-SA 3.0",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/9/93/Hurkissandos_Hospital.jpg"
+  },
+  {
+    "hospital": "hosp-sankara",
+    "file": "hosp-sankara__1.jpg",
+    "title": "File:Shankara Nethraalaya Chennai.jpg",
+    "license": "CC BY-SA 4.0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Shankara_Nethraalaya_Chennai.jpg/1280px-Shankara_Nethraalaya_Chennai.jpg"
+  },
+  {
+    "hospital": "hosp-sankara",
+    "file": "hosp-sankara__2.jpg",
+    "title": "File:Mahyco Block Building- Sankara Nethralaya, College Road.jpg",
+    "license": "CC0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Mahyco_Block_Building-_Sankara_Nethralaya%2C_College_Road.jpg/1280px-Mahyco_Block_Building-_Sankara_Nethralaya%2C_College_Road.jpg"
+  },
+  {
+    "hospital": "hosp-miot",
+    "file": "hosp-miot__1.jpg",
+    "title": "File:Miot Hospital 2.jpg",
+    "license": "CC BY-SA 4.0",
+    "source": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Miot_Hospital_2.jpg"
+  },
+  {
+    "hospital": "hosp-miot",
+    "file": "hosp-miot__2.jpg",
+    "title": "File:MIOT.JPG",
+    "license": "CC BY-SA 4.0",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/MIOT.JPG/1280px-MIOT.JPG"
+  }
+]
