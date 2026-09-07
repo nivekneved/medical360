@@ -1,19 +1,20 @@
-# Medical 360 Robots Policy
+# Med360 Robots Policy
 User-agent: *
 Allow: /
 Allow: /about
-Allow: /services
+Allow: /how-it-works
 Allow: /hospitals
 Allow: /hospitals/*
 Allow: /specialties
 Allow: /specialties/*
 Allow: /case-studies
 Allow: /cost-calculator
-Allow: /visa-guide
 Allow: /describe-need
 Allow: /contact
 Allow: /privacy
 Allow: /terms
+Allow: /cookies
+Allow: /medical-disclaimer
 
 # Disallow Private Administrative Routes
 Disallow: /admin
@@ -22,3 +23,4 @@ Disallow: /api/
 
 # XML Sitemap Directive
 Sitemap: https://www.med360.mu/sitemap.xml
+Sitemap: https://www.med360.mu/sitemap_index.xml
