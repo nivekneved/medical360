@@ -12,7 +12,6 @@
 - Free Medical Assessment / Inquiry Wizard: https://medical360-zeta.vercel.app/describe-need
 - Hospitals Directory: https://medical360-zeta.vercel.app/hospitals
 - Medical Specialties: https://medical360-zeta.vercel.app/specialties
-- Specialists Directory: https://medical360-zeta.vercel.app/doctors
 - Interactive Treatment Cost Calculator: https://medical360-zeta.vercel.app/cost-calculator
 - Patient Recovery Stories: https://medical360-zeta.vercel.app/case-studies
 - Visa & Medical Travel Guide: https://medical360-zeta.vercel.app/visa-guide

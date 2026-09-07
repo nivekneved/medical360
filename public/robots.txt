@@ -7,7 +7,6 @@ Allow: /hospitals
 Allow: /hospitals/*
 Allow: /specialties
 Allow: /specialties/*
-Allow: /doctors
 Allow: /case-studies
 Allow: /cost-calculator
 Allow: /visa-guide
