@@ -1,12 +1,17 @@
 import { AlertTriangle, Stethoscope, Siren, TrendingDown, Building2, Link2, MessageCircleQuestion, LifeBuoy } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
 
 export function MedicalDisclaimerPage() {
+  const { i18n } = useTranslation();
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr';
+
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
-        title="Medical Disclaimer"
-        description="Important medical disclaimer for Med360 — a healthcare facilitator, not a medical provider. Content is informational only and never a substitute for professional medical advice."
+        title={isFr ? "Avertissement Médical & Rôle d'Intermédiation | Med360" : isKr ? "Avertisman Medikal | Med360" : "Medical Disclaimer | Med360"}
+        description={isFr ? "Avertissement médical important pour Med360 — facilitateur de parcours de soins, et non établissement ou praticien de santé." : "Important medical disclaimer for Med360 — a healthcare facilitator, not a medical provider. Content is informational only and never a substitute for professional medical advice."}
         canonical="/medical-disclaimer"
       />
 
@@ -24,13 +29,13 @@ export function MedicalDisclaimerPage() {
             background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)',
             color: '#f87171', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1rem',
           }}>
-            <AlertTriangle size={16} /> Please Read Carefully
+            <AlertTriangle size={16} /> {isFr ? "À Lire Attentivement" : isKr ? "Lir Avek Atansion" : "Please Read Carefully"}
           </div>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-            Medical Disclaimer
+            {isFr ? "Avertissement Médical" : isKr ? "Avertisman Medikal" : "Medical Disclaimer"}
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            Med360 is a healthcare facilitator — not a hospital, clinic or medical laboratory.
+            {isFr ? "Med360 est un facilitateur de soins de santé — et non un hôpital, une clinique ou un laboratoire médical." : "Med360 is a healthcare facilitator — not a hospital, clinic or medical laboratory."}
           </p>
         </div>
       </section>

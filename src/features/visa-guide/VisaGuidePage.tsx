@@ -105,8 +105,8 @@ export function VisaGuidePage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', paddingBottom: '5rem' }}>
       <Helmet>
-        <title>Medical Visa & Travel Guide for Mauritian Patients | Med360</title>
-        <meta name="description" content="Complete step-by-step medical visa and travel coordination guide for patients travelling from Mauritius to India, Thailand, Singapore, and Malaysia." />
+        <title>{isFr ? "Guide Visa Médical & Voyage pour Patients Mauriciens | Med360" : isKr ? "Gid Viza Medikal & Vwayaz pou Pasian Morisien | Med360" : "Medical Visa & Travel Guide for Mauritian Patients | Med360"}</title>
+        <meta name="description" content={isFr ? "Guide complet des démarches de visa médical et d'organisation de voyage pour les patients voyageant de Maurice vers l'Inde." : "Complete step-by-step medical visa and travel coordination guide for patients travelling from Mauritius to India, Thailand, Singapore, and Malaysia."} />
       </Helmet>
 
       {/* Hero Banner */}

@@ -1,12 +1,17 @@
 import { Cookie, ShieldCheck, Database, Settings, Eye } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
 
 export function CookiePolicyPage() {
+  const { i18n } = useTranslation();
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr';
+
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
-        title="Cookie Policy"
-        description="How Med360 uses cookies and local browser storage to remember your preferences, secure your session and keep the site fast — no advertising trackers."
+        title={isFr ? "Politique de Cookies & Confidentialité | Med360" : isKr ? "Politik Cookies | Med360" : "Cookie Policy | Med360"}
+        description={isFr ? "Découvrez comment Med360 utilise les cookies et le stockage local pour sécuriser votre session sans traceurs publicitaires." : "How Med360 uses cookies and local browser storage to remember your preferences, secure your session and keep the site fast — no advertising trackers."}
         canonical="/cookies"
       />
 
@@ -24,13 +29,13 @@ export function CookiePolicyPage() {
             background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.3)',
             color: '#fbbf24', fontSize: '0.85rem', fontWeight: 600, marginBottom: '1rem',
           }}>
-            <Cookie size={16} /> Transparency First
+            <Cookie size={16} /> {isFr ? "Transparence & Respect de la Vie Privée" : isKr ? "Transparans avan Tou" : "Transparency First"}
           </div>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-            Cookie Policy
+            {isFr ? "Politique Relative aux Cookies" : isKr ? "Politik Cookies" : "Cookie Policy"}
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            Last Updated: September 2026 • No advertising or third-party tracking cookies
+            {isFr ? "Dernière mise à jour : Septembre 2026 • Zéro cookie publicitaire ou traceur commercial" : "Last Updated: September 2026 • No advertising or third-party tracking cookies"}
           </p>
         </div>
       </section>
