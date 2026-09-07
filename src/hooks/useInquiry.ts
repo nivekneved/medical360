@@ -32,29 +32,40 @@ export interface InquiryFormData {
   budgetMax: string;
 }
 
-const INITIAL_FORM: InquiryFormData = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  countryOfResidence: 'Mauritius',
-  specialtyId: '',
-  serviceId: '',
-  serviceName: '',
-  hospitalId: '',
-  hospitalName: '',
-  sourcePage: '',
-  sourceUrl: '',
-  description: '',
-  urgency: 'routine',
-  preferredCountry: '',
-  budgetMin: '',
-  budgetMax: '',
+const getSavedProfile = (): Partial<InquiryFormData> | null => {
+  try {
+    const raw = localStorage.getItem('med360_user_profile');
+    if (raw) return JSON.parse(raw);
+  } catch {}
+  return null;
+};
+
+const getInitialForm = (): InquiryFormData => {
+  const saved = getSavedProfile();
+  return {
+    firstName: saved?.firstName || '',
+    lastName: saved?.lastName || '',
+    email: saved?.email || '',
+    phone: saved?.phone || '+230 ',
+    countryOfResidence: saved?.countryOfResidence || 'Mauritius',
+    specialtyId: 'sp-cardiology',
+    serviceId: '',
+    serviceName: '',
+    hospitalId: '',
+    hospitalName: '',
+    sourcePage: '',
+    sourceUrl: '',
+    description: '',
+    urgency: 'routine',
+    preferredCountry: 'India',
+    budgetMin: '',
+    budgetMax: '',
+  };
 };
 
 export function useInquiry() {
   const [step, setStep]             = useState(1);
-  const [formData, setFormData]     = useState<InquiryFormData>(INITIAL_FORM);
+  const [formData, setFormData]     = useState<InquiryFormData>(getInitialForm);
   const [honeypot, setHoneypot]     = useState('');
   const [formStartTime, setFormStartTime] = useState<number>(Date.now());
   const [submitting, setSubmitting] = useState(false);
@@ -137,6 +148,17 @@ export function useInquiry() {
       setCreatedInquiry(inquiry);
       setSubmitted(true);
 
+      // Save user profile for seamless zero-friction return visits
+      try {
+        localStorage.setItem('med360_user_profile', JSON.stringify({
+          firstName: cleanFirstName,
+          lastName: cleanLastName,
+          email: cleanEmail,
+          phone: cleanPhone,
+          countryOfResidence: formData.countryOfResidence,
+        }));
+      } catch {}
+
       // Trigger Resend email notification
       sendInquiryEmail({
         firstName: cleanFirstName,
@@ -177,7 +199,7 @@ export function useInquiry() {
 
   const reset = useCallback(() => {
     setStep(1);
-    setFormData(INITIAL_FORM);
+    setFormData(getInitialForm());
     setHoneypot('');
     setFormStartTime(Date.now());
     setSubmitted(false);

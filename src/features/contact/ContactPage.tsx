@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, MessageCircle, Clock, ArrowRight, CheckCircle2, AlertCircle, Sparkles, Building2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +30,26 @@ export function ContactPage() {
   const [errors, setErrors] = useState<{ name?: string; contact?: string; message?: string; form?: string }>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  // Auto-restore saved user contact profile for zero-friction interaction
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('med360_user_profile');
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (saved.firstName || saved.lastName) {
+          setName(`${saved.firstName || ''} ${saved.lastName || ''}`.trim());
+        }
+        if (saved.phone || saved.email) {
+          setContact(saved.phone || saved.email);
+        }
+      } else {
+        setContact('+230 ');
+      }
+    } catch {
+      setContact('+230 ');
+    }
+  }, []);
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
@@ -81,6 +101,17 @@ export function ContactPage() {
       const cleanContact = sanitizeInput(contact);
       const cleanMessage = sanitizeInput(message);
       const isEmail = cleanContact.includes('@');
+
+      // Save user profile to localStorage for future zero-friction visits
+      try {
+        localStorage.setItem('med360_user_profile', JSON.stringify({
+          firstName: cleanName.split(' ')[0] || cleanName,
+          lastName: cleanName.split(' ').slice(1).join(' ') || '',
+          phone: !isEmail ? cleanContact : '+230 59188275',
+          email: isEmail ? cleanContact : '',
+          countryOfResidence: 'Mauritius',
+        }));
+      } catch {}
 
       await mockEngine.createInquiry({
         firstName: cleanName.split(' ')[0] || cleanName,
@@ -342,6 +373,80 @@ export function ContactPage() {
                     {errors.contact && <span className="form-error">{errors.contact}</span>}
                   </div>
 
+                  {/* 1-Click Quick Message Chips */}
+                  <div style={{ marginBottom: '0.25rem' }}>
+                    <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.4rem' }}>
+                      <span>⚡</span>
+                      <span>{l10n('Suggestions en 1 Clic (Remplissage Automatique) :', 'Sugestion an 1 Klik :', '1-Click Quick Message Templates:')}</span>
+                    </label>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                      {[
+                        {
+                          label: l10n('📋 2ème Avis Médical Gratuit', '📋 2em Lavi Dokter Gratis', '📋 Free Second Opinion'),
+                          text: l10n(
+                            'Bonjour, je souhaiterais obtenir un deuxième avis médical gratuit et faire étudier mes rapports avec vos hôpitaux partenaires en Inde.',
+                            'Bonzour, mo ti pou kontan gagn enn deziem lavi dokter gratis pou get mo bann rapor ar zot bann lopital partener dan L\'inde.',
+                            'Hello, I would like to request a free medical second opinion to review my diagnostic reports with your partner hospitals in India.'
+                          ),
+                        },
+                        {
+                          label: l10n('🏥 Devis & Coûts Hospitaliers', '🏥 Devis & Pri Lopital', '🏥 Cost Estimate & Packages'),
+                          text: l10n(
+                            'Bonjour, je souhaite recevoir une estimation transparente des coûts et options de séjour pour un traitement médical à l\'étranger.',
+                            'Bonzour, mo anvi gagn enn estimasion pri kler ek opsion sezour pou enn tretman medikal a letranze.',
+                            'Hello, I would like to receive a transparent cost estimate and package options for medical treatment abroad.'
+                          ),
+                        },
+                        {
+                          label: l10n('✈️ Visa Médical & Logistique', '✈️ Viza Medikal & Vwayaz', '✈️ Visa & Travel Support'),
+                          text: l10n(
+                            'Bonjour, j\'ai besoin d\'assistance pour obtenir les lettres d\'invitation de visa médical hospitalier et organiser le voyage du patient et des accompagnants.',
+                            'Bonzour, mo bizin lasistans pou let envitasion viza medikal ek organizasion vwayaz pasian ek akonpagnan.',
+                            'Hello, I need assistance with hospital medical visa invitation letters and travel coordination for patient and family.'
+                          ),
+                        },
+                        {
+                          label: l10n('🩺 Téléconsultation Vidéo', '🩺 Telekonsiltasion Video', '🩺 Video Teleconsultation'),
+                          text: l10n(
+                            'Bonjour, je souhaite programmer une téléconsultation vidéo directe avec un médecin spécialiste en Inde avant de confirmer mon départ.',
+                            'Bonzour, mo anvi aranz enn telekonsiltasion video direk ar enn dokter spesialis dan L\'inde avan voyaze.',
+                            'Hello, I would like to arrange a direct video teleconsultation with a specialist doctor in India before traveling.'
+                          ),
+                        },
+                      ].map((chip, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => {
+                            setMessage(chip.text);
+                            if (errors.message) setErrors(prev => ({ ...prev, message: undefined }));
+                          }}
+                          style={{
+                            background: 'var(--color-surface)',
+                            border: '1px solid var(--color-border)',
+                            borderRadius: '999px',
+                            padding: '0.3rem 0.75rem',
+                            fontSize: '0.78rem',
+                            fontWeight: 600,
+                            color: 'var(--color-text)',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s ease',
+                          }}
+                          onMouseEnter={e => {
+                            e.currentTarget.style.borderColor = 'var(--color-primary)';
+                            e.currentTarget.style.color = 'var(--color-primary)';
+                          }}
+                          onMouseLeave={e => {
+                            e.currentTarget.style.borderColor = 'var(--color-border)';
+                            e.currentTarget.style.color = 'var(--color-text)';
+                          }}
+                        >
+                          {chip.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
                   {/* Message Input */}
                   <div className="form-group">
                     <label className="form-label" htmlFor="contact-message">
@@ -369,6 +474,93 @@ export function ContactPage() {
                   </button>
                 </form>
               )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Interactive Site Map with Exact Pinpoint Location ─────────────────── */}
+      <section className="section" style={{ background: 'var(--color-surface-2)', borderTop: '1px solid var(--color-border)', padding: '4rem 0 5rem' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 2.5rem' }}>
+            <span className="section-label">
+              📍 {l10n('Plan d\'Accès & Localisation Exacte', 'Plan Laksé & Pozision Exak', 'Interactive Site Map & Exact Location')}
+            </span>
+            <h2 className="text-h2" style={{ marginBottom: '0.75rem' }}>
+              {l10n('Venez Nous Rencontrer à Port-Louis', 'Vinn Zwen Nou dan Porlwi', 'Visit Med360 in Port-Louis')}
+            </h2>
+            <p className="text-lead" style={{ margin: 0 }}>
+              {l10n(
+                'Nos bureaux sont situés au 4ème étage de l\'IKS Building, au carrefour des rues R. Seeneevassen & Farquhar, à proximité du centre de Port-Louis.',
+                'Nou biro trouv lor 4em letaz IKS Building, kwin lari R. Seeneevassen & Farquhar, dan Porlwi.',
+                'Our headquarters are located on the 4th Floor of IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis.'
+              )}
+            </p>
+          </div>
+
+          <div style={{
+            position: 'relative',
+            borderRadius: 'var(--radius-2xl)',
+            overflow: 'hidden',
+            border: '2px solid var(--color-border)',
+            boxShadow: '0 12px 36px rgba(0,0,0,0.1)',
+            background: 'var(--color-surface)',
+          }}>
+            {/* Interactive Google Maps Embed with Pinpoint */}
+            <iframe
+              title="Med360 Location Map - IKS Building Port Louis"
+              src="https://maps.google.com/maps?q=IKS+Building,+Cnr+R.+Seeneevassen+%26+Farquhar+Streets,+Port+Louis,+Mauritius&t=&z=16&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="460"
+              style={{ border: 0, display: 'block' }}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+
+            {/* Floating Location Overlay Card with GPS Directions */}
+            <div style={{
+              position: 'absolute',
+              top: '1.25rem',
+              left: '1.25rem',
+              maxWidth: '360px',
+              background: 'var(--color-surface)',
+              border: '1.5px solid var(--color-border)',
+              borderRadius: 'var(--radius-lg)',
+              padding: '1.25rem',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.2)',
+              backdropFilter: 'blur(8px)',
+              zIndex: 10,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+                <strong style={{ fontSize: '0.95rem', color: 'var(--color-primary)' }}>Med360 Ltd (Siège Social)</strong>
+              </div>
+              <p style={{ margin: '0 0 0.75rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+                Sedeco Ltée, 4ème étage, IKS Building<br />
+                Cnr R. Seeneevassen & Farquhar Streets<br />
+                Port-Louis 11613, Mauritius
+              </p>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=IKS+Building+Farquhar+Street+Port+Louis+Mauritius"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-sm"
+                  style={{ fontWeight: 700 }}
+                >
+                  <MapPin size={14} /> {l10n('Itinéraire GPS', 'Itinerer GPS', 'Get Directions')}
+                </a>
+                <a
+                  href={buildMed360WhatsAppUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-whatsapp btn-sm"
+                  style={{ fontWeight: 700 }}
+                >
+                  <MessageCircle size={14} /> WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         </div>

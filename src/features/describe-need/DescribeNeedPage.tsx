@@ -350,6 +350,86 @@ export function DescribeNeedPage() {
                 </span>
                 {fieldErrors.specialtyId && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.specialtyId}</span>}
               </div>
+              {/* 1-Click Quick Fill Chips for Zero-Friction Pre-filling */}
+              <div style={{ marginBottom: '1.25rem' }}>
+                <label className="form-label" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
+                  <span>⚡</span>
+                  <span>{l10n('Remplissage Rapide en 1 Clic (Optionnel) :', 'Rempli Vit an 1 Klik :', '1-Click Quick Pre-fill (Optional):')}</span>
+                </label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {[
+                    {
+                      id: 'sp-cardiology',
+                      label: l10n('❤️ Cardiologie & Coeur', '❤️ Kardiolozi & Leker', '❤️ Cardiology & Heart'),
+                      text: l10n(
+                        'Je sollicite un deuxième avis médical et une estimation de devis pour un diagnostic cardiaque (chirurgie/pontage/valve) dans un hôpital de référence en Inde.',
+                        'Mo pe rod enn deziem lavi dokter ek estimasion pri pou enn problem leker dan enn bon lopital dan L\'inde.',
+                        'I would like a medical second opinion and treatment cost estimate for a cardiac condition from a leading accredited hospital in India.'
+                      ),
+                    },
+                    {
+                      id: 'sp-oncology',
+                      label: l10n('🎗️ Oncologie / Cancer', '🎗️ Onkolozi / Kanser', '🎗️ Oncology & Cancer Care'),
+                      text: l10n(
+                        'Je souhaite obtenir l\'avis d\'un oncologue référent et un devis de prise en charge pour un protocole de traitement oncologique complet.',
+                        'Mo pe rod lavi enn espesyalis onkolog ek estimasion pri pou enn tretman kanser konple.',
+                        'I am requesting a specialist oncologist review, treatment protocol, and hospital estimate for cancer therapy.'
+                      ),
+                    },
+                    {
+                      id: 'sp-orthopedics',
+                      label: l10n('🦴 Orthopédie / Prothèse', '🦴 Zwin / Zenou / Lars', '🦴 Orthopedics / Joint'),
+                      text: l10n(
+                        'Je recherche un chirurgien orthopédique pour une prothèse (genou/hanche/rachis) et souhaite connaître les délais et devis complets.',
+                        'Mo pe rod enn sirizien pou zwin/zenou ek mo anvi konn pri ek letan tretman.',
+                        'I am seeking an orthopedic surgeon for joint replacement (knee/hip/spine) and would like full cost estimates and timeline.'
+                      ),
+                    },
+                    {
+                      id: 'sp-ivf',
+                      label: l10n('👶 PMA / FIV & Fertilité', '👶 FIV & Fertidie', '👶 IVF & Fertility'),
+                      text: l10n(
+                        'Nous souhaitons des informations détaillées et les forfaits d\'accompagnement pour un parcours de PMA / FIV dans une clinique spécialisée.',
+                        'Nou pe rod ranseynman ek pri pou enn tretman FIV dan enn klinik spesialize.',
+                        'We are seeking detailed information and package estimates for an IVF / fertility treatment cycle at an accredited center.'
+                      ),
+                    },
+                    {
+                      id: 'sp-general',
+                      label: l10n('📋 2ème Avis Médical Général', '📋 2em Lavi Dokter Gratis', '📋 2nd Medical Opinion'),
+                      text: l10n(
+                        'J\'ai des bilans et rapports médicaux récents et souhaite un avis médical d\'expert avec orientation vers le bon spécialiste en Inde.',
+                        'Mo ena bann rapor medikal ek mo anvi gagn lavi enn dokter spesialis pou gid mwa ver bon lopital.',
+                        'I have recent medical reports and test results and would like an expert second opinion and guidance to the right specialist in India.'
+                      ),
+                    },
+                  ].map(chip => (
+                    <button
+                      key={chip.id}
+                      type="button"
+                      onClick={() => {
+                        updateField('specialtyId', chip.id);
+                        updateField('description', chip.text);
+                        setFieldErrors(prev => ({ ...prev, specialtyId: undefined, description: undefined }));
+                      }}
+                      style={{
+                        background: formData.specialtyId === chip.id ? 'var(--color-primary)' : 'var(--color-surface)',
+                        color: formData.specialtyId === chip.id ? '#ffffff' : 'var(--color-text)',
+                        border: `1.5px solid ${formData.specialtyId === chip.id ? 'var(--color-primary)' : 'var(--color-border)'}`,
+                        borderRadius: '999px',
+                        padding: '0.35rem 0.85rem',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      {chip.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="form-group">
                 <label className="form-label" htmlFor="wiz-description">{l10n('Décrivez Votre Condition *', 'Dekrir Ou Problem Sant *', 'Describe Your Condition *')}</label>
                 <textarea
@@ -365,7 +445,7 @@ export function DescribeNeedPage() {
                     'Silvouple dekrir ou maladi, si dokter inn dir ou kitsoz, ek ki kalite tretman ou pe rode…',
                     'Please describe your medical condition, any diagnosis you have received, and what type of treatment or opinion you are looking for…'
                   )}
-                  style={{ minHeight: 160, borderColor: fieldErrors.description ? '#ef4444' : undefined }}
+                  style={{ minHeight: 140, borderColor: fieldErrors.description ? '#ef4444' : undefined }}
                   required
                 />
                 {fieldErrors.description && <span style={{ color: '#ef4444', fontSize: '0.78rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{fieldErrors.description}</span>}
