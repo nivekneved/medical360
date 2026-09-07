@@ -199,7 +199,7 @@ export function HospitalsPage() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => navigate('/describe-need')}
+              onClick={() => navigate('/describe-need?from=Hospitals+Directory+Banner&serviceName=Hospital+Selection+Consultation')}
             >
               <span>{isFr ? 'RÉSERVER UNE CONSULTATION' : isKr ? 'REZERV OU KONSILTASION' : 'BOOK A CONSULTATION'}</span>
             </button>
@@ -424,7 +424,7 @@ export function HospitalsPage() {
                         </button>
                         <button
                           className="btn btn-primary btn-sm"
-                          onClick={() => navigate(`/describe-need?hospitalId=${hospital.id}`)}
+                          onClick={() => navigate(`/describe-need?hospitalId=${hospital.id}&hospitalName=${encodeURIComponent(hospital.name)}&from=Hospitals+Directory+Card&serviceName=Consultation+at+${encodeURIComponent(hospital.name)}`)}
                         >
                           {l10n('Avis Médical', 'Lavi Medikal', 'Book Review')}
                         </button>

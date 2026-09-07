@@ -1,38 +1,38 @@
 # 🛡️ Med360 — Top 25 SEO & Security Measures
 
-This document outlines the 25 search engine optimization (SEO) and security implementations built into the Med360 application.
+This document outlines the 25 core search engine optimization (SEO) and platform security implementations built into the Med360 application.
 
 ---
 
 ## 📈 Search Engine Optimization (SEO)
 
-1. **Dynamic Document Head Tags**: Configured `react-helmet-async` across every page for route-specific titles and descriptions.
-2. **Dynamic Canonical Links**: Automatically assigns canonical tags preventing duplicate content penalties.
-3. **Structured Data (JSON-LD)**: Injected `MedicalOrganization` schema on the homepage for Google Rich Snippets.
-4. **Search Engine Directives (`robots.txt`)**: Allows indexing of public routes while blocking administrative portals (`/admin`).
-5. **XML Sitemap (`sitemap.xml`)**: Comprehensive sitemap linking all main pages and language alternates.
-6. **Multi-Language HTML Synchronization**: Synchronizes `<html lang="...">` with the user's active language (FR, KR, EN) via `useEffect`.
-7. **Semantic HTML5 Elements**: Proper semantic structure (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`).
-8. **Single `<h1>` Hierarchy**: Strict single primary heading per page with logical nested hierarchy (`<h2>`, `<h3>`).
-9. **Image Optimization & Lazy Loading**: All images below the fold implement `loading="lazy"`.
-10. **Descriptive `alt` Attributes**: All imagery contains meaningful context or localization-aware descriptions.
-11. **Open Graph Protocol (OG)**: Injects `og:title`, `og:description`, `og:type`, and `og:url` for rich social media cards.
-12. **Twitter Cards**: Injects `twitter:card` and `twitter:title` metadata.
-13. **Clean Route URLs**: Human-readable, descriptive slug structure across all inside pages.
+1. **Dynamic Document Head Tags**: Configured `react-helmet-async` across every route for customized titles, meta descriptions, and keywords.
+2. **Canonical URL Enforcement**: Canonical link tags dynamically generated for all pages (`https://www.med360.mu/...`) preventing duplicate content penalties.
+3. **Structured Data (JSON-LD)**: Injected `MedicalOrganization`, `WebSite`, and `BreadcrumbList` schemas enabling Google Rich Results and Knowledge Panels.
+4. **Google Site Verification (Meta Tag)**: Integrated official verification token `<meta name="google-site-verification" content="3j7riaRlLP4HA23dZvDIahErTsWiJSNjPMB2ksAi09I" />`.
+5. **Google Site Verification (HTML File)**: Uploaded `public/google14ff20f76e301b28.html` root verification target.
+6. **Multi-Language XML Sitemaps**: 44 indexable routes registered in `/sitemap.xml` and `/sitemap_index.xml` featuring `xhtml:link` alternate language definitions (`fr`, `kr`, `en`).
+7. **Search Engine Directives (`robots.txt`)**: Allows full crawling of public routes while blocking administrative portals (`/admin`) and API endpoints (`/api`).
+8. **Multi-Language HTML Tag Synchronization**: Dynamically binds `<html lang="...">` with the user's active language (`fr`, `kr`, `en`) in real time.
+9. **Semantic HTML5 Architecture**: Implements standard semantic landmarks (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`).
+10. **Strict Single `<h1>` Hierarchy**: Ensures one primary heading per page with logical cascading subheadings (`<h2>`, `<h3>`).
+11. **Image Optimization & Native Lazy Loading**: All below-the-fold photography implements `loading="lazy"` with explicit aspect ratio constraints.
+12. **Descriptive Localization-Aware `alt` Attributes**: All imagery contains meaningful, localized descriptions.
+13. **Open Graph Protocol (OG)**: Injects rich social preview cards (`og:title`, `og:description`, `og:image`, `og:url`, `og:site_name`).
+14. **Twitter Card Metadata**: Supports `twitter:card`, `twitter:title`, `twitter:description`, and `twitter:image`.
+15. **Google Tag Manager & Analytics**: Compatible with Google Analytics (gtag.js) and GTM container tracking with zero CSP violations.
 
 ---
 
 ## 🔒 Platform Security
 
-14. **Content Security Policy (CSP)**: Injected strict CSP meta-tag in `index.html` allowing trusted scripts, styles, and images.
-15. **Referrer Policy**: Enforced `strict-origin-when-cross-origin` to prevent data leakage in HTTP headers.
-16. **Permissions Policy**: Disabled sensitive browser APIs (camera, microphone, geolocation) by default.
-17. **Clickjacking Defense**: Applied `X-Frame-Options` and `frame-ancestors 'none'` directives.
-18. **MIME Sniffing Prevention**: Enforced `X-Content-Type-Options: nosniff`.
-19. **External Link Hardening**: All external anchor tags with `target="_blank"` implement `rel="noopener noreferrer"`.
-20. **Client-Side Brute Force Protection**: Implemented login failure tracking in `AuthProvider` (3 failed attempts locks out for 5 minutes).
-21. **Session Token Obfuscation**: Administrative session data in `sessionStorage` is base64-obfuscated rather than stored as plaintext JSON.
-22. **Inquiry Anti-Spam Rate Limiter**: 10-second client-side throttle on inquiry submissions to prevent form flooding.
-23. **XSS Input Sanitization**: Controlled React state inputs prevent arbitrary script injection in rendering trees.
-24. **Zero-Vulnerability Dependency Tree**: Audited with `npm audit` yielding 0 known vulnerabilities.
-25. **Admin Route Guards**: Unauthenticated users attempting to access `/admin/*` are intercepted and redirected to `/admin/login`.
+16. **Strict Content Security Policy (CSP)**: Injected in `index.html` and `vercel.json` restricting scripts, styles, fonts, frames, and connections to trusted domains (Google, Cloudflare, Resend, Supabase).
+17. **Referrer Policy**: Enforced `strict-origin-when-cross-origin` across all responses to prevent PII leakage.
+18. **Browser Permissions Policy**: Explicitly disables sensitive browser features (`camera=(), microphone=(), geolocation=()`).
+19. **Clickjacking Defense**: Applied `X-Frame-Options: DENY` and CSP `frame-ancestors 'none'` directives preventing iframe embedding.
+20. **MIME Sniffing Prevention**: Enforced `X-Content-Type-Options: nosniff`.
+21. **HTTP Strict Transport Security (HSTS)**: Enforced `max-age=63072000; includeSubDomains; preload` for full HTTPS enforcement.
+22. **External Link Hardening**: All outbound links targeting external domains implement `target="_blank"` with `rel="noopener noreferrer"`.
+23. **Anti-Spam & Rate Limiting**: Inquiry submissions throttled by client-side anti-flooding controls, and admin login protected by brute-force lockout (3 failed attempts $\to$ 5-minute lockout).
+24. **Serverless Email Proxy Hardening**: `/api/resend/emails` validates payload sizes, enforces strict rate limits, and restricts sender addresses to approved domains (`@med360.mu`, `@resend.dev`).
+25. **Admin Route Guards & Search Index Exclusion**: Protected admin routes require valid authentication and deliver `X-Robots-Tag: noindex, nofollow` headers.

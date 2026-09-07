@@ -248,7 +248,7 @@ export function HowItWorksPage() {
           <div className="hiw-hero__actions">
             <button
               className="btn btn-primary btn-lg"
-              onClick={() => navigate('/describe-need')}
+              onClick={() => navigate('/describe-need?from=How+It+Works+Top+Banner&serviceName=Treatment+Coordination+Consultation')}
               id="hiw-hero-cta"
             >
               <span>{isFr ? "RÉSERVER VOTRE CONSULTATION MÉDICALE" : isKr ? "REZERV OU KONSILTASION MEDIKAL" : "BOOK YOUR MEDICAL CONSULTATION"}</span>
@@ -437,7 +437,7 @@ export function HowItWorksPage() {
           <div className="hiw-cta-buttons">
             <button 
               className="btn btn-accent btn-lg"
-              onClick={() => navigate('/describe-need')}
+              onClick={() => navigate('/describe-need?from=How+It+Works+Bottom+CTA&serviceName=Treatment+Coordination+Consultation')}
               id="hiw-bottom-cta"
             >
               <span>{isFr ? "RÉSERVER VOTRE CONSULTATION MÉDICALE" : isKr ? "REZERV OU KONSILTASION MEDIKAL" : "BOOK YOUR MEDICAL CONSULTATION"}</span>

@@ -121,7 +121,7 @@ export function Navbar() {
           {/* Primary Action CTA */}
           <button
             className="btn btn-primary btn-sm navbar__cta"
-            onClick={() => navigate('/describe-need')}
+            onClick={() => navigate('/describe-need?from=Header+Navigation+CTA&serviceName=Free+Doctor+Review')}
             id="navbar-cta-btn"
           >
             <span>{isFr ? 'Avis Gratuit' : isKr ? 'Lavi Gratis' : 'Free Doctor Review'}</span>
@@ -178,7 +178,7 @@ export function Navbar() {
               className="btn btn-primary"
               style={{ width: '100%', justifyContent: 'center' }}
               onClick={() => {
-                navigate('/describe-need');
+                navigate('/describe-need?from=Mobile+Menu+CTA&serviceName=Free+Doctor+Review');
                 setIsOpen(false);
               }}
             >

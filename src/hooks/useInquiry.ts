@@ -21,6 +21,10 @@ export interface InquiryFormData {
   specialtyId: string;
   serviceId?: string;
   serviceName?: string;
+  hospitalId?: string;
+  hospitalName?: string;
+  sourcePage?: string;
+  sourceUrl?: string;
   description: string;
   urgency: InquiryUrgency;
   preferredCountry: string;
@@ -37,6 +41,10 @@ const INITIAL_FORM: InquiryFormData = {
   specialtyId: '',
   serviceId: '',
   serviceName: '',
+  hospitalId: '',
+  hospitalName: '',
+  sourcePage: '',
+  sourceUrl: '',
   description: '',
   urgency: 'routine',
   preferredCountry: '',
@@ -139,6 +147,10 @@ export function useInquiry() {
         specialtyId: formData.specialtyId,
         serviceId: formData.serviceId,
         serviceName: formData.serviceName,
+        hospitalId: formData.hospitalId,
+        hospitalName: formData.hospitalName,
+        sourcePage: formData.sourcePage,
+        sourceUrl: formData.sourceUrl,
         description: cleanDesc,
         urgency: formData.urgency,
         preferredCountry: formData.preferredCountry,

@@ -151,7 +151,7 @@ export function CaseStudiesPage() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => navigate('/describe-need')}
+              onClick={() => navigate('/describe-need?from=Case+Studies+Top+Banner&serviceName=Patient+Case+Review')}
             >
               ✍ {l10n('Partager mon cas', 'Partaz mo ka', 'Share My Case')}
             </button>
@@ -329,7 +329,7 @@ export function CaseStudiesPage() {
               'Join thousands of patients who trusted Med360 to find them the best care at the right price.'
             ))}
           </p>
-          <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need')} id="cs-cta-btn">
+          <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need?from=Case+Studies+Bottom+CTA&serviceName=Treatment+Plan+Inquiry')} id="cs-cta-btn">
             {t('home.process.startBtn')} <ArrowRight size={18} />
           </button>
         </div>

@@ -102,7 +102,7 @@ export function SpecialtyDetailPage() {
                   }}
                   l10n={l10n}
                   l={l}
-                  onQuoteClick={(sId) => navigate(`/describe-need?specialty=${sId}`)}
+                  onQuoteClick={(sId) => navigate(`/describe-need?specialty=${sId}&specialtyName=${encodeURIComponent(specialty.name)}&from=Specialty+Procedures+Table+(${encodeURIComponent(specialty.name)})`)}
                 />
               </div>
 
@@ -177,7 +177,7 @@ export function SpecialtyDetailPage() {
                         </div>
                         <button
                           className="btn btn-primary btn-sm"
-                          onClick={() => navigate(`/describe-need?specialty=${specialty.id}`)}
+                          onClick={() => navigate(`/describe-need?specialty=${specialty.id}&specialtyName=${encodeURIComponent(specialty.name)}&from=Specialty+Doctor+Profile+(${encodeURIComponent(doc.name)})`)}
                         >
                           {l10n('Consulter', 'Konsilte', 'Consult')}
                         </button>
@@ -226,7 +226,7 @@ export function SpecialtyDetailPage() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                   <button
                     className="btn btn-primary btn-lg"
-                    onClick={() => navigate(`/describe-need?specialty=${specialty.id}`)}
+                    onClick={() => navigate(`/describe-need?specialty=${specialty.id}&specialtyName=${encodeURIComponent(specialty.name)}&from=Specialty+Detail+Page+(${encodeURIComponent(specialty.name)})`)}
                     style={{ width: '100%' }}
                   >
                     {t('nav.freeOpinion')} <ArrowRight size={16} />

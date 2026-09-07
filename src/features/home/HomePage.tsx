@@ -142,7 +142,7 @@ export function HomePage() {
             <div className="hero__actions">
               <button
                 className="btn btn-primary btn-lg"
-                onClick={() => navigate('/describe-need')}
+                onClick={() => navigate('/describe-need?from=Home+Hero+Banner&serviceName=Free+Medical+Review')}
                 id="hero-cta-btn"
               >
                 <span>{isFr ? 'RÉSERVER VOTRE CONSULTATION MÉDICALE' : isKr ? 'REZERV OU KONSILTASION MEDIKAL' : 'BOOK YOUR MEDICAL CONSULTATION'}</span>
@@ -286,7 +286,7 @@ export function HomePage() {
             })}
           </div>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
-            <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="process-cta-btn">
+            <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need?from=Home+Process+Section&serviceName=Treatment+Facilitation')} id="process-cta-btn">
               <span>{isFr ? 'RÉSERVER VOTRE CONSULTATION MÉDICALE' : isKr ? 'REZERV OU KONSILTASION MEDIKAL' : 'BOOK YOUR MEDICAL CONSULTATION'}</span>
               <ArrowRight size={18} />
             </button>
@@ -500,7 +500,7 @@ export function HomePage() {
                 : 'Book your appointment today. Let us help you understand your options and connect you with the right medical care.'}
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need')} id="footer-cta-btn">
+              <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need?from=Home+Bottom+CTA&serviceName=Free+Doctor+Review')} id="footer-cta-btn">
                 <span>{isFr ? 'RÉSERVER VOTRE CONSULTATION MÉDICALE' : isKr ? 'REZERV OU KONSILTASION MEDIKAL' : 'BOOK YOUR MEDICAL CONSULTATION'}</span>
                 <ArrowRight size={18} />
               </button>
