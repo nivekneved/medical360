@@ -40,7 +40,7 @@ export function HospitalsPage() {
   }, [showCompareModal]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [itemsPerPage, setItemsPerPage] = useState(15);
 
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';

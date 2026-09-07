@@ -12,8 +12,35 @@ export const DEFAULT_CONFIG: MockConfig = {
   errorRate: 0,
 };
 
-export const STORAGE_KEY = 'med360_mock_store_v4';
-export const CONFIG_KEY = 'med360_mock_config';
+export const STORAGE_KEY = 'med360_mock_store_v7';
+export const CONFIG_KEY = 'med360_mock_config_v7';
+
+// Clean legacy localStorage keys to ensure new PPTX seed data is immediately visible
+if (typeof window !== 'undefined' && window.localStorage) {
+  try {
+    const legacyKeys = [
+      'med360_mock_store_v1',
+      'med360_mock_store_v2',
+      'med360_mock_store_v3',
+      'med360_mock_store_v4',
+      'med360_mock_store_v5',
+      'med360_mock_store_v6',
+      'med360_cache_hospitals:all',
+      'med360_cache_specialties:all',
+      'med360_cache_doctors:all',
+    ];
+    legacyKeys.forEach(k => localStorage.removeItem(k));
+    // Also remove any med360_cache_ prefixed items
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i);
+      if (key && (key.startsWith('med360_cache_') && !key.startsWith('med360_cache_v7_'))) {
+        localStorage.removeItem(key);
+      }
+    }
+  } catch {
+    // ignore
+  }
+}
 
 export function getLatencyMs(latency: MockConfig['latency']): number {
   const map = { instant: 0, normal: 300, slow: 1000 };
@@ -64,13 +91,23 @@ export function loadStore(): MockStore {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as MockStore;
-      const specMap = new Map(specialtiesSeed.map(s => [s.id, s.imageUrl]));
+      const specMap = new Map(specialtiesSeed.map(s => [s.id, s]));
+      const hospMap = new Map(hospitalsSeed.map(h => [h.id, h]));
       const docMap = new Map(doctorsSeed.map(d => [d.id, d.imageUrl]));
-      const hospMap = new Map(hospitalsSeed.map(h => [h.id, h.imageUrl]));
       const csMap = new Map(caseStudiesSeed.map(c => [c.id, c.imageUrl]));
 
-      const hospitals = (parsed.hospitals?.length ? parsed.hospitals : hospitalsSeed).map(h => hospMap.has(h.id) ? { ...h, imageUrl: hospMap.get(h.id)! } : h);
-      const specialties = (parsed.specialties?.length ? parsed.specialties : specialtiesSeed).map(s => specMap.has(s.id) ? { ...s, imageUrl: specMap.get(s.id)! } : s);
+      // Verify that parsed stores contain the updated seed count (15 hospitals & 15 specialties)
+      const hasAllHospitals = parsed.hospitals?.length >= 15 && parsed.hospitals.some(h => h.id === 'hosp-kims');
+      const hasAllSpecialties = parsed.specialties?.length >= 15 && parsed.specialties.some(s => s.id === 'sp-spine');
+
+      const hospitals = hasAllHospitals
+        ? parsed.hospitals.map(h => hospMap.has(h.id) ? { ...hospMap.get(h.id)!, ...h, imageUrl: hospMap.get(h.id)!.imageUrl } : h)
+        : hospitalsSeed;
+
+      const specialties = hasAllSpecialties
+        ? parsed.specialties.map(s => specMap.has(s.id) ? { ...specMap.get(s.id)!, ...s, imageUrl: specMap.get(s.id)!.imageUrl } : s)
+        : specialtiesSeed;
+
       const doctors = (parsed.doctors?.length ? parsed.doctors : doctorsSeed).map(d => docMap.has(d.id) ? { ...d, imageUrl: docMap.get(d.id)! } : d);
       const caseStudies = (parsed.caseStudies?.length ? parsed.caseStudies : caseStudiesSeed).map(c => csMap.has(c.id) ? { ...c, imageUrl: csMap.get(c.id)! } : c);
 
