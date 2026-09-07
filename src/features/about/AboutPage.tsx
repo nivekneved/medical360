@@ -72,9 +72,9 @@ const TIMELINE = [
   },
   {
     year: '2025',
-    title: 'The Launch of Medical 360 Ltd',
-    title_fr: 'Création de Medical 360 Ltd',
-    title_kr: 'Lansman Medical 360 Ltd',
+    title: 'The Launch of Med360',
+    title_fr: 'Création de Med360',
+    title_kr: 'Lansman Med360',
     desc: 'Created as an ethical medical-services company assisting self-paying and insured patients while generating sustainable revenue to fund treatment for those who cannot afford it.',
     desc_fr: 'Créée comme entreprise de services médicaux éthique pour accompagner les patients solvables et assurés, tout en générant des revenus durables pour les patients défavorisés.',
     desc_kr: 'Kree kouma enn lakonpanyi medikal etik pou kordonn swen pasian ek finans bann tretman pou bann ki dan bezwin.',
@@ -185,8 +185,8 @@ export function AboutPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title="Our Story & Philosophy · Medical 360 Ltd"
-        description="Born From a Decade of Compassion. Built Around the Patient. Medical 360 Ltd is a social enterprise initiative of NGO Enn Rev Enn Sourir."
+        title="Our Story & Philosophy · Med360"
+        description="Born From a Decade of Compassion. Built Around the Patient. Med360 is a social enterprise initiative of NGO Enn Rev Enn Sourir."
         canonical="/about"
       />
 
@@ -201,9 +201,9 @@ export function AboutPage() {
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Né d\'une décennie de compassion. Centré sur le patient. Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients.',
-              'Ne depi enn deseni konpasion. Santre lor pasian. Medical 360 Ltd li enn linisiativ antrepriz sosyal l\'ONG Enn Rev Enn Sourir pou kordonn swen pasian avek dignite.',
-              'Born From a Decade of Compassion. Built Around the Patient. Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families.'
+              'Né d\'une décennie de compassion. Centré sur le patient. Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients.',
+              'Ne depi enn deseni konpasion. Santre lor pasian. Med360 li enn linisiativ antrepriz sosyal l\'ONG Enn Rev Enn Sourir pou kordonn swen pasian avek dignite.',
+              'Born From a Decade of Compassion. Built Around the Patient. Med360 is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families.'
             ))}
           </p>
         </div>
@@ -222,9 +222,9 @@ export function AboutPage() {
               </h2>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: '1rem' }}>
                 {l10n(
-                  'Medical 360 Ltd est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients et de leurs familles durant certains des moments les plus difficiles de leur vie.',
-                  'Medical 360 Ltd li enn linisiativ sosyal l\'ONG Enn Rev Enn Sourir, ne depi plizir lane leksperyans pou sipor bann pasian ek fami dan moman pli difisil.',
-                  'Medical 360 Ltd is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.'
+                  'Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients et de leurs familles durant certains des moments les plus difficiles de leur vie.',
+                  'Med360 li enn linisiativ sosyal l\'ONG Enn Rev Enn Sourir, ne depi plizir lane leksperyans pou sipor bann pasian ek fami dan moman pli difisil.',
+                  'Med360 is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.'
                 )}
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
@@ -255,16 +255,16 @@ export function AboutPage() {
                 </p>
                 <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.65, margin: '0 0 0.75rem', fontSize: '0.925rem' }}>
                   {l10n(
-                    'En 2025 est née l\'idée de Medical 360 : créer une société de services médicaux éthique, capable d\'accompagner les patients privés et assurés souhaitant se faire soigner à l\'étranger, tout en générant une source de revenus durable pour financer les soins de ceux qui n\'en ont pas les moyens.',
-                    'An 2025, lide Medical 360 finn ne : kree enn lakonpanyi medikal etik pou ed bann pasian ki kapav peye ouswa asire, pandan ki li kree reveni dirab pou finans bann swen pou bann ki pena mwayen.',
-                    'In 2025, the idea of Medical 360 was born: to create an ethical medical-services company capable of assisting self-paying patients, insured patients and families seeking specialised treatment abroad, while creating a sustainable source of revenue to support patients who cannot afford the treatment they need.'
+                    'En 2025 est née l\'idée de Med360 : créer une société de services médicaux éthique, capable d\'accompagner les patients privés et assurés souhaitant se faire soigner à l\'étranger, tout en générant une source de revenus durable pour financer les soins de ceux qui n\'en ont pas les moyens.',
+                    'An 2025, lide Med360 finn ne : kree enn lakonpanyi medikal etik pou ed bann pasian ki kapav peye ouswa asire, pandan ki li kree reveni dirab pou finans bann swen pou bann ki pena mwayen.',
+                    'In 2025, the idea of Med360 was born: to create an ethical medical-services company capable of assisting self-paying patients, insured patients and families seeking specialised treatment abroad, while creating a sustainable source of revenue to support patients who cannot afford the treatment they need.'
                   )}
                 </p>
                 <div style={{ padding: '0.85rem 1rem', background: 'var(--color-surface)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(16, 185, 129, 0.25)', fontSize: '0.875rem', fontWeight: 700, color: 'var(--color-text)' }}>
                   {l10n(
-                    'Patients qui peuvent financer leurs soins → Medical 360 génère des revenus durables → ces revenus contribuent à la mission sociale d\'Enn Rev Enn Sourir et soutiennent les patients vulnérables.',
-                    'Pasian ki kapav peye zot swen → Medical 360 kree reveni dirab → sa reveni la ed l\'ONG Enn Rev Enn Sourir pou sov pasian vilnerab.',
-                    'Patients who can afford their healthcare receive professional medical coordination → Medical 360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.'
+                    'Patients qui peuvent financer leurs soins → Med360 génère des revenus durables → ces revenus contribuent à la mission sociale d\'Enn Rev Enn Sourir et soutiennent les patients vulnérables.',
+                    'Pasian ki kapav peye zot swen → Med360 kree reveni dirab → sa reveni la ed l\'ONG Enn Rev Enn Sourir pou sov pasian vilnerab.',
+                    'Patients who can afford their healthcare receive professional medical coordination → Med360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.'
                   )}
                 </div>
               </div>
@@ -297,7 +297,7 @@ export function AboutPage() {
             </div>
           </div>
 
-          {/* Why Medical 360 Was Needed & No Dividends */}
+          {/* Why Med360 Was Needed & No Dividends */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem', marginBottom: '5rem' }}>
             <div style={{
               background: 'var(--color-surface)',
@@ -305,9 +305,9 @@ export function AboutPage() {
               borderRadius: 'var(--radius-xl)',
               padding: '2.5rem',
             }}>
-              <span className="section-label">{l10n('✦ Éthique & Transparence', '✦ Etik & Transparans', '✦ Why Medical 360 Was Needed')}</span>
+              <span className="section-label">{l10n('✦ Éthique & Transparence', '✦ Etik & Transparans', '✦ Why Med360 Was Needed')}</span>
               <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 1rem', color: 'var(--color-text)' }}>
-                {l10n('Pourquoi Medical 360 Était Nécessaire', 'Kifer Medical 360 Ti Bizin Kree', 'Why Medical 360 Was Needed')}
+                {l10n('Pourquoi Med360 Était Nécessaire', 'Kifer Med360 Ti Bizin Kree', 'Why Med360 Was Needed')}
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1rem' }}>
                 {l10n(
@@ -344,9 +344,9 @@ export function AboutPage() {
               </h3>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1rem' }}>
                 {l10n(
-                  'Medical 360 suit une philosophie différente. Notre but n\'est pas de créer des dividendes pour des actionnaires individuels. Notre but est de créer un impact réel.',
-                  'Medical 360 swiv enn lot filozofi. Nou lobzektif pa kre dividann pou bann aksioner. Nou bi se kre enn vre impak.',
-                  'Medical 360 follows a different philosophy. Our purpose is not to create dividends for individual shareholders. Our purpose is to create impact.'
+                  'Med360 suit une philosophie différente. Notre but n\'est pas de créer des dividendes pour des actionnaires individuels. Notre but est de créer un impact réel.',
+                  'Med360 swiv enn lot filozofi. Nou lobzektif pa kre dividann pou bann aksioner. Nou bi se kre enn vre impak.',
+                  'Med360 follows a different philosophy. Our purpose is not to create dividends for individual shareholders. Our purpose is to create impact.'
                 )}
               </p>
               <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1rem' }}>
@@ -475,9 +475,9 @@ export function AboutPage() {
 
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1.75rem' }}>
               {l10n(
-                'Les fondations de Medical 360 sont renforcées par l\'engagement d\'Enn Rev Enn Sourir auprès d\'organisations internationales respectées dans la lutte contre le cancer et l\'oncologie pédiatrique. Enn Rev Enn Sourir est actuellement reconnue comme Membre Titulaire de l\'Union for International Cancer Control (UICC), tandis que ses informations institutionnelles attestent de collaborations avec la Société Internationale d\'Oncologie Pédiatrique (SIOP) et Childhood Cancer International (CCI). CCI a également présenté publiquement Enn Rev Enn Sourir et son action à Maurice. Ces relations renforcent les principes qui nous guident : pratique éthique, soins centrés sur le patient, collaboration, dignité et accès équitable à la santé.',
-                'Lafondasion Medical 360 ranforse par langazman Enn Rev Enn Sourir ar bann lorganizasion mondial renome dan kanser ek onkolizi pediatrik. Enn Rev Enn Sourir li enn Manb Titiler UICC, pe kolabore ar SIOP ek CCI. Sa bann lalians la ranfors nou bann valer : etik, respe drwa pasian, dignite ek akse egal a bann swen.',
-                'The foundation behind Medical 360 is strengthened by Enn Rev Enn Sourir\'s involvement with respected international organisations in cancer and paediatric oncology. Enn Rev Enn Sourir is currently listed as a Full Member of the Union for International Cancer Control (UICC), while its own organisational information documents collaboration with the International Society of Paediatric Oncology (SIOP) and Childhood Cancer International (CCI). CCI has also publicly profiled Enn Rev Enn Sourir and its work in Mauritius. These relationships reinforce the principles that guide us: ethical practice, patient-centred care, collaboration, dignity and equitable access to healthcare.'
+                'Les fondations de Med360 sont renforcées par l\'engagement d\'Enn Rev Enn Sourir auprès d\'organisations internationales respectées dans la lutte contre le cancer et l\'oncologie pédiatrique. Enn Rev Enn Sourir est actuellement reconnue comme Membre Titulaire de l\'Union for International Cancer Control (UICC), tandis que ses informations institutionnelles attestent de collaborations avec la Société Internationale d\'Oncologie Pédiatrique (SIOP) et Childhood Cancer International (CCI). CCI a également présenté publiquement Enn Rev Enn Sourir et son action à Maurice. Ces relations renforcent les principes qui nous guident : pratique éthique, soins centrés sur le patient, collaboration, dignité et accès équitable à la santé.',
+                'Lafondasion Med360 ranforse par langazman Enn Rev Enn Sourir ar bann lorganizasion mondial renome dan kanser ek onkolizi pediatrik. Enn Rev Enn Sourir li enn Manb Titiler UICC, pe kolabore ar SIOP ek CCI. Sa bann lalians la ranfors nou bann valer : etik, respe drwa pasian, dignite ek akse egal a bann swen.',
+                'The foundation behind Med360 is strengthened by Enn Rev Enn Sourir\'s involvement with respected international organisations in cancer and paediatric oncology. Enn Rev Enn Sourir is currently listed as a Full Member of the Union for International Cancer Control (UICC), while its own organisational information documents collaboration with the International Society of Paediatric Oncology (SIOP) and Childhood Cancer International (CCI). CCI has also publicly profiled Enn Rev Enn Sourir and its work in Mauritius. These relationships reinforce the principles that guide us: ethical practice, patient-centred care, collaboration, dignity and equitable access to healthcare.'
               )}
             </p>
 
@@ -563,9 +563,9 @@ export function AboutPage() {
             </h3>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, fontSize: '1rem', margin: 0 }}>
               {l10n(
-                'Medical 360 représente le nouveau chapitre d\'un voyage né d\'une conviction profonde : des soins de santé de qualité ne doivent jamais être un privilège réservé aux seuls patients qui en ont les moyens.',
-                'Medical 360 reprezant nouvo sapit enn vwayaz ki finn koumanse ar enn konviksion sinp : bon swen lasante zame pa bizin enn privilez reserve zis pou bann ki kapav peye.',
-                'Medical 360 represents the next chapter of a journey that began with a simple belief: Quality healthcare should never be a privilege reserved only for those who can afford it.'
+                'Med360 représente le nouveau chapitre d\'un voyage né d\'une conviction profonde : des soins de santé de qualité ne doivent jamais être un privilège réservé aux seuls patients qui en ont les moyens.',
+                'Med360 reprezant nouvo sapit enn vwayaz ki finn koumanse ar enn konviksion sinp : bon swen lasante zame pa bizin enn privilez reserve zis pou bann ki kapav peye.',
+                'Med360 represents the next chapter of a journey that began with a simple belief: Quality healthcare should never be a privilege reserved only for those who can afford it.'
               )}
             </p>
             <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, fontSize: '1rem', margin: 0 }}>
@@ -583,7 +583,7 @@ export function AboutPage() {
               textAlign: 'center',
             }}>
               <h4 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--color-primary)', margin: '0 0 0.5rem' }}>
-                Medical 360 — Your Health. Our Mission. A Greater Purpose.
+                Med360 — Your Health. Our Mission. A Greater Purpose.
               </h4>
               <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-text)', margin: 0 }}>
                 {l10n('Zéro dividende. Aucun compromis sur la dignité. Le patient d\'abord. Toujours.', 'Zero dividann. Oken konpromi lor dignite. Pasian avan tou. Touzour.', 'No dividends. No compromise on dignity. Patient first. Always.')}

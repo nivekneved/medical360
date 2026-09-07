@@ -1,5 +1,5 @@
 // ---------------------------------------------
-// Medical 360 — Core Domain Types
+// Med360 — Core Domain Types
 // ---------------------------------------------
 
 export interface Hospital {

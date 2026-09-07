@@ -1,5 +1,5 @@
 /**
- * Medical 360 (Web) — Comprehensive Security Protocols, Anti-Bot Defense, SQL Injection & XSS Suite
+ * Med360 (Web) — Comprehensive Security Protocols, Anti-Bot Defense, SQL Injection & XSS Suite
  * 
  * Enterprise-Grade Client-Side & API Security Defenses:
  * 1. SQL Injection Detection & Neutralization (Tautologies, Stacked queries, UNION, Time-based blind, Comments)

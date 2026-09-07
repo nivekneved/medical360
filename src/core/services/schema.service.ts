@@ -1,5 +1,5 @@
 /**
- * Medical 360 — Schema.org JSON-LD Structured Data Suite
+ * Med360 — Schema.org JSON-LD Structured Data Suite
  * 
  * Provides search engines with structured entity definitions for:
  * 1. MedicalOrganization (Global)
@@ -49,7 +49,7 @@ export function getMedicalOrganizationSchema() {
       },
     ],
     sameAs: [
-      'https://www.facebook.com/Medical360',
+      'https://www.facebook.com/Med360',
       'https://www.linkedin.com/company/medical360',
     ],
     medicalSpecialty: [

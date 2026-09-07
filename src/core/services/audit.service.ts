@@ -1,5 +1,5 @@
 /**
- * Medical 360 — Security & Audit Trail Service
+ * Med360 — Security & Audit Trail Service
  * 
  * Records tamper-evident security events, user logins, entity updates, and CMS modifications.
  */

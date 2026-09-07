@@ -1,5 +1,5 @@
 /**
- * Medical360 Export & Print Service
+ * Med360 Export & Print Service
  * Provides PDF export, print preview formatting, and CSV downloading.
  */
 
@@ -10,7 +10,7 @@ export interface ExportColumn {
 }
 
 /**
- * Opens a styled Medical360 print preview window for instantaneous printing or Saving as PDF.
+ * Opens a styled Med360 print preview window for instantaneous printing or Saving as PDF.
  */
 export function printOrExportPdf(
   reportTitle: string,
@@ -55,7 +55,7 @@ export function printOrExportPdf(
     <!DOCTYPE html>
     <html>
       <head>
-        <title>${reportTitle} - Medical360 Export</title>
+        <title>${reportTitle} - Med360 Export</title>
         <meta charset="utf-8" />
         <style>
           @page {

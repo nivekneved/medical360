@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   Medical 360 — Design System (White, Medical Dark Green, Black, Grey Variations)
+   Med360 — Design System (White, Medical Dark Green, Black, Grey Variations)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ─── Base Palette Tokens (Strict: White, Green, Black, Greys) ──────────────── */
@@ -60,7 +60,7 @@
   --sidebar-width:  260px;
 }
 
-/* ─── 1. Med-default (Signature Medical 360: White + Grey Variations + Medical Dark Green) ─── */
+/* ─── 1. Med-default (Signature Med360: White + Grey Variations + Medical Dark Green) ─── */
 :root,
 [data-theme="Med-default"],
 [data-theme="light"] {
@@ -313,7 +313,7 @@
   --footer-bg:            #24060e;
 }
 
-/* ─── 6. Med-Logo (Exact Match to Official Medical360 Logo Colors) ────────────── */
+/* ─── 6. Med-Logo (Exact Match to Official Med360 Logo Colors) ────────────── */
 [data-theme="Med-Logo"],
 [data-theme="logo-brand"] {
   --color-primary:        #03528c; /* Logo Navy Blue */
