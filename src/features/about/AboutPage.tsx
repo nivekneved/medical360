@@ -24,8 +24,12 @@ export function AboutPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title="Our Story & Philosophy · Med360"
-        description="Born From a Decade of Compassion. Built Around the Patient. Med360 is a social enterprise initiative of NGO Enn Rev Enn Sourir."
+        title={l10n("Notre Histoire & Philosophie · Med360", "Nou Zistwar & Filosofi · Med360", "Our Story & Philosophy · Med360")}
+        description={l10n(
+          "Né d'une décennie de compassion. Centré sur le patient. Med360 est une entreprise sociale de l'ONG Enn Rev Enn Sourir.",
+          "Ne depi enn deseni konpasion. Santre lor pasian. Med360 li enn antrepriz sosyal l'ONG Enn Rev Enn Sourir.",
+          "Born From a Decade of Compassion. Built Around the Patient. Med360 is a social enterprise initiative of NGO Enn Rev Enn Sourir."
+        )}
         canonical="/about"
       />
 

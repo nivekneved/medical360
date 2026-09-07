@@ -1,12 +1,17 @@
 import { Scale, AlertCircle, FileCheck, ShieldAlert } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
 
 export function TermsPage() {
+  const { i18n } = useTranslation();
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr';
+
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
-        title="Terms of Service & Healthcare Disclaimer"
-        description="Review the terms, conditions, and facilitator obligations of Med360 (owned by NGO Enn Rev Enn Sourir)."
+        title={isFr ? "Conditions Générales & Droits du Patient | Med360" : isKr ? "Kondision Zeneral & Drwa Pasian | Med360" : "Terms of Service & Healthcare Disclaimer | Med360"}
+        description={isFr ? "Consultez les conditions générales, engagements et obligations d'intermédiation de Med360 (détenu par l'ONG Enn Rev Enn Sourir)." : "Review the terms, conditions, and facilitator obligations of Med360 (owned by NGO Enn Rev Enn Sourir)."}
         canonical="/terms"
       />
       
@@ -32,13 +37,13 @@ export function TermsPage() {
             fontWeight: 600,
             marginBottom: '1rem',
           }}>
-            <Scale size={16} /> Legal & Patient Rights
+            <Scale size={16} /> {isFr ? "Cadre Juridique & Droits du Patient" : isKr ? "Kad Ziridik & Drwa Pasian" : "Legal & Patient Rights"}
           </div>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-            Terms of Service
+            {isFr ? "Conditions Générales d'Utilisation" : isKr ? "Kondision Zeneral" : "Terms of Service"}
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            Med360 • A company owned by NGO Enn Rev Enn Sourir • Port Louis, Mauritius
+            {isFr ? "Med360 • Entreprise sociale détenue par l'ONG Enn Rev Enn Sourir • Port-Louis, Maurice" : "Med360 • A company owned by NGO Enn Rev Enn Sourir • Port Louis, Mauritius"}
           </p>
         </div>
       </section>

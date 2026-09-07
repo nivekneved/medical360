@@ -95,8 +95,8 @@ export function HomePage() {
   return (
     <main className="home">
       <SEO 
-        title="World-Class Healthcare. Without the Wait. With the Dignity You Deserve." 
-        description="Med360 coordinates world-class healthcare, specialist opinions, and patient travel from Mauritius to 15 accredited hospitals across India." 
+        title={isFr ? "Des Soins de Classe Mondiale · Sans Attente | Med360" : isKr ? "Swen Lasante Kalite · San Bizin Atann | Med360" : "World-Class Healthcare. Without the Wait. With the Dignity You Deserve."} 
+        description={isFr ? "Med360 facilite l'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale jusqu'à vos soins à l'étranger et votre retour à domicile." : "Med360 coordinates world-class healthcare, specialist opinions, and patient travel from Mauritius to 15 accredited hospitals across India."} 
         canonical="/"
         schema={schema}
       />
@@ -123,8 +123,10 @@ export function HomePage() {
               </span>
             </div>
             <h1 className="hero__title">
-              World-Class Healthcare.<br />
-              <span className="gradient-text">Without the Wait. With the Dignity You Deserve.</span>
+              {tCms('heroTitleLine1', isFr ? 'Des Soins de Classe Mondiale.' : isKr ? 'Swen Lasante Kalite.' : 'World-Class Healthcare.')}<br />
+              <span className="gradient-text">
+                {tCms('heroTitleLine2', isFr ? 'Sans Attente. Avec la Dignité que Vous Méritez.' : isKr ? 'San Bizin Atann. Avek Dignite ki Ou Merite.' : 'Without the Wait. With the Dignity You Deserve.')}
+              </span>
             </h1>
             <p className="hero__subtitle">
               {isFr 

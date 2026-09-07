@@ -1,12 +1,17 @@
 import { Shield, Lock, Eye, FileText, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { SEO } from '../../components/SEO/SEO';
 
 export function PrivacyPolicyPage() {
+  const { i18n } = useTranslation();
+  const isFr = i18n.language === 'fr';
+  const isKr = i18n.language === 'kr';
+
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
-        title="Privacy Policy & Medical Data Protection"
-        description="Learn how Med360 protects your personal and medical information under the Mauritius Data Protection Act 2017 and GDPR standards."
+        title={isFr ? "Politique de Confidentialité & Protection des Données | Med360" : isKr ? "Politik Konfidansialite & Donn Medikal | Med360" : "Privacy Policy & Medical Data Protection | Med360"}
+        description={isFr ? "Découvrez comment Med360 protège vos données personnelles et médicales conformément à la loi mauricienne Data Protection Act 2017 et au RGPD." : "Learn how Med360 protects your personal and medical information under the Mauritius Data Protection Act 2017 and GDPR standards."}
         canonical="/privacy"
       />
       
@@ -32,13 +37,13 @@ export function PrivacyPolicyPage() {
             fontWeight: 600,
             marginBottom: '1rem',
           }}>
-            <Shield size={16} /> Strict Confidentiality Standards
+            <Shield size={16} /> {isFr ? "Normes Strictes de Confidentialité" : isKr ? "Standard Konfidansialite Strik" : "Strict Confidentiality Standards"}
           </div>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)', fontWeight: 800, marginBottom: '1rem', letterSpacing: '-0.02em' }}>
-            Privacy Policy
+            {isFr ? "Politique de Confidentialité" : isKr ? "Politik Konfidansialite" : "Privacy Policy"}
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.05rem', lineHeight: 1.6 }}>
-            Last Updated: September 2026 • Compliant with Mauritius Data Protection Act 2017 & GDPR
+            {isFr ? "Dernière mise à jour : Septembre 2026 • Conforme au Data Protection Act 2017 (Maurice) & RGPD" : "Last Updated: September 2026 • Compliant with Mauritius Data Protection Act 2017 & GDPR"}
           </p>
         </div>
       </section>

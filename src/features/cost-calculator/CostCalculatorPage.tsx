@@ -140,8 +140,8 @@ export function CostCalculatorPage() {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', paddingBottom: '5rem' }}>
       <Helmet>
-        <title>Medical Treatment Cost Calculator & Comparison | Med360</title>
-        <meta name="description" content="Calculate and compare international medical treatment costs for Mauritian patients across India, Thailand, Singapore, and Europe. Save up to 70% with transparent pricing." />
+        <title>{isFr ? 'Calculateur & Comparateur de Coûts Médicaux | Med360' : isKr ? 'Kalkilatris Pri Tretman Medikal | Med360' : 'Medical Treatment Cost Calculator & Comparison | Med360'}</title>
+        <meta name="description" content={isFr ? "Calculez et comparez les coûts des soins médicaux internationaux en Inde avec une tarification claire et transparente." : "Calculate and compare international medical treatment costs for Mauritian patients across India, Thailand, Singapore, and Europe. Save up to 70% with transparent pricing."} />
       </Helmet>
 
       {/* Admin Preview Mode Banner (When Cost Calculator is hidden from public) */}

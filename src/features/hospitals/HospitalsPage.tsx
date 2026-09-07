@@ -115,8 +115,8 @@ export function HospitalsPage() {
   return (
     <main className="hospitals-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title="Premier Partner Hospitals in India | Med360"
-        description="Explore 15 premier JCI & NABH accredited hospitals across India (Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR) partnered with Med360."
+        title={isFr ? "Hôpitaux Partenaires de Référence en Inde | Med360" : isKr ? "Lopital Partener de Referans dan L'inde | Med360" : "Premier Partner Hospitals in India | Med360"}
+        description={isFr ? "Découvrez nos 15 hôpitaux accrédités JCI & NABH partenaires en Inde (Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR)." : "Explore 15 premier JCI & NABH accredited hospitals across India (Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR) partnered with Med360."}
         canonical="/hospitals"
       />
       {/* Header Banner */}

@@ -112,8 +112,12 @@ export function ContactPage() {
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title="When Your Health Can’t Wait, Neither Should You · Contact Med360"
-        description="Speak to a Patient Navigator today. Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Mauritius. WhatsApp: +230 5918 8275."
+        title={l10n("Quand Votre Santé Ne Peut Pas Attendre · Contact Med360", "Kan Ou Lasante Pa Kapav Atann · Kontak Med360", "When Your Health Can’t Wait, Neither Should You · Contact Med360")}
+        description={l10n(
+          "Parlez à un Patient Navigator dès aujourd'hui. Sedeco Ltée, Port-Louis, Maurice. WhatsApp: +230 5918 8275.",
+          "Koz ar enn Patient Navigator zordi. Sedeco Ltée, Porlwi, Moris. WhatsApp: +230 5918 8275.",
+          "Speak to a Patient Navigator today. Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Mauritius. WhatsApp: +230 5918 8275."
+        )}
         canonical="/contact"
       />
 
