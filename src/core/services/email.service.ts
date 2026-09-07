@@ -474,8 +474,8 @@ export async function sendInquiryEmail(formData: InquiryFormData, specialtyName?
     description: formData.description,
     urgency: formData.urgency,
     preferredCountry: formData.preferredCountry,
-    budgetMin: formData.budgetMin,
-    budgetMax: formData.budgetMax,
+    budgetMin: formData.budgetMin !== undefined ? String(formData.budgetMin) : undefined,
+    budgetMax: formData.budgetMax !== undefined ? String(formData.budgetMax) : undefined,
   });
 
   const headers: Record<string, string> = {
