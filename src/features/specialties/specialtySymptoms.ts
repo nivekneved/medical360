@@ -10,17 +10,37 @@ export const SPECIALTY_SYMPTOMS_MAP: Record<string, {
   fr: SpecialtySymptomData;
   kr: SpecialtySymptomData;
 }> = {
-  'sp-cardiology': {
+  'sp-oncology': {
     en: {
-      badge: '❤️ Heart & Circulation',
-      plainName: 'Heart & Chest Care',
-      symptoms: ['Chest pain or pressure', 'Shortness of breath', 'High blood pressure', 'Heart palpitations', 'Bypass & valve issues'],
-      keywords: ['heart', 'chest', 'breath', 'breathing', 'pressure', 'cardiac', 'cardiology', 'bypass', 'artery', 'stent', 'valve', 'tavi', 'cabg', 'attack', 'palpitation', 'pulse', 'angioplasty']
+      badge: '🎗️ Cancer Care & Tumours',
+      plainName: 'Cancer & Tumour Treatments',
+      symptoms: ['Abnormal lump or mass', 'Sudden unexplained weight loss', 'Tumour diagnosis', 'Need for chemotherapy / radiotherapy', 'Biopsy review'],
+      keywords: ['cancer', 'tumor', 'tumour', 'lump', 'mass', 'chemo', 'chemotherapy', 'radiation', 'radiotherapy', 'oncology', 'cyberknife', 'biopsy', 'carcinoma', 'sarcoma']
     },
     fr: {
-      badge: '❤️ Cœur & Vaisseaux',
-      plainName: 'Soins du Cœur & Poitrine',
-      symptoms: ['Douleur ou oppression dans la poitrine', 'Essoufflement rapide', 'Tension artérielle élevée', 'Palpitations cardiaques', 'Pontage & valves'],
+      badge: '🎗️ Soins du Cancer & Tumeurs',
+      plainName: 'Traitements du Cancer & Tumeurs',
+      symptoms: ['Grosseur ou masse anormale', 'Perte de poids inexpliquée', 'Diagnostic de tumeur', 'Besoin de chimiothérapie / radiothérapie', 'Revue de biopsie'],
+      keywords: ['cancer', 'tumeur', 'grosseur', 'boule', 'masse', 'chimiotherapie', 'chimiothérapie', 'chimio', 'radiotherapie', 'radiothérapie', 'oncologie', 'biopsie']
+    },
+    kr: {
+      badge: '🎗️ Swen Kanser & Timer',
+      plainName: 'Tretman Kanser & Timer',
+      symptoms: ['Enn boule / grosseur anormale', 'Perdi pwa vit san eseye', 'Timer / Kanser', 'Bizin simioterapi ouswa reyon', 'Test biopsi'],
+      keywords: ['kanser', 'timer', 'boule', 'masse', 'simio', 'simioterapi', 'radioterapi', 'biopsi']
+    }
+  },
+  'sp-cardiology': {
+    en: {
+      badge: '❤️ Heart & Cardiac Care',
+      plainName: 'Heart, Bypass & Valve Care',
+      symptoms: ['Chest pain or tightness', 'Shortness of breath on exertion', 'High blood pressure', 'Heart palpitations', 'Bypass / valve replacement needed'],
+      keywords: ['heart', 'chest', 'breath', 'breathing', 'pressure', 'cardiac', 'cardiology', 'bypass', 'artery', 'stent', 'valve', 'tavi', 'tavr', 'cabg', 'attack', 'palpitation', 'angioplasty']
+    },
+    fr: {
+      badge: '❤️ Cœur & Cardiologie',
+      plainName: 'Soins du Cœur & Vaisseaux',
+      symptoms: ['Douleur ou oppression thoracique', 'Essoufflement à l\'effort', 'Tension artérielle élevée', 'Palpitations cardiaques', 'Pontage / remplacement valvulaire'],
       keywords: ['coeur', 'cœur', 'poitrine', 'souffle', 'essoufflement', 'tension', 'cardiaque', 'cardiologie', 'pontage', 'artere', 'artère', 'stent', 'valve', 'infarctus', 'angioplastie', 'palpitations']
     },
     kr: {
@@ -30,57 +50,17 @@ export const SPECIALTY_SYMPTOMS_MAP: Record<string, {
       keywords: ['leker', 'poitrine', 'souf', 'presion', 'disan', 'bypass', 'stent', 'valv', 'atak leker', 'douler leker']
     }
   },
-  'sp-oncology': {
-    en: {
-      badge: '🎗️ Cancer Care & Tumors',
-      plainName: 'Cancer & Tumor Treatments',
-      symptoms: ['Abnormal lump or mass', 'Sudden unexplained weight loss', 'Tumor diagnosis', 'Need for chemotherapy / radiotherapy', 'Biopsy review'],
-      keywords: ['cancer', 'tumor', 'tumour', 'lump', 'mass', 'chemo', 'chemotherapy', 'radiation', 'radiotherapy', 'oncology', 'leukemia', 'lymphoma', 'bone marrow', 'cyberknife', 'biopsy']
-    },
-    fr: {
-      badge: '🎗️ Soins du Cancer & Tumeurs',
-      plainName: 'Traitements du Cancer & Tumeurs',
-      symptoms: ['Grosseur ou masse anormale', 'Perte de poids soudaine', 'Diagnostic de tumeur', 'Besoin de chimiothérapie / radiothérapie', 'Revue de biopsie'],
-      keywords: ['cancer', 'tumeur', 'grosseur', 'boule', 'masse', 'chimiotherapie', 'chimiothérapie', 'chimio', 'radiotherapie', 'radiothérapie', 'oncologie', 'leucemie', 'leucémie', 'moelle', 'biopsie']
-    },
-    kr: {
-      badge: '🎗️ Swen Kanser & Timer',
-      plainName: 'Tretman Kanser & Timer',
-      symptoms: ['Enn boule / grosseur anormale', 'Perdi pwa vit san eseye', 'Timer / Kanser', 'Bizin simioterapi ouswa reyon', 'Test biopsi'],
-      keywords: ['kanser', 'timer', 'boule', 'masse', 'simio', 'simioterapi', 'radioterapi', 'mwal ose', 'lesemi', 'biopsi']
-    }
-  },
-  'sp-orthopedics': {
-    en: {
-      badge: '🦴 Bones, Joints & Spine',
-      plainName: 'Joints, Knee & Back Pain',
-      symptoms: ['Knee pain & walking difficulty', 'Severe hip stiffness', 'Chronic backache & spine issues', 'Shoulder / joint pain', 'Knee or hip replacement'],
-      keywords: ['knee', 'hip', 'bone', 'joint', 'back', 'spine', 'walking', 'leg', 'shoulder', 'orthopedic', 'orthopedics', 'replacement', 'prosthetic', 'disc', 'tlif', 'cartilage', 'fracture', 'arthritis']
-    },
-    fr: {
-      badge: '🦴 Os, Articulations & Dos',
-      plainName: 'Genou, Hanche & Mal de Dos',
-      symptoms: ['Douleur au genou & difficulté à marcher', 'Douleur et blocage de hanche', 'Mal de dos chronique & colonne', 'Articulations douloureuses', 'Prothèse genou / hanche'],
-      keywords: ['genou', 'hanche', 'os', 'articulation', 'dos', 'colonne', 'marche', 'jambe', 'epaule', 'épaule', 'orthopedie', 'orthopédie', 'prothese', 'prothèse', 'disque', 'arthrose', 'fracture', 'rachis']
-    },
-    kr: {
-      badge: '🦴 Lezo, Zointir & Ledo',
-      plainName: 'Zounou, Lans & Mal Ledo',
-      symptoms: ['Douler zounou & difikilte pou marse', 'Douler lans ki bloke', 'Mal ledo for & kolonn', 'Zointir ferm / gonfle', 'Sanz zounou / protez'],
-      keywords: ['zounou', 'lans', 'lezo', 'zointir', 'ledo', 'kolonn', 'marse', 'loperasion zounou', 'protez', 'artroz', 'kase']
-    }
-  },
   'sp-neurology': {
     en: {
       badge: '🧠 Brain, Spine & Nerves',
-      plainName: 'Brain, Nerves & Stroke Care',
-      symptoms: ['Severe persistent headaches', 'Numbness or tingling in limbs', 'Stroke recovery & paralysis', 'Seizures & epilepsy', 'Involuntary tremors / Parkinson'],
-      keywords: ['brain', 'head', 'headache', 'nerve', 'neurology', 'neurosurgery', 'stroke', 'paralysis', 'seizure', 'epilepsy', 'parkinson', 'memory', 'spine', 'tremor', 'dizziness']
+      plainName: 'Brain, Nerves & Neurosurgery',
+      symptoms: ['Severe persistent headaches', 'Numbness or tingling in limbs', 'Stroke recovery & neuro deficits', 'Seizures & epilepsy', 'Tremors / Parkinson’s disease'],
+      keywords: ['brain', 'head', 'headache', 'nerve', 'neurology', 'neurosurgery', 'stroke', 'paralysis', 'seizure', 'epilepsy', 'parkinson', 'memory', 'spine', 'tremor', 'dizziness', 'dbs']
     },
     fr: {
-      badge: '🧠 Cerveau, Nerfs & Colonne',
+      badge: '🧠 Cerveau & Neurochirurgie',
       plainName: 'Cerveau, Nerfs & Suites d\'AVC',
-      symptoms: ['Maux de tête violents ou persistants', 'Engourdissements ou perte de force', 'Récupération après un AVC', 'Crises d\'épilepsie', 'Tremblements / maladie de Parkinson'],
+      symptoms: ['Maux de tête violents ou persistants', 'Engourdissements ou perte de force', 'Récupération post-AVC', 'Crises d\'épilepsie', 'Tremblements / maladie de Parkinson'],
       keywords: ['cerveau', 'tete', 'tête', 'nerf', 'neurologie', 'neurochirurgie', 'avc', 'paralysie', 'epilepsie', 'épilepsie', 'parkinson', 'vertige', 'colonne', 'tremblement']
     },
     kr: {
@@ -90,96 +70,257 @@ export const SPECIALTY_SYMPTOMS_MAP: Record<string, {
       keywords: ['laservel', 'latet', 'ner', 'neurolozi', 'stroke', 'paralize', 'epilepsi', 'parkinson', 'lavertiz', 'tranbleman']
     }
   },
-  'sp-transplant': {
+  'sp-orthopedics': {
     en: {
-      badge: '🔄 Organ Transplants & Kidneys',
-      plainName: 'Kidney, Liver & Dialysis Care',
-      symptoms: ['Kidney failure / currently on dialysis', 'High creatinine levels', 'Liver disease / cirrhosis', 'Need for an organ donor', 'Bone marrow transplant'],
-      keywords: ['kidney', 'liver', 'transplant', 'transplantation', 'dialysis', 'renal', 'donor', 'failure', 'creatinine', 'cirrhosis', 'organ', 'bone marrow', 'nephrology']
+      badge: '🦴 Bones, Joints & Spine',
+      plainName: 'Joints, Knee & Back Care',
+      symptoms: ['Severe knee arthritis & pain', 'Hip joint stiffness', 'Chronic spine / back disc pain', 'Shoulder / ligament tears', 'Joint replacement needed'],
+      keywords: ['knee', 'hip', 'bone', 'joint', 'back', 'spine', 'walking', 'leg', 'shoulder', 'orthopedic', 'orthopedics', 'replacement', 'prosthetic', 'disc', 'tlif', 'cartilage', 'fracture', 'arthritis', 'robotic']
     },
     fr: {
-      badge: '🔄 Greffes d\'Organes & Reins',
-      plainName: 'Reins, Foie & Dialyse',
-      symptoms: ['Insuffisance rénale / séances de dialyse', 'Taux de créatinine trop élevé', 'Maladie hépatique / cirrhose', 'Recherche d\'une greffe', 'Greffe de moelle osseuse'],
-      keywords: ['rein', 'foie', 'greffe', 'transplantation', 'dialyse', 'renale', 'rénale', 'donneur', 'creatinine', 'créatinine', 'cirrhose', 'organe', 'moelle', 'nephrologie']
+      badge: '🦴 Os, Articulations & Rachis',
+      plainName: 'Genou, Hanche & Mal de Dos',
+      symptoms: ['Douleur au genou & arthrose', 'Douleur et blocage de hanche', 'Mal de dos chronique & hernie discale', 'Articulations douloureuses', 'Prothèse genou / hanche'],
+      keywords: ['genou', 'hanche', 'os', 'articulation', 'dos', 'colonne', 'marche', 'jambe', 'epaule', 'épaule', 'orthopedie', 'orthopédie', 'prothese', 'prothèse', 'disque', 'arthrose', 'fracture', 'rachis']
     },
     kr: {
-      badge: '🔄 Transplantasion Lerin & Fwa',
-      plainName: 'Lerin, Fwa & Dializ',
-      symptoms: ['Lerin pa marse / bizin fer dializ', 'Kreatinin tro o', 'Problem fwa / sirhoz', 'Bizin enn gref lerin ouswa fwa', 'Transplantasion mwal ose'],
-      keywords: ['lerin', 'fwa', 'gref', 'transplantasion', 'dializ', 'rein', 'kreatinin', 'mwal ose', 'doner']
+      badge: '🦴 Lezo, Zointir & Ledo',
+      plainName: 'Zounou, Lans & Mal Ledo',
+      symptoms: ['Douler zounou & difikilte pou marse', 'Douler lans ki bloke', 'Mal ledo for & kolonn', 'Zointir ferm / gonfle', 'Sanz zounou / protez'],
+      keywords: ['zounou', 'lans', 'lezo', 'zointir', 'ledo', 'kolonn', 'marse', 'loperasion zounou', 'protez', 'artroz', 'kase']
     }
   },
-  'sp-ivf': {
+  'sp-transplant': {
     en: {
-      badge: '👶 Fertility, IVF & Baby Care',
-      plainName: 'Fertility & Having a Baby',
-      symptoms: ['Difficulty conceiving / getting pregnant', 'Multiple failed pregnancies', 'Male or female fertility concerns', 'IVF (In Vitro) consultation', 'Egg freezing'],
-      keywords: ['baby', 'pregnant', 'fertility', 'infertility', 'ivf', 'icsi', 'egg', 'sperm', 'pregnancy', 'maternity', 'conceive', 'twins', 'gynecology', 'child']
+      badge: '🫀 Organ Transplants',
+      plainName: 'Kidney, Liver & LVAD',
+      symptoms: ['End-stage kidney failure / dialysis', 'Elevated creatinine levels', 'Liver cirrhosis / end-stage disease', 'Advanced heart failure / LVAD', 'Donor matching required'],
+      keywords: ['kidney', 'liver', 'transplant', 'transplantation', 'dialysis', 'renal', 'donor', 'failure', 'creatinine', 'cirrhosis', 'organ', 'lvad', 'heart transplant']
     },
     fr: {
-      badge: '👶 Fertilité, FIV & Maternité',
-      plainName: 'Aide à la Grossesse & Fertilité',
-      symptoms: ['Difficulté à concevoir ou tomber enceinte', 'Fausses couches à répétition', 'Problème de fertilité femme ou homme', 'Demande de FIV (fécondation)', 'Préservation d\'ovocytes'],
-      keywords: ['bebe', 'bébé', 'enceinte', 'fertilite', 'fertilité', 'infertilite', 'infertilité', 'fiv', 'icsi', 'ovule', 'sperme', 'grossesse', 'maternite', 'maternité', 'concevoir', 'gynecologie']
+      badge: '🫀 Greffes d\'Organes',
+      plainName: 'Greffe Rein, Foie & LVAD',
+      symptoms: ['Insuffisance rénale terminale / dialyse', 'Créatinine très élevée', 'Cirrhose hépatique avancée', 'Insuffisance cardiaque / assistance LVAD', 'Recherche de compatibilité donneur'],
+      keywords: ['rein', 'foie', 'greffe', 'transplantation', 'dialyse', 'renal', 'donneur', 'creatinine', 'cirrhose', 'lvad']
     },
     kr: {
-      badge: '👶 Gagn Zanfan & FIV',
-      plainName: 'Gagn Zanfan & Swen Fertilite',
-      symptoms: ['Difikilte pou tom ansent / gagn zanfan', 'Bann fos kous repete', 'Problem fertilite madam ouswa misie', 'Anvi fer FIV (In-Vitro)', 'Prezerv fertilite'],
-      keywords: ['zanfan', 'baba', 'ansent', 'fertilite', 'fiv', 'in-vitro', 'icsi', 'grosesse', 'matenite']
+      badge: '🫀 Transplantasion Lorgann',
+      plainName: 'Transplantasion Lerin & Fwa',
+      symptoms: ['Lerin nepli marse / pe fer dializ', 'Kreatinn tro o', 'Problem fwa grav (sirroz)', 'Bizin enn doner lerin/fwa'],
+      keywords: ['lerin', 'fwa', 'transplantasion', 'dializ', 'doner', 'kreatinn', 'lorgann']
+    }
+  },
+  'sp-paediatrics': {
+    en: {
+      badge: '👶 Child & Paediatric Surgery',
+      plainName: 'Children’s Medical & Surgery',
+      symptoms: ['Congenital heart defects in children', 'Paediatric tumours / blood disorders', 'Congenital anatomical anomalies', 'Specialised child surgery'],
+      keywords: ['child', 'children', 'baby', 'paediatric', 'pediatric', 'congenital', 'infant', 'asd', 'vsd', 'tetralogy', 'kids']
+    },
+    fr: {
+      badge: '👶 Pédiatrie & Chirurgie Enfant',
+      plainName: 'Soins Spécialisés Enfants',
+      symptoms: ['Malformation cardiaque congénitale chez l\'enfant', 'Tumeurs pédiatriques', 'Anomalies anatomiques de naissance', 'Chirurgie infantile'],
+      keywords: ['enfant', 'pediatrie', 'pédiatrie', 'bebe', 'bébé', 'congenital', 'congénital', 'nourrisson', 'cardiopathie']
+    },
+    kr: {
+      badge: '👶 Swen & Sirirzi Zanfan',
+      plainName: 'Swen Spesialize pou Zanfan',
+      symptoms: ['Problem leker depi nesans', 'Kanser / maladi grav kot zanfan', 'Anomali depi nesans', 'Sirirzi spesial zanfan'],
+      keywords: ['zanfan', 'bebe', 'pediatri', 'nesans', 'leker zanfan']
+    }
+  },
+  'sp-haematology': {
+    en: {
+      badge: '🩸 Haematology & BMT',
+      plainName: 'Blood Disorders & Bone Marrow',
+      symptoms: ['Leukaemia / lymphoma diagnosis', 'Severe anaemia / thalassemia', 'Sickle cell disease', 'Need for bone marrow transplant'],
+      keywords: ['blood', 'haematology', 'hematology', 'bone marrow', 'bmt', 'stem cell', 'leukaemia', 'leukemia', 'lymphoma', 'myeloma', 'thalassemia', 'sickle cell']
+    },
+    fr: {
+      badge: '🩸 Hématologie & Moelle Osseuse',
+      plainName: 'Troubles du Sang & Greffe Moelle',
+      symptoms: ['Diagnostic de leucémie ou lymphome', 'Anémie sévère / thalassémie', 'Drépanocytose', 'Indication de greffe de moelle'],
+      keywords: ['sang', 'hematologie', 'hématologie', 'moelle', 'cellules souches', 'leucemie', 'leucémie', 'lymphome', 'thalassemie', 'myelome']
+    },
+    kr: {
+      badge: '🩸 Disan & Mwal Ose',
+      plainName: 'Kanser Disan & Transplantasion Mwal',
+      symptoms: ['Lesemi / Linfom (kanser disan)', 'Mank disan grav / Talasemi', 'Drepanozitose', 'Bizin transplantasion mwal ose'],
+      keywords: ['disan', 'mwal ose', 'ematolozi', 'lesemi', 'linfom', 'talasemi']
     }
   },
   'sp-cosmetic': {
     en: {
-      badge: '✨ Weight Loss & Reconstruction',
-      plainName: 'Weight Loss Surgery & Body Care',
-      symptoms: ['Severe obesity / gastric sleeve needed', 'Nose breathing difficulty & reshaping', 'Reconstruction after injury / burn', 'Body contouring'],
-      keywords: ['weight', 'bariatric', 'sleeve', 'gastric', 'obesity', 'nose', 'rhinoplasty', 'plastic', 'cosmetic', 'skin', 'reconstruction', 'contouring']
+      badge: '✨ Plastic & Reconstructive',
+      plainName: 'Aesthetic & Reconstruction',
+      symptoms: ['Post-mastectomy breast reconstruction', 'Burn scar or trauma reconstruction', 'Cleft lip & palate repair', 'Body contouring & rhinoplasty'],
+      keywords: ['plastic', 'cosmetic', 'reconstructive', 'reconstruction', 'breast', 'mastectomy', 'rhinoplasty', 'aesthetic', 'burns', 'cleft']
     },
     fr: {
-      badge: '✨ Perte de Poids & Réparation',
-      plainName: 'Chirurgie Bariatrique & Réparation',
-      symptoms: ['Surpoids important / chirurgie sleeve', 'Gêne respiratoire ou forme du nez', 'Reconstruction après accident ou brûlure', 'Remodelage corporel'],
-      keywords: ['poids', 'bariatrique', 'sleeve', 'gastrique', 'obesite', 'obésité', 'nez', 'rhinoplastie', 'plastique', 'esthetique', 'esthétique', 'peau', 'reconstruction']
+      badge: '✨ Chirurgie Plastique & Réparation',
+      plainName: 'Reconstruction & Esthétique',
+      symptoms: ['Reconstruction mammaire post-cancer', 'Séquelles de brûlures ou traumatismes', 'Fente labio-palatine', 'Remodelage et rhinoplastie'],
+      keywords: ['plastique', 'esthetique', 'esthétique', 'reconstruction', 'mammaire', 'sein', 'rhinoplastie', 'brulure', 'cicatrice']
     },
     kr: {
-      badge: '✨ Bais Pwa & Sirirzi Reparatris',
-      plainName: 'Bais Pwa & Reparasion Lekor',
-      symptoms: ['Trop gros / bizin loperasion lestoma (sleeve)', 'Difikilte respire ar nene / sanz form', 'Repar lekor apre blesir ouswa brile', 'Estetik'],
-      keywords: ['pwa', 'bariatrik', 'sleeve', 'lestoma', 'gros', 'nene', 'rinoplasti', 'plastik', 'estetik', 'brile']
+      badge: '✨ Sirirzi Plastik & Estetik',
+      plainName: 'Rekonstriksion & Estetik',
+      symptoms: ['Rekonstriksion pwatrin apre kanser', 'Kikatri / Blesir grav', 'Labous fandi (bec de lievre)', 'Rhinoplastie ek estetik'],
+      keywords: ['plastik', 'estetik', 'rekonstriksion', 'pwatrin', 'rhinoplastie']
+    }
+  },
+  'sp-fertility': {
+    en: {
+      badge: '🧬 Fertility & IVF',
+      plainName: 'IVF & Reproductive Care',
+      symptoms: ['Inability to conceive after 1+ years', 'Recurrent IVF cycle failures', 'Low sperm count / male factor', 'Egg freezing / fertility preservation'],
+      keywords: ['fertility', 'ivf', 'icsi', 'infertility', 'pregnancy', 'embryo', 'egg', 'sperm', 'blastocyst', 'reproductive', 'pgt']
+    },
+    fr: {
+      badge: '🧬 Fertilité & FIV',
+      plainName: 'PMA & Soins de la Fertilité',
+      symptoms: ['Difficulté à concevoir depuis plus d\'1 an', 'Échecs répétés de FIV', 'Infertilité masculine ou féminine', 'Préservation d\'ovocytes'],
+      keywords: ['fertilite', 'fertilité', 'fiv', 'icsi', 'pma', 'grossesse', 'embryon', 'ovocyte', 'sperme', 'infertilite', 'infertilité']
+    },
+    kr: {
+      badge: '🧬 Fertilite & FIV',
+      plainName: 'Swen pou Fer Zanfan (FIV)',
+      symptoms: ['Pe gagne difikilte pou fer zanfan', 'FIV pa pe marse', 'Problem fertilite madam ouswa misie', 'Test fertilite konple'],
+      keywords: ['fertilite', 'fiv', 'ivf', 'zanfan', 'reprodiksion']
     }
   },
   'sp-ophthalmology': {
     en: {
-      badge: '👁️ Eyes & Vision Care',
-      plainName: 'Eye Care, Cataracts & LASIK',
-      symptoms: ['Blurry or cloudy vision', 'Cataract obstruction', 'Desire to remove glasses (LASIK)', 'Retina or glaucoma diagnosis', 'Eye pain or pressure'],
-      keywords: ['eye', 'eyes', 'vision', 'sight', 'see', 'blur', 'blurry', 'cataract', 'lasik', 'glasses', 'glaucoma', 'retina', 'cornea', 'ophthalmology']
+      badge: '👁️ Ophthalmology & Eyes',
+      plainName: 'Eye Surgery & Vision Care',
+      symptoms: ['Retinal detachment / floaters & flashes', 'Severe corneal disease / scarring', 'Advanced glaucoma / vision loss', 'Complex cataract & paediatric eye care'],
+      keywords: ['eye', 'vision', 'ophthalmology', 'retina', 'cornea', 'cataract', 'glaucoma', 'vitrectomy', 'lasik', 'sankara']
     },
     fr: {
-      badge: '👁️ Yeux & Soins de la Vue',
-      plainName: 'Yeux, Cataracte & Laser LASIK',
-      symptoms: ['Vision floue ou voile devant les yeux', 'Gêne liée à une cataracte', 'Souhait de ne plus porter de lunettes (LASIK)', 'Glaucome ou problème de rétine', 'Douleur ou tension oculaire'],
-      keywords: ['oeil', 'yeux', 'vue', 'vision', 'flou', 'cataracte', 'lasik', 'lunettes', 'glaucome', 'retine', 'rétine', 'cornee', 'cornée', 'ophtalmologie', 'myopie']
+      badge: '👁️ Ophtalmologie & Yeux',
+      plainName: 'Chirurgie Oculaire & Vision',
+      symptoms: ['Décollement de rétine / éclairs visuels', 'Pathologies cornéennes sévères', 'Glaucome avancé', 'Cataracte complexe'],
+      keywords: ['oeil', 'yeux', 'ophtalmologie', 'retine', 'rétine', 'cornee', 'cornée', 'cataracte', 'glaucome', 'vitrectomie', 'vision']
     },
     kr: {
-      badge: '👁️ Lizie & Swen Vizion',
-      plainName: 'Swen Lizie, Katarak & LASIK',
-      symptoms: ['Trouv flou / enn vwal devan lizie', 'Problem katarak', 'Anvi tir linet ar laser LASIK', 'Glokom ouswa problem retinn', 'Douler dan lizie'],
-      keywords: ['lizie', 'vizion', 'flou', 'katarak', 'lasik', 'linet', 'retinn', 'oftalmolozi', 'glokom']
+      badge: '👁️ Lizie & Lazit',
+      plainName: 'Swen & Sirirzi Lizie',
+      symptoms: ['Problem retin / dekolman retin', 'Problem korne / bezwin gref', 'Glokom / katarak avanse', 'Bizin tretman lizie spesial'],
+      keywords: ['lizie', 'retin', 'korne', 'katarak', 'glokom', 'oftalmolozi']
     }
-  }
+  },
+  'sp-urology': {
+    en: {
+      badge: '🫘 Urology & Nephrology',
+      plainName: 'Kidneys, Bladder & Prostate',
+      symptoms: ['Large or recurrent kidney stones', 'Prostate enlargement or PSA elevation', 'Blood in urine (haematuria)', 'Chronic kidney disease / dialysis access'],
+      keywords: ['kidney', 'urology', 'nephrology', 'stone', 'stones', 'prostate', 'bladder', 'urine', 'rirs', 'lithotripsy', 'psa']
+    },
+    fr: {
+      badge: '🫘 Urologie & Néphrologie',
+      plainName: 'Reins, Vessie & Prostate',
+      symptoms: ['Calculs rénaux récidivants', 'Adénome ou cancer de la prostate', 'Sang dans les urines', 'Maladie rénale chronique / fistule'],
+      keywords: ['rein', 'urologie', 'nephrologie', 'néphrologie', 'calcul', 'calculs', 'prostate', 'vessie', 'urine', 'lithotripsie']
+    },
+    kr: {
+      badge: '🫘 Urolozi & Lerin',
+      plainName: 'Lerin, Vesi & Prostat',
+      symptoms: ['Ros dan lerin / douler o rens', 'Problem prostat / difikilte pise', 'Disan dan pipi', 'Problem lerin'],
+      keywords: ['lerin', 'urolozi', 'ros lerin', 'prostat', 'vesi', 'pipi']
+    }
+  },
+  'sp-dental': {
+    en: {
+      badge: '🦷 Dental & Maxillofacial',
+      plainName: 'Dental Implants & Jaw Care',
+      symptoms: ['Missing multiple teeth / full arch loss', 'Severe jaw misalignment or trauma', 'Complex wisdom teeth impactions', 'Need for bone grafting and implants'],
+      keywords: ['dental', 'teeth', 'tooth', 'implant', 'implants', 'jaw', 'maxillofacial', 'all-on-4', 'all-on-6', 'dentist']
+    },
+    fr: {
+      badge: '🦷 Dentaire & Maxillo-Facial',
+      plainName: 'Implants Dentaires & Mâchoire',
+      symptoms: ['Perte de plusieurs dents / édentement', 'Décalage ou traumatisme de la mâchoire', 'Chirurgie maxillo-faciale', 'Pose d\'implants All-on-4 / All-on-6'],
+      keywords: ['dentaire', 'dents', 'dent', 'implant', 'implants', 'machoire', 'mâchoire', 'maxillofacial', 'all-on-4']
+    },
+    kr: {
+      badge: '🦷 Swen Lezan & Maswar',
+      plainName: 'Inplan Lezan & Sirirzi Maswar',
+      symptoms: ['Bann lezan finn manke / mank tou lezan', 'Problem maswar', 'Bizin inplan dantan fix', 'Swen dantan konple'],
+      keywords: ['lezan', 'dan', 'inplan', 'maswar', 'dantis']
+    }
+  },
+  'sp-pulmonology': {
+    en: {
+      badge: '🫁 Pulmonology & Lungs',
+      plainName: 'Lungs, Chest & Thoracic Care',
+      symptoms: ['Chronic severe cough or breathlessness', 'Lung nodule or mass on CT scan', 'Pleural effusion / chest pathology', 'Need for VATS keyhole lung surgery'],
+      keywords: ['lung', 'lungs', 'pulmonology', 'pulmonary', 'chest', 'thoracic', 'vats', 'cough', 'breathing', 'ebus', 'copd', 'asthma']
+    },
+    fr: {
+      badge: '🫁 Pneumologie & Thorax',
+      plainName: 'Poumons, Respiration & Thorax',
+      symptoms: ['Toux persistante ou essoufflement sévère', 'Nodule ou masse pulmonaire au scanner', 'Épanchement pleural', 'Chirurgie thoracique VATS'],
+      keywords: ['poumon', 'poumons', 'pneumologie', 'thorax', 'thoracique', 'vats', 'toux', 'respiration', 'ebus', 'asthme']
+    },
+    kr: {
+      badge: '🫁 Poumon & Pwatrin',
+      plainName: 'Swen Poumon & Respirasion',
+      symptoms: ['Tous pa pe pase / difikilte respire', 'Boule / niodil dan poumon lor scanner', 'Delo dan poumon', 'Sirirzi poumon mini-invazif'],
+      keywords: ['poumon', 'pwatrin', 'tous', 'respire', 'pnomolozi']
+    }
+  },
+  'sp-gynecology': {
+    en: {
+      badge: '👩 Women’s Health',
+      plainName: 'Gynaecology & Fibroids',
+      symptoms: ['Uterine fibroids causing heavy bleeding', 'Severe endometriosis & pelvic pain', 'Ovarian cysts or tumours', 'Minimally invasive hysterectomy needed'],
+      keywords: ['women', 'gynecology', 'gynaecology', 'fibroid', 'fibroids', 'endometriosis', 'ovary', 'uterus', 'hysterectomy', 'laparoscopy']
+    },
+    fr: {
+      badge: '👩 Santé Féminine & Gynécologie',
+      plainName: 'Gynécologie, Fibromes & Pelvis',
+      symptoms: ['Fibromes utérins avec saignements', 'Endométriose sévère & douleurs pelviennes', 'Kystes ovariens', 'Chirurgie gynécologique mini-invasive'],
+      keywords: ['femme', 'gynecologie', 'gynécologie', 'fibrome', 'fibromes', 'endometriose', 'endométriose', 'ovaire', 'uterus', 'utérus', 'hysterectomie']
+    },
+    kr: {
+      badge: '👩 Lasante Fam & Zinecolozi',
+      plainName: 'Zinecolozi & Fibrom',
+      symptoms: ['Fibrom ki pe koz boku saignement', 'Endometrioz ek douler bas-vant', "Kist lor l'ovair", 'Laparoskopi zinekolozik'],
+      keywords: ['fam', 'zinecolozi', 'fibrom', 'endometrioz', 'uterus']
+    }
+  },
+  'sp-gastroenterology': {
+    en: {
+      badge: '🩺 Gastroenterology & GI',
+      plainName: 'Digestive, Liver & GI Surgery',
+      symptoms: ['Chronic stomach pain or acid reflux', 'Jaundice / bile duct obstruction', 'Liver lesions or pancreatic disease', 'Colon polyps / colorectal surgery'],
+      keywords: ['gastro', 'gastroenterology', 'digestive', 'liver', 'stomach', 'bowel', 'colon', 'pancreas', 'biliary', 'ercp', 'endoscopy', 'bariatric']
+    },
+    fr: {
+      badge: '🩺 Gastroentérologie & Digestif',
+      plainName: 'Appareil Digestif, Foie & Estomac',
+      symptoms: ['Douleurs abdominales chroniques / reflux', 'Jaunisse / calculs de la voie biliaire', 'Pathologies du foie ou pancréas', 'Chirurgie colorectale / endoscopie'],
+      keywords: ['gastro', 'gastroenterologie', 'gastroentérologie', 'digestif', 'foie', 'estomac', 'intestin', 'colon', 'pancreas', 'pancréas', 'cpre', 'endoscopie']
+    },
+    kr: {
+      badge: '🩺 Gastroenterolozi & Lestoma',
+      plainName: 'Lestoma, Fwa & Kanal Biler',
+      symptoms: ['Douler lestoma / reflux ki pa pase', 'Lizone / blokaz kanal biler', 'Problem fwa ouswa pankreas', 'Endoskopi ek sirirzi lestoma'],
+      keywords: ['lestoma', 'fwa', 'trip', 'gastro', 'endoskopi', 'ercp', 'pankreas']
+    }
+  },
 };
 
 export const QUICK_SYMPTOM_FILTERS = [
-  { id: 'all', label_en: 'All Specialties', label_fr: 'Toutes les Spécialités', label_kr: 'Tou Spesialite', icon: '🩺' },
-  { id: 'sp-cardiology', label_en: 'Heart & Chest', label_fr: 'Cœur & Poitrine', label_kr: 'Leker & Poitrine', icon: '❤️' },
-  { id: 'sp-orthopedics', label_en: 'Bones & Knee Pain', label_fr: 'Genou, Dos & Os', label_kr: 'Zounou, Ledo & Lezo', icon: '🦴' },
-  { id: 'sp-oncology', label_en: 'Cancer Care & Tumors', label_fr: 'Cancer & Tumeurs', label_kr: 'Kanser & Timer', icon: '🎗️' },
-  { id: 'sp-neurology', label_en: 'Brain & Spine', label_fr: 'Cerveau & Nerfs', label_kr: 'Laservel & Ner', icon: '🧠' },
-  { id: 'sp-ivf', label_en: 'Having a Baby / IVF', label_fr: 'Bébé & Fertilité', label_kr: 'Gagn Zanfan / FIV', icon: '👶' },
-  { id: 'sp-transplant', label_en: 'Kidneys & Transplants', label_fr: 'Reins & Greffes', label_kr: 'Lerin & Gref', icon: '🔄' },
-  { id: 'sp-ophthalmology', label_en: 'Eyes & Vision', label_fr: 'Yeux & Cataracte', label_kr: 'Lizie & Katarak', icon: '👁️' },
-  { id: 'sp-cosmetic', label_en: 'Weight Loss & Nose', label_fr: 'Perte de Poids (Sleeve)', label_kr: 'Bais Pwa & Nene', icon: '✨' },
+  { id: 'all', icon: '✨', label_en: 'All Specialties', label_fr: 'Toutes les Spécialités', label_kr: 'Tou Spesialite' },
+  { id: 'sp-oncology', icon: '🎗️', label_en: 'Cancer Care', label_fr: 'Cancer & Tumeurs', label_kr: 'Kanser' },
+  { id: 'sp-cardiology', icon: '❤️', label_en: 'Heart Care', label_fr: 'Cœur & Vaisseaux', label_kr: 'Leker' },
+  { id: 'sp-orthopedics', icon: '🦴', label_en: 'Bones & Spine', label_fr: 'Os & Dos', label_kr: 'Lezo & Ledo' },
+  { id: 'sp-neurology', icon: '🧠', label_en: 'Brain & Nerves', label_fr: 'Cerveau & AVC', label_kr: 'Laservel' },
+  { id: 'sp-transplant', icon: '🫀', label_en: 'Transplants', label_fr: 'Greffes Rein/Foie', label_kr: 'Transplantasion' },
+  { id: 'sp-haematology', icon: '🩸', label_en: 'Blood & BMT', label_fr: 'Moelle & Sang', label_kr: 'Disan & Mwal' },
+  { id: 'sp-ophthalmology', icon: '👁️', label_en: 'Eye Surgery', label_fr: 'Ophtalmologie', label_kr: 'Lizie' },
+  { id: 'sp-urology', icon: '🫘', label_en: 'Urology & Stones', label_fr: 'Urologie & Calculs', label_kr: 'Urolozi' },
+  { id: 'sp-fertility', icon: '🧬', label_en: 'IVF & Fertility', label_fr: 'FIV & Fertilité', label_kr: 'FIV / Fertilite' },
 ];

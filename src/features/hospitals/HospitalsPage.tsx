@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X, HelpCircle, Sparkles } from 'lucide-react';
+import { Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X, HelpCircle, Sparkles, Building2 } from 'lucide-react';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useTranslation } from 'react-i18next';
-import { getUniqueCountries, getUniqueAccreditations } from '../../core/services/hospital.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import type { HospitalFilters } from '../../core/services/hospital.service';
@@ -14,15 +13,24 @@ import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListT
 import { Pagination } from '../../components/Pagination/Pagination';
 import './Hospitals.css';
 
+const INDIAN_HUBS = [
+  { id: 'all', label: 'All Cities & Hubs', label_fr: 'Toutes les Villes', label_kr: 'Tou Lavil' },
+  { id: 'Chennai', label: 'Chennai', label_fr: 'Chennai', label_kr: 'Chennai' },
+  { id: 'Bengaluru', label: 'Bengaluru', label_fr: 'Bengaluru', label_kr: 'Bengaluru' },
+  { id: 'Hyderabad', label: 'Hyderabad & Secunderabad', label_fr: 'Hyderabad & Secunderabad', label_kr: 'Hyderabad' },
+  { id: 'Mumbai', label: 'Mumbai', label_fr: 'Mumbai', label_kr: 'Mumbai' },
+  { id: 'Delhi', label: 'New Delhi & Gurugram (NCR)', label_fr: 'New Delhi & Gurugram (NCR)', label_kr: 'New Delhi & Gurugram' },
+];
+
 export function HospitalsPage() {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<HospitalFilters>({});
   const [searchInput, setSearchInput] = useState('');
+  const [selectedHub, setSelectedHub] = useState('all');
   const [showCompareModal, setShowCompareModal] = useState(false);
   const compareSectionRef = useRef<HTMLDivElement>(null);
   const { i18n } = useTranslation();
-  const { hospitals, loading } = useHospitals(filters);
-  const { hospitals: allHospitals } = useHospitals({});
+  const { hospitals: allHospitals, loading } = useHospitals({});
   const { data: cms } = useCMS('hospitals');
 
   useEffect(() => {
@@ -34,18 +42,10 @@ export function HospitalsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
 
-  const countries = getUniqueCountries(allHospitals);
-  const accreditations = getUniqueAccreditations(allHospitals);
-
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
   const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
   const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
-
-  const tCms = (key: string, fallback: string) => {
-    if (!cms?.content?.[key]) return fallback;
-    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
-  };
 
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>('rating');
@@ -66,8 +66,33 @@ export function HospitalsPage() {
 
   const comparedHospitals = allHospitals.filter(h => compareIds.includes(h.id));
 
+  // Filter hospitals by search and hub
+  const filteredHospitals = allHospitals.filter((h) => {
+    // Hub filter
+    if (selectedHub !== 'all') {
+      const cityLower = (h.city || '').toLowerCase();
+      if (selectedHub === 'Delhi' && !cityLower.includes('delhi') && !cityLower.includes('gurugram')) return false;
+      if (selectedHub === 'Chennai' && !cityLower.includes('chennai')) return false;
+      if (selectedHub === 'Bengaluru' && !cityLower.includes('bengaluru')) return false;
+      if (selectedHub === 'Hyderabad' && !cityLower.includes('hyderabad') && !cityLower.includes('secunderabad')) return false;
+      if (selectedHub === 'Mumbai' && !cityLower.includes('mumbai')) return false;
+    }
+
+    // Search query
+    if (searchInput.trim()) {
+      const q = searchInput.toLowerCase().trim();
+      const matchName = l(h, 'name')?.toLowerCase().includes(q) || h.name?.toLowerCase().includes(q);
+      const matchCity = h.city?.toLowerCase().includes(q);
+      const matchDesc = l(h, 'description')?.toLowerCase().includes(q);
+      const matchAcc = h.accreditations?.some(a => a.toLowerCase().includes(q));
+      if (!matchName && !matchCity && !matchDesc && !matchAcc) return false;
+    }
+
+    return true;
+  });
+
   // Sort hospitals
-  const sortedHospitals = [...hospitals].sort((a, b) => {
+  const sortedHospitals = [...filteredHospitals].sort((a, b) => {
     if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
     if (sortBy === 'beds') return (b.bedsCount || 0) - (a.bedsCount || 0);
     if (sortBy === 'patients') return (b.internationalPatientsPerYear || 0) - (a.internationalPatientsPerYear || 0);
@@ -90,34 +115,56 @@ export function HospitalsPage() {
   return (
     <main className="hospitals-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO 
-        title={l10n('Hôpitaux & Cliniques Partenaires', 'Lopital & Klinik Partener', 'Partner Hospitals & Caring Clinics')}
-        description={l10n(
-          'Découvrez des hôpitaux et cliniques partenaires réputés pour leur sécurité, leur hygiène et la bienveillance de leurs équipes.',
-          'Dekouver nou bann lopital ek klinik partener rekonet pou zot sekirite ek bon laker.',
-          'Discover welcoming, accredited partner hospitals dedicated to patient safety and compassionate nursing care.'
-        )}
+        title="Premier Partner Hospitals in India | Medical 360"
+        description="Explore 15 premier JCI & NABH accredited hospitals across India (Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR) partnered with Medical 360."
         canonical="/hospitals"
       />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/hospitals_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {tCms('heroLabel', l10n('Des Lieux de Soins Sûrs & Accueillants', 'Lopital Sikire & Akéyan', 'Safe & Welcoming Hospitals'))}
+            {isFr ? 'Réseau Hospitalier d\'Excellence en Inde' : isKr ? 'Rezo Lopital L\'inde' : 'India Hospital Network of Excellence'}
           </span>
           <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Hôpitaux et Cliniques Partenaires', 'Nou Bann Lopital & Klinik Partener', 'Partner Hospitals & Caring Clinics'))}
+            {isFr ? '15 Hôpitaux Partenaires & Équipes Spécialistes' : isKr ? '15 Gran Lopital Partener dan L\'inde' : '15 Premier Partner Hospitals Across India'}
           </h1>
-          <p className="text-lead">
-            {tCms('heroDesc', l10n(
-              'Nous vous orientons vers des hôpitaux et cliniques de premier plan, où sécurité médicale, confort moderne et chaleur humaine vous accompagnent du premier jour jusqu\'à votre rétablissement.',
-              'Nou gid ou ver bann gran lopital ek klinik kot sekirite, konfor ek bon laker garanti depi premie zour ziska ou rekiperasion konple.',
-              'We connect you with accredited hospitals and private clinics where medical safety, modern facilities, and compassionate nursing care surround you throughout your stay.'
-            ))}
+          <p className="text-lead" style={{ maxWidth: '850px' }}>
+            {isFr 
+              ? 'Medical 360 facilite l\'accès aux centres hospitaliers et équipes chirurgicales établis à travers l\'Inde. Obtenez des avis médicaux de pointe, des plans de traitement et un accompagnement complet du premier contact jusqu\'à votre retour.'
+              : isKr
+              ? 'Medical 360 fasilit akse ar bann pli gran lopital ek sirizien dan L\'inde. Gagn deziem lavi medikal, devis kler ek kordinasion voyaz konple.'
+              : 'Medical 360 facilitates access to established hospitals and specialist medical teams across India. Through our network, patients obtain specialist medical opinions, transparent treatment plans, and continuous patient navigation.'}
           </p>
         </div>
       </section>
 
       <div className="container" style={{ padding: '2rem var(--space-6) 6rem' }}>
+        
+        {/* Slide 8 Intro Callout Box */}
+        <div className="hospital-network-intro-card" style={{
+          background: 'var(--color-surface)',
+          border: '1px solid var(--color-border)',
+          borderLeft: '4px solid var(--color-primary)',
+          borderRadius: 'var(--radius-lg)',
+          padding: '1.75rem',
+          marginBottom: '2rem',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.04)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+            <Building2 size={24} color="var(--color-primary)" />
+            <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>
+              {isFr ? 'À Propos de Notre Réseau Hospitalier' : isKr ? 'Lor Nou Rezo Lopital' : 'About Our Partner Hospital Network'}
+            </h3>
+          </div>
+          <p style={{ margin: 0, fontSize: '0.925rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
+            {isFr
+              ? 'Notre accompagnement va bien au-delà de la simple mise en relation. De l\'analyse de vos rapports médicaux et la prise de rendez-vous avec les chefs de service jusqu\'à l\'assistance visa, les réservations de vols, l\'admission et le suivi post-traitement, notre équipe de navigation vous accompagne avec bienveillance. Le choix de l\'établissement repose sur les exigences médicales spécifiques de chaque patient (accréditations JCI/NABH, plateau technique, renommée clinique et services internationaux).'
+              : isKr
+              ? 'Nou sipor al bien pli lwin ki zis enn referal. Depi analiz ou dosie medikal ek randevou sef dokter ziska viza, biye avion, lotel, ladmision lopital ek swivi apre tretman, nou lekip res ar ou tou long ou vwayaz.'
+              : 'Our support goes far beyond hospital referral. From medical-record review, specialist appointments, and treatment planning to visa assistance, flights, accommodation, hospital admission, and post-treatment follow-up, our patient-navigation team accompanies patients and families throughout their healthcare journey. Hospital selection is strictly tailored to individual clinical requirements, international accreditations (JCI/NABH), and advanced surgical capabilities.'}
+          </p>
+        </div>
+
         {/* Patient Reassurance Helper Card */}
         <div className="spec-helper-card" style={{ marginBottom: '1.75rem' }}>
           <div className="spec-helper-card__left">
@@ -127,16 +174,16 @@ export function HospitalsPage() {
             <div>
               <h3 className="spec-helper-card__title">
                 {l10n(
-                  'Besoin d\'aide pour choisir l\'hôpital le plus adapté ?',
+                  'Besoin d\'aide pour choisir l\'hôpital le plus adapté à votre diagnostic ?',
                   'Bizin led pou swazir meyer lopital pou ou ka ?',
-                  'Need guidance choosing the right accredited hospital?'
+                  'Need guidance choosing the right accredited hospital for your condition?'
                 )}
               </h3>
               <p className="spec-helper-card__desc">
                 {l10n(
-                  'Ne vous souciez pas des démarches à distance — notre équipe médicale sélectionne pour vous l\'établissement le plus spécialisé, organise votre admission et s\'occupe des démarches de visa médical sans frais.',
-                  'Pa traka ditou pou bann papie ouswa vwayaz — nou lekip organiz tou pou ou : swazir lopital, pran randevou dokter ek ed ou ar visa medikal gratis.',
-                  'Don\'t worry about complex arrangements — our medical team will help select the best hospital for your condition, schedule priority doctor appointments, and assist with medical visas for free.'
+                  'Nos Patient Navigators analysent gratuitement vos comptes rendus et vous orientent vers le chef de service et l\'établissement le plus expérimenté.',
+                  'Nou bann Patient Navigator get ou dosie gratis ek dir ou ki meyer lopital ek dokter pou ou tretman.',
+                  'Our Patient Navigators will review your records for free and recommend the most suitable institution and department head within 48 hours.'
                 )}
               </p>
             </div>
@@ -147,61 +194,42 @@ export function HospitalsPage() {
               className="btn btn-primary"
               onClick={() => navigate('/describe-need')}
             >
-              ✍️ {l10n('Demander une recommandation', 'Demann rekomandasion', 'Get Hospital Advice')}
+              <span>{isFr ? 'RÉSERVER UNE CONSULTATION' : isKr ? 'REZERV OU KONSILTASION' : 'BOOK A CONSULTATION'}</span>
             </button>
             <a
               href={buildMed360WhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-outline"
+              className="btn btn-whatsapp"
             >
               💬 WhatsApp
             </a>
           </div>
         </div>
 
-        {/* Quick Country Filters */}
+        {/* City / Hub Quick Filter Chips */}
         <div className="spec-symptom-chips-container" style={{ marginBottom: '1.75rem' }}>
           <div className="spec-symptom-chips-label">
             <Sparkles size={14} />
-            <span>{l10n('Destinations médicales principales :', 'Bann pei prinsipal :', 'Top medical destinations:')}</span>
+            <span>{l10n('Filtrer par pôle médical en Inde :', 'Filtre par lavil dan L\'inde :', 'Filter by Indian Healthcare Hub:')}</span>
           </div>
-          <div className="spec-symptom-chips" role="tablist" aria-label="Country quick filter chips">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={!filters.country}
-              className={`spec-symptom-chip ${!filters.country ? 'spec-symptom-chip--active' : ''}`}
-              onClick={() => {
-                setFilters(f => ({ ...f, country: undefined }));
-                setCurrentPage(1);
-              }}
-            >
-              <span>🌐</span>
-              <span>{l10n('Tous les pays', 'Tou pei', 'All Countries')}</span>
-            </button>
-            {countries.map((c) => {
-              const isActive = filters.country === c;
-              const flag = c.includes('India') || c.includes('Inde') ? '🇮🇳'
-                : c.includes('Thailand') || c.includes('Thaïlande') ? '🇹🇭'
-                : c.includes('Mauritius') || c.includes('Maurice') ? '🇲🇺'
-                : c.includes('Singapore') || c.includes('Singapour') ? '🇸🇬'
-                : c.includes('Malaysia') || c.includes('Malaisie') ? '🇲🇾'
-                : c.includes('France') ? '🇫🇷' : '🏥';
+          <div className="spec-symptom-chips" role="tablist" aria-label="City quick filter chips">
+            {INDIAN_HUBS.map((hub) => {
+              const isActive = selectedHub === hub.id;
               return (
                 <button
-                  key={c}
+                  key={hub.id}
                   type="button"
                   role="tab"
                   aria-selected={isActive}
                   className={`spec-symptom-chip ${isActive ? 'spec-symptom-chip--active' : ''}`}
                   onClick={() => {
-                    setFilters(f => ({ ...f, country: c }));
+                    setSelectedHub(hub.id);
                     setCurrentPage(1);
                   }}
                 >
-                  <span>{flag}</span>
-                  <span>{c}</span>
+                  <span>📍</span>
+                  <span>{isFr ? hub.label_fr : isKr ? hub.label_kr : hub.label}</span>
                 </button>
               );
             })}
@@ -214,234 +242,214 @@ export function HospitalsPage() {
             searchQuery={searchInput}
             onSearchChange={(val) => {
               setSearchInput(val);
-              setFilters(f => ({ ...f, searchQuery: val || undefined }));
               setCurrentPage(1);
             }}
-            searchPlaceholder={tCms('searchPlaceholder', l10n('Rechercher un hôpital, ville ou spécialité...', 'Rod enn lopital, lavil ouswa swen...', 'Search hospitals, cities, or treatments...'))}
+            searchPlaceholder={isFr ? 'Rechercher un hôpital, ville ou spécialité...' : isKr ? 'Rod enn lopital, lavil...' : 'Search hospital name, city, or specialty...'}
+            totalCount={filteredHospitals.length}
+            countUnit={l10n('hôpital', 'lopital', 'hospital')}
+            countUnitPlural={l10n('hôpitaux', 'lopital', 'hospitals')}
             sortBy={sortBy}
-            onSortChange={setSortBy}
+            onSortChange={(val) => {
+              setSortBy(val);
+              setCurrentPage(1);
+            }}
             sortOptions={sortOptions}
-            totalCount={sortedHospitals.length}
-            countUnit={isFr ? 'hôpital' : isKr ? 'lopital' : 'hospital'}
-            countUnitPlural={isFr ? 'hôpitaux' : isKr ? 'lopital' : 'hospitals'}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
-            extraControls={
-              <>
-                {/* Country Filter Pill */}
-                <div className="list-toolbar__filter-pill">
-                  <select
-                    className="list-toolbar__filter-select"
-                    value={filters.country || ''}
-                    onChange={e => { setFilters(f => ({ ...f, country: e.target.value || undefined })); setCurrentPage(1); }}
-                    id="hospital-country-filter"
-                  >
-                    <option value="">{l10n('🌐 Tous les pays', '🌐 Tou pei', '🌐 All Countries')}</option>
-                    {countries.map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                </div>
-
-                {/* Accreditation Filter Pill */}
-                <div className="list-toolbar__filter-pill">
-                  <select
-                    className="list-toolbar__filter-select"
-                    value={filters.accreditation || ''}
-                    onChange={e => { setFilters(f => ({ ...f, accreditation: e.target.value || undefined })); setCurrentPage(1); }}
-                    id="hospital-accreditation-filter"
-                  >
-                    <option value="">{l10n('🏅 Accréditations', '🏅 Akreditasion', '🏅 All Accreditations')}</option>
-                    {accreditations.map(a => <option key={a} value={a}>{a}</option>)}
-                  </select>
-                </div>
-
-                {/* Clear Active Filters */}
-                {(searchInput || filters.country || filters.accreditation) && (
-                  <button
-                    type="button"
-                    className="list-toolbar__clear-btn"
-                    onClick={() => { setFilters({}); setSearchInput(''); setCurrentPage(1); }}
-                    id="hospital-clear-filters-btn"
-                  >
-                    ↺ {l10n('Effacer', 'Efase', 'Clear')}
-                  </button>
-                )}
-
-                {/* Compare Float Trigger */}
-                {compareIds.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setShowCompareModal(true)}
-                    className="btn btn-primary btn-sm"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontWeight: 800, borderRadius: '999px', height: 40, padding: '0 1rem' }}
-                  >
-                    <Scale size={15} />
-                    <span>{isFr ? `Comparer (${compareIds.length})` : `Compare (${compareIds.length})`}</span>
-                  </button>
-                )}
-              </>
-            }
           />
         )}
 
-        {/* Hospital Grid / List */}
-        <div className={`hospitals-list ${viewMode === 'list' ? 'hospitals-list--list-view' : ''}`}>
-          {loading
-            ? Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="skeleton" style={{ height: 280, borderRadius: 16 }} />
-              ))
-            : paginatedHospitals.map(hospital => {
-                const isSelected = compareIds.includes(hospital.id);
+        {/* Comparison Floating Action Bar */}
+        {compareIds.length > 0 && (
+          <div className="hospital-compare-bar animate-fade-in-up">
+            <div className="hospital-compare-bar__inner container">
+              <div className="hospital-compare-bar__info">
+                <Scale size={20} className="text-primary" />
+                <span>
+                  <strong>{compareIds.length}</strong> / 3 {l10n('hôpitaux sélectionnés pour comparaison', 'lopital seleksione', 'hospitals selected')}
+                </span>
+                <div className="hospital-compare-bar__chips">
+                  {comparedHospitals.map(h => (
+                    <span key={h.id} className="compare-chip">
+                      {h.name}
+                      <button onClick={() => toggleCompare(h.id)} aria-label="Remove">
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="hospital-compare-bar__actions">
+                <button
+                  className="btn btn-outline btn-sm"
+                  onClick={() => setCompareIds([])}
+                  style={{ color: 'white', borderColor: 'rgba(255,255,255,0.4)' }}
+                >
+                  {l10n('Réinitialiser', 'Reset', 'Clear All')}
+                </button>
+                <button
+                  className="btn btn-accent btn-sm"
+                  onClick={() => setShowCompareModal(true)}
+                >
+                  <Scale size={16} />
+                  {l10n('Comparer Maintenant', 'Konpare Aster', 'Compare Now')}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Loading Skeleton */}
+        {loading && (
+          <div className="hospitals-grid" style={{ marginTop: '2rem' }}>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="hospital-card skeleton" style={{ height: 380 }} />
+            ))}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && filteredHospitals.length === 0 && (
+          <div className="empty-state">
+            <Shield size={48} className="empty-state__icon" />
+            <h3 className="empty-state__title">
+              {l10n('Aucun hôpital trouvé', 'Pena lopital trouve', 'No hospitals match your search')}
+            </h3>
+            <p className="empty-state__desc">
+              {l10n('Essayez d\'ajuster vos critères ou contactez directement notre équipe.', 'Esey sanz ou bann filtre ouswa koz ar nou lekip.', 'Try clearing your filters or speak directly with our Patient Navigator.')}
+            </p>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                setSearchInput('');
+                setSelectedHub('all');
+                setCurrentPage(1);
+              }}
+            >
+              {l10n('Réinitialiser les filtres', 'Reset tou filtre', 'Reset Filters')}
+            </button>
+          </div>
+        )}
+
+        {/* Hospitals Grid / List */}
+        {!loading && filteredHospitals.length > 0 && (
+          <>
+            <div className={`hospitals-grid ${viewMode === 'list' ? 'hospitals-grid--list' : ''}`} style={{ marginTop: '1.5rem' }}>
+              {paginatedHospitals.map(hospital => {
+                const isCompared = compareIds.includes(hospital.id);
                 return (
-                  <div key={hospital.id} className="hospital-list-card" id={`hospital-${hospital.id}`}>
-                    <div className="hospital-list-card__image">
+                  <article
+                    key={hospital.id}
+                    className={`hospital-card ${isCompared ? 'hospital-card--compared' : ''}`}
+                    id={`hospital-card-${hospital.id}`}
+                  >
+                    <div className="hospital-card__image">
                       <img
                         src={hospital.imageUrl}
                         alt={hospital.name}
                         loading="lazy"
-                        onError={(e) => { e.currentTarget.src = '/assets/banners/hospitals_banner.jpg'; }}
+                        decoding="async"
+                        width="400"
+                        height="220"
                       />
+                      <div className="hospital-card__overlay" />
+                      
+                      {/* Compare Checkbox */}
                       <button
+                        type="button"
+                        className={`hospital-card__compare-btn ${isCompared ? 'hospital-card__compare-btn--active' : ''}`}
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleCompare(hospital.id);
                         }}
-                        style={{
-                          position: 'absolute',
-                          top: 10,
-                          left: 10,
-                          background: isSelected ? 'var(--color-primary)' : 'rgba(0,0,0,0.65)',
-                          color: '#ffffff',
-                          border: 'none',
-                          borderRadius: '999px',
-                          padding: '0.3rem 0.65rem',
-                          fontSize: '0.75rem',
-                          fontWeight: 700,
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 4,
-                          cursor: 'pointer',
-                          backdropFilter: 'blur(4px)',
-                        }}
+                        title={isCompared ? 'Retirer du comparateur' : 'Ajouter au comparateur'}
                       >
-                        {isSelected ? <CheckSquare size={13} /> : <Square size={13} />}
-                        <span>{isSelected ? (isFr ? 'Sélectionné' : 'Selected') : (isFr ? 'Comparer' : 'Compare')}</span>
+                        {isCompared ? <CheckSquare size={16} /> : <Square size={16} />}
+                        <span>{isCompared ? 'Sélectionné' : 'Comparer'}</span>
                       </button>
-                    </div>
-                    <div className="hospital-list-card__body">
-                      <div className="hospital-list-card__badges">
+
+                      {/* Accreditations Badges */}
+                      <div className="hospital-card__badges">
                         {hospital.accreditations.map(acc => (
-                          <span key={acc} className="badge badge-accent">
-                            <Shield size={10} /> {acc}
-                          </span>
+                          <span key={acc} className="badge badge-accent">{acc}</span>
                         ))}
                       </div>
-                      <h2 className="hospital-list-card__name">{l(hospital, 'name')}</h2>
-                      <p className="hospital-list-card__location">
-                        <MapPin size={14} /> {l(hospital, 'city')}, {l(hospital, 'country')}
-                      </p>
-                      <div className="hospital-list-card__rating">
-                        <Star size={14} fill="#ffb400" color="#ffb400" />
-                        <strong>{hospital.rating}</strong>
-                        <span className="text-muted">({formatNumber(hospital.reviewCount)} {l10n('avis', 'reviou', 'reviews')})</span>
-                        <span className="hospital-list-card__separator">·</span>
-                        <span>{formatNumber(hospital.bedsCount)} {l10n('lits', 'lili', 'beds')}</span>
-                        <span className="hospital-list-card__separator">·</span>
-                        <span>{formatNumber(hospital.internationalPatientsPerYear)}+ {l10n('patients intl/an', 'pasian intl/an', 'intl. patients/yr')}</span>
+                    </div>
+
+                    <div className="hospital-card__body">
+                      <div className="hospital-card__top">
+                        <h3 className="hospital-card__name">{l(hospital, 'name')}</h3>
+                        <p className="hospital-card__location">
+                          <MapPin size={14} />
+                          {hospital.city}, {hospital.country}
+                        </p>
                       </div>
-                      <p className="hospital-list-card__desc">{truncateText(l(hospital, 'description'), 160)}</p>
+
+                      <div className="hospital-card__stats">
+                        <div className="hospital-card__rating">
+                          <Star size={14} fill="#ffb400" color="#ffb400" />
+                          <span>{hospital.rating}</span>
+                          <span className="text-muted">({formatNumber(hospital.reviewCount)})</span>
+                        </div>
+                        {hospital.bedsCount > 0 && (
+                          <span className="hospital-card__beds">
+                            🛏️ {formatNumber(hospital.bedsCount)} {l10n('lits', 'lili', 'beds')}
+                          </span>
+                        )}
+                        {hospital.foundedYear && (
+                          <span className="hospital-card__year" style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+                            Est. {hospital.foundedYear}
+                          </span>
+                        )}
+                      </div>
+
+                      <p className="hospital-card__desc">
+                        {truncateText(l(hospital, 'description'), 135)}
+                      </p>
+
+                      <div className="hospital-card__footer">
+                        <button
+                          className="btn btn-outline btn-sm"
+                          onClick={() => navigate(`/hospitals/${hospital.id}`)}
+                        >
+                          <span>{l10n('Voir le Profil Détaillé', 'Get Profil Konple', 'View Hospital Profile')}</span>
+                          <ArrowRight size={14} />
+                        </button>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => navigate(`/describe-need?hospitalId=${hospital.id}`)}
+                        >
+                          {l10n('Avis Médical', 'Lavi Medikal', 'Book Review')}
+                        </button>
+                      </div>
                     </div>
-                    <div className="hospital-list-card__actions">
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => navigate(`/hospitals/${hospital.id}`)}
-                        id={`view-hospital-${hospital.id}-btn`}
-                      >
-                        {l10n('Voir les détails', 'Get Detay', 'View Details')} <ArrowRight size={14} />
-                      </button>
-                      <button
-                        className="btn btn-outline btn-sm"
-                        onClick={() => navigate(`/describe-need?hospital=${hospital.id}`)}
-                        id={`inquire-hospital-${hospital.id}-btn`}
-                      >
-                        {l10n('Obtenir un avis', 'Gagn Lavi Medikal', 'Get Opinion')}
-                      </button>
-                    </div>
-                  </div>
+                  </article>
                 );
-              })
-          }
-        </div>
+              })}
+            </div>
 
-        {/* Pagination */}
-        <Pagination
-          currentPage={currentPage}
-          totalItems={sortedHospitals.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={(p) => {
-            setCurrentPage(p);
-            window.scrollTo({ top: 380, behavior: 'smooth' });
-          }}
-          onItemsPerPageChange={setItemsPerPage}
-          pageSizeOptions={[6, 9, 15]}
-          unitName={isFr ? 'hôpitaux' : isKr ? 'lopital' : 'hospitals'}
-        />
+            {/* Pagination Controls */}
+            <Pagination
+              currentPage={currentPage}
+              totalItems={filteredHospitals.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+            />
+          </>
+        )}
+
+        {/* Inline Comparison Drawer */}
+        {showCompareModal && (
+          <div ref={compareSectionRef} style={{ marginTop: '3rem' }}>
+            <HospitalCompareModal
+              hospitals={comparedHospitals}
+              onClose={() => setShowCompareModal(false)}
+              onRemove={(hospitalId) => setCompareIds(prev => prev.filter(id => id !== hospitalId))}
+            />
+          </div>
+        )}
       </div>
-
-      {/* Floating Bottom Compare Bar */}
-      {compareIds.length > 0 && (
-        <div style={{
-          position: 'fixed',
-          bottom: 24,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background: 'rgba(9, 13, 16, 0.94)',
-          border: '1.5px solid color-mix(in srgb, var(--color-accent) 40%, transparent)',
-          borderRadius: '999px',
-          padding: '0.6rem 1.25rem',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-          boxShadow: '0 12px 36px rgba(0,0,0,0.4)',
-          backdropFilter: 'blur(10px)',
-          zIndex: 1000,
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#ffffff', fontSize: '0.875rem', fontWeight: 700 }}>
-            <Scale size={18} color="var(--color-accent-light)" />
-            <span>{compareIds.length} {isFr ? 'hôpital(s) sélectionné(s)' : 'hospital(s) selected'}</span>
-          </div>
-
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <button
-              onClick={() => setShowCompareModal(true)}
-              className="btn btn-primary btn-sm"
-              style={{ fontWeight: 800, padding: '0.4rem 1.1rem', borderRadius: '999px' }}
-            >
-              {isFr ? 'Comparer Côte à Côte' : 'Compare Side-by-Side'}
-            </button>
-            <button
-              onClick={() => setCompareIds([])}
-              style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
-              title="Clear selection"
-            >
-              <X size={16} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Side-by-Side Compare Modal */}
-      {showCompareModal && (
-        <HospitalCompareModal
-          hospitals={comparedHospitals}
-          onClose={() => setShowCompareModal(false)}
-          onRemove={(id) => {
-            setCompareIds(prev => prev.filter(x => x !== id));
-            if (compareIds.length <= 1) {
-              setShowCompareModal(false);
-            }
-          }}
-        />
-      )}
     </main>
   );
 }
+export default HospitalsPage;

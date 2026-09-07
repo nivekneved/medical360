@@ -46,7 +46,6 @@ export function Footer() {
             <h4 className="footer__heading">{t('footer.quickLinks')}</h4>
             <ul className="footer__links">
               <li><Link to="/specialties">{t('nav.specialties')}</Link></li>
-              <li><Link to="/doctors">{t('nav.doctors')}</Link></li>
               <li><Link to="/hospitals">{t('nav.hospitals')}</Link></li>
               <li><Link to="/how-it-works">How It Works</Link></li>
               {settings.enableCostComparison && (
@@ -61,12 +60,12 @@ export function Footer() {
           <div className="footer__col">
             <h4 className="footer__heading">{t('footer.topSpecialties')}</h4>
             <ul className="footer__links">
-              <li><Link to="/specialties/sp-cardiology">{t('footer.specialtiesList.cardiology')}</Link></li>
-              <li><Link to="/specialties/sp-oncology">{t('footer.specialtiesList.oncology')}</Link></li>
-              <li><Link to="/specialties/sp-orthopedics">{t('footer.specialtiesList.orthopedics')}</Link></li>
-              <li><Link to="/specialties/sp-neurology">{t('footer.specialtiesList.neurology')}</Link></li>
-              <li><Link to="/specialties/sp-transplant">{t('footer.specialtiesList.transplant')}</Link></li>
-              <li><Link to="/specialties/sp-ivf">{t('footer.specialtiesList.ivf')}</Link></li>
+              <li><Link to="/specialties/sp-oncology">🎗️ {t('footer.specialtiesList.oncology')}</Link></li>
+              <li><Link to="/specialties/sp-cardiology">❤️ {t('footer.specialtiesList.cardiology')}</Link></li>
+              <li><Link to="/specialties/sp-orthopedics">🦴 {t('footer.specialtiesList.orthopedics')}</Link></li>
+              <li><Link to="/specialties/sp-neurology">🧠 {t('footer.specialtiesList.neurology')}</Link></li>
+              <li><Link to="/specialties/sp-transplant">🫀 {t('footer.specialtiesList.transplant')}</Link></li>
+              <li><Link to="/specialties/sp-haematology">🩸 Haematology & BMT</Link></li>
             </ul>
           </div>
 

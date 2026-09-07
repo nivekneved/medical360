@@ -62,7 +62,6 @@ export function Navbar() {
 
   const NAV_LINKS = [
     { to: '/specialties', label: isFr ? 'Spécialités' : isKr ? 'Spesialite' : 'Specialties' },
-    { to: '/doctors', label: isFr ? 'Médecins' : isKr ? 'Dokter' : 'Surgeons' },
     { to: '/hospitals', label: isFr ? 'Hôpitaux' : isKr ? 'Lopital' : 'Hospitals' },
     { to: '/how-it-works', label: isFr ? 'Comment Ça Marche' : isKr ? 'Kouma Li Mase' : 'How It Works' },
     { to: '/about', label: isFr ? 'Notre Histoire' : isKr ? 'Nou Zistwar' : 'Our Story' },
