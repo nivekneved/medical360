@@ -81,15 +81,7 @@ export function SpecialtiesPage() {
 
   return (
     <main className="specialties-page" style={{ paddingTop: 'var(--navbar-height)' }}>
-      <SEO 
-        title={l10n('Spécialités & Soins Médicaux', 'Spesialite & Swen Medikal', 'Medical Specialties & Treatments')}
-        description={l10n(
-          'Découvrez nos spécialités médicales et nos traitements adaptés pour vous et vos proches.',
-          'Dekouver nou bann spesialite medikal ek tretman adapte pou ou ek ou fami.',
-          'Explore our medical specialties and trusted treatments with clear guidance from caring doctors.'
-        )}
-        canonical="/specialties"
-      />
+      <SEO pageKey="specialties" />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/specialties_banner.jpg)' }}>
         <div className="container page-hero__inner">

@@ -6,6 +6,7 @@ import { useDoctors } from '../../hooks/useDoctors';
 import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
+import { getSpecialtySchema } from '../../core/services/schema.service';
 import { ProcedureInlineManager } from './components/ProcedureInlineManager';
 import './Specialties.css';
 
@@ -46,8 +47,21 @@ export function SpecialtyDetailPage() {
     <main className="specialty-detail-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO
         title={`${l(specialty, 'name')} - Procedures & Costs | Med360`}
-        description={l(specialty, 'shortDescription') || `Explore world-class ${specialty.name} treatments.`}
+        description={l(specialty, 'shortDescription') || `Explore world-class ${specialty.name} treatments and specialist hospitals.`}
         canonical={`/specialties/${specialty.id}`}
+        image={specialty.imageUrl}
+        schema={getSpecialtySchema({
+          id: specialty.id,
+          name: specialty.name,
+          shortDescription: l(specialty, 'shortDescription') || specialty.name,
+          imageUrl: specialty.imageUrl,
+          procedures: specialty.procedures,
+        })}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Specialties', path: '/specialties' },
+          { name: l(specialty, 'name'), path: `/specialties/${specialty.id}` },
+        ]}
       />
 
       {/* Hero */}

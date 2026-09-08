@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MessageCircle, Mail, ShieldAlert, Sparkles, HeartHandshake } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../../components/SEO/SEO';
 import { WHATSAPP_DISPLAY, CONTACT_EMAIL, SITE_NAME, PARENT_NGO_NAME, WHATSAPP_NUMBER } from '../../core/config/site';
 import { buildWhatsAppUrl } from '../../core/services/whatsapp.service';
 import './Maintenance.css';
@@ -51,10 +51,7 @@ export function MaintenancePage() {
 
   return (
     <div className="maintenance-wrapper">
-      <Helmet>
-        <title>{content.title} | {SITE_NAME}</title>
-        <meta name="description" content={content.subtitle} />
-      </Helmet>
+      <SEO pageKey="maintenance" title={content.title} description={content.subtitle} />
 
       <div className="maintenance-bg-glow" />
 

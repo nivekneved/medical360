@@ -151,15 +151,7 @@ export function ContactPage() {
 
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
-      <SEO 
-        title={l10n("Quand Votre Santé Ne Peut Pas Attendre · Contact Med360", "Kan Ou Lasante Pa Kapav Atann · Kontak Med360", "When Your Health Can’t Wait, Neither Should You · Contact Med360")}
-        description={l10n(
-          `Parlez à un Patient Navigator dès aujourd'hui. ${SITE_ADDRESS.locality}, Maurice. WhatsApp: ${WHATSAPP_DISPLAY}.`,
-          `Koz ar enn Patient Navigator zordi. ${SITE_ADDRESS.locality}, Moris. WhatsApp: ${WHATSAPP_DISPLAY}.`,
-          `Speak to a Patient Navigator today. ${SITE_ADDRESS.full}. WhatsApp: ${WHATSAPP_DISPLAY}.`
-        )}
-        canonical="/contact"
-      />
+      <SEO pageKey="contact" />
 
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>

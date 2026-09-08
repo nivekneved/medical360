@@ -90,12 +90,7 @@ export function HomePage() {
 
   return (
     <main className="home">
-      <SEO 
-        title={isFr ? "Des Soins de Classe Mondiale · Sans Attente | Med360" : isKr ? "Swen Lasante Kalite · San Bizin Atann | Med360" : "World-Class Healthcare. Without the Wait. With the Dignity You Deserve."} 
-        description={isFr ? "Med360 facilite l'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale jusqu'à vos soins à l'étranger et votre retour à domicile." : "Med360 coordinates world-class healthcare, specialist opinions, and patient travel from Mauritius to 15 accredited hospitals across India."} 
-        canonical="/"
-        schema={schema}
-      />
+      <SEO pageKey="home" schema={schema} />
       {/* ── Top Mission Marquee Ribbon (When position === 'above') ─────────── */}
       {marqueeEnabled && marqueePosition === 'above' && (
         <div className="mission-marquee-top">

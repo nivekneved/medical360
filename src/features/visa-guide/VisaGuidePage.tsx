@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Plane, CheckCircle2, ShieldCheck, PhoneCall } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../../components/SEO/SEO';
 import { useNavigate } from 'react-router-dom';
 import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
@@ -104,10 +104,7 @@ export function VisaGuidePage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', paddingBottom: '5rem' }}>
-      <Helmet>
-        <title>{isFr ? "Guide Visa Médical & Voyage pour Patients Mauriciens | Med360" : isKr ? "Gid Viza Medikal & Vwayaz pou Pasian Morisien | Med360" : "Medical Visa & Travel Guide for Mauritian Patients | Med360"}</title>
-        <meta name="description" content={isFr ? "Guide complet des démarches de visa médical et d'organisation de voyage pour les patients voyageant de Maurice vers l'Inde." : "Complete step-by-step medical visa and travel coordination guide for patients travelling from Mauritius to India, Thailand, Singapore, and Malaysia."} />
-      </Helmet>
+      <SEO pageKey="visaGuide" />
 
       {/* Hero Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/visaguide_banner.jpg)' }}>

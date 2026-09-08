@@ -155,15 +155,7 @@ export function DescribeNeedPage() {
 
   return (
     <main className="describe-need-page" style={{ paddingTop: 'var(--navbar-height)' }}>
-      <SEO 
-        title={l10n('Nous Sommes à Votre Écoute', 'Nou La Pou Ekout Ou', 'We Are Here to Help You')}
-        description={l10n(
-          'Partagez votre situation médicale en toute confidentialité pour recevoir un avis médical gratuit et des conseils bienveillants.',
-          'Partaz ou sitiasion medikal dan konfidansialite net pou gagn enn lavi dokter gratis.',
-          'Share your health situation in complete confidentiality to receive a free, gentle medical review from caring doctors.'
-        )}
-        canonical="/describe-need"
-      />
+      <SEO pageKey="describeNeed" />
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/consultation-support.jpg)', minHeight: 280, padding: '4rem 0 3rem' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
