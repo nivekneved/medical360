@@ -1,6 +1,10 @@
 export const SITE_URL: string = ((import.meta.env.VITE_SITE_URL as string | undefined) || 'https://www.med360.mu').replace(/\/+$/, '');
 
+export const IS_MAINTENANCE_MODE: boolean =
+  import.meta.env.VITE_MAINTENANCE_MODE === 'false' ? false : true;
+
 export const SITE_NAME = 'Med360';
+
 export const LEGAL_NAME = 'Med360 Ltd';
 export const PARENT_NGO_NAME = 'Enn Rev Enn Sourir';
 

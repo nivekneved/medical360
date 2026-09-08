@@ -19,6 +19,8 @@ import { HomePage } from './features/home/HomePage';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { CookieConsentBanner } from './components/common/CookieConsentBanner';
 import { PageLoader } from './components/common/Loader';
+import { IS_MAINTENANCE_MODE } from './core/config/site';
+import { MaintenancePage } from './features/maintenance/MaintenancePage';
 
 
 /**
@@ -88,6 +90,10 @@ import './styles/globals.css';
 
 // ─── Public Layout Wrapper ────────────────────────────────────────────────────
 function PublicLayout() {
+  if (IS_MAINTENANCE_MODE) {
+    return <MaintenancePage />;
+  }
+
   return (
     <>
       <Navbar />
