@@ -22,6 +22,7 @@ import { ConfirmDialog } from '../../../components/common/ConfirmDialog';
 import { Honeypot } from '../../../components/Honeypot/Honeypot';
 import { isHoneypotClean, detectSqlInjection, deepSanitize } from '../../../core/services/validation.service';
 import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
+import { auditService } from '../../../core/services/audit.service';
 import '../AdminToolbar.css';
 
 
@@ -172,7 +173,15 @@ export function AdminEntityManager<T extends { id: string }>({
 
   const handleExecuteDelete = async () => {
     setConfirmDeleteOpen(false);
+    const count = selectedIds.size;
     await onDelete(Array.from(selectedIds));
+    auditService.log({
+      actorName: 'Admin Session',
+      actorRole: 'admin',
+      action: 'delete',
+      entityType: entityName.toLowerCase().replace(/\s+/g, '_') as any,
+      details: `Deleted ${count} ${entityName}(s) from institutional records`,
+    });
     handleClearSelection();
   };
 
@@ -233,6 +242,15 @@ export function AdminEntityManager<T extends { id: string }>({
     try {
       const cleanItem = deepSanitize(editingItem);
       await onSave(cleanItem, isNewItem);
+      auditService.log({
+        actorName: 'Admin Session',
+        actorRole: 'admin',
+        action: isNewItem ? 'create' : 'update',
+        entityType: entityName.toLowerCase().replace(/\s+/g, '_') as any,
+        entityId: cleanItem.id,
+        entityName: (cleanItem as any).name || (cleanItem as any).title || cleanItem.id,
+        details: `${isNewItem ? 'Created new' : 'Updated'} ${entityName} record (${(cleanItem as any).name || cleanItem.id})`,
+      });
       setSavedSuccess(true);
       setTimeout(() => {
         setSavedSuccess(false);

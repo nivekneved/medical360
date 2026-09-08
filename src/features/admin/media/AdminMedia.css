@@ -1,0 +1,219 @@
+/* ─── Admin Media & Asset Gallery Styles ─── */
+
+.admin-media-container {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.admin-media-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-media-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-media-stat-card {
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-media-stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(14, 165, 233, 0.12);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-media-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.admin-media-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 0.5rem 0.875rem;
+  color: #fff;
+  min-width: 260px;
+}
+
+.admin-media-search input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  font-size: 0.875rem;
+  width: 100%;
+}
+
+.admin-media-category-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.admin-media-pill {
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-media-pill:hover,
+.admin-media-pill--active {
+  background: #0ea5e9;
+  border-color: #0ea5e9;
+  color: #fff;
+}
+
+.admin-media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.admin-media-card {
+  background: var(--bg-surface, #1e293b);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-media-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.admin-media-thumbnail-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: #0f172a;
+  overflow: hidden;
+}
+
+.admin-media-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.admin-media-card:hover .admin-media-thumbnail {
+  transform: scale(1.04);
+}
+
+.admin-media-category-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(4px);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.admin-media-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+}
+
+.admin-media-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-media-meta {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: space-between;
+}
+
+.admin-media-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-media-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+
+.admin-media-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.admin-media-btn--copied {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+  color: #34d399;
+}

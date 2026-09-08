@@ -82,6 +82,8 @@ const AdminDoctorsPage      = lazyWithRetry(() => import('./features/admin/docto
 const AdminCaseStudiesPage  = lazyWithRetry(() => import('./features/admin/case-studies/AdminCaseStudiesPage'), m => m.AdminCaseStudiesPage);
 const AdminSettingsPage     = lazyWithRetry(() => import('./features/admin/settings/AdminSettingsPage'), m => m.AdminSettingsPage);
 const AdminSEOPage          = lazyWithRetry(() => import('./features/admin/seo/AdminSEOPage'), m => m.AdminSEOPage);
+const AdminMediaPage        = lazyWithRetry(() => import('./features/admin/media/AdminMediaPage'), m => m.AdminMediaPage);
+const AdminAuditPage        = lazyWithRetry(() => import('./features/admin/audit/AdminAuditPage'), m => m.AdminAuditPage);
 const AdminAnalyticsPage    = lazyWithRetry(() => import('./features/admin/analytics/AdminAnalyticsPage'), m => m.AdminAnalyticsPage);
 const AdminPageEditor       = lazyWithRetry(() => import('./features/admin/pages/AdminPageEditor'), m => m.AdminPageEditor);
 const AdminEmailTemplatesPage = lazyWithRetry(() => import('./features/admin/email-templates/AdminEmailTemplatesPage'), m => m.AdminEmailTemplatesPage);
@@ -241,6 +243,8 @@ export default function App() {
                       <Route path="dashboard"    element={<AdminDashboardPage />} />
                       <Route path="analytics"    element={<AdminAnalyticsPage />} />
                       <Route path="seo"          element={<AdminSEOPage />} />
+                      <Route path="media"        element={<AdminMediaPage />} />
+                      <Route path="audit-logs"   element={<AdminAuditPage />} />
                       <Route path="inquiries"    element={<AdminInquiriesPage />} />
                       <Route path="hospitals"    element={<AdminHospitalsPage />} />
                       <Route path="specialties"  element={<AdminSpecialtiesPage />} />
