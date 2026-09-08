@@ -31,11 +31,7 @@ export function NotFoundPage() {
       justifyContent: 'center',
       background: 'var(--color-bg)',
     }}>
-      <SEO
-        title={isFr ? 'Page Non Trouvée (404)' : isKr ? 'Paz Pa Trouve (404)' : 'Page Not Found (404)'}
-        description="The medical page or resource you are looking for may have moved or been updated."
-        noIndex={true}
-      />
+      <SEO pageKey="notFound" />
 
       <div className="container" style={{ maxWidth: 680, textAlign: 'center' }}>
         {/* Error Code Pill */}

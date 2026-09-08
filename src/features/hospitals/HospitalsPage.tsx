@@ -106,11 +106,7 @@ export function HospitalsPage() {
 
   return (
     <main className="hospitals-page" style={{ paddingTop: 'var(--navbar-height)' }}>
-      <SEO 
-        title={isFr ? "Hôpitaux Partenaires de Référence en Inde | Med360" : isKr ? "Lopital Partener de Referans dan L'inde | Med360" : "Premier Partner Hospitals in India | Med360"}
-        description={isFr ? "Découvrez nos 15 hôpitaux accrédités JCI & NABH partenaires en Inde (Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR)." : "Explore 15 premier JCI & NABH accredited hospitals across India (Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR) partnered with Med360."}
-        canonical="/hospitals"
-      />
+      <SEO pageKey="hospitals" />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/hospitals_banner.jpg)' }}>
         <div className="container page-hero__inner">

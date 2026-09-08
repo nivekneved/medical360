@@ -7,6 +7,7 @@ import { useL10n } from '../../hooks/useL10n';
 import { formatNumber } from '../../core/services/format.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
+import { getHospitalSchema } from '../../core/services/schema.service';
 import './Hospitals.css';
 
 export function HospitalDetailPage() {
@@ -47,8 +48,25 @@ export function HospitalDetailPage() {
     <main className="hospital-detail-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO
         title={`${hospital.name} - ${hospital.city}, ${hospital.country} | Med360`}
-        description={l(hospital, 'overview') || `Explore ${hospital.name} accredited healthcare services.`}
+        description={l(hospital, 'overview') || `Explore ${hospital.name} accredited healthcare services in ${hospital.city}, ${hospital.country}.`}
         canonical={`/hospitals/${hospital.id}`}
+        image={hospital.imageUrl}
+        schema={getHospitalSchema({
+          id: hospital.id,
+          name: hospital.name,
+          city: hospital.city,
+          country: hospital.country,
+          accreditations: hospital.accreditations || [],
+          imageUrl: hospital.imageUrl,
+          description: l(hospital, 'overview') || hospital.name,
+          bedsCount: hospital.bedsCount,
+          foundedYear: hospital.foundedYear,
+        })}
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Hospitals', path: '/hospitals' },
+          { name: hospital.name, path: `/hospitals/${hospital.id}` },
+        ]}
       />
 
       {/* Hero Banner */}

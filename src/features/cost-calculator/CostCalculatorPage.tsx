@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Calculator, ArrowRight, CheckCircle2, ShieldCheck, Clock, Sparkles, HeartPulse, EyeOff, Lock, Settings, HelpCircle } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
+import { SEO } from '../../components/SEO/SEO';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { useL10n } from '../../hooks/useL10n';
 import { useCMS } from '../../hooks/useCMS';
@@ -89,9 +89,7 @@ export function CostCalculatorPage() {
   if (!settings.enableCostComparison && !isAuthenticated) {
     return (
       <div style={{ minHeight: '80vh', background: 'var(--color-bg)', paddingTop: 'calc(var(--navbar-height) + 3rem)', paddingBottom: '5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Helmet>
-          <title>Medical Treatment Assessment | Med360</title>
-        </Helmet>
+        <SEO pageKey="costCalculator" />
         <div className="container" style={{ maxWidth: 640, textAlign: 'center' }}>
           <div style={{
             background: 'var(--color-surface)',
@@ -138,10 +136,7 @@ export function CostCalculatorPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)', paddingBottom: '5rem' }}>
-      <Helmet>
-        <title>{isFr ? 'Calculateur & Comparateur de Coûts Médicaux | Med360' : isKr ? 'Kalkilatris Pri Tretman Medikal | Med360' : 'Medical Treatment Cost Calculator & Comparison | Med360'}</title>
-        <meta name="description" content={isFr ? "Calculez et comparez les coûts des soins médicaux internationaux en Inde avec une tarification claire et transparente." : "Calculate and compare international medical treatment costs for Mauritian patients across India, Thailand, Singapore, and Europe. Save up to 70% with transparent pricing."} />
-      </Helmet>
+      <SEO pageKey="costCalculator" />
 
       {/* Admin Preview Mode Banner (When Cost Calculator is hidden from public) */}
       {!settings.enableCostComparison && isAuthenticated && (

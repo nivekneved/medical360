@@ -8,12 +8,8 @@ export function MedicalDisclaimerPage() {
 
 
   return (
-    <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
-      <SEO
-        title={isFr ? "Avertissement Médical & Rôle d'Intermédiation | Med360" : isKr ? "Avertisman Medikal | Med360" : "Medical Disclaimer | Med360"}
-        description={isFr ? "Avertissement médical important pour Med360 — facilitateur de parcours de soins, et non établissement ou praticien de santé." : "Important medical disclaimer for Med360 — a healthcare facilitator, not a medical provider. Content is informational only and never a substitute for professional medical advice."}
-        canonical="/medical-disclaimer"
-      />
+    <main style={{ paddingTop: 'var(--navbar-height)' }}>
+      <SEO pageKey="medicalDisclaimer" />
 
       {/* Hero Header */}
       <section style={{

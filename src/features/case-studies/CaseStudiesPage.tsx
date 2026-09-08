@@ -94,15 +94,7 @@ export function CaseStudiesPage() {
 
   return (
     <main className="case-studies-page" style={{ paddingTop: 'var(--navbar-height)' }}>
-      <SEO 
-        title={l10n('Histoires de Guérison & Espoir', 'Zistwar Gerizon & Lespwar', 'Stories of Healing & Hope')}
-        description={l10n(
-          'Découvrez les témoignages émouvants de patients et de familles que nous avons eu le privilège d\'accompagner vers la guérison.',
-          'Dekouver bann vre temwagnaz bann fami ki finn gagn gerizon ar nou led.',
-          'Discover moving stories of patients and families guided with care and compassion to complete recovery.'
-        )}
-        canonical="/case-studies"
-      />
+      <SEO pageKey="caseStudies" />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/casestudies_banner.jpg)' }}>
         <div className="container page-hero__inner">

@@ -8,12 +8,8 @@ export function TermsPage() {
   const { isFr, isKr, l10n } = useL10n();
 
   return (
-    <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
-      <SEO
-        title={isFr ? `Conditions Générales & Droits du Patient | ${SITE_NAME}` : isKr ? `Kondision Zeneral & Drwa Pasian | ${SITE_NAME}` : `Terms of Service & Healthcare Disclaimer | ${SITE_NAME}`}
-        description={isFr ? `Consultez les conditions générales, engagements et obligations d'intermédiation de ${SITE_NAME}.` : `Review the terms, conditions, and facilitator obligations of ${SITE_NAME}.`}
-        canonical="/terms"
-      />
+    <main style={{ paddingTop: 'var(--navbar-height)' }}>
+      <SEO pageKey="terms" />
       
       {/* Hero Header */}
       <section style={{

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useL10n } from '../../hooks/useL10n';
 import { SEO } from '../../components/SEO/SEO';
+import { getFaqPageSchema } from '../../core/services/schema.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import './HowItWorks.css';
 
@@ -212,13 +213,16 @@ export function HowItWorksPage() {
   const tLang = (obj: any, key: string) => l(obj, key);
 
 
+  const faqSchema = getFaqPageSchema(
+    FAQS.map(faq => ({
+      question: isFr ? faq.q_fr : isKr ? faq.q_kr : faq.q,
+      answer: isFr ? faq.a_fr : isKr ? faq.a_kr : faq.a,
+    }))
+  );
+
   return (
     <div className="how-it-works-page">
-      <SEO
-        title={isFr ? "Comment Ça Marche — Votre Parcours de Soins en 6 Étapes" : isKr ? "Kouma Li Mase — Ou Vwayaz Medikal an 6 Letap" : "How It Works — Your Healthcare Journey, Made Simple"}
-        description={isFr ? "Med360 coordonne chaque étape de votre parcours de soins, de la première demande médicale et téléconsultation avec le spécialiste jusqu'aux soins à l'étranger et au retour à domicile." : "Med360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home."}
-        canonical="/how-it-works"
-      />
+      <SEO pageKey="howItWorks" schema={faqSchema} />
 
       {/* ── Hero Banner ──────────────────────────────────────────────────────── */}
       <section className="hiw-hero">

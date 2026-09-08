@@ -8,12 +8,8 @@ export function CookiePolicyPage() {
 
 
   return (
-    <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
-      <SEO
-        title={isFr ? `Politique de Cookies & Confidentialité | ${SITE_NAME}` : isKr ? `Politik Cookies | ${SITE_NAME}` : `Cookie Policy | ${SITE_NAME}`}
-        description={isFr ? `Découvrez comment ${SITE_NAME} utilise les cookies et le stockage local pour sécuriser votre session sans traceurs publicitaires.` : `How ${SITE_NAME} uses cookies and local browser storage to remember your preferences, secure your session and keep the site fast — no advertising trackers.`}
-        canonical="/cookies"
-      />
+    <main style={{ paddingTop: 'var(--navbar-height)' }}>
+      <SEO pageKey="cookies" />
 
       {/* Hero Header */}
       <section style={{

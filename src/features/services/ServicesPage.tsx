@@ -137,11 +137,7 @@ export function ServicesPage() {
 
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
-      <SEO 
-        title={l10n('Nos Services', 'Nou Bann Servis', 'Our Services')}
-        description={l10n('Découvrez nos services de conciergerie médicale Med360. Détenu par l\'ONG Enn Rev Enn Sourir, 100 % des bénéfices financent les soins des démunis.', 'Dekouver nou bann servis Med360. Apartenir a l\'ONG Enn Rev Enn Sourir, 100% profi al dan swen.', 'Discover Med360 comprehensive medical concierge services. Owned by NGO Enn Rev Enn Sourir, 100% of profits fund healthcare for the needy.')}
-        canonical="/services"
-      />
+      <SEO pageKey="services" />
       {/* Header Banner */}
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/services_banner.jpg)' }}>
         <div className="container page-hero__inner">

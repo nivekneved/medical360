@@ -8,12 +8,8 @@ export function PrivacyPolicyPage() {
 
 
   return (
-    <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
-      <SEO
-        title={isFr ? `Politique de Confidentialité & Protection des Données | ${SITE_NAME}` : isKr ? `Politik Konfidansialite & Donn Medikal | ${SITE_NAME}` : `Privacy Policy & Medical Data Protection | ${SITE_NAME}`}
-        description={isFr ? `Découvrez comment ${SITE_NAME} protège vos données personnelles et médicales conformément à la loi mauricienne Data Protection Act 2017 et au RGPD.` : `Learn how ${SITE_NAME} protects your personal and medical information under the Mauritius Data Protection Act 2017 and GDPR standards.`}
-        canonical="/privacy"
-      />
+    <main style={{ paddingTop: 'var(--navbar-height)' }}>
+      <SEO pageKey="privacy" />
       
       {/* Hero Header */}
       <section style={{

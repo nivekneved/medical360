@@ -20,6 +20,7 @@ export function AdminLockoutNoticePage() {
         title="403 Access Restricted — Security Notice"
         description="Administrative access to this endpoint is restricted."
         canonical="/admin"
+        noIndex={true}
       />
 
       {/* Ambient security warning glow */}
