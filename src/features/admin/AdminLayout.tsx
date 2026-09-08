@@ -39,6 +39,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { useDataConfig } from '../../providers/DataProvider';
+import { isSupabaseConfigured } from '../../core/supabase/client';
 import './AdminLayout.css';
 
 const DATA_NAV = [
@@ -488,6 +489,28 @@ export function AdminLayout() {
           </div>
 
           <div className="admin-topbar__right">
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '3px 10px',
+              borderRadius: '9999px',
+              background: isSupabaseConfigured ? 'rgba(16, 185, 129, 0.12)' : 'rgba(245, 158, 11, 0.12)',
+              border: `1px solid ${isSupabaseConfigured ? 'rgba(16, 185, 129, 0.3)' : 'rgba(245, 158, 11, 0.3)'}`,
+              color: isSupabaseConfigured ? '#34d399' : '#f59e0b',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+            }}>
+              <span style={{
+                width: 6,
+                height: 6,
+                borderRadius: '50%',
+                background: isSupabaseConfigured ? '#10b981' : '#f59e0b',
+                boxShadow: `0 0 6px ${isSupabaseConfigured ? '#10b981' : '#f59e0b'}`,
+              }} />
+              <span>{isSupabaseConfigured ? 'Supabase Live' : 'Mock Engine'}</span>
+            </div>
+
             <Link
               to="/admin/settings"
               className="admin-topbar__action-btn"
