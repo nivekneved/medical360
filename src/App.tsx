@@ -88,14 +88,79 @@ const AdminMarqueePage        = lazyWithRetry(() => import('./features/admin/mar
 
 import './styles/globals.css';
 
+function isClientPreviewActive(): boolean {
+  if (typeof window === 'undefined') return false;
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('preview') === 'med360' || params.get('preview') === 'true' || params.get('bypass') === 'true') {
+      localStorage.setItem('med360_client_preview', 'true');
+      return true;
+    }
+    return localStorage.getItem('med360_client_preview') === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function ClientPreviewActivator() {
+  try {
+    localStorage.setItem('med360_client_preview', 'true');
+  } catch {}
+  return <Navigate to="/" replace />;
+}
+
 // ─── Public Layout Wrapper ────────────────────────────────────────────────────
 function PublicLayout() {
-  if (IS_MAINTENANCE_MODE) {
+  const isPreview = isClientPreviewActive();
+
+  if (IS_MAINTENANCE_MODE && !isPreview) {
     return <MaintenancePage />;
   }
 
   return (
     <>
+      {IS_MAINTENANCE_MODE && isPreview && (
+        <div style={{
+          position: 'fixed',
+          bottom: '16px',
+          left: '16px',
+          zIndex: 99999,
+          background: 'rgba(15, 23, 42, 0.92)',
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(16, 185, 129, 0.4)',
+          color: '#34d399',
+          padding: '8px 14px',
+          borderRadius: '9999px',
+          fontSize: '12px',
+          fontWeight: 600,
+          boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }}>
+          <span>👁️ Client Preview Mode</span>
+          <button
+            type="button"
+            onClick={() => {
+              try {
+                localStorage.removeItem('med360_client_preview');
+              } catch {}
+              window.location.href = '/';
+            }}
+            style={{
+              background: 'rgba(255,255,255,0.1)',
+              border: 'none',
+              color: '#fff',
+              borderRadius: '9999px',
+              padding: '2px 8px',
+              cursor: 'pointer',
+              fontSize: '11px'
+            }}
+          >
+            Exit
+          </button>
+        </div>
+      )}
       <Navbar />
       <Suspense fallback={<PageLoader />}>
         <Outlet />
@@ -151,6 +216,9 @@ export default function App() {
                       <Route path="/cookies"          element={<CookiePolicyPage />} />
                       <Route path="/medical-disclaimer" element={<MedicalDisclaimerPage />} />
                     </Route>
+
+                    {/* Client Preview Activation Gateway */}
+                    <Route path="/preview" element={<ClientPreviewActivator />} />
 
                     {/* Secret Admin Login Gateway */}
                     <Route path="/deven" element={

@@ -95,6 +95,17 @@ export function MaintenancePage() {
           src="/Web Med360 ogo-05.png"
           alt={SITE_NAME}
           className="maintenance-logo"
+          onClick={() => {
+            const clicks = Number(sessionStorage.getItem('maint_logo_clicks') || '0') + 1;
+            sessionStorage.setItem('maint_logo_clicks', String(clicks));
+            if (clicks >= 5) {
+              sessionStorage.removeItem('maint_logo_clicks');
+              try {
+                localStorage.setItem('med360_client_preview', 'true');
+              } catch {}
+              window.location.reload();
+            }
+          }}
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).style.display = 'none';
           }}
