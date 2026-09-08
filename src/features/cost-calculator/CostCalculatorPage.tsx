@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Calculator, ArrowRight, CheckCircle2, ShieldCheck, Clock, Sparkles, HeartPulse, EyeOff, Lock, Settings, HelpCircle } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useSpecialties } from '../../hooks/useSpecialties';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { useCMS } from '../../hooks/useCMS';
 import { usePlatformSettings } from '../../core/services/settings.service';
 import { useAuth } from '../../providers/AuthProvider';
@@ -31,22 +31,20 @@ const COUNTRY_PROFILES: CountryCostProfile[] = [
 
 export function CostCalculatorPage() {
   const { specialties } = useSpecialties();
-  const { i18n } = useTranslation();
+  const { lang, isFr, isKr, l10n, l } = useL10n();
   const { data: cms } = useCMS('cost-calculator');
   const { settings } = usePlatformSettings();
   const { isAuthenticated } = useAuth();
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
-  const langKey = (isFr || isKr) ? (i18n.language as 'fr' | 'kr') : 'en';
-  const l10n = (fr: string, kr: string, en: string) => isFr ? fr : isKr ? kr : en;
+  const langKey = (isFr || isKr) ? (lang as 'fr' | 'kr') : 'en';
   const navigate = useNavigate();
 
   const MUR_RATE = settings.murExchangeRate || DEFAULT_MUR_RATE;
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
-    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+    return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
+
 
   const [selectedSpecialtyId, setSelectedSpecialtyId] = useState<string>('sp-cardiology');
   const [selectedProcedureId, setSelectedProcedureId] = useState<string>('proc-c1');

@@ -48,10 +48,27 @@ export const SITE_METRICS = {
 
 export const DEFAULT_MUR_RATE = 46.5;
 
+export interface MedicalHub {
+  id: string;
+  label: string;
+  label_fr: string;
+  label_kr: string;
+}
+
+export const INDIAN_HUBS: MedicalHub[] = [
+  { id: 'all', label: 'All Cities & Hubs', label_fr: 'Toutes les Villes', label_kr: 'Tou Lavil' },
+  { id: 'Chennai', label: 'Chennai', label_fr: 'Chennai', label_kr: 'Chennai' },
+  { id: 'Bengaluru', label: 'Bengaluru', label_fr: 'Bengaluru', label_kr: 'Bengaluru' },
+  { id: 'Hyderabad', label: 'Hyderabad & Secunderabad', label_fr: 'Hyderabad & Secunderabad', label_kr: 'Hyderabad' },
+  { id: 'Mumbai', label: 'Mumbai', label_fr: 'Mumbai', label_kr: 'Mumbai' },
+  { id: 'Delhi', label: 'New Delhi & Gurugram (NCR)', label_fr: 'New Delhi & Gurugram (NCR)', label_kr: 'New Delhi & Gurugram' },
+];
+
 export const LEGAL_CONSTANTS = {
   lastUpdatedEn: 'September 2026',
   lastUpdatedFr: 'Septembre 2026',
   complianceEn: 'Mauritius Data Protection Act 2017 & GDPR',
   complianceFr: 'Data Protection Act 2017 (Maurice) & RGPD',
 };
+
 

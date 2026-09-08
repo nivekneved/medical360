@@ -1,6 +1,6 @@
 import { ArrowRight, MessageCircle, Shield, Users, Globe2, Heart, Star, Sparkles, Trophy, Award, BookmarkCheck, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
@@ -9,17 +9,15 @@ import { HIGHLIGHTS, TIMELINE, FOOTNOTES, AWARDS } from './aboutContent';
 
 export function AboutPage() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t, lang, l10n, l } = useL10n();
   const { data: cms } = useCMS('about');
   const { caseStudies } = useCaseStudies();
 
-  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
-  const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
-
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
-    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+    return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
+
 
   return (
     <main style={{ paddingTop: 'var(--navbar-height)' }}>

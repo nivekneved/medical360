@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { Plane, CheckCircle2, ShieldCheck, PhoneCall } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+
 
 interface VisaDestination {
   id: string;
@@ -85,12 +86,11 @@ const DESTINATIONS: VisaDestination[] = [
 ];
 
 export function VisaGuidePage() {
-  const { i18n } = useTranslation();
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
+  const { isFr, isKr, l10n } = useL10n();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState<string>('india');
+
   const [checkedItems, setCheckedItems] = useState<Record<string, boolean>>({
     'check-passport': true,
     'check-records': true,

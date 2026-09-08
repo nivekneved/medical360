@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Star, Users, Award, Globe2, HeartPulse, ShieldCheck, MessageCircle, FileText, Stethoscope, Plane, Building2, UserCheck } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { useCMS } from '../../hooks/useCMS';
 import { useFeaturedSpecialties } from '../../hooks/useSpecialties';
 import { useFeaturedHospitals } from '../../hooks/useHospitals';
@@ -15,7 +15,7 @@ import './Home.css';
 
 export function HomePage() {
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
+  const { lang, isFr, isKr, l10n, l } = useL10n();
   const { specialties, loading: specLoading } = useFeaturedSpecialties();
   const { hospitals, loading: hospLoading }   = useFeaturedHospitals();
   const { caseStudies, loading: csLoading }   = useFeaturedCaseStudies();
@@ -25,17 +25,12 @@ export function HomePage() {
   const marqueeEnabled = marqueeCms?.content?.enabled !== 'false' && marqueeCms?.content?.enabled !== false;
   const marqueePosition = marqueeCms?.content?.position || 'above';
 
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
-
-  // Determine localized field
-  const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
-  
   // Safe helper for CMS content
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
-    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+    return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
+
 
   const STATS = [
     { icon: Users,      value: SITE_METRICS.patientsAssistedEn,    label: isFr ? `${SITE_METRICS.patientsAssistedFr} Patients Accompagnés` : isKr ? `${SITE_METRICS.patientsAssistedEn} Pasian Asiste` : `${SITE_METRICS.patientsAssistedEn} Patients Assisted` },

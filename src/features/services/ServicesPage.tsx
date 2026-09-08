@@ -91,11 +91,12 @@ const SERVICES = [
   },
 ];
 
+import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 
 export function ServicesPage() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t, lang, isFr, isKr, l10n, l } = useL10n();
   const { data: cms } = useCMS('services');
 
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -104,15 +105,11 @@ export function ServicesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
 
-  const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
-  const l10n = (fr: string, cre: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'cre' || i18n.language === 'kr' ? cre : en;
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr' || i18n.language === 'cre';
-
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
-    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+    return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
+
 
   const sortOptions: SortOption[] = [
     { value: 'recommended', label: isFr ? 'Recommandés' : isKr ? 'Rekommande' : 'Recommended', icon: '⚡' },

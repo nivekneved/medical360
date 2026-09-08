@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, MessageCircle, Clock, ArrowRight, CheckCircle2, AlertCircle, Sparkles, Building2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { 
   WHATSAPP_DISPLAY, 
@@ -27,9 +27,9 @@ import { sendContactEmail } from '../../core/services/email.service';
 
 export function ContactPage() {
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
+  const { i18n, l10n, l } = useL10n();
   const { data: cms } = useCMS('contact');
-  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
+
 
   // Form State
   const [name, setName] = useState('');

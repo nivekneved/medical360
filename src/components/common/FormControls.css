@@ -1,0 +1,143 @@
+/* ─── Med360 Standardized Form Controls ─────────────────────────────────────── */
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.form-field__label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-field__label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text, #0f172a);
+}
+
+.form-field__required {
+  color: var(--color-danger, #dc2626);
+  margin-left: 0.25rem;
+}
+
+.form-field__hint {
+  font-size: 0.78rem;
+  color: var(--color-text-muted, #94a3b8);
+}
+
+.form-field__error {
+  font-size: 0.8rem;
+  color: var(--color-danger, #dc2626);
+  margin-top: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Base input element */
+.input-base {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: var(--color-text, #0f172a);
+  background: var(--color-surface, #ffffff);
+  border: 1.5px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 0.75rem);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+[data-theme="Med-dark"] .input-base,
+[data-theme="dark"] .input-base {
+  background: var(--color-dark-3, #1a222e);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.input-base:focus {
+  border-color: var(--color-primary, #065f46);
+  box-shadow: 0 0 0 3px rgba(6, 95, 70, 0.15);
+}
+
+.input-base--error {
+  border-color: var(--color-danger, #dc2626) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15) !important;
+}
+
+.input-base:disabled {
+  background: var(--color-surface-2, #f1f5f9);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Button variations */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: var(--radius-md, 0.75rem);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--color-primary, #065f46);
+  color: #ffffff;
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-light, #047857);
+}
+
+.btn-secondary {
+  background: var(--color-surface-2, #f1f5f9);
+  color: var(--color-text, #0f172a);
+  border-color: var(--color-border, #e2e8f0);
+}
+[data-theme="Med-dark"] .btn-secondary,
+[data-theme="dark"] .btn-secondary {
+  background: var(--color-dark-3, #1a222e);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-surface-3, #e2e8f0);
+}
+
+.btn-danger {
+  background: var(--color-danger, #dc2626);
+  color: #ffffff;
+}
+.btn-danger:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.btn-warning {
+  background: var(--color-warning, #d97706);
+  color: #ffffff;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-border, #e2e8f0);
+  color: var(--color-text, #0f172a);
+}
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--color-primary, #065f46);
+  color: var(--color-primary, #065f46);
+}

@@ -1,12 +1,11 @@
 import { AlertTriangle, Stethoscope, Siren, TrendingDown, Building2, Link2, MessageCircleQuestion, LifeBuoy } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { SEO } from '../../components/SEO/SEO';
 import { LEGAL_NAME, CONTACT_EMAIL, WHATSAPP_DISPLAY, SITE_ADDRESS } from '../../core/config/site';
 
 export function MedicalDisclaimerPage() {
-  const { i18n } = useTranslation();
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
+  const { isFr, isKr, l10n } = useL10n();
+
 
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>

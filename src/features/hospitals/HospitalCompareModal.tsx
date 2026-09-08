@@ -1,7 +1,7 @@
 import { X, Star, Building2, Globe, Award, Users, Bed, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import type { Hospital } from '../../core/types';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 
 interface HospitalCompareModalProps {
   hospitals: Hospital[];
@@ -11,9 +11,8 @@ interface HospitalCompareModalProps {
 
 export function HospitalCompareModal({ hospitals, onClose, onRemove }: HospitalCompareModalProps) {
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
+  const { isFr, isKr } = useL10n();
+
 
   if (hospitals.length === 0) return null;
 
