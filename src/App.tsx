@@ -84,6 +84,9 @@ const AdminSettingsPage     = lazyWithRetry(() => import('./features/admin/setti
 const AdminSEOPage          = lazyWithRetry(() => import('./features/admin/seo/AdminSEOPage'), m => m.AdminSEOPage);
 const AdminMediaPage        = lazyWithRetry(() => import('./features/admin/media/AdminMediaPage'), m => m.AdminMediaPage);
 const AdminAuditPage        = lazyWithRetry(() => import('./features/admin/audit/AdminAuditPage'), m => m.AdminAuditPage);
+const AdminPricingPage      = lazyWithRetry(() => import('./features/admin/pricing/AdminPricingPage'), m => m.AdminPricingPage);
+const AdminConciergePage    = lazyWithRetry(() => import('./features/admin/concierge/AdminConciergePage'), m => m.AdminConciergePage);
+const AdminTranslationsPage = lazyWithRetry(() => import('./features/admin/translations/AdminTranslationsPage'), m => m.AdminTranslationsPage);
 const AdminAnalyticsPage    = lazyWithRetry(() => import('./features/admin/analytics/AdminAnalyticsPage'), m => m.AdminAnalyticsPage);
 const AdminPageEditor       = lazyWithRetry(() => import('./features/admin/pages/AdminPageEditor'), m => m.AdminPageEditor);
 const AdminEmailTemplatesPage = lazyWithRetry(() => import('./features/admin/email-templates/AdminEmailTemplatesPage'), m => m.AdminEmailTemplatesPage);
@@ -242,6 +245,9 @@ export default function App() {
                       <Route index element={<Navigate to="/admin/dashboard" replace />} />
                       <Route path="dashboard"    element={<AdminDashboardPage />} />
                       <Route path="analytics"    element={<AdminAnalyticsPage />} />
+                      <Route path="concierge"    element={<AdminConciergePage />} />
+                      <Route path="pricing"      element={<AdminPricingPage />} />
+                      <Route path="translations" element={<AdminTranslationsPage />} />
                       <Route path="seo"          element={<AdminSEOPage />} />
                       <Route path="media"        element={<AdminMediaPage />} />
                       <Route path="audit-logs"   element={<AdminAuditPage />} />
