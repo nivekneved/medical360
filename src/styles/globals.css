@@ -1004,3 +1004,45 @@ h1, h2, h3, h4, h5, h6 {
     color: #000000 !important;
   }
 }
+
+/* ─── Skeleton Loading Utilities ─────────────────────────────────────────────── */
+.skeleton-box {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-2, #f1f5f9) 25%,
+    var(--color-surface-3, #e2e8f0) 50%,
+    var(--color-surface-2, #f1f5f9) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+}
+
+[data-theme="Med-dark"] .skeleton-box,
+[data-theme="dark"] .skeleton-box {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes skeletonPulse {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Image Loading Transitions ──────────────────────────────────────────────── */
+.img-loading {
+  opacity: 0.6;
+  filter: blur(4px);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.img-loaded {
+  opacity: 1;
+  filter: blur(0);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+

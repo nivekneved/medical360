@@ -16,10 +16,11 @@ import {
   Ambulance,
   Stethoscope
 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { SEO } from '../../components/SEO/SEO';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import './HowItWorks.css';
+
 
 interface Step {
   num: string;
@@ -205,17 +206,11 @@ const FAQS = [
 
 export function HowItWorksPage() {
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
+  const { isFr, isKr, l10n, l } = useL10n();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
+  const tLang = (obj: any, key: string) => l(obj, key);
 
-  const tLang = (obj: any, key: string) => {
-    if (isFr && obj[`${key}_fr`]) return obj[`${key}_fr`];
-    if (isKr && obj[`${key}_kr`]) return obj[`${key}_kr`];
-    return obj[key];
-  };
 
   return (
     <div className="how-it-works-page">

@@ -1,19 +1,21 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { SEO } from '../../components/SEO/SEO';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { useCMS } from '../../hooks/useCMS';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { ImageWithFallback } from '../../components/common/ImageWithFallback';
 import { SPECIALTY_SYMPTOMS_MAP, QUICK_SYMPTOM_FILTERS } from './specialtySymptoms';
 import './Specialties.css';
 
+
 export function SpecialtiesPage() {
   const navigate = useNavigate();
-  const { i18n } = useTranslation();
+  const { lang, isFr, isKr, l10n, l } = useL10n();
   const { specialties, loading } = useSpecialties();
   const { data: cms } = useCMS('specialties');
 
@@ -24,16 +26,13 @@ export function SpecialtiesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(15);
 
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
-  const langKey = (isFr || isKr) ? (i18n.language as 'fr' | 'kr') : 'en';
-  const l10n = (fr: string, kr: string, en: string) => isFr ? fr : isKr ? kr : en;
-  const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
+  const langKey = (isFr || isKr) ? (lang as 'fr' | 'kr') : 'en';
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
-    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+    return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
+
 
   const sortOptions: SortOption[] = [
     { value: 'popular', label: isFr ? 'Plus Populaires' : isKr ? 'Plis Popiler' : 'Most Popular', icon: '⚡' },
@@ -232,13 +231,13 @@ export function SpecialtiesPage() {
                 return (
                   <div key={sp.id} className="spec-card" id={`spec-card-${sp.id}`} style={{ cursor: 'pointer' }}>
                     <div className="spec-card__image" onClick={() => navigate(`/specialties/${sp.id}`)}>
-                      <img
+                      <ImageWithFallback
                         src={sp.imageUrl}
                         alt={l(sp, 'name')}
-                        loading="lazy"
-                        onError={(e) => { e.currentTarget.src = '/assets/banners/specialties_banner.jpg'; }}
+                        fallbackCategory="specialty"
                       />
                       <div className="spec-card__overlay" />
+
                       <h2 className="spec-card__name">{l(sp, 'name')}</h2>
                     </div>
                     <div className="spec-card__body">

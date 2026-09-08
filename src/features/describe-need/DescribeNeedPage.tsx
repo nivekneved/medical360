@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Check, MessageCircle, ArrowRight, ArrowLeft } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { useInquiry } from '../../hooks/useInquiry';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
@@ -22,7 +22,7 @@ const COUNTRIES = ['Mauritius', 'Réunion Island', 'Comoros', 'Madagascar', 'Sey
 export function DescribeNeedPage() {
   const navigate   = useNavigate();
   const [params]   = useSearchParams();
-  const { i18n } = useTranslation();
+  const { i18n, lang, l10n, l } = useL10n();
   const { specialties } = useSpecialties();
   const {
     step, totalSteps, formData, honeypot, setHoneypot, submitting, submitted,
@@ -40,13 +40,11 @@ export function DescribeNeedPage() {
     budget?: string;
   }>({});
 
-  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
-  const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
-
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
-    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+    return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
+
 
   const URGENCY_OPTIONS = [
     { value: 'routine',   label: l10n('Routine', 'Routinn', 'Routine'),   desc: l10n('Aucune urgence immédiate', 'Pena okenn irzans', 'No immediate urgency') },

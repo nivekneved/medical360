@@ -1,12 +1,11 @@
 import { Shield, Lock, Eye, FileText, CheckCircle2 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { SEO } from '../../components/SEO/SEO';
 import { LEGAL_CONSTANTS, PRIVACY_EMAIL, SITE_NAME, PARENT_NGO_NAME } from '../../core/config/site';
 
 export function PrivacyPolicyPage() {
-  const { i18n } = useTranslation();
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
+  const { isFr, isKr, l10n } = useL10n();
+
 
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>

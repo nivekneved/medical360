@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
 import { useCaseStudies } from '../../hooks/useCaseStudies';
 import { useSpecialties } from '../../hooks/useSpecialties';
 import { truncateText } from '../../core/services/format.service';
@@ -10,12 +10,14 @@ import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { ImageWithFallback } from '../../components/common/ImageWithFallback';
 import { SPECIALTY_SYMPTOMS_MAP, QUICK_SYMPTOM_FILTERS } from '../specialties/specialtySymptoms';
 import './CaseStudies.css';
 
+
 export function CaseStudiesPage() {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t, lang, isFr, isKr, l10n, l } = useL10n();
   const { caseStudies, loading } = useCaseStudies();
   const { specialties } = useSpecialties();
   const { data: cms } = useCMS('case-studies');
@@ -28,16 +30,13 @@ export function CaseStudiesPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(6);
 
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
-  const langKey = (isFr || isKr) ? (i18n.language as 'fr' | 'kr') : 'en';
-  const l10n = (fr: string, kr: string, en: string) => isFr ? fr : isKr ? kr : en;
-  const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
+  const langKey = (isFr || isKr) ? (lang as 'fr' | 'kr') : 'en';
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
-    return cms.content[key][i18n.language] || cms.content[key]['en'] || fallback;
+    return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
+
 
   function getSpecialtyName(id: string) {
     const s = specialties.find(s => s.id === id);
@@ -268,13 +267,13 @@ export function CaseStudiesPage() {
                 return (
                   <div key={cs.id} className="cs-card" id={`cs-card-${cs.id}`}>
                     <div className="cs-card__image">
-                      <img
+                      <ImageWithFallback
                         src={cs.imageUrl}
                         alt={l(cs, 'condition')}
-                        loading="lazy"
-                        onError={(e) => { e.currentTarget.src = '/assets/banners/casestudies_banner.jpg'; }}
+                        fallbackCategory="general"
                       />
                       <div className="cs-card__overlay" />
+
                       <div className="cs-card__savings">{l10n('Économisé', 'Sov', 'Saved')} {cs.costSavedPercent}%</div>
                       <div className="cs-card__specialty">
                         {symptomEntry ? symptomEntry.badge : getSpecialtyName(cs.specialtyId)}

@@ -1,9 +1,9 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { ArrowLeft, ArrowRight, MapPin, MessageCircle, Clock } from 'lucide-react';
 import { useSpecialty } from '../../hooks/useSpecialties';
 import { useHospitals } from '../../hooks/useHospitals';
 import { useDoctors } from '../../hooks/useDoctors';
+import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { ProcedureInlineManager } from './components/ProcedureInlineManager';
@@ -12,13 +12,11 @@ import './Specialties.css';
 export function SpecialtyDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t, l10n, l } = useL10n();
   const { specialty, loading, setSpecialty, refetch } = useSpecialty(id);
   const { hospitals } = useHospitals({});
   const { doctors } = useDoctors(id);
 
-  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
-  const l = (obj: any, field: string) => obj?.[`${field}_${i18n.language}`] || obj?.[field] || '';
 
   if (loading) {
     return (

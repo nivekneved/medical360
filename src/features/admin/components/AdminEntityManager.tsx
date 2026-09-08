@@ -18,10 +18,12 @@ import { ImageField } from './ImageField';
 import { RichTextEditor } from './RichTextEditor';
 import { AdminPagination } from './AdminPagination';
 import { AdminBulkActionBar } from './AdminBulkActionBar';
+import { ConfirmDialog } from '../../../components/common/ConfirmDialog';
 import { Honeypot } from '../../../components/Honeypot/Honeypot';
 import { isHoneypotClean, detectSqlInjection, deepSanitize } from '../../../core/services/validation.service';
 import { printOrExportPdf, exportToCsv, type ExportColumn } from '../../../core/services/export.service';
 import '../AdminToolbar.css';
+
 
 export interface FieldDefinition<T> {
   key: keyof T & string;
@@ -160,15 +162,20 @@ export function AdminEntityManager<T extends { id: string }>({
     setSelectedIds(new Set());
   };
 
-  // Bulk Actions
-  const handleDeleteSelected = async () => {
-    if (selectedIds.size === 0) return;
-    const confirmMsg = `Are you sure you want to delete ${selectedIds.size} ${entityName}(s)? This action cannot be undone.`;
-    if (!window.confirm(confirmMsg)) return;
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
+  // Bulk Actions
+  const handleDeleteSelected = () => {
+    if (selectedIds.size === 0) return;
+    setConfirmDeleteOpen(true);
+  };
+
+  const handleExecuteDelete = async () => {
+    setConfirmDeleteOpen(false);
     await onDelete(Array.from(selectedIds));
     handleClearSelection();
   };
+
 
   const handleExportCsv = () => {
     const exportData = selectedIds.size > 0
@@ -498,77 +505,33 @@ export function AdminEntityManager<T extends { id: string }>({
                   }
 
                   const isWide = f.type === 'textarea' || f.type === 'image' || f.type === 'array';
-
                   return (
                     <div key={f.key} style={{ gridColumn: isWide ? '1 / -1' : undefined }}>
                       <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-text)', marginBottom: '0.4rem' }}>
                         {f.label} {f.required && <span style={{ color: 'var(--color-danger)' }}>*</span>}
                       </label>
-
                       {f.type === 'image' ? (
-                        <ImageField
-                          value={val || ''}
-                          onChange={(newUrl) => updateItemField(f.key, newUrl)}
-                          label={f.label}
-                        />
+                        <ImageField value={val || ''} onChange={(newUrl) => updateItemField(f.key, newUrl)} label={f.label} />
                       ) : f.type === 'textarea' ? (
-                        <RichTextEditor
-                          value={val || ''}
-                          onChange={(newVal) => updateItemField(f.key, newVal)}
-                          placeholder={f.placeholder || `Enter ${f.label.toLowerCase()}...`}
-                          minHeight={150}
-                        />
+                        <RichTextEditor value={val || ''} onChange={(newVal) => updateItemField(f.key, newVal)} placeholder={f.placeholder || `Enter ${f.label.toLowerCase()}...`} minHeight={150} />
                       ) : f.type === 'number' ? (
-                        <input
-                          type="number"
-                          className="form-input"
-                          value={val !== undefined ? val : ''}
-                          onChange={e => updateItemField(f.key, Number(e.target.value))}
-                          placeholder={f.placeholder}
-                          style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}
-                        />
+                        <input type="number" className="form-input" value={val !== undefined ? val : ''} onChange={e => updateItemField(f.key, Number(e.target.value))} placeholder={f.placeholder} style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }} />
                       ) : f.type === 'boolean' ? (
                         <label style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer', fontSize: '0.9rem', padding: '0.75rem 1rem', background: 'var(--color-surface-2)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
-                          <input
-                            type="checkbox"
-                            checked={!!val}
-                            onChange={e => updateItemField(f.key, e.target.checked)}
-                            style={{ width: 18, height: 18, accentColor: 'var(--color-primary)' }}
-                          />
+                          <input type="checkbox" checked={!!val} onChange={e => updateItemField(f.key, e.target.checked)} style={{ width: 18, height: 18, accentColor: 'var(--color-primary)' }} />
                           <span style={{ fontWeight: 600 }}>Enable / Activate {f.label}</span>
                         </label>
                       ) : f.type === 'select' && f.options ? (
-                        <select
-                          className="form-input"
-                          value={val || ''}
-                          onChange={e => updateItemField(f.key, e.target.value)}
-                          style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}
-                        >
-                          {f.options.map(o => (
-                            <option key={o.value} value={o.value}>{o.label}</option>
-                          ))}
+                        <select className="form-input" value={val || ''} onChange={e => updateItemField(f.key, e.target.value)} style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}>
+                          {f.options.map(o => (<option key={o.value} value={o.value}>{o.label}</option>))}
                         </select>
                       ) : f.type === 'array' ? (
                         <div>
-                          <input
-                            type="text"
-                            className="form-input"
-                            placeholder="Comma-separated items (e.g. Item 1, Item 2)"
-                            value={Array.isArray(val) ? val.join(', ') : ''}
-                            onChange={e => updateItemField(f.key, e.target.value.split(',').map(s => s.trim()).filter(Boolean))}
-                            style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}
-                          />
+                          <input type="text" className="form-input" placeholder="Comma-separated items" value={Array.isArray(val) ? val.join(', ') : ''} onChange={e => updateItemField(f.key, e.target.value.split(',').map(s => s.trim()).filter(Boolean))} style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }} />
                           <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: 4, display: 'block' }}>Separate multiple items with commas</span>
                         </div>
                       ) : (
-                        <input
-                          type="text"
-                          className="form-input"
-                          value={val || ''}
-                          onChange={e => updateItemField(f.key, e.target.value)}
-                          placeholder={f.placeholder}
-                          style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }}
-                        />
+                        <input type="text" className="form-input" value={val || ''} onChange={e => updateItemField(f.key, e.target.value)} placeholder={f.placeholder} style={{ width: '100%', fontSize: '0.9rem', borderColor: hasError ? '#ef4444' : undefined }} />
                       )}
                       {hasError && <span style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: 4, display: 'block', fontWeight: 600 }}>{modalFieldErrors[f.key]}</span>}
                       {f.help && <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: 4 }}>{f.help}</div>}
@@ -734,6 +697,17 @@ export function AdminEntityManager<T extends { id: string }>({
         />
       )}
 
+      {/* ── Delete Confirmation Dialog ── */}
+      <ConfirmDialog
+        isOpen={confirmDeleteOpen}
+        onClose={() => setConfirmDeleteOpen(false)}
+        onConfirm={handleExecuteDelete}
+        title={`Delete ${selectedIds.size} ${entityName}(s)`}
+        message={`Are you sure you want to permanently delete ${selectedIds.size} selected item(s)? This action cannot be undone.`}
+        confirmLabel="Delete Permanently"
+        variant="danger"
+      />
     </div>
   );
 }
+

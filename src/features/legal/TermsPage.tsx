@@ -1,18 +1,17 @@
-import { Scale, AlertCircle, FileCheck, ShieldAlert } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { Scale, FileCheck, ShieldAlert, HeartHandshake, CheckCircle2, AlertCircle } from 'lucide-react';
+import { useL10n } from '../../hooks/useL10n';
 import { SEO } from '../../components/SEO/SEO';
-import { SITE_NAME, PARENT_NGO_NAME, SITE_ADDRESS } from '../../core/config/site';
+import { LEGAL_CONSTANTS, CONTACT_EMAIL, SITE_NAME, LEGAL_NAME, PARENT_NGO_NAME, SITE_ADDRESS } from '../../core/config/site';
+
 
 export function TermsPage() {
-  const { i18n } = useTranslation();
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
+  const { isFr, isKr, l10n } = useL10n();
 
   return (
     <main style={{ paddingTop: 'var(--navbar-height)', minHeight: '100vh', background: 'var(--bg-main)' }}>
       <SEO
         title={isFr ? `Conditions Générales & Droits du Patient | ${SITE_NAME}` : isKr ? `Kondision Zeneral & Drwa Pasian | ${SITE_NAME}` : `Terms of Service & Healthcare Disclaimer | ${SITE_NAME}`}
-        description={isFr ? `Consultez les conditions générales, engagements et obligations d'intermédiation de ${SITE_NAME} (détenu par l'ONG ${PARENT_NGO_NAME}).` : `Review the terms, conditions, and facilitator obligations of ${SITE_NAME} (owned by NGO ${PARENT_NGO_NAME}).`}
+        description={isFr ? `Consultez les conditions générales, engagements et obligations d'intermédiation de ${SITE_NAME}.` : `Review the terms, conditions, and facilitator obligations of ${SITE_NAME}.`}
         canonical="/terms"
       />
       

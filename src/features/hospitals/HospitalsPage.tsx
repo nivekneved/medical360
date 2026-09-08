@@ -2,34 +2,30 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X, HelpCircle, Sparkles, Building2 } from 'lucide-react';
 import { useHospitals } from '../../hooks/useHospitals';
-import { useTranslation } from 'react-i18next';
+import { useL10n } from '../../hooks/useL10n';
+import { useToast } from '../../providers/ToastProvider';
 import { formatNumber, truncateText } from '../../core/services/format.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+import { INDIAN_HUBS } from '../../core/config/site';
 import type { HospitalFilters } from '../../core/services/hospital.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { HospitalCompareModal } from './HospitalCompareModal';
 import { ListToolbar, type SortOption } from '../../components/ListToolbar/ListToolbar';
 import { Pagination } from '../../components/Pagination/Pagination';
+import { ImageWithFallback } from '../../components/common/ImageWithFallback';
 import './Hospitals.css';
 
-const INDIAN_HUBS = [
-  { id: 'all', label: 'All Cities & Hubs', label_fr: 'Toutes les Villes', label_kr: 'Tou Lavil' },
-  { id: 'Chennai', label: 'Chennai', label_fr: 'Chennai', label_kr: 'Chennai' },
-  { id: 'Bengaluru', label: 'Bengaluru', label_fr: 'Bengaluru', label_kr: 'Bengaluru' },
-  { id: 'Hyderabad', label: 'Hyderabad & Secunderabad', label_fr: 'Hyderabad & Secunderabad', label_kr: 'Hyderabad' },
-  { id: 'Mumbai', label: 'Mumbai', label_fr: 'Mumbai', label_kr: 'Mumbai' },
-  { id: 'Delhi', label: 'New Delhi & Gurugram (NCR)', label_fr: 'New Delhi & Gurugram (NCR)', label_kr: 'New Delhi & Gurugram' },
-];
 
 export function HospitalsPage() {
   const navigate = useNavigate();
+  const toast = useToast();
+  const { isFr, isKr, l10n, l } = useL10n();
   const [filters, setFilters] = useState<HospitalFilters>({});
   const [searchInput, setSearchInput] = useState('');
   const [selectedHub, setSelectedHub] = useState('all');
   const [showCompareModal, setShowCompareModal] = useState(false);
   const compareSectionRef = useRef<HTMLDivElement>(null);
-  const { i18n } = useTranslation();
   const { hospitals: allHospitals, loading } = useHospitals({});
   const { data: cms } = useCMS('hospitals');
 
@@ -42,11 +38,6 @@ export function HospitalsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(15);
 
-  const isFr = i18n.language === 'fr';
-  const isKr = i18n.language === 'kr';
-  const l10n = (fr: string, kr: string, en: string) => i18n.language === 'fr' ? fr : i18n.language === 'kr' ? kr : en;
-  const l = (obj: any, field: string) => obj[`${field}_${i18n.language}`] || obj[field];
-
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<string>('rating');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -57,7 +48,7 @@ export function HospitalsPage() {
         return prev.filter(x => x !== id);
       }
       if (prev.length >= 3) {
-        alert(isFr ? 'Vous pouvez comparer jusqu\'à 3 hôpitaux simultanément.' : 'You can compare up to 3 hospitals at a time.');
+        toast.warning(isFr ? 'Vous pouvez comparer jusqu\'à 3 hôpitaux simultanément.' : 'You can compare up to 3 hospitals at a time.');
         return prev;
       }
       return [...prev, id];
@@ -65,6 +56,7 @@ export function HospitalsPage() {
   };
 
   const comparedHospitals = allHospitals.filter(h => compareIds.includes(h.id));
+
 
   // Filter hospitals by search and hub
   const filteredHospitals = allHospitals.filter((h) => {
@@ -351,15 +343,15 @@ export function HospitalsPage() {
                     id={`hospital-card-${hospital.id}`}
                   >
                     <div className="hospital-card__image">
-                      <img
+                      <ImageWithFallback
                         src={hospital.imageUrl}
                         alt={hospital.name}
-                        loading="lazy"
-                        decoding="async"
+                        fallbackCategory="hospital"
                         width="400"
                         height="220"
                       />
                       <div className="hospital-card__overlay" />
+
                       
                       {/* Compare Checkbox */}
                       <button
