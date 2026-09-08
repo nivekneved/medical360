@@ -311,13 +311,24 @@ export function getPageSEO(pageKey: SEOPageKey, lang: string = 'en') {
   const meta = SEO_PAGES[pageKey] || SEO_PAGES.home;
   const currentLang = (lang === 'fr' || lang === 'kr') ? lang : 'en';
 
-  const title = meta.title[currentLang] || meta.title.en;
-  const description = meta.description[currentLang] || meta.description.en;
-  const canonical = meta.canonical;
-  const image = meta.image || `${SITE_URL}/assets/hero-banner.jpg`;
-  const noIndex = !!meta.noIndex;
+  let customOverrides: any = null;
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('med360_seo_custom_overrides');
+      if (stored) {
+        customOverrides = JSON.parse(stored)?.[pageKey];
+      }
+    } catch {}
+  }
+
+  const title = customOverrides?.title?.[currentLang] || meta.title[currentLang] || meta.title.en;
+  const description = customOverrides?.description?.[currentLang] || meta.description[currentLang] || meta.description.en;
+  const canonical = customOverrides?.canonical || meta.canonical;
+  const image = customOverrides?.image || meta.image || `${SITE_URL}/assets/hero-banner.jpg`;
+  const noIndex = customOverrides?.noIndex !== undefined ? customOverrides.noIndex : !!meta.noIndex;
   const ogType = meta.ogType || 'website';
-  const keywords = meta.keywords?.[currentLang]?.join(', ');
+  const rawKeywords = customOverrides?.keywords?.[currentLang] || meta.keywords?.[currentLang];
+  const keywords = Array.isArray(rawKeywords) ? rawKeywords.join(', ') : rawKeywords;
 
   return {
     title,

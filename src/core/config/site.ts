@@ -1,7 +1,24 @@
 export const SITE_URL: string = ((import.meta.env.VITE_SITE_URL as string | undefined) || 'https://www.med360.mu').replace(/\/+$/, '');
 
-export const IS_MAINTENANCE_MODE: boolean =
-  import.meta.env.VITE_MAINTENANCE_MODE === 'false' ? false : true;
+export function isMaintenanceModeActive(): boolean {
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('med360_maintenance_mode');
+      if (stored !== null) return stored === 'true';
+    } catch {}
+  }
+  return import.meta.env.VITE_MAINTENANCE_MODE === 'false' ? false : true;
+}
+
+export function setMaintenanceMode(active: boolean): void {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem('med360_maintenance_mode', String(active));
+    } catch {}
+  }
+}
+
+export const IS_MAINTENANCE_MODE: boolean = isMaintenanceModeActive();
 
 export const SITE_NAME = 'Med360';
 

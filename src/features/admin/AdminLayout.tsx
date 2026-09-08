@@ -36,6 +36,8 @@ import {
   ClipboardList,
   PhoneCall,
   ShieldCheck,
+  Globe,
+  TrendingUp,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { useDataConfig } from '../../providers/DataProvider';
@@ -44,6 +46,7 @@ import './AdminLayout.css';
 
 const DATA_NAV = [
   { to: '/admin/dashboard',    label: 'Dashboard',                     icon: LayoutDashboard },
+  { to: '/admin/analytics',    label: 'Analytics & Funnel',            icon: TrendingUp },
   { to: '/admin/inquiries',    label: 'All Patient Requests & Inquiries', icon: Inbox },
   { to: '/admin/hospitals',    label: 'Partner Hospitals',             icon: Building2 },
   { to: '/admin/specialties',  label: 'Medical Specialties',           icon: Stethoscope },
@@ -52,12 +55,13 @@ const DATA_NAV = [
 ];
 
 const CMS_GLOBAL_NAV = [
-  { to: '/admin/marquee',             label: 'Scrolling Mission Ticker', icon: Megaphone },
-  { to: '/admin/settings?tab=themes', label: 'Themes & Branding',        icon: Palette },
-  { to: '/admin/pages/header',        label: 'Header & Navigation',      icon: PanelTop },
-  { to: '/admin/pages/footer',        label: 'Footer & Legal',           icon: PanelBottom },
-  { to: '/admin/campaigns',          label: 'Email Campaigns (Nexus)',   icon: Send },
-  { to: '/admin/email-templates',    label: 'Email Templates',          icon: Mail },
+  { to: '/admin/seo',                 label: 'SEO & Social Sharing',      icon: Globe },
+  { to: '/admin/marquee',             label: 'Scrolling Mission Ticker',  icon: Megaphone },
+  { to: '/admin/settings?tab=themes', label: 'Themes & Branding',         icon: Palette },
+  { to: '/admin/pages/header',        label: 'Header & Navigation',       icon: PanelTop },
+  { to: '/admin/pages/footer',        label: 'Footer & Legal',            icon: PanelBottom },
+  { to: '/admin/campaigns',           label: 'Email Campaigns (Nexus)',    icon: Send },
+  { to: '/admin/email-templates',     label: 'Email Templates',           icon: Mail },
 ];
 
 const CMS_PAGES_NAV = [
@@ -121,7 +125,7 @@ export function AdminLayout() {
   const [openSection, setOpenSection] = useState<MenuSection | null>(() => {
     const path = location.pathname;
     const search = location.search;
-    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
+    if (path.startsWith('/admin/seo') || path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
       return 'global';
     }
     if (path.startsWith('/admin/pages/')) {
@@ -135,12 +139,13 @@ export function AdminLayout() {
     setMobileOpen(false);
     const path = location.pathname;
     const search = location.search;
-    if (path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
+    if (path.startsWith('/admin/seo') || path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
       setOpenSection('global');
     } else if (path.startsWith('/admin/pages/')) {
       setOpenSection('cms');
     } else if (
       path.startsWith('/admin/dashboard') ||
+      path.startsWith('/admin/analytics') ||
       path.startsWith('/admin/inquiries') ||
       path.startsWith('/admin/hospitals') ||
       path.startsWith('/admin/specialties') ||
@@ -164,6 +169,8 @@ export function AdminLayout() {
   const getCurrentPageTitle = () => {
     const path = location.pathname;
     if (path === '/admin/dashboard') return 'Dashboard';
+    if (path === '/admin/analytics') return 'Analytics & Lead Funnel';
+    if (path === '/admin/seo') return 'Live SEO & Social Sharing';
     if (path === '/admin/inquiries') return 'All Patient Requests';
     if (path === '/admin/hospitals') return 'Partner Hospitals';
     if (path === '/admin/specialties') return 'Medical Specialties';
@@ -172,10 +179,12 @@ export function AdminLayout() {
     if (path === '/admin/settings') {
       const params = new URLSearchParams(location.search);
       if (params.get('tab') === 'themes') return 'Themes & Branding';
+      if (params.get('tab') === 'maintenance') return 'Maintenance & Hotline';
       return 'System & Database Backup';
     }
     if (path === '/admin/email-templates') return 'Email Templates';
     if (path === '/admin/campaigns') return 'Campaigns';
+    if (path === '/admin/marquee') return 'Mission Ticker';
     if (path.startsWith('/admin/pages/')) {
       const pageId = path.replace('/admin/pages/', '');
       const found = CMS_PAGES_NAV.find(p => p.to === path);
