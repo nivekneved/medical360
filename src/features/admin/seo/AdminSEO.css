@@ -1,0 +1,183 @@
+/* ─── Admin SEO & Social Sharing Suite ─────────────────────────────────────────── */
+
+.admin-seo-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 1.5rem 0;
+}
+
+.admin-seo-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.75rem;
+  align-items: flex-start;
+}
+
+@media (max-width: 960px) {
+  .admin-seo-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-seo-sidebar {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl, 1rem);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.admin-seo-page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-md, 0.5rem);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-seo-page-btn:hover {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.admin-seo-page-btn--active {
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary) 30%, transparent);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.admin-seo-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.admin-seo-card {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl, 1rem);
+  padding: 1.75rem;
+}
+
+.admin-seo-previews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* ── Google SERP Preview ── */
+.serp-preview-box {
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  font-family: Arial, sans-serif;
+  color: #202124;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.serp-preview__url {
+  font-size: 0.78rem;
+  color: #202124;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+.serp-preview__title {
+  font-size: 1.15rem;
+  color: #1a0dab;
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0 0 0.4rem 0;
+  cursor: pointer;
+}
+
+.serp-preview__desc {
+  font-size: 0.85rem;
+  color: #4d5156;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── Social Card Preview (WhatsApp / FB) ── */
+.social-preview-box {
+  background: #1e293b;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.social-preview__image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: #0f172a;
+}
+
+.social-preview__content {
+  padding: 1rem;
+}
+
+.social-preview__domain {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.social-preview__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f8fafc;
+  line-height: 1.35;
+  margin: 0 0 0.35rem 0;
+}
+
+.social-preview__desc {
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.char-counter {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  float: right;
+  margin-top: 4px;
+}
+
+.char-counter--optimal {
+  color: #10b981;
+}
+
+.char-counter--warn {
+  color: #f59e0b;
+}
+
+.char-counter--danger {
+  color: #ef4444;
+}

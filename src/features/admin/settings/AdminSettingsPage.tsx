@@ -9,19 +9,21 @@ import {
   AlertCircle,
   HardDriveDownload,
   Key,
+  ShieldAlert,
 } from 'lucide-react';
 import { AdminBackupManager } from './components/AdminBackupManager';
 import { AdminSecuritySettings } from './components/AdminSecuritySettings';
 import { AdminGeneralSettings } from './components/AdminGeneralSettings';
 import { AdminThemeSettings } from './components/AdminThemeSettings';
+import { AdminMaintenanceSettings } from './components/AdminMaintenanceSettings';
 
-type SettingsTab = 'general' | 'themes' | 'backups' | 'security';
+type SettingsTab = 'general' | 'maintenance' | 'themes' | 'backups' | 'security';
 
 export function AdminSettingsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlTab = searchParams.get('tab') as SettingsTab | null;
 
-  const validTabs: SettingsTab[] = ['general', 'themes', 'backups', 'security'];
+  const validTabs: SettingsTab[] = ['general', 'maintenance', 'themes', 'backups', 'security'];
   const initialTab: SettingsTab = (urlTab && validTabs.includes(urlTab)) ? urlTab : 'general';
 
   const [activeTab, setActiveTab] = useState<SettingsTab>(initialTab);
@@ -121,6 +123,26 @@ export function AdminSettingsPage() {
 
         <button
           type="button"
+          onClick={() => handleTabChange('maintenance')}
+          style={{
+            padding: '0.75rem 1.25rem',
+            fontSize: '0.9rem',
+            fontWeight: 700,
+            background: 'transparent',
+            border: 'none',
+            borderBottom: activeTab === 'maintenance' ? '2.5px solid var(--color-primary)' : '2.5px solid transparent',
+            color: activeTab === 'maintenance' ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+          }}
+        >
+          <ShieldAlert size={16} /> Maintenance & Emergency
+        </button>
+
+        <button
+          type="button"
           onClick={() => handleTabChange('themes')}
           style={{
             padding: '0.75rem 1.25rem',
@@ -183,6 +205,10 @@ export function AdminSettingsPage() {
       {/* Tab Contents */}
       {activeTab === 'general' && (
         <AdminGeneralSettings onNotify={showNotification} />
+      )}
+
+      {activeTab === 'maintenance' && (
+        <AdminMaintenanceSettings onNotify={showNotification} />
       )}
 
       {activeTab === 'themes' && (

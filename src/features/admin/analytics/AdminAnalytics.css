@@ -1,0 +1,123 @@
+/* ─── Admin Analytics & Lead Funnel Suite ─────────────────────────────────────── */
+
+.admin-analytics-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 1.5rem 0;
+}
+
+.analytics-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.analytics-metric-card {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl, 1rem);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.analytics-metric-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+}
+
+.analytics-metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.analytics-metric-val {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.analytics-metric-label {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.analytics-grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+  .analytics-grid-two {
+    grid-template-columns: 1fr;
+  }
+}
+
+.analytics-card {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-xl, 1rem);
+  padding: 1.75rem;
+}
+
+/* ── Funnel Bar Visuals ── */
+.funnel-step {
+  margin-bottom: 1.25rem;
+}
+
+.funnel-step:last-child {
+  margin-bottom: 0;
+}
+
+.funnel-step__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.funnel-step__bar-bg {
+  width: 100%;
+  height: 10px;
+  background: var(--color-bg);
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.funnel-step__bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--color-primary, #065f46), #10b981);
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Distribution List ── */
+.distribution-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.875rem;
+}
+
+.distribution-row:last-child {
+  border-bottom: none;
+}

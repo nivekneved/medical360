@@ -19,7 +19,7 @@ import { HomePage } from './features/home/HomePage';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { CookieConsentBanner } from './components/common/CookieConsentBanner';
 import { PageLoader } from './components/common/Loader';
-import { IS_MAINTENANCE_MODE } from './core/config/site';
+import { IS_MAINTENANCE_MODE, isMaintenanceModeActive } from './core/config/site';
 import { MaintenancePage } from './features/maintenance/MaintenancePage';
 
 
@@ -81,6 +81,8 @@ const AdminSpecialtiesPage  = lazyWithRetry(() => import('./features/admin/speci
 const AdminDoctorsPage      = lazyWithRetry(() => import('./features/admin/doctors/AdminDoctorsPage'), m => m.AdminDoctorsPage);
 const AdminCaseStudiesPage  = lazyWithRetry(() => import('./features/admin/case-studies/AdminCaseStudiesPage'), m => m.AdminCaseStudiesPage);
 const AdminSettingsPage     = lazyWithRetry(() => import('./features/admin/settings/AdminSettingsPage'), m => m.AdminSettingsPage);
+const AdminSEOPage          = lazyWithRetry(() => import('./features/admin/seo/AdminSEOPage'), m => m.AdminSEOPage);
+const AdminAnalyticsPage    = lazyWithRetry(() => import('./features/admin/analytics/AdminAnalyticsPage'), m => m.AdminAnalyticsPage);
 const AdminPageEditor       = lazyWithRetry(() => import('./features/admin/pages/AdminPageEditor'), m => m.AdminPageEditor);
 const AdminEmailTemplatesPage = lazyWithRetry(() => import('./features/admin/email-templates/AdminEmailTemplatesPage'), m => m.AdminEmailTemplatesPage);
 const AdminCampaignsPage      = lazyWithRetry(() => import('./features/admin/campaigns/AdminCampaignsPage'), m => m.AdminCampaignsPage);
@@ -112,14 +114,15 @@ function ClientPreviewActivator() {
 // ─── Public Layout Wrapper ────────────────────────────────────────────────────
 function PublicLayout() {
   const isPreview = isClientPreviewActive();
+  const maintenanceActive = isMaintenanceModeActive();
 
-  if (IS_MAINTENANCE_MODE && !isPreview) {
+  if (maintenanceActive && !isPreview) {
     return <MaintenancePage />;
   }
 
   return (
     <>
-      {IS_MAINTENANCE_MODE && isPreview && (
+      {maintenanceActive && isPreview && (
         <div style={{
           position: 'fixed',
           bottom: '16px',
@@ -236,6 +239,8 @@ export default function App() {
                     <Route path="/admin" element={<AdminGuard />}>
                       <Route index element={<Navigate to="/admin/dashboard" replace />} />
                       <Route path="dashboard"    element={<AdminDashboardPage />} />
+                      <Route path="analytics"    element={<AdminAnalyticsPage />} />
+                      <Route path="seo"          element={<AdminSEOPage />} />
                       <Route path="inquiries"    element={<AdminInquiriesPage />} />
                       <Route path="hospitals"    element={<AdminHospitalsPage />} />
                       <Route path="specialties"  element={<AdminSpecialtiesPage />} />
