@@ -73,8 +73,8 @@ export function LatestActionsFeed({ inquiries, onRefresh }: LatestActionsFeedPro
         title: `System Action: ${audit.action}`,
         description: `Category: ${audit.category} · Checksum: ${audit.checksum}`,
         timestamp: audit.timestamp,
-        actor: audit.user,
-        badgeText: audit.category,
+        actor: audit.user || audit.actorName || 'Administrator',
+        badgeText: audit.category || 'SYSTEM',
         badgeColor: audit.category === 'SECURITY_ALERT' ? '#ef4444' : '#6366f1',
       });
     });

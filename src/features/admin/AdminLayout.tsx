@@ -38,6 +38,8 @@ import {
   ShieldCheck,
   Globe,
   TrendingUp,
+  Image as ImageIcon,
+  Activity,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { useDataConfig } from '../../providers/DataProvider';
@@ -56,6 +58,8 @@ const DATA_NAV = [
 
 const CMS_GLOBAL_NAV = [
   { to: '/admin/seo',                 label: 'SEO & Social Sharing',      icon: Globe },
+  { to: '/admin/media',               label: 'Media & Asset Gallery',     icon: ImageIcon },
+  { to: '/admin/audit-logs',          label: 'Security & Audit Trail',    icon: Activity },
   { to: '/admin/marquee',             label: 'Scrolling Mission Ticker',  icon: Megaphone },
   { to: '/admin/settings?tab=themes', label: 'Themes & Branding',         icon: Palette },
   { to: '/admin/pages/header',        label: 'Header & Navigation',       icon: PanelTop },
@@ -125,7 +129,7 @@ export function AdminLayout() {
   const [openSection, setOpenSection] = useState<MenuSection | null>(() => {
     const path = location.pathname;
     const search = location.search;
-    if (path.startsWith('/admin/seo') || path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
+    if (path.startsWith('/admin/seo') || path.startsWith('/admin/media') || path.startsWith('/admin/audit-logs') || path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
       return 'global';
     }
     if (path.startsWith('/admin/pages/')) {
@@ -139,7 +143,7 @@ export function AdminLayout() {
     setMobileOpen(false);
     const path = location.pathname;
     const search = location.search;
-    if (path.startsWith('/admin/seo') || path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
+    if (path.startsWith('/admin/seo') || path.startsWith('/admin/media') || path.startsWith('/admin/audit-logs') || path.startsWith('/admin/pages/header') || path.startsWith('/admin/pages/footer') || path.startsWith('/admin/email-templates') || path.startsWith('/admin/campaigns') || (path === '/admin/settings' && search.includes('tab=themes'))) {
       setOpenSection('global');
     } else if (path.startsWith('/admin/pages/')) {
       setOpenSection('cms');
@@ -171,6 +175,8 @@ export function AdminLayout() {
     if (path === '/admin/dashboard') return 'Dashboard';
     if (path === '/admin/analytics') return 'Analytics & Lead Funnel';
     if (path === '/admin/seo') return 'Live SEO & Social Sharing';
+    if (path === '/admin/media') return 'Media & Asset Gallery';
+    if (path === '/admin/audit-logs') return 'Security & Audit Trail';
     if (path === '/admin/inquiries') return 'All Patient Requests';
     if (path === '/admin/hospitals') return 'Partner Hospitals';
     if (path === '/admin/specialties') return 'Medical Specialties';
