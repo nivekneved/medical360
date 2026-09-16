@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldCheck, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { usePlatformSettings } from '../../core/services/settings.service';
 
 const CONSENT_STORAGE_KEY = 'med360_cookie_consent_v1';
 
 export function CookieConsentBanner() {
   const { i18n } = useTranslation();
+  const { settings } = usePlatformSettings();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (settings.addonCookieConsent === false) return;
     const hasConsented = localStorage.getItem(CONSENT_STORAGE_KEY);
     if (!hasConsented) {
       const timer = setTimeout(() => setVisible(true), 1200);
@@ -27,7 +30,7 @@ export function CookieConsentBanner() {
     setVisible(false);
   };
 
-  if (!visible) return null;
+  if (settings.addonCookieConsent === false || !visible) return null;
 
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
