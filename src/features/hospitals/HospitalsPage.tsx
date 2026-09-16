@@ -164,52 +164,6 @@ export function HospitalsPage() {
           </p>
         </div>
 
-        {/* Patient Reassurance Helper Card */}
-        <div className="spec-helper-card" style={{ marginBottom: '1.75rem' }}>
-          <div className="spec-helper-card__left">
-            <div className="spec-helper-card__icon" aria-hidden="true">
-              <img 
-                src="/assets/consultation-support.jpg" 
-                alt="Patient Navigator" 
-                className="spec-helper-card__avatar-img" 
-              />
-            </div>
-            <div>
-              <h3 className="spec-helper-card__title">
-                {l10n(
-                  'Besoin d\'aide pour choisir l\'hôpital le plus adapté à votre diagnostic ?',
-                  'Bizin led pou swazir meyer lopital pou ou ka ?',
-                  'Need guidance choosing the right accredited hospital for your condition?'
-                )}
-              </h3>
-              <p className="spec-helper-card__desc">
-                {l10n(
-                  'Nos Patient Navigators analysent gratuitement vos comptes rendus et vous orientent vers le chef de service et l\'établissement le plus expérimenté.',
-                  'Nou bann Patient Navigator get ou dosie gratis ek dir ou ki meyer lopital ek dokter pou ou tretman.',
-                  'Our Patient Navigators will review your records for free and recommend the most suitable institution and department head within 48 hours.'
-                )}
-              </p>
-            </div>
-          </div>
-          <div className="spec-helper-card__actions">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => navigate('/describe-need?from=Hospitals+Directory+Banner&serviceName=Hospital+Selection+Consultation')}
-            >
-              <span>{isFr ? 'RÉSERVER UNE CONSULTATION' : isKr ? 'REZERV OU KONSILTASION' : 'BOOK A CONSULTATION'}</span>
-            </button>
-            <a
-              href={buildMed360WhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-whatsapp"
-            >
-              💬 WhatsApp
-            </a>
-          </div>
-        </div>
-
         {/* City / Hub Quick Filter Chips */}
         <div className="spec-symptom-chips-container" style={{ marginBottom: '1.75rem' }}>
           <div className="spec-symptom-chips-label">
