@@ -1,6 +1,20 @@
 import { useState, useEffect } from 'react';
 
-export interface PlatformSettings {
+export interface PlatformAddons {
+  addonFloatingWhatsApp: boolean;
+  addonCostCalculator: boolean;
+  addonPatientStories: boolean;
+  addonDoctorProfiles: boolean;
+  addonMultiCurrency: boolean;
+  addonMultiLanguage: boolean;
+  addonLiveAnalytics: boolean;
+  addonCookieConsent: boolean;
+  addonEmergencyBar: boolean;
+  addonMedicalImagingViewer: boolean;
+  addonSeoRichSnippets: boolean;
+}
+
+export interface PlatformSettings extends PlatformAddons {
   siteName: string;
   tagline: string;
   supportEmail: string;
@@ -21,7 +35,19 @@ export const DEFAULT_PLATFORM_SETTINGS: PlatformSettings = {
   defaultCurrency: 'USD',
   murExchangeRate: 46.5,
   ngoHeritageName: 'NGO Enn Rev Enn Sourir',
-  enableCostComparison: false, // Hidden by default, can be toggled on in admin settings
+  enableCostComparison: false,
+  // Addon Registry Defaults
+  addonFloatingWhatsApp: true,
+  addonCostCalculator: true,
+  addonPatientStories: true,
+  addonDoctorProfiles: true,
+  addonMultiCurrency: true,
+  addonMultiLanguage: true,
+  addonLiveAnalytics: true,
+  addonCookieConsent: true,
+  addonEmergencyBar: true,
+  addonMedicalImagingViewer: true,
+  addonSeoRichSnippets: true,
 };
 
 const SETTINGS_STORAGE_KEY = 'med360_platform_settings_v1';

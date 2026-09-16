@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { MessageCircle, ArrowUp } from 'lucide-react';
 import { useWhatsAppAction } from '../../hooks/useWhatsAppAction';
+import { usePlatformSettings } from '../../core/services/settings.service';
 import './FloatingWhatsApp.css';
 
 export function FloatingWhatsApp() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { openWhatsApp } = useWhatsAppAction();
+  const { settings } = usePlatformSettings();
 
   useEffect(() => {
     let ticking = false;
@@ -39,17 +41,19 @@ export function FloatingWhatsApp() {
 
   return (
     <div className="floating-actions-group" aria-label="Floating actions">
-      {/* WhatsApp Button */}
-      <button
-        type="button"
-        onClick={() => openWhatsApp({ source: 'Floating Widget' })}
-        className="floating-whatsapp"
-        aria-label="Chat with Med360 on WhatsApp"
-        id="floating-whatsapp-btn"
-      >
-        <MessageCircle size={26} />
-        <span className="floating-action__tooltip">Chat on WhatsApp</span>
-      </button>
+      {/* WhatsApp Button (Addon Module Controlled) */}
+      {settings.addonFloatingWhatsApp !== false && (
+        <button
+          type="button"
+          onClick={() => openWhatsApp({ source: 'Floating Widget' })}
+          className="floating-whatsapp"
+          aria-label="Chat with Med360 on WhatsApp"
+          id="floating-whatsapp-btn"
+        >
+          <MessageCircle size={26} />
+          <span className="floating-action__tooltip">Chat on WhatsApp</span>
+        </button>
+      )}
 
 
       {/* Scroll to Top Button (Below WhatsApp) */}

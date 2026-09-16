@@ -1,5 +1,24 @@
 import React, { useState } from 'react';
-import { Building2, Globe, Mail, Phone, MessageCircle, Calculator, Sliders, CheckCircle2, Eye, EyeOff } from 'lucide-react';
+import {
+  Building2,
+  Globe,
+  Mail,
+  Phone,
+  MessageCircle,
+  Calculator,
+  Sliders,
+  CheckCircle2,
+  Eye,
+  EyeOff,
+  Sparkles,
+  DollarSign,
+  Languages,
+  Activity,
+  Cookie,
+  Radio,
+  FileSearch,
+  Search,
+} from 'lucide-react';
 import { getPlatformSettings, savePlatformSettings, PlatformSettings } from '../../../../core/services/settings.service';
 
 interface AdminGeneralSettingsProps {
@@ -18,6 +37,25 @@ export const AdminGeneralSettings: React.FC<AdminGeneralSettingsProps> = ({ onNo
   const [ngoHeritageName, setNgoHeritageName] = useState(initial.ngoHeritageName);
   const [enableCostComparison, setEnableCostComparison] = useState(initial.enableCostComparison);
 
+  // Addon State Registry
+  const [addons, setAddons] = useState({
+    addonFloatingWhatsApp: initial.addonFloatingWhatsApp ?? true,
+    addonCostCalculator: initial.addonCostCalculator ?? true,
+    addonPatientStories: initial.addonPatientStories ?? true,
+    addonDoctorProfiles: initial.addonDoctorProfiles ?? true,
+    addonMultiCurrency: initial.addonMultiCurrency ?? true,
+    addonMultiLanguage: initial.addonMultiLanguage ?? true,
+    addonLiveAnalytics: initial.addonLiveAnalytics ?? true,
+    addonCookieConsent: initial.addonCookieConsent ?? true,
+    addonEmergencyBar: initial.addonEmergencyBar ?? true,
+    addonMedicalImagingViewer: initial.addonMedicalImagingViewer ?? true,
+    addonSeoRichSnippets: initial.addonSeoRichSnippets ?? true,
+  });
+
+  const toggleAddon = (key: keyof typeof addons) => {
+    setAddons(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     savePlatformSettings({
@@ -30,8 +68,86 @@ export const AdminGeneralSettings: React.FC<AdminGeneralSettingsProps> = ({ onNo
       murExchangeRate,
       ngoHeritageName,
       enableCostComparison,
+      ...addons,
     });
-    onNotify({ text: 'Platform general settings & module visibility updated.' });
+    onNotify({ text: 'Platform general settings & Addon modules updated successfully.' });
+  };
+
+  const renderAddonToggle = (
+    key: keyof typeof addons,
+    icon: React.ReactNode,
+    title: string,
+    description: string
+  ) => {
+    const active = addons[key];
+    return (
+      <div
+        key={key}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start',
+          gap: '1rem',
+          padding: '1rem',
+          background: active ? 'rgba(16, 185, 129, 0.04)' : 'rgba(241, 245, 249, 0.5)',
+          border: `1px solid ${active ? 'rgba(16, 185, 129, 0.2)' : 'var(--color-border)'}`,
+          borderRadius: 'var(--radius-lg)',
+          transition: 'all 0.2s ease',
+        }}
+      >
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+            {icon}
+            <strong style={{ fontSize: '0.92rem', color: 'var(--color-text)' }}>{title}</strong>
+            <span
+              style={{
+                fontSize: '0.7rem',
+                fontWeight: 800,
+                padding: '1px 6px',
+                borderRadius: '999px',
+                textTransform: 'uppercase',
+                background: active ? 'rgba(16, 185, 129, 0.15)' : 'rgba(148, 163, 184, 0.15)',
+                color: active ? '#059669' : '#64748b',
+              }}
+            >
+              {active ? 'Active' : 'Disabled'}
+            </span>
+          </div>
+          <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>
+            {description}
+          </p>
+        </div>
+
+        <label style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', cursor: 'pointer', flexShrink: 0, marginTop: 4 }}>
+          <input
+            type="checkbox"
+            checked={active}
+            onChange={() => toggleAddon(key)}
+            style={{ display: 'none' }}
+          />
+          <div style={{
+            width: 44,
+            height: 24,
+            borderRadius: 12,
+            background: active ? 'var(--color-primary)' : '#cbd5e1',
+            position: 'relative',
+            transition: 'background 0.2s ease',
+          }}>
+            <div style={{
+              position: 'absolute',
+              top: 2,
+              left: active ? 22 : 2,
+              width: 20,
+              height: 20,
+              borderRadius: '50%',
+              background: '#ffffff',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+              transition: 'left 0.2s ease',
+            }} />
+          </div>
+        </label>
+      </div>
+    );
   };
 
   return (
@@ -105,7 +221,7 @@ export const AdminGeneralSettings: React.FC<AdminGeneralSettingsProps> = ({ onNo
 
         <div>
           <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, marginBottom: 4 }}>
-            Public Phone / Hotline
+            Support Phone Number
           </label>
           <input
             type="text"
@@ -117,7 +233,7 @@ export const AdminGeneralSettings: React.FC<AdminGeneralSettingsProps> = ({ onNo
 
         <div>
           <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, marginBottom: 4 }}>
-            WhatsApp Number (Digits with country code)
+            WhatsApp Number (Intl format, no +)
           </label>
           <input
             type="text"
@@ -129,11 +245,28 @@ export const AdminGeneralSettings: React.FC<AdminGeneralSettingsProps> = ({ onNo
 
         <div>
           <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, marginBottom: 4 }}>
-            USD to Mauritian Rupee (MUR) Exchange Rate
+            Default Base Currency
+          </label>
+          <select
+            className="form-input"
+            value={defaultCurrency}
+            onChange={e => setDefaultCurrency(e.target.value)}
+          >
+            <option value="USD">USD ($)</option>
+            <option value="MUR">MUR (Rs)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="ZAR">ZAR (R)</option>
+          </select>
+        </div>
+
+        <div>
+          <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, marginBottom: 4 }}>
+            MUR Exchange Rate (1 USD = X MUR)
           </label>
           <input
             type="number"
-            step={0.1}
+            step="0.1"
             className="form-input"
             value={murExchangeRate}
             onChange={e => setMurExchangeRate(parseFloat(e.target.value) || 46.5)}
@@ -141,114 +274,109 @@ export const AdminGeneralSettings: React.FC<AdminGeneralSettingsProps> = ({ onNo
         </div>
       </div>
 
-      {/* Feature & Module Activation Section */}
+      {/* ─── ADDON MODULES REGISTRY ─────────────────────────────────────────── */}
       <div>
         <h2 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Sliders size={20} color="var(--color-primary)" />
-          Public Features & Module Activation
+          <Sparkles size={20} color="var(--color-primary)" />
+          Addon Modules & Feature Flags (Activate / Deactivate in Backend)
         </h2>
         <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', margin: '0.25rem 0 0' }}>
-          Instantly control public visibility of optional modules like treatment cost comparison and calculators.
+          Core architectural principle: Every major feature is an independent addon that can be toggled live without code changes.
         </p>
       </div>
 
       <div style={{
         background: 'var(--color-surface)',
-        border: enableCostComparison ? '1.5px solid var(--color-primary)' : '1.5px solid var(--color-border)',
+        border: '1.5px solid var(--color-border)',
         borderRadius: 'var(--radius-xl)',
         padding: '1.5rem',
-        transition: 'all 0.2s ease',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gap: '1rem',
       }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          gap: '1.5rem',
-          flexWrap: 'wrap',
-        }}>
-          <div style={{ flex: 1, minWidth: 260 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.35rem' }}>
-              <Calculator size={20} color="var(--color-primary)" />
-              <strong style={{ fontSize: '1rem', color: 'var(--color-text)' }}>
-                Treatment Cost Comparison & Calculator Module
-              </strong>
-              <span style={{
-                fontSize: '0.72rem',
-                fontWeight: 800,
-                padding: '2px 8px',
-                borderRadius: '999px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px',
-                background: enableCostComparison ? 'rgba(16, 185, 129, 0.15)' : 'rgba(148, 163, 184, 0.15)',
-                color: enableCostComparison ? '#059669' : '#64748b',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 4,
-              }}>
-                {enableCostComparison ? (
-                  <>
-                    <Eye size={12} /> Active on Website
-                  </>
-                ) : (
-                  <>
-                    <EyeOff size={12} /> Hidden from Website
-                  </>
-                )}
-              </span>
-            </div>
-            <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
-              When enabled, visitors can access the interactive Multi-Country Cost Calculator (comparing India, Thailand, Malaysia, Singapore, and Europe) via navigation menus, doctor profile cards, and footer links. When disabled, all public access and links to cost comparisons are hidden.
-            </p>
-          </div>
+        {renderAddonToggle(
+          'addonFloatingWhatsApp',
+          <MessageCircle size={18} color="#10b981" />,
+          'Floating WhatsApp Fast-Contact CTA',
+          'Renders the 24/7 patient WhatsApp floating helper button across all public pages.'
+        )}
 
-          <label style={{
-            position: 'relative',
-            display: 'inline-flex',
-            alignItems: 'center',
-            cursor: 'pointer',
-            flexShrink: 0,
-            marginTop: '0.25rem',
-          }}>
-            <input
-              type="checkbox"
-              checked={enableCostComparison}
-              onChange={e => setEnableCostComparison(e.target.checked)}
-              style={{ display: 'none' }}
-            />
-            <div style={{
-              width: 52,
-              height: 28,
-              borderRadius: 14,
-              background: enableCostComparison ? 'var(--color-primary)' : '#cbd5e1',
-              position: 'relative',
-              transition: 'background 0.25s ease',
-              boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)',
-            }}>
-              <div style={{
-                position: 'absolute',
-                top: 3,
-                left: enableCostComparison ? 27 : 3,
-                width: 22,
-                height: 22,
-                borderRadius: '50%',
-                background: '#ffffff',
-                boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                transition: 'left 0.25s ease',
-              }} />
-            </div>
-            <span style={{ marginLeft: 10, fontSize: '0.85rem', fontWeight: 700, color: 'var(--color-text)' }}>
-              {enableCostComparison ? 'Enabled' : 'Disabled'}
-            </span>
-          </label>
-        </div>
+        {renderAddonToggle(
+          'addonCostCalculator',
+          <Calculator size={18} color="#06b6d4" />,
+          'Treatment Cost Calculator & Comparison',
+          'Enables the interactive cross-country medical procedure cost estimator.'
+        )}
+
+        {renderAddonToggle(
+          'addonPatientStories',
+          <FileSearch size={18} color="#8b5cf6" />,
+          'Verified Patient Stories & Case Studies',
+          'Displays patient recovery testimonials and before/after clinical outcomes.'
+        )}
+
+        {renderAddonToggle(
+          'addonDoctorProfiles',
+          <Building2 size={18} color="#f59e0b" />,
+          'Specialist Doctors & Credentials Directory',
+          'Enables doctor bio cards, qualifications, and hospital affiliation directories.'
+        )}
+
+        {renderAddonToggle(
+          'addonMultiCurrency',
+          <DollarSign size={18} color="#10b981" />,
+          'Live Multi-Currency Conversion Engine',
+          'Allows patients to switch pricing seamlessly between USD, MUR, EUR, GBP, and ZAR.'
+        )}
+
+        {renderAddonToggle(
+          'addonMultiLanguage',
+          <Languages size={18} color="#6366f1" />,
+          'Multi-Lingual Localization (EN / FR / Creole)',
+          'Enables the 3-way language switcher in navigation and auto-translates content.'
+        )}
+
+        {renderAddonToggle(
+          'addonLiveAnalytics',
+          <Activity size={18} color="#ec4899" />,
+          'GA4 & Meta Conversion Telemetry',
+          'Dispatches aggregated, privacy-compliant event tracking and funnel analytics.'
+        )}
+
+        {renderAddonToggle(
+          'addonCookieConsent',
+          <Cookie size={18} color="#f97316" />,
+          'Cookie Consent & Privacy Policy Banner',
+          'Complies with GDPR and Mauritius Data Protection Act 2017 consent requirements.'
+        )}
+
+        {renderAddonToggle(
+          'addonEmergencyBar',
+          <Radio size={18} color="#ef4444" />,
+          'Top Marquee & Emergency Alert Banner',
+          'Renders the emergency broadcast marquee and live patient notices on header.'
+        )}
+
+        {renderAddonToggle(
+          'addonMedicalImagingViewer',
+          <Eye size={18} color="#06b6d4" />,
+          'Medical DICOM & Scan Viewer',
+          'Enables the interactive high-resolution radiological and diagnostic scan viewer.'
+        )}
+
+        {renderAddonToggle(
+          'addonSeoRichSnippets',
+          <Search size={18} color="#059669" />,
+          'JSON-LD Schema & Rich Snippets Engine',
+          'Injects Schema.org structured data (Hospital, Doctor, FAQPage) for Google SERP dominance.'
+        )}
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
         <button type="submit" className="btn btn-primary" style={{ fontWeight: 700, padding: '0.65rem 1.5rem' }}>
-          Save Platform Settings & Module Rules
+          Save Platform Settings & Addon Rules
         </button>
       </div>
     </form>
   );
 };
-
