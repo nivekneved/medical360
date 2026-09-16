@@ -88,24 +88,33 @@ export async function trackWhatsAppConsultation(params: {
     console.warn('Failed to save WhatsApp consultation log:', err);
   }
 
-  // 2. Dispatch webhook payload to serverless endpoint if available
-  try {
-    const res = await fetch('/api/webhooks/whatsapp', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event: 'whatsapp.consultation_initiated',
-        data: logEntry,
-        timestamp,
-      }),
-    });
-    if (res.ok) {
-      logEntry.webhookStatus = 'dispatched';
-    } else {
+  // 2. Dispatch webhook payload to serverless endpoint with keepalive/sendBeacon
+  const webhookPayload = JSON.stringify({
+    event: 'whatsapp.consultation_initiated',
+    data: logEntry,
+    timestamp,
+  });
+
+  if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+    try {
+      const blob = new Blob([webhookPayload], { type: 'application/json' });
+      const sent = navigator.sendBeacon('/api/webhooks/whatsapp', blob);
+      logEntry.webhookStatus = sent ? 'dispatched' : 'mock_logged';
+    } catch {
       logEntry.webhookStatus = 'mock_logged';
     }
-  } catch {
-    logEntry.webhookStatus = 'mock_logged';
+  } else {
+    try {
+      const res = await fetch('/api/webhooks/whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: webhookPayload,
+        keepalive: true,
+      });
+      logEntry.webhookStatus = res.ok ? 'dispatched' : 'mock_logged';
+    } catch {
+      logEntry.webhookStatus = 'mock_logged';
+    }
   }
 
   return logEntry;
