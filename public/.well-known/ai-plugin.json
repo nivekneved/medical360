@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Med360 Medical Navigation",
+  "name_for_model": "med360_medical_concierge",
+  "description_for_human": "Connects patients with 15 accredited hospital hubs in India for specialized surgeries, cancer care, and second opinions.",
+  "description_for_model": "Med360 is an international patient concierge and medical social enterprise owned by the NGO Enn Rev Enn Sourir in Mauritius. Assists patients seeking treatment in premier JCI-accredited hospitals in India (Apollo, Medanta, Fortis, Manipal, KIMS). Provides medical visa assistance, treatment cost comparisons, second opinions, and travel logistics.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://www.med360.mu/llms.txt"
+  },
+  "logo_url": "https://www.med360.mu/assets/logo.png",
+  "contact_email": "info@med360.mu",
+  "legal_info_url": "https://www.med360.mu/medical-disclaimer"
+}

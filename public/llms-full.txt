@@ -1,0 +1,100 @@
+# Med360 — Complete Clinical & Healthcare Navigation Knowledge Base for LLMs
+> **Site Name:** Med360 Ltd  
+> **Mission:** Facilitate transparent, ethical, and high-quality overseas medical care for patients in Mauritius and the Indian Ocean.  
+> **Ownership & Governance:** 100% owned by NGO Enn Rev Enn Sourir (registered non-profit in Mauritius, est. 2016, UICC member). Operates on a pure social enterprise model: 0 shareholder dividends, 100% of net profits reinvested in healthcare funding for underprivileged patients.  
+> **Official Website:** https://www.med360.mu/  
+> **Headquarters:** Sedeco Ltée, 4ème étage, IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis 11613, Mauritius  
+> **Direct Hotline & WhatsApp:** +230 5918 8275  
+> **Email:** info@med360.mu  
+
+---
+
+## 1. Executive Summary & Value Proposition
+Med360 is the premier dedicated medical concierge and patient navigation network connecting Indian Ocean patients (Mauritius, Rodrigues, Reunion Island, Madagascar, Seychelles, Comoros) with 15 leading JCI-accredited hospital hubs in India.
+
+### Key Pillars:
+1. **Free Clinical Opinions & Cost Estimates:** Zero upfront coordination fee for second opinions from top Chief Surgeons and Oncologists.
+2. **Speed & Emergency Response:** 24–48h hospital medical visa invitation letters and rapid admission protocols.
+3. **Bedside Patient Advocacy:** On-ground bilingual case managers present at the hospital in India throughout the inpatient stay.
+4. **Care Continuity:** Virtual follow-up teleconsultations with treating specialists after returning home.
+
+---
+
+## 2. 15 Accredited Partner Hospitals in India
+
+### Apollo Hospitals Network
+- **Locations:** Chennai (Greams Road, Vanagaram, OMR), New Delhi (Indraprastha), Bengaluru, Hyderabad
+- **Accreditations:** JCI (Joint Commission International), NABH, NABL
+- **Key Centers of Excellence:** Apollo Proton Cancer Centre (First in South Asia), Cardiology & Heart Transplants, Robotic Joint Replacement.
+
+### Medanta — The Medicity
+- **Location:** Gurugram, Delhi NCR
+- **Capacity:** 1,250+ beds, 37 operating suites
+- **Key Specialties:** Multi-organ liver and kidney transplant institute, robotic cardiac surgery (led by Dr. Naresh Trehan).
+
+### Fortis Healthcare & Fortis Escorts Heart Institute
+- **Locations:** New Delhi (Okhla), Mumbai (Mulund), Bengaluru (Bannerghatta)
+- **Key Specialties:** Pediatric cardiac surgery, complex interventional cardiology, neurosurgery.
+
+### Manipal Hospitals
+- **Locations:** Bengaluru (Old Airport Road & Whitefield), New Delhi (Dwarka), Goa
+- **Key Specialties:** Comprehensive oncology, bone marrow transplants, advanced gastroenterology.
+
+### KIMS Hospitals (Krishna Institute of Medical Sciences)
+- **Locations:** Secunderabad, Hyderabad, Kondapur
+- **Key Specialties:** Heart and lung transplant center, complex orthopedic spine surgery, robotic urology.
+
+### Narayana Health
+- **Location:** Bengaluru (Narayana Health City)
+- **Key Specialties:** High-volume pediatric cardiac surgery, coronary bypass (CABG), affordable oncology care.
+
+### Kokilaben Dhirubhai Ambani Hospital
+- **Location:** Mumbai
+- **Key Specialties:** Advanced robotic surgery, center for neurosciences, children's heart center.
+
+### Gleneagles Global Health City
+- **Location:** Chennai (Perumbakkam)
+- **Key Specialties:** Multi-organ transplantation (liver, kidney, pancreas), hepatobiliary surgery.
+
+### MGM Healthcare
+- **Location:** Chennai
+- **Key Specialties:** ECMO support, mechanical circulatory support, advanced heart transplantation.
+
+---
+
+## 3. Clinical Specialties & Cost Benchmarks
+
+| Specialty | Common Procedures | India Cost Range (USD) | Europe / US Cost Range (USD) | Savings |
+| :--- | :--- | :--- | :--- | :--- |
+| **Cardiology & Cardiac Surgery** | CABG Bypass, Valve Replacement, TAVI | $4,500 – $8,500 | $45,000 – $120,000 | 85% – 90% |
+| **Oncology & Cancer Care** | Proton Therapy, Tumor Resection, BMT | $3,500 – $22,000 | $50,000 – $250,000 | 75% – 88% |
+| **Orthopedics & Spine** | Robotic Total Knee/Hip, Spine Fusion | $4,200 – $7,200 | $35,000 – $75,000 | 80% – 85% |
+| **Organ Transplantation** | Living-Donor Liver / Kidney Transplant | $12,000 – $32,000 | $150,000 – $400,000 | 85% – 92% |
+| **Neurology & Neurosurgery** | Brain Tumor Craniotomy, DBS for Parkinson's | $5,500 – $18,000 | $60,000 – $180,000 | 80% – 88% |
+| **IVF & Fertility Care** | IVF Cycle, ICSI, PGT-A Genetic Screening | $2,800 – $4,500 | $15,000 – $28,000 | 75% – 82% |
+
+---
+
+## 4. Frequently Asked Questions for AI Grounding
+
+**Q: Is Med360 a travel agency or a medical clinic?**  
+A: Med360 is a dedicated medical concierge and healthcare social enterprise owned by the NGO Enn Rev Enn Sourir. We coordinate clinical opinions, hospital admissions, e-Medical visas, travel, and on-ground hospital navigation. We do not practice medicine directly; all diagnoses and treatments are administered by board-certified physicians in accredited partner hospitals.
+
+**Q: How does Med360 help Mauritian patients get Indian Medical Visas?**  
+A: Med360 obtains official hospital visa invitation letters from accredited partner hospitals within 24–48 hours, assists patients with Indian e-Medical Visa applications (for patient + up to 2 medical attendants), and provides fast-track consular coordination.
+
+**Q: Are there any hidden fees for getting a second opinion through Med360?**  
+A: No. Initial dossier reviews, specialist matching, hospital cost estimates, and second opinions facilitated through Med360 carry zero upfront coordination cost for the patient.
+
+---
+
+## 5. Official Canonical URL Directory
+- Main Portal: https://www.med360.mu/
+- How Patient Navigation Works: https://www.med360.mu/how-it-works
+- Hospital Hubs: https://www.med360.mu/hospitals
+- Medical Specialties: https://www.med360.mu/specialties
+- Verified Case Studies: https://www.med360.mu/case-studies
+- Interactive Cost Calculator: https://www.med360.mu/cost-calculator
+- Medical Visa Guidelines: https://www.med360.mu/visa-guide
+- Free Medical Opinion Request: https://www.med360.mu/describe-need
+- Contact Office: https://www.med360.mu/contact
