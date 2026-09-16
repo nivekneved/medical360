@@ -1,5 +1,5 @@
-# Med360 Robots Policy & AI Crawler Directives
-# Optimized for Googlebot, Google AI Overviews, GPTBot, ClaudeBot, PerplexityBot, and Bingbot
+# Med360 Robots Policy & AI Crawler Directives (GEO & LLM Optimized)
+# Full access granted for AI Search Engines, Answer Engines, and Traditional Web Crawlers
 
 User-agent: *
 Allow: /
@@ -19,11 +19,10 @@ Allow: /terms
 Allow: /cookies
 Allow: /medical-disclaimer
 Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /.well-known/ai-plugin.json
 
-# Specific Search & AI Answer Engines
-User-agent: Googlebot
-Allow: /
-
+# ── Generative Engine Optimization (GEO) & AI Search Agents ──
 User-agent: GPTBot
 Allow: /
 
@@ -33,21 +32,51 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: Claude-Web
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
-User-agent: Bingbot
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
 Allow: /
 
 User-agent: Applebot
 Allow: /
 
-# Disallow Private Administrative Routes
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# ── Traditional Web Crawlers ──
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# ── Private Admin Endpoints Disallowed ──
 Disallow: /admin
 Disallow: /admin/*
 Disallow: /api/
 
-# XML Sitemap Directives
+# ── Machine-Readable AI & Search Feeds ──
 Sitemap: https://www.med360.mu/sitemap.xml
 Sitemap: https://www.med360.mu/sitemap_index.xml
-

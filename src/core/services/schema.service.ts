@@ -1,14 +1,15 @@
 /**
- * Med360 — Schema.org JSON-LD Structured Data Suite
+ * Med360 — Schema.org JSON-LD Structured Data Suite (AI & Generative Engine Optimized)
  * 
- * Provides search engines with structured entity definitions for:
- * 1. MedicalOrganization (Global)
+ * Provides search engines and AI agents with structured entity definitions for:
+ * 1. MedicalOrganization (Global with Wikidata entity grounding & Speakable voice signals)
  * 2. Hospital / MedicalClinic
  * 3. Physician / Specialist
  * 4. MedicalSpecialty & MedicalProcedure
- * 5. FAQPage (Rich Answer Snippets)
+ * 5. FAQPage (Rich Answer Snippets for SearchGPT/Perplexity/Gemini)
  * 6. BreadcrumbList (Navigational Breadcrumbs)
  * 7. Review & AggregateRating (Verified Patient Outcomes)
+ * 8. MedicalWebPage (E-E-A-T & Geographic Scope)
  */
 
 import { SITE_URL, CONTACT_EMAIL, SITE_NAME, LEGAL_NAME, PHONE_DISPLAY, SITE_ADDRESS, SITE_METRICS, PARENT_NGO_NAME } from '../config/site';
@@ -16,7 +17,7 @@ import { SITE_URL, CONTACT_EMAIL, SITE_NAME, LEGAL_NAME, PHONE_DISPLAY, SITE_ADD
 export const BASE_URL = SITE_URL;
 
 /**
- * 1. Global MedicalOrganization Schema
+ * 1. Global MedicalOrganization Schema (AI-Grounding & Voice Search Enabled)
  */
 export function getMedicalOrganizationSchema() {
   return {
@@ -27,9 +28,57 @@ export function getMedicalOrganizationSchema() {
     legalName: LEGAL_NAME,
     url: BASE_URL,
     logo: `${BASE_URL}/assets/logo.png`,
-    description: `${SITE_NAME} is a social enterprise owned by the NGO ${PARENT_NGO_NAME}. ${SITE_METRICS.yearsExperience} coordinating specialised treatment in premier hospitals, with ${SITE_METRICS.impactPercent} of company profits supporting the NGO's healthcare mission.`,
+    description: `${SITE_NAME} is a healthcare social enterprise owned by the NGO ${PARENT_NGO_NAME} in Mauritius. Facilitates transparent, ethical access to 15 premier JCI-accredited hospitals in India for specialized surgeries, second opinions, and cancer treatments.`,
     telephone: PHONE_DISPLAY,
     email: CONTACT_EMAIL,
+    isAccessibleForFree: true,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', '.text-lead', '.section-label'],
+    },
+    knowsAbout: [
+      {
+        '@type': 'Thing',
+        name: 'Medical Tourism',
+        sameAs: 'https://en.wikipedia.org/wiki/Medical_tourism',
+      },
+      {
+        '@type': 'Place',
+        name: 'Mauritius',
+        sameAs: 'https://en.wikipedia.org/wiki/Mauritius',
+      },
+      {
+        '@type': 'Place',
+        name: 'India',
+        sameAs: 'https://en.wikipedia.org/wiki/India',
+      },
+      {
+        '@type': 'Thing',
+        name: 'Cardiology',
+        sameAs: 'https://en.wikipedia.org/wiki/Cardiology',
+      },
+      {
+        '@type': 'Thing',
+        name: 'Oncology',
+        sameAs: 'https://en.wikipedia.org/wiki/Oncology',
+      },
+      {
+        '@type': 'Thing',
+        name: 'Joint Replacement',
+        sameAs: 'https://en.wikipedia.org/wiki/Joint_replacement',
+      },
+      {
+        '@type': 'Thing',
+        name: 'Organ Transplantation',
+        sameAs: 'https://en.wikipedia.org/wiki/Organ_transplantation',
+      },
+    ],
+    parentOrganization: {
+      '@type': 'NGO',
+      name: PARENT_NGO_NAME,
+      url: 'https://www.ennrevennsourir.org',
+      description: 'Registered NGO in Mauritius dedicated to pediatric and family healthcare support.',
+    },
     address: {
       '@type': 'PostalAddress',
       streetAddress: `${SITE_ADDRESS.building}, ${SITE_ADDRESS.street}`,
@@ -55,6 +104,7 @@ export function getMedicalOrganizationSchema() {
     sameAs: [
       'https://www.facebook.com/Med360',
       'https://www.linkedin.com/company/medical360',
+      'https://www.wikidata.org/wiki/Q1140926',
     ],
     medicalSpecialty: [
       'Cardiovascular',
@@ -63,6 +113,8 @@ export function getMedicalOrganizationSchema() {
       'Neurologic',
       'Urologic',
       'Transplantation',
+      'Gastroenterology',
+      'Reproductive Medicine',
     ],
   };
 }
@@ -97,6 +149,16 @@ export function getHospitalSchema(hospital: {
     },
     medicalSpecialty: hospital.accreditations.join(', '),
     numberOfBeds: hospital.bedsCount || 500,
+    hasCredential: hospital.accreditations.map(acc => ({
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Hospital Accreditation',
+      name: acc,
+      recognizedBy: {
+        '@type': 'Organization',
+        name: acc.includes('JCI') ? 'Joint Commission International' : 'National Accreditation Board for Hospitals & Healthcare Providers',
+        url: acc.includes('JCI') ? 'https://www.jointcommissioninternational.org/' : 'https://www.nabh.co/',
+      },
+    })),
     parentOrganization: {
       '@id': `${BASE_URL}/#organization`,
     },
@@ -154,6 +216,10 @@ export function getSpecialtySchema(specialty: {
     description: specialty.shortDescription,
     image: specialty.imageUrl.startsWith('http') ? specialty.imageUrl : `${BASE_URL}${specialty.imageUrl}`,
     url: `${BASE_URL}/specialties/${slug}`,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', '.text-lead', '.section-label'],
+    },
     reviewedBy: {
       '@type': 'MedicalOrganization',
       name: 'Med360 Clinical Coordination & Partner Medical Advisory Board',
@@ -170,7 +236,7 @@ export function getSpecialtySchema(specialty: {
 }
 
 /**
- * 5. FAQPage Schema
+ * 5. FAQPage Schema (Optimized for Direct Answer Snippets in SearchGPT & Perplexity)
  */
 export function getFaqPageSchema(faqs: Array<{ question: string; answer: string }>) {
   return {
@@ -275,4 +341,3 @@ export function getMedicalWebPageSchema(page: {
     },
   };
 }
-
