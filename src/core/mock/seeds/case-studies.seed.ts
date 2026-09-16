@@ -23,7 +23,7 @@ export const caseStudiesSeed: CaseStudy[] = [
     costSavedPercent: 65,
     durationDays: 18,
     year: 2024,
-    imageUrl: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80',
     featured: true,
   },
   {
@@ -48,7 +48,7 @@ export const caseStudiesSeed: CaseStudy[] = [
     costSavedPercent: 60,
     durationDays: 22,
     year: 2024,
-    imageUrl: 'https://images.unsplash.com/photo-1612531385446-f7e6d131e1d0?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80',
     featured: true,
   },
   {
@@ -98,7 +98,7 @@ export const caseStudiesSeed: CaseStudy[] = [
     costSavedPercent: 40,
     durationDays: 45,
     year: 2023,
-    imageUrl: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80',
     featured: true,
   },
   {
@@ -123,7 +123,7 @@ export const caseStudiesSeed: CaseStudy[] = [
     costSavedPercent: 70,
     durationDays: 14,
     year: 2024,
-    imageUrl: 'https://images.unsplash.com/photo-1571772996211-2f02c9727629?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80',
     featured: true,
   },
   {
@@ -148,7 +148,7 @@ export const caseStudiesSeed: CaseStudy[] = [
     costSavedPercent: 62,
     durationDays: 8,
     year: 2024,
-    imageUrl: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80',
     featured: false,
   },
   {
@@ -198,7 +198,7 @@ export const caseStudiesSeed: CaseStudy[] = [
     costSavedPercent: 55,
     durationDays: 14,
     year: 2023,
-    imageUrl: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=800&q=80',
     featured: false,
   },
 ];

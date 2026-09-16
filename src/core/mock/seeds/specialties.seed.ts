@@ -154,7 +154,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Post-mastectomy breast reconstruction, microsurgical tissue transfer, cleft lip/palate repair, rhinoplasty, body contouring, and reconstructive trauma care with natural aesthetic outcomes.',
     description_fr: 'Reconstruction mammaire post-mastectomie, transfert tissulaire microchirurgical, rhinoplastie et remodelage corporel.',
     description_kr: 'Rekonstriksion apre maladi, sirirzi kouma rhinoplastie ek remodelaz lekor.',
-    imageUrl: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&q=80',
+    imageUrl: '/assets/banners/cosmetic_surgery.jpg',
     featured: false,
     procedures: [
       { id: 'proc-cosm-1', specialtyId: 'sp-cosmetic', name: 'Post-Cancer Breast Reconstruction', name_fr: 'Reconstruction Mammaire Post-Cancer', name_kr: 'Rekonstriksion Pwatrin Apre Kanser', description: 'Autologous flap or implant-based anatomical breast reconstruction.', description_fr: 'Reconstruction par lambeau autologue ou implants après mastectomie.', description_kr: 'Rekonstriksion pwatrin pou restore fason natirel.', estimatedDurationDays: 7, estimatedCostUSD: { min: 4500, max: 9000 } },
@@ -173,7 +173,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Advanced IVF with ICSI, pre-implantation genetic testing (PGT-A/M), egg freezing, hysteroscopy, and treatment of male and female infertility in accredited embryology laboratories.',
     description_fr: 'FIV avec ICSI, dépistage génétique préimplantatoire (DPI), congélation d\'ovocytes et traitement global de l\'infertilité.',
     description_kr: 'Teknolosi FIV modern, tes zenetik ek akonpanyeman personalize pou fer zanfan.',
-    imageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1583912267670-6575ad472688?w=800&q=80',
     featured: false,
     procedures: [
       { id: 'proc-fert-1', specialtyId: 'sp-fertility', name: 'IVF Cycle with ICSI & Blastocyst Culture', name_fr: 'Cycle de FIV avec ICSI & Culture Blastocyste', name_kr: 'Sik FIV avek ICSI', description: 'Full ovarian stimulation, ultrasound monitoring, ICSI, and embryo transfer.', description_fr: 'Cycle complet de FIV avec injection intracytoplasmique et transfert d\'embryon.', description_kr: 'Program FIV konple avek sipor labo embrion de pwent.', estimatedDurationDays: 18, estimatedCostUSD: { min: 3500, max: 7000 } },
@@ -192,7 +192,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Vitreo-retinal surgery, corneal transplantation (DALK/DMEK), advanced cataract micro-incisions, glaucoma filtering surgery, and paediatric eye care at world-renowned eye institutes such as Sankara Nethralaya.',
     description_fr: 'Chirurgie vitréo-rétinienne, greffe de cornée et microchirurgie de la cataracte dans des instituts de renommée mondiale.',
     description_kr: 'Operasion retin, gref korne ek katarakt dan bann meyer sant lizie.',
-    imageUrl: 'https://images.unsplash.com/photo-1579684453423-f84349ef60b0?w=800&q=80',
+    imageUrl: '/assets/banners/corneal_case_study.jpg',
     featured: false,
     procedures: [
       { id: 'proc-ophth-1', specialtyId: 'sp-ophthalmology', name: 'Vitrectomy & Retinal Detachment Repair', name_fr: 'Vitrectomie & Réparation Décollement Rétine', name_kr: 'Vitrectomi & Reparasion Retin', description: 'Microsurgical vitrectomy for retinal detachment, macular hole or diabetic retinopathy.', description_fr: 'Microchirurgie vitréo-rétinienne pour décollement et rétinopathie diabétique.', description_kr: 'Operasion mikrosirirzikal pou sov la vi lizie.', estimatedDurationDays: 5, estimatedCostUSD: { min: 2500, max: 5500 } },
@@ -211,7 +211,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Robotic radical prostatectomy, laser lithotripsy (RIRS) for kidney stones, nephron-sparing partial nephrectomy, dialysis access (AV fistula), and reconstructive urology.',
     description_fr: 'Prostatectomie robotique, lithotripsie laser pour calculs rénaux et prise en charge des maladies rénales chroniques.',
     description_kr: 'Tretman laser pou ros lerin, operasion prostat robotik ek kordonasion dializ.',
-    imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80',
     featured: false,
     procedures: [
       { id: 'proc-uro-1', specialtyId: 'sp-urology', name: 'Laser Lithotripsy (RIRS) for Kidney Stones', name_fr: 'Lithotripsie Laser Répétée (RIRS) Calculs Rénaux', name_kr: 'Laser RIRS pou Ros Lerin', description: 'Endoscopic retrograde intrarenal laser fragmentation without incisions.', description_fr: 'Fragmentation endoscopique au laser sans incision cutanée.', description_kr: 'Kraz ros lerin avek laser san bizin koupe.', estimatedDurationDays: 3, estimatedCostUSD: { min: 2200, max: 4800 } },
@@ -249,7 +249,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Video-Assisted Thoracoscopic Surgery (VATS), robotic lobectomy for lung lesions, endobronchial ultrasound (EBUS), and pulmonary rehabilitation.',
     description_fr: 'Chirurgie thoracique vidéo-assistée (VATS), résection pulmonaire robotique et exploration bronchique approfondie (EBUS).',
     description_kr: 'Operasion poumon mini-invazif (VATS) ek tretman avanse pou bann problem respiratwar.',
-    imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=800&q=80',
     featured: false,
     procedures: [
       { id: 'proc-pulm-1', specialtyId: 'sp-pulmonology', name: 'VATS Minimally Invasive Thoracic Surgery', name_fr: 'Chirurgie Thoracique Mini-Invasive (VATS)', name_kr: 'Sirirzi Thoracik Mini-Invazif (VATS)', description: 'Video-guided keyhole thoracic resection with expedited recovery.', description_fr: 'Résection pulmonaire par vidéothoracoscopie avec récupération rapide.', description_kr: 'Operasion poumon par ti-trou gide par video pou rekiperasion vit.', estimatedDurationDays: 7, estimatedCostUSD: { min: 5500, max: 11500 } },
@@ -268,7 +268,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Laparoscopic and robotic hysterectomy, complex myomectomy (fibroids), advanced endometriosis excision, pelvic floor reconstruction, and gynaecologic oncology.',
     description_fr: 'Hystérectomie et myomectomie cœlioscopique ou robotique, chirurgie de l\'endométriose profonde et oncologie gynécologique.',
     description_kr: 'Operasion laparoskopik pou fibrom, endometrioz ek lezot problem lasante fam.',
-    imageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80',
     featured: false,
     procedures: [
       { id: 'proc-gyn-1', specialtyId: 'sp-gynecology', name: 'Laparoscopic / Robotic Myomectomy', name_fr: 'Myomectomie Cœlioscopique / Robotique', name_kr: 'Laparoskopi pou Fibrom', description: 'Minimally invasive uterine-sparing removal of symptomatic fibroids.', description_fr: 'Ablation mini-invasive des fibromes préservant la fertilité utérine.', description_kr: 'Operasion mini-invazif pou tir bann fibrom san afekte la fertilite.', estimatedDurationDays: 5, estimatedCostUSD: { min: 3200, max: 6800 } },
@@ -287,7 +287,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Advanced therapeutic endoscopy (ERCP, EUS, ESD), laparoscopic colorectal surgery, bariatric and metabolic surgery, and complex hepatobiliary and pancreatic resections.',
     description_fr: 'Endoscopie interventionnelle avancée (CPRE, écho-endoscopie), chirurgie colorectale mini-invasive et résections hépato-biliaires.',
     description_kr: 'Endoskopi avanse (ERCP), sirirzi lestoma ek fwa par laparoskopi.',
-    imageUrl: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80',
     featured: false,
     procedures: [
       { id: 'proc-gi-1', specialtyId: 'sp-gastroenterology', name: 'Advanced ERCP & Hepatobiliary Interventions', name_fr: 'CPRE Avancée & Interventions Hépato-Biliaires', name_kr: 'ERCP Avanse & Traitman Kanal Biler', description: 'Endoscopic clearance of biliary stones, stenting and tumour palliation.', description_fr: 'Extraction endoscopique de calculs biliaires et pose de prothèses.', description_kr: 'Endoskopi pou tir ros dan kanal biler ek poz stent.', estimatedDurationDays: 4, estimatedCostUSD: { min: 2500, max: 5500 } },
