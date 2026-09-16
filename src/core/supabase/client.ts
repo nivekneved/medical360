@@ -16,6 +16,23 @@ const fallbackKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_token';
 
 export const supabase: SupabaseClient = createClient(
   isSupabaseConfigured ? supabaseUrl : fallbackUrl,
-  isSupabaseConfigured ? supabaseAnonKey : fallbackKey
+  isSupabaseConfigured ? supabaseAnonKey : fallbackKey,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: false,
+    },
+    global: {
+      headers: {
+        'x-client-info': 'med360-web-v1',
+      },
+    },
+    realtime: {
+      params: {
+        eventsPerSecond: 5,
+      },
+    },
+  }
 );
 
