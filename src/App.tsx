@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { ThemeProvider } from './providers/ThemeProvider';
 import { CurrencyProvider } from './providers/CurrencyProvider';
@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from './providers/AuthProvider';
 import { ToastProvider } from './providers/ToastProvider';
 import { HelmetProvider } from 'react-helmet-async';
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+import { enforceFrameBusting } from './core/services/security.service';
 
 // Public layout components (eager)
 import { Navbar } from './components/Navbar/Navbar';
@@ -193,6 +194,10 @@ function AdminGuard() {
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
+  useEffect(() => {
+    enforceFrameBusting();
+  }, []);
+
   return (
     <ErrorBoundary>
       <HelmetProvider>
