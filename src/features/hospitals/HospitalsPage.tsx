@@ -138,8 +138,12 @@ export function HospitalsPage() {
           marginBottom: '2rem',
           boxShadow: '0 4px 20px rgba(0,0,0,0.04)'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
-            <Building2 size={24} color="var(--color-primary)" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '0.85rem' }}>
+            <img 
+              src="/assets/banners/hospitals_banner.jpg" 
+              alt="Hospital Network Support" 
+              style={{ width: 44, height: 44, borderRadius: 10, objectFit: 'cover', flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }} 
+            />
             <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>
               {isFr ? 'Accompagnement & Sélection Hospitalière' : isKr ? 'Akonpanyeman & Swazir Lopital' : 'Patient Support & Hospital Selection'}
             </h3>
@@ -164,7 +168,11 @@ export function HospitalsPage() {
         <div className="spec-helper-card" style={{ marginBottom: '1.75rem' }}>
           <div className="spec-helper-card__left">
             <div className="spec-helper-card__icon" aria-hidden="true">
-              <HelpCircle size={28} />
+              <img 
+                src="/assets/consultation-support.jpg" 
+                alt="Patient Navigator" 
+                className="spec-helper-card__avatar-img" 
+              />
             </div>
             <div>
               <h3 className="spec-helper-card__title">

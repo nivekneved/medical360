@@ -119,7 +119,11 @@ export function CaseStudiesPage() {
         <div className="spec-helper-card" style={{ marginBottom: '1.75rem' }}>
           <div className="spec-helper-card__left">
             <div className="spec-helper-card__icon" aria-hidden="true">
-              <HelpCircle size={28} />
+              <img 
+                src="/assets/consultation-support.jpg" 
+                alt="Compassionate Guidance" 
+                className="spec-helper-card__avatar-img" 
+              />
             </div>
             <div>
               <h3 className="spec-helper-card__title">

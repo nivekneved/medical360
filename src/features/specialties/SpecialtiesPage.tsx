@@ -106,7 +106,11 @@ export function SpecialtiesPage() {
         <div className="spec-helper-card">
           <div className="spec-helper-card__left">
             <div className="spec-helper-card__icon" aria-hidden="true">
-              <HelpCircle size={28} />
+              <img 
+                src="/assets/consultation-support.jpg" 
+                alt="Specialist Guidance" 
+                className="spec-helper-card__avatar-img" 
+              />
             </div>
             <div>
               <h3 className="spec-helper-card__title">
