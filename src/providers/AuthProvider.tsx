@@ -1,6 +1,12 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { AdminUser } from '../core/types';
 import { supabase, isSupabaseConfigured } from '../core/supabase/client';
+import {
+  constantTimeEquals,
+  generateStorageChecksum,
+  verifyStorageChecksum,
+  generateSessionFingerprint,
+} from '../core/services/security.service';
 
 // ─── Fallback Admin Credentials ───────────────────────────────────────────────
 const MOCK_ADMINS: AdminUser[] = [
@@ -10,6 +16,34 @@ const MOCK_ADMINS: AdminUser[] = [
 ];
 
 const MOCK_PASSWORD = 'med360admin';
+
+function saveSecureSession(user: AdminUser) {
+  try {
+    const raw = JSON.stringify({ user, timestamp: Date.now(), fp: generateSessionFingerprint() });
+    const b64 = btoa(raw);
+    const checksum = generateStorageChecksum(b64);
+    sessionStorage.setItem('med360_admin_user', b64);
+    sessionStorage.setItem('med360_admin_sig', checksum);
+  } catch {}
+}
+
+function loadSecureSession(): AdminUser | null {
+  try {
+    const b64 = sessionStorage.getItem('med360_admin_user');
+    const sig = sessionStorage.getItem('med360_admin_sig');
+    if (!b64 || !sig) return null;
+    if (!verifyStorageChecksum(b64, sig)) {
+      console.warn('🛡️ Security: Tampered session detected in storage.');
+      sessionStorage.removeItem('med360_admin_user');
+      sessionStorage.removeItem('med360_admin_sig');
+      return null;
+    }
+    const data = JSON.parse(atob(b64));
+    return data.user || null;
+  } catch {
+    return null;
+  }
+}
 
 // ─── Context Shape ────────────────────────────────────────────────────────────
 interface AuthContextValue {
@@ -23,14 +57,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 // ─── Provider ─────────────────────────────────────────────────────────────────
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AdminUser | null>(() => {
-    try {
-      const stored = sessionStorage.getItem('med360_admin_user');
-      return stored ? JSON.parse(atob(stored)) : null;
-    } catch {
-      return null;
-    }
-  });
+  const [user, setUser] = useState<AdminUser | null>(() => loadSecureSession());
 
   // Listen to live Supabase Auth session changes
   useEffect(() => {
@@ -46,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           active: true,
         };
         setUser(adminUser);
-        sessionStorage.setItem('med360_admin_user', btoa(JSON.stringify(adminUser)));
+        saveSecureSession(adminUser);
       }
     }).catch(() => {});
 
@@ -60,7 +87,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           active: true,
         };
         setUser(adminUser);
-        sessionStorage.setItem('med360_admin_user', btoa(JSON.stringify(adminUser)));
+        saveSecureSession(adminUser);
       } else if (!session && !sessionStorage.getItem('med360_admin_user')) {
         setUser(null);
       }
@@ -101,7 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             active: true,
           };
           setUser(adminUser);
-          sessionStorage.setItem('med360_admin_user', btoa(JSON.stringify(adminUser)));
+          saveSecureSession(adminUser);
           return true;
         }
       } catch (err) {
@@ -109,9 +136,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     }
 
-    // 2. Fallback Mock/Emergency Credentials Check
-    const fallbackMatch = MOCK_ADMINS.find(a => a.email.toLowerCase() === email.toLowerCase() && a.active);
-    if (!fallbackMatch || password !== MOCK_PASSWORD) {
+    // 2. Fallback Mock/Emergency Credentials Check (Timing-attack resistant constant-time check)
+    const fallbackMatch = MOCK_ADMINS.find(a => constantTimeEquals(a.email.toLowerCase(), email.toLowerCase()) && a.active);
+    if (!fallbackMatch || !constantTimeEquals(password, MOCK_PASSWORD)) {
       const newAttempts = attempts + 1;
       localStorage.setItem('med360_login_attempts', newAttempts.toString());
       
@@ -127,7 +154,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('med360_lockout_until');
     
     setUser(fallbackMatch);
-    sessionStorage.setItem('med360_admin_user', btoa(JSON.stringify(fallbackMatch)));
+    saveSecureSession(fallbackMatch);
     return true;
   }
 
@@ -137,6 +164,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     setUser(null);
     sessionStorage.removeItem('med360_admin_user');
+    sessionStorage.removeItem('med360_admin_sig');
   }
 
   return (

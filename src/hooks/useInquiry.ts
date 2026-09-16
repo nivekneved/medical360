@@ -10,6 +10,9 @@ import {
   checkRateLimit,
   sanitizeInput,
   detectSqlInjection,
+  detectPromptInjection,
+  normalizeUnicode,
+  sanitizeErrorMessage,
 } from '../core/services/security.service';
 
 // ─── Step form data shape ─────────────────────────────────────────────────────
@@ -112,7 +115,13 @@ export function useInquiry() {
 
     // 3. Client Rate Limit
     const rateCheck = checkRateLimit('web_inquiry_submit', 5, 10 * 60 * 1000);
-    // 4. SQL Injection Check
+    if (!rateCheck.allowed) {
+      setError(`Too many submission attempts. Please wait ${rateCheck.remainingCooldownSeconds} seconds.`);
+      setSubmitting(false);
+      return;
+    }
+
+    // 4. SQL Injection & Prompt Injection Check
     const rawInputs = [formData.firstName, formData.lastName, formData.email, formData.phone, formData.description];
     if (rawInputs.some(detectSqlInjection)) {
       console.warn('🛡️ Security: SQL Injection payload detected in inquiry submission.');
@@ -121,13 +130,20 @@ export function useInquiry() {
       return;
     }
 
+    if (detectPromptInjection(formData.description)) {
+      console.warn('🛡️ Security: Prompt Injection pattern detected in clinical description.');
+      setError('Prohibited automated prompt instructions detected in medical note.');
+      setSubmitting(false);
+      return;
+    }
+
     try {
-      // 5. Input Sanitization (XSS & Injection Protection)
-      const cleanFirstName = sanitizeInput(formData.firstName);
-      const cleanLastName  = sanitizeInput(formData.lastName);
-      const cleanPhone     = sanitizeInput(formData.phone);
-      const cleanEmail     = sanitizeInput(formData.email);
-      const cleanDesc      = sanitizeInput(formData.description);
+      // 5. Input Sanitization & Unicode Normalization (XSS & Injection Protection)
+      const cleanFirstName = sanitizeInput(normalizeUnicode(formData.firstName));
+      const cleanLastName  = sanitizeInput(normalizeUnicode(formData.lastName));
+      const cleanPhone     = sanitizeInput(normalizeUnicode(formData.phone));
+      const cleanEmail     = sanitizeInput(normalizeUnicode(formData.email));
+      const cleanDesc      = sanitizeInput(normalizeUnicode(formData.description));
 
       const inquiry = await mockEngine.createInquiry({
         firstName: cleanFirstName,
