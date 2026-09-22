@@ -1,4 +1,4 @@
-import { Heart, Users, Globe2, Shield, Trophy, Award, Sparkles } from 'lucide-react';
+import { Heart, Users, Globe2, Shield } from 'lucide-react';
 import { SITE_METRICS, PARENT_NGO_NAME } from '../../core/config/site';
 
 /**
@@ -111,60 +111,6 @@ export const FOOTNOTES = [
   },
 ];
 
-export const AWARDS = [
-  {
-    id: 'award-1',
-    year: '2025',
-    title: 'Excellence in Medical Travel Facilitation — Indian Ocean',
-    title_fr: 'Excellence en Facilitation Médicale — Océan Indien',
-    title_kr: 'Lekselans dan Kordonasion Vwayaz Medikal — Losean Indien',
-    organization: 'Global Health & Travel Asia-Pacific Awards',
-    organization_fr: 'Prix Asie-Pacifique Santé & Tourisme Mondial',
-    organization_kr: 'Global Health & Travel Asia-Pacific',
-    description: 'Recognized for high standards of clinical navigation, rapid specialist review coordination, and strict partner hospital accreditation compliance.',
-    description_fr: 'Décerné pour la qualité remarquable de l\'accompagnement patient, la coordination rapide d\'avis médicaux et le respect rigoureux des accréditations hospitalières.',
-    description_kr: 'Rekonpans pou kalite kordonasion pasian, rapidite lavi dokter ek respe bann gran sertifikasion JCI.',
-    icon: Trophy,
-    color: '#f59e0b',
-    badge: 'Winner 2025',
-    badge_fr: 'Lauréat 2025',
-    badge_kr: 'Gagnan 2025',
-  },
-  {
-    id: 'award-2',
-    year: '2024',
-    title: 'Excellence in Patient Concierge & Bedside Care',
-    title_fr: 'Excellence en Conciergerie Médicale & Soins aux Patients',
-    title_kr: 'Lekselans dan Konsierzri & Akonpanyeman Pasian',
-    organization: 'African Healthcare Leadership Summit',
-    organization_fr: 'Sommet des Leaders de la Santé Africaine',
-    organization_kr: 'African Healthcare Leadership',
-    description: 'Recognized for compassionate, end-to-end patient logistics, dedicated multilingual bedside coordinators, and patient-first ethics.',
-    description_fr: 'Reconnu pour son accompagnement humain de bout en bout, ses coordinateurs multilingues dédiés sur place et son éthique centrée sur le patient.',
-    description_kr: 'Rekonet pou enn servis bien imin, kordonater lor plas ek proteksion drwa pasian.',
-    icon: Award,
-    color: '#10b981',
-    badge: 'Gold Distinction',
-    badge_fr: 'Distinction Or',
-    badge_kr: 'Distinksion Lor',
-  },
-  {
-    id: 'award-3',
-    year: '2024',
-    title: 'Cross-Border Healthcare Innovation Award',
-    title_fr: 'Prix de l\'Innovation en Santé Transfrontalière',
-    title_kr: 'Pri Inovasion dan Swen Transfrontalie',
-    organization: 'Indian Ocean Healthcare & Wellness Forum',
-    organization_fr: 'Forum Santé & Bien-être de l\'Océan Indien',
-    organization_kr: 'Forum Sante Losean Indien',
-    description: 'Honored for connecting patients in Mauritius directly with leading overseas chief surgeons via secure video teleconsultations.',
-    description_fr: 'Récompensé pour la mise en relation directe des patients avec les plus grands spécialistes internationaux via téléconsultations vidéo sécurisées.',
-    description_kr: 'Pri inovasion pou koneksyon digital rapid ant pasian Morisien ek bann sef sirizien renome.',
-    icon: Sparkles,
-    color: '#3b82f6',
-    badge: 'Innovation Award',
-    badge_fr: 'Prix Innovation',
-    badge_kr: 'Pri Inovasion',
-  },
-];
+// AWARDS section removed — no verified awards to display.
+// Add real award data here when the client provides confirmed recognitions.
 
