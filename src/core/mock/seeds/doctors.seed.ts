@@ -1,116 +1,17 @@
 import type { Doctor } from '../../types';
 
-export const doctorsSeed: Doctor[] = [
-  {
-    id: 'doc-1',
-    hospitalId: 'hosp-apollo',
-    hospitalIds: ['hosp-apollo', 'hosp-max-saket'],
-    name: 'Dr. Devi Prasad Shetty',
-    title: 'Chairman & Chief Cardiac Surgeon',
-    specialties: ['sp-cardiology'],
-    qualifications: ['MBBS', 'MS (General Surgery)', 'FRCS (Cardiothoracic Surgery - UK)'],
-    experience: 36,
-    surgeries: 15000,
-    languages: ['English', 'Hindi', 'Kannada'],
-    imageUrl: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=800&q=80',
-    bio: 'World-renowned cardiothoracic surgeon who has performed over 15,000 heart surgeries. Pioneer of high-volume, low-cost micro-precision cardiac care assisting patients across the Indian Ocean.',
-    consultationFeeUSD: 60,
-    featured: true,
-  },
-  {
-    id: 'doc-2',
-    hospitalId: 'hosp-medanta',
-    hospitalIds: ['hosp-medanta', 'hosp-fortis-escorts'],
-    name: 'Dr. Naresh Trehan',
-    title: 'Chairman & Managing Director, Cardiovascular Surgeon',
-    specialties: ['sp-cardiology'],
-    qualifications: ['MBBS', 'Diplomate American Board of Surgery', 'Diplomate American Board of Cardiothoracic Surgery'],
-    experience: 42,
-    surgeries: 48000,
-    languages: ['English', 'Hindi', 'Punjabi'],
-    imageUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=800&q=80',
-    bio: 'Former Assistant Professor of Surgery at NYU Medical Center. Pioneered robotic heart surgery and minimally invasive coronary artery bypass surgery in Asia.',
-    consultationFeeUSD: 75,
-    featured: true,
-  },
-  {
-    id: 'doc-3',
-    hospitalId: 'hosp-max-saket',
-    hospitalIds: ['hosp-max-saket', 'hosp-kokilaben'],
-    name: 'Dr. Harit Chaturvedi',
-    title: 'Chairman - Max Institute of Cancer Care',
-    specialties: ['sp-oncology', 'sp-gastroenterology'],
-    qualifications: ['MBBS', 'MS (General Surgery)', 'MCh (Surgical Oncology)'],
-    experience: 28,
-    surgeries: 11000,
-    languages: ['English', 'Hindi'],
-    imageUrl: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=800&q=80',
-    bio: 'Renowned surgical oncologist with over 28 years of clinical leadership in advanced gastrointestinal, thoracic and complex multi-organ cancer resections.',
-    consultationFeeUSD: 80,
-    featured: true,
-  },
-  {
-    id: 'doc-4',
-    hospitalId: 'hosp-kokilaben',
-    hospitalIds: ['hosp-kokilaben', 'hosp-max-saket'],
-    name: 'Dr. Rajesh Mistry',
-    title: 'Director - Centre for Cancer & Surgical Oncology',
-    specialties: ['sp-oncology'],
-    qualifications: ['MBBS', 'MS (General Surgery)', 'Fellow Surgical Oncology (TMH Mumbai)'],
-    experience: 26,
-    surgeries: 9500,
-    languages: ['English', 'Hindi', 'Marathi', 'Gujarati'],
-    imageUrl: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=800&q=80',
-    bio: 'Distinguished surgical oncologist specializing in precision oncology, targeted therapies, and complex surgical oncology across international multidisciplinary tumour boards.',
-    consultationFeeUSD: 95,
-    featured: true,
-  },
-  {
-    id: 'doc-5',
-    hospitalId: 'hosp-apollo',
-    hospitalIds: ['hosp-apollo', 'hosp-medanta', 'hosp-manipal'],
-    name: 'Prof. Dr. Subhash Gupta',
-    title: 'Chairman - Liver Transplant & Hepato-Pancreato-Biliary Surgery',
-    specialties: ['sp-transplant'],
-    qualifications: ['MBBS', 'MS', 'FRCS (Edinburgh)', 'FRCS (Glasgow)'],
-    experience: 31,
-    surgeries: 6000,
-    languages: ['English', 'Hindi', 'Tamil'],
-    imageUrl: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=800&q=80',
-    bio: 'Pioneering liver transplant surgeon who led the first successful living donor liver transplant programs across South Asia with over 3,000 successful liver transplants.',
-    consultationFeeUSD: 70,
-    featured: true,
-  },
-  {
-    id: 'doc-6',
-    hospitalId: 'hosp-manipal',
-    hospitalIds: ['hosp-manipal', 'hosp-aster-prime'],
-    name: 'Dr. Firuza R. Parikh',
-    title: 'Director - Assisted Reproduction & Genetics (IVF)',
-    specialties: ['sp-fertility'],
-    qualifications: ['MD (Obstetrics & Gynaecology)', 'DGO', 'Diplomate of National Board', 'Postdoctoral Fellow (Yale University, USA)'],
-    experience: 34,
-    surgeries: 12000,
-    languages: ['English', 'Hindi', 'Gujarati', 'French'],
-    imageUrl: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&q=80',
-    bio: 'Internationally acclaimed fertility specialist trained at Yale University School of Medicine. Has helped deliver over 12,000 babies to couples across 35 countries.',
-    consultationFeeUSD: 65,
-    featured: true,
-  },
-  {
-    id: 'doc-7',
-    hospitalId: 'hosp-apollo',
-    hospitalIds: ['hosp-apollo', 'hosp-paras'],
-    name: 'Dr. Arun Saroha',
-    title: 'Senior Director - Neurosurgery & Spine Surgery',
-    specialties: ['sp-neurology'],
-    qualifications: ['MBBS', 'MS (General Surgery)', 'MCh (Neurosurgery - PGI Chandigarh)'],
-    experience: 24,
-    surgeries: 9000,
-    languages: ['English', 'Hindi'],
-    imageUrl: 'https://images.unsplash.com/photo-1622253694242-abeb37a33e97?w=800&q=80',
-    bio: 'Leading neurosurgeon and spine specialist specializing in minimally invasive brain tumor resections, complex spinal reconstructions, and neuro-endoscopy.',
-    consultationFeeUSD: 60,
-    featured: true,
-  },
-];
+/**
+ * DOCTORS / SURGEONS SECTION — REMOVED
+ *
+ * The client explicitly instructed in PPTX Slide 7:
+ *   "Surgeons — Remove this part"
+ *
+ * This data is intentionally cleared. Do NOT re-add without
+ * explicit client approval.
+ *
+ * If individual doctor profiles are needed in future, they must be:
+ *   1. Confirmed in writing by the referring hospital
+ *   2. Accompanied by the doctor's own photo (not stock imagery)
+ *   3. Approved for publication by the doctor themselves
+ */
+export const doctorsSeed: Doctor[] = [];
