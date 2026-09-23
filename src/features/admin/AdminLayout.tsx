@@ -16,16 +16,17 @@ import {
   ExternalLink,
   HardDriveDownload,
   Settings,
+  Boxes,
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { isSupabaseConfigured } from '../../core/supabase/client';
 import {
   CORE_NAV,
   DIRECTORY_NAV,
-  MARKETING_NAV,
-  CMS_MEDIA_NAV,
+  CMS_NAV,
   CMS_PAGES_NAV,
   SETTINGS_NAV,
+  EXTENDED_NAV,
   getSectionForPath,
   getCurrentPageTitle,
 } from './adminNavConfig';
@@ -307,66 +308,7 @@ export function AdminLayout() {
             )}
           </div>
 
-          {/* ─── SECTION 2: MARKETING & OUTREACH ─── */}
-          <div className="admin-sidebar__section">
-            <button
-              type="button"
-              className={`admin-sidebar__section-header ${
-                openSection === 'marketing' ? 'admin-sidebar__section-header--open' : ''
-              }`}
-              onClick={() => toggleSection('marketing')}
-              title="Marketing & Outreach"
-              aria-label="Marketing & Outreach"
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: collapsed ? 'center' : 'flex-start',
-                  gap: '0.5rem',
-                  width: '100%',
-                  minWidth: 0,
-                }}
-              >
-                <Send size={18} className="admin-sidebar__section-icon" />
-                {!collapsed && (
-                  <span className="admin-sidebar__section-title">Marketing & Outreach</span>
-                )}
-              </div>
-              {!collapsed && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <span className="admin-sidebar__section-count">{MARKETING_NAV.length}</span>
-                  <ChevronDown
-                    size={14}
-                    className={`admin-sidebar__chevron ${
-                      openSection === 'marketing' ? 'admin-sidebar__chevron--open' : ''
-                    }`}
-                  />
-                </div>
-              )}
-            </button>
-
-            {(openSection === 'marketing' || collapsed) && (
-              <div className="admin-sidebar__submenu">
-                {MARKETING_NAV.map(({ to, label, icon: Icon }) => (
-                  <NavLink
-                    key={to}
-                    to={to}
-                    className={`admin-sidebar__nav-link ${
-                      isItemActive(to) ? 'admin-sidebar__nav-link--active' : ''
-                    }`}
-                    title={label}
-                    aria-label={label}
-                  >
-                    <Icon size={17} />
-                    {!collapsed && <span>{label}</span>}
-                  </NavLink>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* ─── SECTION 3: CONTENT & CMS ─── */}
+          {/* ─── SECTION 2: WEBSITE CONTENT (CMS) ─── */}
           <div className="admin-sidebar__section">
             <button
               type="button"
@@ -374,8 +316,8 @@ export function AdminLayout() {
                 openSection === 'cms' ? 'admin-sidebar__section-header--open' : ''
               }`}
               onClick={() => toggleSection('cms')}
-              title="Content & CMS"
-              aria-label="Content & CMS"
+              title="Website Content (CMS)"
+              aria-label="Website Content (CMS)"
             >
               <div
                 style={{
@@ -389,13 +331,13 @@ export function AdminLayout() {
               >
                 <Layers size={18} className="admin-sidebar__section-icon" />
                 {!collapsed && (
-                  <span className="admin-sidebar__section-title">Content & CMS</span>
+                  <span className="admin-sidebar__section-title">Website Content</span>
                 )}
               </div>
               {!collapsed && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                   <span className="admin-sidebar__section-count">
-                    {CMS_MEDIA_NAV.length + CMS_PAGES_NAV.length}
+                    {CMS_NAV.length + CMS_PAGES_NAV.length}
                   </span>
                   <ChevronDown
                     size={14}
@@ -409,7 +351,7 @@ export function AdminLayout() {
 
             {(openSection === 'cms' || collapsed) && (
               <div className="admin-sidebar__submenu">
-                {CMS_MEDIA_NAV.map(({ to, label, icon: Icon }) => (
+                {CMS_NAV.map(({ to, label, icon: Icon }) => (
                   <NavLink
                     key={to}
                     to={to}
@@ -446,7 +388,7 @@ export function AdminLayout() {
                     }}
                   >
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                      <FileCode2 size={15} color="#38bdf8" /> Page Templates
+                      <FileCode2 size={15} color="#38bdf8" /> All Public Pages
                     </span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                       <span className="admin-sidebar__section-count" style={{ fontSize: '0.62rem' }}>
@@ -482,7 +424,7 @@ export function AdminLayout() {
             )}
           </div>
 
-          {/* ─── SECTION 4: SYSTEM & SETTINGS (SUBMENU) ─── */}
+          {/* ─── SECTION 3: SYSTEM & SETTINGS ─── */}
           <div className="admin-sidebar__section">
             <button
               type="button"
@@ -490,8 +432,8 @@ export function AdminLayout() {
                 openSection === 'settings' ? 'admin-sidebar__section-header--open' : ''
               }`}
               onClick={() => toggleSection('settings')}
-              title="System & Settings"
-              aria-label="System & Settings"
+              title="Platform Settings"
+              aria-label="Platform Settings"
             >
               <div
                 style={{
@@ -505,7 +447,7 @@ export function AdminLayout() {
               >
                 <Settings size={18} className="admin-sidebar__section-icon" />
                 {!collapsed && (
-                  <span className="admin-sidebar__section-title">System & Settings</span>
+                  <span className="admin-sidebar__section-title">Platform Settings</span>
                 )}
               </div>
               {!collapsed && (
@@ -535,6 +477,70 @@ export function AdminLayout() {
                   >
                     <Icon size={17} />
                     {!collapsed && <span>{label}</span>}
+                  </NavLink>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* ─── SECTION 4: EXTENDED MODULES (FUTURE TOOLS / LABS) ─── */}
+          <div className="admin-sidebar__section" style={{ marginTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '0.5rem' }}>
+            <button
+              type="button"
+              className={`admin-sidebar__section-header ${
+                openSection === 'extended' ? 'admin-sidebar__section-header--open' : ''
+              }`}
+              onClick={() => toggleSection('extended')}
+              title="Extended Modules (Secondary & Future Tools)"
+              aria-label="Extended Modules"
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: collapsed ? 'center' : 'flex-start',
+                  gap: '0.5rem',
+                  width: '100%',
+                  minWidth: 0,
+                }}
+              >
+                <Boxes size={18} className="admin-sidebar__section-icon" color="#94a3b8" />
+                {!collapsed && (
+                  <span className="admin-sidebar__section-title" style={{ color: '#94a3b8' }}>
+                    Extended Modules
+                  </span>
+                )}
+              </div>
+              {!collapsed && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <span className="admin-sidebar__section-count" style={{ background: 'rgba(255,255,255,0.1)', color: '#94a3b8' }}>
+                    {EXTENDED_NAV.length}
+                  </span>
+                  <ChevronDown
+                    size={14}
+                    className={`admin-sidebar__chevron ${
+                      openSection === 'extended' ? 'admin-sidebar__chevron--open' : ''
+                    }`}
+                  />
+                </div>
+              )}
+            </button>
+
+            {(openSection === 'extended' || collapsed) && (
+              <div className="admin-sidebar__submenu">
+                {EXTENDED_NAV.map(({ to, label, icon: Icon }) => (
+                  <NavLink
+                    key={to}
+                    to={to}
+                    className={`admin-sidebar__nav-link ${
+                      isItemActive(to) ? 'admin-sidebar__nav-link--active' : ''
+                    }`}
+                    title={label}
+                    aria-label={label}
+                    style={{ opacity: 0.85 }}
+                  >
+                    <Icon size={16} />
+                    {!collapsed && <span style={{ fontSize: '0.8rem' }}>{label}</span>}
                   </NavLink>
                 ))}
               </div>
