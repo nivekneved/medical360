@@ -114,7 +114,8 @@ export function loadStore(): MockStore {
         : specialtiesSeed;
 
       const doctors = (parsed.doctors?.length ? parsed.doctors : doctorsSeed).map(d => docMap.has(d.id) ? { ...d, imageUrl: docMap.get(d.id)! } : d);
-      const caseStudies = (parsed.caseStudies?.length ? parsed.caseStudies : caseStudiesSeed).map(c => csMap.has(c.id) ? { ...c, imageUrl: csMap.get(c.id)! } : c);
+      const hasCaseStudies = parsed.caseStudies?.length >= 8;
+      const caseStudies = (hasCaseStudies ? parsed.caseStudies : caseStudiesSeed).map(c => csMap.has(c.id) ? { ...c, imageUrl: csMap.get(c.id)! } : c);
 
       return {
         hospitals,

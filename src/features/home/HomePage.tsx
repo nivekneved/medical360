@@ -285,7 +285,11 @@ export function HomePage() {
               <span>{isFr ? 'RÉSERVER VOTRE CONSULTATION MÉDICALE' : isKr ? 'REZERV OU KONSILTASION MEDIKAL' : 'BOOK YOUR MEDICAL CONSULTATION'}</span>
               <ArrowRight size={18} />
             </button>
-            <button className="btn btn-ghost btn-lg" onClick={() => navigate('/how-it-works')} style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#fff' }}>
+            <button
+              className="btn btn-lg home-process__btn-secondary"
+              onClick={() => navigate('/how-it-works')}
+              id="process-explore-btn"
+            >
               <span>{isFr ? 'Découvrir le Parcours en Détail' : isKr ? 'Get Detay Parcours' : 'Explore Detailed 6-Step Guide'}</span>
               <ArrowRight size={16} />
             </button>
@@ -434,11 +438,10 @@ export function HomePage() {
               : caseStudies.slice(0, 3).map(cs => (
                 <div key={cs.id} className="case-card" id={`case-card-${cs.id}`}>
                   <div className="case-card__image">
-                    <img
+                    <ImageWithFallback
                       src={cs.imageUrl}
                       alt={`${cs.patientFirstName}'s story`}
-                      loading="lazy"
-                      decoding="async"
+                      fallbackCategory="general"
                       width="400"
                       height="240"
                     />
