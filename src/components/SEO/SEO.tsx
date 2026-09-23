@@ -96,7 +96,7 @@ export function SEO({
       {/* ── 3. Multi-Lingual Hreflang Alternates ── */}
       <link rel="alternate" hrefLang="en" href={canonicalUrl} />
       <link rel="alternate" hrefLang="fr" href={canonicalUrl} />
-      <link rel="alternate" hrefLang="kr" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="fr-MU" href={canonicalUrl} />
       <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
 
       {/* ── 4. Open Graph Protocol (Facebook, WhatsApp, LinkedIn) ── */}

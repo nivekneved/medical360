@@ -39,9 +39,8 @@ const staticRoutes = [
   { path: '/hospitals',        priority: '0.95', freq: 'daily'   },
   { path: '/specialties',      priority: '0.95', freq: 'weekly'  },
   { path: '/case-studies',     priority: '0.8',  freq: 'weekly'  },
-  { path: '/cost-calculator',  priority: '0.7',  freq: 'monthly' },
-  { path: '/describe-need',    priority: '0.7',  freq: 'monthly' },
-  { path: '/contact',          priority: '0.7',  freq: 'monthly' },
+  { path: '/describe-need',    priority: '0.85', freq: 'weekly'  },
+  { path: '/contact',          priority: '0.75', freq: 'monthly' },
   { path: '/about',            priority: '0.8',  freq: 'monthly' },
   { path: '/privacy',          priority: '0.3',  freq: 'yearly'  },
   { path: '/terms',            priority: '0.3',  freq: 'yearly'  },
@@ -51,17 +50,22 @@ const staticRoutes = [
 
 const urls = [
   ...staticRoutes,
-  ...hospitalsSeed.map(h => ({ path: `/hospitals/${h.id}`,   priority: '0.8', freq: 'weekly'  })),
-  ...specialtiesSeed.map(s => ({ path: `/specialties/${s.id}`, priority: '0.8', freq: 'weekly' })),
+  ...hospitalsSeed.map(h => ({ path: `/hospitals/${h.id}`,   priority: '0.85', freq: 'weekly' })),
+  ...specialtiesSeed.map(s => ({ path: `/specialties/${s.id}`, priority: '0.85', freq: 'weekly' })),
 ];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${urls.map(u => `  <url>
     <loc>${SITE_URL}${u.path}</loc>
     <lastmod>${TODAY}</lastmod>
     <changefreq>${u.freq}</changefreq>
     <priority>${u.priority}</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="${SITE_URL}${u.path}" />
+    <xhtml:link rel="alternate" hreflang="fr" href="${SITE_URL}${u.path}" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="${SITE_URL}${u.path}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}${u.path}" />
   </url>`).join('\n')}
 </urlset>
 `;

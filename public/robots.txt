@@ -10,8 +10,6 @@ Allow: /hospitals/*
 Allow: /specialties
 Allow: /specialties/*
 Allow: /case-studies
-Allow: /cost-calculator
-Allow: /visa-guide
 Allow: /describe-need
 Allow: /contact
 Allow: /privacy
