@@ -15,7 +15,7 @@
 7. [Admin Portal & CMS Guide](#-admin-portal--cms-guide)
 8. [Database Backup & 1-Click Restore](#-database-backup--1-click-restore)
 9. [Security & SEO Implementation](#-security--seo-implementation)
-10. [Documentation Links](#-documentation-links)
+10. [Documentation Hub & Guides](#-documentation-hub--guides)
 
 ---
 
@@ -38,7 +38,7 @@ For over a decade, Enn Rêv Enn Sourir has funded and coordinated life-saving me
 - **Multilingual Support (EN / FR / KR)**: Seamless toggle between English, Français, and Kreol Morisien with automatic `<html>` attribute synchronization.
 - **Interactive Intake Wizard (`/describe-need`)**: Multi-step medical intake form with specialty selection, urgency ratings, hospital preselection, traffic origin attribution, and automated email notification dispatch.
 - **Hospital Directory & Detail Pages (`/hospitals` & `/hospitals/:id`)**: Search & filter by city, bed count, international patient volume, and accreditations (JCI, NABH, NABL).
-- **Specialties & Procedures Catalog (`/specialties` & `/specialties/:id`)**: Comprehensive guides with price estimation in USD & MUR, recovery timelines, and affiliated hospitals.
+- **Specialties & Procedures Catalog (`/specialties` & `/specialties/:id`)**: Comprehensive guides with price estimation in USD & MUR, recovery timelines, symptom chips, and affiliated hospitals.
 - **Interactive Treatment Cost Calculator (`/cost-calculator`)**: Multi-currency benchmark comparing Western medical rates against accredited Indian hospitals with up to 90% savings.
 - **Comprehensive 6-Stage Patient Guide (`/how-it-works`)**: Step-by-step breakdown from initial enquiry to post-treatment recovery care.
 - **Verified Patient Success Stories (`/case-studies`)**: Real patient testimonials, outcomes, and cost-savings statistics.
@@ -47,7 +47,7 @@ For over a decade, Enn Rêv Enn Sourir has funded and coordinated life-saving me
 ### 🛡️ Admin & CMS Portal (`/admin`)
 - **Real-Time CMS Page Editor (`/admin/pages/:pageId`)**: Live text editing for all pages with language tabs (FR, KR, EN) and instant site synchronization.
 - **Email Template Customizer & Dispatch Engine (`/admin/email-templates`)**: Customizable notification templates, live HTML preview, and test dispatch to `kevinadlib@gmail.com`.
-- **Core Data Management**: Dedicated CRUD interfaces with inline workstations for:
+- **Core Data Management**: Dedicated CRUD interfaces with zero-modal inline workstations for:
   - *Partner Hospitals* (`/admin/hospitals`)
   - *Medical Specialties & Procedures* (`/admin/specialties`)
   - *Patient Success Stories* (`/admin/case-studies`)
@@ -63,18 +63,22 @@ For over a decade, Enn Rêv Enn Sourir has funded and coordinated life-saving me
 | :--- | :--- |
 | **Core Framework** | React 19 + TypeScript + Vite |
 | **Routing** | React Router v7 (`react-router-dom`) |
-| **Styling** | Vanilla CSS with CSS Custom Properties (Clean responsive design system) |
+| **Styling** | Vanilla CSS with CSS Custom Properties (Zero-Modal, Clean responsive design system) |
 | **Internationalization** | `i18next` + `react-i18next` (EN, FR, KR) |
 | **SEO & Meta** | `react-helmet-async` + Schema.org JSON-LD + Sitemap XML |
 | **Icons** | Lucide React (`lucide-react`) |
 | **Data Engine** | Dual-Mode: Supabase Live PostgreSQL + LocalStorage Reactive Fallback |
+| **MCP Ecosystem** | Supabase MCP + Firebase MCP + Higgsfield AI MCP (`https://mcp.higgsfield.ai/mcp`) |
 | **Email Notification** | Resend API Integration (`/api/resend/emails`) with automated lead alerts |
+| **Concierge Hotline** | 24/7 WhatsApp Hotline (`+230 5918 8275`) & Edge Webhook (`/api/webhooks/whatsapp`) |
 
 ### 🎨 Design Rules
 - **Three-Color Palette**: 
   - Emerald Green (`#065f46` / `--color-primary`)
   - Dark Slate (`#090d10` / `--color-dark`)
   - Clean Surface White (`#ffffff` / `--color-surface`)
+- **Zero-Modal CRUD Architecture**: Inline cards, expandable drawers, and non-blocking banners.
+- **Scrollbar Cleanliness**: Never display raw OS scrollbars on interactive chip rows. Wrap on desktop; native swipe without scrollbar on mobile.
 - **Typography**: Inter / Outfit modern sans-serif typography.
 - **Visuals**: Full-width imagery, glassmorphism cards, micro-animations, and zero placeholder art.
 
@@ -152,11 +156,20 @@ Navigate to `/admin` or `/admin/login`:
 
 ---
 
-## 📚 Documentation Links
-- [🏛️ Architectural Design Document](file:///d:/WEB%202026/medical360/docs/ARCHITECTURE.md)
-- [🛡️ Admin & Content Manager Guide](file:///d:/WEB%202026/medical360/docs/ADMIN_GUIDE.md)
-- [🛡️ SEO & Security Audit](file:///d:/WEB%202026/medical360/docs/SECURITY_AND_SEO.md)
-- [📱 Mobile Architecture & Store Compliance](file:///d:/WEB%202026/medical360-mobile/docs/ARCHITECTURE.md)
+## 📚 Documentation Hub & Guides
+
+All in-depth platform specifications, operational runbooks, and design guidelines are organized in the [`docs/`](docs/README.md) hub:
+
+- [📚 **Master Documentation Hub**](docs/README.md) — Central directory of all platform manuals and specifications.
+- [🏛️ **Architecture & Technical Specs**](docs/ARCHITECTURE.md) — System design, dual-mode persistence, MCP servers, and data schemas.
+- [🎨 **UI/UX Architecture & Guidelines**](docs/UX_GUIDELINES.md) — Design system tokens, zero-modal CRUD rules, and scrollbar hygiene.
+- [📖 **Admin Portal & CMS User Guide**](docs/ADMIN_GUIDE.md) — Patient case triage, inline workstations, and live page editor.
+- [🛡️ **SEO & Security Audit**](docs/SECURITY_AND_SEO.md) — Top 25 search engine and defense-in-depth security measures.
+- [📋 **Production Operations Runbook**](RUNBOOK.md) — Master business logic, NGO reinvestment cycle, and WhatsApp webhook specs.
+- [🚀 **Production Launch Checklist**](LAUNCH_CHECKLIST.md) — Pre-flight verification for DNS, Vercel, Resend, and Search Console.
 
 ---
-*© 2026 Med360 Ltd. All rights reserved. Port Louis, Mauritius.*
+
+Designed & Developed with ♥ by **Deven** — [WhatsApp: +230 58 16 94 20](https://wa.me/23058169420)  
+*© 2026 Med360 Ltd. Wholly owned by NGO Enn Rêv Enn Sourir. Port Louis, Mauritius.*
+

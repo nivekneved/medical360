@@ -114,3 +114,39 @@ Inspect inbound and outbound communication events:
 
 - **Export Backup**: Click **"Generate Complete System Backup"** to download a complete JSON snapshot of all hospitals, specialties, doctors, case studies, inquiries, and CMS copy.
 - **Restore Backup**: Drop a previously exported `.json` file into the restore dropzone to restore the database instantly.
+
+---
+
+## 10. Broadcast Campaigns & Email Templates
+
+### 10.1 Broadcast Campaign Center (`/admin/campaigns`)
+- Compose and preview targeted announcements for prospective patients and hospital partners.
+- Filter recipient segments by language (EN / FR / KR), treatment category, and triage status.
+- Schedule dispatches and inspect open/conversion analytics.
+
+### 10.2 Email Template Customizer (`/admin/email-templates`)
+- Edit dynamic HTML notification templates sent via the Resend API.
+- Live side-by-side rendering with variable placeholders (`{{patient_name}}`, `{{specialty}}`, `{{hospital}}`, `{{inquiry_id}}`).
+- Send live test emails directly to `kevinadlib@gmail.com` before publishing.
+
+---
+
+## 11. Command-Line Backup & Verification
+
+In addition to the Web Admin UI, DevOps engineers can run manual backups directly from the terminal:
+
+```bash
+# Export all live Supabase tables to backups/database/
+npm run backup
+
+# Run test suite to verify data models and routes
+npm test
+
+# Typecheck and production bundle build
+npm run build
+```
+
+---
+
+*© 2026 Med360 Ltd. All rights reserved. Port Louis, Mauritius.*
+
