@@ -35,7 +35,7 @@ export const WHATSAPP_NUMBER = '23059188275';
 export const WHATSAPP_DISPLAY = '+230 5918 8275';
 
 export const DEVELOPER_NAME = 'Deven';
-export const DEVELOPER_WHATSAPP_NUMBER = (import.meta.env.VITE_DEVELOPER_WHATSAPP as string | undefined) || '23059188275';
+export const DEVELOPER_WHATSAPP_NUMBER = (import.meta.env.VITE_DEVELOPER_WHATSAPP as string | undefined) || '23058169420';
 export const DEVELOPER_WHATSAPP_URL = `https://wa.me/${DEVELOPER_WHATSAPP_NUMBER}?text=${encodeURIComponent('Hello Deven, I saw your work on Med360 and would like to connect.')}`;
 
 export const SITE_ADDRESS = {
