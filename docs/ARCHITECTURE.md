@@ -177,3 +177,40 @@ Content edited in `/admin/pages` immediately overrides static copy in the active
   - HTML verification file: `public/google14ff20f76e301b28.html`
 - **Analytics & Tracking**: Google Tag Manager & Google Analytics (gtag.js) integrations with strict CSP compatibility.
 - **Structured Data**: Injected JSON-LD schemas (`MedicalOrganization`, `WebSite`, `BreadcrumbList`).
+
+---
+
+## 8. Model Context Protocol (MCP) Ecosystem
+
+The platform workspace is augmented with Model Context Protocol (MCP) servers configured in `mcp_config.json`:
+
+1. **Supabase MCP Server** (`@supabase/mcp-server-supabase`):
+   - Direct PostgreSQL database inspection, schema verification, and secure querying via service role tokens.
+2. **Firebase MCP Server** (`firebase-tools mcp`):
+   - Firebase Auth, Cloud Storage, Firestore rules auditing, and developer knowledge queries.
+3. **Higgsfield AI MCP** (`https://mcp.higgsfield.ai/mcp`):
+   - Generative media, dynamic video synthesis, and AI asset generation endpoint for medical educational media.
+
+---
+
+## 9. Multilingual Symptom & Condition Taxonomy
+
+To bridge the gap between technical medical terminology and patient inquiries, Med360 implements a dedicated multilingual symptom mapping engine (`src/features/specialties/specialtySymptoms.ts`):
+
+- **Trilingual Keyword Expansion**: Maps common symptoms across English, French, and Kreol Morisien (e.g. *douleur genou / douler zounou / knee pain* $\to$ Orthopedics & Joint Replacement).
+- **Quick-Access Filter Pills**: Enables instant filtering by organ/condition without requiring technical medical specialty names.
+- **Zero-Scrollbar Layout**: Responsive desktop pill wrapping and mobile touch scrolling with hidden browser scrollbars.
+
+---
+
+## 10. WhatsApp Concierge & Edge Webhooks
+
+- **Concierge Hotline**: Dedicated WhatsApp line (`+230 5918 8275`) for patient case triage.
+- **Context-Aware Dynamic Deep Links**: Pre-fills patient intent, chosen specialty, and target hospital.
+- **Serverless Webhook Receiver** (`/api/webhooks/whatsapp.ts`): Edge endpoint for Meta Graph API verification and inbound message dispatching.
+- **Developer Signature Line**: Verified developer attribution (`+230 58 16 94 20`) in website footer metadata.
+
+---
+
+*© 2026 Med360 Ltd. All rights reserved. Port Louis, Mauritius.*
+
