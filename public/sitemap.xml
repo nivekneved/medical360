@@ -1,261 +1,424 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.med360.mu/</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/" />
   </url>
   <url>
     <loc>https://www.med360.mu/how-it-works</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/how-it-works" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/how-it-works" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties" />
   </url>
   <url>
     <loc>https://www.med360.mu/case-studies</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.med360.mu/cost-calculator</loc>
-    <lastmod>2026-09-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/case-studies" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/case-studies" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/case-studies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/case-studies" />
   </url>
   <url>
     <loc>https://www.med360.mu/describe-need</loc>
-    <lastmod>2026-09-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/describe-need" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/describe-need" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/describe-need" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/describe-need" />
   </url>
   <url>
     <loc>https://www.med360.mu/contact</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.75</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/contact" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/contact" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/contact" />
   </url>
   <url>
     <loc>https://www.med360.mu/about</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/about" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/about" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/about" />
   </url>
   <url>
     <loc>https://www.med360.mu/privacy</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/privacy" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/privacy" />
   </url>
   <url>
     <loc>https://www.med360.mu/terms</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/terms" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/terms" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/terms" />
   </url>
   <url>
     <loc>https://www.med360.mu/cookies</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/cookies" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/cookies" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/cookies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/cookies" />
   </url>
   <url>
     <loc>https://www.med360.mu/medical-disclaimer</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/medical-disclaimer" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/medical-disclaimer" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/medical-disclaimer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/medical-disclaimer" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-apollo</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-apollo" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-apollo" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-apollo" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-apollo" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-manipal</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-manipal" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-manipal" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-manipal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-manipal" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-kims</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-kims" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-kims" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-kims" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-kims" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-yashoda</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-yashoda" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-yashoda" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-yashoda" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-yashoda" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-lilavati</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-lilavati" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-lilavati" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-lilavati" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-lilavati" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-medanta</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-medanta" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-medanta" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-medanta" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-medanta" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-fortis-escorts</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-fortis-escorts" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-fortis-escorts" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-fortis-escorts" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-fortis-escorts" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-paras</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-paras" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-paras" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-paras" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-paras" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-max-saket</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-max-saket" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-max-saket" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-max-saket" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-max-saket" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-reliance</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-reliance" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-reliance" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-reliance" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-reliance" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-kokilaben</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-kokilaben" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-kokilaben" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-kokilaben" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-kokilaben" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-park</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-park" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-park" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-park" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-park" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-sankara</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-sankara" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-sankara" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-sankara" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-sankara" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-miot</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-miot" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-miot" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-miot" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-miot" />
   </url>
   <url>
     <loc>https://www.med360.mu/hospitals/hosp-aster-prime</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/hospitals/hosp-aster-prime" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/hospitals/hosp-aster-prime" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/hospitals/hosp-aster-prime" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/hospitals/hosp-aster-prime" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-oncology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-oncology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-oncology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-oncology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-oncology" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-cardiology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-cardiology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-cardiology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-cardiology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-cardiology" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-neurology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-neurology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-neurology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-neurology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-neurology" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-orthopedics</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-orthopedics" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-orthopedics" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-orthopedics" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-orthopedics" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-transplant</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-transplant" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-transplant" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-transplant" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-transplant" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-paediatrics</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-paediatrics" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-paediatrics" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-paediatrics" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-paediatrics" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-haematology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-haematology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-haematology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-haematology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-haematology" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-cosmetic</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-cosmetic" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-cosmetic" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-cosmetic" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-cosmetic" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-fertility</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-fertility" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-fertility" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-fertility" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-fertility" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-ophthalmology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-ophthalmology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-ophthalmology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-ophthalmology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-ophthalmology" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-urology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-urology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-urology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-urology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-urology" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-dental</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-dental" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-dental" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-dental" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-dental" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-pulmonology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-pulmonology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-pulmonology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-pulmonology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-pulmonology" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-gynecology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-gynecology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-gynecology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-gynecology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-gynecology" />
   </url>
   <url>
     <loc>https://www.med360.mu/specialties/sp-gastroenterology</loc>
-    <lastmod>2026-09-07</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/specialties/sp-gastroenterology" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/specialties/sp-gastroenterology" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/specialties/sp-gastroenterology" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/specialties/sp-gastroenterology" />
   </url>
 </urlset>

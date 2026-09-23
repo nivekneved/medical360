@@ -97,6 +97,11 @@
       "source": "/visa-guide",
       "destination": "/how-it-works",
       "permanent": true
+    },
+    {
+      "source": "/cost-calculator",
+      "destination": "/describe-need",
+      "permanent": true
     }
   ],
   "rewrites": [

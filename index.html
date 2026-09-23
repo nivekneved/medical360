@@ -31,21 +31,26 @@
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-MED360');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Google tag (gtag.js) Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
+    <!-- Google Telemetry & Search Analytics Engine (Clean Console Guard) -->
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag(){ window.dataLayer.push(arguments); }
+      window.gtag = gtag;
       gtag('js', new Date());
-      gtag('config', 'G-PLACEHOLDER');
+
+      // Only attempt remote script fetch if valid production GA4/GTM ID is configured
+      (function() {
+        try {
+          var gaId = (window.VITE_GA_ID || '').trim();
+          if (gaId && gaId !== 'G-PLACEHOLDER' && /^G-[A-Z0-9]+$/i.test(gaId)) {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaId);
+            document.head.appendChild(s);
+            gtag('config', gaId);
+          }
+        } catch (e) {}
+      })();
     </script>
 
     <!-- AI & Generative Search Engine Optimization (GEO) Directives -->
@@ -89,7 +94,7 @@
     <meta name="twitter:description" content="Free medical opinion, 15 premier accredited Indian hospitals, full concierge support. A social enterprise — no dividends, patient first." />
     <meta name="twitter:image" content="https://www.med360.mu/assets/hero-banner.jpg" />
 
-    <!-- Static Structured Data (Organization + WebSite) — reliable for crawlers that do not execute JS -->
+    <!-- Static Structured Data (Organization + WebSite + MedicalBusiness + SearchAction + FAQPage) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -101,7 +106,7 @@
           "legalName": "Med360 Ltd",
           "url": "https://www.med360.mu/",
           "logo": "https://www.med360.mu/assets/logo.png",
-          "description": "Med360 Ltd is a social enterprise owned by the NGO Enn Rev Enn Sourir, connecting patients in Mauritius and the Indian Ocean with 15 premier accredited hospitals across India. No dividends — 100% of profits support the NGO's healthcare mission.",
+          "description": "Med360 Ltd is a healthcare concierge social enterprise owned by registered NGO Enn Rêv Enn Sourir, connecting patients in Mauritius and the Indian Ocean with 15 premier accredited hospitals across India. 100% of net profits fund surgeries for underprivileged patients.",
           "telephone": "+230 59188275",
           "email": "info@med360.mu",
           "address": {
@@ -118,7 +123,34 @@
             "availableLanguage": ["en", "fr", "mfe"],
             "areaServed": ["MU", "RE", "KM", "MG", "SC", "MV"]
           }],
-          "medicalSpecialty": ["Oncology", "Cardiovascular", "Neurologic", "Orthopedic", "Transplantation", "Fertility", "Ophthalmologic"]
+          "medicalSpecialty": [
+            "Oncology", "Cardiovascular", "Neurologic", "Orthopedic",
+            "Transplantation", "Fertility", "Ophthalmologic", "Gastroenterology",
+            "Pediatric", "Robotic Surgery"
+          ]
+        },
+        {
+          "@type": "MedicalBusiness",
+          "@id": "https://www.med360.mu/#business",
+          "name": "Med360 International Healthcare Concierge",
+          "url": "https://www.med360.mu/",
+          "telephone": "+230 59188275",
+          "priceRange": "$$",
+          "currenciesAccepted": "MUR, USD, EUR",
+          "paymentAccepted": "Cash, Bank Transfer, Insurance Guarantee",
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -20.1609,
+            "longitude": 57.5012
+          },
+          "openingHoursSpecification": [
+            {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+              "opens": "00:00",
+              "closes": "23:59"
+            }
+          ]
         },
         {
           "@type": "WebSite",
@@ -126,18 +158,67 @@
           "url": "https://www.med360.mu/",
           "name": "Med360",
           "publisher": { "@id": "https://www.med360.mu/#organization" },
-          "inLanguage": ["en", "fr", "mfe"]
+          "inLanguage": ["en", "fr", "mfe"],
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://www.med360.mu/specialties?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://www.med360.mu/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Med360 and who owns it?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Med360 Ltd is an international healthcare concierge social enterprise based in Port Louis, Mauritius, wholly owned by the registered NGO Enn Rêv Enn Sourir. 100% of net company profits are reinvested directly into the NGO's medical assistance fund to sponsor overseas surgeries for underprivileged patients."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which accredited hospitals in India does Med360 coordinate with?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Med360 maintains partnerships with 15 premier accredited hospitals across India, including Apollo Hospitals (Chennai & Mumbai), Fortis Memorial & Mulund, MGM Healthcare, MIOT International, Artemis, BLK-Max Super Speciality, Dr. Rela Institute, Gleneagles HealthCity, Amrita Hospital, SIMS Hospital, Yashoda Hospitals, Marengo Asia, Kauvery Hospital, and Max Super Speciality."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is the initial medical review and second opinion free?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Med360 provides 100% free expert medical second opinions and detailed multi-hospital treatment quotes within 24 to 48 hours with zero obligation."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much can patients save compared to private Western care?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Patients typically save between 70% and 90% on major cardiac surgery, orthopedic joint replacement, oncology radiation/chemotherapy, and organ transplants while receiving care from internationally accredited JCI and NABH hospitals."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What travel and visa logistics are included in Med360's concierge service?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Med360 assists with medical visa invitation letters from Indian hospitals, flight booking coordination, VIP airport tarmac transfers, vetted hotel accommodation near hospitals, local SIM cards, and dedicated Mauritian patient navigators."
+              }
+            }
+          ]
         }
       ]
     }
     </script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MED360"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
