@@ -58,9 +58,6 @@ export function Footer() {
               <li><Link to="/specialties">{t('nav.specialties')}</Link></li>
               <li><Link to="/hospitals">{t('nav.hospitals')}</Link></li>
               <li><Link to="/how-it-works">How It Works</Link></li>
-              {settings.enableCostComparison && (
-                <li><Link to="/cost-calculator">Cost Calculator</Link></li>
-              )}
               <li><Link to="/about">{t('nav.about')}</Link></li>
               <li><Link to="/contact">{t('nav.contact')}</Link></li>
             </ul>
@@ -85,7 +82,7 @@ export function Footer() {
             <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.55)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
               {t('footer.freeOpinionDesc')}
             </p>
-            <Link to="/describe-need?from=Footer+CTA&serviceName=Free+Doctor+Review" className="btn btn-accent btn-sm" id="footer-cta-btn">
+            <Link to="/describe-need?from=Footer+CTA&serviceName=Specialist+Medical+Review" className="btn btn-accent btn-sm" id="footer-cta-btn">
               {t('nav.freeOpinion')}
             </Link>
             <a

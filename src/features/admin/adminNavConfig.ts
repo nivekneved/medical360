@@ -51,7 +51,6 @@ export const CORE_NAV: NavItem[] = [
 export const DIRECTORY_NAV: NavItem[] = [
   { to: '/admin/hospitals', label: 'Partner Hospitals', icon: Building2 },
   { to: '/admin/specialties', label: 'Medical Specialties', icon: Stethoscope },
-  { to: '/admin/doctors', label: 'Specialists & Doctors', icon: UserCheck },
   { to: '/admin/case-studies', label: 'Patient Stories', icon: Award },
   { to: '/admin/pricing', label: 'Procedure Pricing Matrix', icon: Calculator },
 ];
@@ -76,10 +75,8 @@ export const CMS_PAGES_NAV: NavItem[] = [
   { to: '/admin/pages/about', label: 'About Med360', icon: Info },
   { to: '/admin/pages/how-it-works', label: 'How It Works', icon: HelpCircle },
   { to: '/admin/pages/specialties', label: 'Specialties Page', icon: Stethoscope },
-  { to: '/admin/pages/doctors', label: 'Doctors Page', icon: UserCheck },
   { to: '/admin/pages/hospitals', label: 'Hospitals Page', icon: Building2 },
   { to: '/admin/pages/case-studies', label: 'Case Studies Page', icon: Award },
-  { to: '/admin/pages/cost-calculator', label: 'Cost Calculator', icon: Calculator },
   { to: '/admin/pages/describe-need', label: 'Describe Need Wizard', icon: ClipboardList },
   { to: '/admin/pages/contact', label: 'Contact Page', icon: PhoneCall },
   { to: '/admin/pages/header', label: 'Header Navigation', icon: PanelTop },
@@ -104,7 +101,6 @@ export function getSectionForPath(path: string): MenuSection | null {
   if (
     path.startsWith('/admin/hospitals') ||
     path.startsWith('/admin/specialties') ||
-    path.startsWith('/admin/doctors') ||
     path.startsWith('/admin/case-studies') ||
     path.startsWith('/admin/pricing')
   ) {
@@ -138,7 +134,6 @@ export function getCurrentPageTitle(path: string, search: string): string {
   if (path === '/admin/concierge') return 'Medical Visa & Travel Concierge';
   if (path === '/admin/hospitals') return 'Partner Hospitals';
   if (path === '/admin/specialties') return 'Medical Specialties';
-  if (path === '/admin/doctors') return 'Specialists & Doctors';
   if (path === '/admin/case-studies') return 'Patient Stories & Clinical Outcomes';
   if (path === '/admin/pricing') return 'Procedure Pricing & Cost Matrix';
   if (path === '/admin/campaigns') return 'Email Campaigns (Nexus)';

@@ -17,9 +17,9 @@ export const specialtiesSeed: Specialty[] = [
     imageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&q=80',
     featured: true,
     procedures: [
-      { id: 'proc-onc-1', specialtyId: 'sp-oncology', name: 'Surgical Oncology & Tumour Resection', name_fr: 'Chirurgie Oncologique & Résection Tumorale', name_kr: 'Sirirzi Kanser & Reseksion Timer', description: 'Precision surgical removal of solid tumours with clear margins.', description_fr: 'Ablation chirurgicale précise des tumeurs solides avec marges saines.', description_kr: 'Operasion pou tir timer dan lekor avek gran presizion.', estimatedDurationDays: 14, estimatedCostUSD: { min: 6000, max: 15000 } },
-      { id: 'proc-onc-2', specialtyId: 'sp-oncology', name: 'CyberKnife & Proton Beam Radiotherapy', name_fr: 'Radiothérapie CyberKnife & Faisceau de Protons', name_kr: 'Radioterapi CyberKnife & Proton', description: 'Sub-millimetre precision radiation sparing surrounding healthy tissue.', description_fr: 'Rayonnement de précision submillimétrique préservant les tissus sains environnants.', description_kr: 'Tretman reyon presi san abim bann lezot latisi.', estimatedDurationDays: 10, estimatedCostUSD: { min: 8000, max: 18000 } },
-      { id: 'proc-onc-3', specialtyId: 'sp-oncology', name: 'Chemotherapy & Targeted Immunotherapy', name_fr: 'Chimiothérapie & Immunothérapie Ciblée', name_kr: 'Simioterapi & Imminoterapi Sible', description: 'Personalised systemic and targeted cancer pharmacotherapy cycles.', description_fr: 'Cycles personnalisés de pharmacothérapie systémique et ciblée contre le cancer.', description_kr: 'Sik simioterapi personalize pou plizier kalite kanser.', estimatedDurationDays: 21, estimatedCostUSD: { min: 3000, max: 12000 } },
+      { id: 'proc-onc-1', specialtyId: 'sp-oncology', name: 'Surgical Oncology & Tumour Resection', name_fr: 'Chirurgie Oncologique & Résection Tumorale', name_kr: 'Sirirzi Kanser & Reseksion Timer', description: 'Precision surgical removal of solid tumours with clear margins.', description_fr: 'Ablation chirurgicale précise des tumeurs solides avec marges saines.', description_kr: 'Operasion pou tir timer dan lekor avek gran presizion.', estimatedDurationDays: 14 },
+      { id: 'proc-onc-2', specialtyId: 'sp-oncology', name: 'CyberKnife & Proton Beam Radiotherapy', name_fr: 'Radiothérapie CyberKnife & Faisceau de Protons', name_kr: 'Radioterapi CyberKnife & Proton', description: 'Sub-millimetre precision radiation sparing surrounding healthy tissue.', description_fr: 'Rayonnement de précision submillimétrique préservant les tissus sains environnants.', description_kr: 'Tretman reyon presi san abim bann lezot latisi.', estimatedDurationDays: 10 },
+      { id: 'proc-onc-3', specialtyId: 'sp-oncology', name: 'Chemotherapy & Targeted Immunotherapy', name_fr: 'Chimiothérapie & Immunothérapie Ciblée', name_kr: 'Simioterapi & Imminoterapi Sible', description: 'Personalised systemic and targeted cancer pharmacotherapy cycles.', description_fr: 'Cycles personnalisés de pharmacothérapie systémique et ciblée contre le cancer.', description_kr: 'Sik simioterapi personalize pou plizier kalite kanser.', estimatedDurationDays: 21 },
     ],
   },
   {
@@ -38,9 +38,9 @@ export const specialtiesSeed: Specialty[] = [
     imageUrl: 'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=800&q=80',
     featured: true,
     procedures: [
-      { id: 'proc-card-1', specialtyId: 'sp-cardiology', name: 'Coronary Artery Bypass Graft (CABG)', name_fr: 'Pontage Coronarien (CABG)', name_kr: 'Bypass Leker (CABG)', description: 'Open-heart surgery or beating-heart bypass to restore blood flow.', description_fr: 'Chirurgie pour restaurer le flux sanguin vers le cœur.', description_kr: 'Operasion leker pou re-donn disan sirkile bien.', estimatedDurationDays: 10, estimatedCostUSD: { min: 5000, max: 9500 } },
-      { id: 'proc-card-2', specialtyId: 'sp-cardiology', name: 'TAVI / TAVR & Valve Replacement', name_fr: 'TAVI / TAVR & Remplacement Valvulaire', name_kr: 'TAVI & Sanzman Valv', description: 'Transcatheter minimally invasive aortic valve implantation.', description_fr: 'Implantation mini-invasive de valve aortique par voie transcathéter.', description_kr: 'Sanzman valv leker san bizin ouver leker konpletman.', estimatedDurationDays: 7, estimatedCostUSD: { min: 16000, max: 28000 } },
-      { id: 'proc-card-3', specialtyId: 'sp-cardiology', name: 'Angioplasty & Complex Stenting', name_fr: 'Angioplastie & Pose de Stent Complexe', name_kr: 'Anzioplasti & Poz Stent', description: 'Percutaneous coronary intervention with drug-eluting stents.', description_fr: 'Intervention coronaire percutanée avec stents actifs.', description_kr: 'Ti-operasion pou debous bann larter leker.', estimatedDurationDays: 4, estimatedCostUSD: { min: 3200, max: 6500 } },
+      { id: 'proc-card-1', specialtyId: 'sp-cardiology', name: 'Coronary Artery Bypass Graft (CABG)', name_fr: 'Pontage Coronarien (CABG)', name_kr: 'Bypass Leker (CABG)', description: 'Open-heart surgery or beating-heart bypass to restore blood flow.', description_fr: 'Chirurgie pour restaurer le flux sanguin vers le cœur.', description_kr: 'Operasion leker pou re-donn disan sirkile bien.', estimatedDurationDays: 10 },
+      { id: 'proc-card-2', specialtyId: 'sp-cardiology', name: 'TAVI / TAVR & Valve Replacement', name_fr: 'TAVI / TAVR & Remplacement Valvulaire', name_kr: 'TAVI & Sanzman Valv', description: 'Transcatheter minimally invasive aortic valve implantation.', description_fr: 'Implantation mini-invasive de valve aortique par voie transcathéter.', description_kr: 'Sanzman valv leker san bizin ouver leker konpletman.', estimatedDurationDays: 7 },
+      { id: 'proc-card-3', specialtyId: 'sp-cardiology', name: 'Angioplasty & Complex Stenting', name_fr: 'Angioplastie & Pose de Stent Complexe', name_kr: 'Anzioplasti & Poz Stent', description: 'Percutaneous coronary intervention with drug-eluting stents.', description_fr: 'Intervention coronaire percutanée avec stents actifs.', description_kr: 'Ti-operasion pou debous bann larter leker.', estimatedDurationDays: 4 },
     ],
   },
   {
@@ -59,8 +59,8 @@ export const specialtiesSeed: Specialty[] = [
     imageUrl: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&q=80',
     featured: true,
     procedures: [
-      { id: 'proc-neuro-1', specialtyId: 'sp-neurology', name: 'Brain Tumour Microsurgery & Navigation', name_fr: 'Microchirurgie des Tumeurs Cérébrales', name_kr: 'Mikro-Sirirzi Timer Laservel', description: 'Image-guided navigation microsurgery for cranial neoplasms.', description_fr: 'Microchirurgie guidée par imagerie pour tumeurs intracrâniennes.', description_kr: 'Operasion laservel gide par kamera pou tir timer.', estimatedDurationDays: 14, estimatedCostUSD: { min: 8000, max: 18000 } },
-      { id: 'proc-neuro-2', specialtyId: 'sp-neurology', name: 'Deep Brain Stimulation (DBS)', name_fr: 'Stimulation Cérébrale Profonde (DBS)', name_kr: 'Stimilasion Laservel (DBS)', description: 'Advanced neuromodulation for Parkinson’s and movement disorders.', description_fr: 'Neuromodulation avancée pour la maladie de Parkinson et tremblements.', description_kr: 'Tretman pou Parkinson ek bann problem mouvman.', estimatedDurationDays: 10, estimatedCostUSD: { min: 18000, max: 32000 } },
+      { id: 'proc-neuro-1', specialtyId: 'sp-neurology', name: 'Brain Tumour Microsurgery & Navigation', name_fr: 'Microchirurgie des Tumeurs Cérébrales', name_kr: 'Mikro-Sirirzi Timer Laservel', description: 'Image-guided navigation microsurgery for cranial neoplasms.', description_fr: 'Microchirurgie guidée par imagerie pour tumeurs intracrâniennes.', description_kr: 'Operasion laservel gide par kamera pou tir timer.', estimatedDurationDays: 14 },
+      { id: 'proc-neuro-2', specialtyId: 'sp-neurology', name: 'Deep Brain Stimulation (DBS)', name_fr: 'Stimulation Cérébrale Profonde (DBS)', name_kr: 'Stimilasion Laservel (DBS)', description: 'Advanced neuromodulation for Parkinson’s and movement disorders.', description_fr: 'Neuromodulation avancée pour la maladie de Parkinson et tremblements.', description_kr: 'Tretman pou Parkinson ek bann problem mouvman.', estimatedDurationDays: 10 },
     ],
   },
   {
@@ -79,8 +79,8 @@ export const specialtiesSeed: Specialty[] = [
     imageUrl: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80',
     featured: true,
     procedures: [
-      { id: 'proc-ortho-1', specialtyId: 'sp-orthopedics', name: 'Robotic Total Knee / Hip Replacement', name_fr: 'Prothèse Totale Genou / Hanche Robotisée', name_kr: 'Sanzman Total Zounou / Lans Robotik', description: 'Sub-millimetre robotic navigation joint arthroplasty.', description_fr: 'Remplacement articulaire sous assistance robotique ultra-précise.', description_kr: 'Sanzman zointir avek lasistans robot pou meyer rezilta.', estimatedDurationDays: 8, estimatedCostUSD: { min: 4500, max: 9500 } },
-      { id: 'proc-ortho-2', specialtyId: 'sp-orthopedics', name: 'Minimally Invasive Spine Surgery (TLIF)', name_fr: 'Chirurgie Mini-Invasive du Rachis (TLIF)', name_kr: 'Sirirzi Ledo Mini-Invazif (TLIF)', description: 'Targeted decompression and spinal fusion for disc herniation.', description_fr: 'Décompression ciblée et fusion vertébrale pour hernie discale.', description_kr: 'Fizion ledo pou soulaz douler disk ek restore lekilib.', estimatedDurationDays: 10, estimatedCostUSD: { min: 6000, max: 13000 } },
+      { id: 'proc-ortho-1', specialtyId: 'sp-orthopedics', name: 'Robotic Total Knee / Hip Replacement', name_fr: 'Prothèse Totale Genou / Hanche Robotisée', name_kr: 'Sanzman Total Zounou / Lans Robotik', description: 'Sub-millimetre robotic navigation joint arthroplasty.', description_fr: 'Remplacement articulaire sous assistance robotique ultra-précise.', description_kr: 'Sanzman zointir avek lasistans robot pou meyer rezilta.', estimatedDurationDays: 8 },
+      { id: 'proc-ortho-2', specialtyId: 'sp-orthopedics', name: 'Minimally Invasive Spine Surgery (TLIF)', name_fr: 'Chirurgie Mini-Invasive du Rachis (TLIF)', name_kr: 'Sirirzi Ledo Mini-Invazif (TLIF)', description: 'Targeted decompression and spinal fusion for disc herniation.', description_fr: 'Décompression ciblée et fusion vertébrale pour hernie discale.', description_kr: 'Fizion ledo pou soulaz douler disk ek restore lekilib.', estimatedDurationDays: 10 },
     ],
   },
   {
@@ -99,8 +99,8 @@ export const specialtiesSeed: Specialty[] = [
     imageUrl: 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=800&q=80',
     featured: true,
     procedures: [
-      { id: 'proc-trans-1', specialtyId: 'sp-transplant', name: 'Living Donor Kidney Transplant', name_fr: 'Greffe de Rein Donneur Vivant', name_kr: 'Transplantasion Lerin Doner Vivan', description: 'Comprehensive surgical transplant, immunology profiling and donor care.', description_fr: 'Greffe rénale complète, bilan immunologique et suivi du donneur.', description_kr: 'Transplantasion lerin konple avek swivi iminolozik.', estimatedDurationDays: 21, estimatedCostUSD: { min: 14000, max: 24000 } },
-      { id: 'proc-trans-2', specialtyId: 'sp-transplant', name: 'Living Donor Liver Transplant (LDLT)', name_fr: 'Greffe de Foie Donneur Vivant', name_kr: 'Transplantasion Fwa Doner Vivan', description: 'Advanced split-liver and whole living donor transplant programme.', description_fr: 'Programme avancé de transplantation hépatique donneur vivant.', description_kr: 'Operasion transplantasion fwa par bann meyer sirirzien.', estimatedDurationDays: 30, estimatedCostUSD: { min: 28000, max: 42000 } },
+      { id: 'proc-trans-1', specialtyId: 'sp-transplant', name: 'Living Donor Kidney Transplant', name_fr: 'Greffe de Rein Donneur Vivant', name_kr: 'Transplantasion Lerin Doner Vivan', description: 'Comprehensive surgical transplant, immunology profiling and donor care.', description_fr: 'Greffe rénale complète, bilan immunologique et suivi du donneur.', description_kr: 'Transplantasion lerin konple avek swivi iminolozik.', estimatedDurationDays: 21 },
+      { id: 'proc-trans-2', specialtyId: 'sp-transplant', name: 'Living Donor Liver Transplant (LDLT)', name_fr: 'Greffe de Foie Donneur Vivant', name_kr: 'Transplantasion Fwa Doner Vivan', description: 'Advanced split-liver and whole living donor transplant programme.', description_fr: 'Programme avancé de transplantation hépatique donneur vivant.', description_kr: 'Operasion transplantasion fwa par bann meyer sirirzien.', estimatedDurationDays: 30 },
     ],
   },
   {
@@ -119,7 +119,7 @@ export const specialtiesSeed: Specialty[] = [
     imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80',
     featured: true,
     procedures: [
-      { id: 'proc-paed-1', specialtyId: 'sp-paediatrics', name: 'Congenital Paediatric Cardiac Surgery', name_fr: 'Chirurgie Cardiaque Congénitale Pédiatrique', name_kr: 'Sirirzi Leker Konzenital Zanfan', description: 'Correction of ASD, VSD, TOF, and complex congenital anomalies.', description_fr: 'Correction des cardiopathies congénitales (CIA, CIV, Tétralogie de Fallot).', description_kr: 'Koreksion bann problem leker depi nesans pou bann zanfan.', estimatedDurationDays: 14, estimatedCostUSD: { min: 5500, max: 11000 } },
+      { id: 'proc-paed-1', specialtyId: 'sp-paediatrics', name: 'Congenital Paediatric Cardiac Surgery', name_fr: 'Chirurgie Cardiaque Congénitale Pédiatrique', name_kr: 'Sirirzi Leker Konzenital Zanfan', description: 'Correction of ASD, VSD, TOF, and complex congenital anomalies.', description_fr: 'Correction des cardiopathies congénitales (CIA, CIV, Tétralogie de Fallot).', description_kr: 'Koreksion bann problem leker depi nesans pou bann zanfan.', estimatedDurationDays: 14 },
     ],
   },
   {
@@ -138,7 +138,7 @@ export const specialtiesSeed: Specialty[] = [
     imageUrl: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=80',
     featured: true,
     procedures: [
-      { id: 'proc-haem-1', specialtyId: 'sp-haematology', name: 'Allogeneic / Autologous BMT', name_fr: 'Greffe de Moelle Allogénique / Autologue', name_kr: 'Transplantasion Mwal Ose Allogeneik/Otolog', description: 'Bone marrow and peripheral blood stem cell transplantation.', description_fr: 'Transplantation de moelle osseuse et cellules souches hématopoïétiques.', description_kr: 'Transplantasion mwal ose pou trete lesemi ek linfom.', estimatedDurationDays: 30, estimatedCostUSD: { min: 20000, max: 38000 } },
+      { id: 'proc-haem-1', specialtyId: 'sp-haematology', name: 'Allogeneic / Autologous BMT', name_fr: 'Greffe de Moelle Allogénique / Autologue', name_kr: 'Transplantasion Mwal Ose Allogeneik/Otolog', description: 'Bone marrow and peripheral blood stem cell transplantation.', description_fr: 'Transplantation de moelle osseuse et cellules souches hématopoïétiques.', description_kr: 'Transplantasion mwal ose pou trete lesemi ek linfom.', estimatedDurationDays: 30 },
     ],
   },
   {
@@ -155,9 +155,9 @@ export const specialtiesSeed: Specialty[] = [
     description_fr: 'Reconstruction mammaire post-mastectomie, transfert tissulaire microchirurgical, rhinoplastie et remodelage corporel.',
     description_kr: 'Rekonstriksion apre maladi, sirirzi kouma rhinoplastie ek remodelaz lekor.',
     imageUrl: '/assets/banners/cosmetic_surgery.jpg',
-    featured: false,
+    featured: true,
     procedures: [
-      { id: 'proc-cosm-1', specialtyId: 'sp-cosmetic', name: 'Post-Cancer Breast Reconstruction', name_fr: 'Reconstruction Mammaire Post-Cancer', name_kr: 'Rekonstriksion Pwatrin Apre Kanser', description: 'Autologous flap or implant-based anatomical breast reconstruction.', description_fr: 'Reconstruction par lambeau autologue ou implants après mastectomie.', description_kr: 'Rekonstriksion pwatrin pou restore fason natirel.', estimatedDurationDays: 7, estimatedCostUSD: { min: 4500, max: 9000 } },
+      { id: 'proc-cosm-1', specialtyId: 'sp-cosmetic', name: 'Post-Cancer Breast Reconstruction', name_fr: 'Reconstruction Mammaire Post-Cancer', name_kr: 'Rekonstriksion Pwatrin Apre Kanser', description: 'Autologous flap or implant-based anatomical breast reconstruction.', description_fr: 'Reconstruction par lambeau autologue ou implants après mastectomie.', description_kr: 'Rekonstriksion pwatrin pou restore fason natirel.', estimatedDurationDays: 7 },
     ],
   },
   {
@@ -174,9 +174,9 @@ export const specialtiesSeed: Specialty[] = [
     description_fr: 'FIV avec ICSI, dépistage génétique préimplantatoire (DPI), congélation d\'ovocytes et traitement global de l\'infertilité.',
     description_kr: 'Teknolosi FIV modern, tes zenetik ek akonpanyeman personalize pou fer zanfan.',
     imageUrl: 'https://images.unsplash.com/photo-1583912267670-6575ad472688?w=800&q=80',
-    featured: false,
+    featured: true,
     procedures: [
-      { id: 'proc-fert-1', specialtyId: 'sp-fertility', name: 'IVF Cycle with ICSI & Blastocyst Culture', name_fr: 'Cycle de FIV avec ICSI & Culture Blastocyste', name_kr: 'Sik FIV avek ICSI', description: 'Full ovarian stimulation, ultrasound monitoring, ICSI, and embryo transfer.', description_fr: 'Cycle complet de FIV avec injection intracytoplasmique et transfert d\'embryon.', description_kr: 'Program FIV konple avek sipor labo embrion de pwent.', estimatedDurationDays: 18, estimatedCostUSD: { min: 3500, max: 7000 } },
+      { id: 'proc-fert-1', specialtyId: 'sp-fertility', name: 'IVF Cycle with ICSI & Blastocyst Culture', name_fr: 'Cycle de FIV avec ICSI & Culture Blastocyste', name_kr: 'Sik FIV avek ICSI', description: 'Full ovarian stimulation, ultrasound monitoring, ICSI, and embryo transfer.', description_fr: 'Cycle complet de FIV avec injection intracytoplasmique et transfert d\'embryon.', description_kr: 'Program FIV konple avek sipor labo embrion de pwent.', estimatedDurationDays: 18 },
     ],
   },
   {
@@ -193,9 +193,9 @@ export const specialtiesSeed: Specialty[] = [
     description_fr: 'Chirurgie vitréo-rétinienne, greffe de cornée et microchirurgie de la cataracte dans des instituts de renommée mondiale.',
     description_kr: 'Operasion retin, gref korne ek katarakt dan bann meyer sant lizie.',
     imageUrl: '/assets/banners/corneal_case_study.jpg',
-    featured: false,
+    featured: true,
     procedures: [
-      { id: 'proc-ophth-1', specialtyId: 'sp-ophthalmology', name: 'Vitrectomy & Retinal Detachment Repair', name_fr: 'Vitrectomie & Réparation Décollement Rétine', name_kr: 'Vitrectomi & Reparasion Retin', description: 'Microsurgical vitrectomy for retinal detachment, macular hole or diabetic retinopathy.', description_fr: 'Microchirurgie vitréo-rétinienne pour décollement et rétinopathie diabétique.', description_kr: 'Operasion mikrosirirzikal pou sov la vi lizie.', estimatedDurationDays: 5, estimatedCostUSD: { min: 2500, max: 5500 } },
+      { id: 'proc-ophth-1', specialtyId: 'sp-ophthalmology', name: 'Vitrectomy & Retinal Detachment Repair', name_fr: 'Vitrectomie & Réparation Décollement Rétine', name_kr: 'Vitrectomi & Reparasion Retin', description: 'Microsurgical vitrectomy for retinal detachment, macular hole or diabetic retinopathy.', description_fr: 'Microchirurgie vitréo-rétinienne pour décollement et rétinopathie diabétique.', description_kr: 'Operasion mikrosirirzikal pou sov la vi lizie.', estimatedDurationDays: 5 },
     ],
   },
   {
@@ -212,9 +212,9 @@ export const specialtiesSeed: Specialty[] = [
     description_fr: 'Prostatectomie robotique, lithotripsie laser pour calculs rénaux et prise en charge des maladies rénales chroniques.',
     description_kr: 'Tretman laser pou ros lerin, operasion prostat robotik ek kordonasion dializ.',
     imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80',
-    featured: false,
+    featured: true,
     procedures: [
-      { id: 'proc-uro-1', specialtyId: 'sp-urology', name: 'Laser Lithotripsy (RIRS) for Kidney Stones', name_fr: 'Lithotripsie Laser Répétée (RIRS) Calculs Rénaux', name_kr: 'Laser RIRS pou Ros Lerin', description: 'Endoscopic retrograde intrarenal laser fragmentation without incisions.', description_fr: 'Fragmentation endoscopique au laser sans incision cutanée.', description_kr: 'Kraz ros lerin avek laser san bizin koupe.', estimatedDurationDays: 3, estimatedCostUSD: { min: 2200, max: 4800 } },
+      { id: 'proc-uro-1', specialtyId: 'sp-urology', name: 'Laser Lithotripsy (RIRS) for Kidney Stones', name_fr: 'Lithotripsie Laser Répétée (RIRS) Calculs Rénaux', name_kr: 'Laser RIRS pou Ros Lerin', description: 'Endoscopic retrograde intrarenal laser fragmentation without incisions.', description_fr: 'Fragmentation endoscopique au laser sans incision cutanée.', description_kr: 'Kraz ros lerin avek laser san bizin koupe.', estimatedDurationDays: 3 },
     ],
   },
   {
@@ -231,9 +231,9 @@ export const specialtiesSeed: Specialty[] = [
     description_fr: 'Implants dentaires All-on-4 / All-on-6, chirurgie orthognathique des mâchoires et réhabilitation du sourire.',
     description_kr: 'Inplan lezan All-on-4, koreksion maswar ek swen dantan modern.',
     imageUrl: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=800&q=80',
-    featured: false,
+    featured: true,
     procedures: [
-      { id: 'proc-dent-1', specialtyId: 'sp-dental', name: 'All-on-4 / All-on-6 Full Arch Implants', name_fr: 'Implants Dentaires All-on-4 / All-on-6 Arcade Complète', name_kr: 'Inplan Lezan All-on-4 / All-on-6', description: 'Fixed full-arch rehabilitation with premium titanium implants.', description_fr: 'Réhabilitation fixe de l\'arcade avec implants titane haut de gamme.', description_kr: 'Ranplasman tou bann lezan avek bann inplan fix.', estimatedDurationDays: 6, estimatedCostUSD: { min: 3800, max: 8000 } },
+      { id: 'proc-dent-1', specialtyId: 'sp-dental', name: 'All-on-4 / All-on-6 Full Arch Implants', name_fr: 'Implants Dentaires All-on-4 / All-on-6 Arcade Complète', name_kr: 'Inplan Lezan All-on-4 / All-on-6', description: 'Fixed full-arch rehabilitation with premium titanium implants.', description_fr: 'Réhabilitation fixe de l\'arcade avec implants titane haut de gamme.', description_kr: 'Ranplasman tou bann lezan avek bann inplan fix.', estimatedDurationDays: 6 },
     ],
   },
   {
@@ -250,9 +250,9 @@ export const specialtiesSeed: Specialty[] = [
     description_fr: 'Chirurgie thoracique vidéo-assistée (VATS), résection pulmonaire robotique et exploration bronchique approfondie (EBUS).',
     description_kr: 'Operasion poumon mini-invazif (VATS) ek tretman avanse pou bann problem respiratwar.',
     imageUrl: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=800&q=80',
-    featured: false,
+    featured: true,
     procedures: [
-      { id: 'proc-pulm-1', specialtyId: 'sp-pulmonology', name: 'VATS Minimally Invasive Thoracic Surgery', name_fr: 'Chirurgie Thoracique Mini-Invasive (VATS)', name_kr: 'Sirirzi Thoracik Mini-Invazif (VATS)', description: 'Video-guided keyhole thoracic resection with expedited recovery.', description_fr: 'Résection pulmonaire par vidéothoracoscopie avec récupération rapide.', description_kr: 'Operasion poumon par ti-trou gide par video pou rekiperasion vit.', estimatedDurationDays: 7, estimatedCostUSD: { min: 5500, max: 11500 } },
+      { id: 'proc-pulm-1', specialtyId: 'sp-pulmonology', name: 'VATS Minimally Invasive Thoracic Surgery', name_fr: 'Chirurgie Thoracique Mini-Invasive (VATS)', name_kr: 'Sirirzi Thoracik Mini-Invazif (VATS)', description: 'Video-guided keyhole thoracic resection with expedited recovery.', description_fr: 'Résection pulmonaire par vidéothoracoscopie avec récupération rapide.', description_kr: 'Operasion poumon par ti-trou gide par video pou rekiperasion vit.', estimatedDurationDays: 7 },
     ],
   },
   {
@@ -269,9 +269,9 @@ export const specialtiesSeed: Specialty[] = [
     description_fr: 'Hystérectomie et myomectomie cœlioscopique ou robotique, chirurgie de l\'endométriose profonde et oncologie gynécologique.',
     description_kr: 'Operasion laparoskopik pou fibrom, endometrioz ek lezot problem lasante fam.',
     imageUrl: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80',
-    featured: false,
+    featured: true,
     procedures: [
-      { id: 'proc-gyn-1', specialtyId: 'sp-gynecology', name: 'Laparoscopic / Robotic Myomectomy', name_fr: 'Myomectomie Cœlioscopique / Robotique', name_kr: 'Laparoskopi pou Fibrom', description: 'Minimally invasive uterine-sparing removal of symptomatic fibroids.', description_fr: 'Ablation mini-invasive des fibromes préservant la fertilité utérine.', description_kr: 'Operasion mini-invazif pou tir bann fibrom san afekte la fertilite.', estimatedDurationDays: 5, estimatedCostUSD: { min: 3200, max: 6800 } },
+      { id: 'proc-gyn-1', specialtyId: 'sp-gynecology', name: 'Laparoscopic / Robotic Myomectomy', name_fr: 'Myomectomie Cœlioscopique / Robotique', name_kr: 'Laparoskopi pou Fibrom', description: 'Minimally invasive uterine-sparing removal of symptomatic fibroids.', description_fr: 'Ablation mini-invasive des fibromes préservant la fertilité utérine.', description_kr: 'Operasion mini-invazif pou tir bann fibrom san afekte la fertilite.', estimatedDurationDays: 5 },
     ],
   },
   {
@@ -288,9 +288,9 @@ export const specialtiesSeed: Specialty[] = [
     description_fr: 'Endoscopie interventionnelle avancée (CPRE, écho-endoscopie), chirurgie colorectale mini-invasive et résections hépato-biliaires.',
     description_kr: 'Endoskopi avanse (ERCP), sirirzi lestoma ek fwa par laparoskopi.',
     imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80',
-    featured: false,
+    featured: true,
     procedures: [
-      { id: 'proc-gi-1', specialtyId: 'sp-gastroenterology', name: 'Advanced ERCP & Hepatobiliary Interventions', name_fr: 'CPRE Avancée & Interventions Hépato-Biliaires', name_kr: 'ERCP Avanse & Traitman Kanal Biler', description: 'Endoscopic clearance of biliary stones, stenting and tumour palliation.', description_fr: 'Extraction endoscopique de calculs biliaires et pose de prothèses.', description_kr: 'Endoskopi pou tir ros dan kanal biler ek poz stent.', estimatedDurationDays: 4, estimatedCostUSD: { min: 2500, max: 5500 } },
+      { id: 'proc-gi-1', specialtyId: 'sp-gastroenterology', name: 'Advanced ERCP & Hepatobiliary Interventions', name_fr: 'CPRE Avancée & Interventions Hépato-Biliaires', name_kr: 'ERCP Avanse & Traitman Kanal Biler', description: 'Endoscopic clearance of biliary stones, stenting and tumour palliation.', description_fr: 'Extraction endoscopique de calculs biliaires et pose de prothèses.', description_kr: 'Endoskopi pou tir ros dan kanal biler ek poz stent.', estimatedDurationDays: 4 },
     ],
   },
 ];

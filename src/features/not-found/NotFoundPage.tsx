@@ -140,31 +140,17 @@ export function NotFoundPage() {
             </div>
           </Link>
 
-          {settings.enableCostComparison ? (
-            <Link to="/cost-calculator" style={{ textDecoration: 'none' }} className="card card--interactive">
-              <div style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <div style={{ width: 36, height: 36, borderRadius: 8, background: 'color-mix(in srgb, var(--color-primary) 10%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Calculator size={18} />
-                </div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-text)' }}>Calculator</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Compare global pricing</div>
-                </div>
+          <Link to="/how-it-works" style={{ textDecoration: 'none' }} className="card card--interactive">
+            <div style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div style={{ width: 36, height: 36, borderRadius: 8, background: 'color-mix(in srgb, var(--color-primary) 10%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <HelpCircle size={18} />
               </div>
-            </Link>
-          ) : (
-            <Link to="/how-it-works" style={{ textDecoration: 'none' }} className="card card--interactive">
-              <div style={{ padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <div style={{ width: 36, height: 36, borderRadius: 8, background: 'color-mix(in srgb, var(--color-primary) 10%, transparent)', color: 'var(--color-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <HelpCircle size={18} />
-                </div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-text)' }}>How It Works</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>4-step medical journey</div>
-                </div>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-text)' }}>How It Works</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>6-step patient journey</div>
               </div>
-            </Link>
-          )}
+            </div>
+          </Link>
         </div>
 
         {/* Direct Action */}

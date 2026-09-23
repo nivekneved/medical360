@@ -59,7 +59,7 @@ export interface Procedure {
   description_fr?: string;
   description_kr?: string;
   estimatedDurationDays: number;
-  estimatedCostUSD: { min: number; max: number };
+  estimatedCostUSD?: { min: number; max: number };
 }
 
 export interface Doctor {

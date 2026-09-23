@@ -2,9 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Star, Users, Award, Globe2, HeartPulse, ShieldCheck, MessageCircle, FileText, Stethoscope, Plane, Building2, UserCheck } from 'lucide-react';
 import { useL10n } from '../../hooks/useL10n';
 import { useCMS } from '../../hooks/useCMS';
-import { useFeaturedSpecialties } from '../../hooks/useSpecialties';
+import { useSpecialties } from '../../hooks/useSpecialties';
 import { useFeaturedHospitals } from '../../hooks/useHospitals';
 import { useFeaturedCaseStudies } from '../../hooks/useCaseStudies';
+import { ImageWithFallback } from '../../components/common/ImageWithFallback';
 import { SEO } from '../../components/SEO/SEO';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
@@ -16,7 +17,7 @@ import './Home.css';
 export function HomePage() {
   const navigate = useNavigate();
   const { lang, isFr, isKr, l10n, l } = useL10n();
-  const { specialties, loading: specLoading } = useFeaturedSpecialties();
+  const { specialties, loading: specLoading } = useSpecialties();
   const { hospitals, loading: hospLoading }   = useFeaturedHospitals();
   const { caseStudies, loading: csLoading }   = useFeaturedCaseStudies();
   const { data: cms } = useCMS('home');
@@ -185,7 +186,7 @@ export function HomePage() {
         <MissionMarquee />
       )}
 
-      {/* ── Specialties (14 Specialties) ─────────────────────────────────────── */}
+      {/* ── Specialties (All 15 Specialties from PPTX) ───────────────────────── */}
       <section className="section home-specialties">
         <div className="container">
           <div className="section-header">
@@ -203,8 +204,8 @@ export function HomePage() {
           </div>
           <div className="specialties-grid">
             {specLoading
-              ? Array.from({ length: 8 }).map((_, i) => <div key={i} className="specialty-card-full skeleton" style={{ height: 320 }} />)
-              : specialties.slice(0, 8).map((sp, i) => (
+              ? Array.from({ length: 15 }).map((_, i) => <div key={i} className="specialty-card-full skeleton" style={{ height: 320 }} />)
+              : specialties.map((sp, i) => (
                 <div
                   key={sp.id}
                   className={`specialty-card-full animate-fade-in-up delay-${(i % 4) + 1}`}
@@ -214,9 +215,10 @@ export function HomePage() {
                   tabIndex={0}
                   onKeyDown={e => e.key === 'Enter' && navigate(`/specialties/${sp.id}`)}
                 >
-                  <img
+                  <ImageWithFallback
                     src={sp.imageUrl}
                     alt={sp.name}
+                    fallbackCategory="specialty"
                     className="specialty-card-full__img"
                     loading="lazy"
                     decoding="async"
@@ -240,7 +242,7 @@ export function HomePage() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/specialties')}>
-              {isFr ? 'Voir Toutes les Spécialités' : isKr ? 'Get Tou Bann Spesialite' : 'View All Specialties'} <ArrowRight size={16} />
+              {isFr ? 'Explorer le Répertoire & Recherche par Symptômes' : isKr ? 'Repertoire Konple & Rod par Sintom' : 'Explore Full Directory & Symptom Search'} <ArrowRight size={16} />
             </button>
           </div>
         </div>

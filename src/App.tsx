@@ -79,7 +79,6 @@ const AdminDashboardPage    = lazyWithRetry(() => import('./features/admin/dashb
 const AdminInquiriesPage    = lazyWithRetry(() => import('./features/admin/inquiries/AdminInquiriesPage'), m => m.AdminInquiriesPage);
 const AdminHospitalsPage    = lazyWithRetry(() => import('./features/admin/hospitals/AdminHospitalsPage'), m => m.AdminHospitalsPage);
 const AdminSpecialtiesPage  = lazyWithRetry(() => import('./features/admin/specialties/AdminSpecialtiesPage'), m => m.AdminSpecialtiesPage);
-const AdminDoctorsPage      = lazyWithRetry(() => import('./features/admin/doctors/AdminDoctorsPage'), m => m.AdminDoctorsPage);
 const AdminCaseStudiesPage  = lazyWithRetry(() => import('./features/admin/case-studies/AdminCaseStudiesPage'), m => m.AdminCaseStudiesPage);
 const AdminSettingsPage     = lazyWithRetry(() => import('./features/admin/settings/AdminSettingsPage'), m => m.AdminSettingsPage);
 const AdminSEOPage          = lazyWithRetry(() => import('./features/admin/seo/AdminSEOPage'), m => m.AdminSEOPage);
@@ -220,7 +219,7 @@ export default function App() {
                       <Route path="/describe-need"    element={<DescribeNeedPage />} />
                       <Route path="/how-it-works"     element={<HowItWorksPage />} />
                       <Route path="/services"         element={<Navigate to="/how-it-works" replace />} />
-                      <Route path="/cost-calculator"  element={<CostCalculatorPage />} />
+                      <Route path="/cost-calculator"  element={<Navigate to="/describe-need" replace />} />
                       <Route path="/visa-guide"       element={<Navigate to="/how-it-works" replace />} />
                       <Route path="/case-studies"     element={<CaseStudiesPage />} />
                       <Route path="/contact"          element={<ContactPage />} />
@@ -259,7 +258,7 @@ export default function App() {
                       <Route path="inquiries"    element={<AdminInquiriesPage />} />
                       <Route path="hospitals"    element={<AdminHospitalsPage />} />
                       <Route path="specialties"  element={<AdminSpecialtiesPage />} />
-                      <Route path="doctors"      element={<AdminDoctorsPage />} />
+                      <Route path="doctors"      element={<Navigate to="/admin/dashboard" replace />} />
                       <Route path="case-studies" element={<AdminCaseStudiesPage />} />
                       <Route path="settings"     element={<AdminSettingsPage />} />
                       <Route path="email-templates" element={<AdminEmailTemplatesPage />} />

@@ -76,8 +76,8 @@ export function CostCalculatorPage() {
     return `$${Math.round(usdAmount).toLocaleString('en-US')}`;
   };
 
-  const baseMinUSD = activeProcedure?.estimatedCostUSD.min ?? 5000;
-  const baseMaxUSD = activeProcedure?.estimatedCostUSD.max ?? 9000;
+  const baseMinUSD = activeProcedure?.estimatedCostUSD?.min ?? 5000;
+  const baseMaxUSD = activeProcedure?.estimatedCostUSD?.max ?? 9000;
   const baseAvgUSD = (baseMinUSD + baseMaxUSD) / 2;
 
   // Comparison with Mauritius local private
