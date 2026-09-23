@@ -110,7 +110,7 @@ export function loadStore(): MockStore {
         : hospitalsSeed;
 
       const specialties = hasAllSpecialties
-        ? parsed.specialties.map(s => specMap.has(s.id) ? { ...specMap.get(s.id)!, ...s, imageUrl: specMap.get(s.id)!.imageUrl } : s)
+        ? parsed.specialties.map(s => specMap.has(s.id) ? { ...specMap.get(s.id)!, ...s, featured: true, imageUrl: specMap.get(s.id)!.imageUrl } : s)
         : specialtiesSeed;
 
       const doctors = (parsed.doctors?.length ? parsed.doctors : doctorsSeed).map(d => docMap.has(d.id) ? { ...d, imageUrl: docMap.get(d.id)! } : d);

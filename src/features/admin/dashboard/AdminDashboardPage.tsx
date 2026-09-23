@@ -264,27 +264,6 @@ export function AdminDashboardPage() {
           <ExternalLink size={14} color="var(--color-primary)" />
         </Link>
 
-        <Link
-          to="/admin/doctors"
-          style={{
-            background: 'var(--color-surface)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '0.85rem 1rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            textDecoration: 'none',
-            color: 'var(--color-text)',
-            transition: 'border-color 0.15s ease',
-          }}
-        >
-          <div>
-            <div style={{ fontSize: '0.88rem', fontWeight: 700 }}>Medical Specialists</div>
-            <div style={{ fontSize: '0.74rem', color: 'var(--color-text-secondary)' }}>Surgeons & clinical matrix</div>
-          </div>
-          <ExternalLink size={14} color="var(--color-primary)" />
-        </Link>
 
         <Link
           to="/admin/campaigns"

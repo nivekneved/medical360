@@ -1,19 +1,18 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Star, Building2, Stethoscope, UserCheck, BookOpen, Check, RefreshCw } from 'lucide-react';
+import { Star, Building2, Stethoscope, BookOpen, Check, RefreshCw } from 'lucide-react';
 import { crudService, type EntityCollection } from '../../../core/services/crud.service';
-import type { Specialty, Hospital, Doctor, CaseStudy } from '../../../core/types';
+import type { Specialty, Hospital, CaseStudy } from '../../../core/types';
 
 interface FeaturedShowcaseManagerProps {
-  initialType?: 'specialties' | 'hospitals' | 'doctors' | 'case-studies';
+  initialType?: 'specialties' | 'hospitals' | 'case-studies';
 }
 
-type ShowcaseTab = 'specialties' | 'hospitals' | 'doctors' | 'case-studies';
+type ShowcaseTab = 'specialties' | 'hospitals' | 'case-studies';
 
 export function FeaturedShowcaseManager({ initialType = 'specialties' }: FeaturedShowcaseManagerProps) {
   const [activeTab, setActiveTab] = useState<ShowcaseTab>(initialType);
   const [specialties, setSpecialties] = useState<Specialty[]>([]);
   const [hospitals, setHospitals]     = useState<Hospital[]>([]);
-  const [doctors, setDoctors]         = useState<Doctor[]>([]);
   const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
   const [loading, setLoading]         = useState(true);
   const [updatingId, setUpdatingId]   = useState<string | null>(null);
@@ -22,15 +21,13 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
   const loadAll = async () => {
     setLoading(true);
     try {
-      const [sp, ho, doc, cs] = await Promise.all([
+      const [sp, ho, cs] = await Promise.all([
         crudService.getAll('specialties'),
         crudService.getAll('hospitals'),
-        crudService.getAll('doctors'),
         crudService.getAll('caseStudies'),
       ]);
       setSpecialties(sp);
       setHospitals(ho);
-      setDoctors(doc);
       setCaseStudies(cs);
     } catch (e) {
       console.error('Failed to load showcase items:', e);
@@ -68,17 +65,6 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
           matches: (item: Hospital, q: string) =>
             item.name.toLowerCase().includes(q) || item.country.toLowerCase().includes(q) || item.city.toLowerCase().includes(q),
         };
-      case 'doctors':
-        return {
-          collection: 'doctors' as EntityCollection,
-          items: doctors,
-          setter: setDoctors,
-          accentColor: '#4f46e5',
-          getPrimary: (item: Doctor) => item.name,
-          getSecondary: (item: Doctor) => item.title,
-          matches: (item: Doctor, q: string) =>
-            item.name.toLowerCase().includes(q) || item.title.toLowerCase().includes(q),
-        };
       case 'case-studies':
         return {
           collection: 'caseStudies' as EntityCollection,
@@ -91,7 +77,7 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
             item.patientFirstName.toLowerCase().includes(q) || item.condition.toLowerCase().includes(q),
         };
     }
-  }, [activeTab, specialties, hospitals, doctors, caseStudies]);
+  }, [activeTab, specialties, hospitals, caseStudies]);
 
   // Unified single toggle function
   const toggleItemFeatured = async (item: { id: string; featured?: boolean }) => {
@@ -118,7 +104,6 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
   const tabs = [
     { key: 'specialties' as const, label: 'Medical Specialties', icon: Stethoscope, count: specialties.filter((s) => s.featured).length, total: specialties.length },
     { key: 'hospitals' as const, label: 'Partner Hospitals', icon: Building2, count: hospitals.filter((h) => h.featured).length, total: hospitals.length },
-    { key: 'doctors' as const, label: 'Elite Specialists', icon: UserCheck, count: doctors.filter((d) => d.featured).length, total: doctors.length },
     { key: 'case-studies' as const, label: 'Patient Stories', icon: BookOpen, count: caseStudies.filter((c) => c.featured).length, total: caseStudies.length },
   ];
 
@@ -141,7 +126,7 @@ export function FeaturedShowcaseManager({ initialType = 'specialties' }: Feature
             <span>Featured Showcase Manager — Select Items to Appear on Front</span>
           </div>
           <p style={{ margin: '0.25rem 0 0 0', color: 'var(--color-text-secondary)', fontSize: '0.85rem' }}>
-            Select which specialties, hospitals, doctors, and patient stories appear in the featured carousels and showcases on the front page.
+            Select which specialties, hospitals, and patient stories appear in the featured carousels and showcases on the front page.
           </p>
         </div>
 

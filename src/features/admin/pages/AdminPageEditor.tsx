@@ -26,7 +26,6 @@ const CMS_PAGES = [
   { id: 'how-it-works', label: 'How It Works', icon: '🤝' },
   { id: 'hospitals', label: 'Hospitals Directory', icon: '🏢' },
   { id: 'specialties', label: 'Specialties Directory', icon: '⭐' },
-  { id: 'cost-calculator', label: 'Cost Calculator', icon: '🧮' },
   { id: 'case-studies', label: 'Patient Stories', icon: '📖' },
   { id: 'contact', label: 'Contact Us', icon: '✉️' },
   { id: 'describe-need', label: 'Intake Wizard', icon: '📝' },
