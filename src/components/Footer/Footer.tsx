@@ -11,7 +11,9 @@ import {
   SITE_ADDRESS, 
   SITE_NAME, 
   PARENT_NGO_NAME, 
-  SITE_METRICS 
+  SITE_METRICS,
+  DEVELOPER_NAME,
+  DEVELOPER_WHATSAPP_URL
 } from '../../core/config/site';
 import './Footer.css';
 
@@ -113,8 +115,29 @@ export function Footer() {
         <div className="footer__bottom">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
             <p>© {new Date().getFullYear()} {SITE_NAME}. All rights reserved. | {SITE_ADDRESS.locality}, {SITE_ADDRESS.country}</p>
-            <p style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.5)' }}>
-              Designed & Developed with <span style={{ color: '#ef4444' }}>♥</span> by <strong style={{ color: '#10b981' }}>Deven</strong>
+            <p style={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+              Designed & Developed with <span style={{ color: '#ef4444' }}>♥</span> by{' '}
+              <a
+                href={DEVELOPER_WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: '#25D366',
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  transition: 'opacity 0.15s ease',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.85')}
+                onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+                title="Chat with Developer on WhatsApp"
+                id="developer-signature-whatsapp"
+              >
+                <span>{DEVELOPER_NAME}</span>
+                <MessageCircle size={13} style={{ verticalAlign: 'middle' }} />
+              </a>
             </p>
           </div>
           <div className="footer__bottom-links" style={{ display: 'flex', gap: '1.25rem', alignItems: 'center', flexWrap: 'wrap' }}>
