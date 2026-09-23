@@ -959,3 +959,22 @@
   font-size: 1.05rem;
   margin-bottom: 0.35rem;
 }
+
+.home-process__btn-secondary {
+  background: #ffffff !important;
+  color: #023861 !important;
+  border: 1.5px solid #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.home-process__btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #01213b !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+}
