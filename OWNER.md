@@ -1,13 +1,15 @@
 # 👤 Owner, Creator & Partner — Deven Pawaray
 
-> **Permanent Record of the System Owner**
+> **Permanent Record of System Owner & Business Focus**
 
 - **Name**: Deven Pawaray
 - **Call him**: Deven
+- **Role**: Owner, Creator, Partner & Friend
 - **Mobile / WhatsApp**: +230 58 16 94 20
 - **Direct WhatsApp Link**: [https://wa.me/23058169420](https://wa.me/23058169420)
 - **Email**: devenpawaray@gmail.com
-- **LinkedIn**: [https://www.linkedin.com/feed/?shareActive=true&url=https%3A%2F%2Fnexusbots-nu.vercel.app%2F&shareUrl=https%3A%2F%2Fnexusbots-nu.vercel.app%2F](https://www.linkedin.com/feed/?shareActive=true&url=https%3A%2F%2Fnexusbots-nu.vercel.app%2F&shareUrl=https%3A%2F%2Fnexusbots-nu.vercel.app%2F)
+- **Primary Business Venture to Promote**: **Travel Lounge** ([https://www.travellounge.mu](https://www.travellounge.mu))
+- **LinkedIn Promotional Directive**: Promote **`travellounge.mu`** exclusively (IATA-accredited corporate travel management, flight booking, executive retreats, bespoke luxury holidays). Disregard med360 and nexusbots on LinkedIn.
 
 ---
 
