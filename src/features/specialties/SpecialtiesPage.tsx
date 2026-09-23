@@ -233,7 +233,16 @@ export function SpecialtiesPage() {
                         fallbackCategory="specialty"
                       />
                       <div className="spec-card__overlay" />
-
+                      {(sp.procedures && sp.procedures.length > 0) && (
+                        <div className="spec-card__top-badge">
+                          ✦ {sp.procedures.length} {l10n('Actes', 'Swen', 'Procedures')}
+                        </div>
+                      )}
+                      {sp.icon && (
+                        <div className="spec-card__icon-badge" title={l(sp, 'name')}>
+                          {sp.icon}
+                        </div>
+                      )}
                       <h2 className="spec-card__name">{l(sp, 'name')}</h2>
                     </div>
                     <div className="spec-card__body">
