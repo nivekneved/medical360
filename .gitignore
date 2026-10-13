@@ -27,3 +27,13 @@ dist-ssr
 *.sln
 *.sw?
 *.zip
+
+# Database dumps & local backups containing patient PII
+backups/
+*.dump
+*.sql.gz
+
+# Proprietary presentation documents containing strategic / internal info
+*.pptx
+*.ppt
+*.key

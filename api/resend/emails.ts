@@ -94,12 +94,13 @@ export default async function handler(req: Request) {
   }
 
   try {
-    const authHeader = req.headers.get('authorization') || '';
-    const apiKey = process.env.RESEND_API_KEY || (authHeader.startsWith('Bearer ') ? authHeader.replace('Bearer ', '') : '');
+    // SECURITY: the key is server-side only (Vercel env RESEND_API_KEY).
+    // Client-supplied Authorization headers are ignored.
+    const apiKey = process.env.RESEND_API_KEY || '';
 
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: 'Resend API key missing' }), {
-        status: 400,
+      return new Response(JSON.stringify({ error: 'Email service not configured' }), {
+        status: 503,
         headers: { 'Content-Type': 'application/json' },
       });
     }

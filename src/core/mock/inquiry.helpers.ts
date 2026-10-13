@@ -105,13 +105,14 @@ export async function liveOrMockCreateInquiry(
         created_at: now,
         updated_at: now,
       };
-      const { data: resData, error } = await supabase.from('inquiries').insert([row]).select().single();
-      if (!error && resData) {
-        const mapped = mapInquiryRow(resData);
-        store.inquiries.unshift(mapped);
+      // No read-back: anon users have INSERT-only access to `inquiries` (RLS).
+      const { error } = await supabase.from('inquiries').insert([row]);
+      if (!error) {
+        store.inquiries.unshift(newInquiry);
         save();
-        return mapped;
+        return newInquiry;
       }
+      console.warn('Supabase createInquiry rejected (falling back to local store):', error.message);
     } catch (e) {
       console.warn('Supabase createInquiry error (falling back to local store):', e);
     }

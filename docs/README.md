@@ -74,7 +74,7 @@ npm run backup
 - Credentials:
   - **Administrator**: `admin@med360.mu`
   - **Case Manager**: `case@med360.mu`
-  - **Password**: configured in `VITE_ADMIN_PASSWORD` (default: `med360admin`)
+   - **Password**: your own Supabase Auth password (no default/shared password exists)
 
 ---
 

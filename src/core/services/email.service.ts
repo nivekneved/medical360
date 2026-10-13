@@ -444,7 +444,6 @@ export function formatSubject(
 }
 
 export async function sendInquiryEmail(formData: InquiryFormData, specialtyName?: string): Promise<boolean> {
-  const apiKey = import.meta.env.VITE_RESEND_API_KEY || '';
   const recipient = import.meta.env.VITE_ADMIN_EMAIL || DEFAULT_TEST_RECIPIENT;
   const config = getEmailTemplateConfig();
 
@@ -481,9 +480,6 @@ export async function sendInquiryEmail(formData: InquiryFormData, specialtyName?
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
-  if (apiKey) {
-    headers['Authorization'] = `Bearer ${apiKey}`;
-  }
 
   try {
     const res = await fetch('/api/resend/emails', {
@@ -515,7 +511,6 @@ export async function sendContactEmail(data: {
   message: string;
   sourcePage?: string;
 }): Promise<boolean> {
-  const apiKey = import.meta.env.VITE_RESEND_API_KEY || '';
   const recipient = import.meta.env.VITE_ADMIN_EMAIL || DEFAULT_TEST_RECIPIENT;
   const config = getEmailTemplateConfig();
 
@@ -545,9 +540,6 @@ export async function sendContactEmail(data: {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
-  if (apiKey) {
-    headers['Authorization'] = `Bearer ${apiKey}`;
-  }
 
   try {
     const res = await fetch('/api/resend/emails', {
@@ -574,7 +566,6 @@ export async function sendContactEmail(data: {
 }
 
 export async function sendTestEmail(recipientEmail: string, config: EmailTemplateConfig): Promise<{ success: boolean; error?: string }> {
-  const apiKey = import.meta.env.VITE_RESEND_API_KEY || '';
 
   const mockData = {
     firstName: 'Jean-Luc',
@@ -608,9 +599,6 @@ export async function sendTestEmail(recipientEmail: string, config: EmailTemplat
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
-  if (apiKey) {
-    headers['Authorization'] = `Bearer ${apiKey}`;
-  }
 
   try {
     const res = await fetch('/api/resend/emails', {

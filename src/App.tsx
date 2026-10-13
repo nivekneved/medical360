@@ -182,7 +182,8 @@ function PublicLayout() {
 
 // ─── Admin Auth Guard ─────────────────────────────────────────────────────────
 function AdminGuard() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
+  if (isLoading) return <PageLoader />;
   if (!isAuthenticated) return <Navigate to="/admin/login" replace />;
   return (
     <Suspense fallback={<PageLoader />}>

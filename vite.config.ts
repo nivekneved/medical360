@@ -1,31 +1,27 @@
-import { defineConfig, type Plugin } from 'vite';
+import { defineConfig, loadEnv, type Plugin } from 'vite';
 
-function resendDevProxy(): Plugin {
+// DEV ONLY: server-side key (no VITE_ prefix => never bundled into client code).
+function resendDevProxy(resendApiKey: string): Plugin {
   return {
     name: 'resend-dev-proxy',
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         if (req.url?.startsWith('/api/resend/emails')) {
-          res.setHeader('Access-Control-Allow-Origin', '*');
-          res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-          res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-
-          if (req.method === 'OPTIONS') {
-            res.statusCode = 204;
-            res.end();
-            return;
-          }
-
           if (req.method === 'POST') {
             let body = '';
             req.on('data', chunk => { body += chunk; });
             req.on('end', async () => {
               try {
-                const authHeader = req.headers['authorization'] || '';
+                if (!resendApiKey) {
+                  res.statusCode = 503;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ error: 'RESEND_API_KEY not set in local .env' }));
+                  return;
+                }
                 const upstreamRes = await fetch('https://api.resend.com/emails', {
                   method: 'POST',
                   headers: {
-                    'Authorization': authHeader as string,
+                    'Authorization': `Bearer ${resendApiKey}`,
                     'Content-Type': 'application/json',
                   },
                   body,
@@ -55,17 +51,10 @@ function resendDevProxy(): Plugin {
   };
 }
 
-export default defineConfig({
-  plugins: [resendDevProxy()],
-  server: {
-    proxy: {
-      '/api/resend': {
-        target: 'https://api.resend.com',
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api\/resend/, ''),
-      },
-    },
-  },
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  return {
+  plugins: [resendDevProxy(env.RESEND_API_KEY || '')],
   build: {
     chunkSizeWarningLimit: 800,
     rollupOptions: {
@@ -90,5 +79,6 @@ export default defineConfig({
       },
     },
   },
+  };
 });
 

@@ -160,7 +160,7 @@ export interface AdminUser {
   id: string;
   email: string;
   name: string;
-  role: 'admin' | 'case_manager';
+  role: 'super_admin' | 'admin' | 'case_manager';
   active: boolean;
 }
 

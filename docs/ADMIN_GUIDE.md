@@ -8,8 +8,8 @@ This manual covers administrative operations, patient case triage, hospital and 
 
 1. Navigate to `/admin` or click **Admin Portal** in the footer / navigation.
 2. Sign in using administrative credentials:
-   - **Administrator**: `admin@med360.mu` (Password: configured in `VITE_ADMIN_PASSWORD` or fallback `med360admin`)
-   - **Case Coordinator**: `case@med360.mu` (Password: `med360admin`)
+   - Sign in with your Supabase Auth account. Only users listed as **active** in the `admin_users` table are granted access (roles: `super_admin`, `admin`, `case_manager`).
+   - Accounts are provisioned by a super admin (`node scripts/create-super-admin.mjs`, password via env var) - there are no shared or default passwords.
 3. **Security Safeguard**: Client-side rate-limiting locks the portal after 3 consecutive failed attempts for 5 minutes.
 
 ---

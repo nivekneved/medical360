@@ -1,54 +1,46 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useRef, type ReactNode } from 'react';
 import type { AdminUser } from '../core/types';
 import { supabase, isSupabaseConfigured } from '../core/supabase/client';
-import {
-  constantTimeEquals,
-  generateStorageChecksum,
-  verifyStorageChecksum,
-  generateSessionFingerprint,
-} from '../core/services/security.service';
 
-// ─── Fallback Admin Credentials ───────────────────────────────────────────────
-const MOCK_ADMINS: AdminUser[] = [
-  { id: 'admin-1', email: 'admin@med360.mu', name: 'Admin Med360', role: 'admin', active: true },
-  { id: 'admin-2', email: 'kevinadlib@gmail.com', name: 'Kevin (Director)', role: 'admin', active: true },
-  { id: 'admin-3', email: 'case@med360.mu',  name: 'Sarah Case Manager', role: 'case_manager', active: true },
-];
+// ─── Authentication model ─────────────────────────────────────────────────────
+// Authentication is handled ONLY by Supabase Auth (bcrypt, server-side).
+// Authorization is the server-side `admin_users` table (enforced again by RLS via
+// public.is_admin()). The browser never decides who is an admin:
+//   - no hardcoded/emergency credentials
+//   - no self-signed sessionStorage session (it was forgeable from the console)
+//   - role is read from `admin_users`, not from user-editable user_metadata
+// Failed-login throttling here is UX only; the real brute-force protection is
+// Supabase Auth's server-side rate limiting.
 
-const MOCK_PASSWORD = 'med360admin';
+const LOCKOUT_KEY = 'med360_lockout_until';
+const ATTEMPTS_KEY = 'med360_login_attempts';
 
-function saveSecureSession(user: AdminUser) {
-  try {
-    const raw = JSON.stringify({ user, timestamp: Date.now(), fp: generateSessionFingerprint() });
-    const b64 = btoa(raw);
-    const checksum = generateStorageChecksum(b64);
-    sessionStorage.setItem('med360_admin_user', b64);
-    sessionStorage.setItem('med360_admin_sig', checksum);
-  } catch {}
-}
+async function resolveAdmin(session: { user: { id: string; email?: string | null; user_metadata?: Record<string, any> } } | null): Promise<AdminUser | null> {
+  const email = session?.user?.email?.toLowerCase();
+  if (!session || !email) return null;
 
-function loadSecureSession(): AdminUser | null {
-  try {
-    const b64 = sessionStorage.getItem('med360_admin_user');
-    const sig = sessionStorage.getItem('med360_admin_sig');
-    if (!b64 || !sig) return null;
-    if (!verifyStorageChecksum(b64, sig)) {
-      console.warn('🛡️ Security: Tampered session detected in storage.');
-      sessionStorage.removeItem('med360_admin_user');
-      sessionStorage.removeItem('med360_admin_sig');
-      return null;
-    }
-    const data = JSON.parse(atob(b64));
-    return data.user || null;
-  } catch {
-    return null;
-  }
+  const { data, error } = await supabase
+    .from('admin_users')
+    .select('id, email, name, role, active')
+    .ilike('email', email)
+    .maybeSingle();
+
+  if (error || !data || !data.active) return null;
+
+  return {
+    id: session.user.id,
+    email: data.email,
+    name: data.name || session.user.user_metadata?.full_name || email.split('@')[0],
+    role: data.role as AdminUser['role'],
+    active: true,
+  };
 }
 
 // ─── Context Shape ────────────────────────────────────────────────────────────
 interface AuthContextValue {
   user: AdminUser | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
@@ -57,105 +49,77 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 // ─── Provider ─────────────────────────────────────────────────────────────────
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<AdminUser | null>(() => loadSecureSession());
+  const [user, setUser] = useState<AdminUser | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(isSupabaseConfigured);
+  const mounted = useRef(true);
 
-  // Listen to live Supabase Auth session changes
   useEffect(() => {
-    if (!isSupabaseConfigured) return;
+    mounted.current = true;
+    if (!isSupabaseConfigured) {
+      setIsLoading(false);
+      return;
+    }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        const adminUser: AdminUser = {
-          id: session.user.id,
-          email: session.user.email || '',
-          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Admin Med360',
-          role: (session.user.user_metadata?.role as any) || 'admin',
-          active: true,
-        };
-        setUser(adminUser);
-        saveSecureSession(adminUser);
-      }
-    }).catch(() => {});
+    supabase.auth.getSession()
+      .then(async ({ data: { session } }) => {
+        const admin = await resolveAdmin(session);
+        if (!mounted.current) return;
+        setUser(admin);
+        // A valid Supabase user who is not an active admin must not hold a session here.
+        if (session && !admin) supabase.auth.signOut().catch(() => {});
+      })
+      .catch(() => {})
+      .finally(() => { if (mounted.current) setIsLoading(false); });
 
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        const adminUser: AdminUser = {
-          id: session.user.id,
-          email: session.user.email || '',
-          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Admin Med360',
-          role: (session.user.user_metadata?.role as any) || 'admin',
-          active: true,
-        };
-        setUser(adminUser);
-        saveSecureSession(adminUser);
-      } else if (!session && !sessionStorage.getItem('med360_admin_user')) {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
         setUser(null);
+        return;
       }
+      // Defer Supabase calls out of the auth callback to avoid deadlocks.
+      setTimeout(async () => {
+        const admin = await resolveAdmin(session);
+        if (mounted.current) setUser(admin);
+      }, 0);
     });
 
     return () => {
+      mounted.current = false;
       authListener?.subscription?.unsubscribe();
     };
   }, []);
 
   async function login(email: string, password: string): Promise<boolean> {
-    // Brute force protection check
-    const attempts = parseInt(localStorage.getItem('med360_login_attempts') || '0', 10);
-    const lockoutUntil = parseInt(localStorage.getItem('med360_lockout_until') || '0', 10);
-    
-    if (Date.now() < lockoutUntil) {
-      alert('Too many failed attempts. Account locked temporarily.');
+    const lockoutUntil = parseInt(localStorage.getItem(LOCKOUT_KEY) || '0', 10);
+    if (Date.now() < lockoutUntil) return false;
+
+    const fail = () => {
+      const attempts = parseInt(localStorage.getItem(ATTEMPTS_KEY) || '0', 10) + 1;
+      localStorage.setItem(ATTEMPTS_KEY, String(attempts));
+      if (attempts >= 5) localStorage.setItem(LOCKOUT_KEY, String(Date.now() + 5 * 60 * 1000));
       return false;
-    }
+    };
 
-    // 1. Attempt Live Supabase Authentication
-    if (isSupabaseConfigured) {
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
+    if (!isSupabaseConfigured) return fail();
 
-        if (data?.user && !error) {
-          localStorage.removeItem('med360_login_attempts');
-          localStorage.removeItem('med360_lockout_until');
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      if (error || !data?.session) return fail();
 
-          const adminUser: AdminUser = {
-            id: data.user.id,
-            email: data.user.email || email,
-            name: data.user.user_metadata?.full_name || data.user.email?.split('@')[0] || 'Admin Med360',
-            role: (data.user.user_metadata?.role as any) || 'admin',
-            active: true,
-          };
-          setUser(adminUser);
-          saveSecureSession(adminUser);
-          return true;
-        }
-      } catch (err) {
-        console.warn('Supabase auth attempt failed, checking fallback credentials:', err);
+      const admin = await resolveAdmin(data.session);
+      if (!admin) {
+        // Authenticated but not an authorised admin → no access.
+        await supabase.auth.signOut().catch(() => {});
+        return fail();
       }
-    }
 
-    // 2. Fallback Mock/Emergency Credentials Check (Timing-attack resistant constant-time check)
-    const fallbackMatch = MOCK_ADMINS.find(a => constantTimeEquals(a.email.toLowerCase(), email.toLowerCase()) && a.active);
-    if (!fallbackMatch || !constantTimeEquals(password, MOCK_PASSWORD)) {
-      const newAttempts = attempts + 1;
-      localStorage.setItem('med360_login_attempts', newAttempts.toString());
-      
-      if (newAttempts >= 5) {
-        // Lockout for 5 minutes
-        localStorage.setItem('med360_lockout_until', (Date.now() + 5 * 60 * 1000).toString());
-      }
-      return false;
+      localStorage.removeItem(ATTEMPTS_KEY);
+      localStorage.removeItem(LOCKOUT_KEY);
+      setUser(admin);
+      return true;
+    } catch {
+      return fail();
     }
-
-    // Success with emergency admin credentials
-    localStorage.removeItem('med360_login_attempts');
-    localStorage.removeItem('med360_lockout_until');
-    
-    setUser(fallbackMatch);
-    saveSecureSession(fallbackMatch);
-    return true;
   }
 
   function logout() {
@@ -163,8 +127,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       supabase.auth.signOut().catch(() => {});
     }
     setUser(null);
-    sessionStorage.removeItem('med360_admin_user');
-    sessionStorage.removeItem('med360_admin_sig');
   }
 
   return (
@@ -172,6 +134,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       value={{
         user,
         isAuthenticated: user !== null,
+        isLoading,
         login,
         logout,
       }}

@@ -152,7 +152,7 @@ npm run build
 Navigate to `/admin` or `/admin/login`:
 - **Admin Email**: `admin@med360.mu`
 - **Case Manager Email**: `case@med360.mu`
-- **Password**: `med360admin`
+- **Password**: your own Supabase Auth password (no default/shared password exists)
 
 ---
 

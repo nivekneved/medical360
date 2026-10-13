@@ -425,15 +425,11 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
 
 // ─── Dispatch Campaign via Resend ─────────────────────────────────────────────
 export async function sendTestCampaignEmail(campaign: Campaign, testEmail: string): Promise<{ success: boolean; error?: string }> {
-  const apiKey = import.meta.env.VITE_RESEND_API_KEY || '';
   const html = renderCampaignHtml(campaign, { name: 'Dr. / Patient (Preview)', country: 'Mauritius', email: testEmail });
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
-  if (apiKey) {
-    headers['Authorization'] = `Bearer ${apiKey}`;
-  }
 
   try {
     const res = await fetch('/api/resend/emails', {
@@ -462,16 +458,12 @@ export async function dispatchCampaign(
   contacts: Contact[],
   onProgress?: (sent: number, total: number) => void
 ): Promise<{ success: boolean; sentCount: number; errors: string[] }> {
-  const apiKey = import.meta.env.VITE_RESEND_API_KEY || '';
   const errors: string[] = [];
   let sentCount = 0;
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
-  if (apiKey) {
-    headers['Authorization'] = `Bearer ${apiKey}`;
-  }
 
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
