@@ -1,5 +1,6 @@
 import type { InquiryFormData } from '../../hooks/useInquiry';
 import { supabase, isSupabaseConfigured } from '../supabase/client';
+import { escapeHtml } from './security.service';
 
 export interface EmailTemplateConfig {
   subject: string;
@@ -151,22 +152,33 @@ export function renderEmailHtml(
   config: EmailTemplateConfig,
   data: RenderEmailData
 ): string {
-  const patientFullName = `${data.firstName} ${data.lastName}`.trim() || 'Valued Patient';
-  const budgetText = data.budgetMin && data.budgetMax 
-    ? `$${data.budgetMin} - $${data.budgetMax} USD` 
-    : 'Not specified';
+  const rawFullName = `${data.firstName || ''} ${data.lastName || ''}`.trim() || 'Valued Patient';
+  const patientFullName = escapeHtml(rawFullName);
+  const rawEmail = (data.email || '').trim();
+  const safeEmail = escapeHtml(rawEmail);
+  const rawPhone = (data.phone || '').trim();
+  const safePhone = escapeHtml(rawPhone);
+  const cleanPhoneDigits = rawPhone.replace(/[^0-9+]/g, '');
+
+  const displayService = escapeHtml(data.serviceName || 'Free Medical Review / Consultation');
+  const displaySpecialty = escapeHtml(data.specialtyName || 'General Healthcare / Not specified');
+  const displayHospital = escapeHtml(data.hospitalName || 'Any Accredited Partner Hospital');
+  const displaySource = escapeHtml(data.sourcePage || 'Website Portal Direct');
+  const safeCountry = escapeHtml(data.countryOfResidence || 'Mauritius');
+  const safeDescription = escapeHtml(data.description || 'No additional details provided.');
+  const safeUrgency = escapeHtml(data.urgency || 'routine');
+  const safePreferredCountry = escapeHtml(data.preferredCountry || '');
+  const budgetText = escapeHtml(
+    data.budgetMin && data.budgetMax 
+      ? `$${data.budgetMin} - $${data.budgetMax} USD` 
+      : 'Not specified'
+  );
 
   const urgencyColor = data.urgency === 'emergency' 
     ? '#dc2626' 
     : data.urgency === 'urgent' 
     ? '#ea580c' 
     : '#16a34a';
-
-  const displayService = data.serviceName || 'Free Medical Review / Consultation';
-  const displaySpecialty = data.specialtyName || 'General Healthcare / Not specified';
-  const displayHospital = data.hospitalName || 'Any Accredited Partner Hospital';
-  const displaySource = data.sourcePage || 'Website Portal Direct';
-  const cleanPhoneDigits = (data.phone || '').replace(/[^0-9+]/g, '');
 
   const sections: string[] = [];
 
@@ -181,16 +193,16 @@ export function renderEmailHtml(
             </td>
             <td style="text-align: right; vertical-align: middle;">
               <span style="display: inline-block; background: #065f46; color: #ffffff; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
-                ${data.urgency || 'NEW'}
+                ${safeUrgency.toUpperCase()}
               </span>
             </td>
           </tr>
         </table>
         <h2 style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: ${config.banner.textColor}; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-          ${config.banner.title}
+          ${escapeHtml(config.banner.title)}
         </h2>
         <p style="margin: 0; font-size: 13px; opacity: 0.9; line-height: 1.4; color: ${config.banner.textColor};">
-          ${config.banner.subtitle}
+          ${escapeHtml(config.banner.subtitle)}
         </p>
       </div>
     `);
@@ -202,11 +214,11 @@ export function renderEmailHtml(
   // Quick Action Response Bar at the top of the body
   if (config.callToAction?.enabled) {
     const waReplyText = encodeURIComponent(
-      `Hello ${patientFullName}, thank you for contacting Med360 regarding your request for ${displayService}. I am your dedicated patient coordinator.`
+      `Hello ${rawFullName}, thank you for contacting Med360 regarding your request for ${data.serviceName || 'medical assistance'}. I am your dedicated patient coordinator.`
     );
     const waLink = `https://wa.me/${cleanPhoneDigits.replace('+', '')}?text=${waReplyText}`;
-    const emailSubject = encodeURIComponent(`Med360 - Follow-up on your medical request (${displayService})`);
-    const emailBody = encodeURIComponent(`Dear ${patientFullName},\n\nThank you for reaching out to Med360 regarding ${displayService}.\n\nBest regards,\nMed360 Patient Coordination Team\n+230 5918 8275`);
+    const emailSubject = encodeURIComponent(`Med360 - Follow-up on your medical request (${data.serviceName || 'Consultation'})`);
+    const emailBody = encodeURIComponent(`Dear ${rawFullName},\n\nThank you for reaching out to Med360 regarding ${data.serviceName || 'your inquiry'}.\n\nBest regards,\nMed360 Patient Coordination Team\n+230 5918 8275`);
 
     sections.push(`
       <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 8px; padding: 14px 16px; margin-bottom: 22px;">
@@ -214,17 +226,17 @@ export function renderEmailHtml(
           ⚡ Rapid Response Actions (Get Back to Patient)
         </div>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          ${data.phone ? `
-            <a href="${waLink}" target="_blank" style="display: inline-block; background-color: #16a34a; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 8px 14px; border-radius: 6px; margin-right: 6px; margin-bottom: 6px;">
-              💬 Reply via WhatsApp (${data.phone})
+          ${rawPhone ? `
+            <a href="${waLink}" target="_blank" rel="noopener noreferrer" style="display: inline-block; background-color: #16a34a; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 8px 14px; border-radius: 6px; margin-right: 6px; margin-bottom: 6px;">
+              💬 Reply via WhatsApp (${safePhone})
             </a>
           ` : ''}
-          ${data.email ? `
-            <a href="mailto:${data.email}?subject=${emailSubject}&body=${emailBody}" style="display: inline-block; background-color: #0284c7; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 8px 14px; border-radius: 6px; margin-right: 6px; margin-bottom: 6px;">
-              ✉️ Reply via Email (${data.email})
+          ${rawEmail ? `
+            <a href="mailto:${encodeURIComponent(rawEmail)}?subject=${emailSubject}&body=${emailBody}" style="display: inline-block; background-color: #0284c7; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 8px 14px; border-radius: 6px; margin-right: 6px; margin-bottom: 6px;">
+              ✉️ Reply via Email (${safeEmail})
             </a>
           ` : ''}
-          ${data.phone ? `
+          ${rawPhone ? `
             <a href="tel:${cleanPhoneDigits}" style="display: inline-block; background-color: #0f172a; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 8px 14px; border-radius: 6px; margin-bottom: 6px;">
               📞 Call Patient
             </a>
@@ -245,19 +257,19 @@ export function renderEmailHtml(
         </tr>
       `);
     }
-    if (config.patientInfo.showEmail && data.email) {
+    if (config.patientInfo.showEmail && rawEmail) {
       rows.push(`
         <tr style="border-bottom: 1px solid #f1f5f9;">
           <td style="padding: 9px 0; color: #64748b; font-size: 13px; font-weight: 600;">Email:</td>
-          <td style="padding: 9px 0; font-size: 14px;"><a href="mailto:${data.email}" style="color: #0284c7; text-decoration: none; font-weight: 700;">${data.email}</a></td>
+          <td style="padding: 9px 0; font-size: 14px;"><a href="mailto:${encodeURIComponent(rawEmail)}" style="color: #0284c7; text-decoration: none; font-weight: 700;">${safeEmail}</a></td>
         </tr>
       `);
     }
-    if (config.patientInfo.showPhone && data.phone) {
+    if (config.patientInfo.showPhone && rawPhone) {
       rows.push(`
         <tr style="border-bottom: 1px solid #f1f5f9;">
           <td style="padding: 9px 0; color: #64748b; font-size: 13px; font-weight: 600;">Phone / WhatsApp:</td>
-          <td style="padding: 9px 0; font-size: 14px;"><a href="tel:${cleanPhoneDigits}" style="color: #0284c7; text-decoration: none; font-weight: 700;">${data.phone}</a></td>
+          <td style="padding: 9px 0; font-size: 14px;"><a href="tel:${cleanPhoneDigits}" style="color: #0284c7; text-decoration: none; font-weight: 700;">${safePhone}</a></td>
         </tr>
       `);
     }
@@ -265,7 +277,7 @@ export function renderEmailHtml(
       rows.push(`
         <tr style="border-bottom: 1px solid #f1f5f9;">
           <td style="padding: 9px 0; color: #64748b; font-size: 13px; font-weight: 600;">Country of Residence:</td>
-          <td style="padding: 9px 0; color: #0f172a; font-size: 14px; font-weight: 600;">${data.countryOfResidence || 'Mauritius'}</td>
+          <td style="padding: 9px 0; color: #0f172a; font-size: 14px; font-weight: 600;">${safeCountry}</td>
         </tr>
       `);
     }
@@ -274,7 +286,7 @@ export function renderEmailHtml(
       sections.push(`
         <div style="margin-bottom: 22px;">
           <h3 style="margin: 0 0 10px 0; font-size: 14px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
-            ${config.patientInfo.title}
+            ${escapeHtml(config.patientInfo.title)}
           </h3>
           <table style="width: 100%; border-collapse: collapse;">
             ${rows.join('')}
@@ -325,7 +337,7 @@ export function renderEmailHtml(
           <td style="padding: 9px 8px; color: #64748b; font-size: 13px; font-weight: 600;">Urgency Level:</td>
           <td style="padding: 9px 8px; font-size: 14px;">
             <span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: #ffffff; background-color: ${urgencyColor};">
-              ${data.urgency || 'routine'}
+              ${safeUrgency}
             </span>
           </td>
         </tr>
@@ -335,13 +347,13 @@ export function renderEmailHtml(
     sections.push(`
       <div style="margin-bottom: 22px;">
         <h3 style="margin: 0 0 10px 0; font-size: 14px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
-          ${config.medicalDetails.title}
+          ${escapeHtml(config.medicalDetails.title)}
         </h3>
         ${medRows.length > 0 ? `<table style="width: 100%; border-collapse: collapse; margin-bottom: 12px;">${medRows.join('')}</table>` : ''}
         ${config.medicalDetails.showDescription ? `
           <div style="background-color: #f8fafc; padding: 14px 16px; border-radius: 6px; border-left: 4px solid ${config.medicalDetails.accentColor}; margin-top: 8px;">
             <div style="font-size: 11px; font-weight: 800; color: #475569; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Medical Problem / Patient Message:</div>
-            <div style="color: #1e293b; font-size: 13px; line-height: 1.6; white-space: pre-wrap;">${data.description || 'No additional details provided.'}</div>
+            <div style="color: #1e293b; font-size: 13px; line-height: 1.6; white-space: pre-wrap;">${safeDescription}</div>
           </div>
         ` : ''}
       </div>
@@ -363,7 +375,7 @@ export function renderEmailHtml(
       prefRows.push(`
         <tr style="border-bottom: 1px solid #f1f5f9;">
           <td style="padding: 9px 8px; color: #64748b; font-size: 13px; font-weight: 600;">Preferred Destination:</td>
-          <td style="padding: 9px 8px; color: #0f172a; font-size: 13px;">${data.preferredCountry}</td>
+          <td style="padding: 9px 8px; color: #0f172a; font-size: 13px;">${safePreferredCountry}</td>
         </tr>
       `);
     }
@@ -380,7 +392,7 @@ export function renderEmailHtml(
       sections.push(`
         <div style="margin-bottom: 22px;">
           <h3 style="margin: 0 0 10px 0; font-size: 14px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px;">
-            ${config.preferences.title}
+            ${escapeHtml(config.preferences.title)}
           </h3>
           <table style="width: 100%; border-collapse: collapse;">
             ${prefRows.join('')}
@@ -398,11 +410,11 @@ export function renderEmailHtml(
     sections.push(`
       <div style="background-color: #f8fafc; padding: 16px 24px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px; text-align: center;">
         <p style="margin: 0 0 4px 0; font-size: 12px; color: #64748b;">
-          ${config.footer.disclaimer}
+          ${escapeHtml(config.footer.disclaimer)}
         </p>
         ${config.footer.brandingText ? `
           <p style="margin: 0; font-size: 11px; color: #94a3b8; font-weight: 600;">
-            ${config.footer.brandingText}
+            ${escapeHtml(config.footer.brandingText)}
           </p>
         ` : ''}
       </div>
@@ -418,6 +430,11 @@ export function renderEmailHtml(
   `;
 }
 
+function cleanSubjectToken(val: string | undefined, defaultVal: string): string {
+  const s = val || defaultVal;
+  return s.replace(/[\r\n\0]/g, ' ').trim();
+}
+
 export function formatSubject(
   subjectTemplate: string,
   data: {
@@ -430,18 +447,22 @@ export function formatSubject(
     sourcePage?: string;
   }
 ): string {
-  const patientFullName = `${data.firstName} ${data.lastName}`.trim() || 'Patient';
-  const displayService = data.serviceName || 'Medical Inquiry';
-  const displaySpecialty = data.specialtyName || 'General';
-  const displaySource = data.sourcePage || 'Web';
+  const patientFullName = cleanSubjectToken(`${data.firstName || ''} ${data.lastName || ''}`, 'Patient');
+  const displayService = cleanSubjectToken(data.serviceName, 'Medical Inquiry');
+  const displaySpecialty = cleanSubjectToken(data.specialtyName, 'General');
+  const displaySource = cleanSubjectToken(data.sourcePage, 'Web');
+  const displayUrgency = cleanSubjectToken(data.urgency, 'Routine');
+  const displayCountry = cleanSubjectToken(data.countryOfResidence, 'Mauritius');
 
   return subjectTemplate
     .replace(/\{\{patientName\}\}/g, patientFullName)
     .replace(/\{\{service\}\}/g, displayService)
     .replace(/\{\{specialty\}\}/g, displaySpecialty)
-    .replace(/\{\{urgency\}\}/g, data.urgency || 'Routine')
-    .replace(/\{\{country\}\}/g, data.countryOfResidence || 'Mauritius')
-    .replace(/\{\{source\}\}/g, displaySource);
+    .replace(/\{\{urgency\}\}/g, displayUrgency)
+    .replace(/\{\{country\}\}/g, displayCountry)
+    .replace(/\{\{source\}\}/g, displaySource)
+    .replace(/[\r\n\0]/g, ' ')
+    .trim();
 }
 
 export async function sendInquiryEmail(formData: InquiryFormData, specialtyName?: string): Promise<boolean> {

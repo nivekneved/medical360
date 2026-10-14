@@ -30,6 +30,8 @@
  * 25. Tamper-Evident Security Audit & Breach Telemetry System
  */
 
+import DOMPurify from 'dompurify';
+
 // In-memory rate limiting & security token store
 const rateLimitStore: Record<string, { count: number; firstAttemptTime: number; lastAttemptTime: number }> = {};
 const csrfTokenStore = new Set<string>();
@@ -163,27 +165,19 @@ export function sanitizeInput(input: string): string {
 
 export function sanitizeHtml(html: string): string {
   if (!html || typeof html !== 'string') return '';
-  return html
-    .normalize('NFC')
-    .replace(/\0/g, '')
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
-    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
-    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
-    .replace(/<embed\b[^<]*(?:(?!<\/embed>)<[^<]*)*<\/embed>/gi, '')
-    .replace(/<applet\b[^<]*(?:(?!<\/applet>)<[^<]*)*<\/applet>/gi, '')
-    .replace(/<meta\b[^>]*>/gi, '')
-    .replace(/<link\b[^>]*>/gi, '')
-    .replace(/<base\b[^>]*>/gi, '')
-    .replace(/<form\b[^>]*>[\s\S]*?<\/form>/gi, '')
-    .replace(/\s+on[a-zA-Z]+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
-    .replace(/\s+autofocus\b/gi, '')
-    .replace(/href\s*=\s*("javascript:[^"]*"|'javascript:[^']*'|javascript:[^\s>]+)/gi, 'href="#"')
-    .replace(/href\s*=\s*("data:text\/html[^"]*"|'data:text\/html[^']*')/gi, 'href="#"')
-    .replace(/href\s*=\s*("vbscript:[^"]*"|'vbscript:[^']*')/gi, 'href="#"')
-    .replace(/src\s*=\s*("javascript:[^"]*"|'javascript:[^']*'|javascript:[^\s>]+)/gi, 'src=""')
-    .replace(/src\s*=\s*("data:text\/html[^"]*"|'data:text\/html[^']*')/gi, 'src=""')
-    .replace(/src\s*=\s*("vbscript:[^"]*"|'vbscript:[^']*')/gi, 'src=""');
+  const normalized = html.normalize('NFC').replace(/\0/g, '');
+
+  if (typeof window !== 'undefined' && DOMPurify.isSupported) {
+    return DOMPurify.sanitize(normalized, {
+      USE_PROFILES: { html: true },
+      FORBID_TAGS: ['script', 'iframe', 'object', 'embed', 'form', 'base', 'applet', 'meta', 'link'],
+      FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur', 'onchange', 'onsubmit', 'autofocus'],
+      ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+    });
+  }
+
+  // Safe fallback for non-browser/SSR environments
+  return escapeHtml(normalized);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

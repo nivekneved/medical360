@@ -1,4 +1,5 @@
 import { supabase, isSupabaseConfigured } from '../supabase/client';
+import { escapeHtml } from './security.service';
 
 export interface Contact {
   id: string;
@@ -336,8 +337,8 @@ export function parseCSVContacts(csvText: string): Contact[] {
 
 // ─── Campaign HTML Generator ──────────────────────────────────────────────────
 export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>): string {
-  const name = contact.name || 'Valued Patient';
-  const country = contact.country || 'Mauritius';
+  const name = escapeHtml(contact.name || 'Valued Patient');
+  const country = escapeHtml(contact.country || 'Mauritius');
   const t = campaign.template;
 
   const introText = (t.introText || '')
