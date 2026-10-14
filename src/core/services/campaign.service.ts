@@ -1,3 +1,5 @@
+import { supabase, isSupabaseConfigured } from '../supabase/client';
+
 export interface Contact {
   id: string;
   name: string;
@@ -424,12 +426,22 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
 }
 
 // ─── Dispatch Campaign via Resend ─────────────────────────────────────────────
+async function getAdminAuthHeaders(): Promise<Record<string, string>> {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  try {
+    if (isSupabaseConfigured) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.access_token) {
+        headers['Authorization'] = `Bearer ${session.access_token}`;
+      }
+    }
+  } catch {}
+  return headers;
+}
+
 export async function sendTestCampaignEmail(campaign: Campaign, testEmail: string): Promise<{ success: boolean; error?: string }> {
   const html = renderCampaignHtml(campaign, { name: 'Dr. / Patient (Preview)', country: 'Mauritius', email: testEmail });
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
+  const headers = await getAdminAuthHeaders();
 
   try {
     const res = await fetch('/api/resend/emails', {
@@ -460,10 +472,7 @@ export async function dispatchCampaign(
 ): Promise<{ success: boolean; sentCount: number; errors: string[] }> {
   const errors: string[] = [];
   let sentCount = 0;
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
+  const headers = await getAdminAuthHeaders();
 
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];

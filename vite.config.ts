@@ -18,13 +18,24 @@ function resendDevProxy(resendApiKey: string): Plugin {
                   res.end(JSON.stringify({ error: 'RESEND_API_KEY not set in local .env' }));
                   return;
                 }
+                let payloadToSend = body;
+                try {
+                  const parsed = JSON.parse(body);
+                  payloadToSend = JSON.stringify({
+                    from: parsed.from,
+                    to: Array.isArray(parsed.to) ? parsed.to : [parsed.to],
+                    subject: String(parsed.subject || '').replace(/[\r\n\0]/g, ' ').slice(0, 200).trim(),
+                    html: String(parsed.html || ''),
+                  });
+                } catch {}
+
                 const upstreamRes = await fetch('https://api.resend.com/emails', {
                   method: 'POST',
                   headers: {
                     'Authorization': `Bearer ${resendApiKey}`,
                     'Content-Type': 'application/json',
                   },
-                  body,
+                  body: payloadToSend,
                 });
 
                 const text = await upstreamRes.text();

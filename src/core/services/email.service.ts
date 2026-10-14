@@ -1,4 +1,5 @@
 import type { InquiryFormData } from '../../hooks/useInquiry';
+import { supabase, isSupabaseConfigured } from '../supabase/client';
 
 export interface EmailTemplateConfig {
   subject: string;
@@ -599,6 +600,14 @@ export async function sendTestEmail(recipientEmail: string, config: EmailTemplat
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
+  try {
+    if (isSupabaseConfigured) {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.access_token) {
+        headers['Authorization'] = `Bearer ${session.access_token}`;
+      }
+    }
+  } catch {}
 
   try {
     const res = await fetch('/api/resend/emails', {
