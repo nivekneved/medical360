@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { ThemeProvider } from './providers/ThemeProvider';
 import { CurrencyProvider } from './providers/CurrencyProvider';
@@ -20,8 +20,9 @@ import { HomePage } from './features/home/HomePage';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { CookieConsentBanner } from './components/common/CookieConsentBanner';
 import { PageLoader } from './components/common/Loader';
-import { IS_MAINTENANCE_MODE, isMaintenanceModeActive } from './core/config/site';
+import { IS_MAINTENANCE_MODE, isMaintenanceModeActive, setMaintenanceMode } from './core/config/site';
 import { MaintenancePage } from './features/maintenance/MaintenancePage';
+import { supabase, isSupabaseConfigured } from './core/supabase/client';
 
 
 /**
@@ -119,7 +120,34 @@ function ClientPreviewActivator() {
 // ─── Public Layout Wrapper ────────────────────────────────────────────────────
 function PublicLayout() {
   const isPreview = isClientPreviewActive();
-  const maintenanceActive = isMaintenanceModeActive();
+  const [maintenanceActive, setMaintenanceActive] = useState<boolean>(isMaintenanceModeActive());
+
+  useEffect(() => {
+    const handleUpdate = () => setMaintenanceActive(isMaintenanceModeActive());
+    window.addEventListener('storage', handleUpdate);
+    window.addEventListener('med360_maintenance_changed', handleUpdate);
+
+    if (isSupabaseConfigured) {
+      (async () => {
+        try {
+          const { data } = await supabase
+            .from('site_settings')
+            .select('value')
+            .eq('key', 'maintenance_mode')
+            .maybeSingle();
+          if (data && typeof data.value === 'boolean') {
+            setMaintenanceMode(data.value);
+            setMaintenanceActive(data.value);
+          }
+        } catch {}
+      })();
+    }
+
+    return () => {
+      window.removeEventListener('storage', handleUpdate);
+      window.removeEventListener('med360_maintenance_changed', handleUpdate);
+    };
+  }, []);
 
   if (maintenanceActive && !isPreview) {
     return <MaintenancePage />;

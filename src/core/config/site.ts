@@ -7,13 +7,14 @@ export function isMaintenanceModeActive(): boolean {
       if (stored !== null) return stored === 'true';
     } catch {}
   }
-  return import.meta.env.VITE_MAINTENANCE_MODE === 'false' ? false : true;
+  return import.meta.env.VITE_MAINTENANCE_MODE === 'true';
 }
 
 export function setMaintenanceMode(active: boolean): void {
   if (typeof window !== 'undefined') {
     try {
       localStorage.setItem('med360_maintenance_mode', String(active));
+      window.dispatchEvent(new CustomEvent('med360_maintenance_changed', { detail: active }));
     } catch {}
   }
 }

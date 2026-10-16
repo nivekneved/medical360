@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ShieldAlert,
   CheckCircle2,
@@ -19,6 +19,7 @@ import {
   CONTACT_EMAIL,
   SITE_URL,
 } from '../../../../core/config/site';
+import { supabase, isSupabaseConfigured } from '../../../../core/supabase/client';
 
 interface AdminMaintenanceSettingsProps {
   onNotify: (msg: { text: string; isError?: boolean }) => void;
@@ -30,12 +31,43 @@ export const AdminMaintenanceSettings: React.FC<AdminMaintenanceSettingsProps> =
   const [emergencyPhone, setEmergencyPhone] = useState<string>(WHATSAPP_DISPLAY);
   const [emergencyEmail, setEmergencyEmail] = useState<string>(CONTACT_EMAIL);
 
+  useEffect(() => {
+    if (isSupabaseConfigured) {
+      (async () => {
+        try {
+          const { data } = await supabase
+            .from('site_settings')
+            .select('value')
+            .eq('key', 'maintenance_mode')
+            .maybeSingle();
+          if (data && typeof data.value === 'boolean') {
+            setIsActive(data.value);
+            setMaintenanceMode(data.value);
+          }
+        } catch {}
+      })();
+    }
+  }, []);
+
   const previewUrl = `${SITE_URL || window.location.origin}/preview`;
 
-  const handleToggle = () => {
+  const handleToggle = async () => {
     const nextState = !isActive;
-    setMaintenanceMode(nextState);
     setIsActive(nextState);
+    setMaintenanceMode(nextState);
+
+    if (isSupabaseConfigured) {
+      try {
+        await supabase.from('site_settings').upsert({
+          key: 'maintenance_mode',
+          value: nextState,
+          updated_at: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.error('Failed to sync maintenance mode to Supabase:', err);
+      }
+    }
+
     onNotify({
       text: nextState
         ? 'Maintenance Mode ENABLED. Public visitors now see the Under Maintenance page.'
