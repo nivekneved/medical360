@@ -2,6 +2,7 @@
 // Handles deep link building, conversion tracking, and real-time CRM webhook sync
 
 import { WHATSAPP_NUMBER } from '../config/site';
+import { supabase, isSupabaseConfigured } from '../supabase/client';
 
 const MED360_PHONE = WHATSAPP_NUMBER;
 const LOCAL_STORAGE_WHATSAPP_LOGS = 'med360_whatsapp_consultation_logs';
@@ -158,6 +159,42 @@ export function getWhatsAppConsultationLogs(): WhatsAppConsultationLog[] {
     return JSON.parse(raw);
   } catch {
     return [];
+  }
+}
+
+/**
+ * Fetches live WhatsApp consultation logs from Supabase (admin) merged with local logs.
+ */
+export async function fetchWhatsAppConsultationLogs(): Promise<WhatsAppConsultationLog[]> {
+  const localLogs = getWhatsAppConsultationLogs();
+  if (!isSupabaseConfigured) return localLogs;
+
+  try {
+    const { data, error } = await supabase
+      .from('whatsapp_logs')
+      .select('*')
+      .order('timestamp', { ascending: false })
+      .limit(100);
+
+    if (error || !data) return localLogs;
+
+    const remoteLogs: WhatsAppConsultationLog[] = data.map((row: any) => ({
+      id: row.id,
+      timestamp: row.timestamp || row.created_at,
+      source: row.source || 'WhatsApp',
+      patientName: row.patient_name || 'WhatsApp Visitor',
+      country: row.country || 'Mauritius',
+      specialty: row.specialty || 'General Concierge',
+      phone: row.phone || '',
+      prefilledMessage: row.prefilled_message || '',
+      webhookStatus: row.webhook_status || 'dispatched',
+    }));
+
+    const seen = new Set(remoteLogs.map(l => l.id));
+    const merged = [...remoteLogs, ...localLogs.filter(l => !seen.has(l.id))];
+    return merged.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  } catch {
+    return localLogs;
   }
 }
 

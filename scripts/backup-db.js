@@ -6,8 +6,14 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const supabaseUrl = 'https://vtcywighvyndtoxfvmny.supabase.co';
-const supabaseAnonKey = 'sb_publishable_A5Ugg4ZnCDbak0_h8gjy5Q_ZXVauRm0';
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('❌ Missing VITE_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY / VITE_SUPABASE_ANON_KEY in environment.');
+  process.exit(1);
+}
+
 const client = createClient(supabaseUrl, supabaseAnonKey);
 
 const tables = [

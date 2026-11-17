@@ -28,6 +28,7 @@ import {
   Activity,
   Palette,
   Layers,
+  Cpu,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -37,9 +38,10 @@ export interface NavItem {
   icon: LucideIcon;
 }
 
-// ─── 1. Overview & Inquiries (Direct Front Leads) ───────────────────────────
+// ─── 1. Overview & Unified Connect Hub (Direct Front Leads & Outreach) ──────
 export const CORE_NAV: NavItem[] = [
   { to: '/admin/dashboard', label: 'Command Overview', icon: LayoutDashboard },
+  { to: '/admin/connect', label: 'Connect (Inquiries & Outreach)', icon: Cpu },
   { to: '/admin/inquiries', label: 'Patient Leads & Inquiries', icon: Inbox },
 ];
 
@@ -131,6 +133,7 @@ export function getSectionForPath(path: string): MenuSection | null {
 
 export function getCurrentPageTitle(path: string, search: string): string {
   if (path === '/admin/dashboard') return 'Command Overview';
+  if (path === '/admin/connect') return 'Patient Connect & Coordination Hub';
   if (path === '/admin/inquiries') return 'Patient Leads & Inquiries';
   if (path === '/admin/hospitals') return 'Partner Hospitals';
   if (path === '/admin/specialties') return 'Medical Specialties & Procedures';

@@ -97,7 +97,7 @@ export const SEO_PAGES: Record<SEOPageKey, LocalizedMeta> = {
       kr: 'Dekouver nou bann lopital akredite JCI ek NABH dan Chennai, Bengaluru, Mumbai, Delhi ek Hyderabad avek lakonpagnman pasian dedie.',
     },
     canonical: '/hospitals',
-    image: '/assets/banners/hospital_banner.jpg',
+    image: '/assets/banners/hospitals_banner.jpg',
   },
 
   specialties: {
@@ -127,7 +127,7 @@ export const SEO_PAGES: Record<SEOPageKey, LocalizedMeta> = {
       kr: 'Depi lezamen dosie medikal ziska swazir lopital, viza medikal, biyé avion ek swivi apre tretman: dekouver nou lakonpagnman 360°.',
     },
     canonical: '/how-it-works',
-    image: '/assets/banners/howitworks_banner.jpg',
+    image: '/assets/banners/services_banner.jpg',
   },
 
   services: {
@@ -155,8 +155,8 @@ export const SEO_PAGES: Record<SEOPageKey, LocalizedMeta> = {
       fr: 'Calculez et comparez les coûts des soins médicaux internationaux en Inde avec une tarification claire et transparente.',
       kr: 'Kalkil ek konpar pri tretman medikal dan L\'inde ek lezot pei avek transparans total.',
     },
-    canonical: '/cost-calculator',
-    image: '/assets/banners/costcalculator_banner.jpg',
+    canonical: '/describe-need',
+    image: '/assets/banners/calculator_banner.jpg',
   },
 
   visaGuide: {
@@ -170,7 +170,7 @@ export const SEO_PAGES: Record<SEOPageKey, LocalizedMeta> = {
       fr: 'Guide complet des démarches de visa médical et d\'organisation de voyage pour les patients voyageant de Maurice vers l\'Inde.',
       kr: 'Gid konple pou demars viza medikal ek vwayaz pou bann pasian ki vwayaz depi Moris ver L\'inde.',
     },
-    canonical: '/visa-guide',
+    canonical: '/how-it-works',
     image: '/assets/banners/visaguide_banner.jpg',
   },
 
@@ -186,7 +186,7 @@ export const SEO_PAGES: Record<SEOPageKey, LocalizedMeta> = {
       kr: 'Zistwar bann pasian morisien ki finn gagn tretman medikal d\'ekselans a l\'etranze avek sipor Med360.',
     },
     canonical: '/case-studies',
-    image: '/assets/banners/casestudy_banner.jpg',
+    image: '/assets/banners/casestudies_banner.jpg',
   },
 
   contact: {

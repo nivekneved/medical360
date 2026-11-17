@@ -16,7 +16,7 @@ function isOriginAllowed(origin: string | null): boolean {
     const host = u.hostname.toLowerCase();
     if (ALLOWED_ORIGIN_HOSTS.has(host)) return true;
     if (host.endsWith('.med360.mu')) return true;
-    if (host.endsWith('.vercel.app')) return true;
+    if (host.startsWith('med360') && host.endsWith('.vercel.app')) return true;
     return false;
   } catch {
     return false;
@@ -160,6 +160,34 @@ export default async function handler(req: Request) {
       const eventType = payload?.event || 'webhook.received';
       // Safe telemetry log: only metadata, no PII
       console.log(`[WhatsApp Webhook] Handled event "${eventType}" for Lead ID: ${leadId}`);
+
+      // Persist non-PII/structured consultation log to Supabase whatsapp_logs when configured
+      const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
+      const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+      if (supabaseUrl && supabaseKey) {
+        const d = payload?.data || {};
+        const logRow = {
+          id: String(leadId).slice(0, 80),
+          timestamp: d.timestamp || new Date().toISOString(),
+          source: String(d.source || eventType).slice(0, 200),
+          patient_name: d.patientName ? String(d.patientName).slice(0, 120) : 'WhatsApp Visitor',
+          country: d.country ? String(d.country).slice(0, 80) : 'Mauritius',
+          specialty: d.specialty ? String(d.specialty).slice(0, 120) : 'General Concierge',
+          phone: d.phone ? String(d.phone).slice(0, 40) : '',
+          prefilled_message: d.prefilledMessage ? String(d.prefilledMessage).slice(0, 1000) : '',
+          webhook_status: 'dispatched',
+        };
+        await fetch(`${supabaseUrl}/rest/v1/whatsapp_logs`, {
+          method: 'POST',
+          headers: {
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'resolution=merge-duplicates,return=minimal',
+          },
+          body: JSON.stringify([logRow]),
+        }).catch(() => {});
+      }
 
       return new Response(JSON.stringify({ 
         success: true, 

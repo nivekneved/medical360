@@ -130,6 +130,9 @@ export interface Inquiry {
   specialtyId: string;
   serviceId?: string;
   serviceName?: string;
+  hospitalId?: string;
+  hospitalName?: string;
+  sourcePage?: string;
   description: string;
   urgency: InquiryUrgency;
   preferredCountry?: string;

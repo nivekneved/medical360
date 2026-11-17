@@ -64,19 +64,34 @@ class RequestOptimizationEngine {
     // 1. Check L1 Memory Cache
     const memEntry = this.l1Cache.get(key);
     const now = Date.now();
-    if (memEntry && now - memEntry.timestamp < memEntry.ttlMs) {
-      this.recordHit();
-      return memEntry.data as T;
+    if (memEntry) {
+      if (now - memEntry.timestamp < memEntry.ttlMs) {
+        this.recordHit();
+        return memEntry.data as T;
+      }
+      if (options.staleWhileRevalidate) {
+        this.recordHit();
+        this.revalidateInBackground(key, fetcher, ttlMs, tags, options.persist);
+        return memEntry.data as T;
+      }
     }
 
     // 2. Check L2 Persistent Storage Cache if enabled
     if (options.persist) {
       const persisted = this.readL2<T>(key);
-      if (persisted && now - persisted.timestamp < persisted.ttlMs) {
-        // Promote back to L1 RAM
-        this.setL1(key, persisted.data, persisted.ttlMs, tags);
-        this.recordHit();
-        return persisted.data;
+      if (persisted) {
+        if (now - persisted.timestamp < persisted.ttlMs) {
+          // Promote back to L1 RAM
+          this.setL1(key, persisted.data, persisted.ttlMs, tags);
+          this.recordHit();
+          return persisted.data;
+        }
+        if (options.staleWhileRevalidate) {
+          this.setL1(key, persisted.data, persisted.ttlMs, tags);
+          this.recordHit();
+          this.revalidateInBackground(key, fetcher, ttlMs, tags, true);
+          return persisted.data;
+        }
       }
     }
 
@@ -195,6 +210,31 @@ class RequestOptimizationEngine {
       savedRequests: 0,
       savingsPercentage: 0,
     };
+  }
+
+  private revalidateInBackground<T>(
+    key: string,
+    fetcher: () => Promise<T>,
+    ttlMs: number,
+    tags: string[],
+    persist?: boolean
+  ): void {
+    if (this.inflightRequests.has(key)) return;
+    const bgPromise = (async () => {
+      try {
+        this.metrics.networkExecuted++;
+        const result = await fetcher();
+        this.setL1(key, result, ttlMs, tags);
+        if (persist) {
+          this.writeL2(key, result, ttlMs, tags);
+        }
+      } catch {
+        // Keep stale value on background refresh failure
+      } finally {
+        this.inflightRequests.delete(key);
+      }
+    })();
+    this.inflightRequests.set(key, bgPromise);
   }
 
   private setL1<T>(key: string, data: T, ttlMs: number, tags: string[]): void {

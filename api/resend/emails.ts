@@ -38,7 +38,7 @@ function isOriginAllowed(origin: string | null): boolean {
     const host = u.hostname.toLowerCase();
     if (ALLOWED_ORIGIN_HOSTS.has(host)) return true;
     if (host.endsWith('.med360.mu')) return true;
-    if (host.endsWith('.vercel.app')) return true;
+    if (host.startsWith('med360') && host.endsWith('.vercel.app')) return true;
     return false;
   } catch {
     return false;
@@ -76,7 +76,7 @@ function isAdminRecipient(email: string): boolean {
   return allowedAdmins.has(clean);
 }
 
-// Verify Supabase Auth JWT token for requests sending to external arbitrary recipients
+// Verify Supabase Auth JWT token and active admin_users membership for external recipients
 async function verifyAdminAuth(authHeader: string | null): Promise<boolean> {
   if (!authHeader || !authHeader.startsWith('Bearer ')) return false;
   const token = authHeader.slice(7).trim();
@@ -93,7 +93,24 @@ async function verifyAdminAuth(authHeader: string | null): Promise<boolean> {
         'apikey': supabaseAnonKey,
       },
     });
-    return res.ok;
+    if (!res.ok) return false;
+
+    const user = (await res.json()) as { email?: string };
+    if (!user?.email) return false;
+
+    const adminCheck = await fetch(
+      `${supabaseUrl}/rest/v1/admin_users?email=ilike.${encodeURIComponent(user.email)}&active=eq.true&select=id`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'apikey': supabaseAnonKey,
+        },
+      }
+    );
+    if (!adminCheck.ok) return false;
+
+    const rows = await adminCheck.json();
+    return Array.isArray(rows) && rows.length > 0;
   } catch {
     return false;
   }
@@ -161,7 +178,79 @@ export default async function handler(req: Request) {
     });
   }
 
-  // ── 4. Anti-relay guard: Sender Identity Whitelist ──
+  // ── 4. Support Authenticated Admin Batch Dispatch (Resend /emails/batch) ──
+  const apiKey = process.env.RESEND_API_KEY || '';
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: 'Email service not configured' }), {
+      status: 503,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    });
+  }
+
+  if (Array.isArray(body?.batch)) {
+    const authHeader = req.headers.get('authorization');
+    const isAuthedAdmin = await verifyAdminAuth(authHeader);
+    if (!isAuthedAdmin) {
+      return new Response(JSON.stringify({ error: 'Unauthorized: Admin authentication required for batch dispatch.' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+
+    const batchItems = body.batch.slice(0, 100);
+    const sanitizedBatch: Array<{ from: string; to: string[]; subject: string; html: string }> = [];
+
+    for (const item of batchItems) {
+      const fStr = typeof item?.from === 'string' ? item.from.trim() : '';
+      const fMatch = fStr.match(/^(?:([^<>\r\n]+)<)?\s*([a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}))>?$/);
+      if (!fMatch || !ALLOWED_SENDER_DOMAINS.includes(fMatch[3].toLowerCase())) continue;
+
+      const rTo = Array.isArray(item?.to) ? item.to : (typeof item?.to === 'string' ? [item.to] : []);
+      const vTo = rTo
+        .filter((r: unknown): r is string => typeof r === 'string')
+        .map(r => r.trim())
+        .filter(r => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(r))
+        .slice(0, MAX_RECIPIENTS);
+      if (vTo.length === 0) continue;
+
+      sanitizedBatch.push({
+        from: fStr,
+        to: vTo,
+        subject: typeof item.subject === 'string' ? item.subject.replace(/[\r\n\0]/g, ' ').slice(0, 200).trim() : 'Med360 Notification',
+        html: typeof item.html === 'string' ? item.html : '<p>Med360 Notification</p>',
+      });
+    }
+
+    if (sanitizedBatch.length === 0) {
+      return new Response(JSON.stringify({ error: 'No valid emails in batch' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+
+    try {
+      const batchRes = await fetch('https://api.resend.com/emails/batch', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(sanitizedBatch),
+      });
+      const batchText = await batchRes.text();
+      return new Response(batchText, {
+        status: batchRes.status,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    } catch (err: any) {
+      return new Response(JSON.stringify({ error: err.message || 'Batch dispatch failed' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+  }
+
+  // ── 5. Anti-relay guard: Sender Identity Whitelist ──
   const fromStr = typeof body?.from === 'string' ? body.from.trim() : '';
   const fromMatch = fromStr.match(/^(?:([^<>\r\n]+)<)?\s*([a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,}))>?$/);
   if (!fromMatch) {
@@ -231,16 +320,8 @@ export default async function handler(req: Request) {
     html: cleanHtml,
   };
 
-  // ── 7. Dispatch via Resend API ──
+  // ── 8. Dispatch via Resend API ──
   try {
-    const apiKey = process.env.RESEND_API_KEY || '';
-    if (!apiKey) {
-      return new Response(JSON.stringify({ error: 'Email service not configured' }), {
-        status: 503,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
-      });
-    }
-
     const upstreamRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {

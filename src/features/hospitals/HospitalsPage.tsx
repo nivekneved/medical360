@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Star, MapPin, Shield, ArrowRight, Scale, CheckSquare, Square, X, HelpCircle, Sparkles, Building2 } from 'lucide-react';
 import { useHospitals } from '../../hooks/useHospitals';
@@ -7,7 +7,6 @@ import { useToast } from '../../providers/ToastProvider';
 import { formatNumber, truncateText } from '../../core/services/format.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { INDIAN_HUBS } from '../../core/config/site';
-import type { HospitalFilters } from '../../core/services/hospital.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { HospitalCompareModal } from './HospitalCompareModal';
@@ -21,7 +20,6 @@ export function HospitalsPage() {
   const navigate = useNavigate();
   const toast = useToast();
   const { isFr, isKr, l10n, l } = useL10n();
-  const [filters, setFilters] = useState<HospitalFilters>({});
   const [searchInput, setSearchInput] = useState('');
   const [selectedHub, setSelectedHub] = useState('all');
   const [showCompareModal, setShowCompareModal] = useState(false);
@@ -42,7 +40,7 @@ export function HospitalsPage() {
   const [sortBy, setSortBy] = useState<string>('rating');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-  const toggleCompare = (id: string) => {
+  const toggleCompare = useCallback((id: string) => {
     setCompareIds(prev => {
       if (prev.includes(id)) {
         return prev.filter(x => x !== id);
@@ -53,56 +51,62 @@ export function HospitalsPage() {
       }
       return [...prev, id];
     });
-  };
+  }, [isFr, toast]);
 
-  const comparedHospitals = allHospitals.filter(h => compareIds.includes(h.id));
-
-
-  // Filter hospitals by search and hub
-  const filteredHospitals = allHospitals.filter((h) => {
-    // Hub filter
-    if (selectedHub !== 'all') {
-      const cityLower = (h.city || '').toLowerCase();
-      if (selectedHub === 'Delhi' && !cityLower.includes('delhi') && !cityLower.includes('gurugram')) return false;
-      if (selectedHub === 'Chennai' && !cityLower.includes('chennai')) return false;
-      if (selectedHub === 'Bengaluru' && !cityLower.includes('bengaluru')) return false;
-      if (selectedHub === 'Hyderabad' && !cityLower.includes('hyderabad') && !cityLower.includes('secunderabad')) return false;
-      if (selectedHub === 'Mumbai' && !cityLower.includes('mumbai')) return false;
-    }
-
-    // Search query
-    if (searchInput.trim()) {
-      const q = searchInput.toLowerCase().trim();
-      const matchName = l(h, 'name')?.toLowerCase().includes(q) || h.name?.toLowerCase().includes(q);
-      const matchCity = h.city?.toLowerCase().includes(q);
-      const matchDesc = l(h, 'description')?.toLowerCase().includes(q);
-      const matchAcc = h.accreditations?.some(a => a.toLowerCase().includes(q));
-      if (!matchName && !matchCity && !matchDesc && !matchAcc) return false;
-    }
-
-    return true;
-  });
-
-  // Sort hospitals
-  const sortedHospitals = [...filteredHospitals].sort((a, b) => {
-    if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
-    if (sortBy === 'beds') return (b.bedsCount || 0) - (a.bedsCount || 0);
-    if (sortBy === 'patients') return (b.internationalPatientsPerYear || 0) - (a.internationalPatientsPerYear || 0);
-    if (sortBy === 'name') return a.name.localeCompare(b.name);
-    return 0;
-  });
-
-  const paginatedHospitals = sortedHospitals.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+  const comparedHospitals = useMemo(
+    () => allHospitals.filter(h => compareIds.includes(h.id)),
+    [allHospitals, compareIds]
   );
 
-  const sortOptions: SortOption[] = [
+  // Filter hospitals by search and hub
+  const filteredHospitals = useMemo(() => {
+    const q = searchInput.toLowerCase().trim();
+    return allHospitals.filter((h) => {
+      if (selectedHub !== 'all') {
+        const cityLower = (h.city || '').toLowerCase();
+        if (selectedHub === 'Delhi' && !cityLower.includes('delhi') && !cityLower.includes('gurugram')) return false;
+        if (selectedHub === 'Chennai' && !cityLower.includes('chennai')) return false;
+        if (selectedHub === 'Bengaluru' && !cityLower.includes('bengaluru')) return false;
+        if (selectedHub === 'Hyderabad' && !cityLower.includes('hyderabad') && !cityLower.includes('secunderabad')) return false;
+        if (selectedHub === 'Mumbai' && !cityLower.includes('mumbai')) return false;
+      }
+
+      if (q) {
+        const matchName = l(h, 'name')?.toLowerCase().includes(q) || h.name?.toLowerCase().includes(q);
+        const matchCity = h.city?.toLowerCase().includes(q);
+        const matchDesc = l(h, 'description')?.toLowerCase().includes(q);
+        const matchAcc = h.accreditations?.some(a => a.toLowerCase().includes(q));
+        if (!matchName && !matchCity && !matchDesc && !matchAcc) return false;
+      }
+
+      return true;
+    });
+  }, [allHospitals, selectedHub, searchInput, l]);
+
+  // Sort hospitals
+  const sortedHospitals = useMemo(() => {
+    return [...filteredHospitals].sort((a, b) => {
+      if (sortBy === 'rating') return (b.rating || 0) - (a.rating || 0);
+      if (sortBy === 'beds') return (b.bedsCount || 0) - (a.bedsCount || 0);
+      if (sortBy === 'patients') return (b.internationalPatientsPerYear || 0) - (a.internationalPatientsPerYear || 0);
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
+      return 0;
+    });
+  }, [filteredHospitals, sortBy]);
+
+  const paginatedHospitals = useMemo(() => {
+    return sortedHospitals.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+  }, [sortedHospitals, currentPage, itemsPerPage]);
+
+  const sortOptions: SortOption[] = useMemo(() => [
     { value: 'rating', label: isFr ? 'Meilleure Note' : isKr ? 'Mayer Not' : 'Highest Rated', icon: '★' },
     { value: 'beds', label: isFr ? 'Capacité Lits' : isKr ? 'Lili Lopital' : 'Bed Capacity', icon: '🛏️' },
     { value: 'patients', label: isFr ? 'Patients Intl' : isKr ? 'Pasian Intl' : 'Intl Patients', icon: '👥' },
     { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
-  ];
+  ], [isFr, isKr]);
 
   return (
     <main className="hospitals-page" style={{ paddingTop: 'var(--navbar-height)' }}>

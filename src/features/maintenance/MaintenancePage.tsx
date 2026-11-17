@@ -89,7 +89,7 @@ export function MaintenancePage() {
 
         {/* Logo */}
         <img
-          src="/Web Med360 ogo-05.png"
+          src="/assets/logo.png"
           alt={SITE_NAME}
           className="maintenance-logo"
           onClick={() => {

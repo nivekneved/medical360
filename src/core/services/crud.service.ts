@@ -121,6 +121,11 @@ const COLLECTION_REGISTRY: { [K in EntityCollection]: CollectionConfig<EntityTyp
       phone: i.phone,
       country_of_residence: i.countryOfResidence,
       specialty_id: i.specialtyId,
+      service_id: i.serviceId || null,
+      service_name: i.serviceName || null,
+      hospital_id: i.hospitalId || null,
+      hospital_name: i.hospitalName || null,
+      source_page: i.sourcePage || null,
       description: i.description,
       urgency: i.urgency || 'routine',
       preferred_country: i.preferredCountry || null,
@@ -162,9 +167,7 @@ class CentralizedCrudEngine {
         if (isSupabaseConfigured) {
           try {
             const { data, error } = await supabase.from(cfg.tableName).select('*').order('created_at', { ascending: false });
-            // Only use Supabase if it contains the full updated catalog (>= 15 items for hospitals/specialties)
-            const minCount = (collection === 'hospitals' || collection === 'specialties') ? 15 : 1;
-            if (!error && data && data.length >= minCount) {
+            if (!error && data && data.length > 0) {
               return data.map(cfg.mapRow) as EntityTypeMap[K][];
             }
           } catch (e) {
@@ -225,13 +228,25 @@ class CentralizedCrudEngine {
     if (isSupabaseConfigured && cfg.toRow) {
       try {
         const row = cfg.toRow(newEntity, id);
-        const { data: resData, error } = await supabase.from(cfg.tableName).insert([row]).select().single();
-        if (!error && resData) {
-          const mapped = cfg.mapRow(resData) as EntityTypeMap[K];
-          (this.store[collection] as any).unshift(mapped);
-          this.save();
-          logSecurityEvent('CMS_EDIT', `Created ${collection} entity: ${id}`);
-          return mapped;
+        if (collection === 'inquiries') {
+          // Anon users have INSERT-only RLS on `inquiries`; do not chain .select().single()
+          const { error } = await supabase.from(cfg.tableName).insert([row]);
+          if (!error) {
+            (this.store[collection] as any).unshift(newEntity);
+            this.save();
+            logSecurityEvent('CMS_EDIT', `Created ${collection} entity: ${id}`);
+            return newEntity;
+          }
+          console.warn(`Supabase insert(${collection}) rejected:`, error.message);
+        } else {
+          const { data: resData, error } = await supabase.from(cfg.tableName).insert([row]).select().single();
+          if (!error && resData) {
+            const mapped = cfg.mapRow(resData) as EntityTypeMap[K];
+            (this.store[collection] as any).unshift(mapped);
+            this.save();
+            logSecurityEvent('CMS_EDIT', `Created ${collection} entity: ${id}`);
+            return mapped;
+          }
         }
       } catch (e) {
         console.warn(`Supabase create(${collection}) failed, using local store:`, e);
@@ -306,6 +321,30 @@ class CentralizedCrudEngine {
     (this.store[collection] as any) = (this.store[collection] as any[]).filter(i => !idSet.has(i.id));
     this.save();
     logSecurityEvent('CMS_EDIT', `Deleted ${ids.length} entity(ies) from ${collection}`);
+    return true;
+  }
+  /**
+   * 6. BULK UPDATE STATUS: Single-query batch status update for inquiries
+   */
+  async bulkUpdateInquiryStatus(ids: string[], status: Inquiry['status']): Promise<boolean> {
+    if (!ids.length) return true;
+    cacheService.invalidateTag('inquiries');
+    const now = new Date().toISOString();
+
+    if (isSupabaseConfigured) {
+      try {
+        await supabase.from('inquiries').update({ status, updated_at: now }).in('id', ids);
+      } catch (e) {
+        console.warn('Supabase bulkUpdateInquiryStatus failed:', e);
+      }
+    }
+
+    const idSet = new Set(ids);
+    this.store.inquiries = this.store.inquiries.map(i =>
+      idSet.has(i.id) ? { ...i, status, updatedAt: now } : i
+    );
+    this.save();
+    logSecurityEvent('CMS_EDIT', `Bulk updated ${ids.length} inquiry status(es) to ${status}`);
     return true;
   }
 }

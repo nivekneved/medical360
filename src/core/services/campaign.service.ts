@@ -166,7 +166,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
         'Available in certified Centers of Excellence in India & UAE',
       ],
       ctaText: 'Calculate Estimated Surgery Costs',
-      ctaUrl: 'https://med360.mu/cost-calculator',
+      ctaUrl: 'https://med360.mu/describe-need',
       ctaBgColor: '#059669',
       showWhatsAppButton: true,
       whatsAppText: 'Ask Our Case Manager on WhatsApp',
@@ -200,7 +200,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
         'Special hotel and serviced apartment partner rates for families',
       ],
       ctaText: 'Read Our Complete Medical Visa Guide',
-      ctaUrl: 'https://med360.mu/visa-guide',
+      ctaUrl: 'https://med360.mu/how-it-works',
       ctaBgColor: '#4f46e5',
       showWhatsAppButton: true,
       whatsAppText: 'Speak to our Travel Coordinator',
@@ -335,20 +335,42 @@ export function parseCSVContacts(csvText: string): Contact[] {
   return contacts;
 }
 
-// ─── Campaign HTML Generator ──────────────────────────────────────────────────
+// ─── Campaign HTML Generator & Sanitizers ─────────────────────────────────────
+const DEFAULT_CAMPAIGN_SENDER =
+  import.meta.env.VITE_RESEND_FROM || 'Med360 <onboarding@resend.dev>';
+
+function sanitizeHexColor(value: string | undefined, fallback: string): string {
+  const trimmed = (value || '').trim();
+  return /^#[0-9a-fA-F]{3,8}$/.test(trimmed) ? trimmed : fallback;
+}
+
+function sanitizeHttpUrl(value: string | undefined, fallback = ''): string {
+  const trimmed = (value || '').trim();
+  if (!trimmed) return fallback;
+  if (/^https?:\/\//i.test(trimmed)) return escapeHtml(trimmed);
+  if (trimmed.startsWith('/')) return escapeHtml(`https://www.med360.mu${trimmed}`);
+  return fallback;
+}
+
 export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>): string {
   const name = escapeHtml(contact.name || 'Valued Patient');
   const country = escapeHtml(contact.country || 'Mauritius');
   const t = campaign.template;
 
-  const introText = (t.introText || '')
+  const bannerBg = sanitizeHexColor(t.bannerBg, '#0f172a');
+  const bannerTextColor = sanitizeHexColor(t.bannerTextColor, '#ffffff');
+  const ctaBgColor = sanitizeHexColor(t.ctaBgColor, '#0d9488');
+  const ctaUrl = sanitizeHttpUrl(t.ctaUrl, 'https://www.med360.mu/describe-need');
+  const heroImageUrl = sanitizeHttpUrl(t.heroImageUrl, '');
+
+  const introText = escapeHtml(t.introText || '')
     .replace(/\{\{name\}\}/g, name)
     .replace(/\{\{country\}\}/g, country)
     .replace(/\n/g, '<br/>');
 
   const bulletsHtml = (t.bulletPoints || [])
     .filter(Boolean)
-    .map(b => `<li style="margin-bottom: 8px; color: #334155; font-size: 14px; line-height: 1.5;">${b}</li>`)
+    .map(b => `<li style="margin-bottom: 8px; color: #334155; font-size: 14px; line-height: 1.5;">${escapeHtml(b)}</li>`)
     .join('');
 
   return `
@@ -356,7 +378,7 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
       <div style="max-width: 580px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
         
         <!-- Header Banner with Official Med360 Logo -->
-        <div style="background-color: ${t.bannerBg}; color: ${t.bannerTextColor}; padding: 20px 24px; text-align: left;">
+        <div style="background-color: ${bannerBg}; color: ${bannerTextColor}; padding: 20px 24px; text-align: left;">
           <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
             <tr>
               <td style="vertical-align: middle;">
@@ -364,21 +386,21 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
               </td>
             </tr>
           </table>
-          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: ${t.bannerTextColor}; font-family: 'Outfit', 'Inter', -apple-system, sans-serif; opacity: 0.95;">
-            ${t.bannerTitle}
+          <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: ${bannerTextColor}; font-family: 'Outfit', 'Inter', -apple-system, sans-serif; opacity: 0.95;">
+            ${escapeHtml(t.bannerTitle || '')}
           </h3>
         </div>
 
-        ${t.heroImageUrl ? `
+        ${heroImageUrl ? `
           <div>
-            <img src="${t.heroImageUrl}" alt="Hero" style="width: 100%; height: 220px; object-fit: cover; display: block;" />
+            <img src="${heroImageUrl}" alt="Hero" style="width: 100%; height: 220px; object-fit: cover; display: block;" />
           </div>
         ` : ''}
 
         <!-- Main Body -->
         <div style="padding: 24px;">
           <h2 style="margin: 0 0 14px 0; font-size: 20px; font-weight: 800; color: #0f172a; line-height: 1.3;">
-            ${t.headline}
+            ${escapeHtml(t.headline || '')}
           </h2>
 
           <div style="font-size: 14px; color: #334155; line-height: 1.6; margin-bottom: 20px;">
@@ -386,7 +408,7 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
           </div>
 
           ${bulletsHtml ? `
-            <div style="background-color: #f8fafc; padding: 16px 20px; border-radius: 6px; border-left: 4px solid ${t.ctaBgColor}; margin-bottom: 24px;">
+            <div style="background-color: #f8fafc; padding: 16px 20px; border-radius: 6px; border-left: 4px solid ${ctaBgColor}; margin-bottom: 24px;">
               <ul style="margin: 0; padding-left: 18px;">
                 ${bulletsHtml}
               </ul>
@@ -395,15 +417,15 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
 
           <!-- Primary CTA Button -->
           <div style="text-align: center; margin: 28px 0 16px 0;">
-            <a href="${t.ctaUrl}" target="_blank" style="display: inline-block; background-color: ${t.ctaBgColor}; color: #ffffff; font-weight: 700; font-size: 15px; text-decoration: none; padding: 12px 28px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-              ${t.ctaText}
+            <a href="${ctaUrl}" target="_blank" style="display: inline-block; background-color: ${ctaBgColor}; color: #ffffff; font-weight: 700; font-size: 15px; text-decoration: none; padding: 12px 28px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              ${escapeHtml(t.ctaText || 'Learn More')}
             </a>
           </div>
 
           ${t.showWhatsAppButton ? `
             <div style="text-align: center; margin-bottom: 16px;">
               <a href="https://wa.me/23059188275?text=${encodeURIComponent(`Hello Med360, I received your email regarding "${campaign.subject}" and would like to learn more.`)}" target="_blank" style="display: inline-block; background-color: #16a34a; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 9px 20px; border-radius: 6px;">
-                💬 ${t.whatsAppText || 'Chat on WhatsApp (+230 59188275)'}
+                💬 ${escapeHtml(t.whatsAppText || 'Chat on WhatsApp (+230 59188275)')}
               </a>
             </div>
           ` : ''}
@@ -413,7 +435,7 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
         ${t.showFooter ? `
           <div style="background-color: #f8fafc; padding: 16px 24px; border-top: 1px solid #e2e8f0; text-align: center;">
             <p style="margin: 0 0 6px 0; font-size: 12px; color: #64748b; line-height: 1.4;">
-              ${t.footerNote}
+              ${escapeHtml(t.footerNote || '')}
             </p>
             <p style="margin: 0; font-size: 11px; color: #94a3b8;">
               © ${new Date().getFullYear()} Med360 Ltd • Port Louis, Mauritius. All rights reserved.
@@ -449,7 +471,7 @@ export async function sendTestCampaignEmail(campaign: Campaign, testEmail: strin
       method: 'POST',
       headers,
       body: JSON.stringify({
-        from: 'Med360 Nexus <onboarding@resend.dev>',
+        from: DEFAULT_CAMPAIGN_SENDER,
         to: [testEmail],
         subject: `[CAMPAIGN TEST] ${campaign.subject}`,
         html,
@@ -474,39 +496,37 @@ export async function dispatchCampaign(
   const errors: string[] = [];
   let sentCount = 0;
   const headers = await getAdminAuthHeaders();
+  const CHUNK_SIZE = 50;
 
-  for (let i = 0; i < contacts.length; i++) {
-    const contact = contacts[i];
-    const html = renderCampaignHtml(campaign, contact);
+  for (let i = 0; i < contacts.length; i += CHUNK_SIZE) {
+    const chunk = contacts.slice(i, i + CHUNK_SIZE);
+    const batch = chunk.map(contact => ({
+      from: DEFAULT_CAMPAIGN_SENDER,
+      to: [contact.email],
+      subject: campaign.subject.replace(/\{\{name\}\}/g, contact.name),
+      html: renderCampaignHtml(campaign, contact),
+    }));
 
     try {
       const res = await fetch('/api/resend/emails', {
         method: 'POST',
         headers,
-        body: JSON.stringify({
-          from: 'Med360 Nexus <onboarding@resend.dev>',
-          to: [contact.email],
-          subject: campaign.subject.replace(/\{\{name\}\}/g, contact.name),
-          html,
-        }),
+        body: JSON.stringify({ batch }),
       });
 
       if (res.ok) {
-        sentCount++;
+        sentCount += chunk.length;
       } else {
         const err = await res.json().catch(() => ({}));
-        errors.push(`${contact.email}: ${err.message || 'Resend error'}`);
+        errors.push(`Batch ${Math.floor(i / CHUNK_SIZE) + 1}: ${err.error || err.message || 'Resend batch error'}`);
       }
     } catch (err: any) {
-      errors.push(`${contact.email}: ${err.message}`);
+      errors.push(`Batch ${Math.floor(i / CHUNK_SIZE) + 1}: ${err.message}`);
     }
 
     if (onProgress) {
-      onProgress(i + 1, contacts.length);
+      onProgress(Math.min(i + chunk.length, contacts.length), contacts.length);
     }
-
-    // Small delay to respect rate limit smoothly
-    await new Promise(r => setTimeout(r, 200));
   }
 
   // Update campaign status

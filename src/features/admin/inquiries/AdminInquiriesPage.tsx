@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   Printer,
   Download,
@@ -12,6 +12,7 @@ import {
   Inbox,
 } from 'lucide-react';
 import { mockEngine } from '../../../core/mock/engine';
+import { crudService } from '../../../core/services/crud.service';
 import { useSpecialties } from '../../../hooks/useSpecialties';
 import type { Inquiry, InquiryStatus } from '../../../core/types';
 import { exportInquiriesToCsv, printInquiriesPdf, printInquiryPdf } from '../../../core/services/export.service';
@@ -33,6 +34,21 @@ const STATUS_OPTIONS: InquiryStatus[] = [
   'completed',
   'cancelled',
 ];
+
+const urgencyWeight = (u: string) => {
+  switch (u) {
+    case 'emergency': return 4;
+    case 'urgent': return 3;
+    case 'soon': return 2;
+    default: return 1;
+  }
+};
+
+const urgencyColor = (u: string) =>
+  u === 'emergency' ? '#dc2626' : u === 'urgent' ? '#d97706' : '#059669';
+
+const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
 export function AdminInquiriesPage() {
   const [activeTab, setActiveTab]               = useState<'inquiries' | 'whatsapp'>('inquiries');
@@ -59,19 +75,15 @@ export function AdminInquiriesPage() {
 
   useEffect(() => { load(); }, []);
 
-  const getSpecialtyName = (sId: string) => {
-    const s = specialties.find(item => item.id === sId);
-    return s ? s.name : sId;
-  };
+  const specialtyNameMap = useMemo(
+    () => new Map(specialties.map(item => [item.id, item.name])),
+    [specialties]
+  );
 
-  const urgencyWeight = (u: string) => {
-    switch (u) {
-      case 'emergency': return 4;
-      case 'urgent': return 3;
-      case 'soon': return 2;
-      default: return 1;
-    }
-  };
+  const getSpecialtyName = useCallback(
+    (sId: string) => specialtyNameMap.get(sId) ?? sId,
+    [specialtyNameMap]
+  );
 
   const filteredInquiries = useMemo(() => {
     return inquiries.filter((inq) => {
@@ -135,12 +147,11 @@ export function AdminInquiriesPage() {
 
   const handleBulkStatusChange = async (newStatus: InquiryStatus) => {
     try {
-      await Promise.all(Array.from(selectedIds).map(id => mockEngine.updateInquiry(id, { status: newStatus })));
+      await crudService.bulkUpdateInquiryStatus(Array.from(selectedIds), newStatus);
       setSelectedIds(new Set());
       load();
     } catch (err) {
       console.error(err);
-      alert('Failed to update selected inquiries.');
     }
   };
 
@@ -208,14 +219,6 @@ export function AdminInquiriesPage() {
     } finally {
       setSavingNote(false);
     }
-  };
-
-  const urgencyColor = (u: string) =>
-    u === 'emergency' ? '#dc2626' : u === 'urgent' ? '#d97706' : '#059669';
-
-  const formatDate = (iso: string) => {
-    const d = new Date(iso);
-    return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
   };
 
   if (loading) {

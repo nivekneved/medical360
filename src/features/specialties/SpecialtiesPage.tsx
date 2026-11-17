@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, HelpCircle, Sparkles } from 'lucide-react';
 import { useL10n } from '../../hooks/useL10n';
@@ -34,50 +34,52 @@ export function SpecialtiesPage() {
   };
 
 
-  const sortOptions: SortOption[] = [
+  const sortOptions: SortOption[] = useMemo(() => [
     { value: 'popular', label: isFr ? 'Plus Populaires' : isKr ? 'Plis Popiler' : 'Most Popular', icon: '⚡' },
     { value: 'procedures', label: isFr ? 'Nombre d\'Actes' : isKr ? 'Kantite Loperasion' : 'Procedures Count', icon: '🩺' },
     { value: 'name', label: isFr ? 'Nom (A-Z)' : isKr ? 'Nom (A-Z)' : 'Name (A-Z)', icon: '🔤' },
-  ];
+  ], [isFr, isKr]);
 
-  const filteredSpecialties = specialties.filter((sp) => {
-    // 1. Quick symptom chip filter
-    if (activeSymptom !== 'all' && sp.id !== activeSymptom) {
-      return false;
-    }
-
-    // 2. Search query matching
-    if (!searchQuery.trim()) return true;
+  const filteredSpecialties = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
-    const nameMatch = l(sp, 'name')?.toLowerCase().includes(q) || sp.name?.toLowerCase().includes(q);
-    const descMatch = l(sp, 'shortDescription')?.toLowerCase().includes(q) || sp.shortDescription?.toLowerCase().includes(q);
-    const procMatch = sp.procedures?.some(p => l(p, 'name')?.toLowerCase().includes(q) || p.name?.toLowerCase().includes(q));
+    return specialties.filter((sp) => {
+      if (activeSymptom !== 'all' && sp.id !== activeSymptom) {
+        return false;
+      }
+      if (!q) return true;
+      const nameMatch = l(sp, 'name')?.toLowerCase().includes(q) || sp.name?.toLowerCase().includes(q);
+      const descMatch = l(sp, 'shortDescription')?.toLowerCase().includes(q) || sp.shortDescription?.toLowerCase().includes(q);
+      const procMatch = sp.procedures?.some(p => l(p, 'name')?.toLowerCase().includes(q) || p.name?.toLowerCase().includes(q));
 
-    // Multilingual symptom & keyword match
-    const symptomEntry = SPECIALTY_SYMPTOMS_MAP[sp.id];
-    let symptomMatch = false;
-    if (symptomEntry) {
-      const allKws = [
-        ...symptomEntry.en.keywords, ...symptomEntry.en.symptoms, symptomEntry.en.plainName, symptomEntry.en.badge,
-        ...symptomEntry.fr.keywords, ...symptomEntry.fr.symptoms, symptomEntry.fr.plainName, symptomEntry.fr.badge,
-        ...symptomEntry.kr.keywords, ...symptomEntry.kr.symptoms, symptomEntry.kr.plainName, symptomEntry.kr.badge,
-      ].map(k => k.toLowerCase());
-      symptomMatch = allKws.some(k => k.includes(q) || q.includes(k));
-    }
+      const symptomEntry = SPECIALTY_SYMPTOMS_MAP[sp.id];
+      let symptomMatch = false;
+      if (symptomEntry) {
+        const allKws = [
+          ...symptomEntry.en.keywords, ...symptomEntry.en.symptoms, symptomEntry.en.plainName, symptomEntry.en.badge,
+          ...symptomEntry.fr.keywords, ...symptomEntry.fr.symptoms, symptomEntry.fr.plainName, symptomEntry.fr.badge,
+          ...symptomEntry.kr.keywords, ...symptomEntry.kr.symptoms, symptomEntry.kr.plainName, symptomEntry.kr.badge,
+        ].map(k => k.toLowerCase());
+        symptomMatch = allKws.some(k => k.includes(q) || q.includes(k));
+      }
 
-    return nameMatch || descMatch || procMatch || symptomMatch;
-  });
+      return nameMatch || descMatch || procMatch || symptomMatch;
+    });
+  }, [specialties, activeSymptom, searchQuery, l]);
 
-  const sortedSpecialties = [...filteredSpecialties].sort((a, b) => {
-    if (sortBy === 'procedures') return (b.procedures?.length || 0) - (a.procedures?.length || 0);
-    if (sortBy === 'name') return a.name.localeCompare(b.name);
-    return 0;
-  });
+  const sortedSpecialties = useMemo(() => {
+    return [...filteredSpecialties].sort((a, b) => {
+      if (sortBy === 'procedures') return (b.procedures?.length || 0) - (a.procedures?.length || 0);
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
+      return 0;
+    });
+  }, [filteredSpecialties, sortBy]);
 
-  const paginatedSpecialties = sortedSpecialties.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const paginatedSpecialties = useMemo(() => {
+    return sortedSpecialties.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+  }, [sortedSpecialties, currentPage, itemsPerPage]);
 
   return (
     <main className="specialties-page" style={{ paddingTop: 'var(--navbar-height)' }}>

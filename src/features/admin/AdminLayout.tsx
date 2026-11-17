@@ -128,7 +128,7 @@ export function AdminLayout() {
 
         <div className="admin-sidebar__logo" style={{ padding: 0, border: 'none' }}>
           <img
-            src="/med360-logo.png"
+            src="/assets/logo.png"
             alt="Med360"
             style={{ height: 32, objectFit: 'contain' }}
           />
@@ -171,7 +171,7 @@ export function AdminLayout() {
             }}
           >
             <img
-              src="/med360-logo.png"
+              src="/assets/logo.png"
               alt="Med360"
               style={{
                 height: collapsed ? 30 : 40,

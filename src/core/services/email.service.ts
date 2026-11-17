@@ -2,6 +2,9 @@ import type { InquiryFormData } from '../../hooks/useInquiry';
 import { supabase, isSupabaseConfigured } from '../supabase/client';
 import { escapeHtml } from './security.service';
 
+export const DEFAULT_SENDER_EMAIL =
+  import.meta.env.VITE_RESEND_FROM || 'Med360 Inquiries <onboarding@resend.dev>';
+
 export interface EmailTemplateConfig {
   subject: string;
   banner: {
@@ -508,7 +511,7 @@ export async function sendInquiryEmail(formData: InquiryFormData, specialtyName?
       method: 'POST',
       headers,
       body: JSON.stringify({
-        from: 'Med360 Inquiries <onboarding@resend.dev>',
+        from: DEFAULT_SENDER_EMAIL,
         to: [recipient],
         subject,
         html,
@@ -568,7 +571,7 @@ export async function sendContactEmail(data: {
       method: 'POST',
       headers,
       body: JSON.stringify({
-        from: 'Med360 Inquiries <onboarding@resend.dev>',
+        from: DEFAULT_SENDER_EMAIL,
         to: [recipient],
         subject,
         html,
@@ -635,7 +638,7 @@ export async function sendTestEmail(recipientEmail: string, config: EmailTemplat
       method: 'POST',
       headers,
       body: JSON.stringify({
-        from: 'Med360 Inquiries <onboarding@resend.dev>',
+        from: DEFAULT_SENDER_EMAIL,
         to: [recipientEmail || DEFAULT_TEST_RECIPIENT],
         subject,
         html,

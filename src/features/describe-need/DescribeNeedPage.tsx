@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Check, MessageCircle, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useL10n } from '../../hooks/useL10n';
@@ -58,32 +58,24 @@ export function DescribeNeedPage() {
     ? ['Detay Personel', 'Bizin Medikal', 'Preferans', 'Revize & Soumet']
     : ['Personal Details', 'Medical Need', 'Preferences', 'Review & Submit'];
 
-  // Pre-select specialty, service, hospital & origin source from URL params
-  const preSpecialty = params.get('specialty');
-  if (preSpecialty && !formData.specialtyId) updateField('specialtyId', preSpecialty);
+  // Pre-select specialty, service, hospital & origin source from URL params safely in useEffect
+  useEffect(() => {
+    const preSpecialty = params.get('specialty');
+    if (preSpecialty) updateField('specialtyId', preSpecialty);
 
-  const preService = params.get('service');
-  const preServiceName = params.get('serviceName');
-  if (preService && !formData.serviceId) {
-    updateField('serviceId', preService);
-  }
-  if (preServiceName && !formData.serviceName) {
-    updateField('serviceName', decodeURIComponent(preServiceName));
-  }
+    const preService = params.get('service');
+    const preServiceName = params.get('serviceName');
+    if (preService) updateField('serviceId', preService);
+    if (preServiceName) updateField('serviceName', decodeURIComponent(preServiceName));
 
-  const preHospital = params.get('hospital') || params.get('hospitalId');
-  const preHospitalName = params.get('hospitalName');
-  if (preHospital && !formData.hospitalId) {
-    updateField('hospitalId', preHospital);
-  }
-  if (preHospitalName && !formData.hospitalName) {
-    updateField('hospitalName', decodeURIComponent(preHospitalName));
-  }
+    const preHospital = params.get('hospital') || params.get('hospitalId');
+    const preHospitalName = params.get('hospitalName');
+    if (preHospital) updateField('hospitalId', preHospital);
+    if (preHospitalName) updateField('hospitalName', decodeURIComponent(preHospitalName));
 
-  const preSource = params.get('from') || params.get('source');
-  if (preSource && !formData.sourcePage) {
-    updateField('sourcePage', decodeURIComponent(preSource));
-  }
+    const preSource = params.get('from') || params.get('source');
+    if (preSource) updateField('sourcePage', decodeURIComponent(preSource));
+  }, [params, updateField]);
 
   const selectedSpecialty = specialties.find(s => s.id === formData.specialtyId);
 
@@ -376,7 +368,7 @@ export function DescribeNeedPage() {
                       ),
                     },
                     {
-                      id: 'sp-ivf',
+                      id: 'sp-fertility',
                       label: l10n('👶 PMA / FIV & Fertilité', '👶 FIV & Fertidie', '👶 IVF & Fertility'),
                       text: l10n(
                         'Nous souhaitons des informations détaillées et les forfaits d\'accompagnement pour un parcours de PMA / FIV dans une clinique spécialisée.',
@@ -385,7 +377,8 @@ export function DescribeNeedPage() {
                       ),
                     },
                     {
-                      id: 'sp-general',
+                      id: 'sp-oncology',
+                      chipKey: 'second-opinion',
                       label: l10n('📋 2ème Avis Médical Général', '📋 2em Lavi Dokter Gratis', '📋 2nd Medical Opinion'),
                       text: l10n(
                         'J\'ai des bilans et rapports médicaux récents et souhaite un avis médical d\'expert avec orientation vers le bon spécialiste en Inde.',
@@ -393,13 +386,16 @@ export function DescribeNeedPage() {
                         'I have recent medical reports and test results and would like an expert second opinion and guidance to the right specialist in India.'
                       ),
                     },
-                  ].map(chip => (
+                  ].map((chip: any) => (
                     <button
-                      key={chip.id}
+                      key={chip.chipKey || chip.id}
                       type="button"
                       onClick={() => {
                         updateField('specialtyId', chip.id);
                         updateField('description', chip.text);
+                        if (chip.chipKey === 'second-opinion') {
+                          updateField('serviceName', 'Free Medical Second Opinion');
+                        }
                         setFieldErrors(prev => ({ ...prev, specialtyId: undefined, description: undefined }));
                       }}
                       style={{

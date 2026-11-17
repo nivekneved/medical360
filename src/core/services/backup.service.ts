@@ -5,6 +5,7 @@
  */
 
 import { mockEngine } from '../mock/engine';
+import { STORAGE_KEY as MAIN_STORE_KEY } from '../mock/store';
 import { getEmailTemplateConfig, saveEmailTemplateConfig } from './email.service';
 import type { Hospital, Specialty, Doctor, CaseStudy, Inquiry } from '../types';
 import type { CmsPage } from '../mock/seeds/cms.seed';
@@ -38,7 +39,6 @@ export interface DatabaseBackup {
 }
 
 const BACKUP_STORAGE_KEY = 'med360_database_backups_v1';
-const MAIN_STORE_KEY = 'med360_mock_store_v4';
 
 /**
  * Creates an in-memory database snapshot of all tables.

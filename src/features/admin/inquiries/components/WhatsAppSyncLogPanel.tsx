@@ -12,14 +12,15 @@ import {
   Radio,
   Zap,
 } from 'lucide-react';
-import { getWhatsAppConsultationLogs, type WhatsAppConsultationLog, buildWhatsAppUrl } from '../../../../core/services/whatsapp.service';
+import { fetchWhatsAppConsultationLogs, type WhatsAppConsultationLog, buildWhatsAppUrl } from '../../../../core/services/whatsapp.service';
 
 export const WhatsAppSyncLogPanel: React.FC = () => {
   const [logs, setLogs] = useState<WhatsAppConsultationLog[]>([]);
   const [testTriggered, setTestTriggered] = useState(false);
 
-  const refreshLogs = () => {
-    setLogs(getWhatsAppConsultationLogs());
+  const refreshLogs = async () => {
+    const merged = await fetchWhatsAppConsultationLogs();
+    setLogs(merged);
   };
 
   useEffect(() => {

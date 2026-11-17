@@ -23,6 +23,7 @@ import { PageLoader } from './components/common/Loader';
 import { IS_MAINTENANCE_MODE, isMaintenanceModeActive, setMaintenanceMode } from './core/config/site';
 import { MaintenancePage } from './features/maintenance/MaintenancePage';
 import { supabase, isSupabaseConfigured } from './core/supabase/client';
+import { cacheService } from './core/services/cache.service';
 
 
 /**
@@ -93,6 +94,7 @@ const AdminPageEditor       = lazyWithRetry(() => import('./features/admin/pages
 const AdminEmailTemplatesPage = lazyWithRetry(() => import('./features/admin/email-templates/AdminEmailTemplatesPage'), m => m.AdminEmailTemplatesPage);
 const AdminCampaignsPage      = lazyWithRetry(() => import('./features/admin/campaigns/AdminCampaignsPage'), m => m.AdminCampaignsPage);
 const AdminMarqueePage        = lazyWithRetry(() => import('./features/admin/marquee/AdminMarqueePage'), m => m.AdminMarqueePage);
+const AdminConnectPage        = lazyWithRetry(() => import('./features/admin/connect/AdminConnectPage'), m => m.AdminConnectPage);
 
 import './styles/globals.css';
 
@@ -128,19 +130,23 @@ function PublicLayout() {
     window.addEventListener('med360_maintenance_changed', handleUpdate);
 
     if (isSupabaseConfigured) {
-      (async () => {
-        try {
+      cacheService.cachedFetch<boolean | null>(
+        'site_settings:maintenance_mode',
+        async () => {
           const { data } = await supabase
             .from('site_settings')
             .select('value')
             .eq('key', 'maintenance_mode')
             .maybeSingle();
-          if (data && typeof data.value === 'boolean') {
-            setMaintenanceMode(data.value);
-            setMaintenanceActive(data.value);
-          }
-        } catch {}
-      })();
+          return data && typeof data.value === 'boolean' ? data.value : null;
+        },
+        { ttlMs: 60 * 1000, tags: ['site_settings'], persist: true, staleWhileRevalidate: true }
+      ).then((val) => {
+        if (typeof val === 'boolean') {
+          setMaintenanceMode(val);
+          setMaintenanceActive(val);
+        }
+      }).catch(() => {});
     }
 
     return () => {
@@ -277,6 +283,7 @@ export default function App() {
                     <Route path="/admin" element={<AdminGuard />}>
                       <Route index element={<Navigate to="/admin/dashboard" replace />} />
                       <Route path="dashboard"    element={<AdminDashboardPage />} />
+                      <Route path="connect"      element={<AdminConnectPage />} />
                       <Route path="analytics"    element={<AdminAnalyticsPage />} />
                       <Route path="concierge"    element={<AdminConciergePage />} />
                       <Route path="pricing"      element={<AdminPricingPage />} />
