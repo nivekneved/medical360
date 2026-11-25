@@ -89,16 +89,7 @@ export function CookiePolicyPage() {
 
           <div style={{ marginBottom: '2.5rem' }}>
             <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Settings size={20} color="var(--color-primary)" /> 4. Staff & Administration Only
-            </h2>
-            <p>
-              The separate staff portal (<code>/deven</code>, <code>/admin</code>) uses additional strictly functional storage for authorised coordinators only: session security, an internal audit trail (<code>med360_security_audit_trail_v1</code>), coordinator task lists and email-template configuration. These are never set for ordinary visitors.
-            </p>
-          </div>
-
-          <div style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Eye size={20} color="var(--color-primary)" /> 5. Third Parties
+              <Eye size={20} color="var(--color-primary)" /> 4. Third Parties
             </h2>
             <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <li><strong>Google Fonts</strong> — typography is loaded from Google's CDN; Google may log the request. No profile linking is performed by us.</li>
@@ -109,7 +100,7 @@ export function CookiePolicyPage() {
           </div>
 
           <div style={{ marginBottom: '0' }}>
-            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem' }}>6. Managing & Clearing Storage</h2>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '0.75rem' }}>5. Managing & Clearing Storage</h2>
             <p>
               You can clear all of this at any time via your browser settings ("Clear site data" for <strong>www.med360.mu</strong>). Choosing "Essential Only" in our consent banner still keeps the core site fully functional. Questions? Contact <a href="mailto:info@med360.mu" style={{ color: 'var(--color-primary)', fontWeight: 600 }}>info@med360.mu</a>.
             </p>
