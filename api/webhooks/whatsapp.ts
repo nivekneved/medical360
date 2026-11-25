@@ -137,7 +137,7 @@ export default async function handler(req: Request) {
       } 
       // Case B: Request from client website beacon (must be from authorized origin)
       else {
-        if (origin && !isOriginAllowed(origin)) {
+        if (!origin || !isOriginAllowed(origin)) {
           return new Response(JSON.stringify({ error: 'Forbidden: Unauthorized origin' }), {
             status: 403,
             headers: { 'Content-Type': 'application/json' },

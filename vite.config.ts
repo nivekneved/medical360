@@ -67,6 +67,7 @@ export default defineConfig(({ mode }) => {
   return {
   plugins: [resendDevProxy(env.RESEND_API_KEY || '')],
   build: {
+    sourcemap: false,
     chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {

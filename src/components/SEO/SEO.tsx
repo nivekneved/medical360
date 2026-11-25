@@ -74,8 +74,8 @@ export function SEO({
   }, [schema, breadcrumbs]);
 
   useEffect(() => {
-    // Dynamic lang attribute on <html> element
-    document.documentElement.lang = currentLang;
+    // Dynamic BCP-47 lang attribute on <html> element ('mfe' for Mauritian Creole)
+    document.documentElement.lang = currentLang === 'kr' ? 'mfe' : currentLang;
   }, [currentLang]);
 
   return (
@@ -106,6 +106,8 @@ export function SEO({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:image" content={fullImageUrl} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={cleanTitle} />
       <meta
         property="og:locale"
