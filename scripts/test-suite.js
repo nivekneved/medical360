@@ -200,6 +200,29 @@ const cachedList = bench.l1.get('hospitals').data;
 const derivedHospital = getHospitalByIdDerived(cachedList, 'hosp-1');
 assert(derivedHospital !== null && derivedHospital.id === 'hosp-1', 'Derived single hospital lookup resolved from cache with 0 network calls');
 
+// ─── Test Suite 8: Zero Duplicate / Mismatched Seed Images ───────────────────
+console.log('\n8. Testing Unique Image URLs Across Specialties, Hospitals & Case Studies...');
+const catalogSeeds = [
+  'src/core/mock/seeds/specialties.seed.ts',
+  'src/core/mock/seeds/hospitals.seed.ts',
+  'src/core/mock/seeds/case-studies.seed.ts',
+];
+const seenImages = new Map();
+let dupCount = 0;
+for (const file of catalogSeeds) {
+  const txt = readFileSync(resolve(process.cwd(), file), 'utf8');
+  for (const m of txt.matchAll(/imageUrl:\s*'([^']+)'/g)) {
+    const url = m[1];
+    if (seenImages.has(url)) {
+      console.error(`  ❌ Duplicate imageUrl "${url}" in ${file} (already in ${seenImages.get(url)})`);
+      dupCount++;
+    } else {
+      seenImages.set(url, file);
+    }
+  }
+}
+assert(dupCount === 0 && seenImages.size === 38, `All 38 catalog imageUrls are 100% unique (${seenImages.size} unique, ${dupCount} duplicates)`);
+
 // ─── Summary ─────────────────────────────────────────────────────────────────
 console.log('\n═════════════════════════════════════════════════════════════════════════');
 console.log(`📊 TEST SUITE SUMMARY: ${passedTests} PASSED, ${failedTests} FAILED`);

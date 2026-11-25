@@ -154,7 +154,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Post-mastectomy breast reconstruction, microsurgical tissue transfer, cleft lip/palate repair, rhinoplasty, body contouring, and reconstructive trauma care with natural aesthetic outcomes.',
     description_fr: 'Reconstruction mammaire post-mastectomie, transfert tissulaire microchirurgical, rhinoplastie et remodelage corporel.',
     description_kr: 'Rekonstriksion apre maladi, sirirzi kouma rhinoplastie ek remodelaz lekor.',
-    imageUrl: '/assets/banners/cosmetic_surgery.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&q=80',
     featured: true,
     procedures: [
       { id: 'proc-cosm-1', specialtyId: 'sp-cosmetic', name: 'Post-Cancer Breast Reconstruction', name_fr: 'Reconstruction Mammaire Post-Cancer', name_kr: 'Rekonstriksion Pwatrin Apre Kanser', description: 'Autologous flap or implant-based anatomical breast reconstruction.', description_fr: 'Reconstruction par lambeau autologue ou implants après mastectomie.', description_kr: 'Rekonstriksion pwatrin pou restore fason natirel.', estimatedDurationDays: 7 },
@@ -192,7 +192,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Vitreo-retinal surgery, corneal transplantation (DALK/DMEK), advanced cataract micro-incisions, glaucoma filtering surgery, and paediatric eye care at world-renowned eye institutes such as Sankara Nethralaya.',
     description_fr: 'Chirurgie vitréo-rétinienne, greffe de cornée et microchirurgie de la cataracte dans des instituts de renommée mondiale.',
     description_kr: 'Operasion retin, gref korne ek katarakt dan bann meyer sant lizie.',
-    imageUrl: '/assets/banners/corneal_case_study.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1579684453423-f84349ef60b0?w=800&q=80',
     featured: true,
     procedures: [
       { id: 'proc-ophth-1', specialtyId: 'sp-ophthalmology', name: 'Vitrectomy & Retinal Detachment Repair', name_fr: 'Vitrectomie & Réparation Décollement Rétine', name_kr: 'Vitrectomi & Reparasion Retin', description: 'Microsurgical vitrectomy for retinal detachment, macular hole or diabetic retinopathy.', description_fr: 'Microchirurgie vitréo-rétinienne pour décollement et rétinopathie diabétique.', description_kr: 'Operasion mikrosirirzikal pou sov la vi lizie.', estimatedDurationDays: 5 },
