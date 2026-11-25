@@ -75,7 +75,6 @@ const NotFoundPage        = lazyWithRetry(() => import('./features/not-found/Not
 
 // Lazy admin pages (code-split with deployment auto-retry)
 const AdminLoginPage        = lazyWithRetry(() => import('./features/admin/AdminLoginPage'), m => m.AdminLoginPage);
-const AdminLockoutNoticePage = lazyWithRetry(() => import('./features/admin/AdminLockoutNoticePage'), m => m.AdminLockoutNoticePage);
 const AdminLayout           = lazyWithRetry(() => import('./features/admin/AdminLayout'), m => m.AdminLayout);
 const AdminDashboardPage    = lazyWithRetry(() => import('./features/admin/dashboard/AdminDashboardPage'), m => m.AdminDashboardPage);
 const AdminInquiriesPage    = lazyWithRetry(() => import('./features/admin/inquiries/AdminInquiriesPage'), m => m.AdminInquiriesPage);
@@ -218,7 +217,13 @@ function PublicLayout() {
 function AdminGuard() {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return <PageLoader />;
-  if (!isAuthenticated) return <Navigate to="/admin/login" replace />;
+  if (!isAuthenticated) {
+    return (
+      <Suspense fallback={<PageLoader />}>
+        <NotFoundPage />
+      </Suspense>
+    );
+  }
   return (
     <Suspense fallback={<PageLoader />}>
       <AdminLayout />
@@ -274,10 +279,10 @@ export default function App() {
                       </Suspense>
                     } />
 
-                    {/* Public Decoy / Restricted Notice for /admin/login */}
+                    {/* Public 404 mask for /admin/login */}
                     <Route path="/admin/login" element={
                       <Suspense fallback={<PageLoader />}>
-                        <AdminLockoutNoticePage />
+                        <NotFoundPage />
                       </Suspense>
                     } />
                     <Route path="/admin" element={<AdminGuard />}>

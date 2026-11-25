@@ -70,9 +70,6 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-# ── Private Admin Endpoints Disallowed ──
-Disallow: /admin
-Disallow: /admin/*
 Disallow: /api/
 
 # ── Machine-Readable AI & Search Feeds ──

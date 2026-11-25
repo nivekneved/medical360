@@ -12,7 +12,6 @@ const resources = {
         services: 'Our Services',
         caseStudies: 'Patient Stories',
         contact: 'Contact Us',
-        admin: 'Admin Portal',
         whatsapp: 'WhatsApp',
         freeOpinion: 'Free Medical Review',
       },
@@ -93,8 +92,7 @@ const resources = {
           transplant: 'Organ Transplants',
           ivf: 'IVF & Fertility Care'
         },
-        freeOpinionDesc: 'Free, confidential medical review and personal guidance. Every journey helps NGO Enn Rev Enn Sourir care for patients in need.',
-        adminPortal: 'Admin Portal'
+        freeOpinionDesc: 'Free, confidential medical review and personal guidance. Every journey helps NGO Enn Rev Enn Sourir care for patients in need.'
       },
       common: {
         viewAll: 'View All',
@@ -114,7 +112,6 @@ const resources = {
         services: 'Nos Services',
         caseStudies: 'Témoignages',
         contact: 'Nous Contacter',
-        admin: 'Portail Admin',
         whatsapp: 'WhatsApp',
         freeOpinion: 'Avis Médical Gratuit',
       },
@@ -195,8 +192,7 @@ const resources = {
           transplant: 'Greffes d\'Organes',
           ivf: 'FIV & Fertilité'
         },
-        freeOpinionDesc: 'Avis médical gratuit, confidentiel et accompagnement personnalisé. Chaque prise en charge aide l\'ONG Enn Rev Enn Sourir à soigner les plus démunis.',
-        adminPortal: 'Portail Admin'
+        freeOpinionDesc: 'Avis médical gratuit, confidentiel et accompagnement personnalisé. Chaque prise en charge aide l\'ONG Enn Rev Enn Sourir à soigner les plus démunis.'
       },
       common: {
         viewAll: 'Voir Tout',
@@ -216,7 +212,6 @@ const resources = {
         services: 'Nou Bann Servis',
         caseStudies: 'Temwagnaz',
         contact: 'Kontak Nou',
-        admin: 'Portal Admin',
         whatsapp: 'WhatsApp',
         freeOpinion: 'Lavi Medikal Gratis',
       },
@@ -297,8 +292,7 @@ const resources = {
           transplant: 'Transplantasion',
           ivf: 'FIV & Fertilite'
         },
-        freeOpinionDesc: 'Lavi medikal gratis, konfidansyel ek gidans personel. Sak vwayaz ed l\'ONG Enn Rev Enn Sourir swany bann pasian dan bezwin.',
-        adminPortal: 'Portal Admin'
+        freeOpinionDesc: 'Lavi medikal gratis, konfidansyel ek gidans personel. Sak vwayaz ed l\'ONG Enn Rev Enn Sourir swany bann pasian dan bezwin.'
       },
       common: {
         viewAll: 'Get Tou',

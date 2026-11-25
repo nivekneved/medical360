@@ -145,7 +145,6 @@ export function Footer() {
             <Link to="/terms" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Terms of Service</Link>
             <Link to="/cookies" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Cookies</Link>
             <Link to="/medical-disclaimer" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Medical Disclaimer</Link>
-            <Link to="/deven" style={{ color: 'rgba(255,255,255,0.4)', textDecoration: 'none', fontSize: '0.8rem' }}>Staff Portal</Link>
           </div>
         </div>
       </div>
