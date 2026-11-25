@@ -181,9 +181,9 @@ export const hospitalsSeed: Hospital[] = [
     description: 'Fortis describes the hospital as an internationally recognised institution particularly known for its work in cardiac sciences. It has 13 operating theatres and five catheterisation laboratories, alongside programmes in heart, liver and kidney transplantation. Clinical Excellence & Reputation: Its cardiac programme includes complex angioplasty, TAVR, electrophysiology, adult and paediatric cardiac surgery, LVAD, minimally invasive cardiac surgery and heart transplantation. The facility is NABH accredited. A renowned destination for advanced cardiac medicine and surgery, including complex interventions, LVAD and heart transplantation.',
     description_fr: "Institution de renommée internationale située à Okhla Road, New Delhi. 13 blocs opératoires, 5 salles de cathétérisme, spécialisée en TAVR, LVAD, greffe cardiaque et soins pédiatriques, accréditée NABH.",
     description_kr: 'Enn sant rekonet mondiyalman pou operasion leker dan Okhla Road New Delhi. Ena 13 blok operasion, 5 labo kateterism, spesialiste dan TAVR, LVAD ek gref leker.',
-    imageUrl: '/assets/hospitals/hosp-fortis-escorts__placeholder.svg',
+    imageUrl: '/assets/hospitals/hosp-fortis-escorts__1.jpg',
     gallery: [
-      '/assets/hospitals/hosp-fortis-escorts__placeholder.svg',
+      '/assets/hospitals/hosp-fortis-escorts__1.jpg',
     ],
     accreditations: ['NABH', 'NABL'],
     specialties: ['sp-cardiology', 'sp-paediatrics', 'sp-transplant', 'sp-urology'],

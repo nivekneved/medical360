@@ -213,7 +213,10 @@ for (const file of catalogSeeds) {
   const txt = readFileSync(resolve(process.cwd(), file), 'utf8');
   for (const m of txt.matchAll(/imageUrl:\s*'([^']+)'/g)) {
     const url = m[1];
-    if (seenImages.has(url)) {
+    if (url.endsWith('.svg')) {
+      console.error(`  ❌ SVG placeholder used in ${file}: ${url}`);
+      dupCount++;
+    } else if (seenImages.has(url)) {
       console.error(`  ❌ Duplicate imageUrl "${url}" in ${file} (already in ${seenImages.get(url)})`);
       dupCount++;
     } else {
