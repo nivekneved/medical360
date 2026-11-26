@@ -254,7 +254,7 @@ export function HowItWorksPage() {
               onClick={() => navigate('/describe-need?from=How+It+Works+Top+Banner&serviceName=Treatment+Coordination+Consultation')}
               id="hiw-hero-cta"
             >
-              <span>{isFr ? "RÉSERVER VOTRE CONSULTATION MÉDICALE" : isKr ? "REZERV OU KONSILTASION MEDIKAL" : "BOOK YOUR MEDICAL CONSULTATION"}</span>
+              <span>{isFr ? "Demander un Rendez-vous" : isKr ? "Demann enn Randevou" : "Request an Appointment"}</span>
               <ArrowRight size={18} />
             </button>
             <a
@@ -443,7 +443,7 @@ export function HowItWorksPage() {
               onClick={() => navigate('/describe-need?from=How+It+Works+Bottom+CTA&serviceName=Treatment+Coordination+Consultation')}
               id="hiw-bottom-cta"
             >
-              <span>{isFr ? "RÉSERVER VOTRE CONSULTATION MÉDICALE" : isKr ? "REZERV OU KONSILTASION MEDIKAL" : "BOOK YOUR MEDICAL CONSULTATION"}</span>
+              <span>{isFr ? "Demander un Rendez-vous" : isKr ? "Demann enn Randevou" : "Request an Appointment"}</span>
               <ArrowRight size={18} />
             </button>
             <a

@@ -22,7 +22,7 @@ export const cmsSeed: Record<string, CmsPage> = {
       navCalculator: { en: 'Cost Calculator', fr: 'Calculateur de Coûts', kr: 'Kalkilatris Pri' },
       navCaseStudies: { en: 'Patient Stories', fr: 'Témoignages', kr: 'Zistwar Pasian' },
       navContact: { en: 'Contact Us', fr: 'Contact', kr: 'Kontak' },
-      navFreeOpinionBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER UNE CONSULTATION', kr: 'REZERV OU KONSILTASION' }
+      navFreeOpinionBtn: { en: 'Request an Appointment', fr: 'RÉSERVER UNE CONSULTATION', kr: 'REZERV OU KONSILTASION' }
     }
   },
   home: {
@@ -51,9 +51,9 @@ export const cmsSeed: Record<string, CmsPage> = {
         kr: 'Med360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
       },
       heroPrimaryCta: {
-        en: 'BOOK YOUR MEDICAL CONSULTATION',
-        fr: 'RÉSERVER UNE CONSULTATION MÉDICALE',
-        kr: 'REZERV OU KONSILTASION MEDIKAL'
+        en: 'Request an Appointment',
+        fr: 'Demander un Rendez-vous',
+        kr: 'Demann enn Randevou'
       },
       heroSecondaryCta: {
         en: 'CHAT WITH US ON WHATSAPP',
@@ -77,7 +77,7 @@ export const cmsSeed: Record<string, CmsPage> = {
       processLabel: { en: 'How It Works · 6-Step Journey', fr: 'Parcours Patient en 6 Étapes', kr: 'Parcours Pasian an 6 Letap' },
       processTitle: { en: 'Your Healthcare Journey, Made Simple', fr: 'Votre Parcours de Soins, Simple & Coordonné', kr: 'Ou Vwayaz Lasante, Sinp & Kordone' },
       processDesc: { en: 'Seeking medical treatment abroad can feel complicated. Med360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.', fr: 'Se faire soigner à l\'étranger peut sembler complexe. Med360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à vos soins à l\'étranger et votre retour à domicile.', kr: 'Al fer swen a letranze kapav paret konplike. Med360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.' },
-      processStartBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER UNE CONSULTATION MÉDICALE', kr: 'REZERV OU KONSILTASION MEDIKAL' },
+      processStartBtn: { en: 'Request an Appointment', fr: 'Demander un Rendez-vous', kr: 'Demann enn Randevou' },
       networkLabel: { en: 'India Hospital Network', fr: 'Réseau Hospitalier en Inde', kr: 'Rezo Lopital dan L\'inde' },
       networkTitle: { en: 'Our Hospital Network at a Glance', fr: 'Notre Réseau Hospitalier en un Coup d\'Œil', kr: 'Nou Rezo Lopital dan L\'inde' },
       networkDesc: { en: 'Med360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.', fr: 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation et l\'expertise clinique.', kr: 'Med360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.' },
@@ -101,7 +101,7 @@ export const cmsSeed: Record<string, CmsPage> = {
         fr: 'Parlez à un Patient Navigator dès aujourd\'hui et faites le premier pas vers les soins dont vous avez besoin.',
         kr: 'Koz ar enn Patient Navigator zordi mem ek fer premie pa ver bann meyer swen.'
       },
-      ctaPrimaryBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER UNE CONSULTATION MÉDICALE', kr: 'REZERV OU KONSILTASION MEDIKAL' },
+      ctaPrimaryBtn: { en: 'Request an Appointment', fr: 'Demander un Rendez-vous', kr: 'Demann enn Randevou' },
       ctaWhatsAppBtn: { en: 'CHAT WITH US ON WHATSAPP', fr: 'DISCUTER SUR WHATSAPP', kr: 'KOZ AR NOU LOR WHATSAPP' }
     }
   },
@@ -155,7 +155,7 @@ export const cmsSeed: Record<string, CmsPage> = {
         fr: 'Parlez à un Patient Navigator dès aujourd\'hui et faites le premier pas vers les soins dont vous avez besoin.',
         kr: 'Koz ar enn Patient Navigator zordi mem ek fer premie pa ver bann meyer swen.'
       },
-      ctaPrimaryBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER UNE CONSULTATION MÉDICALE', kr: 'REZERV OU KONSILTASION MEDIKAL' },
+      ctaPrimaryBtn: { en: 'Request an Appointment', fr: 'Demander un Rendez-vous', kr: 'Demann enn Randevou' },
       ctaWhatsAppBtn: { en: 'CHAT WITH US ON WHATSAPP', fr: 'DISCUTER SUR WHATSAPP', kr: 'KOZ AR NOU LOR WHATSAPP' }
     }
   },
@@ -189,7 +189,7 @@ export const cmsSeed: Record<string, CmsPage> = {
         fr: 'Parlez à un Patient Navigator dès aujourd\'hui et faites le premier pas vers les soins dont vous avez besoin.',
         kr: 'Koz ar enn Patient Navigator zordi mem ek fer premie pa ver bann meyer swen.'
       },
-      ctaPrimaryBtn: { en: 'BOOK YOUR MEDICAL CONSULTATION', fr: 'RÉSERVER UNE CONSULTATION MÉDICALE', kr: 'REZERV OU KONSILTASION MEDIKAL' },
+      ctaPrimaryBtn: { en: 'Request an Appointment', fr: 'Demander un Rendez-vous', kr: 'Demann enn Randevou' },
       ctaWhatsAppBtn: { en: 'CHAT WITH US ON WHATSAPP', fr: 'DISCUTER SUR WHATSAPP', kr: 'KOZ AR NOU LOR WHATSAPP' }
     }
   },

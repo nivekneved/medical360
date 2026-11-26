@@ -211,7 +211,7 @@ export function ContactPage() {
                 id="contact-cta-book-btn"
               >
                 <Sparkles size={18} />
-                <span>{l10n('RÉSERVER UNE CONSULTATION MÉDICALE', 'REZERV OU KONSILTASION MEDIKAL', 'BOOK YOUR MEDICAL CONSULTATION')}</span>
+                <span>{l10n('Demander un Rendez-vous', 'Demann enn Randevou', 'Request an Appointment')}</span>
                 <ArrowRight size={18} />
               </button>
               <a

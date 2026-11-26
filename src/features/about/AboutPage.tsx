@@ -209,6 +209,9 @@ export function AboutPage() {
           {/* Media Coverage Section */}
           <MediaCoverageSection />
 
+          {/* Media Coverage Section */}
+          <MediaCoverageSection />
+
           {/* Timeline Section */}
           <div style={{ marginBottom: '5rem' }}>
             <div style={{ textAlign: 'center', maxWidth: 650, margin: '0 auto 3rem' }}>
@@ -449,7 +452,7 @@ export function AboutPage() {
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need?from=About+Us+Page+CTA&serviceName=Medical+Consultation')} id="about-cta-btn">
-                <span>{l10n('RÉSERVER VOTRE CONSULTATION MÉDICALE', 'REZERV OU KONSILTASION MEDIKAL', 'BOOK YOUR MEDICAL CONSULTATION')}</span>
+                <span>{l10n('Demander un Rendez-vous', 'Demann enn Randevou', 'Request an Appointment')}</span>
                 <ArrowRight size={18} />
               </button>
               <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg">
