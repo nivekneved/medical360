@@ -220,9 +220,6 @@ export function AboutPage() {
           {/* Media Coverage Section */}
           <MediaCoverageSection />
 
-          {/* Media Coverage Section */}
-          <MediaCoverageSection />
-
           {/* Timeline Section */}
           <div style={{ marginBottom: '5rem' }}>
             <div style={{ textAlign: 'center', maxWidth: 650, margin: '0 auto 3rem' }}>

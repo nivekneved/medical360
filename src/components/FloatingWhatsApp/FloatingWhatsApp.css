@@ -9,74 +9,97 @@
   gap: 0.65rem;
 }
 
-/* Shared Floating Pill Button */
-.floating-pill {
+/* Expanding Icon-to-Pill Floating Button */
+.floating-icon-btn {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  height: 46px;
-  padding: 0 1.1rem 0 0.85rem;
+  height: 48px;
+  min-width: 48px;
+  padding: 0;
   border-radius: var(--radius-full);
   border: none;
   cursor: pointer;
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  overflow: hidden;
   font-family: inherit;
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.01em;
-  white-space: nowrap;
   text-decoration: none;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background 0.2s ease;
+  transition: box-shadow 0.25s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.22s ease;
 }
 
-.floating-pill__icon {
+.floating-icon-btn:focus-visible {
+  outline: 2.5px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.floating-icon-btn__icon {
+  width: 48px;
+  height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
+.floating-icon-btn__label {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-left: 0;
+  transition: max-width 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease, padding-left 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.floating-icon-btn:hover .floating-icon-btn__label,
+.floating-icon-btn:focus-visible .floating-icon-btn__label {
+  max-width: 220px;
+  opacity: 1;
+  padding-left: 1.1rem;
+}
+
 /* 1. Request an Appointment */
-.floating-pill--appointment {
+.floating-icon-btn--appointment {
   background: linear-gradient(135deg, #0b5a8a 0%, #0d9488 100%);
   color: #ffffff;
   box-shadow: 0 8px 22px rgba(11, 90, 138, 0.35);
 }
 
-.floating-pill--appointment:hover {
-  transform: translateX(-4px) scale(1.03);
+.floating-icon-btn--appointment:hover {
   box-shadow: 0 12px 28px rgba(13, 148, 136, 0.45);
 }
 
 /* 2. Our Services */
-.floating-pill--services {
+.floating-icon-btn--services {
   background: var(--color-surface);
-  color: var(--color-text-main);
+  color: var(--color-primary);
   border: 1.5px solid var(--color-border);
   box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
 }
 
-.floating-pill--services .floating-pill__icon {
-  color: var(--color-primary);
+.floating-icon-btn--services .floating-icon-btn__icon {
+  width: 45px;
+  height: 45px;
 }
 
-.floating-pill--services:hover {
+.floating-icon-btn--services:hover {
+  background: var(--color-primary);
   border-color: var(--color-primary);
-  color: var(--color-primary);
-  transform: translateX(-4px) scale(1.03);
-  box-shadow: 0 10px 24px rgba(13, 148, 136, 0.2);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(13, 148, 136, 0.32);
 }
 
 /* 3. YouTube Podcast */
-.floating-pill--youtube {
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+.floating-icon-btn--youtube {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: #ffffff;
   box-shadow: 0 8px 22px rgba(220, 38, 38, 0.35);
 }
 
-.floating-pill--youtube:hover {
+.floating-icon-btn--youtube:hover {
   color: #ffffff;
-  transform: translateX(-4px) scale(1.03);
   box-shadow: 0 12px 28px rgba(220, 38, 38, 0.48);
 }
 
@@ -90,27 +113,22 @@
 
 .floating-whatsapp:hover {
   background: #1ebe5d;
-  transform: translateX(-4px) scale(1.03);
 }
 
-/* Scroll To Top Button */
+/* 5. Scroll To Top Button */
 .floating-scroll-top {
-  position: relative;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-full);
   background: var(--color-surface);
   color: var(--color-primary);
   border: 1.5px solid var(--color-border);
   box-shadow: var(--shadow-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
   opacity: 0;
   visibility: hidden;
   transform: translateY(12px) scale(0.85);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-scroll-top .floating-icon-btn__icon {
+  width: 45px;
+  height: 45px;
 }
 
 .floating-scroll-top--visible {
@@ -123,31 +141,7 @@
   background: var(--color-primary);
   color: #ffffff;
   border-color: var(--color-primary);
-  transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 20px rgba(13, 148, 136, 0.35);
-}
-
-/* Tooltip for Scroll Top */
-.floating-action__tooltip {
-  position: absolute;
-  right: calc(100% + 12px);
-  background: #080d1a;
-  color: #ffffff;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  padding: 0.375rem 0.875rem;
-  border-radius: var(--radius-full);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(8px);
-  transition: var(--transition-fast);
-  box-shadow: var(--shadow-md);
-}
-
-.floating-scroll-top:hover .floating-action__tooltip {
-  opacity: 1;
-  transform: translateX(0);
 }
 
 @keyframes pulse-glow {
@@ -159,22 +153,22 @@
   .floating-actions-group {
     bottom: 1.15rem;
     right: 1rem;
-    gap: 0.5rem;
+    gap: 0.55rem;
   }
-  .floating-pill {
-    width: 48px;
-    height: 48px;
-    padding: 0;
-    justify-content: center;
+  .floating-icon-btn {
+    height: 44px;
+    min-width: 44px;
   }
-  .floating-pill__label {
-    display: none;
+  .floating-icon-btn__icon {
+    width: 44px;
+    height: 44px;
   }
-  .floating-scroll-top {
-    width: 40px;
-    height: 40px;
+  .floating-icon-btn--services .floating-icon-btn__icon,
+  .floating-scroll-top .floating-icon-btn__icon {
+    width: 41px;
+    height: 41px;
   }
-  .floating-action__tooltip {
+  .floating-icon-btn__label {
     display: none;
   }
 }

@@ -44,28 +44,28 @@ export function FloatingWhatsApp() {
       <button
         type="button"
         onClick={() => navigate('/describe-need?from=Floating+Menu&serviceName=Request+an+Appointment')}
-        className="floating-pill floating-pill--appointment"
+        className="floating-icon-btn floating-icon-btn--appointment"
         aria-label="Request an Appointment"
         id="floating-appointment-btn"
       >
-        <span className="floating-pill__icon">
-          <CalendarCheck size={20} />
+        <span className="floating-icon-btn__icon">
+          <CalendarCheck size={21} aria-hidden="true" />
         </span>
-        <span className="floating-pill__label">Request an Appointment</span>
+        <span className="floating-icon-btn__label">Request an Appointment</span>
       </button>
 
       {/* Our Services */}
       <button
         type="button"
         onClick={() => navigate('/how-it-works')}
-        className="floating-pill floating-pill--services"
+        className="floating-icon-btn floating-icon-btn--services"
         aria-label="Our Services"
         id="floating-services-btn"
       >
-        <span className="floating-pill__icon">
-          <Stethoscope size={20} />
+        <span className="floating-icon-btn__icon">
+          <Stethoscope size={21} aria-hidden="true" />
         </span>
-        <span className="floating-pill__label">Our Services</span>
+        <span className="floating-icon-btn__label">Our Services</span>
       </button>
 
       {/* YouTube Podcast */}
@@ -73,14 +73,14 @@ export function FloatingWhatsApp() {
         href="https://www.youtube.com/watch?v=DdzM1F3grBg"
         target="_blank"
         rel="noopener noreferrer"
-        className="floating-pill floating-pill--youtube"
+        className="floating-icon-btn floating-icon-btn--youtube"
         aria-label="Watch Med360 YouTube Podcast"
         id="floating-youtube-btn"
       >
-        <span className="floating-pill__icon">
-          <PlayCircle size={20} />
+        <span className="floating-icon-btn__icon">
+          <PlayCircle size={22} aria-hidden="true" />
         </span>
-        <span className="floating-pill__label">YouTube Podcast</span>
+        <span className="floating-icon-btn__label">YouTube Podcast</span>
       </a>
 
       {/* WhatsApp Button (Addon Module Controlled) */}
@@ -88,14 +88,14 @@ export function FloatingWhatsApp() {
         <button
           type="button"
           onClick={() => openWhatsApp({ source: 'Floating Widget' })}
-          className="floating-pill floating-whatsapp"
+          className="floating-icon-btn floating-whatsapp"
           aria-label="Chat with Med360 on WhatsApp"
           id="floating-whatsapp-btn"
         >
-          <span className="floating-pill__icon">
-            <MessageCircle size={22} />
+          <span className="floating-icon-btn__icon">
+            <MessageCircle size={22} aria-hidden="true" />
           </span>
-          <span className="floating-pill__label">WhatsApp</span>
+          <span className="floating-icon-btn__label">Chat on WhatsApp</span>
         </button>
       )}
 
@@ -103,13 +103,14 @@ export function FloatingWhatsApp() {
       <button
         type="button"
         onClick={scrollToTop}
-        className={`floating-scroll-top ${showScrollTop ? 'floating-scroll-top--visible' : ''}`}
+        className={`floating-icon-btn floating-scroll-top ${showScrollTop ? 'floating-scroll-top--visible' : ''}`}
         aria-label="Scroll to top of page"
         id="scroll-to-top-btn"
-        title="Scroll to top"
       >
-        <ArrowUp size={20} />
-        <span className="floating-action__tooltip">Back to top</span>
+        <span className="floating-icon-btn__icon">
+          <ArrowUp size={20} aria-hidden="true" />
+        </span>
+        <span className="floating-icon-btn__label">Back to top</span>
       </button>
     </nav>
   );
