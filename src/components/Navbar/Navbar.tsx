@@ -4,7 +4,6 @@ import {
   Menu,
   X,
   MessageCircle,
-  Globe,
   ArrowRight,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -48,14 +47,6 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Language switcher (EN / FR / KR)
-  const toggleLanguage = () => {
-    const langs = ['en', 'fr', 'kr'];
-    const currentIndex = langs.indexOf(i18n.language);
-    const nextLang = langs[(currentIndex + 1) % langs.length];
-    i18n.changeLanguage(nextLang);
-  };
-
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
 
@@ -94,17 +85,6 @@ export function Navbar() {
 
         {/* Action Controls */}
         <div className="navbar__actions">
-          {/* Language Switcher */}
-          <button
-            className="navbar-icon-btn navbar-lang-btn"
-            onClick={toggleLanguage}
-            aria-label="Switch Language"
-            title="Switch Language (EN / FR / KR)"
-          >
-            <Globe size={16} />
-            <span className="lang-text">{i18n.language.toUpperCase()}</span>
-          </button>
-
           {/* WhatsApp Direct Pill */}
           <a
             href={buildMed360WhatsAppUrl()}
@@ -157,11 +137,6 @@ export function Navbar() {
           </nav>
 
           <div className="navbar__mobile-actions">
-            <button className="mobile-utility-btn" onClick={toggleLanguage} style={{ width: '100%' }}>
-              <Globe size={18} color="var(--color-primary)" />
-              <span>Language: <strong>{i18n.language.toUpperCase()}</strong></span>
-            </button>
-
             <a
               href={buildMed360WhatsAppUrl()}
               target="_blank"
