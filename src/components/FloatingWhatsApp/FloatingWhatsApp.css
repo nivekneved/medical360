@@ -1,36 +1,85 @@
 .floating-actions-group {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 1.75rem;
+  right: 1.5rem;
   z-index: 900;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: flex-end;
+  gap: 0.65rem;
 }
 
-/* WhatsApp Button */
-.floating-whatsapp {
+/* Shared Floating Pill Button */
+.floating-pill {
   position: relative;
-  width: 56px;
-  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 46px;
+  padding: 0 1.1rem 0 0.85rem;
   border-radius: var(--radius-full);
-  background: #25D366;
-  color: white;
-  display: flex;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.floating-pill__icon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 1. Request an Appointment */
+.floating-pill--appointment {
+  background: linear-gradient(135deg, #0b5a8a 0%, #0d9488 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 22px rgba(11, 90, 138, 0.35);
+}
+
+.floating-pill--appointment:hover {
+  transform: translateX(-4px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(13, 148, 136, 0.45);
+}
+
+/* 2. Our Services */
+.floating-pill--services {
+  background: var(--color-surface);
+  color: var(--color-text-main);
+  border: 1.5px solid var(--color-border);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+}
+
+.floating-pill--services .floating-pill__icon {
+  color: var(--color-primary);
+}
+
+.floating-pill--services:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateX(-4px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(13, 148, 136, 0.2);
+}
+
+/* 3. WhatsApp Button */
+.floating-whatsapp {
+  background: #25D366;
+  color: #ffffff;
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
-  transition: var(--transition-base);
   animation: pulse-glow 3s infinite;
 }
 
 .floating-whatsapp:hover {
   background: #1ebe5d;
-  transform: scale(1.08);
+  transform: translateX(-4px) scale(1.03);
 }
 
-/* Scroll To Top Button (Positioned Below WhatsApp) */
+/* Scroll To Top Button */
 .floating-scroll-top {
   position: relative;
   width: 44px;
@@ -58,18 +107,18 @@
 
 .floating-scroll-top:hover {
   background: var(--color-primary);
-  color: white;
+  color: #ffffff;
   border-color: var(--color-primary);
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(26, 107, 255, 0.35);
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.35);
 }
 
-/* Tooltips */
+/* Tooltip for Scroll Top */
 .floating-action__tooltip {
   position: absolute;
   right: calc(100% + 12px);
   background: #080d1a;
-  color: white;
+  color: #ffffff;
   font-size: 0.8125rem;
   font-weight: 500;
   padding: 0.375rem 0.875rem;
@@ -82,7 +131,6 @@
   box-shadow: var(--shadow-md);
 }
 
-.floating-whatsapp:hover .floating-action__tooltip,
 .floating-scroll-top:hover .floating-action__tooltip {
   opacity: 1;
   transform: translateX(0);
@@ -90,18 +138,23 @@
 
 @keyframes pulse-glow {
   0%, 100% { box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45); }
-  50%       { box-shadow: 0 8px 32px rgba(37, 211, 102, 0.7); }
+  50%       { box-shadow: 0 8px 32px rgba(37, 211, 102, 0.72); }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .floating-actions-group {
-    bottom: 1.25rem;
-    right: 1.25rem;
+    bottom: 1.15rem;
+    right: 1rem;
     gap: 0.5rem;
   }
-  .floating-whatsapp {
-    width: 50px;
-    height: 50px;
+  .floating-pill {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    justify-content: center;
+  }
+  .floating-pill__label {
+    display: none;
   }
   .floating-scroll-top {
     width: 40px;

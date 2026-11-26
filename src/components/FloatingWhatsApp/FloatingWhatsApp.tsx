@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { MessageCircle, ArrowUp } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { MessageCircle, ArrowUp, CalendarCheck, Stethoscope } from 'lucide-react';
 import { useWhatsAppAction } from '../../hooks/useWhatsAppAction';
 import { usePlatformSettings } from '../../core/services/settings.service';
 import './FloatingWhatsApp.css';
 
 export function FloatingWhatsApp() {
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const navigate = useNavigate();
   const { openWhatsApp } = useWhatsAppAction();
   const { settings } = usePlatformSettings();
 
@@ -33,31 +35,58 @@ export function FloatingWhatsApp() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="floating-actions-group" aria-label="Floating actions">
+    <nav className="floating-actions-group" aria-label="Quick actions">
+      {/* Request an Appointment */}
+      <button
+        type="button"
+        onClick={() => navigate('/describe-need?from=Floating+Menu&serviceName=Request+an+Appointment')}
+        className="floating-pill floating-pill--appointment"
+        aria-label="Request an Appointment"
+        id="floating-appointment-btn"
+      >
+        <span className="floating-pill__icon">
+          <CalendarCheck size={20} />
+        </span>
+        <span className="floating-pill__label">Request an Appointment</span>
+      </button>
+
+      {/* Our Services */}
+      <button
+        type="button"
+        onClick={() => navigate('/how-it-works')}
+        className="floating-pill floating-pill--services"
+        aria-label="Our Services"
+        id="floating-services-btn"
+      >
+        <span className="floating-pill__icon">
+          <Stethoscope size={20} />
+        </span>
+        <span className="floating-pill__label">Our Services</span>
+      </button>
+
       {/* WhatsApp Button (Addon Module Controlled) */}
       {settings.addonFloatingWhatsApp !== false && (
         <button
           type="button"
           onClick={() => openWhatsApp({ source: 'Floating Widget' })}
-          className="floating-whatsapp"
+          className="floating-pill floating-whatsapp"
           aria-label="Chat with Med360 on WhatsApp"
           id="floating-whatsapp-btn"
         >
-          <MessageCircle size={26} />
-          <span className="floating-action__tooltip">Chat on WhatsApp</span>
+          <span className="floating-pill__icon">
+            <MessageCircle size={22} />
+          </span>
+          <span className="floating-pill__label">WhatsApp</span>
         </button>
       )}
 
-
-      {/* Scroll to Top Button (Below WhatsApp) */}
+      {/* Scroll to Top Button */}
       <button
+        type="button"
         onClick={scrollToTop}
         className={`floating-scroll-top ${showScrollTop ? 'floating-scroll-top--visible' : ''}`}
         aria-label="Scroll to top of page"
@@ -67,6 +96,6 @@ export function FloatingWhatsApp() {
         <ArrowUp size={20} />
         <span className="floating-action__tooltip">Back to top</span>
       </button>
-    </div>
+    </nav>
   );
 }
