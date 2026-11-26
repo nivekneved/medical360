@@ -20,6 +20,7 @@ import { useL10n } from '../../hooks/useL10n';
 import { SEO } from '../../components/SEO/SEO';
 import { getFaqPageSchema } from '../../core/services/schema.service';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
+import { FiveEasyStepsWave } from './FiveEasyStepsWave';
 import './HowItWorks.css';
 
 
@@ -221,8 +222,11 @@ export function HowItWorksPage() {
   );
 
   return (
-    <div className="how-it-works-page">
+    <div className="how-it-works-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO pageKey="howItWorks" schema={faqSchema} />
+
+      {/* ── 5 Easy Steps Visual Wave Diagram ─────────────────────────────────── */}
+      <FiveEasyStepsWave />
 
       {/* ── Hero Banner ──────────────────────────────────────────────────────── */}
       <section className="hiw-hero">
