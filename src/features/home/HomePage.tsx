@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Star, Users, Award, Globe2, HeartPulse, ShieldCheck, MessageCircle, FileText, Stethoscope, Plane, Building2, UserCheck } from 'lucide-react';
+import { ArrowRight, Star, Globe2, HeartPulse, ShieldCheck, MessageCircle, FileText, Stethoscope, Plane, Building2, UserCheck } from 'lucide-react';
 import { useL10n } from '../../hooks/useL10n';
 import { useCMS } from '../../hooks/useCMS';
 import { useSpecialties } from '../../hooks/useSpecialties';
@@ -10,7 +10,6 @@ import { SEO } from '../../components/SEO/SEO';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { formatNumber, truncateText } from '../../core/services/format.service';
 import { getMedicalOrganizationSchema } from '../../core/services/schema.service';
-import { SITE_METRICS } from '../../core/config/site';
 import { MissionMarquee } from './components/MissionMarquee';
 import './Home.css';
 
@@ -32,13 +31,6 @@ export function HomePage() {
     return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
 
-
-  const STATS = [
-    { icon: Users,      value: SITE_METRICS.patientsAssistedEn, label: isFr ? 'Patients Accompagnés' : isKr ? 'Pasian Asiste' : 'Patients Assisted' },
-    { icon: Building2,  value: SITE_METRICS.partnerHospitals,   label: isFr ? 'Pôles Hospitaliers Mondiaux' : isKr ? 'Lopital Partener Mondial' : 'Premier Worldwide Hospital Hubs' },
-    { icon: Award,      value: SITE_METRICS.yearsExperience,    label: isFr ? 'Années de Dévouement' : isKr ? 'Banlane D\'experyans Imin' : 'Years of Compassion' },
-    { icon: HeartPulse, value: SITE_METRICS.impactPercent,      label: isFr ? 'Zéro Dividende · Impact Social' : isKr ? 'Zero Dividann · Impak Sosyal' : 'No Dividends · Social Impact' },
-  ];
 
   const PROCESS_STEPS = [
     {
@@ -362,58 +354,6 @@ export function HomePage() {
             <button className="btn btn-outline" onClick={() => navigate('/hospitals')}>
               {isFr ? 'Découvrir les 15 Hôpitaux Partenaires' : isKr ? 'Get Tou Bann 15 Lopital' : 'Browse All 15 Partner Hospitals'} <ArrowRight size={16} />
             </button>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Why Choose Med360 (Social Enterprise Mission) ─────────────────────── */}
-      <section className="section home-why">
-        <div className="container">
-          <div className="why-grid">
-            <div className="why-content">
-              <span className="section-label">
-                {isFr ? '✦ Modèle Social & Philosophie' : isKr ? '✦ Antrepriz Sosyal' : '✦ Social Impact Model'}
-              </span>
-              <h2 className="text-h2">
-                {isFr ? 'Né d\'une Décennie de Compassion. Centré sur le Patient.' : isKr ? 'Ne depi 10 Banlane Konpasion. Santre lor Pasian.' : 'Born From a Decade of Compassion. Built Around the Patient.'}
-              </h2>
-              <p className="text-lead">
-                {isFr
-                  ? 'Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins reçoivent une coordination médicale professionnelle et personnalisée → Med360 génère des revenus durables → ces revenus contribuent à la mission sociale d\'Enn Rev Enn Sourir et soutiennent les patients vulnérables.'
-                  : isKr
-                  ? 'Med360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn enn kordonasion medikal profesyonel → Med360 kre reveni dirab → sa reveni la ed l\'ONG pou sov bann pasian vilnerab.'
-                  : 'Med360 is a social enterprise initiative of Enn Rev Enn Sourir. Patients who can afford their healthcare receive professional medical coordination → Med360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.'}
-              </p>
-              <div className="why-callout-box">
-                <div className="why-callout-tagline">
-                  <strong>{isFr ? 'Zéro Dividende. Votre Santé Compte.' : isKr ? 'Zero Dividann. Ou Lasante Kont.' : 'No Dividends. Your Healthcare Matters.'}</strong>
-                </div>
-                <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
-                  {isFr 
-                    ? 'Votre parcours de soins crée une opportunité de soutenir le parcours de soins d\'un autre patient.'
-                    : isKr
-                    ? 'Ou vwayaz lasante kre enn loportinite pou soutenir vwayaz lasante enn lot pasian.'
-                    : 'Your healthcare journey creates an opportunity to support another healthcare journey.'}
-                </p>
-              </div>
-              <button className="btn btn-primary" onClick={() => navigate('/about')} style={{ marginTop: '2rem' }}>
-                <span>{isFr ? 'Lire Notre Histoire & Nos Affiliations (UICC)' : isKr ? 'Lir Nou Zistwar & Afiliasion (UICC)' : 'Read Our Story & Affiliations (UICC)'}</span>
-                <ArrowRight size={16} />
-              </button>
-            </div>
-            <div className="why-stats-grid">
-              {STATS.map(({ icon: Icon, value, label }, i) => (
-                <div key={label} className={`hero__stat why-stat-card animate-fade-in-up delay-${i + 1}`}>
-                  <div className="hero__stat-icon">
-                    <Icon size={22} />
-                  </div>
-                  <div>
-                    <div className="hero__stat-value">{value}</div>
-                    <div className="hero__stat-label">{label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
