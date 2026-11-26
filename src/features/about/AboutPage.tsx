@@ -5,6 +5,9 @@ import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { HIGHLIGHTS, TIMELINE, FOOTNOTES } from './aboutContent';
+import { CompanyPresentationVideo } from './CompanyPresentationVideo';
+import { LeadershipBriefSection } from './LeadershipBriefSection';
+import { MediaCoverageSection } from './MediaCoverageSection';
 
 export function AboutPage() {
   const navigate = useNavigate();
@@ -196,6 +199,15 @@ export function AboutPage() {
               </div>
             </div>
           </div>
+
+          {/* Official Company Presentation & Board Members Video */}
+          <CompanyPresentationVideo />
+
+          {/* Leadership & Vision Brief (Karan Juglall, Luciano Azor, Delphine Dhollah) */}
+          <LeadershipBriefSection />
+
+          {/* Media Coverage Section */}
+          <MediaCoverageSection />
 
           {/* Timeline Section */}
           <div style={{ marginBottom: '5rem' }}>
