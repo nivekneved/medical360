@@ -196,8 +196,8 @@ export function HomePage() {
           </div>
           <div className="specialties-grid">
             {specLoading
-              ? Array.from({ length: 15 }).map((_, i) => <div key={i} className="specialty-card-full skeleton" style={{ height: 320 }} />)
-              : specialties.map((sp, i) => (
+              ? Array.from({ length: 6 }).map((_, i) => <div key={i} className="specialty-card-full skeleton" style={{ height: 320 }} />)
+              : specialties.slice(0, 6).map((sp, i) => (
                 <div
                   key={sp.id}
                   className={`specialty-card-full animate-fade-in-up delay-${(i % 4) + 1}`}
