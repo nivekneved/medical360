@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MessageCircle, ArrowUp, CalendarCheck, Stethoscope } from 'lucide-react';
+import { MessageCircle, ArrowUp, CalendarCheck, Stethoscope, PlayCircle } from 'lucide-react';
 import { useWhatsAppAction } from '../../hooks/useWhatsAppAction';
 import { usePlatformSettings } from '../../core/services/settings.service';
 import './FloatingWhatsApp.css';
@@ -67,6 +67,21 @@ export function FloatingWhatsApp() {
         </span>
         <span className="floating-pill__label">Our Services</span>
       </button>
+
+      {/* YouTube Podcast */}
+      <a
+        href="https://www.youtube.com/watch?v=DdzM1F3grBg"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="floating-pill floating-pill--youtube"
+        aria-label="Watch Med360 YouTube Podcast"
+        id="floating-youtube-btn"
+      >
+        <span className="floating-pill__icon">
+          <PlayCircle size={20} />
+        </span>
+        <span className="floating-pill__label">YouTube Podcast</span>
+      </a>
 
       {/* WhatsApp Button (Addon Module Controlled) */}
       {settings.addonFloatingWhatsApp !== false && (

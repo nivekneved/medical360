@@ -25,6 +25,7 @@
   font-weight: 700;
   letter-spacing: 0.01em;
   white-space: nowrap;
+  text-decoration: none;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease, background 0.2s ease;
 }
 
@@ -66,7 +67,20 @@
   box-shadow: 0 10px 24px rgba(13, 148, 136, 0.2);
 }
 
-/* 3. WhatsApp Button */
+/* 3. YouTube Podcast */
+.floating-pill--youtube {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 22px rgba(220, 38, 38, 0.35);
+}
+
+.floating-pill--youtube:hover {
+  color: #ffffff;
+  transform: translateX(-4px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(220, 38, 38, 0.48);
+}
+
+/* 4. WhatsApp Button */
 .floating-whatsapp {
   background: #25D366;
   color: #ffffff;
