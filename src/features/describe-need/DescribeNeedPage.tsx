@@ -344,9 +344,9 @@ export function DescribeNeedPage() {
                       id: 'sp-cardiology',
                       label: l10n('❤️ Cardiologie & Coeur', '❤️ Kardiolozi & Leker', '❤️ Cardiology & Heart'),
                       text: l10n(
-                        'Je sollicite un deuxième avis médical et une estimation de devis pour un diagnostic cardiaque (chirurgie/pontage/valve) dans un hôpital de référence en Inde.',
-                        'Mo pe rod enn deziem lavi dokter ek estimasion pri pou enn problem leker dan enn bon lopital dan L\'inde.',
-                        'I would like a medical second opinion and treatment cost estimate for a cardiac condition from a leading accredited hospital in India.'
+                        'Je sollicite un deuxième avis médical et une estimation de devis pour un diagnostic cardiaque (chirurgie/pontage/valve) dans un hôpital accrédité à l\'étranger.',
+                        'Mo pe rod enn deziem lavi dokter ek estimasion pri pou enn problem leker dan enn bon lopital mondial.',
+                        'I would like a medical second opinion and treatment cost estimate for a cardiac condition from a leading accredited hospital worldwide.'
                       ),
                     },
                     {
@@ -381,9 +381,9 @@ export function DescribeNeedPage() {
                       chipKey: 'second-opinion',
                       label: l10n('📋 2ème Avis Médical Général', '📋 2em Lavi Dokter Gratis', '📋 2nd Medical Opinion'),
                       text: l10n(
-                        'J\'ai des bilans et rapports médicaux récents et souhaite un avis médical d\'expert avec orientation vers le bon spécialiste en Inde.',
+                        'J\'ai des bilans et rapports médicaux récents et souhaite un avis médical d\'expert avec orientation vers le bon spécialiste à l\'étranger.',
                         'Mo ena bann rapor medikal ek mo anvi gagn lavi enn dokter spesialis pou gid mwa ver bon lopital.',
-                        'I have recent medical reports and test results and would like an expert second opinion and guidance to the right specialist in India.'
+                        'I have recent medical reports and test results and would like an expert second opinion and guidance to the right specialist worldwide.'
                       ),
                     },
                   ].map((chip: any) => (

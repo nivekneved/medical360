@@ -35,7 +35,7 @@ export function HomePage() {
 
   const STATS = [
     { icon: Users,      value: SITE_METRICS.patientsAssistedEn,    label: isFr ? `${SITE_METRICS.patientsAssistedFr} Patients Accompagnés` : isKr ? `${SITE_METRICS.patientsAssistedEn} Pasian Asiste` : `${SITE_METRICS.patientsAssistedEn} Patients Assisted` },
-    { icon: Building2,  value: SITE_METRICS.partnerHospitals,        label: isFr ? 'Pôles Hospitaliers en Inde' : isKr ? 'Lopital Partener dan L\'inde' : 'Premier Indian Hospital Hubs' },
+    { icon: Building2,  value: SITE_METRICS.partnerHospitals,        label: isFr ? 'Pôles Hospitaliers Mondiaux' : isKr ? 'Lopital Partener Mondial' : 'Premier Worldwide Hospital Hubs' },
     { icon: Award,      value: `${SITE_METRICS.yearsExperience} Years`, label: isFr ? 'Années de Dévouement' : isKr ? 'Banlane D\'experyans Imin' : 'Years of Compassion' },
     { icon: HeartPulse, value: SITE_METRICS.impactPercent,      label: isFr ? 'Zéro Dividende · Modèle Solidaire' : isKr ? 'Zero Dividann · 100% Sosyal' : 'No Dividends · 100% Impact' },
   ];
@@ -81,7 +81,7 @@ export function HomePage() {
 
   const WHY_CHOOSE = [
     { icon: Award,       title: isFr ? 'Né d\'une Décennie de Compassion' : isKr ? 'Ne depi 10 Banlane Konpasion' : 'Born From a Decade of Compassion',         desc: isFr ? 'Med360 est une initiative d\'entreprise sociale née de l\'ONG Enn Rev Enn Sourir (créée en 2016).' : isKr ? 'Med360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir (kree an 2016).' : 'Med360 is a social enterprise initiative of NGO Enn Rev Enn Sourir (established 2016).' },
-    { icon: Globe2,      title: isFr ? '15 Grands Hôpitaux en Inde' : isKr ? '15 Gran Lopital dan L\'inde' : '15 Premier Indian Hospital Hubs',   desc: isFr ? 'Accès direct aux centres d\'excellence à Chennai, Bengaluru, Hyderabad, Mumbai et Delhi NCR.' : isKr ? 'Akse direk ar bann gran sant medikal dan Chennai, Bengaluru, Hyderabad, Mumbai ek Delhi.' : 'Direct access to established clinical departments and accredited hospital hubs across India.' },
+    { icon: Globe2,      title: isFr ? 'Réseau Hospitalier Mondial' : isKr ? 'Rezo Lopital Mondial' : 'Premier Worldwide Hospital Hubs',   desc: isFr ? 'Accès direct aux centres d\'excellence dans le monde entier, avec des partenariats privilégiés en Inde.' : isKr ? 'Akse direk ar bann gran sant medikal dan lemonn antie, prinsipalman avek bann lopital partener dan L\'inde.' : 'Direct access to established clinical departments and accredited hospitals worldwide, partnering primarily with premier Indian hospitals.' },
     { icon: ShieldCheck, title: isFr ? 'Éthique & Dignité du Patient' : isKr ? 'Etik & Dignite Pasian' : 'Ethics, Transparency & Dignity',  desc: isFr ? 'Un modèle où l\'éthique, le choix éclairé, les droits du patient et la dignité passent avant les intérêts commerciaux.' : isKr ? 'Tou kler, respe drwa pasian ek dignite avan tou lintere komersial.' : 'Informed choices and patient rights come before commercial interests. No hidden markups.' },
     { icon: HeartPulse,  title: isFr ? 'Zéro Dividende. Votre Santé Compte.' : isKr ? 'Zero Dividann. Ou Lasante Kont.' : 'No Dividends. Your Healthcare Matters.', desc: isFr ? 'Votre parcours de soins crée une opportunité de soutenir le parcours de soins d\'un autre patient vulnérable.' : isKr ? 'Ou vwayaz lasante kre enn loportinite pou soutenir vwayaz lasante enn lot pasian.' : 'Your healthcare journey creates an opportunity to support another healthcare journey.' },
   ];
@@ -122,10 +122,10 @@ export function HomePage() {
             </h1>
             <p className="hero__subtitle">
               {isFr 
-                ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. De votre première demande médicale et téléconsultation jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
+                ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées dans le monde entier, avec des partenariats privilégiés en Inde. De votre première demande médicale et téléconsultation jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
                 : isKr
-                ? 'Med360 kordonn ou vwayaz lasante ver 15 gran lopital akredite dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
-                : 'Med360 facilitates access to established hospitals and specialist medical teams across India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.'
+                ? 'Med360 kordonn ou vwayaz lasante ver bann lopital akredite mondial, prinsipalman avek bann gran lopital partener dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
+                : 'Med360 facilitates access to established hospitals and specialist medical teams worldwide, partnering primarily with premier accredited hospitals in India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.'
               }
             </p>
             
@@ -301,16 +301,16 @@ export function HomePage() {
       <section className="section home-hospitals">
         <div className="container">
           <div className="section-header">
-            <span className="section-label">{isFr ? 'Réseau Hospitalier en Inde' : isKr ? 'Rezo Lopital dan L\'inde' : 'India Hospital Network'}</span>
+            <span className="section-label">{isFr ? 'Réseau Hospitalier Mondial' : isKr ? 'Rezo Lopital Mondial' : 'Worldwide Hospital Network'}</span>
             <h2 className="text-h2">
-              {isFr ? 'Notre Réseau Hospitalier en un Coup d\'Œil' : isKr ? 'Nou Rezo Lopital dan L\'inde' : 'Our Hospital Network at a Glance'}
+              {isFr ? 'Notre Réseau Hospitalier en un Coup d\'Œil' : isKr ? 'Nou Rezo Lopital Mondial' : 'Our Hospital Network at a Glance'}
             </h2>
             <p className="text-lead">
               {isFr
-                ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation, l\'expertise clinique et les technologies de pointe.'
+                ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées dans le monde entier, avec des partenariats privilégiés en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation, l\'expertise clinique et les technologies de pointe.'
                 : isKr
-                ? 'Med360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
-                : 'Med360 facilitates access to established hospitals and specialist medical teams across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.'}
+                ? 'Med360 fasilit akse ar bann gran lopital ek dokter mondial, prinsipalman avek bann lopital partener dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
+                : 'Med360 facilitates access to established hospitals and specialist medical teams worldwide, with strong partnerships across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.'}
             </p>
           </div>
           <div className="hospitals-grid">

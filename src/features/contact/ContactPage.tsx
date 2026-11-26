@@ -385,9 +385,9 @@ export function ContactPage() {
                         {
                           label: l10n('📋 2ème Avis Médical Gratuit', '📋 2em Lavi Dokter Gratis', '📋 Free Second Opinion'),
                           text: l10n(
-                            'Bonjour, je souhaiterais obtenir un deuxième avis médical gratuit et faire étudier mes rapports avec vos hôpitaux partenaires en Inde.',
-                            'Bonzour, mo ti pou kontan gagn enn deziem lavi dokter gratis pou get mo bann rapor ar zot bann lopital partener dan L\'inde.',
-                            'Hello, I would like to request a free medical second opinion to review my diagnostic reports with your partner hospitals in India.'
+                            'Bonjour, je souhaiterais obtenir un deuxième avis médical gratuit et faire étudier mes rapports avec vos hôpitaux partenaires dans le monde.',
+                            'Bonzour, mo ti pou kontan gagn enn deziem lavi dokter gratis pou get mo bann rapor ar zot bann lopital partener mondial.',
+                            'Hello, I would like to request a free medical second opinion to review my diagnostic reports with your partner hospitals worldwide.'
                           ),
                         },
                         {
@@ -409,9 +409,9 @@ export function ContactPage() {
                         {
                           label: l10n('🩺 Téléconsultation Vidéo', '🩺 Telekonsiltasion Video', '🩺 Video Teleconsultation'),
                           text: l10n(
-                            'Bonjour, je souhaite programmer une téléconsultation vidéo directe avec un médecin spécialiste en Inde avant de confirmer mon départ.',
-                            'Bonzour, mo anvi aranz enn telekonsiltasion video direk ar enn dokter spesialis dan L\'inde avan voyaze.',
-                            'Hello, I would like to arrange a direct video teleconsultation with a specialist doctor in India before traveling.'
+                            'Bonjour, je souhaite programmer une téléconsultation vidéo directe avec un médecin spécialiste à l\'étranger avant de confirmer mon départ.',
+                            'Bonzour, mo anvi aranz enn telekonsiltasion video direk ar enn dokter spesialis mondial avan voyaze.',
+                            'Hello, I would like to arrange a direct video teleconsultation with a specialist doctor worldwide before traveling.'
                           ),
                         },
                       ].map((chip, idx) => (

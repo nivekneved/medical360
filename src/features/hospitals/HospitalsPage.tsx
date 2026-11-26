@@ -115,17 +115,17 @@ export function HospitalsPage() {
       <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/hospitals_banner.jpg)' }}>
         <div className="container page-hero__inner">
           <span className="section-label">
-            {isFr ? 'Réseau Hospitalier en Inde' : isKr ? 'Rezo Lopital dan L\'inde' : 'India Hospital Network'}
+            {isFr ? 'Réseau Hospitalier Mondial' : isKr ? 'Rezo Lopital Mondial' : 'Worldwide Hospital Network'}
           </span>
           <h1 className="text-h1">
-            {isFr ? 'Notre Réseau Hospitalier en un Coup d\'Œil' : isKr ? 'Nou Rezo Lopital dan L\'inde' : 'Our Hospital Network at a Glance'}
+            {isFr ? 'Notre Réseau Hospitalier en un Coup d\'Œil' : isKr ? 'Nou Rezo Lopital Mondial' : 'Our Hospital Network at a Glance'}
           </h1>
           <p className="text-lead" style={{ maxWidth: '850px' }}>
             {isFr 
-              ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées en Inde. Grâce à notre réseau, les patients peuvent obtenir des avis médicaux, des plans de traitement et l\'accès à des soins médicaux et chirurgicaux de pointe selon leur diagnostic individuel et leurs besoins.'
+              ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées dans le monde entier, avec des partenariats privilégiés en Inde. Grâce à notre réseau, les patients peuvent obtenir des avis médicaux, des plans de traitement et l\'accès à des soins médicaux et chirurgicaux de pointe selon leur diagnostic individuel et leurs besoins.'
               : isKr
-              ? 'Med360 fasilit akse ar bann gran lopital ek dokter dan L\'inde. Gagn lavi spesialis, plan tretman ek akse ar bann swen medikal ek sirirzikal de pwent.'
-              : 'Med360 facilitates access to established hospitals and specialist medical teams across India. Through our network, patients can obtain medical opinions, treatment plans and access to advanced medical and surgical care according to their individual diagnosis and needs.'}
+              ? 'Med360 fasilit akse ar bann gran lopital ek dokter mondial, prinsipalman avek bann lopital partener dan L\'inde. Gagn lavi spesialis, plan tretman ek akse ar bann swen medikal ek sirirzikal de pwent.'
+              : 'Med360 facilitates access to established hospitals and specialist medical teams worldwide, partnering primarily with premier hospitals in India. Through our network, patients can obtain medical opinions, treatment plans and access to advanced medical and surgical care according to their individual diagnosis and needs.'}
           </p>
         </div>
       </section>
@@ -172,7 +172,7 @@ export function HospitalsPage() {
         <div className="spec-symptom-chips-container" style={{ marginBottom: '1.75rem' }}>
           <div className="spec-symptom-chips-label">
             <Sparkles size={14} />
-            <span>{l10n('Filtrer par pôle médical en Inde :', 'Filtre par lavil dan L\'inde :', 'Filter by Indian Healthcare Hub:')}</span>
+            <span>{l10n('Filtrer par pôle médical partenaire :', 'Filtre par sant medikal partener :', 'Filter by Partner Healthcare Hub:')}</span>
           </div>
           <div className="spec-symptom-chips" role="tablist" aria-label="City quick filter chips">
             {INDIAN_HUBS.map((hub) => {

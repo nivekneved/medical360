@@ -27,9 +27,9 @@ export const HIGHLIGHTS = [
   },
   {
     icon: Globe2,
-    label: `${SITE_METRICS.partnerHospitals} Premier Indian Hospital Hubs`,
-    label_fr: `${SITE_METRICS.partnerHospitals} Grands Pôles Hospitaliers en Inde`,
-    label_kr: `${SITE_METRICS.partnerHospitals} Gran Lopital dan L'inde`,
+    label: `${SITE_METRICS.partnerHospitals} Premier Worldwide Hospital Hubs`,
+    label_fr: `${SITE_METRICS.partnerHospitals} Grands Pôles Hospitaliers Mondiaux`,
+    label_kr: `${SITE_METRICS.partnerHospitals} Gran Lopital Mondial`,
     sub: 'Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR',
     sub_fr: 'Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR',
     sub_kr: 'Chennai, Bengaluru, Hyderabad, Mumbai, Delhi NCR'

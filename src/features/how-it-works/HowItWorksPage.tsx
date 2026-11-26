@@ -277,7 +277,7 @@ export function HowItWorksPage() {
             </div>
             <div className="hiw-trust-item">
               <Building2 size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "15 Hôpitaux accrédités en Inde" : isKr ? "15 Lopital akredite dan L'inde" : "15 Premier Indian Hospitals"}</span>
+              <span>{isFr ? "Hôpitaux accrédités dans le monde" : isKr ? "Lopital akredite mondial" : "Premier Worldwide Hospitals"}</span>
             </div>
             <div className="hiw-trust-item">
               <UserCheck size={18} className="hiw-trust-icon" />
