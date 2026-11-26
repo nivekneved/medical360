@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { ArrowRight, MessageCircle, Shield, Users, Globe2, Heart, BookmarkCheck, ExternalLink } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
@@ -11,8 +12,18 @@ import { MediaCoverageSection } from './MediaCoverageSection';
 
 export function AboutPage() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, lang, l10n, l } = useL10n();
   const { data: cms } = useCMS('about');
+
+  useEffect(() => {
+    if (location.hash === '#board-members') {
+      const el = document.getElementById('board-members');
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+      }
+    }
+  }, [location.hash]);
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;

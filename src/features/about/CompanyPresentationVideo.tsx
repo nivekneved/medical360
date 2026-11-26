@@ -13,8 +13,10 @@ export function CompanyPresentationVideo() {
 
   return (
     <section
+      id="board-members"
       aria-labelledby="company-video-heading"
       style={{
+        scrollMarginTop: '96px',
         marginBottom: '5rem',
         background: 'linear-gradient(135deg, #071318 0%, #0d2624 55%, #0b1623 100%)',
         border: '1.5px solid rgba(16, 185, 129, 0.32)',

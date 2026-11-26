@@ -233,6 +233,101 @@
   color: var(--color-primary);
 }
 
+/* Desktop About Us Dropdown */
+.navbar__dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.navbar__dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.navbar__dropdown-chevron {
+  transition: transform 0.2s ease;
+}
+
+.navbar__dropdown--open .navbar__dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.navbar__dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  min-width: 190px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 0.4rem;
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  z-index: 1001;
+}
+
+.navbar__dropdown--open .navbar__dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.navbar__dropdown-item {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navbar__dropdown-item:hover {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--color-primary);
+}
+
+/* Mobile About Us Submenu */
+.mobile-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.mobile-nav-sublinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-left: 1rem;
+}
+
+.mobile-nav-sublink {
+  display: block;
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.mobile-nav-sublink:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
 .navbar__mobile-actions {
   display: flex;
   flex-direction: column;

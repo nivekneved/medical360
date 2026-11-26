@@ -5,6 +5,7 @@ import {
   X,
   MessageCircle,
   ArrowRight,
+  ChevronDown,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
@@ -12,16 +13,18 @@ import './Navbar.css';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const { i18n } = useTranslation();
 
-  // Close mobile drawer on route change
+  // Close mobile drawer & dropdown on route change
   useEffect(() => {
     setIsOpen(false);
-  }, [location.pathname]);
+    setAboutOpen(false);
+  }, [location.pathname, location.hash]);
 
   // Scroll detection for sticky blur navbar
   useEffect(() => {
@@ -50,13 +53,20 @@ export function Navbar() {
   const isFr = i18n.language === 'fr';
   const isKr = i18n.language === 'kr';
 
-  const NAV_LINKS = [
+  const ABOUT_SUBLINKS = [
+    { to: '/about', label: isFr ? 'Notre Histoire' : isKr ? 'Nou Zistwar' : 'Our Story' },
+    { to: '/about#board-members', label: isFr ? 'Conseil d\'Administration' : isKr ? 'Komite Direksion' : 'Board Members' },
+  ];
+
+  const isAboutActive = location.pathname === '/about';
+
+  const NAV_LINKS_BEFORE = [
     { to: '/specialties', label: isFr ? 'Spécialités' : isKr ? 'Spesialite' : 'Specialties' },
     { to: '/hospitals', label: isFr ? 'Hôpitaux' : isKr ? 'Lopital' : 'Hospitals' },
     { to: '/how-it-works', label: isFr ? 'Comment Ça Marche' : isKr ? 'Kouma Li Mase' : 'How It Works' },
-    { to: '/about', label: isFr ? 'Notre Histoire' : isKr ? 'Nou Zistwar' : 'Our Story' },
-    { to: '/contact', label: isFr ? 'Contact' : isKr ? 'Kontak' : 'Contact' },
   ];
+
+  const CONTACT_LINK = { to: '/contact', label: isFr ? 'Contact' : isKr ? 'Kontak' : 'Contact' };
 
   return (
     <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
@@ -70,9 +80,9 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Direct Desktop Links (Decluttered & Clean) */}
+        {/* Direct Desktop Links + About Us Submenu */}
         <nav className="navbar__nav" aria-label="Main navigation">
-          {NAV_LINKS.map(item => (
+          {NAV_LINKS_BEFORE.map(item => (
             <NavLink
               key={item.to}
               to={item.to}
@@ -81,6 +91,44 @@ export function Navbar() {
               {item.label}
             </NavLink>
           ))}
+
+          {/* About Us Dropdown */}
+          <div
+            className={`navbar__dropdown ${aboutOpen ? 'navbar__dropdown--open' : ''}`}
+            onMouseEnter={() => setAboutOpen(true)}
+            onMouseLeave={() => setAboutOpen(false)}
+          >
+            <button
+              type="button"
+              className={`navbar__link navbar__dropdown-trigger ${isAboutActive ? 'navbar__link--active' : ''}`}
+              aria-expanded={aboutOpen}
+              aria-haspopup="menu"
+              onClick={() => setAboutOpen(prev => !prev)}
+            >
+              <span>{isFr ? 'À Propos' : isKr ? 'Lor Nou' : 'About Us'}</span>
+              <ChevronDown size={14} className="navbar__dropdown-chevron" />
+            </button>
+            <div className="navbar__dropdown-menu" role="menu">
+              {ABOUT_SUBLINKS.map(sub => (
+                <Link
+                  key={sub.to}
+                  to={sub.to}
+                  role="menuitem"
+                  className="navbar__dropdown-item"
+                  onClick={() => setAboutOpen(false)}
+                >
+                  {sub.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <NavLink
+            to={CONTACT_LINK.to}
+            className={({ isActive }) => `navbar__link ${isActive ? 'navbar__link--active' : ''}`}
+          >
+            {CONTACT_LINK.label}
+          </NavLink>
         </nav>
 
         {/* Action Controls */}
@@ -124,7 +172,7 @@ export function Navbar() {
       <div className={`navbar__mobile ${isOpen ? 'navbar__mobile--open' : ''}`}>
         <div className="navbar__mobile-inner">
           <nav className="navbar__mobile-nav">
-            {NAV_LINKS.map(item => (
+            {NAV_LINKS_BEFORE.map(item => (
               <NavLink
                 key={item.to}
                 to={item.to}
@@ -134,6 +182,32 @@ export function Navbar() {
                 {item.label}
               </NavLink>
             ))}
+
+            <div className="mobile-nav-group">
+              <div className={`mobile-nav-link mobile-nav-group__title ${isAboutActive ? 'mobile-nav-link--active' : ''}`}>
+                {isFr ? 'À Propos' : isKr ? 'Lor Nou' : 'About Us'}
+              </div>
+              <div className="mobile-nav-sublinks">
+                {ABOUT_SUBLINKS.map(sub => (
+                  <Link
+                    key={sub.to}
+                    to={sub.to}
+                    className="mobile-nav-sublink"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {sub.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <NavLink
+              to={CONTACT_LINK.to}
+              className={({ isActive }) => `mobile-nav-link ${isActive ? 'mobile-nav-link--active' : ''}`}
+              onClick={() => setIsOpen(false)}
+            >
+              {CONTACT_LINK.label}
+            </NavLink>
           </nav>
 
           <div className="navbar__mobile-actions">
