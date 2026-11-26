@@ -65,6 +65,7 @@ const HowItWorksPage     = lazyWithRetry(() => import('./features/how-it-works/H
 const ServicesPage        = lazyWithRetry(() => import('./features/services/ServicesPage'), m => m.ServicesPage);
 const CaseStudiesPage     = lazyWithRetry(() => import('./features/case-studies/CaseStudiesPage'), m => m.CaseStudiesPage);
 const ContactPage         = lazyWithRetry(() => import('./features/contact/ContactPage'), m => m.ContactPage);
+const PodcastPage         = lazyWithRetry(() => import('./features/podcast/PodcastPage'), m => m.PodcastPage);
 const CostCalculatorPage  = lazyWithRetry(() => import('./features/cost-calculator/CostCalculatorPage'), m => m.CostCalculatorPage);
 const VisaGuidePage       = lazyWithRetry(() => import('./features/visa-guide/VisaGuidePage'), m => m.VisaGuidePage);
 const PrivacyPolicyPage   = lazyWithRetry(() => import('./features/legal/PrivacyPolicyPage'), m => m.PrivacyPolicyPage);
@@ -263,6 +264,7 @@ export default function App() {
                       <Route path="/visa-guide"       element={<Navigate to="/how-it-works" replace />} />
                       <Route path="/case-studies"     element={<CaseStudiesPage />} />
                       <Route path="/contact"          element={<ContactPage />} />
+                      <Route path="/podcast"          element={<PodcastPage />} />
                       <Route path="/privacy"          element={<PrivacyPolicyPage />} />
                       <Route path="/terms"            element={<TermsPage />} />
                       <Route path="/cookies"          element={<CookiePolicyPage />} />

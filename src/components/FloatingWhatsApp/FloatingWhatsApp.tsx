@@ -69,10 +69,9 @@ export function FloatingWhatsApp() {
       </button>
 
       {/* YouTube Podcast */}
-      <a
-        href="https://www.youtube.com/watch?v=DdzM1F3grBg"
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        type="button"
+        onClick={() => navigate('/podcast')}
         className="floating-icon-btn floating-icon-btn--youtube"
         aria-label="Watch Med360 YouTube Podcast"
         id="floating-youtube-btn"
@@ -81,7 +80,7 @@ export function FloatingWhatsApp() {
           <PlayCircle size={22} aria-hidden="true" />
         </span>
         <span className="floating-icon-btn__label">YouTube Podcast</span>
-      </a>
+      </button>
 
       {/* WhatsApp Button (Addon Module Controlled) */}
       {settings.addonFloatingWhatsApp !== false && (

@@ -66,7 +66,10 @@ export function Navbar() {
     { to: '/how-it-works', label: isFr ? 'Comment Ça Marche' : isKr ? 'Kouma Li Mase' : 'How It Works' },
   ];
 
-  const CONTACT_LINK = { to: '/contact', label: isFr ? 'Contact' : isKr ? 'Kontak' : 'Contact' };
+  const NAV_LINKS_AFTER = [
+    { to: '/contact', label: isFr ? 'Contact' : isKr ? 'Kontak' : 'Contact' },
+    { to: '/podcast', label: isFr ? 'Podcast' : isKr ? 'Podcast' : 'Podcast' },
+  ];
 
   return (
     <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
@@ -123,12 +126,15 @@ export function Navbar() {
             </div>
           </div>
 
-          <NavLink
-            to={CONTACT_LINK.to}
-            className={({ isActive }) => `navbar__link ${isActive ? 'navbar__link--active' : ''}`}
-          >
-            {CONTACT_LINK.label}
-          </NavLink>
+          {NAV_LINKS_AFTER.map(item => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) => `navbar__link ${isActive ? 'navbar__link--active' : ''}`}
+            >
+              {item.label}
+            </NavLink>
+          ))}
         </nav>
 
         {/* Action Controls */}
@@ -201,13 +207,16 @@ export function Navbar() {
               </div>
             </div>
 
-            <NavLink
-              to={CONTACT_LINK.to}
-              className={({ isActive }) => `mobile-nav-link ${isActive ? 'mobile-nav-link--active' : ''}`}
-              onClick={() => setIsOpen(false)}
-            >
-              {CONTACT_LINK.label}
-            </NavLink>
+            {NAV_LINKS_AFTER.map(item => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) => `mobile-nav-link ${isActive ? 'mobile-nav-link--active' : ''}`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </NavLink>
+            ))}
           </nav>
 
           <div className="navbar__mobile-actions">
