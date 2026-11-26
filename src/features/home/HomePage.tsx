@@ -164,16 +164,16 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* Stats Panel */}
-          <div className="hero__stats animate-fade-in-up delay-2">
-            {STATS.map(({ icon: Icon, value, label }) => (
-              <div key={label} className="hero__stat">
-                <div className="hero__stat-icon">
-                  <Icon size={22} />
+          {/* Core Pillars Panel */}
+          <div className="hero__stats hero__pillars animate-fade-in-up delay-2">
+            {WHY_CHOOSE.map(({ icon: Icon, title, desc }) => (
+              <div key={title} className="why-feature hero__pillar-card">
+                <div className="why-feature__icon">
+                  <Icon size={20} />
                 </div>
                 <div>
-                  <div className="hero__stat-value">{value}</div>
-                  <div className="hero__stat-label">{label}</div>
+                  <h4 className="why-feature__title">{title}</h4>
+                  <p className="why-feature__desc">{desc}</p>
                 </div>
               </div>
             ))}
@@ -401,15 +401,15 @@ export function HomePage() {
                 <ArrowRight size={16} />
               </button>
             </div>
-            <div className="why-features">
-              {WHY_CHOOSE.map(({ icon: Icon, title, desc }, i) => (
-                <div key={title} className={`why-feature animate-fade-in-up delay-${i + 1}`}>
-                  <div className="why-feature__icon">
+            <div className="why-stats-grid">
+              {STATS.map(({ icon: Icon, value, label }, i) => (
+                <div key={label} className={`hero__stat why-stat-card animate-fade-in-up delay-${i + 1}`}>
+                  <div className="hero__stat-icon">
                     <Icon size={22} />
                   </div>
                   <div>
-                    <h4 className="why-feature__title">{title}</h4>
-                    <p className="why-feature__desc">{desc}</p>
+                    <div className="hero__stat-value">{value}</div>
+                    <div className="hero__stat-label">{label}</div>
                   </div>
                 </div>
               ))}
