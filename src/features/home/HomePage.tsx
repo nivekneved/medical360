@@ -34,56 +34,56 @@ export function HomePage() {
 
 
   const STATS = [
-    { icon: Users,      value: SITE_METRICS.patientsAssistedEn,    label: isFr ? `${SITE_METRICS.patientsAssistedFr} Patients Accompagnés` : isKr ? `${SITE_METRICS.patientsAssistedEn} Pasian Asiste` : `${SITE_METRICS.patientsAssistedEn} Patients Assisted` },
-    { icon: Building2,  value: SITE_METRICS.partnerHospitals,        label: isFr ? 'Pôles Hospitaliers Mondiaux' : isKr ? 'Lopital Partener Mondial' : 'Premier Worldwide Hospital Hubs' },
-    { icon: Award,      value: `${SITE_METRICS.yearsExperience} Years`, label: isFr ? 'Années de Dévouement' : isKr ? 'Banlane D\'experyans Imin' : 'Years of Compassion' },
-    { icon: HeartPulse, value: SITE_METRICS.impactPercent,      label: isFr ? 'Zéro Dividende · Modèle Solidaire' : isKr ? 'Zero Dividann · 100% Sosyal' : 'No Dividends · 100% Impact' },
+    { icon: Users,      value: SITE_METRICS.patientsAssistedEn, label: isFr ? 'Patients Accompagnés' : isKr ? 'Pasian Asiste' : 'Patients Assisted' },
+    { icon: Building2,  value: SITE_METRICS.partnerHospitals,   label: isFr ? 'Pôles Hospitaliers Mondiaux' : isKr ? 'Lopital Partener Mondial' : 'Premier Worldwide Hospital Hubs' },
+    { icon: Award,      value: SITE_METRICS.yearsExperience,    label: isFr ? 'Années de Dévouement' : isKr ? 'Banlane D\'experyans Imin' : 'Years of Compassion' },
+    { icon: HeartPulse, value: SITE_METRICS.impactPercent,      label: isFr ? 'Zéro Dividende · Impact Social' : isKr ? 'Zero Dividann · Impak Sosyal' : 'No Dividends · Social Impact' },
   ];
 
   const PROCESS_STEPS = [
     {
       num: '01',
       icon: FileText,
-      title: isFr ? '01 — Vos Besoins Médicaux' : isKr ? '01 — Partaz Ou Bezwin Medikal' : '01 — Tell Us About Your Medical Needs',
+      title: isFr ? 'Vos Besoins Médicaux' : isKr ? 'Partaz Ou Bezwin Medikal' : 'Tell Us About Your Medical Needs',
       desc: isFr ? 'Partagez vos rapports, diagnostics et résultats. Un Patient Navigator dédié étudie votre situation et organise une visioconférence avec votre famille si nécessaire.' : isKr ? 'Partaz ou bann rapor medikal. Enn Patient Navigator pou ekout ou ek aranz videokonferans ar ou fami.' : 'Contact our team and share your medical reports. A dedicated Patient Navigator discusses your needs and arranges video family conferences when required.'
     },
     {
       num: '02',
       icon: Stethoscope,
-      title: isFr ? '02 — Examen & Sélection' : isKr ? '02 — Revir & Swazir Lopital' : '02 — Medical Review & Hospital Selection',
+      title: isFr ? 'Examen & Sélection' : isKr ? 'Revir & Swazir Lopital' : 'Medical Review & Hospital Selection',
       desc: isFr ? 'Identification des hôpitaux et spécialistes adaptés parmi notre réseau international et soumission sécurisée de votre dossier médical.' : isKr ? 'Nou rod bann meyer lopital ek dokter dan nou rezo internasional ek avoy ou dosie an sekirite.' : 'We identify appropriate hospitals and specialists within our international healthcare network and securely submit your medical records.'
     },
     {
       num: '03',
       icon: HeartPulse,
-      title: isFr ? '03 — Plan, Devis & Téléconsultation' : isKr ? '03 — Plan, Devis & Telekonsiltasion' : '03 — Treatment Plan, Estimate & Teleconsultation',
+      title: isFr ? 'Plan, Devis & Téléconsultation' : isKr ? 'Plan, Devis & Telekonsiltasion' : 'Treatment Plan, Estimate & Teleconsultation',
       desc: isFr ? 'Réception de l\'avis spécialiste, devis estimatif et coordination d\'une téléconsultation vidéo directe avec le médecin traitant à l\'étranger avant votre départ.' : isKr ? 'Gagn lavi dokter, estimasion pri kler ek enn telekonsiltasion video direk ar sef sirizien avan ou voyaze.' : 'Receive specialist opinions, estimated hospital costs, and direct video teleconsultations with overseas treating specialists before travelling.'
     },
     {
       num: '04',
       icon: Plane,
-      title: isFr ? '04 — Coordination du Voyage' : isKr ? '04 — Kordonasion Vwayaz' : '04 — We Coordinate Your Journey',
+      title: isFr ? 'Coordination du Voyage' : isKr ? 'Kordonasion Vwayaz' : 'We Coordinate Your Journey',
       desc: isFr ? 'Prise en charge complète : admissions, visa médical, vols, transferts aéroport, hébergement, ambulance terrestre ou avion médicalisé si nécessaire.' : isKr ? 'Nou okip ladmision, viza medikal, biye avion, lotel, transpor ek avion saniter si bizin.' : 'Hospital admissions, medical visas, flights, accommodation, airport transfers, ground ambulance, and private air-ambulance when required.'
     },
     {
       num: '05',
       icon: Building2,
-      title: isFr ? '05 — Soins à l\'Étranger' : isKr ? '05 — Tretman a Letranze' : '05 — Treatment Abroad',
+      title: isFr ? 'Soins à l\'Étranger' : isKr ? 'Tretman a Letranze' : 'Treatment Abroad',
       desc: isFr ? 'Accueil à l\'arrivée, accompagnement durant l\'hospitalisation, au chevet du patient et soutien continu à vos proches accompagnateurs.' : isKr ? 'Akey dan lareopor, ladmision lopital, akonpanyeman o sive ek sipor pou ou fami.' : 'On-ground welcome, hospital admission, continuous bedside advocacy for you and your accompanying family member.'
     },
     {
       num: '06',
       icon: UserCheck,
-      title: isFr ? '06 — Retour & Continuité des Soins' : isKr ? '06 — Retour Lakaz & Swivi' : '06 — Return Home & Follow-Up',
+      title: isFr ? 'Retour & Continuité des Soins' : isKr ? 'Retour Lakaz & Swivi' : 'Return Home & Follow-Up',
       desc: isFr ? 'Coordination des comptes rendus médicaux, téléconsultations de suivi post-opératoire et continuité des soins avec vos spécialistes à l\'étranger.' : isKr ? 'Rakor rapor medikal, telekonsiltasion swivi ek kontinwite bann swen kan ou retourn Moris.' : 'Post-treatment medical reports, follow-up teleconsultations, and seamless continuity of care once you return home.'
     },
   ];
 
   const WHY_CHOOSE = [
-    { icon: Award,       title: isFr ? 'Né d\'une Décennie de Compassion' : isKr ? 'Ne depi 10 Banlane Konpasion' : 'Born From a Decade of Compassion',         desc: isFr ? 'Med360 est une initiative d\'entreprise sociale née de l\'ONG Enn Rev Enn Sourir (créée en 2016).' : isKr ? 'Med360 li enn linisiativ sosial l\'ONG Enn Rev Enn Sourir (kree an 2016).' : 'Med360 is a social enterprise initiative of NGO Enn Rev Enn Sourir (established 2016).' },
-    { icon: Globe2,      title: isFr ? 'Réseau Hospitalier Mondial' : isKr ? 'Rezo Lopital Mondial' : 'Premier Worldwide Hospital Hubs',   desc: isFr ? 'Accès direct aux centres d\'excellence dans le monde entier, avec des partenariats privilégiés en Inde.' : isKr ? 'Akse direk ar bann gran sant medikal dan lemonn antie, prinsipalman avek bann lopital partener dan L\'inde.' : 'Direct access to established clinical departments and accredited hospitals worldwide, partnering primarily with premier Indian hospitals.' },
-    { icon: ShieldCheck, title: isFr ? 'Éthique & Dignité du Patient' : isKr ? 'Etik & Dignite Pasian' : 'Ethics, Transparency & Dignity',  desc: isFr ? 'Un modèle où l\'éthique, le choix éclairé, les droits du patient et la dignité passent avant les intérêts commerciaux.' : isKr ? 'Tou kler, respe drwa pasian ek dignite avan tou lintere komersial.' : 'Informed choices and patient rights come before commercial interests. No hidden markups.' },
-    { icon: HeartPulse,  title: isFr ? 'Zéro Dividende. Votre Santé Compte.' : isKr ? 'Zero Dividann. Ou Lasante Kont.' : 'No Dividends. Your Healthcare Matters.', desc: isFr ? 'Votre parcours de soins crée une opportunité de soutenir le parcours de soins d\'un autre patient vulnérable.' : isKr ? 'Ou vwayaz lasante kre enn loportinite pou soutenir vwayaz lasante enn lot pasian.' : 'Your healthcare journey creates an opportunity to support another healthcare journey.' },
+    { icon: ShieldCheck, title: isFr ? 'Éthique, Transparence & Dignité' : isKr ? 'Etik, Transparans & Dignite' : 'Ethics, Transparency & Dignity', desc: isFr ? 'Un modèle où le choix éclairé, les droits du patient et la dignité passent avant tout intérêt commercial, sans frais cachés.' : isKr ? 'Swa kler, drwa pasian ek dignite avan tou lintere komersial, san okenn fre kasiet.' : 'Informed choices and patient rights always come before commercial interests — with clear, itemised estimates and no hidden markups.' },
+    { icon: UserCheck,   title: isFr ? 'Patient Navigator Dédié' : isKr ? 'Patient Navigator Dedie' : 'Dedicated Patient Navigator', desc: isFr ? 'Un interlocuteur unique qui accompagne vous et votre famille, de l\'analyse du dossier jusqu\'au suivi post-opératoire.' : isKr ? 'Enn sel kontak ki akonpagn ou ek ou fami depi revir dosie ziska swivi apre tretman.' : 'One trusted point of contact supporting you and your family from medical record review and teleconsultations to recovery back home.' },
+    { icon: Plane,       title: isFr ? 'Logistique & Évacuation Complète' : isKr ? 'Lozistik & Evakiasion Konple' : 'End-to-End Travel & Care Logistics', desc: isFr ? 'Admissions hospitalières, visa médical, vols, hébergement, transferts et ambulance ou avion médicalisé selon les besoins.' : isKr ? 'Ladmision lopital, viza medikal, biye avion, lotel, transpor ek lanbilans ouswa avion saniter kan bizin.' : 'Coordinated hospital admissions, medical visas, flights, verified stays, airport transfers, and ground or air-ambulance when required.' },
+    { icon: Globe2,      title: isFr ? 'Reconnaissance Internationale (UICC)' : isKr ? 'Rekonesans Internasional (UICC)' : 'Internationally Recognised Network', desc: isFr ? 'Adossé à l\'ONG Enn Rev Enn Sourir, Membre Titulaire de l\'UICC et partenaire des réseaux SIOP & CCI.' : isKr ? 'Apiye par l\'ONG Enn Rev Enn Sourir, Manb Titiler UICC ek kolaborater SIOP & CCI.' : 'Backed by Enn Rev Enn Sourir\'s Full Membership with UICC and global collaborations with SIOP & Childhood Cancer International.' },
   ];
 
   // Rich Schema.org JSON-LD for Homepage
@@ -484,9 +484,6 @@ export function HomePage() {
       <section className="section home-cta">
         <div className="container">
           <div className="cta-box">
-            <p style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffb400', marginBottom: '0.75rem' }}>
-              <em>{isFr ? '« Une conversation peut changer la trajectoire de vos soins. Commencez la vôtre dès aujourd\'hui. »' : isKr ? '« Enn konversasion kapav sanz ou vwayaz lasante. Koumans ou par zordi. »' : '“One conversation could change the direction of your healthcare journey. Start yours today.”'}</em>
-            </p>
             <h2 className="text-h2" style={{ color: '#fff', marginBottom: '1rem' }}>
               {isFr ? 'Votre Santé Mérite l\'Action, Pas l\'Incertitude.' : isKr ? 'Ou Lasante Merite Laksion, Pa Linzistis.' : 'Your Health Deserves Action, Not Uncertainty.'}
             </h2>

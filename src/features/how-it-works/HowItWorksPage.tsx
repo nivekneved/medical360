@@ -48,9 +48,9 @@ const CARE_PHASES: Step[] = [
     badge: 'Step 01',
     badge_fr: 'Étape 01',
     badge_kr: 'Letap 01',
-    title: '01 — Tell Us About Your Medical Needs',
-    title_fr: '01 — Faites-nous Part de Vos Besoins Médicaux',
-    title_kr: '01 — Partaz Ou Bann Bezwin Medikal',
+    title: 'Tell Us About Your Medical Needs',
+    title_fr: 'Faites-nous Part de Vos Besoins Médicaux',
+    title_kr: 'Partaz Ou Bann Bezwin Medikal',
     tagline: 'Dedicated Patient Navigator · Medical Record Review',
     tagline_fr: 'Patient Navigator Dédié · Examen des Dossiers Médicaux',
     tagline_kr: 'Kordonater Pasian Dedie · Lekzamin Rapor Medikal',
@@ -69,9 +69,9 @@ const CARE_PHASES: Step[] = [
     badge: 'Step 02',
     badge_fr: 'Étape 02',
     badge_kr: 'Letap 02',
-    title: '02 — Medical Review & Hospital Selection',
-    title_fr: '02 — Examen Médical & Sélection de l\'Hôpital',
-    title_kr: '02 — Revir Medikal & Swazir Lopital',
+    title: 'Medical Review & Hospital Selection',
+    title_fr: 'Examen Médical & Sélection de l\'Hôpital',
+    title_kr: 'Revir Medikal & Swazir Lopital',
     tagline: 'Specialist Identification · Secure Medical Review',
     tagline_fr: 'Identification des Spécialistes · Transmission Sécurisée',
     tagline_kr: 'Swazir Spesialis · Transmisyon Dosie an Sekirite',
@@ -90,9 +90,9 @@ const CARE_PHASES: Step[] = [
     badge: 'Step 03',
     badge_fr: 'Étape 03',
     badge_kr: 'Letap 03',
-    title: '03 — Treatment Plan, Estimate & Medical Teleconsultation',
-    title_fr: '03 — Plan de Traitement, Devis & Téléconsultation Médicale',
-    title_kr: '03 — Plan Tretman, Estimasion & Telekonsiltasion Medikal',
+    title: 'Treatment Plan, Estimate & Medical Teleconsultation',
+    title_fr: 'Plan de Traitement, Devis & Téléconsultation Médicale',
+    title_kr: 'Plan Tretman, Estimasion & Telekonsiltasion Medikal',
     tagline: 'Specialist Medical Opinion · Video Teleconsultation',
     tagline_fr: 'Avis Spécialiste · Téléconsultation Vidéo Directe',
     tagline_kr: 'Lavi Dokter Spesialis · Telekonsiltasion Video Direk',
@@ -111,9 +111,9 @@ const CARE_PHASES: Step[] = [
     badge: 'Step 04',
     badge_fr: 'Étape 04',
     badge_kr: 'Letap 04',
-    title: '04 — We Coordinate Your Journey',
-    title_fr: '04 — Nous Coordonnons Votre Voyage',
-    title_kr: '04 — Nou Kordonn Ou Vwayaz',
+    title: 'We Coordinate Your Journey',
+    title_fr: 'Nous Coordonnons Votre Voyage',
+    title_kr: 'Nou Kordonn Ou Vwayaz',
     tagline: 'Travel & Visas · Ground & Air Ambulance Options',
     tagline_fr: 'Voyage & Visas · Ambulances Terrestres & Avions Médicalisés',
     tagline_kr: 'Vwayaz & Viza · Lanbilans & Avion Medikalize',
@@ -132,9 +132,9 @@ const CARE_PHASES: Step[] = [
     badge: 'Step 05',
     badge_fr: 'Étape 05',
     badge_kr: 'Letap 05',
-    title: '05 — Treatment Abroad',
-    title_fr: '05 — Prise en Charge & Soins à l\'Étranger',
-    title_kr: '05 — Tretman a Letranze',
+    title: 'Treatment Abroad',
+    title_fr: 'Prise en Charge & Soins à l\'Étranger',
+    title_kr: 'Tretman a Letranze',
     tagline: 'Airport Arrival · Hospital Admission · Bedside Support',
     tagline_fr: 'Accueil Aéroport · Admission · Accompagnement au Chevet',
     tagline_kr: 'Lariwe Lareopor · Ladmision · Kordonater o Sive',
@@ -153,9 +153,9 @@ const CARE_PHASES: Step[] = [
     badge: 'Step 06',
     badge_fr: 'Étape 06',
     badge_kr: 'Letap 06',
-    title: '06 — Return Home & Follow-Up',
-    title_fr: '06 — Retour à Domicile & Suivi Médical',
-    title_kr: '06 — Retour Lakaz & Swivi Medikal',
+    title: 'Return Home & Follow-Up',
+    title_fr: 'Retour à Domicile & Suivi Médical',
+    title_kr: 'Retour Lakaz & Swivi Medikal',
     tagline: 'Medical Reports · Teleconsultation Follow-Ups · Continuity of Care',
     tagline_fr: 'Comptes Rendus · Téléconsultations · Continuité des Soins',
     tagline_kr: 'Rapor Medikal · Telekonsiltasion · Kontinwite Swen',
@@ -336,45 +336,6 @@ export function HowItWorksPage() {
                 </div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── NGO Heritage Reassurance Box ─────────────────────────────────────── */}
-      <section className="hiw-ngo-banner">
-        <div className="container">
-          <div className="hiw-ngo-card">
-            <div className="hiw-ngo-content">
-              <span className="badge badge-accent">✦ {isFr ? "Notre Modèle Social" : isKr ? "Nou Model Sosyal" : "Social Enterprise Mission"}</span>
-              <h2 className="hiw-ngo-title">
-                {isFr 
-                  ? "Zéro Dividende. Votre Santé Compte." 
-                  : isKr 
-                  ? "Zero Dividann. Ou Lasante Kont." 
-                  : "No Dividends. Your Healthcare Matters."}
-              </h2>
-              <p className="hiw-ngo-text">
-                {isFr
-                  ? "Med360 est une initiative d'entreprise sociale d'Enn Rev Enn Sourir. Les patients qui ont les moyens de financer leurs soins bénéficient d'une coordination médicale professionnelle et personnalisée → Med360 génère des revenus durables → ces revenus contribuent à la mission sociale d'Enn Rev Enn Sourir pour soigner les patients vulnérables."
-                  : isKr
-                  ? "Med360 li enn linisiativ lakonpanyi sosyal l'ONG Enn Rev Enn Sourir. Pasian ki kapav peye gagn enn kordonasion medikal profesyonel → Med360 kre reveni dirab → sa reveni la al dan l'ONG pou ed bann pasian vilnerab."
-                  : "Med360 follows a different philosophy: our purpose is not to create dividends for individual shareholders, but to create impact. Patients who can afford their healthcare receive professional medical coordination → Med360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients."}
-              </p>
-              <div className="hiw-ngo-actions">
-                <button className="btn btn-primary" onClick={() => navigate('/about')}>
-                  <span>{isFr ? "Découvrir Notre Histoire & Affiliations" : isKr ? "Dekouver Nou Zistwar & Bann Afiliasion" : "Read Our Story & Philosophy"}</span>
-                  <ArrowRight size={16} />
-                </button>
-              </div>
-            </div>
-            <div className="hiw-ngo-image-wrap">
-              <img 
-                src="/assets/consultation-support.jpg" 
-                alt="Compassionate patient consultation"
-                className="hiw-ngo-img" 
-                loading="lazy"
-              />
-            </div>
           </div>
         </div>
       </section>

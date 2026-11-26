@@ -46,9 +46,9 @@ export function AboutPage() {
           </h1>
           <p className="text-lead">
             {tCms('heroDesc', l10n(
-              'Né d\'une décennie de compassion. Centré sur le patient. Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients.',
-              'Ne depi enn deseni konpasion. Santre lor pasian. Med360 li enn linisiativ antrepriz sosyal l\'ONG Enn Rev Enn Sourir pou kordonn swen pasian avek dignite.',
-              'Born From a Decade of Compassion. Built Around the Patient. Med360 is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families.'
+              'Une coordination médicale internationale éthique depuis Maurice — fondée sur la transparence, la dignité et l\'accès équitable aux meilleurs spécialistes.',
+              'Enn kordonasion medikal internasional etik depi Moris — bati lor transparans, dignite ek akse egal ar bann meyer spesialis.',
+              'Ethical international medical coordination from Mauritius — built on transparency, dignity, and equitable access to leading specialists worldwide.'
             ))}
           </p>
         </div>
@@ -398,57 +398,6 @@ export function AboutPage() {
               ))}
             </div>
           </div>
-
-          {/* Healthcare With Purpose Section */}
-          <div style={{
-            background: 'linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 12%, var(--color-surface)) 0%, var(--color-surface) 100%)',
-            border: '2px solid color-mix(in srgb, var(--color-primary) 30%, transparent)',
-            borderRadius: 'var(--radius-2xl)',
-            padding: 'clamp(2rem, 4vw, 3rem)',
-            marginBottom: '5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.5rem',
-            boxShadow: 'var(--shadow-md)',
-          }}>
-            <span className="section-label">{l10n('✦ Des Soins de Santé Porteurs de Sens', '✦ Swen Lasante avek Misyon', '✦ Healthcare With Purpose')}</span>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: 900, margin: 0, color: 'var(--color-text)' }}>
-              {l10n('Des Soins de Santé Porteurs de Sens', 'Swen Lasante avek Gran Misyon', 'Healthcare With Purpose')}
-            </h3>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, fontSize: '1rem', margin: 0 }}>
-              {l10n(
-                'Med360 représente le nouveau chapitre d\'un voyage né d\'une conviction profonde : des soins de santé de qualité ne doivent jamais être un privilège réservé aux seuls patients qui en ont les moyens.',
-                'Med360 reprezant nouvo sapit enn vwayaz ki finn koumanse ar enn konviksion sinp : bon swen lasante zame pa bizin enn privilez reserve zis pou bann ki kapav peye.',
-                'Med360 represents the next chapter of a journey that began with a simple belief: Quality healthcare should never be a privilege reserved only for those who can afford it.'
-              )}
-            </p>
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.75, fontSize: '1rem', margin: 0 }}>
-              {l10n(
-                'Aujourd\'hui, nous bâtissons un modèle où les soins médicaux et l\'impact social s\'articulent harmonieusement — connectant les patients à des soins de haute spécialisation tout en générant des ressources qui soutiennent d\'autres patients qui risqueraient autrement d\'être délaissés.',
-                'Zordi, nou pe konstrir enn model kot lasante ek limaniter mars ansam — konekte pasian ar gran dokter dan L\'inde pandan ki nou kree mwayen pou sov lezot pasian ki ti pou res deryer.',
-                'Today, we are building a model where healthcare and social impact work together — connecting patients to specialised care while creating resources that can help another patient who may otherwise be left behind.'
-              )}
-            </p>
-            <div style={{
-              background: 'var(--color-surface)',
-              borderRadius: 'var(--radius-lg)',
-              padding: '1.5rem',
-              border: '1.5px solid var(--color-primary)',
-              textAlign: 'center',
-            }}>
-              <h4 style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--color-primary)', margin: '0 0 0.5rem' }}>
-                Med360 — Your Health. Our Mission. A Greater Purpose.
-              </h4>
-              <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-text)', margin: 0 }}>
-                {l10n('Zéro dividende. Aucun compromis sur la dignité. Le patient d\'abord. Toujours.', 'Zero dividann. Oken konpromi lor dignite. Pasian avan tou. Touzour.', 'No dividends. No compromise on dignity. Patient first. Always.')}
-              </p>
-            </div>
-          </div>
-
-
-          {/* Awards section — to be added when real recognitions are confirmed by client */}
-
-          {/* Patient Stories section — to be added once real consented patient stories are collected */}
 
           {/* Bottom Conversion CTA */}
           <div style={{ textAlign: 'center', background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-2xl)', padding: '3.5rem 2rem' }}>

@@ -131,43 +131,6 @@ export function HospitalsPage() {
       </section>
 
       <div className="container" style={{ padding: '2rem var(--space-6) 6rem' }}>
-        
-        {/* Slide 8 Intro Callout Box */}
-        <div className="hospital-network-intro-card" style={{
-          background: 'var(--color-surface)',
-          border: '1px solid var(--color-border)',
-          borderLeft: '4px solid var(--color-primary)',
-          borderRadius: 'var(--radius-lg)',
-          padding: '1.75rem',
-          marginBottom: '2rem',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.04)'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '0.85rem' }}>
-            <img 
-              src="/assets/banners/hospitals_banner.jpg" 
-              alt="Hospital Network Support" 
-              style={{ width: 44, height: 44, borderRadius: 10, objectFit: 'cover', flexShrink: 0, boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }} 
-            />
-            <h3 style={{ margin: 0, fontSize: '1.15rem', fontWeight: 700 }}>
-              {isFr ? 'Accompagnement & Sélection Hospitalière' : isKr ? 'Akonpanyeman & Swazir Lopital' : 'Patient Support & Hospital Selection'}
-            </h3>
-          </div>
-          <p style={{ margin: '0 0 0.75rem', fontSize: '0.925rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
-            {isFr
-              ? 'Notre accompagnement va bien au-delà de la simple référence hospitalière. De l\'analyse des dossiers médicaux, de la prise de rendez-vous avec les spécialistes et de la planification du traitement jusqu\'à l\'assistance visa, le voyage, l\'hébergement, l\'admission et le suivi post-traitement, notre équipe de navigation accompagne les patients et leurs familles tout au long de leur parcours de soins.'
-              : isKr
-              ? 'Nou sipor al bien pli lwin ki zis enn referal. Depi revir dosie medikal, randevou spesialis ek plan tretman ziska lasistans viza, voyaz, lozman, ladmision ek swivi apre tretman, nou lekip res ar ou sak letap.'
-              : 'Our support goes beyond the hospital referral. From medical-record review, specialist appointments and treatment planning to visa assistance, travel, accommodation, admission and post-treatment follow-up, our patient-navigation team accompanies patients and their families throughout their healthcare journey.'}
-          </p>
-          <p style={{ margin: 0, fontSize: '0.925rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>
-            {isFr
-              ? 'Le choix de l\'hôpital est fondé sur les besoins médicaux individuels du patient. L\'accréditation, l\'expertise clinique, la technologie, les capacités multidisciplinaires, les services dédiés aux patients internationaux et les options de traitement figurent parmi les critères pris en compte.'
-              : isKr
-              ? 'Swazir lopital baze lor bezwin medikal sak pasian. Akreditasion, leksperyans klinik, teknolosi, fasilite pou pasian internasional ek opsion tretman form parti bann kriter.'
-              : 'Hospital selection is based on the patient\'s individual medical requirements. Accreditation, clinical expertise, technology, multidisciplinary capabilities, international-patient services and treatment options are among the factors considered.'}
-          </p>
-        </div>
-
         {/* City / Hub Quick Filter Chips */}
         <div className="spec-symptom-chips-container" style={{ marginBottom: '1.75rem' }}>
           <div className="spec-symptom-chips-label">
