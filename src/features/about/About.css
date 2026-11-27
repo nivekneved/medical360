@@ -1,0 +1,660 @@
+/* =============================================================================
+   Med360 — Editorial About Page (About.css)
+   Clean, magazine-grade visual hierarchy · Light & Dark mode ready
+   ============================================================================= */
+
+.about-page {
+  padding-top: var(--navbar-height);
+  background: var(--color-bg);
+}
+
+/* ── 1. Editorial Opening Spread (Replaces Stock Banner) ──────────────────── */
+.about-editorial-hero {
+  position: relative;
+  padding: clamp(2.5rem, 5vw, 4.25rem) 0 clamp(3rem, 5vw, 4.5rem);
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+  background:
+    radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--color-primary) 9%, transparent) 0%, transparent 48%),
+    radial-gradient(circle at 8% 85%, rgba(16, 185, 129, 0.06) 0%, transparent 45%),
+    var(--color-bg);
+}
+
+.about-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
+  gap: clamp(2rem, 4.5vw, 4rem);
+  align-items: center;
+}
+
+.about-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 24%, transparent);
+  margin-bottom: 1.15rem;
+}
+
+.about-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4vw, 3.35rem);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  margin: 0 0 1.25rem;
+}
+
+.about-hero-title span {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-hero-lead {
+  font-size: clamp(1rem, 1.35vw, 1.12rem);
+  line-height: 1.72;
+  color: var(--color-text-secondary);
+  margin: 0 0 1rem;
+  max-width: 60ch;
+}
+
+.about-hero-sub {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin: 0 0 1.75rem;
+  max-width: 60ch;
+}
+
+/* KPI Strip inside Hero */
+.about-kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.about-kpi-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.about-kpi-value {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2vw, 1.65rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+
+.about-kpi-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  line-height: 1.35;
+}
+
+/* Editorial Photo Composition (Right Column) */
+.about-visual-collage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.about-photo-frame {
+  position: relative;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  aspect-ratio: 16 / 11;
+  box-shadow: 0 22px 50px rgba(9, 13, 16, 0.14);
+  border: 1px solid var(--color-border);
+  background: #0b1117;
+}
+
+.about-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.about-photo-caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.25rem 1.35rem 1.15rem;
+  background: linear-gradient(to top, rgba(9, 13, 16, 0.88) 0%, rgba(9, 13, 16, 0.45) 55%, transparent 100%);
+  color: #ffffff;
+}
+
+.about-photo-caption strong {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 800;
+  margin-bottom: 0.15rem;
+}
+
+.about-photo-caption span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* 2x2 Mini Pillars below Main Photo */
+.about-pillars-mini {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.about-pillar-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.about-pillar-chip__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.about-pillar-chip__title {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--color-text);
+  line-height: 1.25;
+}
+
+.about-pillar-chip__sub {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+  margin-top: 0.1rem;
+}
+
+/* ── 2. Social Impact Engine (3-Step Visual Flow) ─────────────────────────── */
+.about-section {
+  padding: clamp(3.25rem, 5vw, 4.75rem) 0;
+}
+
+.about-impact-band {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  margin-bottom: clamp(3rem, 5vw, 4.5rem);
+  box-shadow: var(--shadow-sm);
+}
+
+.about-impact-header {
+  max-width: 720px;
+  margin-bottom: 2rem;
+}
+
+.about-impact-header h2 {
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin: 0.35rem 0 0.75rem;
+}
+
+.about-impact-header p {
+  font-size: 0.96rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.about-cycle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.about-cycle-step {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: var(--radius-xl);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.about-cycle-step--highlight {
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 10%, var(--color-surface)) 0%, var(--color-surface) 100%);
+  border-color: color-mix(in srgb, var(--color-primary) 35%, transparent);
+}
+
+.about-cycle-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.about-cycle-step h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0.15rem 0 0;
+}
+
+.about-cycle-step p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ── 3. Contrast Split: Why Med360 vs No Dividends ────────────────────────── */
+.about-contrast-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem;
+  margin-bottom: clamp(3.5rem, 6vw, 5rem);
+}
+
+.about-card-light {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.about-card-dark {
+  background: linear-gradient(145deg, #090d10 0%, #101b24 55%, #082e26 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-2xl);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  box-shadow: 0 18px 42px rgba(9, 13, 16, 0.2);
+}
+
+.about-card-dark .about-eyebrow {
+  background: rgba(16, 185, 129, 0.16);
+  color: #6ee7b7;
+  border-color: rgba(110, 231, 183, 0.3);
+}
+
+.about-card-light h2,
+.about-card-dark h2 {
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 0.85rem;
+}
+
+.about-card-dark h2 {
+  color: #ffffff;
+}
+
+.about-card-light p {
+  font-size: 0.93rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.9rem;
+}
+
+.about-card-dark p {
+  font-size: 0.93rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0 0 0.9rem;
+}
+
+.about-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.about-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.about-checklist svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.about-pullquote {
+  padding: 1.15rem 1.35rem;
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.07);
+  border-left: 3px solid #34d399;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.55;
+  color: #ecfdf5;
+  margin: 0;
+}
+
+/* ── 4. Editorial Milestones Timeline ─────────────────────────────────────── */
+.about-timeline-wrap {
+  margin-bottom: clamp(3.5rem, 6vw, 5rem);
+}
+
+.about-section-head {
+  text-align: center;
+  max-width: 660px;
+  margin: 0 auto 2.5rem;
+}
+
+.about-section-head h2 {
+  font-size: clamp(1.55rem, 2.8vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--color-text);
+  margin: 0.25rem 0 0.65rem;
+}
+
+.about-section-head p {
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.about-timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.35rem;
+}
+
+.about-timeline-card {
+  position: relative;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--radius-xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-timeline-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(9, 13, 16, 0.08);
+}
+
+.about-timeline-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.about-timeline-year {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  letter-spacing: -0.03em;
+}
+
+.about-timeline-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  color: var(--color-primary);
+}
+
+.about-timeline-card h3 {
+  font-size: 1.08rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0 0 0.6rem;
+  line-height: 1.35;
+}
+
+.about-timeline-card p {
+  font-size: 0.89rem;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* ── 5. Global Affiliations (UICC, SIOP, CCI) ─────────────────────────────── */
+.about-affiliations {
+  margin-bottom: clamp(3.5rem, 6vw, 5rem);
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: clamp(1.75rem, 4vw, 3rem);
+  box-shadow: var(--shadow-sm);
+}
+
+.about-affiliations__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.about-affiliations__icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.about-affiliations__head h2 {
+  font-size: clamp(1.25rem, 2.2vw, 1.55rem);
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0 0 0.2rem;
+}
+
+.about-affiliations__head p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+}
+
+.about-affiliations__intro {
+  color: var(--color-text-secondary);
+  line-height: 1.72;
+  font-size: 0.93rem;
+  margin: 0 0 1.75rem;
+}
+
+.about-affiliations__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.about-affil-card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.about-affil-card:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 45%, transparent);
+  transform: translateY(-2px);
+}
+
+.about-affil-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.about-affil-ref {
+  font-weight: 900;
+  color: var(--color-primary);
+  font-size: 0.95rem;
+}
+
+.about-affil-status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+}
+
+.about-affil-card h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0 0 0.35rem;
+}
+
+.about-affil-loc {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.65rem;
+}
+
+.about-affil-card p {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.62;
+  margin: 0;
+}
+
+.about-affil-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.about-affil-link:hover {
+  text-decoration: underline;
+}
+
+/* ── 6. Dark Conversion Finale ────────────────────────────────────────────── */
+.about-cta-finale {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: linear-gradient(135deg, #090d10 0%, #0d1f26 55%, #064e3b 100%);
+  border-radius: var(--radius-2xl);
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+  color: #ffffff;
+  box-shadow: 0 20px 50px rgba(9, 13, 16, 0.22);
+}
+
+.about-cta-finale h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0 0 0.85rem;
+}
+
+.about-cta-finale p {
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 560px;
+  margin: 0 auto 2rem;
+}
+
+.about-cta-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.about-cta-actions .btn {
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .about-hero-grid,
+  .about-contrast-grid,
+  .about-cycle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-kpi-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .about-pillars-mini {
+    grid-template-columns: 1fr;
+  }
+}

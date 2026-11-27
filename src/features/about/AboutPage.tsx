@@ -1,5 +1,12 @@
 import { useEffect } from 'react';
-import { ArrowRight, MessageCircle, Shield, Users, Globe2, Heart, BookmarkCheck, ExternalLink } from 'lucide-react';
+import {
+  ArrowRight,
+  MessageCircle,
+  BookmarkCheck,
+  ExternalLink,
+  CheckCircle2,
+  Sparkles,
+} from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
@@ -9,11 +16,12 @@ import { HIGHLIGHTS, TIMELINE, FOOTNOTES } from './aboutContent';
 import { CompanyPresentationVideo } from './CompanyPresentationVideo';
 import { LeadershipBriefSection } from './LeadershipBriefSection';
 import { MediaCoverageSection } from './MediaCoverageSection';
+import './About.css';
 
 export function AboutPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t, lang, l10n, l } = useL10n();
+  const { lang, l10n, l } = useL10n();
   const { data: cms } = useCMS('about');
 
   useEffect(() => {
@@ -30,206 +38,283 @@ export function AboutPage() {
     return cms.content[key][lang] || cms.content[key]['en'] || fallback;
   };
 
+  const kpis = [
+    {
+      value: '+3,000',
+      label: l10n('Patients accompagnés', 'Pasian asiste', 'Patients Assisted'),
+    },
+    {
+      value: '2016',
+      label: l10n('Fondation ONG', 'Fondasion ONG', 'NGO Foundation'),
+    },
+    {
+      value: '14',
+      label: l10n('Hôpitaux partenaires', 'Lopital partener', 'Partner Hospitals'),
+    },
+    {
+      value: '100%',
+      label: l10n('Impact réinvesti', 'Impak reinvesti', 'Impact Reinvested'),
+    },
+  ];
+
+  const impactCycle = [
+    {
+      num: '01',
+      title: l10n('Patients Privés & Assurés', 'Pasian Prive & Asire', 'Self-Paying & Insured Patients'),
+      desc: l10n(
+        'Accédez à une coordination médicale internationale éthique, transparente et sans surcoût caché.',
+        'Gagn enn kordonasion medikal internasional etik, kler ek san fre kasiet.',
+        'Patients who can finance their care receive ethical, transparent international medical coordination.'
+      ),
+      highlight: false,
+    },
+    {
+      num: '02',
+      title: l10n('Revenus Durables', 'Reveni Dirab', 'Sustainable Revenue'),
+      desc: l10n(
+        'Med360 génère des revenus d\'entreprise sociale — zéro dividende versé à des actionnaires.',
+        'Med360 kree reveni antrepriz sosyal — zero dividann pou bann aksioner.',
+        'Med360 generates sustainable social-enterprise revenue with zero dividends to shareholders.'
+      ),
+      highlight: false,
+    },
+    {
+      num: '03',
+      title: l10n('Soutien aux Patients Vulnérables', 'Sipor Pasian Vilnerab', 'Funding Care for the Vulnerable'),
+      desc: l10n(
+        'Les bénéfices renforcent la mission d\'Enn Rev Enn Sourir pour financer les soins de ceux qui n\'en ont pas les moyens.',
+        'Bann benefis ranfors mision Enn Rev Enn Sourir pou finans swen bann ki pena mwayen.',
+        'Revenue strengthens Enn Rev Enn Sourir’s mission to fund life-saving care for vulnerable families.'
+      ),
+      highlight: true,
+    },
+  ];
+
+  const ethicsPoints = [
+    l10n(
+      'Aucune commission cachée ni pression commerciale dans le choix de l\'hôpital',
+      'Okenn komision kasiet ouswa presion komersial dan swa lopital',
+      'Zero hidden markups or commercial pressure when choosing a hospital'
+    ),
+    l10n(
+      'Compréhension claire du spécialiste, du protocole et des coûts estimés avant départ',
+      'Konpreansion kler lor dokter, tretman ek estimasion pri avan vwayaze',
+      'Clear understanding of the specialist, treatment plan, and expected costs upfront'
+    ),
+    l10n(
+      'Éthique, choix éclairé et dignité du patient placés avant tout intérêt commercial',
+      'Etik, swa kler ek dignite pasian plase avan tou lintere komersial',
+      'Ethics, informed choice, and patient dignity placed ahead of commercial interests'
+    ),
+  ];
 
   return (
-    <main style={{ paddingTop: 'var(--navbar-height)' }}>
+    <main className="about-page">
       <SEO pageKey="about" />
 
-      {/* Header Banner */}
-      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
-        <div className="container page-hero__inner">
-          <span className="section-label">
-            {tCms('heroLabel', l10n('✦ Entreprise Sociale d\'Enn Rev Enn Sourir · +3 000 Patients', '✦ Lakonpanyi Sosyal l\'ONG Enn Rev Enn Sourir · +3 000 Pasian', '✦ Social Enterprise Initiative of Enn Rev Enn Sourir · +3,000 Patients'))}
-          </span>
-          <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Notre Histoire', 'Nou Zistwar', 'Our Story'))}
-          </h1>
-          <p className="text-lead">
-            {tCms('heroDesc', l10n(
-              'Une coordination médicale internationale éthique depuis Maurice — fondée sur la transparence, la dignité et l\'accès équitable aux meilleurs spécialistes.',
-              'Enn kordonasion medikal internasional etik depi Moris — bati lor transparans, dignite ek akse egal ar bann meyer spesialis.',
-              'Ethical international medical coordination from Mauritius — built on transparency, dignity, and equitable access to leading specialists worldwide.'
-            ))}
-          </p>
-        </div>
-      </section>
-
-      {/* Main Narrative Section */}
-      <section className="section">
+      {/* ── 1. Editorial Opening Spread (No Stock Banner) ─────────────────── */}
+      <section className="about-editorial-hero">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center', marginBottom: '5rem' }}>
+          <div className="about-hero-grid">
             <div>
-              <span className="section-label">
-                {l10n('✦ Genèse & Vocation', '✦ Nou Rasinn', '✦ Born From Compassion')}
-              </span>
-              <h2 className="text-h2" style={{ marginBottom: '1.25rem' }}>
-                {l10n('Né d\'une Décennie de Compassion. Centré sur le Patient.', 'Ne depi 10 Banlane Konpasion. Santre lor Pasian.', 'Born From a Decade of Compassion. Built Around the Patient.')}
-              </h2>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: '1rem' }}>
-                {l10n(
-                  'Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, créée à partir d\'années d\'expérience dans l\'accompagnement des patients et de leurs familles durant certains des moments les plus difficiles de leur vie.',
-                  'Med360 li enn linisiativ sosyal l\'ONG Enn Rev Enn Sourir, ne depi plizir lane leksperyans pou sipor bann pasian ek fami dan moman pli difisil.',
-                  'Med360 is a social enterprise initiative of Enn Rev Enn Sourir, created from years of experience supporting patients and families through some of the most difficult moments of their lives.'
+              <span className="about-eyebrow">
+                <Sparkles size={13} />
+                {tCms(
+                  'heroLabel',
+                  l10n(
+                    'Entreprise Sociale d\'Enn Rev Enn Sourir',
+                    'Antrepriz Sosyal l\'ONG Enn Rev Enn Sourir',
+                    'Social Enterprise of Enn Rev Enn Sourir'
+                  )
                 )}
-              </p>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+              </span>
+
+              <h1 className="about-hero-title">
+                {l10n('Né d\'une Décennie de Compassion.', 'Ne depi 10 Banlane Konpasion.', 'Born From a Decade of Compassion.')}{' '}
+                <span>
+                  {l10n('Centré sur le Patient.', 'Santre lor Pasian.', 'Built Around the Patient.')}
+                </span>
+              </h1>
+
+              <p className="about-hero-lead">
                 {l10n(
-                  'Depuis sa création en 2016, Enn Rev Enn Sourir s\'est employée à garantir que l\'accès aux soins de santé spécialisés ne dépende pas de la situation financière des familles. L\'organisation a soutenu enfants et adultes nécessitant des soins spécialisés à Maurice et à l\'étranger, incluant la coordination médicale, l\'accès aux traitements, l\'aide financière, la logistique de voyage et le soutien psychosocial. Cette mission centrée sur le patient est également reconnue au niveau international (UICC).',
-                  'Depi so kreasion an 2016, Enn Rev Enn Sourir lite pou ki akse a swen spesialize pa depann lor mwayen finansie enn fami. Lorganizasion finn ed bann ti zanfan ek gran dimounn dan Moris ek a letranze avek kordonasion medikal, lasistans vwayaz ek sipor psikososial.',
-                  'Since its establishment in 2016, Enn Rev Enn Sourir has worked to ensure that access to specialised healthcare is not determined by a family\'s financial circumstances. The organisation has supported children and adults requiring specialised medical care in Mauritius and abroad, including medical coordination, treatment access, financial assistance, travel arrangements and psychosocial support. This patient-centred mission is also reflected in the NGO\'s public and international profiles. (UICC)'
+                  'Med360 est une initiative d\'entreprise sociale d\'Enn Rev Enn Sourir, née d\'années d\'accompagnement des patients et de leurs familles dans les moments les plus décisifs de leur vie.',
+                  'Med360 li enn linisiativ sosyal l\'ONG Enn Rev Enn Sourir, ne depi plizir lane leksperyans pou sipor bann pasian ek fami dan moman pli difisil.',
+                  'Med360 is a social enterprise initiative of Enn Rev Enn Sourir, created from years of supporting patients and families through some of the most difficult moments of their lives.'
                 )}
               </p>
 
-              {/* Social Impact Box */}
-              <div style={{
-                background: 'rgba(16, 185, 129, 0.08)',
-                borderLeft: '4px solid var(--color-primary)',
-                padding: '1.35rem',
-                borderRadius: '0 var(--radius-lg) var(--radius-lg) 0',
-                marginTop: '1.5rem',
-              }}>
-                <h4 style={{ margin: '0 0 0.5rem', color: 'var(--color-text)', fontSize: '1.05rem', fontWeight: 800 }}>
-                  {l10n('De la Bienfaisance à l\'Entrepreneuriat Social', 'Depi Aksion Imaniter Ziska Antrepriz Sosyal', 'From Charity to Social Entrepreneurship')}
-                </h4>
-                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.65, margin: '0 0 0.75rem', fontSize: '0.925rem' }}>
-                  {l10n(
-                    'Après des années passées à soutenir principalement des familles modestes et des patients vulnérables, nous avons compris que cette même expérience, ces relations avec les hôpitaux internationaux et cette expertise en navigation de patients pouvaient servir un public mauricien plus large.',
-                    'Apre plizir lane pou ed bann fami vilnerab, nou finn realize ki sa mem leksperyans ek rezo lopital internasional la kapav servi plis Morisien ankor.',
-                    'After years of primarily supporting low- and middle-income families and vulnerable patients, we recognised that the same experience, international hospital relationships and patient-navigation expertise could serve a wider group of Mauritians.'
-                  )}
-                </p>
-                <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.65, margin: '0 0 0.75rem', fontSize: '0.925rem' }}>
-                  {l10n(
-                    'En 2025 est née l\'idée de Med360 : créer une société de services médicaux éthique, capable d\'accompagner les patients privés et assurés souhaitant se faire soigner à l\'étranger, tout en générant une source de revenus durable pour financer les soins de ceux qui n\'en ont pas les moyens.',
-                    'An 2025, lide Med360 finn ne : kree enn lakonpanyi medikal etik pou ed bann pasian ki kapav peye ouswa asire, pandan ki li kree reveni dirab pou finans bann swen pou bann ki pena mwayen.',
-                    'In 2025, the idea of Med360 was born: to create an ethical medical-services company capable of assisting self-paying patients, insured patients and families seeking specialised treatment abroad, while creating a sustainable source of revenue to support patients who cannot afford the treatment they need.'
-                  )}
-                </p>
-                <div style={{ padding: '0.85rem 1rem', background: 'var(--color-surface)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(16, 185, 129, 0.25)', fontSize: '0.875rem', fontWeight: 700, color: 'var(--color-text)' }}>
-                  {l10n(
-                    'Patients qui peuvent financer leurs soins → Med360 génère des revenus durables → ces revenus contribuent à la mission sociale d\'Enn Rev Enn Sourir et soutiennent les patients vulnérables.',
-                    'Pasian ki kapav peye zot swen → Med360 kree reveni dirab → sa reveni la ed l\'ONG Enn Rev Enn Sourir pou sov pasian vilnerab.',
-                    'Patients who can afford their healthcare receive professional medical coordination → Med360 generates sustainable revenue → that revenue contributes to the social mission of Enn Rev Enn Sourir and helps support vulnerable patients.'
-                  )}
-                </div>
+              <p className="about-hero-sub">
+                {l10n(
+                  'Depuis 2016, Enn Rev Enn Sourir veille à ce que l\'accès aux soins spécialisés ne dépende jamais de la situation financière d\'une famille — avec une mission reconnue internationalement (UICC).',
+                  'Depi 2016, Enn Rev Enn Sourir lite pou ki akse a swen spesialize pa depann lor mwayen finansie enn fami — enn mision rekonet internasionalman (UICC).',
+                  'Since 2016, Enn Rev Enn Sourir has worked to ensure access to specialised healthcare is never determined by a family’s financial circumstances — backed by international recognition (UICC).'
+                )}
+              </p>
+
+              <div className="about-kpi-strip">
+                {kpis.map((kpi) => (
+                  <div key={kpi.value} className="about-kpi-item">
+                    <span className="about-kpi-value">{kpi.value}</span>
+                    <span className="about-kpi-label">{kpi.label}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div style={{
-              background: 'linear-gradient(135deg, #090d10 0%, #111822 100%)',
-              border: '1.5px solid rgba(255, 255, 255, 0.12)',
-              borderRadius: 'var(--radius-2xl)',
-              padding: '2.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1.5rem',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
-            }}>
-              {HIGHLIGHTS.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.label} style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-md)', background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
-                      <Icon size={20} />
+            <div className="about-visual-collage">
+              <div className="about-photo-frame">
+                <img
+                  src="/assets/consultation-support.jpg"
+                  alt={l10n('Accompagnement personnalisé Med360', 'Akonpagnman personalize Med360', 'Med360 dedicated patient navigation')}
+                  fetchPriority="high"
+                  decoding="async"
+                />
+                <div className="about-photo-caption">
+                  <strong>
+                    {l10n('Port-Louis, Maurice → Hôpitaux Accrédités Mondiaux', 'Porlwi, Moris → Lopital Akredite Mondial', 'Port-Louis, Mauritius → Accredited Hospitals Worldwide')}
+                  </strong>
+                  <span>
+                    {l10n(
+                      'Coordination médicale, logistique complète et suivi humain de bout en bout',
+                      'Kordonasion medikal, lozistik konple ek swivi imin depi koumansman ziska lafin',
+                      'Medical coordination, full travel logistics, and human follow-up end to end'
+                    )}
+                  </span>
+                </div>
+              </div>
+
+              <div className="about-pillars-mini">
+                {HIGHLIGHTS.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.label} className="about-pillar-chip">
+                      <div className="about-pillar-chip__icon">
+                        <Icon size={17} />
+                      </div>
+                      <div>
+                        <div className="about-pillar-chip__title">{l(item, 'label')}</div>
+                        <div className="about-pillar-chip__sub">{l(item, 'sub')}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div style={{ color: 'white', fontWeight: 700, fontSize: '0.9375rem' }}>{l(item, 'label')}</div>
-                      <div style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.8125rem' }}>{l(item, 'sub')}</div>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="about-section">
+        <div className="container">
+          {/* ── 2. From Charity to Social Entrepreneurship (3-Step Flow) ─── */}
+          <div className="about-impact-band">
+            <div className="about-impact-header">
+              <span className="about-eyebrow">
+                {l10n('Modèle d\'Entreprise Sociale · 2025', 'Model Antrepriz Sosyal · 2025', 'Social Enterprise Model · 2025')}
+              </span>
+              <h2>
+                {l10n('De la Bienfaisance à l\'Entrepreneuriat Social', 'Depi Aksion Imaniter Ziska Antrepriz Sosyal', 'From Charity to Social Entrepreneurship')}
+              </h2>
+              <p>
+                {l10n(
+                  'En 2025, nous avons transformé une décennie d\'expertise en navigation patient et de relations hospitalières internationales en un modèle autonome capable de servir tous les Mauriciens tout en finançant les soins des plus vulnérables.',
+                  'An 2025, nou finn transform enn deseni leksperyans ek rezo lopital internasional an enn model dirab ki servi tou Morisien pandan ki li finans swen bann pli vilnerab.',
+                  'In 2025, we turned a decade of patient-navigation expertise and international hospital relationships into a self-sustaining model serving wider Mauritius while funding care for families who cannot afford treatment.'
+                )}
+              </p>
+            </div>
+
+            <div className="about-cycle-grid">
+              {impactCycle.map((step) => (
+                <div
+                  key={step.num}
+                  className={`about-cycle-step ${step.highlight ? 'about-cycle-step--highlight' : ''}`}
+                >
+                  <span className="about-cycle-num">{step.num}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Why Med360 Was Needed & No Dividends */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem', marginBottom: '5rem' }}>
-            <div style={{
-              background: 'var(--color-surface)',
-              border: '1.5px solid var(--color-border)',
-              borderRadius: 'var(--radius-xl)',
-              padding: '2.5rem',
-            }}>
-              <span className="section-label">{l10n('✦ Éthique & Transparence', '✦ Etik & Transparans', '✦ Why Med360 Was Needed')}</span>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 1rem', color: 'var(--color-text)' }}>
-                {l10n('Pourquoi Med360 Était Nécessaire', 'Kifer Med360 Ti Bizin Kree', 'Why Med360 Was Needed')}
-              </h3>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1rem' }}>
-                {l10n(
-                  'Au fil des ans, nous avons été témoins du développement rapide du secteur de la facilitation médicale. Pour un patient confronté à un diagnostic grave, le choix d\'un hôpital ou d\'un traitement ne doit jamais être dicté par des intérêts cachés, des coûts superflus ou une pression commerciale.',
-                  'Pandan plizir lane, nou finn truv devlopman rapid sekter fasilitasion medikal. Pou enn pasian ki fek gagn enn diagnostik grav, swazir lopital pa bizin par lintere kasiet ouswa presion komersial.',
-                  'Over the years, we have also witnessed the rapid development of the medical facilitation and treatment-abroad sector. For a patient facing a serious diagnosis, choosing a hospital or treatment should never be driven by hidden interests, unnecessary costs or commercial pressure.'
-                )}
-              </p>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1rem' }}>
-                {l10n(
-                  'Cela a renforcé notre conviction que Maurice avait besoin d\'un modèle où l\'éthique, la transparence, le choix éclairé, les droits du patient et la dignité passent avant les intérêts commerciaux.',
-                  'Sa finn ranfors nou konviksion ki Moris bizin enn model kot etik, transparans, swa kler, drwa pasian ek dignite pas avan lintere komersial.',
-                  'This reinforced our belief that Mauritius needed a model where ethics, transparency, informed choice, patient rights and dignity come before commercial interests.'
-                )}
-              </p>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', margin: 0 }}>
-                {l10n(
-                  'Nous croyons que les patients ont le droit de comprendre où ils sont orientés, pourquoi un hôpital ou un spécialiste précis leur est proposé, ce qu\'implique leur traitement et quels sont les coûts prévus avant de prendre une décision éclairée.',
-                  'Nou krwar pasian ena drwa konpran kifer pe propoz li enn sertin lopital ouswa dokter, ki tretman li pou gagne ek ki pri li bizin atann avan pran so desizion.',
-                  'We believe patients deserve to understand where they are being referred, why a particular hospital or specialist is being proposed, what their treatment may involve and what the expected costs are before making an informed decision.'
-                )}
-              </p>
+          {/* ── 3. Contrast Split: Why Med360 vs No Dividends ─────────────── */}
+          <div className="about-contrast-grid">
+            <div className="about-card-light">
+              <div>
+                <span className="about-eyebrow">
+                  {l10n('Éthique & Transparence', 'Etik & Transparans', 'Ethics & Transparency')}
+                </span>
+                <h2>
+                  {l10n('Pourquoi Med360 Était Nécessaire', 'Kifer Med360 Ti Bizin Kree', 'Why Med360 Was Needed')}
+                </h2>
+                <p>
+                  {l10n(
+                    'Pour un patient confronté à un diagnostic grave, le choix d\'un hôpital ou d\'un spécialiste ne doit jamais être dicté par des intérêts cachés, des coûts superflus ou une pression commerciale.',
+                    'Pou enn pasian ki fek gagn enn diagnostik grav, swazir lopital pa bizin zame dikte par lintere kasiet ouswa presion komersial.',
+                    'For a patient facing a serious diagnosis, choosing a hospital or specialist should never be driven by hidden interests, unnecessary costs, or commercial pressure.'
+                  )}
+                </p>
+                <ul className="about-checklist">
+                  {ethicsPoints.map((pt, i) => (
+                    <li key={i}>
+                      <CheckCircle2 size={17} />
+                      <span>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            <div style={{
-              background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(59,130,246,0.06) 100%)',
-              border: '1.5px solid rgba(16,185,129,0.25)',
-              borderRadius: 'var(--radius-xl)',
-              padding: '2.5rem',
-            }}>
-              <span className="section-label">{l10n('✦ Notre Philosophie', '✦ Nou Filozofi', '✦ Our Philosophy')}</span>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: '0 0 1rem', color: 'var(--color-text)' }}>
-                {l10n('Zéro Dividende. Votre Santé Compte.', 'Zero Dividann. Ou Lasante Kont.', 'No Dividends. Your Healthcare Matters.')}
-              </h3>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1rem' }}>
-                {l10n(
-                  'Med360 suit une philosophie différente. Notre but n\'est pas de créer des dividendes pour des actionnaires individuels. Notre but est de créer un impact réel.',
-                  'Med360 swiv enn lot filozofi. Nou lobzektif pa kre dividann pou bann aksioner. Nou bi se kre enn vre impak.',
-                  'Med360 follows a different philosophy. Our purpose is not to create dividends for individual shareholders. Our purpose is to create impact.'
-                )}
-              </p>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1rem' }}>
-                {l10n(
-                  'En développant une entreprise de santé durable, nous visons à servir les patients capables de financer leurs soins ou couverts par une assurance, tout en renforçant la capacité d\'Enn Rev Enn Sourir à continuer d\'aider ceux pour qui le coût des soins reste un obstacle.',
-                  'Par devlop enn lakonpanyi dirab, nou servi bann pasian ki kapav peye, pandan ki nou ranfors l\'ONG Enn Rev Enn Sourir pou ed dimounn ki pena mwayen pey lopital.',
-                  'By developing a sustainable healthcare enterprise, we aim to serve patients who can finance their treatment or are supported by insurance, while helping strengthen the ability of Enn Rev Enn Sourir to continue assisting people for whom the cost of healthcare remains a barrier.'
-                )}
-              </p>
-              <div style={{ padding: '1rem', background: 'var(--color-surface)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(16, 185, 129, 0.3)', fontWeight: 700, color: 'var(--color-primary)', fontSize: '0.95rem' }}>
+            <div className="about-card-dark">
+              <div>
+                <span className="about-eyebrow">
+                  {l10n('Notre Philosophie', 'Nou Filozofi', 'Our Philosophy')}
+                </span>
+                <h2>
+                  {l10n('Zéro Dividende. Votre Santé Compte.', 'Zero Dividann. Ou Lasante Kont.', 'No Dividends. Your Healthcare Matters.')}
+                </h2>
+                <p>
+                  {l10n(
+                    'Notre but n\'est pas de distribuer des dividendes à des actionnaires individuels. Notre but est de créer un impact humain durable.',
+                    'Nou lobzektif pa kre dividann pou bann aksioner. Nou bi se kre enn vre impak imin dirab.',
+                    'Our purpose is not to create dividends for individual shareholders. Our purpose is to create lasting human impact.'
+                  )}
+                </p>
+                <p>
+                  {l10n(
+                    'En servant les patients privés et assurés avec excellence, nous renforçons directement la capacité d\'Enn Rev Enn Sourir à soutenir ceux pour qui le coût des soins reste un obstacle.',
+                    'Par servi bann pasian prive ek asire avek ekselans, nou ranfors direkteman Enn Rev Enn Sourir pou ed bann ki pena mwayen.',
+                    'By serving self-paying and insured patients with excellence, we directly strengthen Enn Rev Enn Sourir’s capacity to assist people for whom cost remains a barrier.'
+                  )}
+                </p>
+              </div>
+              <blockquote className="about-pullquote">
                 {l10n(
                   '« Votre parcours de soins crée une opportunité de soutenir le parcours de soins d\'un autre patient. »',
                   '« Ou vwayaz lasante kre enn loportinite pou soutenir vwayaz lasante enn lot pasian. »',
                   '“Your healthcare journey creates an opportunity to support another healthcare journey.”'
                 )}
-              </div>
+              </blockquote>
             </div>
           </div>
 
-          {/* Official Company Presentation & Board Members Video */}
+          {/* ── 4. Official Video, Leadership (#board-members) & Media ──── */}
           <CompanyPresentationVideo />
-
-          {/* Leadership & Vision Brief (Karan Juglall, Luciano Azor, Delphine Dhollah) */}
           <LeadershipBriefSection />
-
-          {/* Media Coverage Section */}
           <MediaCoverageSection />
 
-          {/* Timeline Section */}
-          <div style={{ marginBottom: '5rem' }}>
-            <div style={{ textAlign: 'center', maxWidth: 650, margin: '0 auto 3rem' }}>
-              <span className="section-label">
+          {/* ── 5. Editorial Milestones Timeline ────────────────────────── */}
+          <div className="about-timeline-wrap">
+            <div className="about-section-head">
+              <span className="about-eyebrow">
                 {l10n('Étapes Clés & Parcours', 'Bann Gran Letap', 'Milestones & History')}
               </span>
-              <h2 className="text-h2" style={{ marginBottom: '0.75rem' }}>
+              <h2>
                 {l10n('Notre Évolution : 2016 à 2025+', 'Nou Levolision : 2016 ziska 2025+', 'Our Evolution: 2016 to 2025+')}
               </h2>
-              <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+              <p>
                 {l10n(
                   'Une trajectoire d\'excellence bâtie sur la confiance, le dévouement humain et les plus hautes reconnaissances mondiales.',
                   'Enn zoli parkour bati lor konfians, lanmour ek bann gran rekonpans internasional.',
@@ -238,182 +323,110 @@ export function AboutPage() {
               </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.75rem' }}>
+            <div className="about-timeline-grid">
               {TIMELINE.map((item) => (
-                <div
-                  key={item.year}
-                  style={{
-                    background: 'var(--color-surface)',
-                    border: '1.5px solid var(--color-border)',
-                    borderRadius: 'var(--radius-xl)',
-                    padding: '2rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    boxShadow: 'var(--shadow-sm)',
-                    position: 'relative',
-                    overflow: 'hidden',
-                  }}
-                >
-                  <div style={{
-                    position: 'absolute',
-                    top: '-15px',
-                    right: '-15px',
-                    width: '90px',
-                    height: '90px',
-                    borderRadius: '50%',
-                    background: 'rgba(16, 185, 129, 0.05)',
-                    pointerEvents: 'none',
-                  }} />
-
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                      <span style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--color-primary)', letterSpacing: '-0.02em' }}>
-                        {item.year}
-                      </span>
-                      <span style={{
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        padding: '0.25rem 0.65rem',
-                        borderRadius: '9999px',
-                        background: 'rgba(16, 185, 129, 0.12)',
-                        color: 'var(--color-primary)',
-                      }}>
-                        {l(item, 'badge')}
-                      </span>
-                    </div>
-
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--color-text)', marginBottom: '0.75rem', lineHeight: 1.35 }}>
-                      {l(item, 'title')}
-                    </h3>
-                    <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem', lineHeight: 1.65, margin: 0 }}>
-                      {l(item, 'desc')}
-                    </p>
+                <article key={item.year} className="about-timeline-card">
+                  <div className="about-timeline-top">
+                    <span className="about-timeline-year">{item.year}</span>
+                    <span className="about-timeline-badge">{l(item, 'badge')}</span>
                   </div>
-                </div>
+                  <h3>{l(item, 'title')}</h3>
+                  <p>{l(item, 'desc')}</p>
+                </article>
               ))}
             </div>
           </div>
 
-          {/* Footnotes & Global Affiliations Section (UICC, SIOP, CCI) */}
-          <div style={{
-            marginBottom: '5rem',
-            background: 'var(--color-surface)',
-            border: '1.5px solid var(--color-border)',
-            borderRadius: 'var(--radius-2xl)',
-            padding: 'clamp(2rem, 4vw, 3rem)',
-            boxShadow: 'var(--shadow-sm)',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-              <div style={{
-                width: 44,
-                height: 44,
-                borderRadius: 'var(--radius-md)',
-                background: 'rgba(16, 185, 129, 0.12)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--color-primary)',
-              }}>
-                <BookmarkCheck size={24} />
+          {/* ── 6. International Recognition (UICC, SIOP, CCI) ──────────── */}
+          <div className="about-affiliations">
+            <div className="about-affiliations__head">
+              <div className="about-affiliations__icon">
+                <BookmarkCheck size={23} />
               </div>
               <div>
-                <h3 style={{ fontSize: '1.35rem', fontWeight: 800, margin: 0, color: 'var(--color-text)' }}>
+                <h2>
                   {l10n('Bâti sur une Reconnaissance Internationale (UICC, SIOP, CCI)', 'Bati lor Rekonesans Internasional (UICC, SIOP, CCI)', 'Built on International Recognition (UICC, SIOP, CCI)')}
-                </h3>
-                <p style={{ margin: '0.2rem 0 0', color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
+                </h2>
+                <p>
                   {l10n('Affiliations officielles renforçant nos principes éthiques et la dignité du patient', 'Bann afiliasion ofisiel ki gid nou bann valer etik', 'Official affiliations reinforcing our ethical principles and patient dignity')}
                 </p>
               </div>
             </div>
 
-            <p style={{ color: 'var(--color-text-secondary)', lineHeight: 1.7, fontSize: '0.925rem', marginBottom: '1.75rem' }}>
+            <p className="about-affiliations__intro">
               {l10n(
-                'Les fondations de Med360 sont renforcées par l\'engagement d\'Enn Rev Enn Sourir auprès d\'organisations internationales respectées dans la lutte contre le cancer et l\'oncologie pédiatrique. Enn Rev Enn Sourir est actuellement reconnue comme Membre Titulaire de l\'Union for International Cancer Control (UICC), tandis que ses informations institutionnelles attestent de collaborations avec la Société Internationale d\'Oncologie Pédiatrique (SIOP) et Childhood Cancer International (CCI). CCI a également présenté publiquement Enn Rev Enn Sourir et son action à Maurice. Ces relations renforcent les principes qui nous guident : pratique éthique, soins centrés sur le patient, collaboration, dignité et accès équitable à la santé.',
-                'Lafondasion Med360 ranforse par langazman Enn Rev Enn Sourir ar bann lorganizasion mondial renome dan kanser ek onkolizi pediatrik. Enn Rev Enn Sourir li enn Manb Titiler UICC, pe kolabore ar SIOP ek CCI. Sa bann lalians la ranfors nou bann valer : etik, respe drwa pasian, dignite ek akse egal a bann swen.',
-                'The foundation behind Med360 is strengthened by Enn Rev Enn Sourir\'s involvement with respected international organisations in cancer and paediatric oncology. Enn Rev Enn Sourir is currently listed as a Full Member of the Union for International Cancer Control (UICC), while its own organisational information documents collaboration with the International Society of Paediatric Oncology (SIOP) and Childhood Cancer International (CCI). CCI has also publicly profiled Enn Rev Enn Sourir and its work in Mauritius. These relationships reinforce the principles that guide us: ethical practice, patient-centred care, collaboration, dignity and equitable access to healthcare.'
+                'Les fondations de Med360 sont renforcées par l\'engagement d\'Enn Rev Enn Sourir auprès d\'organisations internationales respectées dans la lutte contre le cancer et l\'oncologie pédiatrique : Membre Titulaire de l\'UICC, et collaborations documentées avec SIOP et Childhood Cancer International (CCI).',
+                'Lafondasion Med360 ranforse par langazman Enn Rev Enn Sourir ar bann lorganizasion mondial renome : Manb Titiler UICC ek kolaborasion ar SIOP ek Childhood Cancer International (CCI).',
+                'The foundation behind Med360 is strengthened by Enn Rev Enn Sourir’s involvement with respected global cancer organisations: Full Member of the Union for International Cancer Control (UICC), alongside collaborations with SIOP and Childhood Cancer International (CCI).'
               )}
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div className="about-affiliations__grid">
               {FOOTNOTES.map((fn) => (
-                <div
-                  key={fn.ref}
-                  style={{
-                    background: 'var(--color-bg)',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-lg)',
-                    padding: '1.5rem',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                  }}
-                >
+                <article key={fn.ref} className="about-affil-card">
                   <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                      <span style={{ fontWeight: 900, color: 'var(--color-primary)', fontSize: '1rem' }}>
-                        {fn.ref}
-                      </span>
-                      <span style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        padding: '0.2rem 0.55rem',
-                        borderRadius: '9999px',
-                        background: 'rgba(59, 130, 246, 0.1)',
-                        color: '#3b82f6',
-                      }}>
-                        {fn.status}
-                      </span>
+                    <div className="about-affil-card__meta">
+                      <span className="about-affil-ref">{fn.ref}</span>
+                      <span className="about-affil-status">{fn.status}</span>
                     </div>
-                    <h4 style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--color-text)', margin: '0 0 0.35rem' }}>
-                      {fn.org}
-                    </h4>
-                    <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginBottom: '0.75rem' }}>
-                      📍 {fn.location}
-                    </div>
-                    <p style={{ fontSize: '0.84rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, margin: 0 }}>
-                      {fn.desc}
-                    </p>
+                    <h3>{fn.org}</h3>
+                    <div className="about-affil-loc">📍 {fn.location}</div>
+                    <p>{fn.desc}</p>
                   </div>
 
                   <a
                     href={fn.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.35rem',
-                      fontSize: '0.8rem',
-                      fontWeight: 700,
-                      color: 'var(--color-primary)',
-                      marginTop: '1.25rem',
-                      textDecoration: 'none',
-                    }}
+                    className="about-affil-link"
                   >
-                    <span>{l10n('En savoir plus sur le site officiel', 'Plis linformasion lor sit ofisiel', 'Learn more on official website')}</span>
+                    <span>{l10n('Consulter le site officiel', 'Get sit ofisiel', 'Visit official website')}</span>
                     <ExternalLink size={13} />
                   </a>
-                </div>
+                </article>
               ))}
             </div>
           </div>
 
-          {/* Bottom Conversion CTA */}
-          <div style={{ textAlign: 'center', background: 'var(--color-surface)', border: '1.5px solid var(--color-border)', borderRadius: 'var(--radius-2xl)', padding: '3.5rem 2rem' }}>
-            <h2 className="text-h2" style={{ marginBottom: '1rem' }}>
-              {tCms('ctaTitle', l10n('Votre Santé Mérite l\'Action, Pas l\'Incertitude.', 'Ou Lasante Merite Laksion, Pa Linzistis.', 'Your Health Deserves Action, Not Uncertainty.'))}
+          {/* ── 7. Dark Conversion Finale ───────────────────────────────── */}
+          <div className="about-cta-finale">
+            <h2>
+              {tCms(
+                'ctaTitle',
+                l10n(
+                  'Votre Santé Mérite l\'Action, Pas l\'Incertitude.',
+                  'Ou Lasante Merite Laksion, Pa Linzistis.',
+                  'Your Health Deserves Action, Not Uncertainty.'
+                )
+              )}
             </h2>
-            <p className="text-lead" style={{ marginBottom: '2rem', maxWidth: 540, margin: '0 auto 2rem' }}>
-              {tCms('ctaDesc', l10n('Prenez rendez-vous dès aujourd\'hui. Laissez-nous vous aider à comprendre vos options et vous mettre en relation avec les soins médicaux appropriés.', 'Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal.', 'Book your appointment today. Let us help you understand your options and connect you with the right medical care.'))}
+            <p>
+              {tCms(
+                'ctaDesc',
+                l10n(
+                  'Prenez rendez-vous dès aujourd\'hui. Laissez-nous vous aider à comprendre vos options et vous mettre en relation avec les soins médicaux appropriés.',
+                  'Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal.',
+                  'Request an appointment today. Let us help you understand your options and connect you with the right medical care.'
+                )
+              )}
             </p>
-            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button className="btn btn-primary btn-lg" onClick={() => navigate('/describe-need?from=About+Us+Page+CTA&serviceName=Medical+Consultation')} id="about-cta-btn">
+            <div className="about-cta-actions">
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={() => navigate('/describe-need?from=About+Us+Page+CTA&serviceName=Medical+Consultation')}
+                id="about-cta-btn"
+              >
                 <span>{l10n('Demander un Rendez-vous', 'Demann enn Randevou', 'Request an Appointment')}</span>
                 <ArrowRight size={18} />
               </button>
-              <a href={buildMed360WhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp btn-lg">
-                <MessageCircle size={18} /> <span>{l10n('DISCUTER SUR WHATSAPP', 'KOZ AR NOU LOR WHATSAPP', 'CHAT WITH US ON WHATSAPP')}</span>
+              <a
+                href={buildMed360WhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-whatsapp btn-lg"
+              >
+                <MessageCircle size={18} />
+                <span>{l10n('Discuter sur WhatsApp', 'Koz lor WhatsApp', 'Chat on WhatsApp')}</span>
               </a>
             </div>
           </div>
@@ -422,3 +435,4 @@ export function AboutPage() {
     </main>
   );
 }
+export default AboutPage;
