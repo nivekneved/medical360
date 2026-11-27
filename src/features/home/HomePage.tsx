@@ -142,7 +142,7 @@ export function HomePage() {
                 id="hero-whatsapp-btn"
               >
                 <MessageCircle size={18} />
-                <span>{isFr ? 'DISCUTER SUR WHATSAPP' : isKr ? 'KOZ AR NOU LOR WHATSAPP' : 'CHAT WITH US ON WHATSAPP'}</span>
+                <span>{isFr ? 'Discuter sur WhatsApp' : isKr ? 'Koz lor WhatsApp' : 'Chat on WhatsApp'}</span>
               </a>
             </div>
 
