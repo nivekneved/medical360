@@ -10,7 +10,7 @@ This hub indexes all technical architecture documents, administrative manuals, U
 
 | Document | Primary Audience | Description |
 | :--- | :--- | :--- |
-| **[🏛️ Architecture & Technical Specifications](ARCHITECTURE.md)** | Developers, DevOps | Dual-mode data persistence, Supabase + LocalStorage fallback, MCP integrations (Higgsfield, Supabase, Firebase), routing, and email/WhatsApp services. |
+| **[🏛️ Architecture & Technical Specifications](ARCHITECTURE.md)** | Developers, DevOps | Dual-provider persistence (Neon Lakebase Postgres default + Supabase fallback), Neon Object Storage (`uploads`), LocalStorage reactive cache, routing, and email/WhatsApp services. |
 | **[🎨 UI/UX Architecture & Guidelines](UX_GUIDELINES.md)** | Designers, Frontend Devs | Three-color design system, Zero-Modal CRUD rules, scrollbar cleanliness standards, typography, accessibility, and signature standards. |
 | **[📖 Admin Portal & CMS User Guide](ADMIN_GUIDE.md)** | Operations, Case Managers | Patient inquiry triage, zero-modal hospital/specialty CRUD, live CMS page editor, email template customization, and database backups. |
 | **[🛡️ SEO & Security Measures](SECURITY_AND_SEO.md)** | DevOps, Security Auditors | Top 25 SEO and security protections including CSP headers, HSTS, anti-spam rate limiting, JSON-LD schemas, and multilingual sitemaps. |
@@ -25,8 +25,8 @@ This hub indexes all technical architecture documents, administrative manuals, U
 ┌────────────────────────────────────────────────────────────────────────┐
 │                          Presentation Layer                            │
 │  (React 19 + React Router v7 + Vanilla CSS Design Tokens + Lucide)     │
-│  Features: Home, About, Hospitals, Specialties, How It Works,          │
-│            Cost Calculator, Case Studies, Describe Need Wizard, Admin  │
+│  Features: Home, About, Hospitals (14), Specialties (15), How It Works,│
+│            Podcast (12 Episodes), Case Studies, Contact, Describe Need │
 ├────────────────────────────────────────────────────────────────────────┤
 │                           Application Layer                            │
 │  Hooks: useCMS, useHospitals, useSpecialties, useInquiry, useL10n      │
@@ -36,10 +36,10 @@ This hub indexes all technical architecture documents, administrative manuals, U
 │  WhatsApp Concierge (+230 5918 8275) | Resend Serverless Email Proxy  │
 │  Multilingual Symptom Matcher | Multi-Currency Savings Engine          │
 ├────────────────────────────────────────────────────────────────────────┤
-│                     Dual-Mode Persistence Layer                        │
+│                     Dual-Provider Persistence Layer                    │
 │  ┌───────────────────────────────────┐ ┌─────────────────────────────┐ │
-│  │     Supabase Live PostgreSQL      │ │    Resilient Mock Engine    │ │
-│  │ (Tables, RLS, Real-Time Queries)  │ │ (LocalStorage v2 Deep Merge)│ │
+│  │ Neon Lakebase Postgres 18 (Def.)  │ │  Supabase Fallback + Local  │ │
+│  │ (Data API, Auth, Object Storage)  │ │  SingleFlight Cache Engine  │ │
 │  └───────────────────────────────────┘ └─────────────────────────────┘ │
 └────────────────────────────────────────────────────────────────────────┘
 ```

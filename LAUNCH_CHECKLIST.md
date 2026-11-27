@@ -25,9 +25,12 @@ Project → Settings → Environment Variables (Production):
 | Variable | Value | Notes |
 |----------|-------|-------|
 | `VITE_SITE_URL` | `https://www.med360.mu` | Production canonical base URL |
-| `VITE_SUPABASE_URL` | your Supabase URL | PostgreSQL database connection |
-| `VITE_SUPABASE_ANON_KEY` | your Supabase anon key | Public client API key |
-| `VITE_ADMIN_EMAIL` | `kevinadlib@gmail.com` | Lead notification recipient (`info@med360.mu` for prod) |
+| `VITE_NEON_DATA_API_URL` | your Neon Data API URL | Primary Lakebase Postgres REST endpoint (default) |
+| `VITE_NEON_AUTH_URL` | your Neon Auth URL | Primary Managed Better Auth endpoint (default) |
+| `DATABASE_URL` | your Neon Postgres URI | Server-side / CLI scripts only (never prefix with `VITE_`) |
+| `VITE_SUPABASE_URL` | your Supabase URL | Optional fallback database (selectable in Admin Settings) |
+| `VITE_SUPABASE_ANON_KEY` | your Supabase anon key | Optional fallback client API key |
+| `VITE_ADMIN_EMAIL` | `info@med360.mu` | Lead notification recipient |
 | `VITE_WHATSAPP_PHONE` | `23059188275` | 24/7 WhatsApp consultation hotline |
 | `RESEND_API_KEY` | your Resend server key | Secret serverless key (never expose to client) |
 | `WHATSAPP_VERIFY_TOKEN` | a strong random token | Meta Graph webhook verification |
@@ -44,8 +47,8 @@ Then **Redeploy** (Deployments → latest → Redeploy) so all variables take ef
 
 ### Action Items:
 1. Go to <https://search.google.com/search-console> → **Add property** → Select URL prefix `https://www.med360.mu` or Domain `med360.mu` → Click **Verify** (verification will succeed immediately via the meta tag or HTML file).
-2. **Submit Sitemap**: Search Console → Sitemaps → enter `https://www.med360.mu/sitemap.xml` → Click **Submit** (44 URLs: static pages + 15 hospitals + 15 specialties).
-3. **URL Inspection**: Inspect `https://www.med360.mu/` → Click **Request Indexing**. Repeat for `/hospitals`, `/specialties`, `/about`, `/how-it-works`, `/cost-calculator`, and `/contact`.
+2. **Submit Sitemap**: Search Console → Sitemaps → enter `https://www.med360.mu/sitemap.xml` → Click **Submit** (42 URLs: 13 static pages including `/podcast` + 14 hospitals + 15 specialties; regenerate anytime with `npm run sitemap`).
+3. **URL Inspection**: Inspect `https://www.med360.mu/` → Click **Request Indexing**. Repeat for `/hospitals`, `/specialties`, `/about`, `/how-it-works`, `/podcast`, and `/contact`.
 
 ---
 

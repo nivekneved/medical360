@@ -25,10 +25,10 @@
 
 For over a decade, Enn Rêv Enn Sourir has funded and coordinated life-saving medical care abroad for underprivileged patients. Med360 extends world-class healthcare navigation services to private and corporate clients:
 - **100% of net company profits** are reinvested into the NGO's medical assistance fund to sponsor surgeries for patients in need.
-- **15 Accredited Premier Hospitals** across India (Apollo Hospitals Chennai & Navi Mumbai, Manipal Hospital Bengaluru, Fortis Memorial & Mulund, MGM Healthcare Chennai, MIOT International Chennai, Artemis Gurugram, BLK-Max Super Speciality New Delhi, Gleneagles HealthCity Chennai, Dr. Rela Institute Chennai, Amrita Hospital Kochi & Faridabad, SIMS Hospital Chennai, Yashoda Hospitals Hyderabad, Marengo Asia Gurugram, Kauvery Hospital Chennai, Max Super Speciality Saket New Delhi).
-- **15 Medical Specialties & Detailed Procedures Catalog** (Oncology, Cardiology, Orthopedics, Organ Transplant, Neurosurgery & Spine, Robotic Surgery, IVF & Fertility, Urology & Andrology, Gastroenterology & Hepatology, Pediatric Cardiac & Surgery, Bariatrics, Ophthalmology, ENT, Pulmonology, Plastic Surgery).
+- **14 Accredited Premier Hospitals** across India (Apollo Hospitals Chennai & Navi Mumbai, Manipal Hospital Bengaluru, Fortis Escorts & Memorial, MGM Healthcare Chennai, MIOT International Chennai, Artemis Gurugram, Medanta Gurugram, Gleneagles HealthCity Chennai, Kokilaben Dhirubhai Ambani Mumbai, Yashoda Hospitals Hyderabad, Aster Prime Hyderabad, Sankara Nethralaya Chennai, Paras Health, Max Super Speciality Saket New Delhi).
+- **15 Medical Specialties & Detailed Procedures Catalog** (Oncology, Cardiology, Orthopaedics, Organ Transplantation, Neurosurgery & Spine, Robotic Surgery, IVF & Fertility, Urology & Andrology, Gastroenterology & Hepatology, Paediatrics, Haematology, Ophthalmology, ENT, Pulmonology, Plastic & Reconstructive Surgery).
 - **Free expert medical second opinions** and all-inclusive treatment quotes within 24–48 hours.
-- **Full end-to-end travel & visa logistics**: flight coordination, medical visa assistance, VIP airport transfers, local accommodation, and dedicated Mauritian patient navigators.
+- **Full end-to-end travel & visa logistics**: flight coordination, medical visa assistance, VIP airport transfers, local accommodation, ground/air-ambulance coordination, and dedicated Mauritian patient navigators.
 
 ---
 
@@ -40,13 +40,16 @@ For over a decade, Enn Rêv Enn Sourir has funded and coordinated life-saving me
 - **Hospital Directory & Detail Pages (`/hospitals` & `/hospitals/:id`)**: Search & filter by city, bed count, international patient volume, and accreditations (JCI, NABH, NABL).
 - **Specialties & Procedures Catalog (`/specialties` & `/specialties/:id`)**: Comprehensive guides with price estimation in USD & MUR, recovery timelines, symptom chips, and affiliated hospitals.
 - **Interactive Treatment Cost Calculator (`/cost-calculator`)**: Multi-currency benchmark comparing Western medical rates against accredited Indian hospitals with up to 90% savings.
-- **Comprehensive 6-Stage Patient Guide (`/how-it-works`)**: Step-by-step breakdown from initial enquiry to post-treatment recovery care.
+- **Comprehensive 6-Stage Patient Guide (`/how-it-works`)**: Visual 5-step wave diagram + 6-phase breakdown from initial enquiry to post-treatment follow-up.
+- **Official Med360 Podcast Hub (`/podcast`)**: Embedded YouTube series featuring all 12 official medical awareness episodes.
+- **Interactive Contact & Location Hub (`/contact`)**: Direct callout actions, interactive Port-Louis Google Map with GPS directions, and quick inquiry form.
 - **Verified Patient Success Stories (`/case-studies`)**: Real patient testimonials, outcomes, and cost-savings statistics.
 - **Full Legal & Compliance Suite**: Privacy Policy (`/privacy`), Terms of Service (`/terms`), Cookie Policy (`/cookies`), and Medical Disclaimer (`/medical-disclaimer`).
 
 ### 🛡️ Admin & CMS Portal (`/admin`)
+- **Database Provider Switcher (`/admin/settings`)**: Switch cleanly between **Neon Lakebase Postgres (default)** and **Supabase (fallback)** directly from Admin Settings.
 - **Real-Time CMS Page Editor (`/admin/pages/:pageId`)**: Live text editing for all pages with language tabs (FR, KR, EN) and instant site synchronization.
-- **Email Template Customizer & Dispatch Engine (`/admin/email-templates`)**: Customizable notification templates, live HTML preview, and test dispatch to `kevinadlib@gmail.com`.
+- **Email Template Customizer & Dispatch Engine (`/admin/email-templates`)**: Customizable notification templates, live HTML preview, and test dispatch.
 - **Core Data Management**: Dedicated CRUD interfaces with zero-modal inline workstations for:
   - *Partner Hospitals* (`/admin/hospitals`)
   - *Medical Specialties & Procedures* (`/admin/specialties`)
@@ -61,14 +64,14 @@ For over a decade, Enn Rêv Enn Sourir has funded and coordinated life-saving me
 
 | Layer | Technology |
 | :--- | :--- |
-| **Core Framework** | React 19 + TypeScript + Vite |
+| **Core Framework** | React 19 + TypeScript + Vite 8 |
 | **Routing** | React Router v7 (`react-router-dom`) |
 | **Styling** | Vanilla CSS with CSS Custom Properties (Zero-Modal, Clean responsive design system) |
 | **Internationalization** | `i18next` + `react-i18next` (EN, FR, KR) |
-| **SEO & Meta** | `react-helmet-async` + Schema.org JSON-LD + Sitemap XML |
+| **SEO & Meta** | `react-helmet-async` + Schema.org JSON-LD + Auto-Generated Sitemap XML |
 | **Icons** | Lucide React (`lucide-react`) |
-| **Data Engine** | Dual-Mode: Supabase Live PostgreSQL + LocalStorage Reactive Fallback |
-| **MCP Ecosystem** | Supabase MCP + Firebase MCP + Higgsfield AI MCP (`https://mcp.higgsfield.ai/mcp`) |
+| **Data Engine** | **Neon Lakebase Postgres 18 (Default)** via Neon Data API & Neon Auth + Supabase Fallback + LocalStorage Reactive Cache |
+| **Object Storage** | **Neon Object Storage** (`uploads` bucket configured in `neon.ts` via `files-sdk`) |
 | **Email Notification** | Resend API Integration (`/api/resend/emails`) with automated lead alerts |
 | **Concierge Hotline** | 24/7 WhatsApp Hotline (`+230 5918 8275`) & Edge Webhook (`/api/webhooks/whatsapp`) |
 
@@ -138,21 +141,24 @@ npm install
 # 2. Start local development server (Vite)
 npm run dev
 
-# 3. Create a full database & git backup
-npm run backup
+# 3. Run automated test suite (26 compliance & integrity checks)
+npm test
 
-# 4. Run typecheck & build bundle
+# 4. Regenerate public/sitemap.xml from live catalog seeds
+npm run sitemap
+
+# 5. Run TypeScript check & production build
+npm run typecheck
 npm run build
 ```
 
 ---
 
-## 🔐 Admin Portal & Credentials
+## 🔐 Admin Portal & Authentication
 
 Navigate to `/admin` or `/admin/login`:
-- **Admin Email**: `admin@med360.mu`
-- **Case Manager Email**: `case@med360.mu`
-- **Password**: your own Supabase Auth password (no default/shared password exists)
+- Authenticated via **Neon Auth** (default) or **Supabase Auth** (when switched in Admin Settings).
+- No default or hardcoded passwords exist in the repository.
 
 ---
 

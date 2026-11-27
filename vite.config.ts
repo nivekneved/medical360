@@ -67,6 +67,8 @@ export default defineConfig(({ mode }) => {
   return {
   plugins: [resendDevProxy(env.RESEND_API_KEY || '')],
   build: {
+    target: 'es2022',
+    cssMinify: true,
     sourcemap: false,
     chunkSizeWarningLimit: 800,
     rollupOptions: {
@@ -81,6 +83,9 @@ export default defineConfig(({ mode }) => {
             }
             if (id.includes('i18next') || id.includes('react-i18next')) {
               return 'vendor-i18n';
+            }
+            if (id.includes('@neon')) {
+              return 'vendor-neon';
             }
             if (id.includes('@supabase') || id.includes('supabase')) {
               return 'vendor-supabase';

@@ -41,6 +41,7 @@ const staticRoutes = [
   { path: '/case-studies',     priority: '0.8',  freq: 'weekly'  },
   { path: '/describe-need',    priority: '0.85', freq: 'weekly'  },
   { path: '/contact',          priority: '0.75', freq: 'monthly' },
+  { path: '/podcast',          priority: '0.8',  freq: 'weekly'  },
   { path: '/about',            priority: '0.8',  freq: 'monthly' },
   { path: '/privacy',          priority: '0.3',  freq: 'yearly'  },
   { path: '/terms',            priority: '0.3',  freq: 'yearly'  },
