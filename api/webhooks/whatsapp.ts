@@ -161,10 +161,11 @@ export default async function handler(req: Request) {
       // Safe telemetry log: only metadata, no PII
       console.log(`[WhatsApp Webhook] Handled event "${eventType}" for Lead ID: ${leadId}`);
 
-      // Persist non-PII/structured consultation log to Supabase whatsapp_logs when configured
+      // Persist non-PII/structured consultation log to Neon Data API (default) or Supabase fallback
+      const neonDataApiUrl = (process.env.VITE_NEON_DATA_API_URL || '').trim();
       const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
       const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
-      if (supabaseUrl && supabaseKey) {
+      if (neonDataApiUrl || (supabaseUrl && supabaseKey)) {
         const d = payload?.data || {};
         const logRow = {
           id: String(leadId).slice(0, 80),
@@ -177,14 +178,23 @@ export default async function handler(req: Request) {
           prefilled_message: d.prefilledMessage ? String(d.prefilledMessage).slice(0, 1000) : '',
           webhook_status: 'dispatched',
         };
-        await fetch(`${supabaseUrl}/rest/v1/whatsapp_logs`, {
+        const targetUrl = neonDataApiUrl
+          ? `${neonDataApiUrl.replace(/\/$/, '')}/whatsapp_logs`
+          : `${supabaseUrl}/rest/v1/whatsapp_logs`;
+        const targetHeaders: Record<string, string> = neonDataApiUrl
+          ? {
+              'Content-Type': 'application/json',
+              'Prefer': 'resolution=merge-duplicates,return=minimal',
+            }
+          : {
+              'apikey': supabaseKey,
+              'Authorization': `Bearer ${supabaseKey}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'resolution=merge-duplicates,return=minimal',
+            };
+        await fetch(targetUrl, {
           method: 'POST',
-          headers: {
-            'apikey': supabaseKey,
-            'Authorization': `Bearer ${supabaseKey}`,
-            'Content-Type': 'application/json',
-            'Prefer': 'resolution=merge-duplicates,return=minimal',
-          },
+          headers: targetHeaders,
           body: JSON.stringify([logRow]),
         }).catch(() => {});
       }

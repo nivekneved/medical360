@@ -21,8 +21,15 @@
     "vite": "^8.2.0"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1178.0",
+    "@aws-sdk/s3-presigned-post": "^3.1178.0",
+    "@aws-sdk/s3-request-presigner": "^3.1178.0",
+    "@neon/config": "^1.14.8",
+    "@neon/env": "^2.1.11",
+    "@neon/neon-js": "^0.10.2",
     "@supabase/supabase-js": "^2.112.4",
     "dompurify": "^3.4.17",
+    "files-sdk": "^3.2.1",
     "i18next": "^26.4.0",
     "lucide-react": "^1.33.0",
     "react-helmet-async": "^3.0.0",

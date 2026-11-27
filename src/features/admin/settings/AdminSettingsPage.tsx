@@ -16,14 +16,15 @@ import { AdminSecuritySettings } from './components/AdminSecuritySettings';
 import { AdminGeneralSettings } from './components/AdminGeneralSettings';
 import { AdminThemeSettings } from './components/AdminThemeSettings';
 import { AdminMaintenanceSettings } from './components/AdminMaintenanceSettings';
+import { AdminDatabaseProviderSettings } from './components/AdminDatabaseProviderSettings';
 
-type SettingsTab = 'general' | 'maintenance' | 'themes' | 'backups' | 'security';
+type SettingsTab = 'general' | 'database' | 'maintenance' | 'themes' | 'backups' | 'security';
 
 export function AdminSettingsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlTab = searchParams.get('tab') as SettingsTab | null;
 
-  const validTabs: SettingsTab[] = ['general', 'maintenance', 'themes', 'backups', 'security'];
+  const validTabs: SettingsTab[] = ['general', 'database', 'maintenance', 'themes', 'backups', 'security'];
   const initialTab: SettingsTab = (urlTab && validTabs.includes(urlTab)) ? urlTab : 'general';
 
   const [activeTab, setActiveTab] = useState<SettingsTab>(initialTab);
@@ -123,6 +124,26 @@ export function AdminSettingsPage() {
 
         <button
           type="button"
+          onClick={() => handleTabChange('database')}
+          style={{
+            padding: '0.75rem 1.25rem',
+            fontSize: '0.9rem',
+            fontWeight: 700,
+            background: 'transparent',
+            border: 'none',
+            borderBottom: activeTab === 'database' ? '2.5px solid var(--color-primary)' : '2.5px solid transparent',
+            color: activeTab === 'database' ? 'var(--color-primary)' : 'var(--color-text-secondary)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+          }}
+        >
+          <Database size={16} /> Database (Neon / Supabase)
+        </button>
+
+        <button
+          type="button"
           onClick={() => handleTabChange('maintenance')}
           style={{
             padding: '0.75rem 1.25rem',
@@ -205,6 +226,10 @@ export function AdminSettingsPage() {
       {/* Tab Contents */}
       {activeTab === 'general' && (
         <AdminGeneralSettings onNotify={showNotification} />
+      )}
+
+      {activeTab === 'database' && (
+        <AdminDatabaseProviderSettings onNotify={showNotification} />
       )}
 
       {activeTab === 'maintenance' && (

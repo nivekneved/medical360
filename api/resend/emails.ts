@@ -76,12 +76,34 @@ function isAdminRecipient(email: string): boolean {
   return allowedAdmins.has(clean);
 }
 
-// Verify Supabase Auth JWT token and active admin_users membership for external recipients
+// Verify Neon Auth (default) or Supabase Auth JWT token and active admin_users membership
 async function verifyAdminAuth(authHeader: string | null): Promise<boolean> {
   if (!authHeader || !authHeader.startsWith('Bearer ')) return false;
   const token = authHeader.slice(7).trim();
   if (!token) return false;
 
+  // 1. Try Neon Data API (validates Neon Auth JWT via JWKS + RLS on admin_users)
+  const neonDataApiUrl = (process.env.VITE_NEON_DATA_API_URL || '').trim();
+  if (neonDataApiUrl) {
+    try {
+      const neonCheck = await fetch(
+        `${neonDataApiUrl.replace(/\/$/, '')}/admin_users?active=eq.true&select=id`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+      if (neonCheck.ok) {
+        const rows = await neonCheck.json();
+        if (Array.isArray(rows) && rows.length > 0) return true;
+      }
+    } catch {
+      // Fall through to Supabase check if configured
+    }
+  }
+
+  // 2. Fallback: Supabase Auth + REST
   const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
   const supabaseAnonKey = process.env.VITE_SUPABASE_ANON_KEY || '';
   if (!supabaseUrl || !supabaseAnonKey) return false;

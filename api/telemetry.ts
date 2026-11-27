@@ -71,11 +71,12 @@ export default async function handler(req: Request) {
     const body = JSON.parse(raw);
     const batch = Array.isArray(body?.batch) ? body.batch.slice(0, 50) : [];
 
-    // Persist batch to Supabase telemetry_events if configured
+    // Persist batch to Neon Data API (default) or Supabase telemetry_events fallback
+    const neonDataApiUrl = (process.env.VITE_NEON_DATA_API_URL || '').trim();
     const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
 
-    if (supabaseUrl && supabaseKey && batch.length > 0) {
+    if ((neonDataApiUrl || (supabaseUrl && supabaseKey)) && batch.length > 0) {
       const rows = batch
         .filter((ev: any) => typeof ev?.eventName === 'string' && ev.eventName.length > 0)
         .map((ev: any, idx: number) => ({
@@ -87,14 +88,23 @@ export default async function handler(req: Request) {
         }));
 
       if (rows.length > 0) {
-        await fetch(`${supabaseUrl}/rest/v1/telemetry_events`, {
+        const targetUrl = neonDataApiUrl
+          ? `${neonDataApiUrl.replace(/\/$/, '')}/telemetry_events`
+          : `${supabaseUrl}/rest/v1/telemetry_events`;
+        const targetHeaders: Record<string, string> = neonDataApiUrl
+          ? {
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal',
+            }
+          : {
+              'apikey': supabaseKey,
+              'Authorization': `Bearer ${supabaseKey}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal',
+            };
+        await fetch(targetUrl, {
           method: 'POST',
-          headers: {
-            'apikey': supabaseKey,
-            'Authorization': `Bearer ${supabaseKey}`,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=minimal',
-          },
+          headers: targetHeaders,
           body: JSON.stringify(rows),
         }).catch(() => {});
       }

@@ -37,3 +37,4 @@ backups/
 *.pptx
 *.ppt
 *.key
+.neon
