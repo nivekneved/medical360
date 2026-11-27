@@ -2,17 +2,20 @@ import { useEffect } from 'react';
 import {
   ArrowRight,
   MessageCircle,
-  BookmarkCheck,
+  Award,
   ExternalLink,
   CheckCircle2,
   Sparkles,
+  FileCheck2,
+  Download,
+  ShieldCheck,
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useL10n } from '../../hooks/useL10n';
 import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
-import { HIGHLIGHTS, TIMELINE, FOOTNOTES } from './aboutContent';
+import { HIGHLIGHTS, TIMELINE, OFFICIAL_CERTIFICATES } from './aboutContent';
 import { MediaCoverageSection } from './MediaCoverageSection';
 import './About.css';
 
@@ -330,56 +333,108 @@ export function AboutPage() {
             </div>
           </div>
 
-          {/* ── 6. International Recognition (UICC, SIOP, CCI) ──────────── */}
-          <div className="about-affiliations">
-            <div className="about-affiliations__head">
-              <div className="about-affiliations__icon">
-                <BookmarkCheck size={23} />
-              </div>
-              <div>
-                <h2>
-                  {l10n('Bâti sur une Reconnaissance Internationale (UICC, SIOP, CCI)', 'Bati lor Rekonesans Internasional (UICC, SIOP, CCI)', 'Built on International Recognition (UICC, SIOP, CCI)')}
-                </h2>
-                <p>
-                  {l10n('Affiliations officielles renforçant nos principes éthiques et la dignité du patient', 'Bann afiliasion ofisiel ki gid nou bann valer etik', 'Official affiliations reinforcing our ethical principles and patient dignity')}
-                </p>
-              </div>
+          {/* ── 6. Official International Credentials & Awards (UICC, SIOP, CCI) ── */}
+          <section className="about-awards-showcase" aria-labelledby="official-credentials-heading">
+            <div className="about-awards-header">
+              <span className="about-awards-eyebrow">
+                <Award size={14} />
+                {l10n(
+                  'Accréditations & Certificats Officiels Vérifiés',
+                  'Sertifika & Rekonesans Ofisiel Verifie',
+                  'Verified International Credentials & Certificates'
+                )}
+              </span>
+              <h2 id="official-credentials-heading">
+                {l10n(
+                  'Reconnus par les Plus Hautes Instances Mondiales de l\'Oncologie',
+                  'Rekonet par Bann Pli Gran Instans Mondial Onkolozi',
+                  'Recognised by the World’s Leading Oncology Institutions'
+                )}
+              </h2>
+              <p>
+                {l10n(
+                  'La gouvernance éthique de Med360 s\'appuie sur les accréditations officielles et signées d\'Enn Rev Enn Sourir auprès de l\'UICC (Genève), de la SIOP (Genève) et de Childhood Cancer International (Amsterdam). Consultez chaque certificat original ci-dessous.',
+                  'Gouvernans etik Med360 baze lor bann sertifika ofisiel ek sinye Enn Rev Enn Sourir avek UICC (Zenev), SIOP (Zenev) ek Childhood Cancer International (Amsterdam). Get sak sertifika orizinal anba la.',
+                  'Med360’s ethical mandate is backed by signed, verifiable international credentials held by Enn Rev Enn Sourir with UICC (Geneva), SIOP (Geneva), and Childhood Cancer International (Amsterdam). Inspect each official certificate below.'
+                )}
+              </p>
             </div>
 
-            <p className="about-affiliations__intro">
-              {l10n(
-                'Les fondations de Med360 sont renforcées par l\'engagement d\'Enn Rev Enn Sourir auprès d\'organisations internationales respectées dans la lutte contre le cancer et l\'oncologie pédiatrique : Membre Titulaire de l\'UICC, et collaborations documentées avec SIOP et Childhood Cancer International (CCI).',
-                'Lafondasion Med360 ranforse par langazman Enn Rev Enn Sourir ar bann lorganizasion mondial renome : Manb Titiler UICC ek kolaborasion ar SIOP ek Childhood Cancer International (CCI).',
-                'The foundation behind Med360 is strengthened by Enn Rev Enn Sourir’s involvement with respected global cancer organisations: Full Member of the Union for International Cancer Control (UICC), alongside collaborations with SIOP and Childhood Cancer International (CCI).'
-              )}
-            </p>
-
-            <div className="about-affiliations__grid">
-              {FOOTNOTES.map((fn) => (
-                <article key={fn.ref} className="about-affil-card">
+            <div className="about-awards-grid">
+              {OFFICIAL_CERTIFICATES.map((cert) => (
+                <article key={cert.id} className="about-cert-card">
                   <div>
-                    <div className="about-affil-card__meta">
-                      <span className="about-affil-ref">{fn.ref}</span>
-                      <span className="about-affil-status">{fn.status}</span>
+                    <a
+                      href={cert.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`about-cert-plaque about-cert-plaque--${cert.accentStyle}`}
+                      aria-label={`${cert.org} — ${l(cert, 'certificateTitle')} (PDF)`}
+                    >
+                      <div className="about-cert-plaque__topbar" />
+                      <div className="about-cert-plaque__head">
+                        <span className="about-cert-acronym">{cert.acronym}</span>
+                        <span className="about-cert-seal">{cert.yearBadge}</span>
+                      </div>
+
+                      <div className="about-cert-plaque__body">
+                        <div className="about-cert-plaque__doc-type">
+                          {l(cert, 'certificateTitle')}
+                        </div>
+                        <div className="about-cert-plaque__recipient">{cert.recipient}</div>
+                        <div className="about-cert-plaque__org">{cert.org}</div>
+                      </div>
+
+                      <div className="about-cert-plaque__foot">
+                        <span>{cert.location}</span>
+                        <span className="about-cert-plaque__verify">
+                          <ShieldCheck size={13} />
+                          <span>{l10n('Signé · PDF', 'Sinye · PDF', 'Signed · PDF')}</span>
+                        </span>
+                      </div>
+                    </a>
+
+                    <div className="about-cert-meta" style={{ marginTop: '1.15rem' }}>
+                      <span className="about-cert-status">{l(cert, 'status')}</span>
+                      <h3>{cert.org}</h3>
+                      <div className="about-cert-loc">📍 {cert.location}</div>
+                      <p className="about-cert-desc">{l(cert, 'desc')}</p>
+                      <div className="about-cert-signatory">
+                        {l10n('Signé par :', 'Sinye par :', 'Signed by:')} {cert.signatory}
+                      </div>
                     </div>
-                    <h3>{fn.org}</h3>
-                    <div className="about-affil-loc">📍 {fn.location}</div>
-                    <p>{fn.desc}</p>
                   </div>
 
-                  <a
-                    href={fn.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="about-affil-link"
-                  >
-                    <span>{l10n('Consulter le site officiel', 'Get sit ofisiel', 'Visit official website')}</span>
-                    <ExternalLink size={13} />
-                  </a>
+                  <div className="about-cert-actions">
+                    <a
+                      href={cert.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="about-cert-btn-pdf"
+                    >
+                      <FileCheck2 size={15} />
+                      <span>{l10n('Voir le Certificat Officiel (PDF)', 'Get Sertifika Ofisiel (PDF)', 'View Official Certificate (PDF)')}</span>
+                    </a>
+                    <div className="about-cert-secondary-links">
+                      <a href={cert.pdfUrl} download className="about-cert-link">
+                        <Download size={13} />
+                        <span>{l10n('Télécharger PDF', 'Telesarz PDF', 'Download PDF')}</span>
+                      </a>
+                      <a
+                        href={cert.officialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="about-cert-link"
+                      >
+                        <span>{cert.acronym} {l10n('Officiel', 'Ofisiel', 'Official')}</span>
+                        <ExternalLink size={12} />
+                      </a>
+                    </div>
+                  </div>
                 </article>
               ))}
             </div>
-          </div>
+          </section>
 
           {/* ── 7. Dark Conversion Finale ───────────────────────────────── */}
           <div className="about-cta-finale">

@@ -84,6 +84,94 @@ export const TIMELINE = [
   },
 ];
 
+export interface OfficialCertificate {
+  id: string;
+  acronym: string;
+  org: string;
+  certificateTitle: string;
+  certificateTitle_fr: string;
+  certificateTitle_kr: string;
+  recipient: string;
+  status: string;
+  status_fr: string;
+  status_kr: string;
+  yearBadge: string;
+  location: string;
+  signatory: string;
+  desc: string;
+  desc_fr: string;
+  desc_kr: string;
+  pdfUrl: string;
+  officialUrl: string;
+  accentStyle: 'uicc' | 'siop' | 'cci';
+}
+
+export const OFFICIAL_CERTIFICATES: OfficialCertificate[] = [
+  {
+    id: 'cert-uicc',
+    acronym: 'UICC',
+    org: 'Union for International Cancer Control',
+    certificateTitle: 'Official Member Certificate',
+    certificateTitle_fr: 'Certificat Officiel de Membre',
+    certificateTitle_kr: 'Sertifika Ofisiel Manb',
+    recipient: 'Enn Rev Enn Sourir',
+    status: 'Full Member Organisation',
+    status_fr: 'Organisation Membre Titulaire',
+    status_kr: 'Lorganizasion Manb Titiler',
+    yearBadge: 'GLOBAL',
+    location: 'Geneva, Switzerland',
+    signatory: 'Ulrika Årehed Kågström (President) & Cary Adams (CEO)',
+    desc: 'Acknowledges Enn Rev Enn Sourir’s contribution to advancing cancer control globally within the world’s largest and oldest international cancer organisation.',
+    desc_fr: 'Reconnaît la contribution d\'Enn Rev Enn Sourir à l\'avancement de la lutte mondiale contre le cancer au sein de la plus grande organisation internationale dédiée.',
+    desc_kr: 'Rekonet kontribision Enn Rev Enn Sourir dan lalit mondial kont kanser dan pli gran lorganizasion internasional.',
+    pdfUrl: '/assets/certificates/uicc-member-certificate.pdf',
+    officialUrl: 'https://www.uicc.org',
+    accentStyle: 'uicc',
+  },
+  {
+    id: 'cert-siop',
+    acronym: 'SIOP',
+    org: 'International Society of Paediatric Oncology',
+    certificateTitle: '2025 Membership Certificate',
+    certificateTitle_fr: 'Certificat d\'Adhésion 2025',
+    certificateTitle_kr: 'Sertifika Manb 2025',
+    recipient: 'Mr. Juglall Kumar Budheswar (Karan)',
+    status: 'Verified 2025 Member',
+    status_fr: 'Membre Vérifié 2025',
+    status_kr: 'Manb Verifie 2025',
+    yearBadge: '2025',
+    location: 'Geneva, Switzerland',
+    signatory: 'Dr. Guillermo Luis Chantada (SIOP President)',
+    desc: 'Certifies active 2025 membership in the only global multidisciplinary society devoted exclusively to paediatric and adolescent oncology care standards.',
+    desc_fr: 'Certifie l\'adhésion active 2025 à l\'unique société multidisciplinaire mondiale exclusivement dédiée à l\'oncologie pédiatrique et de l\'adolescent.',
+    desc_kr: 'Sertifie ki li enn manb aktif 2025 dan sel sosiete mondial dedie a onkolozi pediatrik ek adolesan.',
+    pdfUrl: '/assets/certificates/siop-membership-certificate-2025.pdf',
+    officialUrl: 'https://siop-online.org',
+    accentStyle: 'siop',
+  },
+  {
+    id: 'cert-cci',
+    acronym: 'CCI',
+    org: 'Childhood Cancer International',
+    certificateTitle: 'Official Associate Member Approval',
+    certificateTitle_fr: 'Agrément Officiel de Membre Associé',
+    certificateTitle_kr: 'Lagreman Ofisiel Manb Asosie',
+    recipient: 'Enn Rev Enn Sourir · Mauritius',
+    status: 'Associate Member · 182 Orgs / 94 Countries',
+    status_fr: 'Membre Associé · 182 Orgs / 94 Pays',
+    status_kr: 'Manb Asosie · 182 Lorg / 94 Pei',
+    yearBadge: '2023+',
+    location: 'Amsterdam, Netherlands',
+    signatory: 'Rodney Wong Kai Heng (President, Board of Trustees)',
+    desc: 'Approved at the CCI Annual General Assembly (Oct 2023), uniting Enn Rev Enn Sourir with 182 organisations across 94 countries championing childhood cancer care.',
+    desc_fr: 'Approuvé lors de l\'Assemblée Générale Annuelle de CCI (oct. 2023), intégrant Enn Rev Enn Sourir à un réseau mondial de 182 organisations dans 94 pays.',
+    desc_kr: 'Aprouve dan Lasanble Zeneral CCI (Okt 2023), ki reini Enn Rev Enn Sourir avek 182 lorganizasion dan 94 pei.',
+    pdfUrl: '/assets/certificates/cci-associate-member-letter.pdf',
+    officialUrl: 'https://www.childhoodcancerinternational.org',
+    accentStyle: 'cci',
+  },
+];
+
 export const FOOTNOTES = [
   {
     ref: '[1]',
@@ -96,7 +184,7 @@ export const FOOTNOTES = [
   {
     ref: '[2]',
     org: 'SIOP (International Society of Paediatric Oncology)',
-    status: 'Documented Collaboration',
+    status: 'Verified 2025 Member',
     location: 'Geneva, Switzerland',
     desc: 'The only global multidisciplinary society entirely devoted to pediatric and adolescent oncology, improving clinical care standards worldwide.',
     link: 'https://siop-online.org',
@@ -104,13 +192,10 @@ export const FOOTNOTES = [
   {
     ref: '[3]',
     org: 'CCI (Childhood Cancer International)',
-    status: 'Profiled Organisation',
+    status: 'Associate Member Organisation',
     location: 'Amsterdam, Netherlands',
-    desc: 'The largest patient-support organisation for childhood cancer in the world. CCI has publicly profiled Enn Rev Enn Sourir and its patient work in Mauritius.',
+    desc: 'The largest patient-support organisation for childhood cancer in the world, uniting 182 organisations across 94 countries.',
     link: 'https://www.childhoodcancerinternational.org',
   },
 ];
-
-// AWARDS section removed — no verified awards to display.
-// Add real award data here when the client provides confirmed recognitions.
 
