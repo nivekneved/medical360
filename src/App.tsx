@@ -57,6 +57,7 @@ function lazyWithRetry<T extends { [key: string]: any }>(
 // Lazy public pages (code-split with deployment auto-retry)
 const AboutPage           = lazyWithRetry(() => import('./features/about/AboutPage'), m => m.AboutPage);
 const BoardMembersPage    = lazyWithRetry(() => import('./features/about/BoardMembersPage'), m => m.BoardMembersPage);
+const AccreditationsPage  = lazyWithRetry(() => import('./features/about/AccreditationsPage'), m => m.AccreditationsPage);
 const HospitalsPage       = lazyWithRetry(() => import('./features/hospitals/HospitalsPage'), m => m.HospitalsPage);
 const HospitalDetailPage  = lazyWithRetry(() => import('./features/hospitals/HospitalDetailPage'), m => m.HospitalDetailPage);
 const SpecialtiesPage     = lazyWithRetry(() => import('./features/specialties/SpecialtiesPage'), m => m.SpecialtiesPage);
@@ -255,6 +256,7 @@ export default function App() {
                       <Route path="/"                 element={<HomePage />} />
                       <Route path="/about"            element={<AboutPage />} />
                       <Route path="/who-we-are"       element={<BoardMembersPage />} />
+                      <Route path="/accreditations"   element={<AccreditationsPage />} />
                       <Route path="/board-members"    element={<Navigate to="/who-we-are" replace />} />
                       <Route path="/hospitals"        element={<HospitalsPage />} />
                       <Route path="/hospitals/:id"    element={<HospitalDetailPage />} />

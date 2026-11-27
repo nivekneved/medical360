@@ -396,15 +396,25 @@ export function AboutPage() {
 
               {/* Right: Live Official Certificate Document Stage */}
               <div className="about-creds-viewer" role="tabpanel">
-                <div className="about-creds-viewer__frame">
-                  <iframe
+                <a
+                  href={activeCert.pdfUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="about-creds-viewer__frame"
+                  aria-label={`${activeCert.org} — ${l(activeCert, 'certificateTitle')} (PDF)`}
+                >
+                  <img
                     key={activeCert.id}
-                    src={`${activeCert.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-                    title={`${activeCert.org} — ${l(activeCert, 'certificateTitle')}`}
-                    className="about-creds-viewer__iframe"
-                    loading="lazy"
+                    src={activeCert.previewImage}
+                    alt={`${activeCert.org} — ${l(activeCert, 'certificateTitle')}`}
+                    className="about-creds-viewer__img"
+                    decoding="async"
                   />
-                </div>
+                  <span className="about-creds-viewer__zoom-pill">
+                    <Maximize2 size={13} />
+                    <span>{l10n('Cliquer pour ouvrir le PDF signé', 'Klike pou ouver PDF sinye', 'Click to open signed PDF')}</span>
+                  </span>
+                </a>
 
                 <div className="about-creds-viewer__bar">
                   <div className="about-creds-viewer__info">

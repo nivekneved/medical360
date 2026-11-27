@@ -33,6 +33,7 @@ export type SEOPageKey =
   | 'home'
   | 'about'
   | 'whoWeAre'
+  | 'accreditations'
   | 'hospitals'
   | 'specialties'
   | 'howItWorks'
@@ -111,6 +112,27 @@ export const SEO_PAGES: Record<SEOPageKey, LocalizedMeta> = {
       en: ['Med360 board members', 'who we are Med360', 'Karan Juglall', 'Luciano Azor', 'Delphine Dhollah', 'Enn Rev Enn Sourir leadership'],
       fr: ['conseil administration Med360', 'qui nous sommes Med360', 'Karan Juglall', 'Enn Rev Enn Sourir'],
       kr: ['kisannla nou ete Med360', 'Karan Juglall', 'Enn Rev Enn Sourir'],
+    },
+  },
+
+  accreditations: {
+    title: {
+      en: 'Accreditations & Official Certificates (UICC, SIOP, CCI) | Med360',
+      fr: 'Accréditations & Certificats Officiels (UICC, SIOP, CCI) | Med360',
+      kr: 'Akreditasion & Sertifika Ofisiel (UICC, SIOP, CCI) | Med360',
+    },
+    description: {
+      en: 'Inspect the signed international credentials behind Med360 and NGO Enn Rev Enn Sourir: UICC Full Member, SIOP 2025 Member, and Childhood Cancer International Associate Member.',
+      fr: 'Consultez les certificats internationaux officiels d\'Enn Rev Enn Sourir et Med360 : Membre Titulaire UICC, Membre SIOP 2025 et Membre Associé Childhood Cancer International.',
+      kr: 'Get bann sertifika internasional ofisiel Enn Rev Enn Sourir ek Med360 : Manb Titiler UICC, Manb SIOP 2025 ek Manb Asosie Childhood Cancer International.',
+    },
+    canonical: '/accreditations',
+    ogType: 'website',
+    image: '/assets/certificates/uicc-preview.jpg',
+    keywords: {
+      en: ['Med360 accreditations', 'UICC member Mauritius', 'SIOP certificate', 'Childhood Cancer International Mauritius', 'Enn Rev Enn Sourir certificates'],
+      fr: ['accréditations Med360', 'UICC Maurice', 'SIOP', 'Childhood Cancer International'],
+      kr: ['akreditasion Med360', 'UICC Moris', 'SIOP', 'CCI'],
     },
   },
 

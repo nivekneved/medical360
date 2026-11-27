@@ -102,6 +102,7 @@ export interface OfficialCertificate {
   desc_fr: string;
   desc_kr: string;
   pdfUrl: string;
+  previewImage: string;
   officialUrl: string;
   accentStyle: 'uicc' | 'siop' | 'cci';
 }
@@ -125,6 +126,7 @@ export const OFFICIAL_CERTIFICATES: OfficialCertificate[] = [
     desc_fr: 'Reconnaît la contribution d\'Enn Rev Enn Sourir à l\'avancement de la lutte mondiale contre le cancer au sein de la plus grande organisation internationale dédiée.',
     desc_kr: 'Rekonet kontribision Enn Rev Enn Sourir dan lalit mondial kont kanser dan pli gran lorganizasion internasional.',
     pdfUrl: '/assets/certificates/uicc-member-certificate.pdf',
+    previewImage: '/assets/certificates/uicc-preview.jpg',
     officialUrl: 'https://www.uicc.org',
     accentStyle: 'uicc',
   },
@@ -146,6 +148,7 @@ export const OFFICIAL_CERTIFICATES: OfficialCertificate[] = [
     desc_fr: 'Certifie l\'adhésion active 2025 à l\'unique société multidisciplinaire mondiale exclusivement dédiée à l\'oncologie pédiatrique et de l\'adolescent.',
     desc_kr: 'Sertifie ki li enn manb aktif 2025 dan sel sosiete mondial dedie a onkolozi pediatrik ek adolesan.',
     pdfUrl: '/assets/certificates/siop-membership-certificate-2025.pdf',
+    previewImage: '/assets/certificates/siop-preview.jpg',
     officialUrl: 'https://siop-online.org',
     accentStyle: 'siop',
   },
@@ -167,6 +170,7 @@ export const OFFICIAL_CERTIFICATES: OfficialCertificate[] = [
     desc_fr: 'Approuvé lors de l\'Assemblée Générale Annuelle de CCI (oct. 2023), intégrant Enn Rev Enn Sourir à un réseau mondial de 182 organisations dans 94 pays.',
     desc_kr: 'Aprouve dan Lasanble Zeneral CCI (Okt 2023), ki reini Enn Rev Enn Sourir avek 182 lorganizasion dan 94 pei.',
     pdfUrl: '/assets/certificates/cci-associate-member-letter.pdf',
+    previewImage: '/assets/certificates/cci-preview.jpg',
     officialUrl: 'https://www.childhoodcancerinternational.org',
     accentStyle: 'cci',
   },
