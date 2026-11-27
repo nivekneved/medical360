@@ -35,7 +35,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'From non-invasive cardiac evaluation and catheterisation to minimally invasive TAVI, coronary artery bypass grafts (CABG), LVAD installations, and heart transplantation led by premier international surgeons.',
     description_fr: 'De l\'évaluation cardiaque non invasive au TAVI mini-invasif, pontages coronariens (CABG), pose de LVAD et transplantation cardiaque.',
     description_kr: 'Depi bann test ziska bypass konplex (CABG), sanzman valv, TAVI ek transplantasion leker fer par bann gran sirirzien.',
-    imageUrl: 'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-cardiology.jpg',
     featured: true,
     procedures: [
       { id: 'proc-card-1', specialtyId: 'sp-cardiology', name: 'Coronary Artery Bypass Graft (CABG)', name_fr: 'Pontage Coronarien (CABG)', name_kr: 'Bypass Leker (CABG)', description: 'Open-heart surgery or beating-heart bypass to restore blood flow.', description_fr: 'Chirurgie pour restaurer le flux sanguin vers le cœur.', description_kr: 'Operasion leker pou re-donn disan sirkile bien.', estimatedDurationDays: 10 },
@@ -76,7 +76,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'State-of-the-art robotic joint arthroplasty, minimally invasive spine surgery (MIS), arthroscopic ligament reconstructions, and paediatric orthopaedics using computer-guided alignment.',
     description_fr: 'Arthroplastie robotique, chirurgie mini-invasive de la colonne vertébrale et reconstructions ligamentaires par arthroscopie.',
     description_kr: 'Operasion robotik zounou ek lans, sirirzi ledo modern ek reparasion ligaman pou regagn mobilite rapid.',
-    imageUrl: 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-orthopedics.jpg',
     featured: true,
     procedures: [
       { id: 'proc-ortho-1', specialtyId: 'sp-orthopedics', name: 'Robotic Total Knee / Hip Replacement', name_fr: 'Prothèse Totale Genou / Hanche Robotisée', name_kr: 'Sanzman Total Zounou / Lans Robotik', description: 'Sub-millimetre robotic navigation joint arthroplasty.', description_fr: 'Remplacement articulaire sous assistance robotique ultra-précise.', description_kr: 'Sanzman zointir avek lasistans robot pou meyer rezilta.', estimatedDurationDays: 8 },
@@ -116,7 +116,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Dedicated paediatric ICUs (PICU), congenital heart surgery, paediatric oncology, neonatology, and correction of congenital anomalies in child-friendly international environments.',
     description_fr: 'Unités de soins intensifs pédiatriques (USIP), chirurgie cardiaque congénitale, oncologie pédiatrique et néonatalogie.',
     description_kr: 'Swen spesialize pou bann zanfan : leker, kanser pediatrik ek bann tretman konzenital.',
-    imageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-paediatrics.jpg',
     featured: true,
     procedures: [
       { id: 'proc-paed-1', specialtyId: 'sp-paediatrics', name: 'Congenital Paediatric Cardiac Surgery', name_fr: 'Chirurgie Cardiaque Congénitale Pédiatrique', name_kr: 'Sirirzi Leker Konzenital Zanfan', description: 'Correction of ASD, VSD, TOF, and complex congenital anomalies.', description_fr: 'Correction des cardiopathies congénitales (CIA, CIV, Tétralogie de Fallot).', description_kr: 'Koreksion bann problem leker depi nesans pou bann zanfan.', estimatedDurationDays: 14 },
@@ -135,7 +135,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Autologous and allogeneic stem cell transplants, haploidentical transplants, CAR-T cell therapy, and management of thalassemia and sickle cell disease in HEPA-filtered cleanroom units.',
     description_fr: 'Greffes de cellules souches autologues et allogéniques, thérapie cellulaire CAR-T et prise en charge des hémopathies malignes en chambres stériles.',
     description_kr: 'Transplantasion mwal ose ek terapi selil souche dan bann lasanm steril de ote sekirite.',
-    imageUrl: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-haematology.jpg',
     featured: true,
     procedures: [
       { id: 'proc-haem-1', specialtyId: 'sp-haematology', name: 'Allogeneic / Autologous BMT', name_fr: 'Greffe de Moelle Allogénique / Autologue', name_kr: 'Transplantasion Mwal Ose Allogeneik/Otolog', description: 'Bone marrow and peripheral blood stem cell transplantation.', description_fr: 'Transplantation de moelle osseuse et cellules souches hématopoïétiques.', description_kr: 'Transplantasion mwal ose pou trete lesemi ek linfom.', estimatedDurationDays: 30 },
@@ -192,7 +192,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Vitreo-retinal surgery, corneal transplantation (DALK/DMEK), advanced cataract micro-incisions, glaucoma filtering surgery, and paediatric eye care at world-renowned eye institutes such as Sankara Nethralaya.',
     description_fr: 'Chirurgie vitréo-rétinienne, greffe de cornée et microchirurgie de la cataracte dans des instituts de renommée mondiale.',
     description_kr: 'Operasion retin, gref korne ek katarakt dan bann meyer sant lizie.',
-    imageUrl: 'https://images.unsplash.com/photo-1579684453423-f84349ef60b0?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-ophthalmology.jpg',
     featured: true,
     procedures: [
       { id: 'proc-ophth-1', specialtyId: 'sp-ophthalmology', name: 'Vitrectomy & Retinal Detachment Repair', name_fr: 'Vitrectomie & Réparation Décollement Rétine', name_kr: 'Vitrectomi & Reparasion Retin', description: 'Microsurgical vitrectomy for retinal detachment, macular hole or diabetic retinopathy.', description_fr: 'Microchirurgie vitréo-rétinienne pour décollement et rétinopathie diabétique.', description_kr: 'Operasion mikrosirirzikal pou sov la vi lizie.', estimatedDurationDays: 5 },
@@ -211,10 +211,10 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Robotic radical prostatectomy, laser lithotripsy (RIRS) for kidney stones, nephron-sparing partial nephrectomy, dialysis access (AV fistula), and reconstructive urology.',
     description_fr: 'Prostatectomie robotique, lithotripsie laser pour calculs rénaux et prise en charge des maladies rénales chroniques.',
     description_kr: 'Tretman laser pou ros lerin, operasion prostat robotik ek kordonasion dializ.',
-    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-urology.jpg',
     featured: true,
     procedures: [
-      { id: 'proc-uro-1', specialtyId: 'sp-urology', name: 'Laser Lithotripsy (RIRS) for Kidney Stones', name_fr: 'Lithotripsie Laser Répétée (RIRS) Calculs Rénaux', name_kr: 'Laser RIRS pou Ros Lerin', description: 'Endoscopic retrograde intrarenal laser fragmentation without incisions.', description_fr: 'Fragmentation endoscopique au laser sans incision cutanée.', description_kr: 'Kraz ros lerin avek laser san bizin koupe.', estimatedDurationDays: 3 },
+      { id: 'proc-uro-1', specialtyId: 'sp-urology', name: 'Laser Lithotripsy (RIRS) for Kidney Stones', name_fr: 'Chirurgie Intrarénale Rétrograde au Laser (RIRS) – Calculs Rénaux', name_kr: 'Laser RIRS pou Ros Lerin', description: 'Endoscopic retrograde intrarenal laser fragmentation without incisions.', description_fr: 'Fragmentation endoscopique au laser sans incision cutanée.', description_kr: 'Kraz ros lerin avek laser san bizin koupe.', estimatedDurationDays: 3 },
     ],
   },
   {
@@ -249,7 +249,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Video-Assisted Thoracoscopic Surgery (VATS), robotic lobectomy for lung lesions, endobronchial ultrasound (EBUS), and pulmonary rehabilitation.',
     description_fr: 'Chirurgie thoracique vidéo-assistée (VATS), résection pulmonaire robotique et exploration bronchique approfondie (EBUS).',
     description_kr: 'Operasion poumon mini-invazif (VATS) ek tretman avanse pou bann problem respiratwar.',
-    imageUrl: 'https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-pulmonology.jpg',
     featured: true,
     procedures: [
       { id: 'proc-pulm-1', specialtyId: 'sp-pulmonology', name: 'VATS Minimally Invasive Thoracic Surgery', name_fr: 'Chirurgie Thoracique Mini-Invasive (VATS)', name_kr: 'Sirirzi Thoracik Mini-Invazif (VATS)', description: 'Video-guided keyhole thoracic resection with expedited recovery.', description_fr: 'Résection pulmonaire par vidéothoracoscopie avec récupération rapide.', description_kr: 'Operasion poumon par ti-trou gide par video pou rekiperasion vit.', estimatedDurationDays: 7 },
@@ -268,7 +268,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Laparoscopic and robotic hysterectomy, complex myomectomy (fibroids), advanced endometriosis excision, pelvic floor reconstruction, and gynaecologic oncology.',
     description_fr: 'Hystérectomie et myomectomie cœlioscopique ou robotique, chirurgie de l\'endométriose profonde et oncologie gynécologique.',
     description_kr: 'Operasion laparoskopik pou fibrom, endometrioz ek lezot problem lasante fam.',
-    imageUrl: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-gynecology.jpg',
     featured: true,
     procedures: [
       { id: 'proc-gyn-1', specialtyId: 'sp-gynecology', name: 'Laparoscopic / Robotic Myomectomy', name_fr: 'Myomectomie Cœlioscopique / Robotique', name_kr: 'Laparoskopi pou Fibrom', description: 'Minimally invasive uterine-sparing removal of symptomatic fibroids.', description_fr: 'Ablation mini-invasive des fibromes préservant la fertilité utérine.', description_kr: 'Operasion mini-invazif pou tir bann fibrom san afekte la fertilite.', estimatedDurationDays: 5 },
@@ -287,7 +287,7 @@ export const specialtiesSeed: Specialty[] = [
     description: 'Advanced therapeutic endoscopy (ERCP, EUS, ESD), laparoscopic colorectal surgery, bariatric and metabolic surgery, and complex hepatobiliary and pancreatic resections.',
     description_fr: 'Endoscopie interventionnelle avancée (CPRE, écho-endoscopie), chirurgie colorectale mini-invasive et résections hépato-biliaires.',
     description_kr: 'Endoskopi avanse (ERCP), sirirzi lestoma ek fwa par laparoskopi.',
-    imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80',
+    imageUrl: '/assets/specialties/sp-gastroenterology.jpg',
     featured: true,
     procedures: [
       { id: 'proc-gi-1', specialtyId: 'sp-gastroenterology', name: 'Advanced ERCP & Hepatobiliary Interventions', name_fr: 'CPRE Avancée & Interventions Hépato-Biliaires', name_kr: 'ERCP Avanse & Traitman Kanal Biler', description: 'Endoscopic clearance of biliary stones, stenting and tumour palliation.', description_fr: 'Extraction endoscopique de calculs biliaires et pose de prothèses.', description_kr: 'Endoskopi pou tir ros dan kanal biler ek poz stent.', estimatedDurationDays: 4 },
