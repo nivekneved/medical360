@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Star, Globe2, HeartPulse, ShieldCheck, MessageCircle, FileText, Stethoscope, Plane, Building2, UserCheck } from 'lucide-react';
+import { ArrowRight, Star, HeartPulse, MessageCircle, FileText, Stethoscope, Plane, Building2, UserCheck } from 'lucide-react';
 import { useL10n } from '../../hooks/useL10n';
 import { useCMS } from '../../hooks/useCMS';
 import { useSpecialties } from '../../hooks/useSpecialties';
@@ -17,8 +17,8 @@ export function HomePage() {
   const navigate = useNavigate();
   const { lang, isFr, isKr, l10n, l } = useL10n();
   const { specialties, loading: specLoading } = useSpecialties();
-  const { hospitals, loading: hospLoading }   = useFeaturedHospitals();
-  const { caseStudies, loading: csLoading }   = useFeaturedCaseStudies();
+  const { hospitals, loading: hospLoading } = useFeaturedHospitals();
+  const { caseStudies, loading: csLoading } = useFeaturedCaseStudies();
   const { data: cms } = useCMS('home');
   const { data: marqueeCms } = useCMS('marquee');
 
@@ -72,10 +72,10 @@ export function HomePage() {
   ];
 
   const WHY_CHOOSE = [
-    { icon: ShieldCheck, title: isFr ? 'Éthique, Transparence & Dignité' : isKr ? 'Etik, Transparans & Dignite' : 'Ethics, Transparency & Dignity', desc: isFr ? 'Un modèle où le choix éclairé, les droits du patient et la dignité passent avant tout intérêt commercial, sans frais cachés.' : isKr ? 'Swa kler, drwa pasian ek dignite avan tou lintere komersial, san okenn fre kasiet.' : 'Informed choices and patient rights always come before commercial interests — with clear, itemised estimates and no hidden markups.' },
-    { icon: UserCheck,   title: isFr ? 'Patient Navigator Dédié' : isKr ? 'Patient Navigator Dedie' : 'Dedicated Patient Navigator', desc: isFr ? 'Un interlocuteur unique qui accompagne vous et votre famille, de l\'analyse du dossier jusqu\'au suivi post-opératoire.' : isKr ? 'Enn sel kontak ki akonpagn ou ek ou fami depi revir dosie ziska swivi apre tretman.' : 'One trusted point of contact supporting you and your family from medical record review and teleconsultations to recovery back home.' },
-    { icon: Plane,       title: isFr ? 'Logistique & Évacuation Complète' : isKr ? 'Lozistik & Evakiasion Konple' : 'End-to-End Travel & Care Logistics', desc: isFr ? 'Admissions hospitalières, visa médical, vols, hébergement, transferts et ambulance ou avion médicalisé selon les besoins.' : isKr ? 'Ladmision lopital, viza medikal, biye avion, lotel, transpor ek lanbilans ouswa avion saniter kan bizin.' : 'Coordinated hospital admissions, medical visas, flights, verified stays, airport transfers, and ground or air-ambulance when required.' },
-    { icon: Globe2,      title: isFr ? 'Reconnaissance Internationale (UICC)' : isKr ? 'Rekonesans Internasional (UICC)' : 'Internationally Recognised Network', desc: isFr ? 'Adossé à l\'ONG Enn Rev Enn Sourir, Membre Titulaire de l\'UICC et partenaire des réseaux SIOP & CCI.' : isKr ? 'Apiye par l\'ONG Enn Rev Enn Sourir, Manb Titiler UICC ek kolaborater SIOP & CCI.' : 'Backed by Enn Rev Enn Sourir\'s Full Membership with UICC and global collaborations with SIOP & Childhood Cancer International.' },
+    { image: '/assets/hero/hero-pillar-ethics.jpg',    title: isFr ? 'Éthique, Transparence & Dignité' : isKr ? 'Etik, Transparans & Dignite' : 'Ethics, Transparency & Dignity', desc: isFr ? 'Choix éclairé et devis clairs sans frais cachés.' : isKr ? 'Swa kler ek pri transparan san fre kasiet.' : 'Informed choices & clear itemised estimates — zero hidden markups.' },
+    { image: '/assets/hero/hero-pillar-navigator.jpg', title: isFr ? 'Patient Navigator Dédié' : isKr ? 'Patient Navigator Dedie' : 'Dedicated Patient Navigator', desc: isFr ? 'Un interlocuteur unique du dossier au suivi.' : isKr ? 'Enn sel kontak depi dosie ziska swivi.' : 'One trusted coordinator from medical review to recovery back home.' },
+    { image: '/assets/hero/hero-pillar-logistics.jpg', title: isFr ? 'Voyage & Logistique Complète' : isKr ? 'Vwayaz & Lozistik Konple' : 'End-to-End Travel & Logistics', desc: isFr ? 'Visa médical, vols, séjour, transferts & ambulance.' : isKr ? 'Viza medikal, biye, lotel, transpor & lanbilans.' : 'Hospital admission, medical visas, flights, stays & air-ambulance.' },
+    { image: '/assets/hero/hero-pillar-network.jpg',   title: isFr ? 'Réseau Reconnu (UICC)' : isKr ? 'Rezo Rekonet (UICC)' : 'Internationally Recognised Network', desc: isFr ? 'Membre Titulaire UICC, partenaire SIOP & CCI.' : isKr ? 'Manb Titiler UICC, kolaborater SIOP & CCI.' : 'Backed by Enn Rev Enn Sourir’s UICC, SIOP & CCI affiliations.' },
   ];
 
   // Rich Schema.org JSON-LD for Homepage
@@ -92,8 +92,8 @@ export function HomePage() {
       )}
 
       {/* ── Hero ──────────────────────────────────────────────────────────────── */}
-      <section 
-        className={`hero ${marqueeEnabled && marqueePosition === 'above' ? 'hero--marquee-above' : 'hero--marquee-below'}`} 
+      <section
+        className={`hero ${marqueeEnabled && marqueePosition === 'above' ? 'hero--marquee-above' : 'hero--marquee-below'}`}
         aria-label="Hero section"
       >
         <div className="hero__bg">
@@ -113,14 +113,14 @@ export function HomePage() {
               </span>
             </h1>
             <p className="hero__subtitle">
-              {isFr 
+              {isFr
                 ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées dans le monde entier, avec des partenariats privilégiés en Inde. De votre première demande médicale et téléconsultation jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
                 : isKr
-                ? 'Med360 kordonn ou vwayaz lasante ver bann lopital akredite mondial, prinsipalman avek bann gran lopital partener dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
-                : 'Med360 facilitates access to established hospitals and specialist medical teams worldwide, partnering primarily with premier accredited hospitals in India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.'
+                  ? 'Med360 kordonn ou vwayaz lasante ver bann lopital akredite mondial, prinsipalman avek bann gran lopital partener dan L\'inde. Gagn lavi spesialis, estimasion pri kler ek akonpanyeman konple depi A a Z.'
+                  : 'Med360 facilitates access to established hospitals and specialist medical teams worldwide, partnering primarily with premier accredited hospitals in India. From your first medical enquiry and specialist consultation to your treatment abroad and your return home.'
               }
             </p>
-            
+
             <p className="hero__callout-quote">
               <em>{isFr ? '« Une conversation peut changer la trajectoire de vos soins. Commencez la vôtre dès aujourd\'hui. »' : isKr ? '« Enn konversasion kapav sanz ou vwayaz lasante. Koumans ou par zordi. »' : '“One conversation could change the direction of your healthcare journey. Start yours today.”'}</em>
             </p>
@@ -145,10 +145,10 @@ export function HomePage() {
                 <span>{isFr ? 'DISCUTER SUR WHATSAPP' : isKr ? 'KOZ AR NOU LOR WHATSAPP' : 'CHAT WITH US ON WHATSAPP'}</span>
               </a>
             </div>
-            
+
             <div className="hero__trust">
               <div className="hero__stars">
-                {[1,2,3,4,5].map(i => <Star key={i} size={16} fill="#ffb400" color="#ffb400" />)}
+                {[1, 2, 3, 4, 5].map(i => <Star key={i} size={16} fill="#ffb400" color="#ffb400" />)}
               </div>
               <span className="hero__trust-text">
                 {isFr ? '+3 000 Patients Accompagnés · Membre Titulaire UICC · Modèle Sans Dividende' : isKr ? '+3,000 Pasian Asiste · Manb UICC · Zero Dividann' : '+3,000 Patients Assisted · UICC Member Network · No Dividends Model'}
@@ -156,27 +156,24 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* Core Pillars Panel */}
-          <div className="hero__pillars animate-fade-in-up delay-2">
-            <div className="hero__pillars-header">
-              <span className="hero__pillars-dot" aria-hidden="true" />
-              <span className="hero__pillars-eyebrow">
-                {isFr ? 'Le Standard Med360' : isKr ? 'Standar Med360' : 'The Med360 Standard'}
-              </span>
-            </div>
-            <div className="hero__pillars-list">
-              {WHY_CHOOSE.map(({ icon: Icon, title, desc }) => (
-                <div key={title} className="hero__pillar-item">
-                  <div className="hero__pillar-icon">
-                    <Icon size={19} />
-                  </div>
-                  <div className="hero__pillar-text">
-                    <h4 className="hero__pillar-title">{title}</h4>
-                    <p className="hero__pillar-desc">{desc}</p>
-                  </div>
+          {/* 2x2 Editorial Photo Bento Grid */}
+          <div className="hero__bento animate-fade-in-up delay-2">
+            {WHY_CHOOSE.map(({ image, title, desc }) => (
+              <div key={title} className="hero__bento-card">
+                <img
+                  src={image}
+                  alt={title}
+                  className="hero__bento-img"
+                  loading="eager"
+                  decoding="async"
+                />
+                <div className="hero__bento-scrim" aria-hidden="true" />
+                <div className="hero__bento-content">
+                  <h3 className="hero__bento-title">{title}</h3>
+                  <p className="hero__bento-desc">{desc}</p>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -195,11 +192,11 @@ export function HomePage() {
               {isFr ? 'Soins de Pointe à Travers Nos Spécialités Médicales' : isKr ? 'Swen Avanse dan Bann Gran Spesialite Medikal' : 'Specialised Care Across Medical Disciplines'}
             </h2>
             <p className="text-lead">
-              {isFr 
+              {isFr
                 ? 'Accédez à des spécialistes renommés et aux technologies diagnostiques et chirurgicales de pointe adaptées à votre situation.'
                 : isKr
-                ? 'Akse ar bann meyer spesialis ek teknolosi modern pou tou kalite tretman.'
-                : 'Access experienced specialists, advanced diagnostics, and complex surgical procedures tailored to your medical condition.'}
+                  ? 'Akse ar bann meyer spesialis ek teknolosi modern pou tou kalite tretman.'
+                  : 'Access experienced specialists, advanced diagnostics, and complex surgical procedures tailored to your medical condition.'}
             </p>
           </div>
           <div className="specialties-grid">
@@ -258,11 +255,11 @@ export function HomePage() {
               {isFr ? 'Votre Parcours de Soins, Simple & Coordonné' : isKr ? 'Ou Vwayaz Lasante, Sinp & Kordone' : 'Your Healthcare Journey, Made Simple'}
             </h2>
             <p className="text-lead" style={{ color: 'rgba(255,255,255,0.8)' }}>
-              {isFr 
+              {isFr
                 ? 'Se faire soigner à l\'étranger peut sembler complexe. Med360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale jusqu\'à votre traitement à l\'étranger et votre retour à domicile.'
                 : isKr
-                ? 'Al fer swen a letranze kapav paret konplike. Med360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.'
-                : 'Seeking medical treatment abroad can feel complicated. Med360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.'}
+                  ? 'Al fer swen a letranze kapav paret konplike. Med360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman ek retour lakaz.'
+                  : 'Seeking medical treatment abroad can feel complicated. Med360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home.'}
             </p>
           </div>
           <div className="process-steps-grid">
@@ -309,8 +306,8 @@ export function HomePage() {
               {isFr
                 ? 'Med360 facilite l\'accès aux hôpitaux établis et aux équipes médicales spécialisées dans le monde entier, avec des partenariats privilégiés en Inde. La sélection hospitalière est basée sur les besoins médicaux individuels, l\'accréditation, l\'expertise clinique et les technologies de pointe.'
                 : isKr
-                ? 'Med360 fasilit akse ar bann gran lopital ek dokter mondial, prinsipalman avek bann lopital partener dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
-                : 'Med360 facilitates access to established hospitals and specialist medical teams worldwide, with strong partnerships across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.'}
+                  ? 'Med360 fasilit akse ar bann gran lopital ek dokter mondial, prinsipalman avek bann lopital partener dan L\'inde. Swazir lopital baze lor bezwin pasian ek akreditasion JCI/NABH.'
+                  : 'Med360 facilitates access to established hospitals and specialist medical teams worldwide, with strong partnerships across India. Selection is based on individual medical requirements, accreditation, clinical expertise, and advanced technology.'}
             </p>
           </div>
           <div className="hospitals-grid">
@@ -376,8 +373,8 @@ export function HomePage() {
               {isFr
                 ? 'Découvrez comment plus d\'une décennie d\'accompagnement médical a redonné le sourire et la santé à des familles.'
                 : isKr
-                ? 'Dekouver kouma nou lasistans inn amenn soulasman ek sourir ar bann fami.'
-                : 'Read how a decade of dedicated medical guidance has brought relief, healing, and peace of mind to families.'}
+                  ? 'Dekouver kouma nou lasistans inn amenn soulasman ek sourir ar bann fami.'
+                  : 'Read how a decade of dedicated medical guidance has brought relief, healing, and peace of mind to families.'}
             </p>
           </div>
           <div className="cases-grid">
@@ -439,8 +436,8 @@ export function HomePage() {
               {isFr
                 ? 'Prenez rendez-vous dès aujourd\'hui. Laissez-nous vous aider à comprendre vos options et vous mettre en relation avec les soins médicaux appropriés.'
                 : isKr
-                ? 'Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal.'
-                : 'Book your appointment today. Let us help you understand your options and connect you with the right medical care.'}
+                  ? 'Pran ou randevou zordi mem. Les nou ed ou konpran ou bann opsion ek konekte ou ar bann meyer swen medikal.'
+                  : 'Book your appointment today. Let us help you understand your options and connect you with the right medical care.'}
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <button className="btn btn-accent btn-lg" onClick={() => navigate('/describe-need?from=Home+Bottom+CTA&serviceName=Free+Doctor+Review')} id="footer-cta-btn">
