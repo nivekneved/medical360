@@ -1,19 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  HeartHandshake, 
   FileText, 
   Plane, 
-  UserCheck, 
   ShieldCheck, 
   CheckCircle2, 
   ArrowRight, 
   MessageCircle, 
   Building2, 
-  Sparkles,
   Calculator,
   ChevronDown,
-  Ambulance,
   Stethoscope
 } from 'lucide-react';
 import { useL10n } from '../../hooks/useL10n';
@@ -227,69 +223,6 @@ export function HowItWorksPage() {
 
       {/* ── 5 Easy Steps Visual Wave Diagram ─────────────────────────────────── */}
       <FiveEasyStepsWave />
-
-      {/* ── Hero Banner ──────────────────────────────────────────────────────── */}
-      <section className="hiw-hero">
-        <div className="container hiw-hero__inner">
-          <div className="hiw-hero__badge">
-            <Sparkles size={15} />
-            <span>{isFr ? "Une Coordination Médicale Bienveillante & Structurée" : isKr ? "Kordonasion Medikal avek Leker" : "One Point of Contact · One Coordinated Journey"}</span>
-          </div>
-
-          <h1 className="hiw-hero__title">
-            {isFr ? "Votre Parcours de Soins, Simple & Coordonné" : isKr ? "Ou Vwayaz Lasante, Sinp & Kordone" : "Your Healthcare Journey, Made Simple"}
-          </h1>
-
-          <p className="hiw-hero__subtitle">
-            {isFr
-              ? "Se faire soigner à l'étranger peut sembler complexe. Med360 facilite votre parcours en coordonnant chaque étape — de votre première demande médicale et consultation spécialisée jusqu'à vos soins à l'étranger et votre retour à domicile."
-              : isKr
-              ? "Al fer swen a letranze kapav paret konplike. Med360 rann ou vwayaz pli fasil par kordonn sak letap — depi premie lavi dokter ziska tretman a letranze ek retour lakaz."
-              : "Seeking medical treatment abroad can feel complicated. Med360 makes the journey easier by coordinating every step — from your first medical enquiry and specialist consultation to your treatment abroad and your return home."}
-          </p>
-
-          <div className="hiw-hero__actions">
-            <button
-              className="btn btn-primary btn-lg"
-              onClick={() => navigate('/describe-need?from=How+It+Works+Top+Banner&serviceName=Treatment+Coordination+Consultation')}
-              id="hiw-hero-cta"
-            >
-              <span>{isFr ? "Demander un Rendez-vous" : isKr ? "Demann enn Randevou" : "Request an Appointment"}</span>
-              <ArrowRight size={18} />
-            </button>
-            <a
-              href={buildMed360WhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-whatsapp btn-lg"
-              id="hiw-hero-whatsapp"
-            >
-              <MessageCircle size={18} />
-              <span>{isFr ? "DISCUTER SUR WHATSAPP" : isKr ? "KOZ AR NOU LOR WHATSAPP" : "CHAT WITH US ON WHATSAPP"}</span>
-            </a>
-          </div>
-
-          {/* Quick Trust Bar */}
-          <div className="hiw-trust-bar">
-            <div className="hiw-trust-item">
-              <CheckCircle2 size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "Patient Navigator dédié" : isKr ? "Patient Navigator dedie" : "Dedicated Patient Navigator"}</span>
-            </div>
-            <div className="hiw-trust-item">
-              <Building2 size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "Hôpitaux accrédités dans le monde" : isKr ? "Lopital akredite mondial" : "Premier Worldwide Hospitals"}</span>
-            </div>
-            <div className="hiw-trust-item">
-              <UserCheck size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "Téléconsultation vidéo directe" : isKr ? "Telekonsiltasion video direk" : "Direct Video Teleconsultation"}</span>
-            </div>
-            <div className="hiw-trust-item">
-              <HeartHandshake size={18} className="hiw-trust-icon" />
-              <span>{isFr ? "+3 000 Patients accompagnés" : isKr ? "+3 000 Pasian asiste" : "+3,000 Patients Assisted"}</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── 6 Phases of Care ─────────────────────────────────────────────────── */}
       <section className="hiw-phases-section">
