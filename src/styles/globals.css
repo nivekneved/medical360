@@ -551,6 +551,38 @@ h1, h2, h3, h4, h5, h6 {
   backdrop-filter: blur(8px);
 }
 
+/* Compact banner variant (-40% height) for Specialties & Hospitals pages */
+.specialties-page .page-hero--banner,
+.hospitals-page .page-hero--banner {
+  min-height: 174px;
+  padding: 1.5rem 0 1.35rem;
+}
+
+.specialties-page .page-hero--banner .page-hero__inner,
+.hospitals-page .page-hero--banner .page-hero__inner {
+  gap: 0.4rem;
+}
+
+.specialties-page .page-hero--banner .section-label,
+.hospitals-page .page-hero--banner .section-label {
+  padding: 0.22rem 0.72rem;
+  font-size: 0.7rem;
+  margin-bottom: 0;
+}
+
+.specialties-page .page-hero--banner .text-h1,
+.hospitals-page .page-hero--banner .text-h1 {
+  font-size: clamp(1.45rem, 2.8vw, 2.2rem);
+  line-height: 1.12;
+  margin: 0;
+}
+
+.specialties-page .page-hero--banner .text-lead,
+.hospitals-page .page-hero--banner .text-lead {
+  font-size: clamp(0.875rem, 1.35vw, 0.98rem);
+  line-height: 1.45;
+}
+
 /* ─── Typography Scale ───────────────────────────────────────────────────────── */
 .text-display {
   font-family: var(--font-display);
