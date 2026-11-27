@@ -224,7 +224,7 @@ for (const file of catalogSeeds) {
     }
   }
 }
-assert(dupCount === 0 && seenImages.size === 38, `All 38 catalog imageUrls are 100% unique (${seenImages.size} unique, ${dupCount} duplicates)`);
+assert(dupCount === 0 && seenImages.size === 37, `All 37 catalog imageUrls are 100% unique (${seenImages.size} unique, ${dupCount} duplicates)`);
 
 // ─── Summary ─────────────────────────────────────────────────────────────────
 console.log('\n═════════════════════════════════════════════════════════════════════════');

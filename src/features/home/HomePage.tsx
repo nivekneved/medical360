@@ -157,18 +157,26 @@ export function HomePage() {
           </div>
 
           {/* Core Pillars Panel */}
-          <div className="hero__stats hero__pillars animate-fade-in-up delay-2">
-            {WHY_CHOOSE.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="why-feature hero__pillar-card">
-                <div className="why-feature__icon">
-                  <Icon size={20} />
+          <div className="hero__pillars animate-fade-in-up delay-2">
+            <div className="hero__pillars-header">
+              <span className="hero__pillars-dot" aria-hidden="true" />
+              <span className="hero__pillars-eyebrow">
+                {isFr ? 'Le Standard Med360' : isKr ? 'Standar Med360' : 'The Med360 Standard'}
+              </span>
+            </div>
+            <div className="hero__pillars-list">
+              {WHY_CHOOSE.map(({ icon: Icon, title, desc }) => (
+                <div key={title} className="hero__pillar-item">
+                  <div className="hero__pillar-icon">
+                    <Icon size={19} />
+                  </div>
+                  <div className="hero__pillar-text">
+                    <h4 className="hero__pillar-title">{title}</h4>
+                    <p className="hero__pillar-desc">{desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="why-feature__title">{title}</h4>
-                  <p className="why-feature__desc">{desc}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -352,7 +360,7 @@ export function HomePage() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '3.5rem', marginBottom: '0.5rem' }}>
             <button className="btn btn-outline" onClick={() => navigate('/hospitals')}>
-              {isFr ? 'Découvrir les 15 Hôpitaux Partenaires' : isKr ? 'Get Tou Bann 15 Lopital' : 'Browse All 15 Partner Hospitals'} <ArrowRight size={16} />
+              {isFr ? 'Découvrir Tous Nos Hôpitaux Partenaires' : isKr ? 'Get Tou Bann Lopital Partener' : 'Browse All Partner Hospitals'} <ArrowRight size={16} />
             </button>
           </div>
         </div>
