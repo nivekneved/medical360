@@ -32,6 +32,7 @@ export interface LocalizedMeta {
 export type SEOPageKey =
   | 'home'
   | 'about'
+  | 'whoWeAre'
   | 'hospitals'
   | 'specialties'
   | 'howItWorks'
@@ -89,6 +90,27 @@ export const SEO_PAGES: Record<SEOPageKey, LocalizedMeta> = {
       en: ['Med360 podcast', 'Mauritius health podcast', 'medical awareness Mauritius', 'specialist doctor talks', 'Enn Rev Enn Sourir'],
       fr: ['podcast médical Maurice', 'Med360 Live', 'sensibilisation santé Maurice', 'émissions spécialistes'],
       kr: ['Med360 podcast', 'emision lasante Moris', 'dokter spesialis'],
+    },
+  },
+
+  whoWeAre: {
+    title: {
+      en: 'Who We Are — Board Members & Leadership | Med360',
+      fr: 'Qui Nous Sommes — Conseil d\'Administration & Direction | Med360',
+      kr: 'Kisannla Nou Ete — Konsey Administrasion & Direksion | Med360',
+    },
+    description: {
+      en: 'Meet the board members and executive leadership behind Med360 and NGO Enn Rev Enn Sourir — Karan Juglall, Luciano Azor, and Delphine Dhollah.',
+      fr: 'Découvrez les membres du conseil d\'administration et la direction de Med360 et d\'Enn Rev Enn Sourir — Karan Juglall, Luciano Azor et Delphine Dhollah.',
+      kr: 'Dekouver bann manb direksion Med360 ek l\'ONG Enn Rev Enn Sourir — Karan Juglall, Luciano Azor ek Delphine Dhollah.',
+    },
+    canonical: '/who-we-are',
+    ogType: 'website',
+    image: '/assets/team/karan-juglall.jpg',
+    keywords: {
+      en: ['Med360 board members', 'who we are Med360', 'Karan Juglall', 'Luciano Azor', 'Delphine Dhollah', 'Enn Rev Enn Sourir leadership'],
+      fr: ['conseil administration Med360', 'qui nous sommes Med360', 'Karan Juglall', 'Enn Rev Enn Sourir'],
+      kr: ['kisannla nou ete Med360', 'Karan Juglall', 'Enn Rev Enn Sourir'],
     },
   },
 

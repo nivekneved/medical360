@@ -13,8 +13,6 @@ import { buildMed360WhatsAppUrl } from '../../core/services/whatsapp.service';
 import { SEO } from '../../components/SEO/SEO';
 import { useCMS } from '../../hooks/useCMS';
 import { HIGHLIGHTS, TIMELINE, FOOTNOTES } from './aboutContent';
-import { CompanyPresentationVideo } from './CompanyPresentationVideo';
-import { LeadershipBriefSection } from './LeadershipBriefSection';
 import { MediaCoverageSection } from './MediaCoverageSection';
 import './About.css';
 
@@ -26,12 +24,9 @@ export function AboutPage() {
 
   useEffect(() => {
     if (location.hash === '#board-members') {
-      const el = document.getElementById('board-members');
-      if (el) {
-        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
-      }
+      navigate('/who-we-are', { replace: true });
     }
-  }, [location.hash]);
+  }, [location.hash, navigate]);
 
   const tCms = (key: string, fallback: string) => {
     if (!cms?.content?.[key]) return fallback;
@@ -300,9 +295,7 @@ export function AboutPage() {
             </div>
           </div>
 
-          {/* ── 4. Official Video, Leadership (#board-members) & Media ──── */}
-          <CompanyPresentationVideo />
-          <LeadershipBriefSection />
+          {/* ── 4. Media Coverage ──────────────────────────────────────── */}
           <MediaCoverageSection />
 
           {/* ── 5. Editorial Milestones Timeline ────────────────────────── */}

@@ -56,6 +56,7 @@ function lazyWithRetry<T extends { [key: string]: any }>(
 
 // Lazy public pages (code-split with deployment auto-retry)
 const AboutPage           = lazyWithRetry(() => import('./features/about/AboutPage'), m => m.AboutPage);
+const BoardMembersPage    = lazyWithRetry(() => import('./features/about/BoardMembersPage'), m => m.BoardMembersPage);
 const HospitalsPage       = lazyWithRetry(() => import('./features/hospitals/HospitalsPage'), m => m.HospitalsPage);
 const HospitalDetailPage  = lazyWithRetry(() => import('./features/hospitals/HospitalDetailPage'), m => m.HospitalDetailPage);
 const SpecialtiesPage     = lazyWithRetry(() => import('./features/specialties/SpecialtiesPage'), m => m.SpecialtiesPage);
@@ -253,6 +254,8 @@ export default function App() {
                     <Route element={<PublicLayout />}>
                       <Route path="/"                 element={<HomePage />} />
                       <Route path="/about"            element={<AboutPage />} />
+                      <Route path="/who-we-are"       element={<BoardMembersPage />} />
+                      <Route path="/board-members"    element={<Navigate to="/who-we-are" replace />} />
                       <Route path="/hospitals"        element={<HospitalsPage />} />
                       <Route path="/hospitals/:id"    element={<HospitalDetailPage />} />
                       <Route path="/specialties"      element={<SpecialtiesPage />} />

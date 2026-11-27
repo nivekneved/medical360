@@ -92,6 +92,16 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/about" />
   </url>
   <url>
+    <loc>https://www.med360.mu/who-we-are</loc>
+    <lastmod>2026-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.med360.mu/who-we-are" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.med360.mu/who-we-are" />
+    <xhtml:link rel="alternate" hreflang="fr-MU" href="https://www.med360.mu/who-we-are" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.med360.mu/who-we-are" />
+  </url>
+  <url>
     <loc>https://www.med360.mu/privacy</loc>
     <lastmod>2026-11-27</lastmod>
     <changefreq>yearly</changefreq>

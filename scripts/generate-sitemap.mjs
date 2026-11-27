@@ -43,6 +43,7 @@ const staticRoutes = [
   { path: '/contact',          priority: '0.75', freq: 'monthly' },
   { path: '/podcast',          priority: '0.8',  freq: 'weekly'  },
   { path: '/about',            priority: '0.8',  freq: 'monthly' },
+  { path: '/who-we-are',       priority: '0.8',  freq: 'monthly' },
   { path: '/privacy',          priority: '0.3',  freq: 'yearly'  },
   { path: '/terms',            priority: '0.3',  freq: 'yearly'  },
   { path: '/cookies',          priority: '0.3',  freq: 'yearly'  },

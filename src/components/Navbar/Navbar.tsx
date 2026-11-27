@@ -55,10 +55,10 @@ export function Navbar() {
 
   const ABOUT_SUBLINKS = [
     { to: '/about', label: isFr ? 'Notre Histoire' : isKr ? 'Nou Zistwar' : 'Our Story' },
-    { to: '/about#board-members', label: isFr ? 'Qui Nous Sommes' : isKr ? 'Kisannla Nou Ete' : 'Who We Are' },
+    { to: '/who-we-are', label: isFr ? 'Qui Nous Sommes' : isKr ? 'Kisannla Nou Ete' : 'Who We Are' },
   ];
 
-  const isAboutActive = location.pathname === '/about';
+  const isAboutActive = location.pathname === '/about' || location.pathname === '/who-we-are';
 
   const NAV_LINKS_BEFORE = [
     { to: '/specialties', label: isFr ? 'Spécialités' : isKr ? 'Spesialite' : 'Specialties' },
