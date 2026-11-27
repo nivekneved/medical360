@@ -153,8 +153,64 @@ export function ContactPage() {
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO pageKey="contact" />
 
+      {/* ── Top Callout Section ──────────────────────────────────────────────── */}
+      <section className="section" style={{ padding: '2rem 0 1.5rem' }}>
+        <div className="container">
+          <div style={{
+            background: 'linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 10%, var(--color-surface)) 0%, var(--color-surface) 100%)',
+            border: '1.5px solid color-mix(in srgb, var(--color-primary) 30%, transparent)',
+            borderRadius: 'var(--radius-xl)',
+            padding: '2rem',
+            textAlign: 'center',
+          }}>
+            <p style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--color-primary)', margin: '0 0 0.5rem' }}>
+              {l10n(
+                '« Une conversation peut changer la trajectoire de vos soins. Commencez la vôtre dès aujourd\'hui. »',
+                '« Enn konversasion kapav sanz ou vwayaz lasante. Koumans ou par zordi. »',
+                '“One conversation could change the direction of your healthcare journey. Start yours today.”'
+              )}
+            </p>
+            <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: '0 0 1.5rem' }}>
+              {l10n(
+                'Parlez à un Patient Navigator dès aujourd\'hui et faites le premier pas vers les soins dont vous avez besoin.',
+                'Koz ar enn Patient Navigator zordi mem ek fer premie pa ver bann meyer swen.',
+                'Speak to a Patient Navigator today and take the first step towards the care you need.'
+              )}
+            </p>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '1rem',
+              justifyContent: 'center',
+            }}>
+              <button
+                className="btn btn-primary btn-lg"
+                onClick={() => navigate('/describe-need')}
+                style={{ fontWeight: 800 }}
+                id="contact-cta-book-btn"
+              >
+                <Sparkles size={18} />
+                <span>{l10n('Demander un Rendez-vous', 'Demann enn Randevou', 'Request an Appointment')}</span>
+                <ArrowRight size={18} />
+              </button>
+              <a
+                href={buildMed360WhatsAppUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-whatsapp btn-lg"
+                style={{ fontWeight: 800 }}
+                id="contact-whatsapp-top-btn"
+              >
+                <MessageCircle size={20} />
+                <span>{l10n('DISCUTER SUR WHATSAPP', 'KOZ AR NOU LOR WHATSAPP', 'CHAT WITH US ON WHATSAPP')}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Interactive Site Map with Exact Pinpoint Location ─────────────────── */}
-      <section className="section" style={{ background: 'var(--color-surface-2)', borderBottom: '1px solid var(--color-border)', padding: '2.5rem 0 3rem' }}>
+      <section className="section" style={{ background: 'var(--color-surface-2)', borderTop: '1px solid var(--color-border)', borderBottom: '1px solid var(--color-border)', padding: '2.5rem 0 3rem' }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 1.75rem' }}>
             <span className="section-label">
@@ -243,59 +299,6 @@ export function ContactPage() {
       {/* Main Contact Grid */}
       <section className="section" style={{ paddingTop: '3rem', paddingBottom: '5rem' }}>
         <div className="container">
-          {/* Top Callout Box */}
-          <div style={{
-            background: 'linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 10%, var(--color-surface)) 0%, var(--color-surface) 100%)',
-            border: '1.5px solid color-mix(in srgb, var(--color-primary) 30%, transparent)',
-            borderRadius: 'var(--radius-xl)',
-            padding: '2rem',
-            textAlign: 'center',
-            marginBottom: '3rem',
-          }}>
-            <p style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--color-primary)', margin: '0 0 0.5rem' }}>
-              {l10n(
-                '« Une conversation peut changer la trajectoire de vos soins. Commencez la vôtre dès aujourd\'hui. »',
-                '« Enn konversasion kapav sanz ou vwayaz lasante. Koumans ou par zordi. »',
-                '“One conversation could change the direction of your healthcare journey. Start yours today.”'
-              )}
-            </p>
-            <p style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', margin: '0 0 1.5rem' }}>
-              {l10n(
-                'Parlez à un Patient Navigator dès aujourd\'hui et faites le premier pas vers les soins dont vous avez besoin.',
-                'Koz ar enn Patient Navigator zordi mem ek fer premie pa ver bann meyer swen.',
-                'Speak to a Patient Navigator today and take the first step towards the care you need.'
-              )}
-            </p>
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '1rem',
-              justifyContent: 'center',
-            }}>
-              <button
-                className="btn btn-primary btn-lg"
-                onClick={() => navigate('/describe-need')}
-                style={{ fontWeight: 800 }}
-                id="contact-cta-book-btn"
-              >
-                <Sparkles size={18} />
-                <span>{l10n('Demander un Rendez-vous', 'Demann enn Randevou', 'Request an Appointment')}</span>
-                <ArrowRight size={18} />
-              </button>
-              <a
-                href={buildMed360WhatsAppUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp btn-lg"
-                style={{ fontWeight: 800 }}
-                id="contact-whatsapp-top-btn"
-              >
-                <MessageCircle size={20} />
-                <span>{l10n('DISCUTER SUR WHATSAPP', 'KOZ AR NOU LOR WHATSAPP', 'CHAT WITH US ON WHATSAPP')}</span>
-              </a>
-            </div>
-          </div>
-
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
             {/* Contact Info Card */}
             <div className="card" style={{ padding: '2.5rem' }}>
