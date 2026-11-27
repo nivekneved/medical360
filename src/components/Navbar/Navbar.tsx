@@ -55,7 +55,7 @@ export function Navbar() {
 
   const ABOUT_SUBLINKS = [
     { to: '/about', label: isFr ? 'Notre Histoire' : isKr ? 'Nou Zistwar' : 'Our Story' },
-    { to: '/about#board-members', label: isFr ? 'Conseil d\'Administration' : isKr ? 'Komite Direksion' : 'Board Members' },
+    { to: '/about#board-members', label: isFr ? 'Qui Nous Sommes' : isKr ? 'Kisannla Nou Ete' : 'Who We Are' },
   ];
 
   const isAboutActive = location.pathname === '/about';
