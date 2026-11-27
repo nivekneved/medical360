@@ -50,13 +50,13 @@ export function FiveEasyStepsWave() {
   return (
     <section className="hiw-five-steps" aria-labelledby="five-steps-heading">
       <div className="container">
-        <h2 id="five-steps-heading" className="hiw-five-steps__heading">
+        <h1 id="five-steps-heading" className="hiw-five-steps__heading">
           {isFr
             ? 'Accessible en 5 Étapes Simples'
             : isKr
             ? 'Disfonib pou Ou dan 5 Letap Fasil'
             : 'Available to you in 5 Easy Steps'}
-        </h2>
+        </h1>
 
         <div className="hiw-wave-wrap">
           {/* Connecting dashed S-curve wave (desktop) */}

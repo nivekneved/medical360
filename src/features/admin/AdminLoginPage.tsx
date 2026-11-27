@@ -5,6 +5,7 @@ import { useAuth } from '../../providers/AuthProvider';
 import { sanitizeInput, checkRateLimit } from '../../core/services/security.service';
 import { Honeypot } from '../../components/Honeypot/Honeypot';
 import { validateEmail, validatePassword, isHoneypotClean } from '../../core/services/validation.service';
+import { SEO } from '../../components/SEO/SEO';
 
 export function AdminLoginPage() {
   const { login } = useAuth();
@@ -67,6 +68,7 @@ export function AdminLoginPage() {
       position: 'relative',
       overflow: 'hidden',
     }}>
+      <SEO title="Portal" noIndex />
       {/* Background ambient glow */}
       <div style={{
         position: 'absolute',

@@ -113,8 +113,11 @@ export function SEO({
         property="og:locale"
         content={currentLang === 'fr' ? 'fr_FR' : currentLang === 'kr' ? 'mfe_MU' : 'en_US'}
       />
-      <meta property="og:locale:alternate" content="fr_FR" />
-      <meta property="og:locale:alternate" content="en_US" />
+      {['en_US', 'fr_FR', 'mfe_MU']
+        .filter(loc => loc !== (currentLang === 'fr' ? 'fr_FR' : currentLang === 'kr' ? 'mfe_MU' : 'en_US'))
+        .map(loc => (
+          <meta key={loc} property="og:locale:alternate" content={loc} />
+        ))}
 
       {/* ── 5. Twitter Card Protocol ── */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -127,7 +130,7 @@ export function SEO({
       {/* ── 6. Schema.org JSON-LD Structured Data ── */}
       {combinedSchemas.map((s, idx) => (
         <script key={idx} type="application/ld+json">
-          {JSON.stringify(s)}
+          {JSON.stringify(s).replace(/</g, '\\u003c')}
         </script>
       ))}
     </Helmet>

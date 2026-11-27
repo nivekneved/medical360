@@ -10,13 +10,16 @@ const ALLOWED_ORIGIN_HOSTS = new Set([
 ]);
 
 function isOriginAllowed(origin: string | null): boolean {
-  if (!origin) return true;
+  if (!origin) return false;
   try {
     const u = new URL(origin);
     const host = u.hostname.toLowerCase();
     if (ALLOWED_ORIGIN_HOSTS.has(host)) return true;
     if (host.endsWith('.med360.mu')) return true;
-    if (host.startsWith('med360') && host.endsWith('.vercel.app')) return true;
+    const vercelHost = (process.env.VERCEL_URL || '').toLowerCase().trim();
+    const vercelBranchHost = (process.env.VERCEL_BRANCH_URL || '').toLowerCase().trim();
+    if (vercelHost && host === vercelHost) return true;
+    if (vercelBranchHost && host === vercelBranchHost) return true;
     return false;
   } catch {
     return false;
@@ -155,20 +158,26 @@ export default async function handler(req: Request) {
         });
       }
 
-      // Security: Sanitize log telemetry (NEVER log full unmasked patient phone/medical message to edge console)
-      const leadId = payload?.data?.id || `wa-${Date.now()}`;
-      const eventType = payload?.event || 'webhook.received';
-      // Safe telemetry log: only metadata, no PII
+      // Security: Always generate server-side ID for unauthenticated browser beacons to prevent overwrites
+      const isSignedMetaWebhook = Boolean(signatureHeader);
+      const rawLeadId = isSignedMetaWebhook && payload?.data?.id
+        ? String(payload.data.id)
+        : `wa-${crypto.randomUUID()}`;
+      const leadId = rawLeadId.replace(/[\r\n\0]/g, '').slice(0, 80);
+      const eventType = String(payload?.event || 'webhook.received').replace(/[\r\n\0]/g, '').slice(0, 80);
+      // Safe telemetry log: only sanitized metadata, no PII
       console.log(`[WhatsApp Webhook] Handled event "${eventType}" for Lead ID: ${leadId}`);
 
       // Persist non-PII/structured consultation log to Neon Data API (default) or Supabase fallback
       const neonDataApiUrl = (process.env.VITE_NEON_DATA_API_URL || '').trim();
       const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
-      const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+      const supabaseKey = isSignedMetaWebhook
+        ? (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '')
+        : (process.env.VITE_SUPABASE_ANON_KEY || '');
       if (neonDataApiUrl || (supabaseUrl && supabaseKey)) {
         const d = payload?.data || {};
         const logRow = {
-          id: String(leadId).slice(0, 80),
+          id: leadId,
           timestamp: d.timestamp || new Date().toISOString(),
           source: String(d.source || eventType).slice(0, 200),
           patient_name: d.patientName ? String(d.patientName).slice(0, 120) : 'WhatsApp Visitor',
@@ -181,16 +190,19 @@ export default async function handler(req: Request) {
         const targetUrl = neonDataApiUrl
           ? `${neonDataApiUrl.replace(/\/$/, '')}/whatsapp_logs`
           : `${supabaseUrl}/rest/v1/whatsapp_logs`;
+        const preferHeader = isSignedMetaWebhook
+          ? 'resolution=merge-duplicates,return=minimal'
+          : 'return=minimal';
         const targetHeaders: Record<string, string> = neonDataApiUrl
           ? {
               'Content-Type': 'application/json',
-              'Prefer': 'resolution=merge-duplicates,return=minimal',
+              'Prefer': preferHeader,
             }
           : {
               'apikey': supabaseKey,
               'Authorization': `Bearer ${supabaseKey}`,
               'Content-Type': 'application/json',
-              'Prefer': 'resolution=merge-duplicates,return=minimal',
+              'Prefer': preferHeader,
             };
         await fetch(targetUrl, {
           method: 'POST',
@@ -231,7 +243,7 @@ export default async function handler(req: Request) {
       if (expectedToken && constantTimeEquals(token, expectedToken)) {
         return new Response(challenge || 'VERIFIED', { 
           status: 200,
-          headers: corsHeaders,
+          headers: { 'Content-Type': 'text/plain; charset=utf-8', ...corsHeaders },
         });
       }
       return new Response(JSON.stringify({ error: 'Verification token mismatch' }), {

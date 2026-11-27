@@ -28,7 +28,7 @@ export function getMedicalOrganizationSchema() {
     legalName: LEGAL_NAME,
     url: BASE_URL,
     logo: `${BASE_URL}/assets/logo.png`,
-    description: `${SITE_NAME} is a healthcare social enterprise owned by the NGO ${PARENT_NGO_NAME} in Mauritius. Facilitates transparent, ethical access to 15 premier JCI-accredited hospitals in India for specialized surgeries, second opinions, and cancer treatments.`,
+    description: `${SITE_NAME} is a healthcare social enterprise owned by the NGO ${PARENT_NGO_NAME} in Mauritius. Facilitates transparent, ethical access to 14 premier JCI & NABH accredited hospitals in India for specialized surgeries, second opinions, and cancer treatments.`,
     telephone: PHONE_DISPLAY,
     email: CONTACT_EMAIL,
     isAccessibleForFree: true,
@@ -104,7 +104,6 @@ export function getMedicalOrganizationSchema() {
     sameAs: [
       'https://www.facebook.com/Med360',
       'https://www.linkedin.com/company/medical360',
-      'https://www.wikidata.org/wiki/Q1140926',
     ],
     medicalSpecialty: [
       'Cardiovascular',
@@ -147,7 +146,6 @@ export function getHospitalSchema(hospital: {
       addressLocality: hospital.city,
       addressCountry: hospital.country,
     },
-    medicalSpecialty: hospital.accreditations.join(', '),
     numberOfBeds: hospital.bedsCount || 500,
     hasCredential: hospital.accreditations.map(acc => ({
       '@type': 'EducationalOccupationalCredential',
@@ -159,9 +157,6 @@ export function getHospitalSchema(hospital: {
         url: acc.includes('JCI') ? 'https://www.jointcommissioninternational.org/' : 'https://www.nabh.co/',
       },
     })),
-    parentOrganization: {
-      '@id': `${BASE_URL}/#organization`,
-    },
   };
 }
 

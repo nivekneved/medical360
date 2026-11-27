@@ -52,7 +52,7 @@ const CARE_PHASES: Step[] = [
     tagline_kr: 'Kordonater Pasian Dedie · Lekzamin Rapor Medikal',
     desc: 'Contact our team and share your medical reports, diagnosis, test results and current treatment information. A dedicated Patient Navigator will discuss your needs and, when required, arrange a video conference with you and your family to better understand your situation, answer your questions and guide you through the next steps.',
     desc_fr: 'Contactez notre équipe et partagez vos rapports médicaux, diagnostics, résultats d\'examens et traitements actuels. Un Patient Navigator dédié étudiera vos besoins et organisera si nécessaire une visioconférence avec vous et votre famille pour répondre à vos questions et vous guider.',
-    desc_kr: 'Kontak nou lekip ek partaz ou bann rapor medikal,診iagnostik ek rezilta tes. Enn Patient Navigator dedie pou diskit ou bezwin ek aranz enn videokonferans ar ou ek ou fami pou reponn ou kestion.',
+    desc_kr: 'Kontak nou lekip ek partaz ou bann rapor medikal, diagnostik ek rezilta tes. Enn Patient Navigator dedie pou diskit ou bezwin ek aranz enn videokonferans ar ou ek ou fami pou reponn ou kestion.',
     highlights: [
       { en: 'Dedicated Patient Navigator listening to your medical situation', fr: 'Un Patient Navigator dédié à l\'écoute de votre situation médicale', kr: 'Enn Patient Navigator dedie pou ekout ou sitiasion' },
       { en: 'Thorough review of reports, diagnostics & current treatment', fr: 'Examen approfondi des bilans, diagnostics et traitements en cours', kr: 'Revir konple ou bann dosie ek lanaliz' },
@@ -76,7 +76,7 @@ const CARE_PHASES: Step[] = [
     desc_kr: 'Dapre ou eta lasante ek ou preferans, nou idantifie bann meyer lopital ek spesialis dan nou rezo internasional ek nou avoy ou dosie an sekirite pou lavi lekip medikal.',
     highlights: [
       { en: 'Custom selection tailored to clinical condition & preferences', fr: 'Sélection personnalisée selon la pathologie et vos préférences', kr: 'Swazir lopital adapte a ou kondision ek preferans' },
-      { en: 'Direct access to 15 premier accredited hospital networks', fr: 'Accès direct aux 15 plus grands réseaux hospitaliers accrédités', kr: 'Akse direk ar 15 gran lopital akredite' },
+      { en: 'Direct access to 14 premier accredited hospital networks', fr: 'Accès direct aux 14 plus grands réseaux hospitaliers accrédités', kr: 'Akse direk ar 14 gran lopital akredite' },
       { en: 'Confidential and secure transmission of all medical records', fr: 'Transmission strictement confidentielle et sécurisée des données', kr: 'Partaz dosie dan konfidansialite ek sekirite total' },
     ],
     icon: Stethoscope,
@@ -218,7 +218,7 @@ export function HowItWorksPage() {
   );
 
   return (
-    <div className="how-it-works-page" style={{ paddingTop: 'var(--navbar-height)' }}>
+    <main className="how-it-works-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO pageKey="howItWorks" schema={faqSchema} />
 
       {/* ── 5 Easy Steps Visual Wave Diagram ─────────────────────────────────── */}
@@ -352,7 +352,7 @@ export function HowItWorksPage() {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
 export default HowItWorksPage;

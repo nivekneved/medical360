@@ -32,17 +32,29 @@ function isRateLimited(ip: string): boolean {
 }
 
 function isOriginAllowed(origin: string | null): boolean {
-  if (!origin) return true; // Direct same-origin or non-browser request
+  if (!origin) return false;
   try {
     const u = new URL(origin);
     const host = u.hostname.toLowerCase();
     if (ALLOWED_ORIGIN_HOSTS.has(host)) return true;
     if (host.endsWith('.med360.mu')) return true;
-    if (host.startsWith('med360') && host.endsWith('.vercel.app')) return true;
+    const vercelHost = (process.env.VERCEL_URL || '').toLowerCase().trim();
+    const vercelBranchHost = (process.env.VERCEL_BRANCH_URL || '').toLowerCase().trim();
+    if (vercelHost && host === vercelHost) return true;
+    if (vercelBranchHost && host === vercelBranchHost) return true;
     return false;
   } catch {
     return false;
   }
+}
+
+function sanitizeEmailHtml(html: string): string {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
+    .replace(/\son[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+    .replace(/javascript\s*:/gi, '');
 }
 
 function getCorsHeaders(req: Request): Record<string, string> {
@@ -82,21 +94,33 @@ async function verifyAdminAuth(authHeader: string | null): Promise<boolean> {
   const token = authHeader.slice(7).trim();
   if (!token) return false;
 
-  // 1. Try Neon Data API (validates Neon Auth JWT via JWKS + RLS on admin_users)
+  // 1. Try Neon Auth + Neon Data API (verify non-anonymous user email first, then active admin_users)
   const neonDataApiUrl = (process.env.VITE_NEON_DATA_API_URL || '').trim();
-  if (neonDataApiUrl) {
+  const neonAuthUrl = (process.env.VITE_NEON_AUTH_URL || '').trim();
+  if (neonDataApiUrl && neonAuthUrl) {
     try {
-      const neonCheck = await fetch(
-        `${neonDataApiUrl.replace(/\/$/, '')}/admin_users?active=eq.true&select=id`,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
+      const sessionRes = await fetch(`${neonAuthUrl.replace(/\/$/, '')}/get-session`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (sessionRes.ok) {
+        const sessionData = (await sessionRes.json()) as { user?: { email?: string; isAnonymous?: boolean } };
+        const userEmail = sessionData?.user?.email?.trim();
+        if (userEmail && !sessionData?.user?.isAnonymous) {
+          const neonCheck = await fetch(
+            `${neonDataApiUrl.replace(/\/$/, '')}/admin_users?email=ilike.${encodeURIComponent(userEmail)}&active=eq.true&select=id`,
+            {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+              },
+            }
+          );
+          if (neonCheck.ok) {
+            const rows = await neonCheck.json();
+            if (Array.isArray(rows) && rows.length > 0) return true;
+          }
         }
-      );
-      if (neonCheck.ok) {
-        const rows = await neonCheck.json();
-        if (Array.isArray(rows) && rows.length > 0) return true;
       }
     } catch {
       // Fall through to Supabase check if configured
@@ -155,8 +179,16 @@ export default async function handler(req: Request) {
     });
   }
 
-  // ── 1. Origin verification ──
+  // ── 1. Origin verification (require valid Origin or Referer unless authenticated admin) ──
   const origin = req.headers.get('origin');
+  const referer = req.headers.get('referer');
+  const effectiveOrigin = origin || referer;
+  if (!req.headers.get('authorization') && !isOriginAllowed(effectiveOrigin)) {
+    return new Response(JSON.stringify({ error: 'Forbidden: Origin not allowed' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
   if (origin && !isOriginAllowed(origin)) {
     return new Response(JSON.stringify({ error: 'Forbidden: Origin not allowed' }), {
       status: 403,
@@ -239,7 +271,7 @@ export default async function handler(req: Request) {
         from: fStr,
         to: vTo,
         subject: typeof item.subject === 'string' ? item.subject.replace(/[\r\n\0]/g, ' ').slice(0, 200).trim() : 'Med360 Notification',
-        html: typeof item.html === 'string' ? item.html : '<p>Med360 Notification</p>',
+        html: typeof item.html === 'string' ? sanitizeEmailHtml(item.html) : '<p>Med360 Notification</p>',
       });
     }
 
@@ -259,13 +291,19 @@ export default async function handler(req: Request) {
         },
         body: JSON.stringify(sanitizedBatch),
       });
+      if (!batchRes.ok) {
+        return new Response(JSON.stringify({ error: 'Batch dispatch failed' }), {
+          status: batchRes.status >= 500 ? 502 : batchRes.status,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        });
+      }
       const batchText = await batchRes.text();
       return new Response(batchText, {
         status: batchRes.status,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
-    } catch (err: any) {
-      return new Response(JSON.stringify({ error: err.message || 'Batch dispatch failed' }), {
+    } catch {
+      return new Response(JSON.stringify({ error: 'Batch dispatch failed' }), {
         status: 500,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
@@ -331,7 +369,7 @@ export default async function handler(req: Request) {
     : 'Med360 Notification';
 
   const cleanHtml = typeof body.html === 'string'
-    ? body.html
+    ? sanitizeEmailHtml(body.html)
     : '<p>Med360 Notification</p>';
 
   // Construct strict payload — drop any bcc, cc, attachments, or smuggled headers
@@ -353,6 +391,13 @@ export default async function handler(req: Request) {
       body: JSON.stringify(sanitizedPayload),
     });
 
+    if (!upstreamRes.ok) {
+      return new Response(JSON.stringify({ error: 'Email dispatch failed' }), {
+        status: upstreamRes.status >= 500 ? 502 : upstreamRes.status,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+
     const responseData = await upstreamRes.text();
 
     return new Response(responseData, {
@@ -362,8 +407,8 @@ export default async function handler(req: Request) {
         ...corsHeaders,
       },
     });
-  } catch (err: any) {
-    return new Response(JSON.stringify({ error: err.message || 'Serverless dispatch failed' }), {
+  } catch {
+    return new Response(JSON.stringify({ error: 'Email dispatch failed' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });

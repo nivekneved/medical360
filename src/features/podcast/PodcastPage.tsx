@@ -57,9 +57,11 @@ export function PodcastPage() {
   return (
     <main className="page-wrapper podcast-page">
       <SEO
-        title="Med360 Live Podcast — Medical Awareness & Specialist Shows"
-        description="Watch all Med360 Live & Podcast episodes featuring leading medical specialists discussing pediatrics, oncology, cardiology, spine surgery, and preventive healthcare in Mauritius."
-        canonical="/podcast"
+        pageKey="podcast"
+        breadcrumbs={[
+          { name: 'Home', path: '/' },
+          { name: 'Podcast', path: '/podcast' },
+        ]}
       />
 
       {/* Hero Header */}

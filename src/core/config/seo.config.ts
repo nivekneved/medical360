@@ -40,6 +40,7 @@ export type SEOPageKey =
   | 'visaGuide'
   | 'caseStudies'
   | 'contact'
+  | 'podcast'
   | 'describeNeed'
   | 'privacy'
   | 'terms'
@@ -67,6 +68,27 @@ export const SEO_PAGES: Record<SEOPageKey, LocalizedMeta> = {
       en: ['medical tourism Mauritius', 'India hospital coordination', 'Apollo Hospitals Mauritius', 'medical evacuation India', 'treatment abroad Mauritius', 'cardiac surgery India', 'oncology Chennai'],
       fr: ['tourisme médical Maurice', 'coordination hôpitaux Inde', 'évacuation sanitaire Maurice Inde', 'chirurgie cardiaque Inde', 'traitement cancer Inde', 'greffe organe Inde'],
       kr: ['swen medikal L\'inde', 'lopital partener Moris', 'evakuasion saniter L\'inde', 'sirizi leker L\'inde', 'tretman kanser'],
+    },
+  },
+
+  podcast: {
+    title: {
+      en: 'Med360 Live Podcast — Medical Awareness & Specialist Shows | Med360',
+      fr: 'Med360 Live Podcast — Sensibilisation Médicale & Émissions Spécialistes | Med360',
+      kr: 'Med360 Live Podcast — Bann Emision Lasante & Spesialis | Med360',
+    },
+    description: {
+      en: 'Watch all 12 official Med360 Live & Podcast episodes featuring leading medical specialists discussing paediatrics, oncology, cardiology, spine surgery, and preventive healthcare in Mauritius.',
+      fr: 'Regardez les 12 épisodes officiels de Med360 Live & Podcast avec des médecins spécialistes abordant la pédiatrie, l\'oncologie, la cardiologie, la chirurgie du rachis et la prévention à Maurice.',
+      kr: 'Get tou bann 12 epizod ofisiel Med360 Live & Podcast avek bann gran dokter spesialis lor pediatri, onkolozi, kardiolozi ek prevansion lasante dan Moris.',
+    },
+    canonical: '/podcast',
+    ogType: 'website',
+    image: '/assets/hero-banner.jpg',
+    keywords: {
+      en: ['Med360 podcast', 'Mauritius health podcast', 'medical awareness Mauritius', 'specialist doctor talks', 'Enn Rev Enn Sourir'],
+      fr: ['podcast médical Maurice', 'Med360 Live', 'sensibilisation santé Maurice', 'émissions spécialistes'],
+      kr: ['Med360 podcast', 'emision lasante Moris', 'dokter spesialis'],
     },
   },
 

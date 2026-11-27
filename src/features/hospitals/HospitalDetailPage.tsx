@@ -48,7 +48,7 @@ export function HospitalDetailPage() {
     <main className="hospital-detail-page" style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO
         title={`${hospital.name} - ${hospital.city}, ${hospital.country} | Med360`}
-        description={l(hospital, 'overview') || `Explore ${hospital.name} accredited healthcare services in ${hospital.city}, ${hospital.country}.`}
+        description={l(hospital, 'description') || `Explore ${hospital.name} accredited healthcare services in ${hospital.city}, ${hospital.country}.`}
         canonical={`/hospitals/${hospital.id}`}
         image={hospital.imageUrl}
         schema={getHospitalSchema({
@@ -58,7 +58,7 @@ export function HospitalDetailPage() {
           country: hospital.country,
           accreditations: hospital.accreditations || [],
           imageUrl: hospital.imageUrl,
-          description: l(hospital, 'overview') || hospital.name,
+          description: l(hospital, 'description') || hospital.name,
           bedsCount: hospital.bedsCount,
           foundedYear: hospital.foundedYear,
         })}
@@ -74,6 +74,8 @@ export function HospitalDetailPage() {
         <img
           src={hospital.imageUrl}
           alt={hospital.name}
+          fetchPriority="high"
+          decoding="async"
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
         <div style={{

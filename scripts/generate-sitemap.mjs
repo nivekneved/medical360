@@ -72,4 +72,14 @@ ${urls.map(u => `  <url>
 `;
 
 fs.writeFileSync(path.join(__dirname, '..', 'public', 'sitemap.xml'), xml, 'utf8');
-console.log(`✅ sitemap.xml generated with ${urls.length} URLs at ${SITE_URL}`);
+
+const sitemapIndexXml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${SITE_URL}/sitemap.xml</loc>
+    <lastmod>${TODAY}</lastmod>
+  </sitemap>
+</sitemapindex>
+`;
+fs.writeFileSync(path.join(__dirname, '..', 'public', 'sitemap_index.xml'), sitemapIndexXml, 'utf8');
+console.log(`✅ sitemap.xml (${urls.length} URLs) & sitemap_index.xml generated at ${SITE_URL}`);

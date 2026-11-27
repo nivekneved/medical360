@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../providers/AuthProvider';
 import { isSupabaseConfigured } from '../../core/supabase/client';
+import { SEO } from '../../components/SEO/SEO';
 import {
   CORE_NAV,
   DIRECTORY_NAV,
@@ -96,7 +97,7 @@ export function AdminLayout() {
 
   function handleLogout() {
     logout();
-    navigate('/admin/login');
+    navigate('/');
   }
 
   // Active check helper for exact and query-parameter routes
@@ -115,6 +116,7 @@ export function AdminLayout() {
 
   return (
     <div className="admin-layout">
+      <SEO title="Admin Portal" noIndex />
       {/* Mobile Top Navigation Header */}
       <header className="admin-mobile-header">
         <button

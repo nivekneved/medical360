@@ -183,12 +183,17 @@ export function renderEmailHtml(
     ? '#ea580c' 
     : '#16a34a';
 
+  const sanitizeHex = (v: string | undefined, fb: string) =>
+    /^#[0-9a-fA-F]{3,8}$/.test((v || '').trim()) ? (v || '').trim() : fb;
+
   const sections: string[] = [];
 
   // 1. Banner Component with Official Med360 Logo
   if (config.banner?.enabled) {
+    const safeBg = sanitizeHex(config.banner.bgColor, '#090d10');
+    const safeText = sanitizeHex(config.banner.textColor, '#ffffff');
     sections.push(`
-      <div style="background-color: ${config.banner.bgColor}; color: ${config.banner.textColor}; padding: 24px; border-radius: 8px 8px 0 0; text-align: left;">
+      <div style="background-color: ${safeBg}; color: ${safeText}; padding: 24px; border-radius: 8px 8px 0 0; text-align: left;">
         <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 14px; width: 100%;">
           <tr>
             <td style="vertical-align: middle;">
@@ -201,10 +206,10 @@ export function renderEmailHtml(
             </td>
           </tr>
         </table>
-        <h2 style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: ${config.banner.textColor}; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <h2 style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: ${safeText}; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
           ${escapeHtml(config.banner.title)}
         </h2>
-        <p style="margin: 0; font-size: 13px; opacity: 0.9; line-height: 1.4; color: ${config.banner.textColor};">
+        <p style="margin: 0; font-size: 13px; opacity: 0.9; line-height: 1.4; color: ${safeText};">
           ${escapeHtml(config.banner.subtitle)}
         </p>
       </div>

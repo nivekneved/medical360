@@ -12,6 +12,7 @@ Allow: /specialties/*
 Allow: /case-studies
 Allow: /describe-need
 Allow: /contact
+Allow: /podcast
 Allow: /privacy
 Allow: /terms
 Allow: /cookies
@@ -19,6 +20,7 @@ Allow: /medical-disclaimer
 Allow: /llms.txt
 Allow: /llms-full.txt
 Allow: /.well-known/ai-plugin.json
+Disallow: /api/
 
 # ── Generative Engine Optimization (GEO) & AI Search Agents ──
 User-agent: GPTBot
@@ -69,8 +71,6 @@ Allow: /
 
 User-agent: Bingbot
 Allow: /
-
-Disallow: /api/
 
 # ── Machine-Readable AI & Search Feeds ──
 Sitemap: https://www.med360.mu/sitemap.xml

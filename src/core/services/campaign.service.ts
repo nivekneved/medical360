@@ -417,14 +417,14 @@ export function renderCampaignHtml(campaign: Campaign, contact: Partial<Contact>
 
           <!-- Primary CTA Button -->
           <div style="text-align: center; margin: 28px 0 16px 0;">
-            <a href="${ctaUrl}" target="_blank" style="display: inline-block; background-color: ${ctaBgColor}; color: #ffffff; font-weight: 700; font-size: 15px; text-decoration: none; padding: 12px 28px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <a href="${ctaUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-block; background-color: ${ctaBgColor}; color: #ffffff; font-weight: 700; font-size: 15px; text-decoration: none; padding: 12px 28px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
               ${escapeHtml(t.ctaText || 'Learn More')}
             </a>
           </div>
 
           ${t.showWhatsAppButton ? `
             <div style="text-align: center; margin-bottom: 16px;">
-              <a href="https://wa.me/23059188275?text=${encodeURIComponent(`Hello Med360, I received your email regarding "${campaign.subject}" and would like to learn more.`)}" target="_blank" style="display: inline-block; background-color: #16a34a; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 9px 20px; border-radius: 6px;">
+              <a href="https://wa.me/23059188275?text=${encodeURIComponent(`Hello Med360, I received your email regarding "${campaign.subject}" and would like to learn more.`)}" target="_blank" rel="noopener noreferrer" style="display: inline-block; background-color: #16a34a; color: #ffffff; font-weight: 700; font-size: 13px; text-decoration: none; padding: 9px 20px; border-radius: 6px;">
                 💬 ${escapeHtml(t.whatsAppText || 'Chat on WhatsApp (+230 59188275)')}
               </a>
             </div>

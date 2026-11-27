@@ -3,6 +3,8 @@ export const config = {
 };
 
 const MAX_BODY_BYTES = 32 * 1024;
+const RATE_WINDOW_MS = 5 * 60 * 1000;
+const RATE_MAX_REQUESTS = 20;
 const ALLOWED_ORIGIN_HOSTS = new Set([
   'med360.mu',
   'www.med360.mu',
@@ -10,14 +12,31 @@ const ALLOWED_ORIGIN_HOSTS = new Set([
   '127.0.0.1',
 ]);
 
+const hits = new Map<string, number[]>();
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const arr = (hits.get(ip) || []).filter(t => now - t < RATE_WINDOW_MS);
+  if (arr.length >= RATE_MAX_REQUESTS) {
+    hits.set(ip, arr);
+    return true;
+  }
+  arr.push(now);
+  hits.set(ip, arr);
+  if (hits.size > 3000) hits.clear();
+  return false;
+}
+
 function isOriginAllowed(origin: string | null): boolean {
-  if (!origin) return true;
+  if (!origin) return false;
   try {
     const u = new URL(origin);
     const host = u.hostname.toLowerCase();
     if (ALLOWED_ORIGIN_HOSTS.has(host)) return true;
     if (host.endsWith('.med360.mu')) return true;
-    if (host.startsWith('med360') && host.endsWith('.vercel.app')) return true;
+    const vercelHost = (process.env.VERCEL_URL || '').toLowerCase().trim();
+    const vercelBranchHost = (process.env.VERCEL_BRANCH_URL || '').toLowerCase().trim();
+    if (vercelHost && host === vercelHost) return true;
+    if (vercelBranchHost && host === vercelBranchHost) return true;
     return false;
   } catch {
     return false;
@@ -52,10 +71,26 @@ export default async function handler(req: Request) {
   }
 
   const origin = req.headers.get('origin');
-  if (origin && !isOriginAllowed(origin)) {
+  if (!origin || !isOriginAllowed(origin)) {
     return new Response(JSON.stringify({ error: 'Forbidden' }), {
       status: 403,
       headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const ip = (req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown').split(',')[0].trim();
+  if (isRateLimited(ip)) {
+    return new Response(JSON.stringify({ error: 'Too many requests' }), {
+      status: 429,
+      headers: { 'Content-Type': 'application/json', 'Retry-After': '300', ...corsHeaders },
+    });
+  }
+
+  const contentType = req.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    return new Response(JSON.stringify({ error: 'Content-Type must be application/json' }), {
+      status: 415,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
   }
 
@@ -74,18 +109,22 @@ export default async function handler(req: Request) {
     // Persist batch to Neon Data API (default) or Supabase telemetry_events fallback
     const neonDataApiUrl = (process.env.VITE_NEON_DATA_API_URL || '').trim();
     const supabaseUrl = process.env.VITE_SUPABASE_URL || '';
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
+    const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || '';
 
     if ((neonDataApiUrl || (supabaseUrl && supabaseKey)) && batch.length > 0) {
       const rows = batch
         .filter((ev: any) => typeof ev?.eventName === 'string' && ev.eventName.length > 0)
-        .map((ev: any, idx: number) => ({
-          id: `tel-${Date.now()}-${idx}-${Math.random().toString(36).slice(2, 6)}`,
-          event_name: String(ev.eventName).slice(0, 100),
-          params: ev.params && typeof ev.params === 'object' ? ev.params : {},
-          url: typeof ev.url === 'string' ? ev.url.slice(0, 300) : '',
-          created_at: ev.timestamp || new Date().toISOString(),
-        }));
+        .map((ev: any) => {
+          const safeParams = ev.params && typeof ev.params === 'object' ? ev.params : {};
+          const serializedParams = JSON.stringify(safeParams);
+          return {
+            id: `tel-${crypto.randomUUID()}`,
+            event_name: String(ev.eventName).slice(0, 100),
+            params: serializedParams.length <= 2048 ? safeParams : {},
+            url: typeof ev.url === 'string' ? ev.url.slice(0, 300) : '',
+            created_at: ev.timestamp || new Date().toISOString(),
+          };
+        });
 
       if (rows.length > 0) {
         const targetUrl = neonDataApiUrl

@@ -339,8 +339,17 @@ export function safeRegexTest(pattern: RegExp, input: string, maxLength = 2000):
 // 9. CSRF & MUTATION REPLAY TOKENS (CWE-352 / CWE-294)
 // ─────────────────────────────────────────────────────────────────────────────
 
+function randomHex(bytes = 16): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+    const arr = new Uint8Array(bytes);
+    crypto.getRandomValues(arr);
+    return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('');
+  }
+  return `${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 12)}`;
+}
+
 export function generateCsrfToken(): string {
-  const token = `csrf_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 12)}`;
+  const token = `csrf_${Date.now().toString(36)}_${randomHex(12)}`;
   csrfTokenStore.add(token);
   // Cap token memory pool to 200 items
   if (csrfTokenStore.size > 200) {
@@ -612,7 +621,7 @@ export function isOriginAllowed(origin: string): boolean {
 
 export function generateSecurityNonce(): string {
   const timestamp = Date.now().toString(36);
-  const randomChars = Math.random().toString(36).substring(2, 10);
+  const randomChars = randomHex(12);
   return `sec_${timestamp}_${randomChars}`;
 }
 

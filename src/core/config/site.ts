@@ -66,7 +66,7 @@ export const OPERATING_HOURS = {
 export const SITE_METRICS = {
   patientsAssistedEn: '+3,000',
   patientsAssistedFr: '+3 000',
-  partnerHospitals: '15',
+  partnerHospitals: '14',
   yearsExperience: '10+',
   impactPercent: '100%',
   foundationYear: '2016',
