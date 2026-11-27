@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ArrowRight,
   MessageCircle,
@@ -6,9 +6,9 @@ import {
   ExternalLink,
   CheckCircle2,
   Sparkles,
-  FileCheck2,
   Download,
   ShieldCheck,
+  Maximize2,
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useL10n } from '../../hooks/useL10n';
@@ -24,6 +24,8 @@ export function AboutPage() {
   const location = useLocation();
   const { lang, l10n, l } = useL10n();
   const { data: cms } = useCMS('about');
+  const [activeCertId, setActiveCertId] = useState<string>(OFFICIAL_CERTIFICATES[0].id);
+  const activeCert = OFFICIAL_CERTIFICATES.find((c) => c.id === activeCertId) || OFFICIAL_CERTIFICATES[0];
 
   useEffect(() => {
     if (location.hash === '#board-members') {
@@ -333,106 +335,115 @@ export function AboutPage() {
             </div>
           </div>
 
-          {/* ── 6. Official International Credentials & Awards (UICC, SIOP, CCI) ── */}
-          <section className="about-awards-showcase" aria-labelledby="official-credentials-heading">
-            <div className="about-awards-header">
-              <span className="about-awards-eyebrow">
-                <Award size={14} />
+          {/* ── 6. Interactive Official Credentials Spotlight (UICC, SIOP, CCI) ── */}
+          <section className="about-creds-stage" aria-labelledby="official-credentials-heading">
+            <div className="about-creds-top">
+              <div>
+                <span className="about-awards-eyebrow">
+                  <Award size={14} />
+                  {l10n(
+                    'Accréditations & Certificats Officiels Vérifiés',
+                    'Sertifika & Rekonesans Ofisiel Verifie',
+                    'Verified International Credentials'
+                  )}
+                </span>
+                <h2 id="official-credentials-heading" className="about-creds-title">
+                  {l10n(
+                    'Reconnus par les Plus Hautes Instances Mondiales',
+                    'Rekonet par Bann Pli Gran Instans Mondial',
+                    'Recognised by Global Oncology Institutions'
+                  )}
+                </h2>
+              </div>
+              <p className="about-creds-lead">
                 {l10n(
-                  'Accréditations & Certificats Officiels Vérifiés',
-                  'Sertifika & Rekonesans Ofisiel Verifie',
-                  'Verified International Credentials & Certificates'
-                )}
-              </span>
-              <h2 id="official-credentials-heading">
-                {l10n(
-                  'Reconnus par les Plus Hautes Instances Mondiales de l\'Oncologie',
-                  'Rekonet par Bann Pli Gran Instans Mondial Onkolozi',
-                  'Recognised by the World’s Leading Oncology Institutions'
-                )}
-              </h2>
-              <p>
-                {l10n(
-                  'La gouvernance éthique de Med360 s\'appuie sur les accréditations officielles et signées d\'Enn Rev Enn Sourir auprès de l\'UICC (Genève), de la SIOP (Genève) et de Childhood Cancer International (Amsterdam). Consultez chaque certificat original ci-dessous.',
-                  'Gouvernans etik Med360 baze lor bann sertifika ofisiel ek sinye Enn Rev Enn Sourir avek UICC (Zenev), SIOP (Zenev) ek Childhood Cancer International (Amsterdam). Get sak sertifika orizinal anba la.',
-                  'Med360’s ethical mandate is backed by signed, verifiable international credentials held by Enn Rev Enn Sourir with UICC (Geneva), SIOP (Geneva), and Childhood Cancer International (Amsterdam). Inspect each official certificate below.'
+                  'Chaque certificat ci-dessous est un document officiel signé détenu par Enn Rev Enn Sourir. Sélectionnez une institution pour inspecter l\'original.',
+                  'Sak sertifika anba la se enn dokiman ofisiel sinye ki Enn Rev Enn Sourir posede. Swazir enn linstitision pou get lorizinal.',
+                  'Every credential below is a signed official document held by Enn Rev Enn Sourir. Select an institution to inspect the original certificate.'
                 )}
               </p>
             </div>
 
-            <div className="about-awards-grid">
-              {OFFICIAL_CERTIFICATES.map((cert) => (
-                <article key={cert.id} className="about-cert-card">
-                  <div>
-                    <a
-                      href={cert.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`about-cert-plaque about-cert-plaque--${cert.accentStyle}`}
-                      aria-label={`${cert.org} — ${l(cert, 'certificateTitle')} (PDF)`}
+            <div className="about-creds-split">
+              {/* Left: Clean Editorial Selector Rail */}
+              <div className="about-creds-rail" role="tablist" aria-label="Official international certificates">
+                {OFFICIAL_CERTIFICATES.map((cert, idx) => {
+                  const isActive = cert.id === activeCert.id;
+                  return (
+                    <button
+                      key={cert.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => setActiveCertId(cert.id)}
+                      className={`about-creds-tab ${isActive ? 'about-creds-tab--active' : ''}`}
                     >
-                      <div className="about-cert-plaque__topbar" />
-                      <div className="about-cert-plaque__head">
-                        <span className="about-cert-acronym">{cert.acronym}</span>
-                        <span className="about-cert-seal">{cert.yearBadge}</span>
+                      <div className="about-creds-tab__head">
+                        <span className="about-creds-tab__index">0{idx + 1}</span>
+                        <span className="about-creds-tab__acronym">{cert.acronym}</span>
+                        <span className="about-creds-tab__year">{cert.yearBadge}</span>
                       </div>
-
-                      <div className="about-cert-plaque__body">
-                        <div className="about-cert-plaque__doc-type">
-                          {l(cert, 'certificateTitle')}
-                        </div>
-                        <div className="about-cert-plaque__recipient">{cert.recipient}</div>
-                        <div className="about-cert-plaque__org">{cert.org}</div>
-                      </div>
-
-                      <div className="about-cert-plaque__foot">
+                      <div className="about-creds-tab__org">{cert.org}</div>
+                      <div className="about-creds-tab__meta">
                         <span>{cert.location}</span>
-                        <span className="about-cert-plaque__verify">
-                          <ShieldCheck size={13} />
-                          <span>{l10n('Signé · PDF', 'Sinye · PDF', 'Signed · PDF')}</span>
-                        </span>
+                        <span>·</span>
+                        <span>{l(cert, 'status')}</span>
                       </div>
-                    </a>
+                    </button>
+                  );
+                })}
+              </div>
 
-                    <div className="about-cert-meta" style={{ marginTop: '1.15rem' }}>
-                      <span className="about-cert-status">{l(cert, 'status')}</span>
-                      <h3>{cert.org}</h3>
-                      <div className="about-cert-loc">📍 {cert.location}</div>
-                      <p className="about-cert-desc">{l(cert, 'desc')}</p>
-                      <div className="about-cert-signatory">
-                        {l10n('Signé par :', 'Sinye par :', 'Signed by:')} {cert.signatory}
-                      </div>
+              {/* Right: Live Official Certificate Document Stage */}
+              <div className="about-creds-viewer" role="tabpanel">
+                <div className="about-creds-viewer__frame">
+                  <iframe
+                    key={activeCert.id}
+                    src={`${activeCert.pdfUrl}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                    title={`${activeCert.org} — ${l(activeCert, 'certificateTitle')}`}
+                    className="about-creds-viewer__iframe"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="about-creds-viewer__bar">
+                  <div className="about-creds-viewer__info">
+                    <div className="about-creds-viewer__verified">
+                      <ShieldCheck size={15} />
+                      <span>{l(activeCert, 'certificateTitle')} · {activeCert.recipient}</span>
+                    </div>
+                    <p className="about-creds-viewer__desc">{l(activeCert, 'desc')}</p>
+                    <div className="about-creds-viewer__sig">
+                      {l10n('Signé par :', 'Sinye par :', 'Signed by:')} {activeCert.signatory}
                     </div>
                   </div>
 
-                  <div className="about-cert-actions">
+                  <div className="about-creds-viewer__actions">
                     <a
-                      href={cert.pdfUrl}
+                      href={activeCert.pdfUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="about-cert-btn-pdf"
+                      className="btn btn-primary btn-sm"
                     >
-                      <FileCheck2 size={15} />
-                      <span>{l10n('Voir le Certificat Officiel (PDF)', 'Get Sertifika Ofisiel (PDF)', 'View Official Certificate (PDF)')}</span>
+                      <Maximize2 size={14} />
+                      <span>{l10n('Ouvrir en Plein Écran', 'Ouver an Gran', 'Open Full PDF')}</span>
                     </a>
-                    <div className="about-cert-secondary-links">
-                      <a href={cert.pdfUrl} download className="about-cert-link">
-                        <Download size={13} />
-                        <span>{l10n('Télécharger PDF', 'Telesarz PDF', 'Download PDF')}</span>
-                      </a>
-                      <a
-                        href={cert.officialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="about-cert-link"
-                      >
-                        <span>{cert.acronym} {l10n('Officiel', 'Ofisiel', 'Official')}</span>
-                        <ExternalLink size={12} />
-                      </a>
-                    </div>
+                    <a href={activeCert.pdfUrl} download className="btn btn-outline btn-sm">
+                      <Download size={14} />
+                      <span>{l10n('Télécharger', 'Telesarz', 'Download')}</span>
+                    </a>
+                    <a
+                      href={activeCert.officialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="about-creds-viewer__ext"
+                    >
+                      <span>{activeCert.acronym}</span>
+                      <ExternalLink size={13} />
+                    </a>
                   </div>
-                </article>
-              ))}
+                </div>
+              </div>
             </div>
           </section>
 
