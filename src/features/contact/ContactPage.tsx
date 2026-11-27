@@ -153,22 +153,90 @@ export function ContactPage() {
     <main style={{ paddingTop: 'var(--navbar-height)' }}>
       <SEO pageKey="contact" />
 
-      {/* Header Banner */}
-      <section className="page-hero--banner" style={{ backgroundImage: 'url(/assets/banners/about_banner.jpg)' }}>
-        <div className="container page-hero__inner">
-          <span className="section-label">
-            {tCms('heroLabel', l10n('✦ Contactez Notre Équipe de Navigation Patient', '✦ Pran Kontak ar Nou Lekip Patient Navigator', '✦ Contact Us · Dedicated Patient Navigation'))}
-          </span>
-          <h1 className="text-h1">
-            {tCms('heroTitle', l10n('Quand Votre Santé Ne Peut Pas Attendre, Vous Non Plus.', 'Kan Ou Lasante Pa Kapav Atann, Ou Osi Pa Bizin Atann.', 'When Your Health Can’t Wait, Neither Should You.'))}
-          </h1>
-          <p className="text-lead">
-            {tCms('heroDesc', l10n(
-              'Faire face à un diagnostic ou envisager un traitement à l\'étranger soulève de nombreuses questions. Vous n\'avez pas à parcourir ce chemin seul. Que vous recherchiez un deuxième avis médical, une consultation de spécialiste, des soins à l\'étranger ou une assistance complète, l\'équipe de Med360 est prête à vous écouter et vous guider vers la prochaine étape.',
-              'Gagn enn diagnostik ouswa pans al swanye a letranze amenn boukou kestion. Ou pa tousel dan sa vwayaz la. Ki ou pe rod enn deziem lavi dokter, telekonsiltasion spesialis ouswa lasistans konple, lekip Med360 pre pou ekout ou ek gid ou.',
-              'Facing a diagnosis or considering treatment abroad can bring many questions. You don\'t have to navigate the journey alone. Whether you are looking for a second medical opinion, specialist consultation, treatment abroad, hospital recommendation or complete medical travel assistance, the Med360 team is ready to listen, understand your needs and guide you towards the next step.'
-            ))}
-          </p>
+      {/* ── Interactive Site Map with Exact Pinpoint Location ─────────────────── */}
+      <section className="section" style={{ background: 'var(--color-surface-2)', borderBottom: '1px solid var(--color-border)', padding: '2.5rem 0 3rem' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 1.75rem' }}>
+            <span className="section-label">
+              📍 {l10n('Plan d\'Accès & Localisation Exacte', 'Plan Laksé & Pozision Exak', 'Interactive Site Map & Exact Location')}
+            </span>
+            <h1 className="text-h2" style={{ marginBottom: '0.6rem' }}>
+              {l10n('Venez Nous Rencontrer à Port-Louis', 'Vinn Zwen Nou dan Porlwi', 'Visit Med360 in Port-Louis')}
+            </h1>
+            <p className="text-lead" style={{ margin: 0 }}>
+              {l10n(
+                'Nos bureaux sont situés au 4ème étage de l\'IKS Building, au carrefour des rues R. Seeneevassen & Farquhar, à proximité du centre de Port-Louis.',
+                'Nou biro trouv lor 4em letaz IKS Building, kwin lari R. Seeneevassen & Farquhar, dan Porlwi.',
+                'Our headquarters are located on the 4th Floor of IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis.'
+              )}
+            </p>
+          </div>
+
+          <div style={{
+            position: 'relative',
+            borderRadius: 'var(--radius-2xl)',
+            overflow: 'hidden',
+            border: '2px solid var(--color-border)',
+            boxShadow: '0 12px 36px rgba(0,0,0,0.1)',
+            background: 'var(--color-surface)',
+          }}>
+            {/* Interactive Google Maps Embed with Pinpoint */}
+            <iframe
+              title={`${SITE_NAME} Location Map - ${SITE_ADDRESS.locality}`}
+              src={SITE_ADDRESS.mapEmbedUrl}
+              width="100%"
+              height="440"
+              style={{ border: 0, display: 'block' }}
+              loading="eager"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+
+            {/* Floating Location Overlay Card with GPS Directions */}
+            <div style={{
+              position: 'absolute',
+              top: '1.25rem',
+              left: '1.25rem',
+              maxWidth: '360px',
+              background: 'var(--color-surface)',
+              border: '1.5px solid var(--color-border)',
+              borderRadius: 'var(--radius-lg)',
+              padding: '1.25rem',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.2)',
+              backdropFilter: 'blur(8px)',
+              zIndex: 10,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
+                <strong style={{ fontSize: '0.95rem', color: 'var(--color-primary)' }}>{LEGAL_NAME} (Siège Social)</strong>
+              </div>
+              <p style={{ margin: '0 0 0.75rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
+                {SITE_ADDRESS.building}<br />
+                {SITE_ADDRESS.street}<br />
+                {SITE_ADDRESS.locality} {SITE_ADDRESS.postalCode}, {SITE_ADDRESS.country}
+              </p>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                <a
+                  href={SITE_ADDRESS.mapDirectionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-sm"
+                  style={{ fontWeight: 700 }}
+                >
+                  <MapPin size={14} /> {l10n('Itinéraire GPS', 'Itinerer GPS', 'Get Directions')}
+                </a>
+                <a
+                  href={buildMed360WhatsAppUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-whatsapp btn-sm"
+                  style={{ fontWeight: 700 }}
+                >
+                  <MessageCircle size={14} /> WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -475,93 +543,6 @@ export function ContactPage() {
                   </button>
                 </form>
               )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Interactive Site Map with Exact Pinpoint Location ─────────────────── */}
-      <section className="section" style={{ background: 'var(--color-surface-2)', borderTop: '1px solid var(--color-border)', padding: '4rem 0 5rem' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', maxWidth: 720, margin: '0 auto 2.5rem' }}>
-            <span className="section-label">
-              📍 {l10n('Plan d\'Accès & Localisation Exacte', 'Plan Laksé & Pozision Exak', 'Interactive Site Map & Exact Location')}
-            </span>
-            <h2 className="text-h2" style={{ marginBottom: '0.75rem' }}>
-              {l10n('Venez Nous Rencontrer à Port-Louis', 'Vinn Zwen Nou dan Porlwi', 'Visit Med360 in Port-Louis')}
-            </h2>
-            <p className="text-lead" style={{ margin: 0 }}>
-              {l10n(
-                'Nos bureaux sont situés au 4ème étage de l\'IKS Building, au carrefour des rues R. Seeneevassen & Farquhar, à proximité du centre de Port-Louis.',
-                'Nou biro trouv lor 4em letaz IKS Building, kwin lari R. Seeneevassen & Farquhar, dan Porlwi.',
-                'Our headquarters are located on the 4th Floor of IKS Building, Cnr R. Seeneevassen & Farquhar Streets, Port-Louis.'
-              )}
-            </p>
-          </div>
-
-          <div style={{
-            position: 'relative',
-            borderRadius: 'var(--radius-2xl)',
-            overflow: 'hidden',
-            border: '2px solid var(--color-border)',
-            boxShadow: '0 12px 36px rgba(0,0,0,0.1)',
-            background: 'var(--color-surface)',
-          }}>
-            {/* Interactive Google Maps Embed with Pinpoint */}
-            <iframe
-              title={`${SITE_NAME} Location Map - ${SITE_ADDRESS.locality}`}
-              src={SITE_ADDRESS.mapEmbedUrl}
-              width="100%"
-              height="460"
-              style={{ border: 0, display: 'block' }}
-              loading="lazy"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-
-            {/* Floating Location Overlay Card with GPS Directions */}
-            <div style={{
-              position: 'absolute',
-              top: '1.25rem',
-              left: '1.25rem',
-              maxWidth: '360px',
-              background: 'var(--color-surface)',
-              border: '1.5px solid var(--color-border)',
-              borderRadius: 'var(--radius-lg)',
-              padding: '1.25rem',
-              boxShadow: '0 8px 30px rgba(0,0,0,0.2)',
-              backdropFilter: 'blur(8px)',
-              zIndex: 10,
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#10b981', display: 'inline-block' }} />
-                <strong style={{ fontSize: '0.95rem', color: 'var(--color-primary)' }}>{LEGAL_NAME} (Siège Social)</strong>
-              </div>
-              <p style={{ margin: '0 0 0.75rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
-                {SITE_ADDRESS.building}<br />
-                {SITE_ADDRESS.street}<br />
-                {SITE_ADDRESS.locality} {SITE_ADDRESS.postalCode}, {SITE_ADDRESS.country}
-              </p>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                <a
-                  href={SITE_ADDRESS.mapDirectionsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary btn-sm"
-                  style={{ fontWeight: 700 }}
-                >
-                  <MapPin size={14} /> {l10n('Itinéraire GPS', 'Itinerer GPS', 'Get Directions')}
-                </a>
-                <a
-                  href={buildMed360WhatsAppUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-whatsapp btn-sm"
-                  style={{ fontWeight: 700 }}
-                >
-                  <MessageCircle size={14} /> WhatsApp
-                </a>
-              </div>
             </div>
           </div>
         </div>
